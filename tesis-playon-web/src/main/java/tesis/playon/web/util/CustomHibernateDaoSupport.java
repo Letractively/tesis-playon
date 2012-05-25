@@ -1,4 +1,4 @@
-package edu.utn.frc.tesis_playon_web.util;
+package tesis.playon.web.util;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

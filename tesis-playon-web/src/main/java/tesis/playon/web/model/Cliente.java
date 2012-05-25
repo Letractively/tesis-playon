@@ -1,4 +1,4 @@
-package edu.utn.frc.tesis_playon_web.model;
+package tesis.playon.web.model;
 
 import java.io.Serializable;
 

@@ -1,6 +1,6 @@
-package edu.utn.frc.tesis_playon_web.business_object.dao;
+package tesis.playon.web.business_object.dao;
 
-import edu.utn.frc.tesis_playon_web.model.Cliente;
+import tesis.playon.web.model.Cliente;
 
 public interface ClienteDao {
 

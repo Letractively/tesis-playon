@@ -1,12 +1,13 @@
-package edu.utn.frc.tesis_playon_web.business_object.dao.impl;
+package tesis.playon.web.business_object.dao.impl;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import edu.utn.frc.tesis_playon_web.business_object.dao.ClienteDao;
-import edu.utn.frc.tesis_playon_web.model.Cliente;
-import edu.utn.frc.tesis_playon_web.util.CustomHibernateDaoSupport;
+import tesis.playon.web.business_object.dao.ClienteDao;
+import tesis.playon.web.model.Cliente;
+import tesis.playon.web.util.CustomHibernateDaoSupport;
+
 
 @Repository("clienteDao")
 public class ClienteDaoImpl extends CustomHibernateDaoSupport implements ClienteDao {

@@ -1,10 +1,11 @@
-package edu.utn.frc.tesis_playon_web.business_object.impl;
+package tesis.playon.web.business_object.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import edu.utn.frc.tesis_playon_web.business_object.ClienteBo;
-import edu.utn.frc.tesis_playon_web.business_object.dao.ClienteDao;
-import edu.utn.frc.tesis_playon_web.model.Cliente;
+import tesis.playon.web.business_object.ClienteBo;
+import tesis.playon.web.business_object.dao.ClienteDao;
+import tesis.playon.web.model.Cliente;
+
 
 public class ClienteBoImpl implements ClienteBo {
 
