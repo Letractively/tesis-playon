@@ -24,7 +24,7 @@ public class ClienteDaoImpl extends CustomHibernateDaoSupport implements Cliente
     }
 
     public Cliente findByClienteDni(String clienteDni) {
-	List<Cliente> list = getHibernateTemplate().find("from Cliente where clienteDni=?", clienteDni);
-	return list.get(0);
+	List<?> list = getHibernateTemplate().find("from Cliente where clienteDni=?", clienteDni);
+	return (Cliente)list.get(0);
     }
 }
