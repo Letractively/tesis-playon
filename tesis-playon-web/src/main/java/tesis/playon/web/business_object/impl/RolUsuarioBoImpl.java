@@ -1,11 +1,13 @@
 package tesis.playon.web.business_object.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import tesis.playon.web.business_object.RolUsuarioBo;
 import tesis.playon.web.business_object.dao.RolUsuarioDao;
 import tesis.playon.web.model.RolUsuario;
 
+@Service("rolUsuarioBo")
 public class RolUsuarioBoImpl implements RolUsuarioBo {
 
     @Autowired
@@ -20,11 +22,11 @@ public class RolUsuarioBoImpl implements RolUsuarioBo {
     }
 
     public void update(RolUsuario rolUsuario) {
-	rolUsuarioDao.save(rolUsuario);
+	rolUsuarioDao.update(rolUsuario);
     }
 
     public void delete(RolUsuario rolUsuario) {
-	rolUsuarioDao.save(rolUsuario);
+	rolUsuarioDao.delete(rolUsuario);
     }
 
     public RolUsuario findByNombreRolUsuario(String nombreRolUsuario) {

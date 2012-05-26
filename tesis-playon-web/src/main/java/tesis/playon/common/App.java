@@ -14,7 +14,7 @@ public class App {
 
 	/** insert **/
 	RolUsuario rolUsuario = new RolUsuario();
-	rolUsuario.setNombre("cliente");
+	rolUsuario.setNombre("Cliente");
 	rolUsuarioBo.save(rolUsuario);
 
 	/** select **/
