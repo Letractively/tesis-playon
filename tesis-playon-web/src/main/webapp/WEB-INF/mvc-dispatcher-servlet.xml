@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-	<context:component-scan base-package="tesis.playon.controller" />
+	<context:component-scan base-package="tesis.playon.common.controller" />
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
