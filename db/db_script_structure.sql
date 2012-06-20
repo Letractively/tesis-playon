@@ -3,13 +3,15 @@
 -- 		del proyecto tesis-playon.
 -- Project: Playon
 -- Author: Alejandro Bostico
--- Date: 17/06/2012
--- Versión Actual: 1.1
+-- Date: 20/06/2012
+-- Versión Actual: 1.2
 --
 -- HISTORIAL DE CAMBIOS
--- Version 1.0 - Versión Inicial
--- Versión 1.1 - Cambiada la Foreign Key CategoriaVehiculo.TarifaID(FK) --> Tarifa.TarifaID(PK)
---               por Cambiada la Foreign Key Tarifa.CategoriaVehiculoID(FK) --> CategoriaVehiculo.CategoriaVehiculoID(PK)
+-- Version 1.0 (16/06/2012) - Versión Inicial
+-- Versión 1.1 (17/06/2012) - Cambiada la Foreign Key CategoriaVehiculo.TarifaID(FK) --> Tarifa.TarifaID(PK)
+--              por Cambiada la Foreign Key Tarifa.CategoriaVehiculoID(FK) --> CategoriaVehiculo.CategoriaVehiculoID(PK)
+-- Version 1.2 (20/06/2012) - Agregada la clase Favoritos
+		Agregada la foreign key TransaccionPlaya.detalleEstadiaID(FK) --> DetalleEstadia.detalleEstadiaID(PK)
 */
 
 
@@ -138,8 +140,8 @@ CREATE TABLE `Promocion` (
   KEY `estadoPromocionID` (`estadoPromocionID`),
   KEY `tarifaID` (`tarifaID`),
   KEY `playaID` (`playaID`),
-  CONSTRAINT `FK_Promocion_EstadoPromocion` FOREIGN KEY (`estadoPromocionID`) REFERENCES `EstadoPromocion` (`estadoPromocionID`),
   CONSTRAINT `FK_Promocion_Playa` FOREIGN KEY (`playaID`) REFERENCES `Playa` (`playaID`),
+  CONSTRAINT `FK_Promocion_EstadoPromocion` FOREIGN KEY (`estadoPromocionID`) REFERENCES `EstadoPromocion` (`estadoPromocionID`),
   CONSTRAINT `FK_Promocion_Tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `Tarifa` (`tarifaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -186,7 +188,7 @@ DROP TABLE IF EXISTS `EstadoDenuncia`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `EstadoDenuncia` (
   `descripcion` text,
-  `nombre` varchar(50) NOT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
   `estadoDenunciaID` int(11) NOT NULL,
   PRIMARY KEY (`estadoDenunciaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -234,8 +236,8 @@ CREATE TABLE `Playa` (
   KEY `barrioID` (`barrioID`),
   KEY `estadoPlayaID` (`estadoPlayaID`),
   KEY `estadiaID` (`estadiaID`),
-  CONSTRAINT `FK_Playa_Barrio` FOREIGN KEY (`barrioID`) REFERENCES `Barrio` (`barrioID`),
   CONSTRAINT `FK_Playa_Estadia` FOREIGN KEY (`estadiaID`) REFERENCES `Estadia` (`estadiaID`),
+  CONSTRAINT `FK_Playa_Barrio` FOREIGN KEY (`barrioID`) REFERENCES `Barrio` (`barrioID`),
   CONSTRAINT `FK_Playa_EstadoPlaya` FOREIGN KEY (`estadoPlayaID`) REFERENCES `EstadoPlaya` (`estadoPlayaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cada instancia representa los datos administrativos de una playa.   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -306,8 +308,8 @@ CREATE TABLE `TransaccionCliente` (
   PRIMARY KEY (`transaccionClienteID`),
   KEY `cuentaClienteID` (`cuentaClienteID`),
   KEY `tipoPagoID` (`tipoPagoID`),
-  CONSTRAINT `FK_TransaccionCliente_CuentaCliente` FOREIGN KEY (`cuentaClienteID`) REFERENCES `CuentaCliente` (`cuentaClienteID`),
-  CONSTRAINT `FK_TransaccionCliente_TipoPago` FOREIGN KEY (`tipoPagoID`) REFERENCES `TipoPago` (`tipoPagoID`)
+  CONSTRAINT `FK_TransaccionCliente_TipoPago` FOREIGN KEY (`tipoPagoID`) REFERENCES `TipoPago` (`tipoPagoID`),
+  CONSTRAINT `FK_TransaccionCliente_CuentaCliente` FOREIGN KEY (`cuentaClienteID`) REFERENCES `CuentaCliente` (`cuentaClienteID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -344,8 +346,8 @@ CREATE TABLE `HistorialDeCambio` (
   KEY `estadoDenunciaID` (`estadoDenunciaID`),
   KEY `denunciaPlayaID` (`denunciaPlayaID`),
   KEY `denunciaVehiculoID` (`denunciaVehiculoID`),
-  CONSTRAINT `FK_HistorialDeCambio_DenunciaPlaya` FOREIGN KEY (`denunciaPlayaID`) REFERENCES `DenunciaPlaya` (`denunciaPlayaID`),
   CONSTRAINT `FK_HistorialDeCambio_DenunciaVehiculo` FOREIGN KEY (`denunciaVehiculoID`) REFERENCES `DenunciaVehiculo` (`denunciaVehiculoID`),
+  CONSTRAINT `FK_HistorialDeCambio_DenunciaPlaya` FOREIGN KEY (`denunciaPlayaID`) REFERENCES `DenunciaPlaya` (`denunciaPlayaID`),
   CONSTRAINT `FK_HistorialDeCambio_EstadoDenuncia` FOREIGN KEY (`estadoDenunciaID`) REFERENCES `EstadoDenuncia` (`estadoDenunciaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -389,8 +391,8 @@ CREATE TABLE `Vehiculo` (
   KEY `categoriaID` (`categoriaID`),
   KEY `modeloVehiculoID` (`modeloVehiculoID`),
   KEY `clienteID` (`clienteID`),
-  CONSTRAINT `FK_Vehiculo_CategoriaVehiculo` FOREIGN KEY (`categoriaID`) REFERENCES `CategoriaVehiculo` (`categoriaVehiculoID`),
   CONSTRAINT `FK_Vehiculo_Cliente` FOREIGN KEY (`clienteID`) REFERENCES `Cliente` (`clienteID`),
+  CONSTRAINT `FK_Vehiculo_CategoriaVehiculo` FOREIGN KEY (`categoriaID`) REFERENCES `CategoriaVehiculo` (`categoriaVehiculoID`),
   CONSTRAINT `FK_Vehiculo_ModeloVehiculo` FOREIGN KEY (`modeloVehiculoID`) REFERENCES `ModeloVehiculo` (`modeloVehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -410,8 +412,8 @@ CREATE TABLE `Empleado` (
   PRIMARY KEY (`empleadoID`),
   KEY `cargoEmpleadoID` (`cargoEmpleadoID`),
   KEY `usuarioID` (`usuarioID`),
-  CONSTRAINT `FK_Empleado_CargoEmpleado` FOREIGN KEY (`cargoEmpleadoID`) REFERENCES `CargoEmpleado` (`cargoEmpleadoID`),
-  CONSTRAINT `FK_Empleado_Usuario` FOREIGN KEY (`usuarioID`) REFERENCES `Usuario` (`usuarioID`)
+  CONSTRAINT `FK_Empleado_Usuario` FOREIGN KEY (`usuarioID`) REFERENCES `Usuario` (`usuarioID`),
+  CONSTRAINT `FK_Empleado_CargoEmpleado` FOREIGN KEY (`cargoEmpleadoID`) REFERENCES `CargoEmpleado` (`cargoEmpleadoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -466,8 +468,8 @@ CREATE TABLE `Abono` (
   KEY `tarifaID` (`tarifaID`),
   KEY `clienteID` (`clienteID`),
   KEY `playaID` (`playaID`),
-  CONSTRAINT `FK_Abono_Cliente` FOREIGN KEY (`clienteID`) REFERENCES `Cliente` (`clienteID`),
   CONSTRAINT `FK_Abono_Playa` FOREIGN KEY (`playaID`) REFERENCES `Playa` (`playaID`),
+  CONSTRAINT `FK_Abono_Cliente` FOREIGN KEY (`clienteID`) REFERENCES `Cliente` (`clienteID`),
   CONSTRAINT `FK_Abono_Tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `Tarifa` (`tarifaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -497,16 +499,16 @@ CREATE TABLE `Tarifa` (
   `fechaAlta` datetime DEFAULT NULL,
   `fechaBaja` datetime DEFAULT NULL,
   `importe` float NOT NULL,
-  `tipoEstadiaID` int(11) NOT NULL,
   `vigente` tinyint(1) DEFAULT NULL,
   `tarifaID` int(11) NOT NULL,
   `playaID` int(11) DEFAULT NULL,
-  `categoriaVehiculoID` int(11) DEFAULT NULL,
+  `tipoEstadiaID` int(11) NOT NULL,
+  `categoriaVehiculoID` int(11) NOT NULL,
   PRIMARY KEY (`tarifaID`),
-  KEY `tipoEstadiaID` (`tipoEstadiaID`),
   KEY `categoriaVehiculoID` (`categoriaVehiculoID`),
-  CONSTRAINT `FK_Tarifa_CategoriaVehiculo` FOREIGN KEY (`categoriaVehiculoID`) REFERENCES `CategoriaVehiculo` (`categoriaVehiculoID`),
-  CONSTRAINT `FK_Tarifa_TipoEstadia` FOREIGN KEY (`tipoEstadiaID`) REFERENCES `TipoEstadia` (`tipoEstadiaID`)
+  KEY `tipoEstadiaID` (`tipoEstadiaID`),
+  CONSTRAINT `FK_Tarifa_TipoEstadia` FOREIGN KEY (`tipoEstadiaID`) REFERENCES `TipoEstadia` (`tipoEstadiaID`),
+  CONSTRAINT `FK_Tarifa_CategoriaVehiculo` FOREIGN KEY (`categoriaVehiculoID`) REFERENCES `CategoriaVehiculo` (`categoriaVehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cada instancia contiene un precio de la tarifa que depende del Categoría de vehículo, tipo de estadía (mensual, por hora, etc).      CategoríaVehiculo: utilitario   TipoEstadía: Mensual   Precio/Tarifa: $720      CategoríaVehiculo: utilitario   TipoEstadía: Por hora   Precio/Tarifa: $14      CategoríaVehiculo: auto   TipoEstadía: Por hora   Precio/Tarifa: $12   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -524,6 +526,37 @@ CREATE TABLE `Barrio` (
   PRIMARY KEY (`barrioID`),
   KEY `localidadID` (`localidadID`),
   CONSTRAINT `FK_Barrio_Localidad` FOREIGN KEY (`localidadID`) REFERENCES `Localidad` (`localidadID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `PermisosUsuarios`
+--
+
+DROP TABLE IF EXISTS `PermisosUsuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `PermisosUsuarios` (
+  `permisosUsuariosID` int(11) NOT NULL,
+  PRIMARY KEY (`permisosUsuariosID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Favorito`
+--
+
+DROP TABLE IF EXISTS `Favorito`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Favorito` (
+  `clienteID` int(11) NOT NULL,
+  `playaID` int(11) NOT NULL,
+  PRIMARY KEY (`clienteID`,`playaID`),
+  KEY `clienteID` (`clienteID`),
+  KEY `playaID` (`playaID`),
+  CONSTRAINT `FK_Favorito_Playa` FOREIGN KEY (`playaID`) REFERENCES `Playa` (`playaID`),
+  CONSTRAINT `FK_Favorito_Cliente` FOREIGN KEY (`clienteID`) REFERENCES `Cliente` (`clienteID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -579,12 +612,15 @@ CREATE TABLE `TransaccionPlaya` (
   `transaccionPlayaID` int(11) NOT NULL,
   `cuentaPlayaID` int(11) DEFAULT NULL,
   `liquidacionID` int(11) DEFAULT NULL,
+  `detalleEstadiaID` int(11) DEFAULT NULL,
   PRIMARY KEY (`transaccionPlayaID`),
+  KEY `detalleEstadiaID` (`detalleEstadiaID`),
   KEY `tipoPagoID` (`tipoPagoID`),
   KEY `cuentaPlayaID` (`cuentaPlayaID`),
   KEY `liquidacionID` (`liquidacionID`),
-  CONSTRAINT `FK_TransaccionPlaya_CuentaPlaya` FOREIGN KEY (`cuentaPlayaID`) REFERENCES `CuentaPlaya` (`cuentaPlayaID`),
   CONSTRAINT `FK_TransaccionPlaya_Liquidacion` FOREIGN KEY (`liquidacionID`) REFERENCES `Liquidacion` (`liquidacionID`),
+  CONSTRAINT `FK_TransaccionPlaya_CuentaPlaya` FOREIGN KEY (`cuentaPlayaID`) REFERENCES `CuentaPlaya` (`cuentaPlayaID`),
+  CONSTRAINT `FK_TransaccionPlaya_DetalleEstadia` FOREIGN KEY (`detalleEstadiaID`) REFERENCES `DetalleEstadia` (`detalleEstadiaID`),
   CONSTRAINT `FK_TransaccionPlaya_TipoPago` FOREIGN KEY (`tipoPagoID`) REFERENCES `TipoPago` (`tipoPagoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -673,8 +709,8 @@ CREATE TABLE `Cliente` (
   PRIMARY KEY (`clienteID`),
   KEY `barrioID` (`barrioID`),
   KEY `usuarioID` (`usuarioID`),
-  CONSTRAINT `FK_Cliente_Barrio` FOREIGN KEY (`barrioID`) REFERENCES `Barrio` (`barrioID`),
-  CONSTRAINT `FK_Cliente_Usuario` FOREIGN KEY (`usuarioID`) REFERENCES `Usuario` (`usuarioID`)
+  CONSTRAINT `FK_Cliente_Usuario` FOREIGN KEY (`usuarioID`) REFERENCES `Usuario` (`usuarioID`),
+  CONSTRAINT `FK_Cliente_Barrio` FOREIGN KEY (`barrioID`) REFERENCES `Barrio` (`barrioID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -709,8 +745,8 @@ CREATE TABLE `Publicidad` (
   KEY `estadoPublicidadID` (`estadoPublicidadID`),
   KEY `posicionID` (`posicionID`),
   KEY `playaID` (`playaID`),
-  CONSTRAINT `FK_Publicidad_EstadoPublicidad` FOREIGN KEY (`estadoPublicidadID`) REFERENCES `EstadoPublicidad` (`estadoPublicidadID`),
   CONSTRAINT `FK_Publicidad_Playa` FOREIGN KEY (`playaID`) REFERENCES `Playa` (`playaID`),
+  CONSTRAINT `FK_Publicidad_EstadoPublicidad` FOREIGN KEY (`estadoPublicidadID`) REFERENCES `EstadoPublicidad` (`estadoPublicidadID`),
   CONSTRAINT `FK_Publicidad_Posicion` FOREIGN KEY (`posicionID`) REFERENCES `Posicion` (`posicionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -740,12 +776,12 @@ CREATE TABLE `DetalleEstadia` (
   KEY `tarifaID` (`tarifaID`),
   KEY `transaccionClienteID` (`transaccionClienteID`),
   KEY `vehiculoID` (`vehiculoID`),
+  CONSTRAINT `FK_DetalleEstadia_Vehiculo` FOREIGN KEY (`vehiculoID`) REFERENCES `Vehiculo` (`vehiculoID`),
   CONSTRAINT `FK_DetalleEstadia_Empleado` FOREIGN KEY (`empleadoID`) REFERENCES `Empleado` (`empleadoID`),
   CONSTRAINT `FK_DetalleEstadia_Estadia` FOREIGN KEY (`estadiaID`) REFERENCES `Estadia` (`estadiaID`),
   CONSTRAINT `FK_DetalleEstadia_Promocion` FOREIGN KEY (`promocionID`) REFERENCES `Promocion` (`promocionID`),
   CONSTRAINT `FK_DetalleEstadia_Tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `Tarifa` (`tarifaID`),
-  CONSTRAINT `FK_DetalleEstadia_TransaccionCliente` FOREIGN KEY (`transaccionClienteID`) REFERENCES `TransaccionCliente` (`transaccionClienteID`),
-  CONSTRAINT `FK_DetalleEstadia_Vehiculo` FOREIGN KEY (`vehiculoID`) REFERENCES `Vehiculo` (`vehiculoID`)
+  CONSTRAINT `FK_DetalleEstadia_TransaccionCliente` FOREIGN KEY (`transaccionClienteID`) REFERENCES `TransaccionCliente` (`transaccionClienteID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -836,8 +872,8 @@ CREATE TABLE `UsuarioSistema` (
   PRIMARY KEY (`usuarioSistemaID`),
   KEY `rolUsuarioID` (`rolUsuarioID`),
   KEY `usuarioSistemaID` (`usuarioSistemaID`),
-  CONSTRAINT `FK_UsuarioSistema_RolUsuario` FOREIGN KEY (`rolUsuarioID`) REFERENCES `RolUsuario` (`rolUsuarioID`),
-  CONSTRAINT `FK_UsuarioSistema_Usuario` FOREIGN KEY (`usuarioSistemaID`) REFERENCES `Usuario` (`usuarioID`)
+  CONSTRAINT `FK_UsuarioSistema_Usuario` FOREIGN KEY (`usuarioSistemaID`) REFERENCES `Usuario` (`usuarioID`),
+  CONSTRAINT `FK_UsuarioSistema_RolUsuario` FOREIGN KEY (`rolUsuarioID`) REFERENCES `RolUsuario` (`rolUsuarioID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -865,4 +901,4 @@ CREATE TABLE `RolUsuario` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-06-18 11:50:13
+-- Dump completed on 2012-06-20  1:03:46

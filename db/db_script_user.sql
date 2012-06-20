@@ -2,11 +2,12 @@
 -- Description: Script de generación del usuario y permisos de la base de datos
 -- Project: Playon
 -- Author: Alejandro Bostico
--- Date: 17/06/2012
--- Versión Actual: 1.0
+-- Date: 20/06/2012
+-- Versión Actual: 1.1
 --
 -- HISTORIAL DE CAMBIOS
--- Version 1.0 - Versión Inicial
+-- Version 1.0 (17/06/2012) - Versión Inicial
+-- Version 1.1 (20/06/2012) - Agregados los permisos a la tabla Favorito
 */
 
 -- Descomentar la siguiente linea si el usuario existe
@@ -41,6 +42,7 @@ GRANT ALL ON `Abono`  TO 'playonAdmin'@'%';
 GRANT ALL ON `Pais`  TO 'playonAdmin'@'%';
 GRANT ALL ON `Tarifa`  TO 'playonAdmin'@'%';
 GRANT ALL ON `Barrio`  TO 'playonAdmin'@'%';
+GRANT ALL ON `Favorito`  TO 'playonAdmin'@'%';
 GRANT ALL ON `Usuario`  TO 'playonAdmin'@'%';
 GRANT ALL ON `TipoPago`  TO 'playonAdmin'@'%';
 GRANT ALL ON `TransaccionPlaya`  TO 'playonAdmin'@'%';
