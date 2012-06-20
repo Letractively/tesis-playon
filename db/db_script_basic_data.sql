@@ -289,16 +289,6 @@ LOCK TABLES `Barrio` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping data for table `PermisosUsuarios`
---
--- ORDER BY:  `permisosUsuariosID`
-
-LOCK TABLES `PermisosUsuarios` WRITE;
-/*!40000 ALTER TABLE `PermisosUsuarios` DISABLE KEYS */;
-/*!40000 ALTER TABLE `PermisosUsuarios` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `Favorito`
 --
 -- ORDER BY:  `clienteID`,`playaID`

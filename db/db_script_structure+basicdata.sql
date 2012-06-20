@@ -784,29 +784,6 @@ LOCK TABLES `Barrio` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `PermisosUsuarios`
---
-
-DROP TABLE IF EXISTS `PermisosUsuarios`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `PermisosUsuarios` (
-  `permisosUsuariosID` int(11) NOT NULL,
-  PRIMARY KEY (`permisosUsuariosID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `PermisosUsuarios`
---
--- ORDER BY:  `permisosUsuariosID`
-
-LOCK TABLES `PermisosUsuarios` WRITE;
-/*!40000 ALTER TABLE `PermisosUsuarios` DISABLE KEYS */;
-/*!40000 ALTER TABLE `PermisosUsuarios` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `Favorito`
 --
 
@@ -889,7 +866,7 @@ CREATE TABLE `TipoPago` (
 
 LOCK TABLES `TipoPago` WRITE;
 /*!40000 ALTER TABLE `TipoPago` DISABLE KEYS */;
-INSERT INTO `TipoPago` (`descripcion`, `nombre`, `tipoPagoID`) VALUES ('Contado Efectivo','Contado',1),('Tarjeta de débito','Tarjeta Débito',2),('Tarjeta de crédito','Tarjeta Crédito',3),('DineroMail','DineroMail',4),('Cheque','Cheque',5);
+INSERT INTO `TipoPago` (`descripcion`, `nombre`, `tipoPagoID`) VALUES ('Contado Efectivo','Contado',1),('Tarjeta de débito','Tarjeta Débito',2),('Tarjeta de crédito','Tarjeta Crédito',3),('DineroMail','DineroMail',4),('Cheque','Cheque',5),('Pago con saldo de la cuenta del cliente','Cuenta',6);
 /*!40000 ALTER TABLE `TipoPago` ENABLE KEYS */;
 UNLOCK TABLES;
 
