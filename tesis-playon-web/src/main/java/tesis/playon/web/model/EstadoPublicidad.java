@@ -18,7 +18,7 @@ import javax.persistence.UniqueConstraint;
  *
  */
 @Entity
-@Table(name = "EstadoPublicidad", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre_rol_usuario") })
+@Table(name = "EstadoPublicidad", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
 public class EstadoPublicidad implements Serializable {
 
     private static final long serialVersionUID = 1L;
