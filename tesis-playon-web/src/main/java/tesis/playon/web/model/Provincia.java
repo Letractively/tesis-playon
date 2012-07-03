@@ -6,8 +6,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -32,9 +35,14 @@ public class Provincia implements Serializable {
     @Column(name = "nombre", unique = true, nullable = false, length = 50)
     private String nombre;
 
-    public Provincia(Integer id, String nombre) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "paisID", nullable = false)
+    private Pais pais;
+
+    public Provincia(Integer id, String nombre, Pais pais) {
 	this.id = id;
 	this.nombre = nombre;
+	this.pais = pais;
     }
 
     public Integer getId() {
@@ -47,6 +55,14 @@ public class Provincia implements Serializable {
 
     public void setNombre(String nombre) {
 	this.nombre = nombre;
+    }
+
+    public Pais getPais() {
+	return pais;
+    }
+
+    public void setPais(Pais pais) {
+	this.pais = pais;
     }
 
     @Override

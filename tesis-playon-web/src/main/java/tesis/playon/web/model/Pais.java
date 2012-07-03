@@ -5,14 +5,11 @@ import static javax.persistence.GenerationType.IDENTITY;
 import java.io.Serializable;
 import java.util.HashSet;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -38,8 +35,7 @@ public class Pais implements Serializable {
     @Column(name = "nombre", unique = true, nullable = false, length = 50)
     private String nombre;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "Provincia", joinColumns = { @JoinColumn(name = "paisID", unique = true) }, inverseJoinColumns = { @JoinColumn(name = "paisID") })
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Pais")
     private HashSet<Provincia> provincias = new HashSet<Provincia>(0);
 
     public Pais(Integer id, String nombre, HashSet<Provincia> provincias) {
