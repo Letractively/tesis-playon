@@ -3,17 +3,17 @@ package tesis.playon.web.business_object.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tesis.playon.web.business_object.RolUsuarioBo;
-import tesis.playon.web.business_object.dao.RolUsuarioDao;
+import tesis.playon.web.business_object.IRolUsuarioBo;
+import tesis.playon.web.business_object.dao.IRolUsuarioDao;
 import tesis.playon.web.model.RolUsuario;
 
 @Service("rolUsuarioBo")
-public class RolUsuarioBoImpl implements RolUsuarioBo {
+public class RolUsuarioBoImpl implements IRolUsuarioBo {
 
     @Autowired
-    RolUsuarioDao rolUsuarioDao;
+    IRolUsuarioDao rolUsuarioDao;
 
-    public void setClienteDao(RolUsuarioDao rolUsuarioDao) {
+    public void setClienteDao(IRolUsuarioDao rolUsuarioDao) {
 	this.rolUsuarioDao = rolUsuarioDao;
     }
 

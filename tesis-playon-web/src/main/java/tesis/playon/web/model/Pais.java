@@ -38,6 +38,9 @@ public class Pais implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "Pais")
     private HashSet<Provincia> provincias = new HashSet<Provincia>(0);
 
+    public Pais() {
+    }
+
     public Pais(Integer id, String nombre, HashSet<Provincia> provincias) {
 	this.id = id;
 	this.nombre = nombre;

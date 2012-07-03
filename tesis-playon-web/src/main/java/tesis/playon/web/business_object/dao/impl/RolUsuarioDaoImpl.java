@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import tesis.playon.util.CustomHibernateDaoSupport;
-import tesis.playon.web.business_object.dao.RolUsuarioDao;
+import tesis.playon.web.business_object.dao.IRolUsuarioDao;
 import tesis.playon.web.model.RolUsuario;
 
 @Repository("rolUsuarioDao")
-public class RolUsuarioDaoImpl extends CustomHibernateDaoSupport implements RolUsuarioDao {
+public class RolUsuarioDaoImpl extends CustomHibernateDaoSupport implements IRolUsuarioDao {
 
     public void save(RolUsuario cliente) {
 	getHibernateTemplate().save(cliente);

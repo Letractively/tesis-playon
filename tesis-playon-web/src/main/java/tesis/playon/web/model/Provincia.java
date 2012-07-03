@@ -22,7 +22,8 @@ import javax.persistence.UniqueConstraint;
  * 
  */
 @Entity
-@Table(name = "Provincia", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
+@Table(name = "Provincia", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre"),
+	@UniqueConstraint(columnNames = "paisID") })
 public class Provincia implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,6 +39,9 @@ public class Provincia implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paisID", nullable = false)
     private Pais pais;
+
+    public Provincia() {
+    }
 
     public Provincia(Integer id, String nombre, Pais pais) {
 	this.id = id;

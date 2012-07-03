@@ -2,7 +2,7 @@ package tesis.playon.web.business_object.dao;
 
 import tesis.playon.web.model.RolUsuario;
 
-public interface RolUsuarioDao {
+public interface IRolUsuarioDao {
 
     void save(RolUsuario rolUsuario);
 
