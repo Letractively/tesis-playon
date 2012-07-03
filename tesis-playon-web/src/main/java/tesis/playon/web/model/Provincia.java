@@ -24,50 +24,27 @@ public class Provincia implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "paisID", nullable = false)
     private Integer id;
 
+    @Column(name = "nombre", unique = true, nullable = false, length = 50)
     private String nombre;
 
-    /**
-     * Constructor con parámetros.
-     * 
-     * @param id
-     * @param nombre
-     * @param pais
-     */
     public Provincia(Integer id, String nombre) {
 	this.id = id;
 	this.nombre = nombre;
     }
 
-    /**
-     * Devuelve el ID del objeto.
-     * 
-     * @return El ID del objeto.
-     */
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "paisID", nullable = false)
     public Integer getId() {
 	return id;
     }
 
-    /**
-     * Devuelve el nombre del objeto.
-     * 
-     * @return El nombre del objeto.
-     */
-    @Column(name = "nombre", unique = true, nullable = false, length = 50)
     public String getNombre() {
 	return nombre;
     }
 
-    /**
-     * Setea un nuevo nombre al objeto.
-     * 
-     * @param nombre
-     *            El nombre del objeto.
-     */
     public void setNombre(String nombre) {
 	this.nombre = nombre;
     }
