@@ -3,13 +3,20 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
+import java.util.HashSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
 
 /**
  * Clase de negocio que contiene los diferentes Países.
@@ -27,6 +34,8 @@ public class Pais implements Serializable {
     private Integer id;
 
     private String nombre;
+    
+    private HashSet<Provincia> provincias;
 
     /**
      * Constructor con parámetros.
@@ -71,6 +80,16 @@ public class Pais implements Serializable {
 	this.nombre = nombre;
     }
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "price_tag_section", joinColumns = { @JoinColumn(name = "price_tag_id", unique = true) }, inverseJoinColumns = { @JoinColumn(name = "section_id") })
+    public HashSet<Provincia> getProvincias() {
+        return provincias;
+    }
+
+    public void setProvincias(HashSet<Provincia> provincias) {
+        this.provincias = provincias;
+    }
+    
     @Override
     public String toString() {
 	return "País [paisID=" + id + ", nombre=" + nombre + "]";

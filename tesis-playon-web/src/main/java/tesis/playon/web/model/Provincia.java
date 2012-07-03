@@ -28,8 +28,6 @@ public class Provincia implements Serializable {
 
     private String nombre;
 
-    private Pais pais;
-
     /**
      * Constructor con parámetros.
      * 
@@ -37,7 +35,7 @@ public class Provincia implements Serializable {
      * @param nombre
      * @param pais
      */
-    public Provincia(Integer id, String nombre, Pais pais) {
+    public Provincia(Integer id, String nombre) {
 	this.id = id;
 	this.nombre = nombre;
     }
@@ -74,17 +72,9 @@ public class Provincia implements Serializable {
 	this.nombre = nombre;
     }
 
-    public Pais getPais() {
-	return pais;
-    }
-
-    public void setPais(Pais pais) {
-	this.pais = pais;
-    }
-
     @Override
     public String toString() {
-	return "Provincia [paisID=" + id + ", nombre=" + nombre + ", Pais=" + pais.toString() + "]";
+	return "Provincia [paisID=" + id + ", nombre=" + nombre + "]";
     }
 
 }
