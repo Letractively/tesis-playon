@@ -42,14 +42,21 @@ public class Pais implements Serializable {
     public Pais() {
     }
 
-    public Pais(Integer id, String nombre, HashSet<Provincia> provincias) {
-	this.id = id;
+    public Pais(String nombre) {
+	this.nombre = nombre;
+    }
+
+    public Pais(String nombre, Set<Provincia> provincias) {
 	this.nombre = nombre;
 	this.provincias = provincias;
     }
 
     public Integer getId() {
 	return id;
+    }
+
+    public void setId(Integer id) {
+	this.id = id;
     }
 
     public String getNombre() {
@@ -70,7 +77,7 @@ public class Pais implements Serializable {
 
     @Override
     public String toString() {
-	return "Pais [paisID=" + id + ", nombre=" + nombre + ", Provincias=" + provincias.toString() + "]";
+	return "Pais [paisID=" + id + ", nombre=" + nombre + "]";
     }
 
 }

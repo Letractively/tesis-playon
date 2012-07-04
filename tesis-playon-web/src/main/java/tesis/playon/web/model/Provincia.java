@@ -42,15 +42,18 @@ public class Provincia implements Serializable {
 
     public Provincia() {
     }
-
-    public Provincia(Integer id, String nombre, Pais pais) {
-	this.id = id;
+    
+    public Provincia(String nombre, Pais pais) {
 	this.nombre = nombre;
 	this.pais = pais;
     }
 
     public Integer getId() {
 	return id;
+    }
+
+    public void setId(Integer id) {
+	this.id = id;
     }
 
     public String getNombre() {

@@ -3,12 +3,10 @@ package tesis.playon.common;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import tesis.playon.web.business_object.IRolUsuarioBo;
 import tesis.playon.web.business_object.dao.IPaisDao;
 import tesis.playon.web.business_object.dao.IProvinciaDao;
 import tesis.playon.web.model.Pais;
 import tesis.playon.web.model.Provincia;
-import tesis.playon.web.model.RolUsuario;
 
 public class App {
     public static void main(String[] args) {
@@ -37,7 +35,7 @@ public class App {
 	IPaisDao paisDao = (IPaisDao) appContext.getBean("paisDao");
 
 	/** insert **/
-	Pais pais = new Pais();
+	Pais pais = new Pais("Argentina");
 	pais.setNombre("Argentina");
 	paisDao.save(pais);
 
@@ -54,9 +52,7 @@ public class App {
 	IProvinciaDao provinciaDao = (IProvinciaDao) appContext.getBean("provinciaDao");
 
 	/** insert **/
-	Provincia provincia = new Provincia();
-	provincia.setNombre("Córdoba");
-	provincia.setPais(otroPais);
+	Provincia provincia = new Provincia("Cordoba", otroPais);
 	provinciaDao.save(provincia);
 
 	/** select **/
