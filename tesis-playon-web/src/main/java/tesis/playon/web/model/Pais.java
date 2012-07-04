@@ -4,6 +4,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,21 +23,21 @@ import javax.persistence.UniqueConstraint;
  * 
  */
 @Entity
-@Table(name = "Pais", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
+@Table(name = "pais", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
 public class Pais implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "paisID", nullable = false)
+    @Column(name = "paisID")
     private Integer id;
 
-    @Column(name = "nombre", unique = true, nullable = false, length = 50)
+    @Column(name = "nombre")
     private String nombre;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Pais")
-    private HashSet<Provincia> provincias = new HashSet<Provincia>(0);
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pais")
+    private Set<Provincia> provincias = new HashSet<Provincia>(0);
 
     public Pais() {
     }
@@ -59,11 +60,11 @@ public class Pais implements Serializable {
 	this.nombre = nombre;
     }
 
-    public HashSet<Provincia> getProvincias() {
+    public Set<Provincia> getProvincias() {
 	return provincias;
     }
 
-    public void setProvincias(HashSet<Provincia> provincias) {
+    public void setProvincias(Set<Provincia> provincias) {
 	this.provincias = provincias;
     }
 

@@ -49,6 +49,7 @@ public class App {
 	otroPais.setNombre("Republica Argentina");
 	paisDao.update(otroPais);
 
+	
 	// Test para Provincia
 	IProvinciaDao provinciaDao = (IProvinciaDao) appContext.getBean("provinciaDao");
 

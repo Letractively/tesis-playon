@@ -22,7 +22,7 @@ import javax.persistence.UniqueConstraint;
  * 
  */
 @Entity
-@Table(name = "Provincia", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre"),
+@Table(name = "provincia", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre"),
 	@UniqueConstraint(columnNames = "paisID") })
 public class Provincia implements Serializable {
 
@@ -30,7 +30,7 @@ public class Provincia implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "paisID", nullable = false)
+    @Column(name = "provinciaID", nullable = false)
     private Integer id;
 
     @Column(name = "nombre", unique = true, nullable = false, length = 50)

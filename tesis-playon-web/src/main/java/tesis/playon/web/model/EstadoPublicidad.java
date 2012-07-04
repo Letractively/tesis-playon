@@ -13,18 +13,26 @@ import javax.persistence.UniqueConstraint;
 
 /**
  * Clase de negocio que contiene los diferentes Estados de publicidad.
+ * 
  * @author alejandro
  * @date 02/07/2012
- *
+ * 
  */
 @Entity
-@Table(name = "EstadoPublicidad", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
+@Table(name = "estadopublicidad", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
 public class EstadoPublicidad implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "estadoPublicidadID", nullable = false)
     private Integer id;
+
+    @Column(name = "nombre", unique = true, nullable = false, length = 50)
     private String nombre;
+
+    @Column(name = "descripcion", unique = false, nullable = true)
     private String descripcion;
 
     /**
@@ -42,27 +50,27 @@ public class EstadoPublicidad implements Serializable {
 
     /**
      * Devuelve el ID del objeto.
+     * 
      * @return El ID del objeto.
      */
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "estadoPublicidadID", nullable = false)
     public Integer getId() {
 	return id;
     }
 
     /**
      * Devuelve el nombre del objeto.
+     * 
      * @return El nombre del objeto.
      */
-    @Column(name = "nombre", unique = true, nullable = false, length = 50)
     public String getNombre() {
 	return nombre;
     }
 
     /**
      * Setea un nuevo nombre al objeto.
-     * @param nombre El nombre del objeto.
+     * 
+     * @param nombre
+     *            El nombre del objeto.
      */
     public void setNombre(String nombre) {
 	this.nombre = nombre;
@@ -70,16 +78,18 @@ public class EstadoPublicidad implements Serializable {
 
     /**
      * Devuelve la descripción del objeto.
+     * 
      * @return
      */
-    @Column(name = "descripcion", unique = false, nullable = true)
     public String getDescripcion() {
 	return descripcion;
     }
 
     /**
      * Setea una nueva descripción al objeto.
-     * @param descripcion La descripción del objeto.
+     * 
+     * @param descripcion
+     *            La descripción del objeto.
      */
     public void setDescripcion(String descripcion) {
 	this.descripcion = descripcion;
