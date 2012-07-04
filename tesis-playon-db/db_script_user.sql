@@ -3,7 +3,7 @@
 -- Project: Playon
 -- Author: Alejandro Bostico
 -- Date: 04/07/2012
--- Version: 1.2
+-- Version: 2.0
 --
 -- HISTORIAL DE CAMBIOS
 -- Version 1.0 (17/06/2012) - Versión Inicial
