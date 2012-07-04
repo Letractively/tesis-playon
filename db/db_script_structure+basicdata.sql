@@ -3,25 +3,28 @@
 -- 		de la base de datos del proyecto tesis-playon.
 -- Project: Playon
 -- Author: Alejandro Bostico
--- Date: 20/06/2012
--- Versión Actual: 1.1
+-- Date: 04/07/2012
+-- Version: 1.2
 --
 -- HISTORIAL DE CAMBIOS
 -- Version 1.0 (18/06/2012) - Versión Inicial
--- Version 1.1 (20/06/2012) - Agregada la clase Favorito
-		Agregada la foreign key TransaccionPlaya.detalleEstadiaID(FK) --> DetalleEstadia.detalleEstadiaID(PK)
+-- Version 1.1 (20/06/2012) - Agregada la clase favorito
+--		Agregada la foreign key transaccion_playa.detalleEstadiaID(FK) --> 
+--		detalle_estadia.detalleEstadiaID(PK)
+-- Versión 1.2 (04/07/2012) - Se cambiaron los nómbres de las tablas a minúsculas y con
+--		guiones bajos para compatibilidad Windows - Linux
 */
 
 
 /********************************************************
- * PRECAUCIÓN!!!					                    * 
- * Usar con cuidado que el script borra todas las 	    *
- * tablas antes de crearlas.				            *
+ * PRECAUCIÓN!!!					* 
+ * Usar con cuidado que el script borra todas las 	*
+ * tablas antes de crearlas.				*
  ********************************************************/
 
 -- Descomentar la siguiente línea para borrar la base de datos
 -- antes de crear las tablas en caso de que fuera necesario.
--- #DROP DATABASE IF EXISTS `tesis_playon`;
+-- DROP DATABASE IF EXISTS `tesis_playon`;
 
 CREATE DATABASE  IF NOT EXISTS `tesis_playon` /*!40100 DEFAULT CHARACTER SET latin1 */;CREATE DATABASE  IF NOT EXISTS `tesis_playon` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `tesis_playon`;
@@ -43,13 +46,13 @@ USE `tesis_playon`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `CuentaPlaya`
+-- Table structure for table `cuenta_playa`
 --
 
-DROP TABLE IF EXISTS `CuentaPlaya`;
+DROP TABLE IF EXISTS `cuenta_playa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `CuentaPlaya` (
+CREATE TABLE `cuenta_playa` (
   `fechaCreacion` datetime DEFAULT NULL,
   `nroCuenta` int(11) DEFAULT NULL,
   `saldo` float DEFAULT NULL,
@@ -57,28 +60,28 @@ CREATE TABLE `CuentaPlaya` (
   `playaID` int(11) DEFAULT NULL,
   PRIMARY KEY (`cuentaPlayaID`),
   KEY `playaID` (`playaID`),
-  CONSTRAINT `FK_CuentaPlaya_Playa` FOREIGN KEY (`playaID`) REFERENCES `Playa` (`playaID`)
+  CONSTRAINT `FK_cuenta_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `CuentaPlaya`
+-- Dumping data for table `cuenta_playa`
 --
 -- ORDER BY:  `cuentaPlayaID`
 
-LOCK TABLES `CuentaPlaya` WRITE;
-/*!40000 ALTER TABLE `CuentaPlaya` DISABLE KEYS */;
-/*!40000 ALTER TABLE `CuentaPlaya` ENABLE KEYS */;
+LOCK TABLES `cuenta_playa` WRITE;
+/*!40000 ALTER TABLE `cuenta_playa` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cuenta_playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `DenunciaVehiculo`
+-- Table structure for table `denuncia_vehiculo`
 --
 
-DROP TABLE IF EXISTS `DenunciaVehiculo`;
+DROP TABLE IF EXISTS `denuncia_vehiculo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `DenunciaVehiculo` (
+CREATE TABLE `denuncia_vehiculo` (
   `asunto` text,
   `fechaAlta` datetime DEFAULT NULL,
   `vehiculoID` int(11) DEFAULT NULL,
@@ -87,56 +90,56 @@ CREATE TABLE `DenunciaVehiculo` (
   PRIMARY KEY (`denunciaVehiculoID`),
   KEY `vehiculoID` (`vehiculoID`),
   KEY `playaID` (`playaID`),
-  CONSTRAINT `FK_DenunciaVehiculo_Playa` FOREIGN KEY (`playaID`) REFERENCES `Playa` (`playaID`),
-  CONSTRAINT `FK_DenunciaVehiculo_Vehiculo` FOREIGN KEY (`vehiculoID`) REFERENCES `Vehiculo` (`vehiculoID`)
+  CONSTRAINT `FK_denuncia_vehiculo_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
+  CONSTRAINT `FK_denuncia_vehiculo_vehiculo` FOREIGN KEY (`vehiculoID`) REFERENCES `vehiculo` (`vehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `DenunciaVehiculo`
+-- Dumping data for table `denuncia_vehiculo`
 --
 -- ORDER BY:  `denunciaVehiculoID`
 
-LOCK TABLES `DenunciaVehiculo` WRITE;
-/*!40000 ALTER TABLE `DenunciaVehiculo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `DenunciaVehiculo` ENABLE KEYS */;
+LOCK TABLES `denuncia_vehiculo` WRITE;
+/*!40000 ALTER TABLE `denuncia_vehiculo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `denuncia_vehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Provincia`
+-- Table structure for table `provincia`
 --
 
-DROP TABLE IF EXISTS `Provincia`;
+DROP TABLE IF EXISTS `provincia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Provincia` (
+CREATE TABLE `provincia` (
   `nombre` varchar(50) DEFAULT NULL,
   `provinciaID` int(11) NOT NULL,
   `paisID` int(11) DEFAULT NULL,
   PRIMARY KEY (`provinciaID`),
   KEY `paisID` (`paisID`),
-  CONSTRAINT `FK_Provincia_Pais` FOREIGN KEY (`paisID`) REFERENCES `Pais` (`paisID`)
+  CONSTRAINT `FK_provincia_pais` FOREIGN KEY (`paisID`) REFERENCES `pais` (`paisID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Provincia`
+-- Dumping data for table `provincia`
 --
 -- ORDER BY:  `provinciaID`
 
-LOCK TABLES `Provincia` WRITE;
-/*!40000 ALTER TABLE `Provincia` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Provincia` ENABLE KEYS */;
+LOCK TABLES `provincia` WRITE;
+/*!40000 ALTER TABLE `provincia` DISABLE KEYS */;
+/*!40000 ALTER TABLE `provincia` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `EstadoPublicidad`
+-- Table structure for table `estado_publicidad`
 --
 
-DROP TABLE IF EXISTS `EstadoPublicidad`;
+DROP TABLE IF EXISTS `estado_publicidad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `EstadoPublicidad` (
+CREATE TABLE `estado_publicidad` (
   `descripcion` text,
   `nombre` varchar(50) DEFAULT NULL,
   `estadoPublicidadID` int(11) NOT NULL,
@@ -145,24 +148,24 @@ CREATE TABLE `EstadoPublicidad` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `EstadoPublicidad`
+-- Dumping data for table `estado_publicidad`
 --
 -- ORDER BY:  `estadoPublicidadID`
 
-LOCK TABLES `EstadoPublicidad` WRITE;
-/*!40000 ALTER TABLE `EstadoPublicidad` DISABLE KEYS */;
-INSERT INTO `EstadoPublicidad` (`descripcion`, `nombre`, `estadoPublicidadID`) VALUES ('Pendiente de Aprobación','Pendiente',1),('Aprobada y pendiente de publicación','Aprobada',2),('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),('Período de publicación vencido','Vencida',5);
-/*!40000 ALTER TABLE `EstadoPublicidad` ENABLE KEYS */;
+LOCK TABLES `estado_publicidad` WRITE;
+/*!40000 ALTER TABLE `estado_publicidad` DISABLE KEYS */;
+INSERT INTO `estado_publicidad` (`descripcion`, `nombre`, `estadoPublicidadID`) VALUES ('Pendiente de Aprobación','Pendiente',1),('Aprobada y pendiente de publicación','Aprobada',2),('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),('Período de publicación vencido','Vencida',5);
+/*!40000 ALTER TABLE `estado_publicidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Promocion`
+-- Table structure for table `promocion`
 --
 
-DROP TABLE IF EXISTS `Promocion`;
+DROP TABLE IF EXISTS `promocion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Promocion` (
+CREATE TABLE `promocion` (
   `descripcion` text,
   `descuento` float DEFAULT NULL,
   `fechaAlta` datetime DEFAULT NULL,
@@ -178,30 +181,30 @@ CREATE TABLE `Promocion` (
   KEY `estadoPromocionID` (`estadoPromocionID`),
   KEY `tarifaID` (`tarifaID`),
   KEY `playaID` (`playaID`),
-  CONSTRAINT `FK_Promocion_Playa` FOREIGN KEY (`playaID`) REFERENCES `Playa` (`playaID`),
-  CONSTRAINT `FK_Promocion_EstadoPromocion` FOREIGN KEY (`estadoPromocionID`) REFERENCES `EstadoPromocion` (`estadoPromocionID`),
-  CONSTRAINT `FK_Promocion_Tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `Tarifa` (`tarifaID`)
+  CONSTRAINT `FK_promocion_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
+  CONSTRAINT `FK_promocion_estado_promocion` FOREIGN KEY (`estadoPromocionID`) REFERENCES `estado_promocion` (`estadoPromocionID`),
+  CONSTRAINT `FK_promocion_tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `tarifa` (`tarifaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Promocion`
+-- Dumping data for table `promocion`
 --
 -- ORDER BY:  `promocionID`
 
-LOCK TABLES `Promocion` WRITE;
-/*!40000 ALTER TABLE `Promocion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Promocion` ENABLE KEYS */;
+LOCK TABLES `promocion` WRITE;
+/*!40000 ALTER TABLE `promocion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `promocion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `ColorVehiculo`
+-- Table structure for table `color_vehiculo`
 --
 
-DROP TABLE IF EXISTS `ColorVehiculo`;
+DROP TABLE IF EXISTS `color_vehiculo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ColorVehiculo` (
+CREATE TABLE `color_vehiculo` (
   `nombre` varchar(50) NOT NULL,
   `colorVehiculoID` int(11) NOT NULL,
   PRIMARY KEY (`colorVehiculoID`)
@@ -209,24 +212,24 @@ CREATE TABLE `ColorVehiculo` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ColorVehiculo`
+-- Dumping data for table `color_vehiculo`
 --
 -- ORDER BY:  `colorVehiculoID`
 
-LOCK TABLES `ColorVehiculo` WRITE;
-/*!40000 ALTER TABLE `ColorVehiculo` DISABLE KEYS */;
-INSERT INTO `ColorVehiculo` (`nombre`, `colorVehiculoID`) VALUES ('Blanco',1),('Negro',2),('Rojo',3),('Amarillo',4),('Verde Claro',5),('Azul',6),('Celeste',7),('Gris Claro',8),('Gris Oscuro',9),('Naranja',10),('Verde Oscuro',11),('Bordo',12);
-/*!40000 ALTER TABLE `ColorVehiculo` ENABLE KEYS */;
+LOCK TABLES `color_vehiculo` WRITE;
+/*!40000 ALTER TABLE `color_vehiculo` DISABLE KEYS */;
+INSERT INTO `color_vehiculo` (`nombre`, `colorVehiculoID`) VALUES ('Blanco',1),('Negro',2),('Rojo',3),('Amarillo',4),('Verde Claro',5),('Azul',6),('Celeste',7),('Gris Claro',8),('Gris Oscuro',9),('Naranja',10),('Verde Oscuro',11),('Bordo',12);
+/*!40000 ALTER TABLE `color_vehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `CuentaCliente`
+-- Table structure for table `cuenta_cliente`
 --
 
-DROP TABLE IF EXISTS `CuentaCliente`;
+DROP TABLE IF EXISTS `cuenta_cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `CuentaCliente` (
+CREATE TABLE `cuenta_cliente` (
   `fechaCreacion` datetime DEFAULT NULL,
   `nroCuenta` int(11) DEFAULT NULL,
   `saldo` float DEFAULT NULL,
@@ -234,28 +237,28 @@ CREATE TABLE `CuentaCliente` (
   `clienteID` int(11) DEFAULT NULL,
   PRIMARY KEY (`cuentaClienteID`),
   KEY `clienteID` (`clienteID`),
-  CONSTRAINT `FK_CuentaCliente_Cliente` FOREIGN KEY (`clienteID`) REFERENCES `Cliente` (`clienteID`)
+  CONSTRAINT `FK_cuenta_cliente_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `CuentaCliente`
+-- Dumping data for table `cuenta_cliente`
 --
 -- ORDER BY:  `cuentaClienteID`
 
-LOCK TABLES `CuentaCliente` WRITE;
-/*!40000 ALTER TABLE `CuentaCliente` DISABLE KEYS */;
-/*!40000 ALTER TABLE `CuentaCliente` ENABLE KEYS */;
+LOCK TABLES `cuenta_cliente` WRITE;
+/*!40000 ALTER TABLE `cuenta_cliente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cuenta_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `EstadoDenuncia`
+-- Table structure for table `estado_denuncia`
 --
 
-DROP TABLE IF EXISTS `EstadoDenuncia`;
+DROP TABLE IF EXISTS `estado_denuncia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `EstadoDenuncia` (
+CREATE TABLE `estado_denuncia` (
   `descripcion` text,
   `nombre` varchar(50) DEFAULT NULL,
   `estadoDenunciaID` int(11) NOT NULL,
@@ -264,24 +267,24 @@ CREATE TABLE `EstadoDenuncia` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `EstadoDenuncia`
+-- Dumping data for table `estado_denuncia`
 --
 -- ORDER BY:  `estadoDenunciaID`
 
-LOCK TABLES `EstadoDenuncia` WRITE;
-/*!40000 ALTER TABLE `EstadoDenuncia` DISABLE KEYS */;
-INSERT INTO `EstadoDenuncia` (`descripcion`, `nombre`, `estadoDenunciaID`) VALUES ('Pendiente de auditoría','Pendiente',1),('En proceso de investigación','En Proceso',2),('Acepatada','Aceptada',3),('Rechazada','Rechazada',4),('Anulada','Anulada',5),('Dada de Baja / Cancelada','De Baja',6);
-/*!40000 ALTER TABLE `EstadoDenuncia` ENABLE KEYS */;
+LOCK TABLES `estado_denuncia` WRITE;
+/*!40000 ALTER TABLE `estado_denuncia` DISABLE KEYS */;
+INSERT INTO `estado_denuncia` (`descripcion`, `nombre`, `estadoDenunciaID`) VALUES ('Pendiente de auditoría','Pendiente',1),('En proceso de investigación','En Proceso',2),('Acepatada','Aceptada',3),('Rechazada','Rechazada',4),('Anulada','Anulada',5),('Dada de Baja / Cancelada','De Baja',6);
+/*!40000 ALTER TABLE `estado_denuncia` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `DenunciaPlaya`
+-- Table structure for table `denuncia_playa`
 --
 
-DROP TABLE IF EXISTS `DenunciaPlaya`;
+DROP TABLE IF EXISTS `denuncia_playa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `DenunciaPlaya` (
+CREATE TABLE `denuncia_playa` (
   `asunto` text,
   `fechaAlta` datetime DEFAULT NULL,
   `playaID` int(11) DEFAULT NULL,
@@ -290,29 +293,29 @@ CREATE TABLE `DenunciaPlaya` (
   PRIMARY KEY (`denunciaPlayaID`),
   KEY `playaID` (`playaID`),
   KEY `clienteID` (`clienteID`),
-  CONSTRAINT `FK_DenunciaPlaya_Cliente` FOREIGN KEY (`clienteID`) REFERENCES `Cliente` (`clienteID`),
-  CONSTRAINT `FK_DenunciaPlaya_Playa` FOREIGN KEY (`playaID`) REFERENCES `Playa` (`playaID`)
+  CONSTRAINT `FK_denuncia_playa_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
+  CONSTRAINT `FK_denuncia_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `DenunciaPlaya`
+-- Dumping data for table `denuncia_playa`
 --
 -- ORDER BY:  `denunciaPlayaID`
 
-LOCK TABLES `DenunciaPlaya` WRITE;
-/*!40000 ALTER TABLE `DenunciaPlaya` DISABLE KEYS */;
-/*!40000 ALTER TABLE `DenunciaPlaya` ENABLE KEYS */;
+LOCK TABLES `denuncia_playa` WRITE;
+/*!40000 ALTER TABLE `denuncia_playa` DISABLE KEYS */;
+/*!40000 ALTER TABLE `denuncia_playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Playa`
+-- Table structure for table `playa`
 --
 
-DROP TABLE IF EXISTS `Playa`;
+DROP TABLE IF EXISTS `playa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Playa` (
+CREATE TABLE `playa` (
   `barrioID` int(11) DEFAULT NULL,
   `cuit` varchar(50) DEFAULT NULL,
   `disponibilidad` tinyint(1) NOT NULL,
@@ -326,30 +329,30 @@ CREATE TABLE `Playa` (
   KEY `barrioID` (`barrioID`),
   KEY `estadoPlayaID` (`estadoPlayaID`),
   KEY `estadiaID` (`estadiaID`),
-  CONSTRAINT `FK_Playa_Estadia` FOREIGN KEY (`estadiaID`) REFERENCES `Estadia` (`estadiaID`),
-  CONSTRAINT `FK_Playa_Barrio` FOREIGN KEY (`barrioID`) REFERENCES `Barrio` (`barrioID`),
-  CONSTRAINT `FK_Playa_EstadoPlaya` FOREIGN KEY (`estadoPlayaID`) REFERENCES `EstadoPlaya` (`estadoPlayaID`)
+  CONSTRAINT `FK_playa_estadia` FOREIGN KEY (`estadiaID`) REFERENCES `estadia` (`estadiaID`),
+  CONSTRAINT `FK_playa_barrio` FOREIGN KEY (`barrioID`) REFERENCES `barrio` (`barrioID`),
+  CONSTRAINT `FK_playa_estado_playa` FOREIGN KEY (`estadoPlayaID`) REFERENCES `estado_playa` (`estadoPlayaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cada instancia representa los datos administrativos de una playa.   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Playa`
+-- Dumping data for table `playa`
 --
 -- ORDER BY:  `playaID`
 
-LOCK TABLES `Playa` WRITE;
-/*!40000 ALTER TABLE `Playa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Playa` ENABLE KEYS */;
+LOCK TABLES `playa` WRITE;
+/*!40000 ALTER TABLE `playa` DISABLE KEYS */;
+/*!40000 ALTER TABLE `playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Liquidacion`
+-- Table structure for table `liquidacion`
 --
 
-DROP TABLE IF EXISTS `Liquidacion`;
+DROP TABLE IF EXISTS `liquidacion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Liquidacion` (
+CREATE TABLE `liquidacion` (
   `fecha` datetime DEFAULT NULL,
   `fechaHasta` datetime DEFAULT NULL,
   `ferchaDesde` datetime DEFAULT NULL,
@@ -358,28 +361,28 @@ CREATE TABLE `Liquidacion` (
   `estadiaID` int(11) DEFAULT NULL,
   PRIMARY KEY (`liquidacionID`),
   KEY `estadiaID` (`estadiaID`),
-  CONSTRAINT `FK_Liquidacion_Estadia` FOREIGN KEY (`estadiaID`) REFERENCES `Estadia` (`estadiaID`)
+  CONSTRAINT `FK_liquidacion_estadia` FOREIGN KEY (`estadiaID`) REFERENCES `estadia` (`estadiaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Liquidacion`
+-- Dumping data for table `liquidacion`
 --
 -- ORDER BY:  `liquidacionID`
 
-LOCK TABLES `Liquidacion` WRITE;
-/*!40000 ALTER TABLE `Liquidacion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Liquidacion` ENABLE KEYS */;
+LOCK TABLES `liquidacion` WRITE;
+/*!40000 ALTER TABLE `liquidacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `liquidacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `CategoriaVehiculo`
+-- Table structure for table `categoria_vehiculo`
 --
 
-DROP TABLE IF EXISTS `CategoriaVehiculo`;
+DROP TABLE IF EXISTS `categoria_vehiculo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `CategoriaVehiculo` (
+CREATE TABLE `categoria_vehiculo` (
   `descripcion` text,
   `nombre` varchar(50) DEFAULT NULL,
   `categoriaVehiculoID` int(11) NOT NULL,
@@ -388,24 +391,24 @@ CREATE TABLE `CategoriaVehiculo` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `CategoriaVehiculo`
+-- Dumping data for table `categoria_vehiculo`
 --
 -- ORDER BY:  `categoriaVehiculoID`
 
-LOCK TABLES `CategoriaVehiculo` WRITE;
-/*!40000 ALTER TABLE `CategoriaVehiculo` DISABLE KEYS */;
-INSERT INTO `CategoriaVehiculo` (`descripcion`, `nombre`, `categoriaVehiculoID`) VALUES ('','Auto',1),('','Moto',2),('','Utilitario',3),('','PickUp / 4X4',4);
-/*!40000 ALTER TABLE `CategoriaVehiculo` ENABLE KEYS */;
+LOCK TABLES `categoria_vehiculo` WRITE;
+/*!40000 ALTER TABLE `categoria_vehiculo` DISABLE KEYS */;
+INSERT INTO `categoria_vehiculo` (`descripcion`, `nombre`, `categoriaVehiculoID`) VALUES ('','Auto',1),('','Moto',2),('','Utilitario',3),('','PickUp / 4X4',4);
+/*!40000 ALTER TABLE `categoria_vehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `EstadoPlaya`
+-- Table structure for table `estado_playa`
 --
 
-DROP TABLE IF EXISTS `EstadoPlaya`;
+DROP TABLE IF EXISTS `estado_playa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `EstadoPlaya` (
+CREATE TABLE `estado_playa` (
   `descripcion` text,
   `nombre` varchar(50) NOT NULL,
   `estadoPlayaID` int(11) NOT NULL,
@@ -414,24 +417,24 @@ CREATE TABLE `EstadoPlaya` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `EstadoPlaya`
+-- Dumping data for table `estado_playa`
 --
 -- ORDER BY:  `estadoPlayaID`
 
-LOCK TABLES `EstadoPlaya` WRITE;
-/*!40000 ALTER TABLE `EstadoPlaya` DISABLE KEYS */;
-INSERT INTO `EstadoPlaya` (`descripcion`, `nombre`, `estadoPlayaID`) VALUES ('Pendiente de Auditoría','Pendiente',1),('Aprobada luego de auditoría','Aprobada',2),('Rechazada luego de auditoría','Rechazada',3),('Dada de baja','De Baja',4);
-/*!40000 ALTER TABLE `EstadoPlaya` ENABLE KEYS */;
+LOCK TABLES `estado_playa` WRITE;
+/*!40000 ALTER TABLE `estado_playa` DISABLE KEYS */;
+INSERT INTO `estado_playa` (`descripcion`, `nombre`, `estadoPlayaID`) VALUES ('Pendiente de Auditoría','Pendiente',1),('Aprobada luego de auditoría','Aprobada',2),('Rechazada luego de auditoría','Rechazada',3),('Dada de baja','De Baja',4);
+/*!40000 ALTER TABLE `estado_playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `TransaccionCliente`
+-- Table structure for table `transaccion_cliente`
 --
 
-DROP TABLE IF EXISTS `TransaccionCliente`;
+DROP TABLE IF EXISTS `transaccion_cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `TransaccionCliente` (
+CREATE TABLE `transaccion_cliente` (
   `fecha` datetime DEFAULT NULL,
   `importe` float DEFAULT NULL,
   `tipoPagoID` int(11) DEFAULT NULL,
@@ -440,29 +443,29 @@ CREATE TABLE `TransaccionCliente` (
   PRIMARY KEY (`transaccionClienteID`),
   KEY `cuentaClienteID` (`cuentaClienteID`),
   KEY `tipoPagoID` (`tipoPagoID`),
-  CONSTRAINT `FK_TransaccionCliente_TipoPago` FOREIGN KEY (`tipoPagoID`) REFERENCES `TipoPago` (`tipoPagoID`),
-  CONSTRAINT `FK_TransaccionCliente_CuentaCliente` FOREIGN KEY (`cuentaClienteID`) REFERENCES `CuentaCliente` (`cuentaClienteID`)
+  CONSTRAINT `FK_transaccion_cliente_tipo_pago` FOREIGN KEY (`tipoPagoID`) REFERENCES `tipo_pago` (`tipoPagoID`),
+  CONSTRAINT `FK_transaccion_cliente_cuenta_cliente` FOREIGN KEY (`cuentaClienteID`) REFERENCES `cuenta_cliente` (`cuentaClienteID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `TransaccionCliente`
+-- Dumping data for table `transaccion_cliente`
 --
 -- ORDER BY:  `transaccionClienteID`
 
-LOCK TABLES `TransaccionCliente` WRITE;
-/*!40000 ALTER TABLE `TransaccionCliente` DISABLE KEYS */;
-/*!40000 ALTER TABLE `TransaccionCliente` ENABLE KEYS */;
+LOCK TABLES `transaccion_cliente` WRITE;
+/*!40000 ALTER TABLE `transaccion_cliente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transaccion_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `TipoEstadia`
+-- Table structure for table `tipo_estadia`
 --
 
-DROP TABLE IF EXISTS `TipoEstadia`;
+DROP TABLE IF EXISTS `tipo_estadia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `TipoEstadia` (
+CREATE TABLE `tipo_estadia` (
   `descripcion` text,
   `nombre` varchar(50) NOT NULL,
   `tipoEstadiaID` int(11) NOT NULL,
@@ -471,24 +474,24 @@ CREATE TABLE `TipoEstadia` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `TipoEstadia`
+-- Dumping data for table `tipo_estadia`
 --
 -- ORDER BY:  `tipoEstadiaID`
 
-LOCK TABLES `TipoEstadia` WRITE;
-/*!40000 ALTER TABLE `TipoEstadia` DISABLE KEYS */;
-INSERT INTO `TipoEstadia` (`descripcion`, `nombre`, `tipoEstadiaID`) VALUES ('','Por Hora',1),('','Por Mes',2),('','Por Noche',3),('','Por Día',4),('','Por Semana',5);
-/*!40000 ALTER TABLE `TipoEstadia` ENABLE KEYS */;
+LOCK TABLES `tipo_estadia` WRITE;
+/*!40000 ALTER TABLE `tipo_estadia` DISABLE KEYS */;
+INSERT INTO `tipo_estadia` (`descripcion`, `nombre`, `tipoEstadiaID`) VALUES ('','Por Hora',1),('','Por Mes',2),('','Por Noche',3),('','Por Día',4),('','Por Semana',5);
+/*!40000 ALTER TABLE `tipo_estadia` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `HistorialDeCambio`
+-- Table structure for table `historial_de_cambio`
 --
 
-DROP TABLE IF EXISTS `HistorialDeCambio`;
+DROP TABLE IF EXISTS `historial_de_cambio`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `HistorialDeCambio` (
+CREATE TABLE `historial_de_cambio` (
   `comentario` text,
   `estadoDenunciaID` int(11) NOT NULL,
   `fecha` datetime DEFAULT NULL,
@@ -499,58 +502,58 @@ CREATE TABLE `HistorialDeCambio` (
   KEY `estadoDenunciaID` (`estadoDenunciaID`),
   KEY `denunciaPlayaID` (`denunciaPlayaID`),
   KEY `denunciaVehiculoID` (`denunciaVehiculoID`),
-  CONSTRAINT `FK_HistorialDeCambio_DenunciaVehiculo` FOREIGN KEY (`denunciaVehiculoID`) REFERENCES `DenunciaVehiculo` (`denunciaVehiculoID`),
-  CONSTRAINT `FK_HistorialDeCambio_DenunciaPlaya` FOREIGN KEY (`denunciaPlayaID`) REFERENCES `DenunciaPlaya` (`denunciaPlayaID`),
-  CONSTRAINT `FK_HistorialDeCambio_EstadoDenuncia` FOREIGN KEY (`estadoDenunciaID`) REFERENCES `EstadoDenuncia` (`estadoDenunciaID`)
+  CONSTRAINT `FK_historial_de_cambio_denuncia_vehiculo` FOREIGN KEY (`denunciaVehiculoID`) REFERENCES `denuncia_vehiculo` (`denunciaVehiculoID`),
+  CONSTRAINT `FK_historial_de_cambio_denuncia_playa` FOREIGN KEY (`denunciaPlayaID`) REFERENCES `denuncia_playa` (`denunciaPlayaID`),
+  CONSTRAINT `FK_historial_de_cambio_estado_denuncia` FOREIGN KEY (`estadoDenunciaID`) REFERENCES `estado_denuncia` (`estadoDenunciaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `HistorialDeCambio`
+-- Dumping data for table `historial_de_cambio`
 --
 -- ORDER BY:  `historialDeCambioID`
 
-LOCK TABLES `HistorialDeCambio` WRITE;
-/*!40000 ALTER TABLE `HistorialDeCambio` DISABLE KEYS */;
-/*!40000 ALTER TABLE `HistorialDeCambio` ENABLE KEYS */;
+LOCK TABLES `historial_de_cambio` WRITE;
+/*!40000 ALTER TABLE `historial_de_cambio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `historial_de_cambio` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Foto`
+-- Table structure for table `foto`
 --
 
-DROP TABLE IF EXISTS `Foto`;
+DROP TABLE IF EXISTS `foto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Foto` (
+CREATE TABLE `foto` (
   `descripcion` text,
   `link` varchar(50) NOT NULL,
   `fotoID` int(11) NOT NULL,
   `perfilPlayaID` int(11) NOT NULL,
   PRIMARY KEY (`fotoID`),
   KEY `perfilPlayaID` (`perfilPlayaID`),
-  CONSTRAINT `FK_Foto_PerfilPlaya` FOREIGN KEY (`perfilPlayaID`) REFERENCES `PerfilPlaya` (`perfilPlayaID`)
+  CONSTRAINT `FK_foto_perfil_playa` FOREIGN KEY (`perfilPlayaID`) REFERENCES `perfil_playa` (`perfilPlayaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Foto`
+-- Dumping data for table `foto`
 --
 -- ORDER BY:  `fotoID`
 
-LOCK TABLES `Foto` WRITE;
-/*!40000 ALTER TABLE `Foto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Foto` ENABLE KEYS */;
+LOCK TABLES `foto` WRITE;
+/*!40000 ALTER TABLE `foto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `foto` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Vehiculo`
+-- Table structure for table `vehiculo`
 --
 
-DROP TABLE IF EXISTS `Vehiculo`;
+DROP TABLE IF EXISTS `vehiculo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Vehiculo` (
+CREATE TABLE `vehiculo` (
   `año` int(11) DEFAULT NULL,
   `categoriaID` int(11) DEFAULT NULL,
   `codigoBarra` varchar(50) DEFAULT NULL,
@@ -564,30 +567,30 @@ CREATE TABLE `Vehiculo` (
   KEY `categoriaID` (`categoriaID`),
   KEY `modeloVehiculoID` (`modeloVehiculoID`),
   KEY `clienteID` (`clienteID`),
-  CONSTRAINT `FK_Vehiculo_Cliente` FOREIGN KEY (`clienteID`) REFERENCES `Cliente` (`clienteID`),
-  CONSTRAINT `FK_Vehiculo_CategoriaVehiculo` FOREIGN KEY (`categoriaID`) REFERENCES `CategoriaVehiculo` (`categoriaVehiculoID`),
-  CONSTRAINT `FK_Vehiculo_ModeloVehiculo` FOREIGN KEY (`modeloVehiculoID`) REFERENCES `ModeloVehiculo` (`modeloVehiculoID`)
+  CONSTRAINT `FK_vehiculo_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
+  CONSTRAINT `FK_vehiculo_categoria_vehiculo` FOREIGN KEY (`categoriaID`) REFERENCES `categoria_vehiculo` (`categoriaVehiculoID`),
+  CONSTRAINT `FK_vehiculo_modelo_vehiculo` FOREIGN KEY (`modeloVehiculoID`) REFERENCES `modelo_vehiculo` (`modeloVehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Vehiculo`
+-- Dumping data for table `vehiculo`
 --
 -- ORDER BY:  `vehiculoID`
 
-LOCK TABLES `Vehiculo` WRITE;
-/*!40000 ALTER TABLE `Vehiculo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Vehiculo` ENABLE KEYS */;
+LOCK TABLES `vehiculo` WRITE;
+/*!40000 ALTER TABLE `vehiculo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `vehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Empleado`
+-- Table structure for table `empleado`
 --
 
-DROP TABLE IF EXISTS `Empleado`;
+DROP TABLE IF EXISTS `empleado`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Empleado` (
+CREATE TABLE `empleado` (
   `cargoEmpleadoID` int(11) DEFAULT NULL,
   `legajo` int(11) DEFAULT NULL,
   `empleadoID` int(11) NOT NULL,
@@ -595,29 +598,29 @@ CREATE TABLE `Empleado` (
   PRIMARY KEY (`empleadoID`),
   KEY `cargoEmpleadoID` (`cargoEmpleadoID`),
   KEY `usuarioID` (`usuarioID`),
-  CONSTRAINT `FK_Empleado_Usuario` FOREIGN KEY (`usuarioID`) REFERENCES `Usuario` (`usuarioID`),
-  CONSTRAINT `FK_Empleado_CargoEmpleado` FOREIGN KEY (`cargoEmpleadoID`) REFERENCES `CargoEmpleado` (`cargoEmpleadoID`)
+  CONSTRAINT `FK_empleado_usuario` FOREIGN KEY (`usuarioID`) REFERENCES `usuario` (`usuarioID`),
+  CONSTRAINT `FK_empleado_cargo_empleado` FOREIGN KEY (`cargoEmpleadoID`) REFERENCES `cargo_empleado` (`cargoEmpleadoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Empleado`
+-- Dumping data for table `empleado`
 --
 -- ORDER BY:  `empleadoID`
 
-LOCK TABLES `Empleado` WRITE;
-/*!40000 ALTER TABLE `Empleado` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Empleado` ENABLE KEYS */;
+LOCK TABLES `empleado` WRITE;
+/*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
+/*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `CargoEmpleado`
+-- Table structure for table `cargo_empleado`
 --
 
-DROP TABLE IF EXISTS `CargoEmpleado`;
+DROP TABLE IF EXISTS `cargo_empleado`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `CargoEmpleado` (
+CREATE TABLE `cargo_empleado` (
   `descripcion` text,
   `nombre` varchar(50) DEFAULT NULL,
   `cargoEmpleadoID` int(11) NOT NULL,
@@ -626,52 +629,52 @@ CREATE TABLE `CargoEmpleado` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `CargoEmpleado`
+-- Dumping data for table `cargo_empleado`
 --
 -- ORDER BY:  `cargoEmpleadoID`
 
-LOCK TABLES `CargoEmpleado` WRITE;
-/*!40000 ALTER TABLE `CargoEmpleado` DISABLE KEYS */;
-INSERT INTO `CargoEmpleado` (`descripcion`, `nombre`, `cargoEmpleadoID`) VALUES ('','Gerente General',1),('','Encargado',2),('','Playero',3);
-/*!40000 ALTER TABLE `CargoEmpleado` ENABLE KEYS */;
+LOCK TABLES `cargo_empleado` WRITE;
+/*!40000 ALTER TABLE `cargo_empleado` DISABLE KEYS */;
+INSERT INTO `cargo_empleado` (`descripcion`, `nombre`, `cargoEmpleadoID`) VALUES ('','Gerente General',1),('','Encargado',2),('','Playero',3);
+/*!40000 ALTER TABLE `cargo_empleado` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `PerfilPlaya`
+-- Table structure for table `perfil_playa`
 --
 
-DROP TABLE IF EXISTS `PerfilPlaya`;
+DROP TABLE IF EXISTS `perfil_playa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `PerfilPlaya` (
+CREATE TABLE `perfil_playa` (
   `descripcion` text,
   `nombreComercial` varchar(50) NOT NULL,
   `perfilPlayaID` int(11) NOT NULL,
   `playaID` int(11) DEFAULT NULL,
   PRIMARY KEY (`perfilPlayaID`),
   KEY `playaID` (`playaID`),
-  CONSTRAINT `FK_PerfilPlaya_Playa` FOREIGN KEY (`playaID`) REFERENCES `Playa` (`playaID`)
+  CONSTRAINT `FK_perfil_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Esta clase va a contener todos los datos del perfil de la playa que se muestra en el sitio: fotos, nombre para mostrar, descripción, etc.    ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `PerfilPlaya`
+-- Dumping data for table `perfil_playa`
 --
 -- ORDER BY:  `perfilPlayaID`
 
-LOCK TABLES `PerfilPlaya` WRITE;
-/*!40000 ALTER TABLE `PerfilPlaya` DISABLE KEYS */;
-/*!40000 ALTER TABLE `PerfilPlaya` ENABLE KEYS */;
+LOCK TABLES `perfil_playa` WRITE;
+/*!40000 ALTER TABLE `perfil_playa` DISABLE KEYS */;
+/*!40000 ALTER TABLE `perfil_playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Abono`
+-- Table structure for table `abono`
 --
 
-DROP TABLE IF EXISTS `Abono`;
+DROP TABLE IF EXISTS `abono`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Abono` (
+CREATE TABLE `abono` (
   `fechaVigenciaDesde` datetime DEFAULT NULL,
   `fechaVigenciaHasta` datetime DEFAULT NULL,
   `tarifaID` int(11) DEFAULT NULL,
@@ -682,30 +685,30 @@ CREATE TABLE `Abono` (
   KEY `tarifaID` (`tarifaID`),
   KEY `clienteID` (`clienteID`),
   KEY `playaID` (`playaID`),
-  CONSTRAINT `FK_Abono_Playa` FOREIGN KEY (`playaID`) REFERENCES `Playa` (`playaID`),
-  CONSTRAINT `FK_Abono_Cliente` FOREIGN KEY (`clienteID`) REFERENCES `Cliente` (`clienteID`),
-  CONSTRAINT `FK_Abono_Tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `Tarifa` (`tarifaID`)
+  CONSTRAINT `FK_abono_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
+  CONSTRAINT `FK_abono_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
+  CONSTRAINT `FK_abono_tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `tarifa` (`tarifaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Abono`
+-- Dumping data for table `abono`
 --
 -- ORDER BY:  `abonoID`
 
-LOCK TABLES `Abono` WRITE;
-/*!40000 ALTER TABLE `Abono` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Abono` ENABLE KEYS */;
+LOCK TABLES `abono` WRITE;
+/*!40000 ALTER TABLE `abono` DISABLE KEYS */;
+/*!40000 ALTER TABLE `abono` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Pais`
+-- Table structure for table `pais`
 --
 
-DROP TABLE IF EXISTS `Pais`;
+DROP TABLE IF EXISTS `pais`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Pais` (
+CREATE TABLE `pais` (
   `nombre` varchar(50) DEFAULT NULL,
   `paisID` int(11) NOT NULL,
   PRIMARY KEY (`paisID`)
@@ -713,23 +716,23 @@ CREATE TABLE `Pais` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Pais`
+-- Dumping data for table `pais`
 --
 -- ORDER BY:  `paisID`
 
-LOCK TABLES `Pais` WRITE;
-/*!40000 ALTER TABLE `Pais` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Pais` ENABLE KEYS */;
+LOCK TABLES `pais` WRITE;
+/*!40000 ALTER TABLE `pais` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pais` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Tarifa`
+-- Table structure for table `tarifa`
 --
 
-DROP TABLE IF EXISTS `Tarifa`;
+DROP TABLE IF EXISTS `tarifa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Tarifa` (
+CREATE TABLE `tarifa` (
   `fechaAlta` datetime DEFAULT NULL,
   `fechaBaja` datetime DEFAULT NULL,
   `importe` float NOT NULL,
@@ -741,84 +744,84 @@ CREATE TABLE `Tarifa` (
   PRIMARY KEY (`tarifaID`),
   KEY `categoriaVehiculoID` (`categoriaVehiculoID`),
   KEY `tipoEstadiaID` (`tipoEstadiaID`),
-  CONSTRAINT `FK_Tarifa_TipoEstadia` FOREIGN KEY (`tipoEstadiaID`) REFERENCES `TipoEstadia` (`tipoEstadiaID`),
-  CONSTRAINT `FK_Tarifa_CategoriaVehiculo` FOREIGN KEY (`categoriaVehiculoID`) REFERENCES `CategoriaVehiculo` (`categoriaVehiculoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cada instancia contiene un precio de la tarifa que depende del Categoría de vehículo, tipo de estadía (mensual, por hora, etc).      CategoríaVehiculo: utilitario   TipoEstadía: Mensual   Precio/Tarifa: $720      CategoríaVehiculo: utilitario   TipoEstadía: Por hora   Precio/Tarifa: $14      CategoríaVehiculo: auto   TipoEstadía: Por hora   Precio/Tarifa: $12   ';
+  CONSTRAINT `FK_tarifa_tipo_estadia` FOREIGN KEY (`tipoEstadiaID`) REFERENCES `tipo_estadia` (`tipoEstadiaID`),
+  CONSTRAINT `FK_tarifa_categoria_vehiculo` FOREIGN KEY (`categoriaVehiculoID`) REFERENCES `categoria_vehiculo` (`categoriaVehiculoID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cada instancia contiene un precio de la tarifa que depende del Categoría de vehículo, tipo de estadía (mensual, por hora, etc).      CategoríaVehiculo: utilitario   TipoEstadía: Mensual   Precio/tarifa: $720      CategoríaVehiculo: utilitario   TipoEstadía: Por hora   Precio/tarifa: $14      CategoríaVehiculo: auto   TipoEstadía: Por hora   Precio/tarifa: $12   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Tarifa`
+-- Dumping data for table `tarifa`
 --
 -- ORDER BY:  `tarifaID`
 
-LOCK TABLES `Tarifa` WRITE;
-/*!40000 ALTER TABLE `Tarifa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Tarifa` ENABLE KEYS */;
+LOCK TABLES `tarifa` WRITE;
+/*!40000 ALTER TABLE `tarifa` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tarifa` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Barrio`
+-- Table structure for table `barrio`
 --
 
-DROP TABLE IF EXISTS `Barrio`;
+DROP TABLE IF EXISTS `barrio`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Barrio` (
+CREATE TABLE `barrio` (
   `nombre` varchar(50) DEFAULT NULL,
   `barrioID` int(11) NOT NULL,
   `localidadID` int(11) DEFAULT NULL,
   PRIMARY KEY (`barrioID`),
   KEY `localidadID` (`localidadID`),
-  CONSTRAINT `FK_Barrio_Localidad` FOREIGN KEY (`localidadID`) REFERENCES `Localidad` (`localidadID`)
+  CONSTRAINT `FK_barrio_localidad` FOREIGN KEY (`localidadID`) REFERENCES `localidad` (`localidadID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Barrio`
+-- Dumping data for table `barrio`
 --
 -- ORDER BY:  `barrioID`
 
-LOCK TABLES `Barrio` WRITE;
-/*!40000 ALTER TABLE `Barrio` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Barrio` ENABLE KEYS */;
+LOCK TABLES `barrio` WRITE;
+/*!40000 ALTER TABLE `barrio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `barrio` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Favorito`
+-- Table structure for table `favorito`
 --
 
-DROP TABLE IF EXISTS `Favorito`;
+DROP TABLE IF EXISTS `favorito`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Favorito` (
+CREATE TABLE `favorito` (
   `clienteID` int(11) NOT NULL,
   `playaID` int(11) NOT NULL,
   PRIMARY KEY (`clienteID`,`playaID`),
   KEY `clienteID` (`clienteID`),
   KEY `playaID` (`playaID`),
-  CONSTRAINT `FK_Favorito_Playa` FOREIGN KEY (`playaID`) REFERENCES `Playa` (`playaID`),
-  CONSTRAINT `FK_Favorito_Cliente` FOREIGN KEY (`clienteID`) REFERENCES `Cliente` (`clienteID`)
+  CONSTRAINT `FK_favorito_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
+  CONSTRAINT `FK_favorito_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Favorito`
+-- Dumping data for table `favorito`
 --
 -- ORDER BY:  `clienteID`,`playaID`
 
-LOCK TABLES `Favorito` WRITE;
-/*!40000 ALTER TABLE `Favorito` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Favorito` ENABLE KEYS */;
+LOCK TABLES `favorito` WRITE;
+/*!40000 ALTER TABLE `favorito` DISABLE KEYS */;
+/*!40000 ALTER TABLE `favorito` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Usuario`
+-- Table structure for table `usuario`
 --
 
-DROP TABLE IF EXISTS `Usuario`;
+DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Usuario` (
+CREATE TABLE `usuario` (
   `apellido` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `nombre` varchar(50) DEFAULT NULL,
@@ -830,28 +833,28 @@ CREATE TABLE `Usuario` (
   `nroDoc` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`usuarioID`),
   KEY `tipoDocID` (`tipoDocID`),
-  CONSTRAINT `FK_Usuario_TipoDoc` FOREIGN KEY (`tipoDocID`) REFERENCES `TipoDoc` (`tipoDocID`)
+  CONSTRAINT `FK_usuario_tipo_doc` FOREIGN KEY (`tipoDocID`) REFERENCES `tipo_doc` (`tipoDocID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Usuario`
+-- Dumping data for table `usuario`
 --
 -- ORDER BY:  `usuarioID`
 
-LOCK TABLES `Usuario` WRITE;
-/*!40000 ALTER TABLE `Usuario` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `TipoPago`
+-- Table structure for table `tipo_pago`
 --
 
-DROP TABLE IF EXISTS `TipoPago`;
+DROP TABLE IF EXISTS `tipo_pago`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `TipoPago` (
+CREATE TABLE `tipo_pago` (
   `descripcion` text,
   `nombre` varchar(50) NOT NULL,
   `tipoPagoID` int(11) NOT NULL,
@@ -860,24 +863,24 @@ CREATE TABLE `TipoPago` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `TipoPago`
+-- Dumping data for table `tipo_pago`
 --
 -- ORDER BY:  `tipoPagoID`
 
-LOCK TABLES `TipoPago` WRITE;
-/*!40000 ALTER TABLE `TipoPago` DISABLE KEYS */;
-INSERT INTO `TipoPago` (`descripcion`, `nombre`, `tipoPagoID`) VALUES ('Contado Efectivo','Contado',1),('Tarjeta de débito','Tarjeta Débito',2),('Tarjeta de crédito','Tarjeta Crédito',3),('DineroMail','DineroMail',4),('Cheque','Cheque',5),('Pago con saldo de la cuenta del cliente','Cuenta',6);
-/*!40000 ALTER TABLE `TipoPago` ENABLE KEYS */;
+LOCK TABLES `tipo_pago` WRITE;
+/*!40000 ALTER TABLE `tipo_pago` DISABLE KEYS */;
+INSERT INTO `tipo_pago` (`descripcion`, `nombre`, `tipoPagoID`) VALUES ('Contado Efectivo','Contado',1),('Tarjeta de débito','Tarjeta Débito',2),('Tarjeta de crédito','Tarjeta Crédito',3),('DineroMail','DineroMail',4),('Cheque','Cheque',5),('Pago con saldo de la cuenta del cliente','Cuenta',6);
+/*!40000 ALTER TABLE `tipo_pago` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `TransaccionPlaya`
+-- Table structure for table `transaccion_playa`
 --
 
-DROP TABLE IF EXISTS `TransaccionPlaya`;
+DROP TABLE IF EXISTS `transaccion_playa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `TransaccionPlaya` (
+CREATE TABLE `transaccion_playa` (
   `fecha` datetime DEFAULT NULL,
   `importe` float DEFAULT NULL,
   `tipoPagoID` int(11) DEFAULT NULL,
@@ -890,31 +893,31 @@ CREATE TABLE `TransaccionPlaya` (
   KEY `tipoPagoID` (`tipoPagoID`),
   KEY `cuentaPlayaID` (`cuentaPlayaID`),
   KEY `liquidacionID` (`liquidacionID`),
-  CONSTRAINT `FK_TransaccionPlaya_Liquidacion` FOREIGN KEY (`liquidacionID`) REFERENCES `Liquidacion` (`liquidacionID`),
-  CONSTRAINT `FK_TransaccionPlaya_CuentaPlaya` FOREIGN KEY (`cuentaPlayaID`) REFERENCES `CuentaPlaya` (`cuentaPlayaID`),
-  CONSTRAINT `FK_TransaccionPlaya_DetalleEstadia` FOREIGN KEY (`detalleEstadiaID`) REFERENCES `DetalleEstadia` (`detalleEstadiaID`),
-  CONSTRAINT `FK_TransaccionPlaya_TipoPago` FOREIGN KEY (`tipoPagoID`) REFERENCES `TipoPago` (`tipoPagoID`)
+  CONSTRAINT `FK_transaccion_playa_liquidacion` FOREIGN KEY (`liquidacionID`) REFERENCES `liquidacion` (`liquidacionID`),
+  CONSTRAINT `FK_transaccion_playa_cuenta_playa` FOREIGN KEY (`cuentaPlayaID`) REFERENCES `cuenta_playa` (`cuentaPlayaID`),
+  CONSTRAINT `FK_transaccion_playa_detalle_estadia` FOREIGN KEY (`detalleEstadiaID`) REFERENCES `detalle_estadia` (`detalleEstadiaID`),
+  CONSTRAINT `FK_transaccion_playa_tipo_pago` FOREIGN KEY (`tipoPagoID`) REFERENCES `tipo_pago` (`tipoPagoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `TransaccionPlaya`
+-- Dumping data for table `transaccion_playa`
 --
 -- ORDER BY:  `transaccionPlayaID`
 
-LOCK TABLES `TransaccionPlaya` WRITE;
-/*!40000 ALTER TABLE `TransaccionPlaya` DISABLE KEYS */;
-/*!40000 ALTER TABLE `TransaccionPlaya` ENABLE KEYS */;
+LOCK TABLES `transaccion_playa` WRITE;
+/*!40000 ALTER TABLE `transaccion_playa` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transaccion_playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `MarcaVehiculo`
+-- Table structure for table `marca_vehiculo`
 --
 
-DROP TABLE IF EXISTS `MarcaVehiculo`;
+DROP TABLE IF EXISTS `marca_vehiculo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `MarcaVehiculo` (
+CREATE TABLE `marca_vehiculo` (
   `descripcion` text,
   `nombre` varchar(50) NOT NULL,
   `marcaVehiculoID` int(11) NOT NULL,
@@ -923,104 +926,104 @@ CREATE TABLE `MarcaVehiculo` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `MarcaVehiculo`
+-- Dumping data for table `marca_vehiculo`
 --
 -- ORDER BY:  `marcaVehiculoID`
 
-LOCK TABLES `MarcaVehiculo` WRITE;
-/*!40000 ALTER TABLE `MarcaVehiculo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `MarcaVehiculo` ENABLE KEYS */;
+LOCK TABLES `marca_vehiculo` WRITE;
+/*!40000 ALTER TABLE `marca_vehiculo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `marca_vehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Estadia`
+-- Table structure for table `estadia`
 --
 
-DROP TABLE IF EXISTS `Estadia`;
+DROP TABLE IF EXISTS `estadia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Estadia` (
+CREATE TABLE `estadia` (
   `estadiaID` int(11) NOT NULL,
   `playaID` int(11) DEFAULT NULL,
   PRIMARY KEY (`estadiaID`),
   KEY `playaID` (`playaID`),
-  CONSTRAINT `FK_Estadia_Playa` FOREIGN KEY (`playaID`) REFERENCES `Playa` (`playaID`)
+  CONSTRAINT `FK_estadia_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cada instancia de esta clase representa un conjunto de ingreso y egreso de los autos en cada playa.   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Estadia`
+-- Dumping data for table `estadia`
 --
 -- ORDER BY:  `estadiaID`
 
-LOCK TABLES `Estadia` WRITE;
-/*!40000 ALTER TABLE `Estadia` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Estadia` ENABLE KEYS */;
+LOCK TABLES `estadia` WRITE;
+/*!40000 ALTER TABLE `estadia` DISABLE KEYS */;
+/*!40000 ALTER TABLE `estadia` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `ModeloVehiculo`
+-- Table structure for table `modelo_vehiculo`
 --
 
-DROP TABLE IF EXISTS `ModeloVehiculo`;
+DROP TABLE IF EXISTS `modelo_vehiculo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ModeloVehiculo` (
+CREATE TABLE `modelo_vehiculo` (
   `descripcion` text,
   `nombre` varchar(50) NOT NULL,
   `modeloVehiculoID` int(11) NOT NULL,
   `marcaVehiculoID` int(11) DEFAULT NULL,
   PRIMARY KEY (`modeloVehiculoID`),
   KEY `marcaVehiculoID` (`marcaVehiculoID`),
-  CONSTRAINT `FK_ModeloVehiculo_MarcaVehiculo` FOREIGN KEY (`marcaVehiculoID`) REFERENCES `MarcaVehiculo` (`marcaVehiculoID`)
+  CONSTRAINT `FK_modelo_vehiculo_marca_vehiculo` FOREIGN KEY (`marcaVehiculoID`) REFERENCES `marca_vehiculo` (`marcaVehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ModeloVehiculo`
+-- Dumping data for table `modelo_vehiculo`
 --
 -- ORDER BY:  `modeloVehiculoID`
 
-LOCK TABLES `ModeloVehiculo` WRITE;
-/*!40000 ALTER TABLE `ModeloVehiculo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ModeloVehiculo` ENABLE KEYS */;
+LOCK TABLES `modelo_vehiculo` WRITE;
+/*!40000 ALTER TABLE `modelo_vehiculo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `modelo_vehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Localidad`
+-- Table structure for table `localidad`
 --
 
-DROP TABLE IF EXISTS `Localidad`;
+DROP TABLE IF EXISTS `localidad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Localidad` (
+CREATE TABLE `localidad` (
   `nombre` varchar(50) DEFAULT NULL,
   `localidadID` int(11) NOT NULL,
   `provinciaID` int(11) DEFAULT NULL,
   PRIMARY KEY (`localidadID`),
   KEY `provinciaID` (`provinciaID`),
-  CONSTRAINT `FK_Localidad_Provincia` FOREIGN KEY (`provinciaID`) REFERENCES `Provincia` (`provinciaID`)
+  CONSTRAINT `FK_localidad_provincia` FOREIGN KEY (`provinciaID`) REFERENCES `provincia` (`provinciaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Localidad`
+-- Dumping data for table `localidad`
 --
 -- ORDER BY:  `localidadID`
 
-LOCK TABLES `Localidad` WRITE;
-/*!40000 ALTER TABLE `Localidad` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Localidad` ENABLE KEYS */;
+LOCK TABLES `localidad` WRITE;
+/*!40000 ALTER TABLE `localidad` DISABLE KEYS */;
+/*!40000 ALTER TABLE `localidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Cliente`
+-- Table structure for table `cliente`
 --
 
-DROP TABLE IF EXISTS `Cliente`;
+DROP TABLE IF EXISTS `cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Cliente` (
+CREATE TABLE `cliente` (
   `barrioID` int(11) DEFAULT NULL,
   `cuentaClienteID` int(11) DEFAULT NULL,
   `domicilio` text,
@@ -1031,29 +1034,29 @@ CREATE TABLE `Cliente` (
   PRIMARY KEY (`clienteID`),
   KEY `barrioID` (`barrioID`),
   KEY `usuarioID` (`usuarioID`),
-  CONSTRAINT `FK_Cliente_Usuario` FOREIGN KEY (`usuarioID`) REFERENCES `Usuario` (`usuarioID`),
-  CONSTRAINT `FK_Cliente_Barrio` FOREIGN KEY (`barrioID`) REFERENCES `Barrio` (`barrioID`)
+  CONSTRAINT `FK_cliente_usuario` FOREIGN KEY (`usuarioID`) REFERENCES `usuario` (`usuarioID`),
+  CONSTRAINT `FK_cliente_barrio` FOREIGN KEY (`barrioID`) REFERENCES `barrio` (`barrioID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Cliente`
+-- Dumping data for table `cliente`
 --
 -- ORDER BY:  `clienteID`
 
-LOCK TABLES `Cliente` WRITE;
-/*!40000 ALTER TABLE `Cliente` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Cliente` ENABLE KEYS */;
+LOCK TABLES `cliente` WRITE;
+/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `TipoDoc`
+-- Table structure for table `tipo_doc`
 --
 
-DROP TABLE IF EXISTS `TipoDoc`;
+DROP TABLE IF EXISTS `tipo_doc`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `TipoDoc` (
+CREATE TABLE `tipo_doc` (
   `nombre` varchar(50) NOT NULL,
   `tipoDocID` int(11) NOT NULL,
   PRIMARY KEY (`tipoDocID`)
@@ -1061,24 +1064,24 @@ CREATE TABLE `TipoDoc` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `TipoDoc`
+-- Dumping data for table `tipo_doc`
 --
 -- ORDER BY:  `tipoDocID`
 
-LOCK TABLES `TipoDoc` WRITE;
-/*!40000 ALTER TABLE `TipoDoc` DISABLE KEYS */;
-INSERT INTO `TipoDoc` (`nombre`, `tipoDocID`) VALUES ('D.N.I.',1),('L.C.',2),('L.E.',3),('C.I.',4);
-/*!40000 ALTER TABLE `TipoDoc` ENABLE KEYS */;
+LOCK TABLES `tipo_doc` WRITE;
+/*!40000 ALTER TABLE `tipo_doc` DISABLE KEYS */;
+INSERT INTO `tipo_doc` (`nombre`, `tipoDocID`) VALUES ('D.N.I.',1),('L.C.',2),('L.E.',3),('C.I.',4);
+/*!40000 ALTER TABLE `tipo_doc` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Publicidad`
+-- Table structure for table `publicidad`
 --
 
-DROP TABLE IF EXISTS `Publicidad`;
+DROP TABLE IF EXISTS `publicidad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Publicidad` (
+CREATE TABLE `publicidad` (
   `estadoPublicidadID` int(11) NOT NULL,
   `posicionID` int(11) NOT NULL,
   `urlImagen` varchar(50) DEFAULT NULL,
@@ -1088,30 +1091,30 @@ CREATE TABLE `Publicidad` (
   KEY `estadoPublicidadID` (`estadoPublicidadID`),
   KEY `posicionID` (`posicionID`),
   KEY `playaID` (`playaID`),
-  CONSTRAINT `FK_Publicidad_Playa` FOREIGN KEY (`playaID`) REFERENCES `Playa` (`playaID`),
-  CONSTRAINT `FK_Publicidad_EstadoPublicidad` FOREIGN KEY (`estadoPublicidadID`) REFERENCES `EstadoPublicidad` (`estadoPublicidadID`),
-  CONSTRAINT `FK_Publicidad_Posicion` FOREIGN KEY (`posicionID`) REFERENCES `Posicion` (`posicionID`)
+  CONSTRAINT `FK_publicidad_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
+  CONSTRAINT `FK_publicidad_estado_publicidad` FOREIGN KEY (`estadoPublicidadID`) REFERENCES `estado_publicidad` (`estadoPublicidadID`),
+  CONSTRAINT `FK_publicidad_posicion` FOREIGN KEY (`posicionID`) REFERENCES `posicion` (`posicionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Publicidad`
+-- Dumping data for table `publicidad`
 --
 -- ORDER BY:  `publicidadID`
 
-LOCK TABLES `Publicidad` WRITE;
-/*!40000 ALTER TABLE `Publicidad` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Publicidad` ENABLE KEYS */;
+LOCK TABLES `publicidad` WRITE;
+/*!40000 ALTER TABLE `publicidad` DISABLE KEYS */;
+/*!40000 ALTER TABLE `publicidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `DetalleEstadia`
+-- Table structure for table `detalle_estadia`
 --
 
-DROP TABLE IF EXISTS `DetalleEstadia`;
+DROP TABLE IF EXISTS `detalle_estadia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `DetalleEstadia` (
+CREATE TABLE `detalle_estadia` (
   `transaccionClienteID` int(11) DEFAULT NULL,
   `empleadoID` int(11) DEFAULT NULL,
   `fechaHoraEgreso` datetime DEFAULT NULL,
@@ -1129,33 +1132,33 @@ CREATE TABLE `DetalleEstadia` (
   KEY `tarifaID` (`tarifaID`),
   KEY `transaccionClienteID` (`transaccionClienteID`),
   KEY `vehiculoID` (`vehiculoID`),
-  CONSTRAINT `FK_DetalleEstadia_Vehiculo` FOREIGN KEY (`vehiculoID`) REFERENCES `Vehiculo` (`vehiculoID`),
-  CONSTRAINT `FK_DetalleEstadia_Empleado` FOREIGN KEY (`empleadoID`) REFERENCES `Empleado` (`empleadoID`),
-  CONSTRAINT `FK_DetalleEstadia_Estadia` FOREIGN KEY (`estadiaID`) REFERENCES `Estadia` (`estadiaID`),
-  CONSTRAINT `FK_DetalleEstadia_Promocion` FOREIGN KEY (`promocionID`) REFERENCES `Promocion` (`promocionID`),
-  CONSTRAINT `FK_DetalleEstadia_Tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `Tarifa` (`tarifaID`),
-  CONSTRAINT `FK_DetalleEstadia_TransaccionCliente` FOREIGN KEY (`transaccionClienteID`) REFERENCES `TransaccionCliente` (`transaccionClienteID`)
+  CONSTRAINT `FK_detalle_estadia_vehiculo` FOREIGN KEY (`vehiculoID`) REFERENCES `vehiculo` (`vehiculoID`),
+  CONSTRAINT `FK_detalle_estadia_empleado` FOREIGN KEY (`empleadoID`) REFERENCES `empleado` (`empleadoID`),
+  CONSTRAINT `FK_detalle_estadia_estadia` FOREIGN KEY (`estadiaID`) REFERENCES `estadia` (`estadiaID`),
+  CONSTRAINT `FK_detalle_estadia_promocion` FOREIGN KEY (`promocionID`) REFERENCES `promocion` (`promocionID`),
+  CONSTRAINT `FK_detalle_estadia_tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `tarifa` (`tarifaID`),
+  CONSTRAINT `FK_detalle_estadia_transaccion_cliente` FOREIGN KEY (`transaccionClienteID`) REFERENCES `transaccion_cliente` (`transaccionClienteID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `DetalleEstadia`
+-- Dumping data for table `detalle_estadia`
 --
 -- ORDER BY:  `detalleEstadiaID`
 
-LOCK TABLES `DetalleEstadia` WRITE;
-/*!40000 ALTER TABLE `DetalleEstadia` DISABLE KEYS */;
-/*!40000 ALTER TABLE `DetalleEstadia` ENABLE KEYS */;
+LOCK TABLES `detalle_estadia` WRITE;
+/*!40000 ALTER TABLE `detalle_estadia` DISABLE KEYS */;
+/*!40000 ALTER TABLE `detalle_estadia` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Sesion`
+-- Table structure for table `sesion`
 --
 
-DROP TABLE IF EXISTS `Sesion`;
+DROP TABLE IF EXISTS `sesion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Sesion` (
+CREATE TABLE `sesion` (
   `fechaFin` datetime DEFAULT NULL,
   `fechaInicio` datetime DEFAULT NULL,
   `idSesion` varchar(50) NOT NULL,
@@ -1163,28 +1166,28 @@ CREATE TABLE `Sesion` (
   `usuarioID` int(11) DEFAULT NULL,
   PRIMARY KEY (`sesionID`),
   KEY `usuarioID` (`usuarioID`),
-  CONSTRAINT `FK_Sesion_Usuario` FOREIGN KEY (`usuarioID`) REFERENCES `Usuario` (`usuarioID`)
+  CONSTRAINT `FK_sesion_usuario` FOREIGN KEY (`usuarioID`) REFERENCES `usuario` (`usuarioID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Sesion`
+-- Dumping data for table `sesion`
 --
 -- ORDER BY:  `sesionID`
 
-LOCK TABLES `Sesion` WRITE;
-/*!40000 ALTER TABLE `Sesion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Sesion` ENABLE KEYS */;
+LOCK TABLES `sesion` WRITE;
+/*!40000 ALTER TABLE `sesion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sesion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Posicion`
+-- Table structure for table `posicion`
 --
 
-DROP TABLE IF EXISTS `Posicion`;
+DROP TABLE IF EXISTS `posicion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Posicion` (
+CREATE TABLE `posicion` (
   `tamañoKBMax` int(11) DEFAULT NULL,
   `tamañoX` int(11) DEFAULT NULL,
   `tamañoY` int(11) DEFAULT NULL,
@@ -1195,23 +1198,23 @@ CREATE TABLE `Posicion` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Posicion`
+-- Dumping data for table `posicion`
 --
 -- ORDER BY:  `posicionID`
 
-LOCK TABLES `Posicion` WRITE;
-/*!40000 ALTER TABLE `Posicion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Posicion` ENABLE KEYS */;
+LOCK TABLES `posicion` WRITE;
+/*!40000 ALTER TABLE `posicion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `posicion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `EstadoPromocion`
+-- Table structure for table `estado_promocion`
 --
 
-DROP TABLE IF EXISTS `EstadoPromocion`;
+DROP TABLE IF EXISTS `estado_promocion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `EstadoPromocion` (
+CREATE TABLE `estado_promocion` (
   `descripcion` text,
   `nombre` varchar(50) NOT NULL,
   `estadoPromocionID` int(11) NOT NULL,
@@ -1220,24 +1223,24 @@ CREATE TABLE `EstadoPromocion` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `EstadoPromocion`
+-- Dumping data for table `estado_promocion`
 --
 -- ORDER BY:  `estadoPromocionID`
 
-LOCK TABLES `EstadoPromocion` WRITE;
-/*!40000 ALTER TABLE `EstadoPromocion` DISABLE KEYS */;
-INSERT INTO `EstadoPromocion` (`descripcion`, `nombre`, `estadoPromocionID`) VALUES ('Pendiente de Aprobación','Pendiente',1),('Aprobada y pendiente de publicación','Aprobada',2),('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),('Período de publicación vencido','Vencida',5);
-/*!40000 ALTER TABLE `EstadoPromocion` ENABLE KEYS */;
+LOCK TABLES `estado_promocion` WRITE;
+/*!40000 ALTER TABLE `estado_promocion` DISABLE KEYS */;
+INSERT INTO `estado_promocion` (`descripcion`, `nombre`, `estadoPromocionID`) VALUES ('Pendiente de Aprobación','Pendiente',1),('Aprobada y pendiente de publicación','Aprobada',2),('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),('Período de publicación vencido','Vencida',5);
+/*!40000 ALTER TABLE `estado_promocion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Comentario`
+-- Table structure for table `comentario`
 --
 
-DROP TABLE IF EXISTS `Comentario`;
+DROP TABLE IF EXISTS `comentario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Comentario` (
+CREATE TABLE `comentario` (
   `calificacion` int(11) DEFAULT NULL,
   `comentario` text NOT NULL,
   `fecha` datetime NOT NULL,
@@ -1248,73 +1251,73 @@ CREATE TABLE `Comentario` (
   PRIMARY KEY (`comentarioID`),
   KEY `playaID` (`playaID`),
   KEY `clienteID` (`clienteID`),
-  CONSTRAINT `FK_Comentario_Cliente` FOREIGN KEY (`clienteID`) REFERENCES `Cliente` (`clienteID`),
-  CONSTRAINT `FK_Comentario_PerfilPlaya` FOREIGN KEY (`playaID`) REFERENCES `PerfilPlaya` (`perfilPlayaID`)
+  CONSTRAINT `FK_comentario_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
+  CONSTRAINT `FK_comentario_perfil_playa` FOREIGN KEY (`playaID`) REFERENCES `perfil_playa` (`perfilPlayaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Comentario`
+-- Dumping data for table `comentario`
 --
 -- ORDER BY:  `comentarioID`
 
-LOCK TABLES `Comentario` WRITE;
-/*!40000 ALTER TABLE `Comentario` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Comentario` ENABLE KEYS */;
+LOCK TABLES `comentario` WRITE;
+/*!40000 ALTER TABLE `comentario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comentario` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `UsuarioSistema`
+-- Table structure for table `usuario_sistema`
 --
 
-DROP TABLE IF EXISTS `UsuarioSistema`;
+DROP TABLE IF EXISTS `usuario_sistema`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `UsuarioSistema` (
+CREATE TABLE `usuario_sistema` (
   `rolUsuarioID` int(11) NOT NULL,
   `usuarioSistemaID` int(11) NOT NULL,
   PRIMARY KEY (`usuarioSistemaID`),
   KEY `rolUsuarioID` (`rolUsuarioID`),
   KEY `usuarioSistemaID` (`usuarioSistemaID`),
-  CONSTRAINT `FK_UsuarioSistema_Usuario` FOREIGN KEY (`usuarioSistemaID`) REFERENCES `Usuario` (`usuarioID`),
-  CONSTRAINT `FK_UsuarioSistema_RolUsuario` FOREIGN KEY (`rolUsuarioID`) REFERENCES `RolUsuario` (`rolUsuarioID`)
+  CONSTRAINT `FK_usuario_sistema_usuario` FOREIGN KEY (`usuarioSistemaID`) REFERENCES `usuario` (`usuarioID`),
+  CONSTRAINT `FK_usuario_sistema_rol_usuario` FOREIGN KEY (`rolUsuarioID`) REFERENCES `rol_usuario` (`rolUsuarioID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `UsuarioSistema`
+-- Dumping data for table `usuario_sistema`
 --
 -- ORDER BY:  `usuarioSistemaID`
 
-LOCK TABLES `UsuarioSistema` WRITE;
-/*!40000 ALTER TABLE `UsuarioSistema` DISABLE KEYS */;
-/*!40000 ALTER TABLE `UsuarioSistema` ENABLE KEYS */;
+LOCK TABLES `usuario_sistema` WRITE;
+/*!40000 ALTER TABLE `usuario_sistema` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usuario_sistema` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `RolUsuario`
+-- Table structure for table `rol_usuario`
 --
 
-DROP TABLE IF EXISTS `RolUsuario`;
+DROP TABLE IF EXISTS `rol_usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `RolUsuario` (
+CREATE TABLE `rol_usuario` (
   `descripcion` text,
   `nombre` varchar(50) NOT NULL,
   `rolUsuarioID` int(11) NOT NULL,
   PRIMARY KEY (`rolUsuarioID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Los roles van a ser: Administrador, Cliente, Dueño, Playero, Gerente, etc. y de estos van a depender los permisos que tenga cada uno dentro del sistema.   ';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Los roles van a ser: Administrador, cliente, Dueño, Playero, Gerente, etc. y de estos van a depender los permisos que tenga cada uno dentro del sistema.   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `RolUsuario`
+-- Dumping data for table `rol_usuario`
 --
 -- ORDER BY:  `rolUsuarioID`
 
-LOCK TABLES `RolUsuario` WRITE;
-/*!40000 ALTER TABLE `RolUsuario` DISABLE KEYS */;
-INSERT INTO `RolUsuario` (`descripcion`, `nombre`, `rolUsuarioID`) VALUES ('Administrador del sistema','Administrador',1),('Auditor del sistema','Auditor',2),('Usuario del Area administrativa/contable','Administración',3),('Usuario sin permisos especiales','Usuario',4);
-/*!40000 ALTER TABLE `RolUsuario` ENABLE KEYS */;
+LOCK TABLES `rol_usuario` WRITE;
+/*!40000 ALTER TABLE `rol_usuario` DISABLE KEYS */;
+INSERT INTO `rol_usuario` (`descripcion`, `nombre`, `rolUsuarioID`) VALUES ('Administrador del sistema','Administrador',1),('Auditor del sistema','Auditor',2),('usuario del Area administrativa/contable','Administración',3),('Usuario sin permisos especiales','usuario',4);
+/*!40000 ALTER TABLE `rol_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
