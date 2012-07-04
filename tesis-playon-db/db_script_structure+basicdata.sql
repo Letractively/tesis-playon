@@ -113,9 +113,9 @@ DROP TABLE IF EXISTS `provincia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `provincia` (
-  `nombre` varchar(50) DEFAULT NULL,
-  `provinciaID` int(11) NOT NULL,
-  `paisID` int(11) DEFAULT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `provinciaID` int(11) NOT NULL auto_increment,
+  `paisID` int(11) NOT NULL,
   PRIMARY KEY (`provinciaID`),
   KEY `paisID` (`paisID`),
   CONSTRAINT `FK_provincia_pais` FOREIGN KEY (`paisID`) REFERENCES `pais` (`paisID`)
@@ -709,8 +709,8 @@ DROP TABLE IF EXISTS `pais`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pais` (
-  `nombre` varchar(50) DEFAULT NULL,
-  `paisID` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `paisID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`paisID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
