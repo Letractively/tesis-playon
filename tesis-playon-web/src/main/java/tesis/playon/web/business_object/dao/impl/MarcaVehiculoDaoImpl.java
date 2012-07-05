@@ -15,7 +15,7 @@ import tesis.playon.web.business_object.dao.IMarcaVehiculoDao;
 import tesis.playon.web.model.MarcaVehiculo;
 
 @Repository("marcaVehiculoDao")
-public class MarcaVehiculoDaoImp extends CustomHibernateDaoSupport implements IMarcaVehiculoDao{
+public class MarcaVehiculoDaoImpl extends CustomHibernateDaoSupport implements IMarcaVehiculoDao{
     
     public void save(MarcaVehiculo marcaVehiculo) {
 	getHibernateTemplate().save(marcaVehiculo);

@@ -3,11 +3,15 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -19,7 +23,7 @@ import javax.persistence.UniqueConstraint;
  * 
  */
 @Entity
-@Table(name = "marca_vehiculo", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
+@Table(name = "marca_vehiculo", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre"), @UniqueConstraint(columnNames = "marcaVehiculoID") })
 public class MarcaVehiculo implements Serializable{
     
     private static final long serialVersionUID = 1L;
@@ -35,6 +39,9 @@ public class MarcaVehiculo implements Serializable{
     @Column(name = "descripcion", unique = false, nullable = true)
     private String descripcion;
     
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "marca_vehiculo")
+    private Set<MarcaVehiculo> marcasVehiculo = new HashSet<MarcaVehiculo>(0);
+    
     /**
      * Constructor con parámetros.
      * 
@@ -47,7 +54,15 @@ public class MarcaVehiculo implements Serializable{
 	this.nombre = nombre;
 	this.descripcion = descripcion;
     }
-    
+       
+    public MarcaVehiculo(String nombre, String descripcion, Set<MarcaVehiculo> marcasVehiculo) {
+	this.nombre = nombre;
+	this.descripcion = descripcion;
+	this.marcasVehiculo = marcasVehiculo;
+    }
+
+
+
     /**
      * Devuelve el ID del objeto.
      * 
@@ -95,6 +110,14 @@ public class MarcaVehiculo implements Serializable{
         this.descripcion = descripcion;
     }
     
+    public Set<MarcaVehiculo> getMarcasVehiculo() {
+        return marcasVehiculo;
+    }
+
+    public void setMarcasVehiculo(Set<MarcaVehiculo> marcasVehiculo) {
+        this.marcasVehiculo = marcasVehiculo;
+    }
+
     @Override
     public String toString() {
 	return "MarcaVehiculo [marcaVehiculoID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
