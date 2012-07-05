@@ -767,9 +767,9 @@ DROP TABLE IF EXISTS `barrio`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `barrio` (
-  `nombre` varchar(50) DEFAULT NULL,
-  `barrioID` int(11) NOT NULL,
-  `localidadID` int(11) DEFAULT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `barrioID` int(11) NOT NULL auto_increment,
+  `localidadID` int(11) NOT NULL,
   PRIMARY KEY (`barrioID`),
   KEY `localidadID` (`localidadID`),
   CONSTRAINT `FK_barrio_localidad` FOREIGN KEY (`localidadID`) REFERENCES `localidad` (`localidadID`)
@@ -997,9 +997,9 @@ DROP TABLE IF EXISTS `localidad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `localidad` (
-  `nombre` varchar(50) DEFAULT NULL,
-  `localidadID` int(11) NOT NULL,
-  `provinciaID` int(11) DEFAULT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `localidadID` int(11) NOT NULL auto_increment,
+  `provinciaID` int(11) NOT NULL,
   PRIMARY KEY (`localidadID`),
   KEY `provinciaID` (`provinciaID`),
   CONSTRAINT `FK_localidad_provincia` FOREIGN KEY (`provinciaID`) REFERENCES `provincia` (`provinciaID`)
@@ -1304,9 +1304,9 @@ DROP TABLE IF EXISTS `rol_usuario`;
 CREATE TABLE `rol_usuario` (
   `descripcion` text,
   `nombre` varchar(50) NOT NULL,
-  `rolUsuarioID` int(11) NOT NULL,
+  `rolUsuarioID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`rolUsuarioID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Los roles van a ser: Administrador, cliente, Dueño, Playero, Gerente, etc. y de estos van a depender los permisos que tenga cada uno dentro del sistema.   ';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Los roles van a ser: Administrador, Cliente, Dueño, Playero, Gerente, etc. y de estos van a depender los permisos que tenga cada uno dentro del sistema.   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
