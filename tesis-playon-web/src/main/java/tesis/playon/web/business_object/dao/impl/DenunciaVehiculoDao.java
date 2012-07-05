@@ -28,7 +28,7 @@ public class DenunciaVehiculoDao extends CustomHibernateDaoSupport implements ID
     }
 
     public DenunciaVehiculo findByAsuntoDenunciaVehiculo(String asuntoDenunciaVehiculo) {
-	List<?> list = getHibernateTemplate().find("from denuncia_vehiculo where asunto=?", asuntoDenunciaVehiculo);
+	List<?> list = getHibernateTemplate().find("from DenunciaVehiculo where asunto=?", asuntoDenunciaVehiculo);
 	return (DenunciaVehiculo) list.get(0);
     }
 

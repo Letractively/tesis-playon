@@ -29,7 +29,7 @@ public class LocalidadDao extends CustomHibernateDaoSupport implements ILocalida
     }
 
     public Localidad findByNombreLocalidad(String nombreLocalidad) {
-	List<?> list = getHibernateTemplate().find("from localidad where nombre=?", nombreLocalidad);
+	List<?> list = getHibernateTemplate().find("from Localidad where nombre=?", nombreLocalidad);
 	return (Localidad) list.get(0);
     }
 

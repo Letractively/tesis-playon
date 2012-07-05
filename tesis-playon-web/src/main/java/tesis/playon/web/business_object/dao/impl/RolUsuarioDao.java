@@ -29,7 +29,7 @@ public class RolUsuarioDao extends CustomHibernateDaoSupport implements IRolUsua
     }
 
     public RolUsuario findByNombreRolUsuario(String nombreRolUsuario) {
-	List<?> list = getHibernateTemplate().find("from rol_usuario where nombre=?", nombreRolUsuario);
+	List<?> list = getHibernateTemplate().find("from RolUsuario where nombre=?", nombreRolUsuario);
 	return (RolUsuario) list.get(0);
     }
     

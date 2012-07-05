@@ -30,7 +30,7 @@ public class MarcaVehiculoDao extends CustomHibernateDaoSupport implements IMarc
     }
 
     public MarcaVehiculo findByNombreMarcaVehiculo(String nombreMarcaVehiculo) {
-	List<?> list = getHibernateTemplate().find("from marca_vehiculo where nombre=?", nombreMarcaVehiculo);
+	List<?> list = getHibernateTemplate().find("from MarcaVehiculo where nombre=?", nombreMarcaVehiculo);
 	return (MarcaVehiculo) list.get(0);
     }
 

@@ -29,7 +29,7 @@ public class ProvinciaDao extends CustomHibernateDaoSupport implements IProvinci
     }
 
     public Provincia findByNombreProvincia(String nombreProvincia) {
-	List<?> list = getHibernateTemplate().find("from provincia where nombre=?", nombreProvincia);
+	List<?> list = getHibernateTemplate().find("from Provincia where nombre=?", nombreProvincia);
 	return (Provincia) list.get(0);
     }
     

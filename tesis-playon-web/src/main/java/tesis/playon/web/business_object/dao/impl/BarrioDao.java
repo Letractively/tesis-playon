@@ -29,7 +29,7 @@ public class BarrioDao extends CustomHibernateDaoSupport implements IBarrioDao {
     }
 
     public Barrio findByNombreBarrio(String nombreBarrio) {
-	List<?> list = getHibernateTemplate().find("from barrio where nombre=?", nombreBarrio);
+	List<?> list = getHibernateTemplate().find("from Barrio where nombre=?", nombreBarrio);
 	return (Barrio) list.get(0);
     }
 }

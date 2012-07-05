@@ -53,7 +53,7 @@ public class Provincia implements Serializable {
 	this.nombre = nombre;
 	this.pais = pais;
     }
-    
+
     public Provincia(String nombre, Pais pais, Set<Localidad> localidades) {
 	this.nombre = nombre;
 	this.pais = pais;

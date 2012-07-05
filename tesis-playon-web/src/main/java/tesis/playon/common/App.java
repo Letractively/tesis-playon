@@ -20,6 +20,7 @@ public class App {
 	/** insert **/
 	RolUsuario rolUsuario = new RolUsuario();
 	rolUsuario.setNombre("Cliente");
+	rolUsuario.setDescripcion("Usuario con el perfil de cliente.");
 	rolUsuarioBo.save(rolUsuario);
 
 	/** select **/
@@ -28,6 +29,7 @@ public class App {
 
 	/** update **/
 	otroRolUsuario.setNombre("Administrador");
+	rolUsuario.setDescripcion("Usuario con el perfil de administrador.");
 	rolUsuarioBo.update(otroRolUsuario);
 
 	/** delete **/
