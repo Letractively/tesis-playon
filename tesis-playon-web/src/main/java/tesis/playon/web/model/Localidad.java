@@ -18,46 +18,46 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * Clase de negocio que contiene los diferentes provincias.
+ * Clase de negocio que contiene los diferentes localidades.
  * 
  * @author gmorales
- * @date 03/07/2012
+ * @date 05/07/2012
  * 
  */
 @Entity
-@Table(name = "provincia", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre"),
-	@UniqueConstraint(columnNames = "paisID") })
-public class Provincia implements Serializable {
+@Table(name = "localidad", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre"),
+	@UniqueConstraint(columnNames = "provinciaID") })
+public class Localidad implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "provinciaID")
+    @Column(name = "localidadID")
     private Integer id;
 
     @Column(name = "nombre")
     private String nombre;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "paisID")
-    private Pais pais;
+    @JoinColumn(name = "provinciaID")
+    private Provincia provincia;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "provincia")
-    private Set<Localidad> localidades = new HashSet<Localidad>(0);
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "localidad")
+    private Set<Barrio> barrios = new HashSet<Barrio>(0);
 
-    public Provincia() {
+    public Localidad() {
     }
 
-    public Provincia(String nombre, Pais pais) {
+    public Localidad(String nombre, Provincia provincia) {
 	this.nombre = nombre;
-	this.pais = pais;
+	this.provincia = provincia;
     }
-    
-    public Provincia(String nombre, Pais pais, Set<Localidad> localidades) {
+
+    public Localidad(String nombre, Provincia provincia, Set<Barrio> barrios) {
 	this.nombre = nombre;
-	this.pais = pais;
-	this.localidades = localidades;
+	this.provincia = provincia;
+	this.barrios = barrios;
     }
 
     public Integer getId() {
@@ -76,25 +76,25 @@ public class Provincia implements Serializable {
 	this.nombre = nombre;
     }
 
-    public Pais getPais() {
-	return pais;
+    public Provincia getProvincia() {
+	return provincia;
     }
 
-    public void setPais(Pais pais) {
-	this.pais = pais;
+    public void setProvincia(Provincia provincia) {
+	this.provincia = provincia;
     }
 
-    public Set<Localidad> getLocalidades() {
-	return localidades;
+    public Set<Barrio> getBarrios() {
+	return barrios;
     }
 
-    public void setLocalidades(Set<Localidad> localidades) {
-	this.localidades = localidades;
+    public void setBarrios(Set<Barrio> barrios) {
+	this.barrios = barrios;
     }
 
     @Override
     public String toString() {
-	return "Provincia [provinciaID=" + id + ", nombre=" + nombre + ", pais=" + pais.getNombre() + "]";
+	return "Localidad [localidadID=" + id + ", nombre=" + nombre + ", provincia=" + provincia.getNombre() + "]";
     }
 
 }

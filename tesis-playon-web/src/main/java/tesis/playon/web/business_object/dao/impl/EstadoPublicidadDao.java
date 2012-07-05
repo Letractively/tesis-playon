@@ -28,7 +28,8 @@ public class EstadoPublicidadDao extends CustomHibernateDaoSupport implements IE
 
     @Override
     public EstadoPublicidad findByNombreEstadoPublicidad(String nombreEstadoPublicidad) {
-	List<?> list = getHibernateTemplate().find("from EstadoPublicidad where nombre=?", nombreEstadoPublicidad);
+	List<?> list = getHibernateTemplate().find("from estado_publicidad where nombre=?", nombreEstadoPublicidad);
 	return (EstadoPublicidad) list.get(0);
     }
+    
 }

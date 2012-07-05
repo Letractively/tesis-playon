@@ -8,8 +8,13 @@ import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.business_object.dao.IRolUsuarioDao;
 import tesis.playon.web.model.RolUsuario;
 
+/**
+ * 
+ * @author gmorales
+ *
+ */
 @Repository("rolUsuarioDao")
-public class RolUsuarioDaoImpl extends CustomHibernateDaoSupport implements IRolUsuarioDao {
+public class RolUsuarioDao extends CustomHibernateDaoSupport implements IRolUsuarioDao {
 
     public void save(RolUsuario cliente) {
 	getHibernateTemplate().save(cliente);
@@ -24,7 +29,8 @@ public class RolUsuarioDaoImpl extends CustomHibernateDaoSupport implements IRol
     }
 
     public RolUsuario findByNombreRolUsuario(String nombreRolUsuario) {
-	List<?> list = getHibernateTemplate().find("from RolUsuario where nombre=?", nombreRolUsuario);
+	List<?> list = getHibernateTemplate().find("from rol_usuario where nombre=?", nombreRolUsuario);
 	return (RolUsuario) list.get(0);
     }
+    
 }

@@ -8,7 +8,7 @@ import tesis.playon.web.business_object.dao.IRolUsuarioDao;
 import tesis.playon.web.model.RolUsuario;
 
 @Service("rolUsuarioBo")
-public class RolUsuarioBoImpl implements IRolUsuarioBo {
+public class RolUsuarioBo implements IRolUsuarioBo {
 
     @Autowired
     IRolUsuarioDao rolUsuarioDao;

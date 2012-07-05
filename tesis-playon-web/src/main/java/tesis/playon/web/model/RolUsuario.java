@@ -11,27 +11,41 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+/**
+ * Clase de negocio que contiene los diferentes roles de usuario.
+ * 
+ * @author gmorales
+ * 
+ */
 @Entity
-@Table(name = "rol_usuario", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre_rol_usuario") })
+@Table(name = "rol_usuario", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
 public class RolUsuario implements Serializable {
 
     private static final long serialVersionUID = 4725165248854057805L;
 
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "rolUsuarioID")
     private Integer id;
 
+    @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "descripcion")
+    private String descripcion;
 
     public RolUsuario() {
     }
 
-    public RolUsuario(Integer id, String nombre) {
-	this.id = id;
+    public RolUsuario(String nombre) {
 	this.nombre = nombre;
     }
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id_rol_usuario", nullable = false)
+    public RolUsuario(String nombre, String descripcion) {
+	this.nombre = nombre;
+	this.descripcion = descripcion;
+    }
+
     public Integer getId() {
 	return id;
     }
@@ -40,7 +54,6 @@ public class RolUsuario implements Serializable {
 	this.id = id;
     }
 
-    @Column(name = "nombre_rol_usuario", unique = true, nullable = false, length = 20)
     public String getNombre() {
 	return nombre;
     }
@@ -49,9 +62,17 @@ public class RolUsuario implements Serializable {
 	this.nombre = nombre;
     }
 
+    public String getDescripcion() {
+	return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+	this.descripcion = descripcion;
+    }
+
     @Override
     public String toString() {
-	return "RolUsuario [id_rol_usuario=" + id + ", nombre_rol_usuario=" + nombre + "]";
+	return "RolUsuario [rolUsuarioID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
     }
 
 }

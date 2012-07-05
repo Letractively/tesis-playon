@@ -8,8 +8,13 @@ import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.business_object.dao.IPaisDao;
 import tesis.playon.web.model.Pais;
 
+/**
+ * 
+ * @author gmorales
+ *
+ */
 @Repository("paisDao")
-public class PaisDaoImpl extends CustomHibernateDaoSupport implements IPaisDao {
+public class PaisDao extends CustomHibernateDaoSupport implements IPaisDao {
 
     public void save(Pais pais) {
 	getHibernateTemplate().save(pais);

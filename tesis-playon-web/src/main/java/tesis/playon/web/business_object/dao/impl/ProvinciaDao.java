@@ -8,8 +8,13 @@ import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.business_object.dao.IProvinciaDao;
 import tesis.playon.web.model.Provincia;
 
+/**
+ * 
+ * @author gmorales
+ *
+ */
 @Repository("provinciaDao")
-public class ProvinciaDaoImpl extends CustomHibernateDaoSupport implements IProvinciaDao {
+public class ProvinciaDao extends CustomHibernateDaoSupport implements IProvinciaDao {
 
     public void save(Provincia provincia) {
 	getHibernateTemplate().save(provincia);
@@ -24,7 +29,8 @@ public class ProvinciaDaoImpl extends CustomHibernateDaoSupport implements IProv
     }
 
     public Provincia findByNombreProvincia(String nombreProvincia) {
-	List<?> list = getHibernateTemplate().find("from Provincia where nombre=?", nombreProvincia);
+	List<?> list = getHibernateTemplate().find("from provincia where nombre=?", nombreProvincia);
 	return (Provincia) list.get(0);
     }
+    
 }
