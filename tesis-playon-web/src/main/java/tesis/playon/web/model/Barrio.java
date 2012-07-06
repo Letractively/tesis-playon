@@ -74,7 +74,7 @@ public class Barrio implements Serializable {
     
     @Override
     public String toString() {
-	return "Barrio [barrioID=" + id + ", nombre=" + nombre + ", localidad=" + localidad.getNombre() + "]";
+	return "Barrio [barrioID=" + id + ", nombre=" + nombre + "]";
     }
 
 }

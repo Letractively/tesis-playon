@@ -60,7 +60,7 @@ public class App {
 
 	/** select **/
 	Provincia otroProvincia = provinciaDao.findByNombreProvincia("Cordoba");
-	System.out.println(otroProvincia);
+	System.out.println(otroProvincia.toString());
 
 	/** update **/
 	otroProvincia.setNombre("Buenos Aires");

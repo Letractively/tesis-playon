@@ -94,7 +94,7 @@ public class Localidad implements Serializable {
 
     @Override
     public String toString() {
-	return "Localidad [localidadID=" + id + ", nombre=" + nombre + ", provincia=" + provincia.getNombre() + "]";
+	return "Localidad [localidadID=" + id + ", nombre=" + nombre + "]";
     }
 
 }
