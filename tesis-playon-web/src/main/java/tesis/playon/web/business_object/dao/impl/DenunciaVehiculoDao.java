@@ -5,6 +5,8 @@ package tesis.playon.web.business_object.dao.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.business_object.dao.IDenunciaVehiculoDao;
 import tesis.playon.web.model.DenunciaVehiculo;
@@ -13,6 +15,7 @@ import tesis.playon.web.model.DenunciaVehiculo;
  * @author Pablo
  *
  */
+@Repository("DenunciaVehiculoDao")
 public class DenunciaVehiculoDao extends CustomHibernateDaoSupport implements IDenunciaVehiculoDao{
     
     public void save(DenunciaVehiculo denunciaVehiculo) {
