@@ -6,8 +6,6 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,56 +14,56 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
  * @author Pablo
- *
+ * 
  */
 @Entity
-@Table(name = "vehiculo", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "codigoBarra"), @UniqueConstraint(columnNames = "patente")})
-public class Vehiculo implements Serializable{
-    
+@Table(name = "vehiculo", catalog = "tesis_playon", uniqueConstraints = {
+	@UniqueConstraint(columnNames = "codigoBarra"), @UniqueConstraint(columnNames = "patente") })
+public class Vehiculo implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "vehiculoID")
     private Integer id;
-    
-    @Column(name = "año")
-    private int año;
-    
+
+    @Column(name = "anio")
+    private int anio;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoriaID")
     private CategoriaVehiculo categoriaVehiculo;
-    
+
     @Column(name = "codigoBarra")
     private String codigoBarra;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "colorID")
     private ColorVehiculo colorVehiculo;
-    
+
     @Column(name = "habilitado")
     private boolean habilitado;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "modeloVehiculoID")
     private ModeloVehiculo modeloVehiculo;
-    
+
     @Column(name = "patente")
     private String patente;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "clienteID")
     private Cliente cliente;
 
-    public Vehiculo(int año, CategoriaVehiculo categoriaVehiculo, String codigoBarra, ColorVehiculo colorVehiculo,
+    public Vehiculo(int anio, CategoriaVehiculo categoriaVehiculo, String codigoBarra, ColorVehiculo colorVehiculo,
 	    boolean habilitado, ModeloVehiculo modeloVehiculo, String patente, Cliente cliente) {
-	this.año = año;
+	this.anio = anio;
 	this.categoriaVehiculo = categoriaVehiculo;
 	this.codigoBarra = codigoBarra;
 	this.colorVehiculo = colorVehiculo;
@@ -75,79 +73,82 @@ public class Vehiculo implements Serializable{
 	this.cliente = cliente;
     }
 
-    public int getAño() {
-        return año;
-    }
-
-    public void setAño(int año) {
-        this.año = año;
-    }
-
     public CategoriaVehiculo getCategoriaVehiculo() {
-        return categoriaVehiculo;
+	return categoriaVehiculo;
     }
 
     public void setCategoriaVehiculo(CategoriaVehiculo categoriaVehiculo) {
-        this.categoriaVehiculo = categoriaVehiculo;
+	this.categoriaVehiculo = categoriaVehiculo;
     }
 
     public String getCodigoBarra() {
-        return codigoBarra;
+	return codigoBarra;
     }
 
     public void setCodigoBarra(String codigoBarra) {
-        this.codigoBarra = codigoBarra;
+	this.codigoBarra = codigoBarra;
     }
 
     public ColorVehiculo getColorVehiculo() {
-        return colorVehiculo;
+	return colorVehiculo;
     }
 
     public void setColorVehiculo(ColorVehiculo colorVehiculo) {
-        this.colorVehiculo = colorVehiculo;
+	this.colorVehiculo = colorVehiculo;
     }
 
     public boolean isHabilitado() {
-        return habilitado;
+	return habilitado;
     }
 
     public void setHabilitado(boolean habilitado) {
-        this.habilitado = habilitado;
+	this.habilitado = habilitado;
     }
 
     public ModeloVehiculo getModeloVehiculo() {
-        return modeloVehiculo;
+	return modeloVehiculo;
     }
 
     public void setModeloVehiculo(ModeloVehiculo modeloVehiculo) {
-        this.modeloVehiculo = modeloVehiculo;
+	this.modeloVehiculo = modeloVehiculo;
     }
 
     public String getPatente() {
-        return patente;
+	return patente;
     }
 
     public void setPatente(String patente) {
-        this.patente = patente;
+	this.patente = patente;
     }
 
     public Cliente getCliente() {
-        return cliente;
+	return cliente;
     }
 
     public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+	this.cliente = cliente;
     }
 
     public Integer getId() {
-        return id;
+	return id;
+    }
+
+    public void setId(Integer id) {
+	this.id = id;
+    }
+
+    public int getAnio() {
+	return anio;
+    }
+
+    public void setAnio(int anio) {
+	this.anio = anio;
     }
 
     @Override
     public String toString() {
-	return "Vehiculo [vehiculoID=" + id + ", año=" + año + ", codigoBarra=" + codigoBarra + ", habilitado=" + habilitado
-		+ ", patente=" + patente + "]";
+	return "Vehiculo [vehiculoID=" + id + ", anio=" + anio + ", codigoBarra=" + codigoBarra + ", habilitado="
+		+ habilitado + ", patente=" + patente + "]";
     }
-    
-    
+
 }
