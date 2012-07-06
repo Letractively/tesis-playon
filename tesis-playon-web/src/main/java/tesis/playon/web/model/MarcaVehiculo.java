@@ -40,7 +40,7 @@ public class MarcaVehiculo implements Serializable{
     private String descripcion;
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "marca_vehiculo")
-    private Set<MarcaVehiculo> marcasVehiculo = new HashSet<MarcaVehiculo>(0);
+    private Set<ModeloVehiculo> modelos = new HashSet<ModeloVehiculo>(0);
     
     /**
      * Constructor con parámetros.
@@ -55,13 +55,11 @@ public class MarcaVehiculo implements Serializable{
 	this.descripcion = descripcion;
     }
        
-    public MarcaVehiculo(String nombre, String descripcion, Set<MarcaVehiculo> marcasVehiculo) {
+    public MarcaVehiculo(String nombre, String descripcion, Set<ModeloVehiculo> modelosVehiculo) {
 	this.nombre = nombre;
 	this.descripcion = descripcion;
-	this.marcasVehiculo = marcasVehiculo;
+	this.modelos = modelosVehiculo;
     }
-
-
 
     /**
      * Devuelve el ID del objeto.
@@ -110,12 +108,12 @@ public class MarcaVehiculo implements Serializable{
         this.descripcion = descripcion;
     }
     
-    public Set<MarcaVehiculo> getMarcasVehiculo() {
-        return marcasVehiculo;
+    public Set<ModeloVehiculo> getMarcasVehiculo() {
+        return modelos;
     }
 
-    public void setMarcasVehiculo(Set<MarcaVehiculo> marcasVehiculo) {
-        this.marcasVehiculo = marcasVehiculo;
+    public void setMarcasVehiculo(Set<ModeloVehiculo> modelosVehiculo) {
+        this.modelos = modelosVehiculo;
     }
 
     @Override

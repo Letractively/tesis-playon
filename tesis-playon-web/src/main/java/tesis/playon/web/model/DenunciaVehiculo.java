@@ -95,7 +95,7 @@ public class DenunciaVehiculo implements Serializable{
 
     @Override
     public String toString() {
-	return "DenunciaVehiculo [id=" + id + ", asunto=" + asunto + ", fechaAlta=" + fechaAlta + "]";
+	return "DenunciaVehiculo [denunciaVehiculoID=" + id + ", asunto=" + asunto + ", fechaAlta=" + fechaAlta + ", Vehiculo="+ vehiculo.getPatente() + ", Playa=" + playa.getNombre() + "]";
     }
 
    
