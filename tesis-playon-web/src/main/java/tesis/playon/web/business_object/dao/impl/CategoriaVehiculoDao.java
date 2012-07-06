@@ -15,7 +15,7 @@ import tesis.playon.web.model.CategoriaVehiculo;
  * @author Pablo
  *
  */
-@Repository("CategoriaVehiculoDao")
+@Repository("categoriaVehiculoDao")
 public class CategoriaVehiculoDao extends CustomHibernateDaoSupport implements ICategoriaVehiculoDao{
     
     

@@ -13,7 +13,7 @@ import tesis.playon.web.model.TipoDoc;
  * @author garribere
  *
  */
-@Repository("tipo_doc")
+@Repository("tipoDocDao")
 public class TipoDocDao extends CustomHibernateDaoSupport implements ITipoDocDao {
 
     public void save(TipoDoc tipoDoc) {

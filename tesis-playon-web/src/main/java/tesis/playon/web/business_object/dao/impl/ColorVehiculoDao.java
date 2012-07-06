@@ -15,7 +15,7 @@ import tesis.playon.web.model.ColorVehiculo;
  * @author Pablo
  *
  */
-@Repository("ColorVehiculoDao")
+@Repository("colorVehiculoDao")
 public class ColorVehiculoDao extends CustomHibernateDaoSupport implements IColorVehiculoDao {
     
     public void save(ColorVehiculo color) {

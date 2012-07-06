@@ -13,7 +13,7 @@ import tesis.playon.web.model.TipoEstadia;
  * @author garribere
  *
  */
-@Repository("tipo_estadia")
+@Repository("tipoEstadiaDao")
 public class TipoEstadiaDao extends CustomHibernateDaoSupport implements ITipoEstadiaDao {
 
     public void save(TipoEstadia tipoEstadia) {

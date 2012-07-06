@@ -15,7 +15,7 @@ import tesis.playon.web.model.DenunciaVehiculo;
  * @author Pablo
  *
  */
-@Repository("DenunciaVehiculoDao")
+@Repository("denunciaVehiculoDao")
 public class DenunciaVehiculoDao extends CustomHibernateDaoSupport implements IDenunciaVehiculoDao{
     
     public void save(DenunciaVehiculo denunciaVehiculo) {
