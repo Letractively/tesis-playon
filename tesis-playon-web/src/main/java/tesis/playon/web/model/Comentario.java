@@ -4,8 +4,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,9 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 /**
  * Clase de negocio que contiene los comentarios sobre una playa
@@ -65,7 +61,14 @@ public class Comentario implements Serializable {
 	this.playa = playa;
 	this.habilitado = habilitado;
 	this.fecha = fecha;
+    }
 
+    public Integer getId() {
+	return id;
+    }
+
+    public void setId(Integer id) {
+	this.id = id;
     }
 
     public Date getFecha() {
@@ -108,13 +111,25 @@ public class Comentario implements Serializable {
 	this.habilitado = habilitado;
     }
 
-    public Integer getId() {
-	return id;
+    public int getCalificacion() {
+	return calificacion;
+    }
+
+    public void setCalificacion(int calificacion) {
+	this.calificacion = calificacion;
+    }
+
+    public String getPatente() {
+	return patente;
+    }
+
+    public void setPatente(String patente) {
+	this.patente = patente;
     }
 
     @Override
     public String toString() {
-	return "Comentario [comentarioID=" + id + ", fecha: =" + fecha + ", comentairo: = " + comentario
+	return "Comentario [comentarioID=" + id + ", fecha: =" + fecha + ", comentario: = " + comentario
 		+ ", habilitado=" + habilitado + "]";
     }
 
