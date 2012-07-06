@@ -649,8 +649,8 @@ DROP TABLE IF EXISTS `perfil_playa`;
 CREATE TABLE `perfil_playa` (
   `descripcion` text,
   `nombreComercial` varchar(50) NOT NULL,
-  `perfilPlayaID` int(11) NOT NULL,
-  `playaID` int(11) DEFAULT NULL,
+  `perfilPlayaID` int(11) NOT NULL auto_increment,
+  `playaID` int(11) NOT NULL,
   PRIMARY KEY (`perfilPlayaID`),
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_perfil_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
@@ -737,13 +737,14 @@ CREATE TABLE `tarifa` (
   `fechaBaja` datetime DEFAULT NULL,
   `importe` float NOT NULL,
   `vigente` tinyint(1) DEFAULT NULL,
-  `tarifaID` int(11) NOT NULL,
-  `playaID` int(11) DEFAULT NULL,
+  `tarifaID` int(11) NOT NULL auto_increment,
+  `playaID` int(11) NOT NULL,
   `tipoEstadiaID` int(11) NOT NULL,
   `categoriaVehiculoID` int(11) NOT NULL,
   PRIMARY KEY (`tarifaID`),
   KEY `categoriaVehiculoID` (`categoriaVehiculoID`),
   KEY `tipoEstadiaID` (`tipoEstadiaID`),
+  CONSTRAINT `FK_tarifa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
   CONSTRAINT `FK_tarifa_tipo_estadia` FOREIGN KEY (`tipoEstadiaID`) REFERENCES `tipo_estadia` (`tipoEstadiaID`),
   CONSTRAINT `FK_tarifa_categoria_vehiculo` FOREIGN KEY (`categoriaVehiculoID`) REFERENCES `categoria_vehiculo` (`categoriaVehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cada instancia contiene un precio de la tarifa que depende del Categoría de vehículo, tipo de estadía (mensual, por hora, etc).      CategoríaVehiculo: utilitario   TipoEstadía: Mensual   Precio/tarifa: $720      CategoríaVehiculo: utilitario   TipoEstadía: Por hora   Precio/tarifa: $14      CategoríaVehiculo: auto   TipoEstadía: Por hora   Precio/tarifa: $12   ';
@@ -1189,10 +1190,10 @@ DROP TABLE IF EXISTS `posicion`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `posicion` (
   `tamanioKBMax` int(11) DEFAULT NULL,
-  `tamanioX` int(11) DEFAULT NULL,
-  `tamanioY` int(11) DEFAULT NULL,
+  `tamanioX` int(11) NOT NULL,
+  `tamanioY` int(11) NOT NULL,
   `ubicacion` text,
-  `posicionID` int(11) NOT NULL,
+  `posicionID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`posicionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Clase que contiene los datos sobre las ubicaciones y posiciones de las publicidades. (layout de publicidades)   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
