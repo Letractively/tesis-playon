@@ -3,7 +3,7 @@
 -- 		de la base de datos del proyecto tesis-playon.
 -- Project: Playon
 -- Author: Alejandro Bostico
--- Date: 04/07/2012
+-- Date: 06/07/2012
 -- Version: 2.0
 --
 -- HISTORIAL DE CAMBIOS
@@ -11,8 +11,10 @@
 -- Version 1.1 (20/06/2012) - Agregada la clase favorito
 --		Agregada la foreign key transaccion_playa.detalleEstadiaID(FK) --> 
 --		detalle_estadia.detalleEstadiaID(PK)
--- Versión 1.2 (04/07/2012) - Se cambiaron los nómbres de las tablas a minúsculas y con
+-- Version 1.2 (04/07/2012) - Se cambiaron los nómbres de las tablas a minúsculas y con
 --		guiones bajos para compatibilidad Windows - Linux
+-- Version 2.0 (06/07/2012) - Se uni� el script de creaci�n de usuario a este.
+-- 
 */
 
 
@@ -1320,6 +1322,24 @@ LOCK TABLES `rol_usuario` WRITE;
 INSERT INTO `rol_usuario` (`descripcion`, `nombre`, `rolUsuarioID`) VALUES ('Administrador del sistema','Administrador',1),('Auditor del sistema','Auditor',2),('usuario del Area administrativa/contable','Administración',3),('Usuario sin permisos especiales','usuario',4);
 /*!40000 ALTER TABLE `rol_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
+
+-- ------------------------------------------------------------------- --
+/**
+ * Crear el usuario 'playonAdmin' con password por defecto 'playon'.
+ */
+
+/* Descomentar la siguiente linea si el usuario existe */
+-- DROP USER 'playonAdmin';
+CREATE USER 'playonAdmin'@'localhost' 
+	IDENTIFIED BY PASSWORD '*AEBE50B9926D86DA86D2B880AA0DF19F0EEDDEF0';
+
+/**
+ * Asignamos todos los permisos al usuario 'playonAdmin' para la BD `tesis_playon`.
+ */
+GRANT ALL PRIVILEGES ON TABLE `tesis_playon`.* TO 'playonAdmin'@'localhost';
+
+-- ------------------------------------------------------------------- --
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
