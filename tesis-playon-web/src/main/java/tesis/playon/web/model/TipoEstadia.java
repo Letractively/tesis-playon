@@ -25,7 +25,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "tipo_estadia", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
 public class TipoEstadia implements Serializable {
 
-    private static final long serialVersionU	ID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -63,7 +63,7 @@ public class TipoEstadia implements Serializable {
 	this.nombre = nombre;
     }
 
-    public void getDescripcion() {
+    public String getDescripcion() {
         return descripcion;
     }
 

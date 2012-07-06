@@ -10,6 +10,6 @@ public interface ITipoEstadiaDao {
 
     void delete(TipoEstadia tipoEstadia);
 
-    Barrio findByNombreTipoEstadia(String nombreTipoEstadia);
+    TipoEstadia findByNombreTipoEstadia(String nombreTipoEstadia);
 
 }
