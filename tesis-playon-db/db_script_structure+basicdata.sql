@@ -554,7 +554,7 @@ DROP TABLE IF EXISTS `vehiculo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vehiculo` (
-  `año` int(11) DEFAULT NULL,
+  `anio` int(11) DEFAULT NULL,
   `categoriaID` int(11) DEFAULT NULL,
   `codigoBarra` varchar(50) DEFAULT NULL,
   `colorID` int(11) DEFAULT NULL,
@@ -1188,9 +1188,9 @@ DROP TABLE IF EXISTS `posicion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `posicion` (
-  `tamañoKBMax` int(11) DEFAULT NULL,
-  `tamañoX` int(11) DEFAULT NULL,
-  `tamañoY` int(11) DEFAULT NULL,
+  `tamanioKBMax` int(11) DEFAULT NULL,
+  `tamanioX` int(11) DEFAULT NULL,
+  `tamanioY` int(11) DEFAULT NULL,
   `ubicacion` text,
   `posicionID` int(11) NOT NULL,
   PRIMARY KEY (`posicionID`)
