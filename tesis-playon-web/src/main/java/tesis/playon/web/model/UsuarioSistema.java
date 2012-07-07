@@ -20,14 +20,14 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "perfil_playa", catalog = "tesis_playon")
+@Table(name = "usuario_sistema", catalog = "tesis_playon")
 public class UsuarioSistema implements Serializable {
 
     private static final long serialVersionUID = 2382561437443895633L;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "perfilPlayaID")
+    @Column(name = "usuarioSistemaID")
     private Integer id;
 
     @Column(name = "nombreComercial")
