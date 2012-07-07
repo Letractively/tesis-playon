@@ -90,7 +90,7 @@ public class DenunciaPlaya implements Serializable {
 
     @Override
     public String toString() {
-	return "DenunciaPlaya [denunciaPlayaID=" + id + ", asunto=" + asunto + ", fechaAlta=" + fechaAlta
+	return "DenunciaPlaya [denunciaPlayaID=" + id + ", asunto=" + asunto + ", fechaAlta=" + fechaAlta.toString()
 		+ ", Cliente=" + cliente.getNroCliente() + ", Playa=" + playa + "]";
     }
 
