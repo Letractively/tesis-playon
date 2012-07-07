@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -21,7 +22,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  * @date 07/07/2012
  */
 @Entity
-@Table(name = "sesion", catalog = "tesis_playon")
+@Table(name = "sesion", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "idSesion")})
 public class Sesion implements Serializable {
 
     private static final long serialVersionUID = 1L;
