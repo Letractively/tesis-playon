@@ -77,6 +77,5 @@ public class App {
 	paisDao.delete(otroPais);
 
 	System.out.println("Done");
-
     }
 }

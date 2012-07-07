@@ -13,7 +13,7 @@ import tesis.playon.web.model.UsuarioSistema;
  * @author gmorales
  * 
  */
-@Repository("paisDao")
+@Repository("usuarioSistemaDao")
 public class UsuarioSistemaDao extends CustomHibernateDaoSupport implements IUsuarioSistemaDao {
 
     public void save(UsuarioSistema UsuarioSistema) {
