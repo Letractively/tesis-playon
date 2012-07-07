@@ -1,5 +1,7 @@
 package tesis.playon.web.business_object.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.RolUsuario;
 
 public interface IRolUsuarioDao {
@@ -10,6 +12,8 @@ public interface IRolUsuarioDao {
 
     void delete(RolUsuario rolUsuario);
 
+    List<RolUsuario> findAll();
+    
     RolUsuario findByNombreRolUsuario(String nombreRolUsuario);
 
 }

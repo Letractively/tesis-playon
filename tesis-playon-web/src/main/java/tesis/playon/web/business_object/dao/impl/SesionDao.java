@@ -11,22 +11,18 @@ import tesis.playon.web.model.Sesion;
 @Repository("SesionDao")
 public class SesionDao extends CustomHibernateDaoSupport implements ISesionDao {
 
-    @Override
     public void save(Sesion sesion) {
 	getHibernateTemplate().save(sesion);
     }
 
-    @Override
     public void update(Sesion sesion) {
 	getHibernateTemplate().update(sesion);
     }
 
-    @Override
     public void delete(Sesion sesion) {
 	getHibernateTemplate().delete(sesion);
     }
 
-    @Override
     public Sesion findByIDSesionSesion(String idSesion) {
 	List<?> list = getHibernateTemplate().find("from Sesion where sesionId=?", idSesion);
 	return (Sesion) list.get(0);
