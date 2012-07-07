@@ -3,8 +3,8 @@
 -- 		de la base de datos del proyecto tesis-playon.
 -- Project: Playon
 -- Author: Alejandro Bostico
--- Date: 06/07/2012
--- Version: 2.0
+-- Date: 07/07/2012
+-- Version: 2.1
 --
 -- HISTORIAL DE CAMBIOS
 -- Version 1.0 (18/06/2012) - VersiÃ³n Inicial
@@ -14,18 +14,18 @@
 -- Version 1.2 (04/07/2012) - Se cambiaron los nÃ³mbres de las tablas a minÃºsculas y con
 --		guiones bajos para compatibilidad Windows - Linux
 -- Version 2.0 (06/07/2012) - Se unió el script de creación de usuario a este.
--- 
+-- Version 2.1 (07/07/2012) - Se agregaron todos los auto_increment en todas las tablas.
 */
 
 
 /********************************************************
- * PRECAUCIÃN!!!					* 
+ * PRECAUCION!!!					* 
  * Usar con cuidado que el script borra todas las 	*
  * tablas antes de crearlas.				*
  ********************************************************/
 
--- Descomentar la siguiente lÃ­nea para borrar la base de datos
--- antes de crear las tablas en caso de que fuera necesario.
+/* Descomentar la siguiente li­nea para borrar la base de datos
+ * antes de crear las tablas en caso de que fuera necesario. */
 -- DROP DATABASE IF EXISTS `tesis_playon`;
 
 /* Descomentar la siguiente linea si existe el usuario 'playonAdmin' */
@@ -58,11 +58,11 @@ DROP TABLE IF EXISTS `cuenta_playa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cuenta_playa` (
-  `fechaCreacion` datetime DEFAULT NULL,
-  `nroCuenta` int(11) DEFAULT NULL,
-  `saldo` float DEFAULT NULL,
-  `cuentaPlayaID` int(11) NOT NULL,
-  `playaID` int(11) DEFAULT NULL,
+  `fechaCreacion` datetime NOT NULL,
+  `nroCuenta` int(11) NOT NULL,
+  `saldo` float NOT NULL DEFAULT 0,
+  `cuentaPlayaID` int(11) NOT NULL auto_increment,
+  `playaID` int(11) NOT NULL,
   PRIMARY KEY (`cuentaPlayaID`),
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_cuenta_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
@@ -87,11 +87,11 @@ DROP TABLE IF EXISTS `denuncia_vehiculo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `denuncia_vehiculo` (
-  `asunto` text,
-  `fechaAlta` datetime DEFAULT NULL,
-  `vehiculoID` int(11) DEFAULT NULL,
-  `denunciaVehiculoID` int(11) NOT NULL,
-  `playaID` int(11) DEFAULT NULL,
+  `asunto` text DEFAULT NULL,
+  `fechaAlta` datetime NOT NULL,
+  `vehiculoID` int(11) NOT NULL,
+  `denunciaVehiculoID` int(11) NOT NULL auto_increment,
+  `playaID` int(11) NOT NULL,
   PRIMARY KEY (`denunciaVehiculoID`),
   KEY `vehiculoID` (`vehiculoID`),
   KEY `playaID` (`playaID`),
@@ -145,9 +145,9 @@ DROP TABLE IF EXISTS `estado_publicidad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `estado_publicidad` (
-  `descripcion` text,
-  `nombre` varchar(50) DEFAULT NULL,
-  `estadoPublicidadID` int(11) NOT NULL,
+  `descripcion` text DEFAULT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `estadoPublicidadID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`estadoPublicidadID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='ESTADOS:   *Vigente   *Vencida   *Cancelada   *Pendiente   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -171,16 +171,16 @@ DROP TABLE IF EXISTS `promocion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `promocion` (
-  `descripcion` text,
+  `descripcion` text DEFAULT NULL,
   `descuento` float DEFAULT NULL,
-  `fechaAlta` datetime DEFAULT NULL,
+  `fechaAlta` datetime NOT NULL,
   `fechaFin` datetime DEFAULT NULL,
   `fechaInicio` datetime DEFAULT NULL,
   `montoFijo` float DEFAULT NULL,
-  `nombre` varchar(50) DEFAULT NULL,
-  `tarifaID` int(11) DEFAULT NULL,
-  `promocionID` int(11) NOT NULL,
-  `playaID` int(11) DEFAULT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `tarifaID` int(11) NOT NULL,
+  `promocionID` int(11) NOT NULL auto_increment,
+  `playaID` int(11) NOT NULL,
   `estadoPromocionID` int(11) NOT NULL,
   PRIMARY KEY (`promocionID`),
   KEY `estadoPromocionID` (`estadoPromocionID`),
@@ -211,7 +211,7 @@ DROP TABLE IF EXISTS `color_vehiculo`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `color_vehiculo` (
   `nombre` varchar(50) NOT NULL,
-  `colorVehiculoID` int(11) NOT NULL,
+  `colorVehiculoID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`colorVehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -235,11 +235,11 @@ DROP TABLE IF EXISTS `cuenta_cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cuenta_cliente` (
-  `fechaCreacion` datetime DEFAULT NULL,
-  `nroCuenta` int(11) DEFAULT NULL,
-  `saldo` float DEFAULT NULL,
-  `cuentaClienteID` int(11) NOT NULL,
-  `clienteID` int(11) DEFAULT NULL,
+  `fechaCreacion` datetime NOT NULL,
+  `nroCuenta` int(11) NOT NULL UNIQUE,
+  `saldo` float NOT NULL DEFAULT 0,
+  `cuentaClienteID` int(11) NOT NULL auto_increment,
+  `clienteID` int(11) NOT NULL,
   PRIMARY KEY (`cuentaClienteID`),
   KEY `clienteID` (`clienteID`),
   CONSTRAINT `FK_cuenta_cliente_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`)
@@ -264,9 +264,9 @@ DROP TABLE IF EXISTS `estado_denuncia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `estado_denuncia` (
-  `descripcion` text,
-  `nombre` varchar(50) DEFAULT NULL,
-  `estadoDenunciaID` int(11) NOT NULL,
+  `descripcion` text DEFAULT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `estadoDenunciaID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`estadoDenunciaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -290,11 +290,11 @@ DROP TABLE IF EXISTS `denuncia_playa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `denuncia_playa` (
-  `asunto` text,
-  `fechaAlta` datetime DEFAULT NULL,
-  `playaID` int(11) DEFAULT NULL,
-  `denunciaPlayaID` int(11) NOT NULL,
-  `clienteID` int(11) DEFAULT NULL,
+  `asunto` text DEFAULT NULL,
+  `fechaAlta` datetime NOT NULL,
+  `playaID` int(11) NOT NULL,
+  `denunciaPlayaID` int(11) NOT NULL auto_increment,
+  `clienteID` int(11) NOT NULL,
   PRIMARY KEY (`denunciaPlayaID`),
   KEY `playaID` (`playaID`),
   KEY `clienteID` (`clienteID`),
@@ -323,13 +323,13 @@ DROP TABLE IF EXISTS `playa`;
 CREATE TABLE `playa` (
   `barrioID` int(11) DEFAULT NULL,
   `cuit` varchar(50) DEFAULT NULL,
-  `disponibilidad` tinyint(1) NOT NULL,
+  `disponibilidad` tinyint(1) DEFAULT NULL,
   `domicilio` varchar(50) DEFAULT NULL,
   `estadoPlayaID` int(11) NOT NULL,
-  `nombreComercial` varchar(50) DEFAULT NULL,
+  `nombreComercial` varchar(50) NOT NULL,
   `razonSocial` varchar(50) DEFAULT NULL,
-  `playaID` int(11) NOT NULL,
-  `estadiaID` int(11) DEFAULT NULL,
+  `playaID` int(11) NOT NULL auto_increment,
+  `estadiaID` int(11) NOT NULL,
   PRIMARY KEY (`playaID`),
   KEY `barrioID` (`barrioID`),
   KEY `estadoPlayaID` (`estadoPlayaID`),
@@ -358,12 +358,12 @@ DROP TABLE IF EXISTS `liquidacion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `liquidacion` (
-  `fecha` datetime DEFAULT NULL,
-  `fechaHasta` datetime DEFAULT NULL,
-  `ferchaDesde` datetime DEFAULT NULL,
-  `importeTotal` float DEFAULT NULL,
-  `liquidacionID` int(11) NOT NULL,
-  `estadiaID` int(11) DEFAULT NULL,
+  `fecha` datetime NOT NULL,
+  `fechaHasta` datetime NOT NULL,
+  `ferchaDesde` datetime NOT NULL,
+  `importeTotal` float NOT NULL DEFAULT 0,
+  `liquidacionID` int(11) NOT NULL auto_increment,
+  `estadiaID` int(11) NOT NULL,
   PRIMARY KEY (`liquidacionID`),
   KEY `estadiaID` (`estadiaID`),
   CONSTRAINT `FK_liquidacion_estadia` FOREIGN KEY (`estadiaID`) REFERENCES `estadia` (`estadiaID`)
@@ -388,9 +388,9 @@ DROP TABLE IF EXISTS `categoria_vehiculo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `categoria_vehiculo` (
-  `descripcion` text,
-  `nombre` varchar(50) DEFAULT NULL,
-  `categoriaVehiculoID` int(11) NOT NULL,
+  `descripcion` text DEFAULT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `categoriaVehiculoID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`categoriaVehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Son los tÃ­pos de vehÃ­culos. Moto, Auto, Utilitario, PickUp, etc.   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -414,9 +414,9 @@ DROP TABLE IF EXISTS `estado_playa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `estado_playa` (
-  `descripcion` text,
+  `descripcion` text DEFAULT NULL,
   `nombre` varchar(50) NOT NULL,
-  `estadoPlayaID` int(11) NOT NULL,
+  `estadoPlayaID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`estadoPlayaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -440,10 +440,10 @@ DROP TABLE IF EXISTS `transaccion_cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `transaccion_cliente` (
-  `fecha` datetime DEFAULT NULL,
-  `importe` float DEFAULT NULL,
-  `tipoPagoID` int(11) DEFAULT NULL,
-  `transaccionClienteID` int(11) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `importe` float NOT NULL,
+  `tipoPagoID` int(11) NOT NULL,
+  `transaccionClienteID` int(11) NOT NULL auto_increment,
   `cuentaClienteID` int(11) NOT NULL,
   PRIMARY KEY (`transaccionClienteID`),
   KEY `cuentaClienteID` (`cuentaClienteID`),
@@ -471,9 +471,9 @@ DROP TABLE IF EXISTS `tipo_estadia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tipo_estadia` (
-  `descripcion` text,
+  `descripcion` text DEFAULT NULL,
   `nombre` varchar(50) NOT NULL,
-  `tipoEstadiaID` int(11) NOT NULL,
+  `tipoEstadiaID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`tipoEstadiaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='TIPOS DE ESTADIA:   * Por hora   * Por dia   * Por noche   * Por Mes   * Por Semana   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -497,10 +497,10 @@ DROP TABLE IF EXISTS `historial_de_cambio`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `historial_de_cambio` (
-  `comentario` text,
+  `comentario` text DEFAULT NULL,
   `estadoDenunciaID` int(11) NOT NULL,
-  `fecha` datetime DEFAULT NULL,
-  `historialDeCambioID` int(11) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `historialDeCambioID` int(11) NOT NULL auto_increment,
   `denunciaPlayaID` int(11) DEFAULT NULL,
   `denunciaVehiculoID` int(11) DEFAULT NULL,
   PRIMARY KEY (`historialDeCambioID`),
@@ -531,9 +531,9 @@ DROP TABLE IF EXISTS `foto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `foto` (
-  `descripcion` text,
+  `descripcion` text DEFAULT NULL,
   `link` varchar(50) NOT NULL,
-  `fotoID` int(11) NOT NULL,
+  `fotoID` int(11) NOT NULL auto_increment,
   `perfilPlayaID` int(11) NOT NULL,
   PRIMARY KEY (`fotoID`),
   KEY `perfilPlayaID` (`perfilPlayaID`),
@@ -560,14 +560,14 @@ DROP TABLE IF EXISTS `vehiculo`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vehiculo` (
   `anio` int(11) DEFAULT NULL,
-  `categoriaID` int(11) DEFAULT NULL,
+  `categoriaID` int(11) NOT NULL,
   `codigoBarra` varchar(50) DEFAULT NULL,
   `colorID` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   `modeloVehiculoID` int(11) NOT NULL,
-  `patente` varchar(50) DEFAULT NULL,
-  `vehiculoID` int(11) NOT NULL,
-  `clienteID` int(11) DEFAULT NULL,
+  `patente` varchar(50) NOT NULL UNIQUE,
+  `vehiculoID` int(11) NOT NULL auto_increment,
+  `clienteID` int(11) NOT NULL,
   PRIMARY KEY (`vehiculoID`),
   KEY `categoriaID` (`categoriaID`),
   KEY `modeloVehiculoID` (`modeloVehiculoID`),
@@ -596,10 +596,10 @@ DROP TABLE IF EXISTS `empleado`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `empleado` (
-  `cargoEmpleadoID` int(11) DEFAULT NULL,
-  `legajo` int(11) DEFAULT NULL,
-  `empleadoID` int(11) NOT NULL,
-  `usuarioID` int(11) DEFAULT NULL,
+  `cargoEmpleadoID` int(11) NOT NULL,
+  `legajo` int(11) NOT NULL UNIQUE,
+  `empleadoID` int(11) NOT NULL auto_increment,
+  `usuarioID` int(11) NOT NULL,
   PRIMARY KEY (`empleadoID`),
   KEY `cargoEmpleadoID` (`cargoEmpleadoID`),
   KEY `usuarioID` (`usuarioID`),
@@ -626,9 +626,9 @@ DROP TABLE IF EXISTS `cargo_empleado`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cargo_empleado` (
-  `descripcion` text,
-  `nombre` varchar(50) DEFAULT NULL,
-  `cargoEmpleadoID` int(11) NOT NULL,
+  `descripcion` text DEFAULT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `cargoEmpleadoID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`cargoEmpleadoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -652,7 +652,7 @@ DROP TABLE IF EXISTS `perfil_playa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `perfil_playa` (
-  `descripcion` text,
+  `descripcion` text DEFAULT NULL,
   `nombreComercial` varchar(50) NOT NULL,
   `perfilPlayaID` int(11) NOT NULL auto_increment,
   `playaID` int(11) NOT NULL,
@@ -682,10 +682,10 @@ DROP TABLE IF EXISTS `abono`;
 CREATE TABLE `abono` (
   `fechaVigenciaDesde` datetime DEFAULT NULL,
   `fechaVigenciaHasta` datetime DEFAULT NULL,
-  `tarifaID` int(11) DEFAULT NULL,
-  `abonoID` int(11) NOT NULL,
-  `clienteID` int(11) DEFAULT NULL,
-  `playaID` int(11) DEFAULT NULL,
+  `tarifaID` int(11) NOT NULL,
+  `abonoID` int(11) NOT NULL auto_increment,
+  `clienteID` int(11) NOT NULL,
+  `playaID` int(11) NOT NULL,
   PRIMARY KEY (`abonoID`),
   KEY `tarifaID` (`tarifaID`),
   KEY `clienteID` (`clienteID`),
@@ -834,7 +834,7 @@ CREATE TABLE `usuario` (
   `password` varchar(50) DEFAULT NULL,
   `sesion` varchar(50) DEFAULT NULL,
   `usuario` varchar(50) NOT NULL,
-  `usuarioID` int(11) NOT NULL,
+  `usuarioID` int(11) NOT NULL auto_increment,
   `tipoDocID` int(11) DEFAULT NULL,
   `nroDoc` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`usuarioID`),
@@ -861,9 +861,9 @@ DROP TABLE IF EXISTS `tipo_pago`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tipo_pago` (
-  `descripcion` text,
+  `descripcion` text DEFAULT NULL,
   `nombre` varchar(50) NOT NULL,
-  `tipoPagoID` int(11) NOT NULL,
+  `tipoPagoID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`tipoPagoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -890,7 +890,7 @@ CREATE TABLE `transaccion_playa` (
   `fecha` datetime DEFAULT NULL,
   `importe` float DEFAULT NULL,
   `tipoPagoID` int(11) DEFAULT NULL,
-  `transaccionPlayaID` int(11) NOT NULL,
+  `transaccionPlayaID` int(11) NOT NULL auto_increment,
   `cuentaPlayaID` int(11) DEFAULT NULL,
   `liquidacionID` int(11) DEFAULT NULL,
   `detalleEstadiaID` int(11) DEFAULT NULL,
@@ -924,9 +924,9 @@ DROP TABLE IF EXISTS `marca_vehiculo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `marca_vehiculo` (
-  `descripcion` text,
+  `descripcion` text DEFAULT NULL,
   `nombre` varchar(50) NOT NULL,
-  `marcaVehiculoID` int(11) NOT NULL,
+  `marcaVehiculoID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`marcaVehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -949,8 +949,8 @@ DROP TABLE IF EXISTS `estadia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `estadia` (
-  `estadiaID` int(11) NOT NULL,
-  `playaID` int(11) DEFAULT NULL,
+  `estadiaID` int(11) NOT NULL auto_increment,
+  `playaID` int(11) NOT NULL,
   PRIMARY KEY (`estadiaID`),
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_estadia_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
@@ -975,10 +975,10 @@ DROP TABLE IF EXISTS `modelo_vehiculo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `modelo_vehiculo` (
-  `descripcion` text,
+  `descripcion` text DEFAULT NULL,
   `nombre` varchar(50) NOT NULL,
-  `modeloVehiculoID` int(11) NOT NULL,
-  `marcaVehiculoID` int(11) DEFAULT NULL,
+  `modeloVehiculoID` int(11) NOT NULL auto_increment,
+  `marcaVehiculoID` int(11) NOT NULL,
   PRIMARY KEY (`modeloVehiculoID`),
   KEY `marcaVehiculoID` (`marcaVehiculoID`),
   CONSTRAINT `FK_modelo_vehiculo_marca_vehiculo` FOREIGN KEY (`marcaVehiculoID`) REFERENCES `marca_vehiculo` (`marcaVehiculoID`)
@@ -1031,12 +1031,12 @@ DROP TABLE IF EXISTS `cliente`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cliente` (
   `barrioID` int(11) DEFAULT NULL,
-  `cuentaClienteID` int(11) DEFAULT NULL,
-  `domicilio` text,
-  `nroCliente` int(11) DEFAULT NULL,
-  `telefono` text,
-  `clienteID` int(11) NOT NULL,
-  `usuarioID` int(11) DEFAULT NULL,
+  `cuentaClienteID` int(11) NOT NULL,
+  `domicilio` text DEFAULT NULL,
+  `nroCliente` int(11) NOT NULL,
+  `telefono` text DEFAULT NULL,
+  `clienteID` int(11) NOT NULL auto_increment,
+  `usuarioID` int(11) NOT NULL,
   PRIMARY KEY (`clienteID`),
   KEY `barrioID` (`barrioID`),
   KEY `usuarioID` (`usuarioID`),
@@ -1064,7 +1064,7 @@ DROP TABLE IF EXISTS `tipo_doc`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tipo_doc` (
   `nombre` varchar(50) NOT NULL,
-  `tipoDocID` int(11) NOT NULL,
+  `tipoDocID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`tipoDocID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1091,8 +1091,8 @@ CREATE TABLE `publicidad` (
   `estadoPublicidadID` int(11) NOT NULL,
   `posicionID` int(11) NOT NULL,
   `urlImagen` varchar(50) DEFAULT NULL,
-  `publicidadID` int(11) NOT NULL,
-  `playaID` int(11) DEFAULT NULL,
+  `publicidadID` int(11) NOT NULL auto_increment,
+  `playaID` int(11) NOT NULL,
   PRIMARY KEY (`publicidadID`),
   KEY `estadoPublicidadID` (`estadoPublicidadID`),
   KEY `posicionID` (`posicionID`),
@@ -1128,8 +1128,8 @@ CREATE TABLE `detalle_estadia` (
   `importeTotal` float DEFAULT NULL,
   `promocionID` int(11) DEFAULT NULL,
   `tarifaID` int(11) NOT NULL,
-  `vehiculoID` int(11) DEFAULT NULL,
-  `detalleEstadiaID` int(11) NOT NULL,
+  `vehiculoID` int(11) NOT NULL,
+  `detalleEstadiaID` int(11) NOT NULL auto_increment,
   `estadiaID` int(11) NOT NULL,
   PRIMARY KEY (`detalleEstadiaID`),
   KEY `empleadoID` (`empleadoID`),
@@ -1168,7 +1168,7 @@ CREATE TABLE `sesion` (
   `fechaFin` datetime DEFAULT NULL,
   `fechaInicio` datetime DEFAULT NULL,
   `idSesion` varchar(50) NOT NULL,
-  `sesionID` int(11) NOT NULL,
+  `sesionID` int(11) NOT NULL auto_increment,
   `usuarioID` int(11) DEFAULT NULL,
   PRIMARY KEY (`sesionID`),
   KEY `usuarioID` (`usuarioID`),
@@ -1194,10 +1194,10 @@ DROP TABLE IF EXISTS `posicion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `posicion` (
-  `tamanioKBMax` int(11) DEFAULT NULL,
-  `tamanioX` int(11) NOT NULL,
-  `tamanioY` int(11) NOT NULL,
-  `ubicacion` text,
+  `tamanioKBMax` int(11) NOT NULL DEFAULT 0,
+  `tamanioX` int(11) NOT NULL DEFAULT 0,
+  `tamanioY` int(11) NOT NULL DEFAULT 0,
+  `ubicacion` text DEFAULT NULL,
   `posicionID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`posicionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Clase que contiene los datos sobre las ubicaciones y posiciones de las publicidades. (layout de publicidades)   ';
@@ -1221,9 +1221,9 @@ DROP TABLE IF EXISTS `estado_promocion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `estado_promocion` (
-  `descripcion` text,
+  `descripcion` text DEFAULT NULL,
   `nombre` varchar(50) NOT NULL,
-  `estadoPromocionID` int(11) NOT NULL,
+  `estadoPromocionID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`estadoPromocionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='ESTADOS:   *Vigente   *Vencida   *Cancelada   *Pendiente   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1251,9 +1251,9 @@ CREATE TABLE `comentario` (
   `comentario` text NOT NULL,
   `fecha` datetime NOT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
-  `playaID` int(11) DEFAULT NULL,
-  `comentarioID` int(11) NOT NULL,
-  `clienteID` int(11) DEFAULT NULL,
+  `playaID` int(11) NOT NULL,
+  `comentarioID` int(11) NOT NULL auto_increment,
+  `clienteID` int(11) NOT NULL,
   PRIMARY KEY (`comentarioID`),
   KEY `playaID` (`playaID`),
   KEY `clienteID` (`clienteID`),
@@ -1281,7 +1281,7 @@ DROP TABLE IF EXISTS `usuario_sistema`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuario_sistema` (
   `rolUsuarioID` int(11) NOT NULL,
-  `usuarioSistemaID` int(11) NOT NULL,
+  `usuarioSistemaID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`usuarioSistemaID`),
   KEY `rolUsuarioID` (`rolUsuarioID`),
   KEY `usuarioSistemaID` (`usuarioSistemaID`),
@@ -1308,7 +1308,7 @@ DROP TABLE IF EXISTS `rol_usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rol_usuario` (
-  `descripcion` text,
+  `descripcion` text DEFAULT NULL,
   `nombre` varchar(50) NOT NULL,
   `rolUsuarioID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`rolUsuarioID`)
