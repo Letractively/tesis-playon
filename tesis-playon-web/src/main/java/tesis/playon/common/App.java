@@ -70,11 +70,11 @@ public class App {
 	otroPais = paisDao.findByNombrePais("Republica Argentina");
 	System.out.println(otroPais);
 
-	/** delete **/
-	provinciaDao.delete(otroProvincia);
-
-	/** delete **/
-	paisDao.delete(otroPais);
+//	/** delete **/
+//	provinciaDao.delete(otroProvincia);
+//
+//	/** delete **/
+//	paisDao.delete(otroPais);
 
 	System.out.println("Done");
     }
