@@ -129,7 +129,7 @@ public class Comentario implements Serializable {
 
     @Override
     public String toString() {
-	return "Comentario [comentarioID=" + id + ", fecha: =" + fecha + ", comentario: = " + comentario
+	return "Comentario [comentarioID=" + id + ", fecha: =" + fecha.toString() + ", comentario: = " + comentario
 		+ ", habilitado=" + habilitado + "]";
     }
 
