@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * Clase de negocio que contiene los diferentes estados de una promoc
+ * Clase de negocio que contiene los diferentes estados de una promoción.
  * 
  * @author garribere
  * @date 05/07/2012
