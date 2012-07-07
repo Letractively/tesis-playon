@@ -1,5 +1,7 @@
 package tesis.playon.web.business_object.dao.impl;
 
+import org.springframework.stereotype.Repository;
+
 import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.business_object.dao.IPublicidadDao;
 import tesis.playon.web.model.Publicidad;
@@ -9,6 +11,7 @@ import tesis.playon.web.model.Publicidad;
  * @author alejandro
  * @date 07/07/2012
  */
+@Repository("PublicidadDao")
 public class PublicidadDao extends CustomHibernateDaoSupport implements IPublicidadDao {
 
     @Override
