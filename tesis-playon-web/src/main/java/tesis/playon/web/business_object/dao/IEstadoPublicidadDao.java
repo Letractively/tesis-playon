@@ -1,5 +1,7 @@
 package tesis.playon.web.business_object.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.EstadoPublicidad;
 
 public interface IEstadoPublicidadDao {
@@ -11,5 +13,6 @@ public interface IEstadoPublicidadDao {
     void delete(EstadoPublicidad estadoPublicidad);
 
     EstadoPublicidad findByNombreEstadoPublicidad(String nombreEstadoPublicidad);
-
+    
+    List<EstadoPublicidad> findAll();
 }

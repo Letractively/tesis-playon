@@ -1,7 +1,7 @@
 package tesis.playon.web.business_object.dao.impl;
 
 import java.util.List;
-
+import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import tesis.playon.util.CustomHibernateDaoSupport;
@@ -31,5 +31,15 @@ public class EstadoPublicidadDao extends CustomHibernateDaoSupport implements IE
 	List<?> list = getHibernateTemplate().find("from EstadoPublicidad where nombre=?", nombreEstadoPublicidad);
 	return (EstadoPublicidad) list.get(0);
     }
-    
+
+    @Override
+    public List<EstadoPublicidad> findAll() {
+	List<EstadoPublicidad> listaEstadoPublicidad = new ArrayList<EstadoPublicidad>();
+	List<?> list = getHibernateTemplate().find("from EstadoPublicidad");
+	for (Object obj : list) {
+	    listaEstadoPublicidad.add((EstadoPublicidad) obj);
+	}
+	return listaEstadoPublicidad;
+    }
+
 }
