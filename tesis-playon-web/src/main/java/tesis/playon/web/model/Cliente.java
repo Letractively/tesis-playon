@@ -24,15 +24,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "cliente", catalog = "tesis_playon")
-public class Cliente implements Serializable{
-    
+public class Cliente implements Serializable {
+
     private static final long serialVersionUID = 2382561437443895633L;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "clienteID")
     private Integer id;
-    
+
     @Column(name = "nroCliente")
     private Integer nroCliente;
 
@@ -41,74 +41,84 @@ public class Cliente implements Serializable{
 
     @Column(name = "telefono")
     private String telefono;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "barrioID")
-    private Barrio barrioID;
-    
+    private Barrio barrio;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cuentaClienteID")
-    private CuentaCliente cuentaClienteID;
-    
+    private CuentaCliente cuentaCliente;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuarioID")
-    private Usuario usuarioID;
+    private Usuario usuario;
 
-    public Integer getNroCliente() {
-        return nroCliente;
+    public Cliente() {
+
     }
 
-    public void setNroCliente(Integer nroCliente) {
-        this.nroCliente = nroCliente;
-    }
+    public Cliente(int nroCliente, String telefono, String domicilio) {
+	this.nroCliente = nroCliente;
+	this.telefono = telefono;
+	this.domicilio = domicilio;
 
-    public String getDomicilio() {
-        return domicilio;
-    }
-
-    public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public Barrio getBarrioID() {
-        return barrioID;
-    }
-
-    public void setBarrioID(Barrio barrioID) {
-        this.barrioID = barrioID;
-    }
-
-    public CuentaCliente getCuentaClienteID() {
-        return cuentaClienteID;
-    }
-
-    public void setCuentaClienteID(CuentaCliente cuentaClienteID) {
-        this.cuentaClienteID = cuentaClienteID;
-    }
-
-    public Usuario getUsuarioID() {
-        return usuarioID;
-    }
-
-    public void setUsuarioID(Usuario usuarioID) {
-        this.usuarioID = usuarioID;
     }
 
     public Integer getId() {
-        return id;
+	return id;
     }
-    
+
+    public Integer getNroCliente() {
+	return nroCliente;
+    }
+
+    public void setNroCliente(Integer nroCliente) {
+	this.nroCliente = nroCliente;
+    }
+
+    public String getDomicilio() {
+	return domicilio;
+    }
+
+    public void setDomicilio(String domicilio) {
+	this.domicilio = domicilio;
+    }
+
+    public String getTelefono() {
+	return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+	this.telefono = telefono;
+    }
+
+    public Barrio getBarrio() {
+	return barrio;
+    }
+
+    public void setBarrio(Barrio barrio) {
+	this.barrio = barrio;
+    }
+
+    public CuentaCliente getCuentaCliente() {
+	return cuentaCliente;
+    }
+
+    public void setCuentaCliente(CuentaCliente cuentaCliente) {
+	this.cuentaCliente = cuentaCliente;
+    }
+
+    public Usuario getUsuario() {
+	return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+	this.usuario = usuario;
+    }
+
     @Override
     public String toString() {
-	return "Cliente [clienteID=" + id + ", nroCliente=" + nroCliente + ", domicilio=" + domicilio
-		+ "]";
+	return "Cliente [clienteID=" + id + ", nroCliente=" + nroCliente + ", domicilio=" + domicilio + "]";
     }
 }
