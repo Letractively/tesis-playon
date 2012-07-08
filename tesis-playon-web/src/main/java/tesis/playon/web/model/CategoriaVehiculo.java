@@ -35,9 +35,11 @@ public class CategoriaVehiculo implements Serializable{
     private String descripcion;
 
     public CategoriaVehiculo(String nombre, String descripcion) {
-	super();
 	this.nombre = nombre;
 	this.descripcion = descripcion;
+    }    
+
+    public CategoriaVehiculo() {
     }
 
     public String getNombre() {
@@ -62,7 +64,7 @@ public class CategoriaVehiculo implements Serializable{
 
     @Override
     public String toString() {
-	return "CategoriaVehiculo [categoriaVehiculoID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
+	return "CategoriaVehiculo:\t[categoriaVehiculoID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
     }
     
     

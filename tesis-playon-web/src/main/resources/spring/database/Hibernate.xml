@@ -29,7 +29,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 				<value>tesis.playon.web.model.Provincia</value>
 <!-- 				<value>tesis.playon.web.model.RolUsuario</value> -->
 <!-- 				<value>tesis.playon.web.model.CargoEmpleado</value> -->
-<!-- 				<value>tesis.playon.web.model.CategoriaVehiculo</value> -->
+				<value>tesis.playon.web.model.CategoriaVehiculo</value>
 <!-- 				<value>tesis.playon.web.model.Cliente</value> -->
 				<value>tesis.playon.web.model.ColorVehiculo</value>
 <!-- 				<value>tesis.playon.web.model.Comentario</value> -->

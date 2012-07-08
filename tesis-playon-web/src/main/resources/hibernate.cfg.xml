@@ -10,7 +10,7 @@
 		<mapping class="tesis.playon.web.model.Pais" />
 		<mapping class="tesis.playon.web.model.Provincia" />
 <!-- 		<mapping class="tesis.playon.web.model.CargoEmpleado" /> -->
-<!-- 		<mapping class="tesis.playon.web.model.CategoriaVehiculo" /> -->
+		<mapping class="tesis.playon.web.model.CategoriaVehiculo" />
 <!-- 		<mapping class="tesis.playon.web.model.Cliente" /> -->
 		<mapping class="tesis.playon.web.model.ColorVehiculo" />
 <!-- 		<mapping class="tesis.playon.web.model.Comentario" /> -->

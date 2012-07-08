@@ -3,6 +3,7 @@
  */
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -36,5 +37,12 @@ public class CategoriaVehiculoDao extends CustomHibernateDaoSupport implements I
 	return (CategoriaVehiculo) list.get(0);
     }
     
-
+    public List<CategoriaVehiculo> findAll(){
+	List<CategoriaVehiculo> categorias = new ArrayList<CategoriaVehiculo>();
+	List<?> list = getHibernateTemplate().find("from CategoriaVehiculo");
+	for (Object object : list) {
+	    categorias.add((CategoriaVehiculo) object);
+	}
+	return categorias;
+    }
 }
