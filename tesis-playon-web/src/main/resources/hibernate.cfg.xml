@@ -12,7 +12,7 @@
 <!-- 		<mapping class="tesis.playon.web.model.CargoEmpleado" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.CategoriaVehiculo" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.Cliente" /> -->
-<!-- 		<mapping class="tesis.playon.web.model.ColorVehiculo" /> -->
+		<mapping class="tesis.playon.web.model.ColorVehiculo" />
 <!-- 		<mapping class="tesis.playon.web.model.Comentario" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.CuentaCliente" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.CuentaPlaya" /> -->

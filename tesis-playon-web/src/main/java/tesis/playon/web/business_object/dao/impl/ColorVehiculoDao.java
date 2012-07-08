@@ -3,6 +3,7 @@
  */
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -33,5 +34,14 @@ public class ColorVehiculoDao extends CustomHibernateDaoSupport implements IColo
     public ColorVehiculo findByNombreColorVehiculo(String colorVehiculo) {
 	List<?> list = getHibernateTemplate().find("from ColorVehiculo where nombre=?", colorVehiculo);
 	return (ColorVehiculo) list.get(0);
+    }
+    
+    public List<ColorVehiculo> findAll(){
+	List<ColorVehiculo> colores = new ArrayList<ColorVehiculo>();
+	List<?> list = getHibernateTemplate().find("from ColorVehiculo");
+	for (Object object : list) {
+	    colores.add((ColorVehiculo) object);
+	}
+	return colores;
     }
 }
