@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * @author garribere
@@ -23,7 +24,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "empleado", catalog = "tesis_playon")
+@Table(name = "empleado", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "legajo")})
 public class Empleado implements Serializable {
 
     private static final long serialVersionUID = 2382561437443895633L;

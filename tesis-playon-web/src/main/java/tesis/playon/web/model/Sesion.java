@@ -25,7 +25,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "sesion", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "idSesion")})
 public class Sesion implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3859234299526922177L;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
