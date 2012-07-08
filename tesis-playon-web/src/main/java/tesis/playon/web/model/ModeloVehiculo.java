@@ -50,6 +50,10 @@ public class ModeloVehiculo implements Serializable{
     }
 
 
+    public ModeloVehiculo() {
+    }
+
+
     public String getNombre() {
         return nombre;
     }
@@ -87,11 +91,6 @@ public class ModeloVehiculo implements Serializable{
 
     @Override
     public String toString() {
-	return "ModeloVehiculo [modeloVehiculoID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", marcaVehiculo="
-		+ marcaVehiculo.getNombre() + "]";
+	return "ModeloVehiculo:\t [modeloVehiculoID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion /**+ ", marcaVehiculo= " + marcaVehiculo.getNombre()**/ + "]";
     }
-    
-    
-    
-    
 }

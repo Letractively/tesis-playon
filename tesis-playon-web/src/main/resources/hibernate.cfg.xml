@@ -23,7 +23,7 @@
 <!-- 		<mapping class="tesis.playon.web.model.EstadoPromocion" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.Favorito" /> -->
 		<mapping class="tesis.playon.web.model.EstadoPublicidad" />
-<!-- 		<mapping class="tesis.playon.web.model.MarcaVehiculo" /> -->
+		<mapping class="tesis.playon.web.model.MarcaVehiculo" />
 <!-- 		<mapping class="tesis.playon.web.model.PerfilPlaya" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.Playa" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.Posicion" /> -->
@@ -47,6 +47,6 @@
 <!-- 		<mapping class="tesis.playon.web.model.Estadia" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.DetalleEstadia" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.Foto" /> -->
-<!-- 		<mapping class="tesis.playon.web.model.ModeloVehiculo" /> -->
+		<mapping class="tesis.playon.web.model.ModeloVehiculo" />
 		</session-factory>
 </hibernate-configuration>

@@ -7,6 +7,7 @@ package tesis.playon.web.business_object.dao.impl;
  * @author Pablo
  *
  */
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 
@@ -34,4 +35,12 @@ public class MarcaVehiculoDao extends CustomHibernateDaoSupport implements IMarc
 	return (MarcaVehiculo) list.get(0);
     }
 
+    public List<MarcaVehiculo> findAll(){
+	List<MarcaVehiculo> marcas = new ArrayList<MarcaVehiculo>();
+	List<?> list = getHibernateTemplate().find("from MarcaVehiculo");
+	for (Object object : list) {
+	    marcas.add((MarcaVehiculo) object);
+	}
+	return marcas;
+    }
 }

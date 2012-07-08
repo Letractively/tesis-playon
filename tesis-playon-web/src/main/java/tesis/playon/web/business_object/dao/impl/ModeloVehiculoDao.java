@@ -3,6 +3,7 @@
  */
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -34,5 +35,13 @@ public class ModeloVehiculoDao extends CustomHibernateDaoSupport implements IMod
 	List<?> list = getHibernateTemplate().find("from ModeloVehiculo where nombre=?", nombreModelo);
 	return (ModeloVehiculo) list.get(0);
     }
-
+    
+    public List<ModeloVehiculo> findAll(){
+	List<ModeloVehiculo> modelos = new ArrayList<ModeloVehiculo>();
+	List<?> list = getHibernateTemplate().find("from ModeloVehiculo");
+	for (Object object : list) {
+	    modelos.add((ModeloVehiculo)object);
+	}
+	return modelos;
+    }
 }

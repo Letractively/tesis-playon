@@ -41,7 +41,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 <!-- 				<value>tesis.playon.web.model.EstadoDenuncia</value> -->
 <!-- 				<value>tesis.playon.web.model.EstadoPromocion</value> -->
 <!-- 				<value>tesis.playon.web.model.Favorito</value> -->
-<!-- 				<value>tesis.playon.web.model.MarcaVehiculo</value> -->
+				<value>tesis.playon.web.model.MarcaVehiculo</value>
 <!-- 				<value>tesis.playon.web.model.PerfilPlaya</value> -->
 <!-- 				<value>tesis.playon.web.model.Playa</value> -->
 <!-- 				<value>tesis.playon.web.model.Posicion</value> -->
@@ -64,7 +64,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 <!-- 				<value>tesis.playon.web.model.Estadia</value> -->
 <!-- 				<value>tesis.playon.web.model.DetalleEstadia</value> -->
 <!-- 				<value>tesis.playon.web.model.Foto</value> -->
-<!-- 				<value>tesis.playon.web.model.ModeloVehiculo</value> -->
+				<value>tesis.playon.web.model.ModeloVehiculo</value>
 			</list>
 		</property>
 

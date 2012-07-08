@@ -49,8 +49,7 @@ public class MarcaVehiculo implements Serializable{
      * @param nombre
      * @param descripcion
      */
-    public MarcaVehiculo(Integer id, String nombre, String descripcion) {
-	this.id = id;
+    public MarcaVehiculo(String nombre, String descripcion) {
 	this.nombre = nombre;
 	this.descripcion = descripcion;
     }
@@ -59,6 +58,9 @@ public class MarcaVehiculo implements Serializable{
 	this.nombre = nombre;
 	this.descripcion = descripcion;
 	this.modelos = modelosVehiculo;
+    }    
+
+    public MarcaVehiculo() {
     }
 
     /**
@@ -118,7 +120,7 @@ public class MarcaVehiculo implements Serializable{
 
     @Override
     public String toString() {
-	return "MarcaVehiculo [marcaVehiculoID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
+	return "MarcaVehiculo:\t [marcaVehiculoID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
     }
 
 }

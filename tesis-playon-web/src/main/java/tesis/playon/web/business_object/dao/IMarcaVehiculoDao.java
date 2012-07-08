@@ -1,6 +1,7 @@
 package tesis.playon.web.business_object.dao;
 
 import tesis.playon.web.model.MarcaVehiculo;
+import java.util.List;
 
 public interface IMarcaVehiculoDao {
 
@@ -11,4 +12,6 @@ public interface IMarcaVehiculoDao {
     void delete(MarcaVehiculo marcaVehiculo);
 
     MarcaVehiculo findByNombreMarcaVehiculo(String nombreMarcaVehiculo);
+    
+    List<MarcaVehiculo> findAll();
 }
