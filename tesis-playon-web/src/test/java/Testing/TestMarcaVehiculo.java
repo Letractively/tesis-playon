@@ -24,8 +24,8 @@ public class TestMarcaVehiculo {
 	
 	System.out.println("\n");
 	/** insert **/
-	MarcaVehiculo marca = new MarcaVehiculo("Renault", null);
-	MarcaVehiculo marca1 = new MarcaVehiculo("Ford", null);
+	MarcaVehiculo marca = new MarcaVehiculo("Subaru", null);
+	MarcaVehiculo marca1 = new MarcaVehiculo("Lexus", null);
 	iMarca.save(marca);
 	iMarca.save(marca1);
 	List<MarcaVehiculo> marcas = iMarca.findAll();
@@ -41,9 +41,9 @@ public class TestMarcaVehiculo {
 	
 	System.out.println("\n");
 	/** update **/
-	marca.setNombre("Citroen");
+	marca.setNombre("Ferrari");
 	iMarca.update(marca);
-	System.out.println("Marca Modificada:\t" + iMarca.findByNombreMarcaVehiculo("Citroen"));
+	System.out.println("Marca Modificada:\t" + iMarca.findByNombreMarcaVehiculo("Ferrari"));
 
 	System.out.println("\n");
 	/** delete **/

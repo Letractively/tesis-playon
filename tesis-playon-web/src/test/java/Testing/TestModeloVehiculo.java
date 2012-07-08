@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import tesis.playon.web.business_object.dao.IMarcaVehiculoDao;
 import tesis.playon.web.business_object.dao.IModeloVehiculoDao;
 import tesis.playon.web.model.MarcaVehiculo;
 import tesis.playon.web.model.ModeloVehiculo;
@@ -22,12 +23,14 @@ public class TestModeloVehiculo {
 	ApplicationContext appContext = new ClassPathXmlApplicationContext("spring/config/BeanLocations.xml");
 
 	IModeloVehiculoDao iModelo = (IModeloVehiculoDao)appContext.getBean("modeloVehiculoDao");
+	IMarcaVehiculoDao iMarca = (IMarcaVehiculoDao)appContext.getBean("marcaVehiculoDao");
 	
 	System.out.println("\n");
 	/** insert **/
-	MarcaVehiculo marca = new MarcaVehiculo("Citroen","citröen");
-	ModeloVehiculo modelo = new ModeloVehiculo("Picasso", "citröen", marca);
-	ModeloVehiculo modelo1 = new ModeloVehiculo("C4", "citröen",marca);
+	MarcaVehiculo marca = iMarca.findByNombreMarcaVehiculo("Citroen");
+	
+	ModeloVehiculo modelo = new ModeloVehiculo(null , marca,"Picasso");
+	ModeloVehiculo modelo1 = new ModeloVehiculo(null,marca, "C4");
 	iModelo.save(modelo);
 	iModelo.save(modelo1);
 	List<ModeloVehiculo> modelos = iModelo.findAll();

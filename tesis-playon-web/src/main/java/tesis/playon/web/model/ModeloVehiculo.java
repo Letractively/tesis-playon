@@ -38,17 +38,17 @@ public class ModeloVehiculo implements Serializable{
     @Column(name = "descripcion")
     private String descripcion;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    //Hay q buscar una solucion para esto xq carga todo los objetos en memoria!!!
+    @ManyToOne
     @JoinColumn(name = "marcaVehiculoID")
     private MarcaVehiculo marcaVehiculo;
 
     
-    public ModeloVehiculo(String nombre, String descripcion, MarcaVehiculo marcaVehiculo) {
+    public ModeloVehiculo(String descripcion, MarcaVehiculo marcaVehiculo, String nombre) {
 	this.nombre = nombre;
 	this.descripcion = descripcion;
 	this.marcaVehiculo = marcaVehiculo;
     }
-
 
     public ModeloVehiculo() {
     }
@@ -87,10 +87,10 @@ public class ModeloVehiculo implements Serializable{
     public Integer getId() {
         return id;
     }
-
+    
 
     @Override
     public String toString() {
-	return "ModeloVehiculo:\t [modeloVehiculoID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion /**+ ", marcaVehiculo= " + marcaVehiculo.getNombre()**/ + "]";
+	return "ModeloVehiculo:\t [modeloVehiculoID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + ", marcaVehiculo= " + marcaVehiculo.toString() + "]";
     }
 }
