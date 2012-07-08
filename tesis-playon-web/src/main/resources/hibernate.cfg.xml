@@ -22,7 +22,7 @@
 <!-- 		<mapping class="tesis.playon.web.model.DenunciaPlaya" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.DenunciaVehiculo" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.Empleado" /> -->
-<!-- 		<mapping class="tesis.playon.web.model.EstadoDenuncia" /> -->
+		<mapping class="tesis.playon.web.model.EstadoDenuncia" />
 <!-- 		<mapping class="tesis.playon.web.model.EstadoPromocion" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.Favorito" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.PerfilPlaya" /> -->

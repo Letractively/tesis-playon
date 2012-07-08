@@ -3,6 +3,7 @@
  */
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -33,5 +34,14 @@ public class EstadoDenunciaDao extends CustomHibernateDaoSupport implements IEst
     public EstadoDenuncia findByNombreEstadoDenuncia(String nombreDenuncia) {
 	List<?> list = getHibernateTemplate().find("from EstadoDenuncia where nombre=?", nombreDenuncia);
 	return (EstadoDenuncia) list.get(0);
+    }
+    
+    public List<EstadoDenuncia> findAll(){
+	List<EstadoDenuncia> estados = new ArrayList<EstadoDenuncia>();
+	List<?> list = getHibernateTemplate().find("from EstadoDenuncia");
+	for (Object object : list) {
+	    estados.add((EstadoDenuncia)object);
+	}
+	return estados;
     }
 }

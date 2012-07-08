@@ -40,6 +40,9 @@ public class EstadoDenuncia implements Serializable{
 	this.descripcion = descripcion;
     }
 
+    public EstadoDenuncia() {
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -62,7 +65,7 @@ public class EstadoDenuncia implements Serializable{
 
     @Override
     public String toString() {
-	return "EstadoDenuncia [estadoDenunciaID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
+	return "EstadoDenuncia:\t [estadoDenunciaID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
     }
     
     
