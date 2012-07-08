@@ -35,6 +35,8 @@ public class CargoEmpleado implements Serializable{
     @Column(name = "descripcion")
     private String descripcion;
 
+    public CargoEmpleado(){}
+    
     public CargoEmpleado(String nombre, String descripcion) {
 	this.nombre = nombre;
 	this.descripcion = descripcion;
@@ -62,6 +64,6 @@ public class CargoEmpleado implements Serializable{
 
     @Override
     public String toString() {
-	return "CargoEmpleado [cargoEmpleadoID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
+	return "CargoEmpleado:\t [cargoEmpleadoID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
     }
 }

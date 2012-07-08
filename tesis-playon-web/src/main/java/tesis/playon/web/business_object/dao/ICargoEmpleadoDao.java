@@ -3,6 +3,8 @@
  */
 package tesis.playon.web.business_object.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.CargoEmpleado;
 
 /**
@@ -19,4 +21,5 @@ public interface ICargoEmpleadoDao {
 
     CargoEmpleado findByNombreCargo(String nombreCargo);
 
+    List<CargoEmpleado> findAll();
 }

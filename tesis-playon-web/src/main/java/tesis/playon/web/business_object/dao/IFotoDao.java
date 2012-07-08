@@ -3,6 +3,8 @@
  */
 package tesis.playon.web.business_object.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.Foto;
 
 /**
@@ -18,4 +20,6 @@ public interface IFotoDao {
     void delete(Foto foto);
 
     Foto findByLinkFoto(String link);
+    
+    List<Foto> findAll();
 }

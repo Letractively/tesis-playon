@@ -49,6 +49,8 @@ public class DenunciaVehiculo implements Serializable {
     @JoinColumn(name = "playaID", nullable = false)
     private Playa playa;
 
+    public DenunciaVehiculo(){}
+    
     public DenunciaVehiculo(String asunto, Date fechaAlta, Vehiculo vehiculo, Playa playa) {
 	this.asunto = asunto;
 	this.fechaAlta = fechaAlta;
@@ -94,8 +96,8 @@ public class DenunciaVehiculo implements Serializable {
 
     @Override
     public String toString() {
-	return "DenunciaVehiculo [denunciaVehiculoID=" + id + ", asunto=" + asunto + ", fechaAlta="
-		+ fechaAlta.toString() + ", Vehiculo=" + vehiculo.getPatente() + ", Playa=" + playa + "]";
+	return "DenunciaVehiculo:\t [denunciaVehiculoID= " + id + ", asunto= " + asunto + ", fechaAlta= "
+		+ fechaAlta.toString() + ", Vehiculo= " + vehiculo.getPatente() + ", Playa= " + playa + "]";
     }
 
 }

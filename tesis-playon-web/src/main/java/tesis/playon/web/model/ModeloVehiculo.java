@@ -22,7 +22,7 @@ import javax.persistence.UniqueConstraint;
  *
  */
 @Entity
-@Table(name = "modelo_vehiculo", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
+@Table(name = "modelo_vehiculo", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre"), @UniqueConstraint(columnNames = "marcaVehiculoID") })
 public class ModeloVehiculo implements Serializable{
 
     private static final long serialVersionUID = 1L;

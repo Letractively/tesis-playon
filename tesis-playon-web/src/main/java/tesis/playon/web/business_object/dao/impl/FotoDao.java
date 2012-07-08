@@ -3,6 +3,7 @@
  */
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -33,5 +34,14 @@ public class FotoDao extends CustomHibernateDaoSupport implements IFotoDao{
     public Foto findByLinkFoto(String link) {
 	List<?> list = getHibernateTemplate().find("from Foto where link=?", link);
 	return (Foto) list.get(0);
+    }
+    
+    public List<Foto> findAll(){
+	List<Foto> fotos = new ArrayList<Foto>();
+	List<?> list = getHibernateTemplate().find("from Foto");
+	for (Object object : list) {
+	    fotos.add((Foto)object);
+	}
+	return fotos;
     }
 }

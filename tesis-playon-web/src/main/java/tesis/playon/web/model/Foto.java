@@ -46,6 +46,8 @@ public class Foto implements Serializable{
 	this.link = link;
 	this.perfilPlaya = perfilPlaya;
     }
+    
+    public Foto(){}
 
     public String getDescripcion() {
         return descripcion;
@@ -77,7 +79,6 @@ public class Foto implements Serializable{
 
     @Override
     public String toString() {
-	return "Foto [fotoID=" + id + ", descripcion=" + descripcion + ", link=" + link + ", perfilPlayaID=" + perfilPlaya.getId()
-		+ "]";
+	return "Foto:\t [fotoID= " + id + ", descripcion= " + descripcion + ", link= " + link + ", perfilPlayaID= " + perfilPlaya.getId() + "]";
     }
 }

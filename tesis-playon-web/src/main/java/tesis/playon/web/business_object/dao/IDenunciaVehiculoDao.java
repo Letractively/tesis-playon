@@ -3,6 +3,8 @@
  */
 package tesis.playon.web.business_object.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.DenunciaVehiculo;
 
 /**
@@ -18,4 +20,6 @@ public interface IDenunciaVehiculoDao {
     void delete(DenunciaVehiculo denunciaVehiculo);
 
     DenunciaVehiculo findByAsuntoDenunciaVehiculo(String asuntoDenunciaVehiculo);
+    
+    List<DenunciaVehiculo> findAll();
 }

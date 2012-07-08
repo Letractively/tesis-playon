@@ -3,6 +3,7 @@
  */
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -35,4 +36,12 @@ public class DenunciaVehiculoDao extends CustomHibernateDaoSupport implements ID
 	return (DenunciaVehiculo) list.get(0);
     }
 
+    public List<DenunciaVehiculo> findAll(){
+	List<DenunciaVehiculo> denuncias = new ArrayList<DenunciaVehiculo>();
+	List<?> list = getHibernateTemplate().find("from DenunciaVehiculo");
+	for (Object object : list) {
+	    denuncias.add((DenunciaVehiculo)object);
+	}
+	return denuncias;
+    }
 }

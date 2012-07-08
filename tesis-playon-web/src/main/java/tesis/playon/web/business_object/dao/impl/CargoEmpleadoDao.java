@@ -3,6 +3,7 @@
  */
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -33,5 +34,14 @@ public class CargoEmpleadoDao extends CustomHibernateDaoSupport implements ICarg
     public CargoEmpleado findByNombreCargo(String nombreCargo) {
 	List<?> list = getHibernateTemplate().find("from CargoEmpleado where nombre=?", nombreCargo);
 	return (CargoEmpleado) list.get(0);
+    }
+    
+    public List<CargoEmpleado> findAll(){
+	List<CargoEmpleado> cargos = new ArrayList<CargoEmpleado>();
+	List<?> list = getHibernateTemplate().find("from CargoEmpleado");
+	for (Object object : list) {
+	    cargos.add((CargoEmpleado)object);
+	}
+	return cargos;
     }
 }
