@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.business_object.dao.ICuentaClienteDao;
-import tesis.playon.web.model.ColorVehiculo;
 import tesis.playon.web.model.CuentaCliente;
 
 @Repository("cuentaClienteDao")
