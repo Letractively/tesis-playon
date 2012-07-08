@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import tesis.playon.util.CustomHibernateDaoSupport;
-import tesis.playon.web.business_object.dao.ICuentaPlaya;
+import tesis.playon.web.business_object.dao.ICuentaPlayaDao;
 import tesis.playon.web.model.CuentaPlaya;
 
 /**
@@ -14,7 +14,7 @@ import tesis.playon.web.model.CuentaPlaya;
  *
  */
 @Repository("cuentaPlayaDao")
-public class CuentaPlayaDao extends CustomHibernateDaoSupport implements ICuentaPlaya {
+public class CuentaPlayaDao extends CustomHibernateDaoSupport implements ICuentaPlayaDao {
 
     public void save(CuentaPlaya cuentaPlaya) {
 	getHibernateTemplate().save(cuentaPlaya);

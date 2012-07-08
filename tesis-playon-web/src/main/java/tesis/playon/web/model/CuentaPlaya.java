@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * Clase de negocio que contiene los diferentes provincias.
+ * Clase de negocio que contiene los diferentes Cuentas de las playas.
  * 
  * @author garribere
  * @date 03/07/2012
@@ -26,7 +26,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "cuenta_playa", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nroCuenta") })
 public class CuentaPlaya implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -7370950550724631370L;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
