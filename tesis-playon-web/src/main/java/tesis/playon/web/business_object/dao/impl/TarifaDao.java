@@ -1,11 +1,13 @@
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.business_object.dao.ITarifaDao;
+import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Tarifa;
 
 /**
@@ -28,9 +30,17 @@ public class TarifaDao extends CustomHibernateDaoSupport implements ITarifaDao {
 	getHibernateTemplate().delete(tarifa);
     }
 
-    public Tarifa findByNombreTarifa(String nombreTarifa) {
-	List<?> list = getHibernateTemplate().find("from Tarifa where nombre=?", nombreTarifa);
+    public Tarifa findByPlayaID(Playa playa) {
+	List<?> list = getHibernateTemplate().find("from Tarifa where playa=?", playa);
 	return (Tarifa) list.get(0);
     }
 
+    public List<Tarifa> findAll(){
+	List<Tarifa> tarifas = new ArrayList<Tarifa>();
+	List<?> list = getHibernateTemplate().find("from Tarifa");
+	for (Object object : list) {
+	    tarifas.add((Tarifa)object);
+	}
+	return tarifas;
+    }
 }

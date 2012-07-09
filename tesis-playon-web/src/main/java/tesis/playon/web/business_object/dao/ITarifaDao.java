@@ -1,6 +1,9 @@
 package tesis.playon.web.business_object.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.Tarifa;
+import tesis.playon.web.model.Playa;
 
 public interface ITarifaDao {
 
@@ -10,6 +13,7 @@ public interface ITarifaDao {
 
     void delete(Tarifa tarifa);
 
-    Tarifa findByNombreTarifa(String nombreTarifa);
+    Tarifa findByPlayaID(Playa playa);
 
+    List<Tarifa> findAll();
 }

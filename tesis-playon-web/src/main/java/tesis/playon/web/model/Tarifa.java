@@ -7,7 +7,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+//import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -46,15 +46,18 @@ public class Tarifa implements Serializable {
     @Column(name = "fechaBaja")
     private Date fechaBaja;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "playaID")
     private Playa playa;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tipoEstadiaID")
     private TipoEstadia tipoEstadia;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoriaVehiculoID")
     private CategoriaVehiculo categoriaVehiculo;
 
@@ -62,7 +65,6 @@ public class Tarifa implements Serializable {
     }
 
     public Tarifa(Float importe, Playa playa, TipoEstadia tipoEstadia, CategoriaVehiculo categoriaVehiculo) {
-	super();
 	this.importe = importe;
 	this.playa = playa;
 	this.tipoEstadia = tipoEstadia;
@@ -135,7 +137,7 @@ public class Tarifa implements Serializable {
 
     @Override
     public String toString() {
-	return "Tarifa [tarifaID=" + id + ", importe=" + importe + "]";
+	return "Tarifa:\t [tarifaID=" + id + ", importe=" + importe + ", "+ playa + ", "+ categoriaVehiculo + ", "+ tipoEstadia + "]";
     }
 
 }

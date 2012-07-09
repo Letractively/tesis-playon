@@ -70,7 +70,7 @@ public class TipoEstadia implements Serializable {
     
     @Override
     public String toString() {
-	return "TipoEstadia [TipoEstadiaID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
+	return "TipoEstadia:\t [TipoEstadiaID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
     }
 
 }
