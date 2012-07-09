@@ -1,37 +1,31 @@
 /*
--- Description: Script de generaciÃ³n de la estructura y carga de datos bÃ¡sicos 
--- 		de la base de datos del proyecto tesis-playon.
--- Project: Playon
--- Author: Alejandro Bostico
--- Date: 07/07/2012
--- Version: 2.1
---
--- HISTORIAL DE CAMBIOS
--- Version 1.0 (18/06/2012) - VersiÃ³n Inicial
--- Version 1.1 (20/06/2012) - Agregada la clase favorito
---		Agregada la foreign key transaccion_playa.detalleEstadiaID(FK) --> 
---		detalle_estadia.detalleEstadiaID(PK)
--- Version 1.2 (04/07/2012) - Se cambiaron los nÃ³mbres de las tablas a minÃºsculas y con
---		guiones bajos para compatibilidad Windows - Linux
--- Version 2.0 (06/07/2012) - Se unió el script de creación de usuario a este.
--- Version 2.1 (07/07/2012) - Se agregaron todos los auto_increment en todas las tablas.
-*/
+ *  Script de generación de la estructura, carga de datos básicos, 
+ *  creación del usuario y asignación de permisos
+ *  de de la base de datos del proyecto tesis-playon.
+ *
+ *  Proyecto: Playon
+ *  Autor: Alejandro Bostico
+ *  Ultima modificacion: 09/07/2012
+ */
 
+/*  Usuario y password para la base de datos tesis_playon:
+ *  Usuario:  'playonAdmin'
+ *  Password: 'playon'
+ */
 
-/********************************************************
- * PRECAUCION!!!					* 
- * Usar con cuidado que el script borra todas las 	*
- * tablas antes de crearlas.				*
- ********************************************************/
+/************************************************************ 
+ ******* OJO QUE ESTO BORRA TODA LA BASE DE DATOS!!! ******** */
+/* Comentar la siguiente li­nea para NO borrar la base de datos
+   antes de crear las tablas en caso de que fuera necesario.  */
+ UNLOCK TABLES;
+ DROP DATABASE IF EXISTS `tesis_playon`;
+/************************************************************ */
 
-/* Descomentar la siguiente li­nea para borrar la base de datos
- * antes de crear las tablas en caso de que fuera necesario. */
--- DROP DATABASE IF EXISTS `tesis_playon`;
+/* Comentar la siguiente linea para NO borrar el usuario
+   en caso de que fuera necesario. */
+ DROP USER 'playonAdmin'@'localhost';
 
-/* Descomentar la siguiente linea si existe el usuario 'playonAdmin' */
--- DROP USER 'playonAdmin'@'localhost';
-
-CREATE DATABASE  IF NOT EXISTS `tesis_playon` /*!40100 DEFAULT CHARACTER SET latin1 */;CREATE DATABASE  IF NOT EXISTS `tesis_playon` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE  IF NOT EXISTS `tesis_playon` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `tesis_playon`;
 -- MySQL dump 10.13  Distrib 5.5.24, for debian-linux-gnu (x86_64)
 --
@@ -62,7 +56,7 @@ CREATE TABLE `cuenta_playa` (
   `nroCuenta` int(11) NOT NULL,
   `saldo` float NOT NULL DEFAULT 0,
   `cuentaPlayaID` int(11) NOT NULL auto_increment,
-  `playaID` int(11) NOT NULL,
+  `playaID` int(11) DEFAULT NULL,
   PRIMARY KEY (`cuentaPlayaID`),
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_cuenta_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
@@ -239,7 +233,7 @@ CREATE TABLE `cuenta_cliente` (
   `nroCuenta` int(11) NOT NULL UNIQUE,
   `saldo` float NOT NULL DEFAULT 0,
   `cuentaClienteID` int(11) NOT NULL auto_increment,
-  `clienteID` int(11) NOT NULL,
+  `clienteID` int(11) DEFAULT NULL,
   PRIMARY KEY (`cuentaClienteID`),
   KEY `clienteID` (`clienteID`),
   CONSTRAINT `FK_cuenta_cliente_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`)
@@ -323,13 +317,13 @@ DROP TABLE IF EXISTS `playa`;
 CREATE TABLE `playa` (
   `barrioID` int(11) DEFAULT NULL,
   `cuit` varchar(50) DEFAULT NULL,
-  `disponibilidad` tinyint(1) DEFAULT NULL,
+  `disponibilidad` int(11) DEFAULT NULL,
   `domicilio` varchar(50) DEFAULT NULL,
   `estadoPlayaID` int(11) NOT NULL,
   `nombreComercial` varchar(50) NOT NULL,
   `razonSocial` varchar(50) DEFAULT NULL,
   `playaID` int(11) NOT NULL auto_increment,
-  `estadiaID` int(11) NOT NULL,
+  `estadiaID` int(11) DEFAULT NULL,
   PRIMARY KEY (`playaID`),
   KEY `barrioID` (`barrioID`),
   KEY `estadoPlayaID` (`estadoPlayaID`),
@@ -1282,10 +1276,11 @@ DROP TABLE IF EXISTS `usuario_sistema`;
 CREATE TABLE `usuario_sistema` (
   `rolUsuarioID` int(11) NOT NULL,
   `usuarioSistemaID` int(11) NOT NULL auto_increment,
+  `usuarioID` int(11) NOT NULL,
   PRIMARY KEY (`usuarioSistemaID`),
   KEY `rolUsuarioID` (`rolUsuarioID`),
-  KEY `usuarioSistemaID` (`usuarioSistemaID`),
-  CONSTRAINT `FK_usuario_sistema_usuario` FOREIGN KEY (`usuarioSistemaID`) REFERENCES `usuario` (`usuarioID`),
+  KEY `usuarioID` (`usuarioID`),
+  CONSTRAINT `FK_usuario_sistema_usuario` FOREIGN KEY (`usuarioID`) REFERENCES `usuario` (`usuarioID`),
   CONSTRAINT `FK_usuario_sistema_rol_usuario` FOREIGN KEY (`rolUsuarioID`) REFERENCES `rol_usuario` (`rolUsuarioID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1326,7 +1321,7 @@ INSERT INTO `rol_usuario` (`descripcion`, `nombre`, `rolUsuarioID`) VALUES ('Adm
 /*!40000 ALTER TABLE `rol_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
--- ------------------------------------------------------------------- --
+-- =================================================================== --
 /**
  * Crear el usuario 'playonAdmin' con password por defecto 'playon'.
  */
@@ -1341,7 +1336,102 @@ CREATE USER 'playonAdmin'@'localhost'
  */
 GRANT ALL PRIVILEGES ON TABLE `tesis_playon`.* TO 'playonAdmin'@'localhost';
 
--- ------------------------------------------------------------------- --
+-- =================================================================== --
+
+-- =================================================================== --
+/**
+ * Carga de datos de ejemplo
+ */
+
+--
+-- Dumping data for table `usuario`
+--
+
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` (`apellido`, `email`, `nombre`, `password`, `sesion`, `usuario`, 
+    `usuarioID`, `tipoDocID`, `nroDoc`) 
+VALUES ('Pablo','pablo_la31@hotmail.com','Moreno','123456',NULL,'pablo_la31',8,1,'32987654'),
+    ('Pablo1','pablola31@hotmail.com','Moreno1','123456',NULL,'pablo_la_31',9,1,'32111111');
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `usuario_sistema`
+--
+
+LOCK TABLES `usuario_sistema` WRITE;
+/*!40000 ALTER TABLE `usuario_sistema` DISABLE KEYS */;
+INSERT INTO `usuario_sistema` (`rolUsuarioID`, `usuarioSistemaID`) 
+VALUES (1,9),(2,8);
+/*!40000 ALTER TABLE `usuario_sistema` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `empleado`
+--
+
+LOCK TABLES `empleado` WRITE;
+/*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
+INSERT INTO `empleado` (`cargoEmpleadoID`, `legajo`, `empleadoID`, `usuarioID`) 
+VALUES (2,1000,8,9),(3,1001,9,8);
+/*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `marca_vehiculo`
+--
+
+LOCK TABLES `marca_vehiculo` WRITE;
+/*!40000 ALTER TABLE `marca_vehiculo` DISABLE KEYS */;
+INSERT INTO `marca_vehiculo` (`descripcion`, `nombre`, `marcaVehiculoID`) 
+VALUES (NULL,'Renault',1),(NULL,'Ford',2),(NULL,'Volkswagen',3),(NULL,'Mercedes Benz',4),
+    (NULL,'Peugeot',5),(NULL,'Citroen',6),(NULL,'BMW',7),(NULL,'Audi',8),(NULL,'Seat',9),
+    (NULL,'Opel',10),(NULL,'Fiat',11),(NULL,'Nissan',12),(NULL,'Toyota',13),(NULL,'Hyundai',14),
+    (NULL,'Volvo',15),(NULL,'Kia',16),(NULL,'Mitsubishi',17),(NULL,'Land Rover',18),
+    (NULL,'Suzuki',19),(NULL,'Porche',20),(NULL,'Chevrolet',21),(NULL,'Mini',22),
+    (NULL,'Alfa Romeo',23),(NULL,'Honda',24),(NULL,'Jeep',25),(NULL,'Chrysler',26),
+    (NULL,'Mazda',27);
+/*!40000 ALTER TABLE `marca_vehiculo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `modelo_vehiculo`
+--
+
+LOCK TABLES `modelo_vehiculo` WRITE;
+/*!40000 ALTER TABLE `modelo_vehiculo` DISABLE KEYS */;
+INSERT INTO `modelo_vehiculo` (`descripcion`, `nombre`, `modeloVehiculoID`, `marcaVehiculoID`) 
+VALUES (NULL,'Clio',1,1),(NULL,'Fluence',2,1),(NULL,'Ka',3,2),(NULL,'Ranger',4,2),
+    (NULL,'Mondeo',5,2),(NULL,'Amarok',6,3),(NULL,'Vento',7,3),(NULL,'CLC',8,4),
+    (NULL,'Sprinter',9,4),(NULL,'407',10,5),(NULL,'308',11,5),(NULL,'Picasso',14,6),
+    (NULL,'C4',15,6);
+/*!40000 ALTER TABLE `modelo_vehiculo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `color_vehiculo`
+--
+
+LOCK TABLES `color_vehiculo` WRITE;
+/*!40000 ALTER TABLE `color_vehiculo` DISABLE KEYS */;
+INSERT INTO `color_vehiculo` (`nombre`) 
+VALUES ('Blanco'),('Negro'),('Rojo'),('Amarillo'),('Verde Claro'),
+    ('Azul'),('Celeste'),('Gris Claro'),('Gris Oscuro'),('Naranja'),
+    ('Verde Oscuro'),('Bordo');
+/*!40000 ALTER TABLE `color_vehiculo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+-- LOCK TABLES `color_vehiculo` WRITE;
+-- /*!40000 ALTER TABLE `color_vehiculo` DISABLE KEYS */;
+-- INSERT INTO `color_vehiculo` (`nombre`, `colorVehiculoID`) 
+-- VALUES ('Blanco',1),('Negro',2),('Rojo',3),('Amarillo',4),('Verde Claro',5),
+--     ('Azul',6),('Celeste',7),('Gris Claro',8),('Gris Oscuro',9),('Naranja',10),
+--     ('Verde Oscuro',11),('Bordo',12);
+-- /*!40000 ALTER TABLE `color_vehiculo` ENABLE KEYS */;
+-- UNLOCK TABLES;
+-- -- =================================================================== --
+
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
