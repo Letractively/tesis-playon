@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+//import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -47,15 +47,18 @@ public class Playa implements Serializable {
     @Column(name = "razonSocial")
     private String razonSocial;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "barrioID")
     private Barrio barrio;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "estadoID")
+    @ManyToOne
+    //@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "estadoID", nullable= true)
     private EstadoPlaya estado;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
+    //@OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estadiaID")
     private Estadia estadia;
 
@@ -65,7 +68,6 @@ public class Playa implements Serializable {
 
     public Playa(String cuit, Integer disponibilidad, String domicilio, String nombreComercial, String razonSocial,
 	    Barrio barrio, EstadoPlaya estado, Estadia estadia) {
-	super();
 	this.cuit = cuit;
 	this.disponibilidad = disponibilidad;
 	this.domicilio = domicilio;
@@ -74,6 +76,11 @@ public class Playa implements Serializable {
 	this.barrio = barrio;
 	this.estado = estado;
 	this.estadia = estadia;
+    }
+    
+    public Playa(String nombreComercial, EstadoPlaya estado) {
+	this.nombreComercial = nombreComercial;
+	this.estado = estado;
     }
 
     public String getCuit() {
@@ -146,7 +153,7 @@ public class Playa implements Serializable {
 
     @Override
     public String toString() {
-	return "Playa [playaID=" + id + ", cuit=" + cuit + ", nombreComercial=" + nombreComercial + ", razonSocial="
+	return "Playa:\t [playaID=" + id + ", cuit=" + cuit + ", nombreComercial=" + nombreComercial + ", razonSocial="
 		+ razonSocial + ", domicilio=" + domicilio + "]";
     }
 }

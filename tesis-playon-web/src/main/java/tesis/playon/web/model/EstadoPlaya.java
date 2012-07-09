@@ -17,7 +17,7 @@ import javax.persistence.UniqueConstraint;
  * @date 08/07/2012
  */
 @Entity
-@Table(name = "estadoPlaya", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
+@Table(name = "estado_playa", catalog = "tesis_playon"/**, uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") }**/)
 public class EstadoPlaya implements Serializable {
 
     private static final long serialVersionUID = 9126225080245683593L;
@@ -34,11 +34,9 @@ public class EstadoPlaya implements Serializable {
     private String descripcion;
 
     public EstadoPlaya() {
-	super();
     }
 
     public EstadoPlaya(String nombre, String descripcion) {
-	super();
 	this.nombre = nombre;
 	this.descripcion = descripcion;
     }
@@ -65,6 +63,6 @@ public class EstadoPlaya implements Serializable {
 
     @Override
     public String toString() {
-	return "Estado Playa [estadoPlayaID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
+	return "Estado Playa:\t [estadoPlayaID=" + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
     }
 }

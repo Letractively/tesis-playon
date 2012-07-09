@@ -24,8 +24,8 @@ public class EstadoPlayaDao extends CustomHibernateDaoSupport implements IEstado
 	getHibernateTemplate().delete(estadoPlaya);
     }
 
-    public EstadoPlaya findByNombreEstadoPlaya(String nombre) {
-	List<?> list = getHibernateTemplate().find("from EstadoPlaya where nombre=", nombre);
+    public EstadoPlaya findByNombreEstadoPlaya(String nombreEstado) {
+	List<?> list = getHibernateTemplate().find("from EstadoPlaya where nombre=?", nombreEstado);
 	return (EstadoPlaya) list.get(0);
     }
 

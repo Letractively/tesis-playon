@@ -38,7 +38,7 @@
 		<mapping class="tesis.playon.web.model.UsuarioSistema" />
 <!-- 		<mapping class="tesis.playon.web.model.Vehiculo" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.Promocion" /> -->
-<!-- 		<mapping class="tesis.playon.web.model.EstadoPlaya" /> -->
+		<mapping class="tesis.playon.web.model.EstadoPlaya" />
 <!-- 		<mapping class="tesis.playon.web.model.Publicidad" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.Liquidacion" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.TransaccionCliente" /> -->
