@@ -1409,27 +1409,6 @@ VALUES (NULL,'Clio',1,1),(NULL,'Fluence',2,1),(NULL,'Ka',3,2),(NULL,'Ranger',4,2
 /*!40000 ALTER TABLE `modelo_vehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Dumping data for table `color_vehiculo`
---
-
-LOCK TABLES `color_vehiculo` WRITE;
-/*!40000 ALTER TABLE `color_vehiculo` DISABLE KEYS */;
-INSERT INTO `color_vehiculo` (`nombre`) 
-VALUES ('Blanco'),('Negro'),('Rojo'),('Amarillo'),('Verde Claro'),
-    ('Azul'),('Celeste'),('Gris Claro'),('Gris Oscuro'),('Naranja'),
-    ('Verde Oscuro'),('Bordo');
-/*!40000 ALTER TABLE `color_vehiculo` ENABLE KEYS */;
-UNLOCK TABLES;
-
--- LOCK TABLES `color_vehiculo` WRITE;
--- /*!40000 ALTER TABLE `color_vehiculo` DISABLE KEYS */;
--- INSERT INTO `color_vehiculo` (`nombre`, `colorVehiculoID`) 
--- VALUES ('Blanco',1),('Negro',2),('Rojo',3),('Amarillo',4),('Verde Claro',5),
---     ('Azul',6),('Celeste',7),('Gris Claro',8),('Gris Oscuro',9),('Naranja',10),
---     ('Verde Oscuro',11),('Bordo',12);
--- /*!40000 ALTER TABLE `color_vehiculo` ENABLE KEYS */;
--- UNLOCK TABLES;
 -- -- =================================================================== --
 
 
