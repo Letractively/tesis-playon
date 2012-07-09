@@ -72,6 +72,6 @@ public class TipoPago implements Serializable{
     }
     
     public String toString(){
-	return "TipoPago [TipoPagoID=" + id + ", nombre=" + nombre + "descripción=" + descripcion + "]";
+	return "TipoPago:\t [TipoPagoID= " + id + ", nombre= " + nombre + ", descripcion=" + descripcion + "]";
     }
 }

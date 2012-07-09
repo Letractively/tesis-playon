@@ -1,5 +1,6 @@
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -27,5 +28,13 @@ public class TipoPagoDao extends CustomHibernateDaoSupport implements ITipoPagoD
 	List<?> list = getHibernateTemplate().find("from TipoPago where nombre=?", nombreTipoPago);
 	return (TipoPago) list.get(0);
     }
-
+    
+    public List<TipoPago> findAll(){
+	List<TipoPago> tipos = new ArrayList<TipoPago>();
+	List<?> list = getHibernateTemplate().find("from TipoPago");
+	for (Object object : list) {
+	    tipos.add((TipoPago)object);
+	}
+	return tipos;
+    }
 }
