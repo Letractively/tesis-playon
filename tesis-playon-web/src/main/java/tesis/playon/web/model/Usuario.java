@@ -5,7 +5,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+//import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -21,8 +21,7 @@ import javax.persistence.UniqueConstraint;
  * 
  */
 @Entity
-@Table(name = "usuario", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "usuario"),
-	@UniqueConstraint(columnNames = "nroDocumento"), @UniqueConstraint(columnNames = "usuarioID") })
+@Table(name = "usuario", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "usuario")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,84 +40,98 @@ public class Usuario implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "nroDoc")
+    @Column(name = "nroDoc" , unique= true)
     private int nroDoc;
 
     @Column(name = "password")
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tipoDocID")
     private TipoDoc tipoDoc;
 
+    @Column(name = "usuario", unique= true)
+    private String nombreUser;
+    
     public Usuario() {
     }
+    
 
-    public Usuario(String nombre, String apellido, String email, String password, TipoDoc tipoDoc, int nroDoc) {
-	this.nombre = nombre;
+    public Usuario(String apellido, String nombre, String nombreUser, String passwd, String email, TipoDoc tipoDoc,int nroDoc) {
 	this.apellido = apellido;
+	this.nombre = nombre;
 	this.email = email;
-	this.password = password;
-	this.tipoDoc = tipoDoc;
 	this.nroDoc = nroDoc;
-
+	this.tipoDoc = tipoDoc;
+	this.nombreUser = nombreUser;
+	this.password= passwd;
     }
 
+
     public String getApellido() {
-	return apellido;
+        return apellido;
     }
 
     public void setApellido(String apellido) {
-	this.apellido = apellido;
+        this.apellido = apellido;
     }
 
     public String getNombre() {
-	return nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-	this.nombre = nombre;
+        this.nombre = nombre;
     }
 
     public String getEmail() {
-	return email;
+        return email;
     }
 
     public void setEmail(String email) {
-	this.email = email;
+        this.email = email;
     }
 
     public int getNroDoc() {
-	return nroDoc;
+        return nroDoc;
     }
 
     public void setNroDoc(int nroDoc) {
-	this.nroDoc = nroDoc;
+        this.nroDoc = nroDoc;
     }
 
     public String getPassword() {
-	return password;
+        return password;
     }
 
     public void setPassword(String password) {
-	this.password = password;
+        this.password = password;
     }
 
     public TipoDoc getTipoDoc() {
-	return tipoDoc;
+        return tipoDoc;
     }
 
     public void setTipoDoc(TipoDoc tipoDoc) {
-	this.tipoDoc = tipoDoc;
+        this.tipoDoc = tipoDoc;
+    }
+
+    public String getNombreUser() {
+        return nombreUser;
+    }
+
+    public void setNombreUser(String nombreUser) {
+        this.nombreUser = nombreUser;
     }
 
     public Integer getId() {
-	return id;
+        return id;
     }
 
     @Override
     public String toString() {
-	return "Usuario [usuarioID=" + id + ", nombre=" + nombre + ", apellido=" + apellido + "]";
+	return "Usuario:\t [usuarioID= " + id + ", nombre= " + nombre + ", apellido=" + apellido + ", " + tipoDoc + ", Nro Documento= "+ nroDoc +", user= "+ nombreUser +"]";
     }
 
 }

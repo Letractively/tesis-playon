@@ -32,23 +32,42 @@ public class UsuarioSistema implements Serializable {
 
     @ManyToOne
     //@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rolUsuarioID", nullable = false)
+    @JoinColumn(name = "rolUsuarioID")
     private RolUsuario rolUsuario;
 
+    @ManyToOne
+    //@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuarioID")    
+    private Usuario usuario;
+    
     public UsuarioSistema() {
     }
-
-    public UsuarioSistema(RolUsuario rolUsuario) {
+    
+    public UsuarioSistema(RolUsuario rolUsuario, Usuario usuario) {
 	this.rolUsuario = rolUsuario;
+	this.usuario = usuario;
     }
+
 
     public RolUsuario getRolUsuario() {
         return rolUsuario;
     }
 
+
     public void setRolUsuario(RolUsuario rolUsuario) {
         this.rolUsuario = rolUsuario;
     }
+
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
 
     public int getId() {
         return id;
@@ -56,6 +75,7 @@ public class UsuarioSistema implements Serializable {
 
     @Override
     public String toString() {
-	return "UsuarioSistema:\t [usuarioSistemaID= " + id + ", " + rolUsuario + "]";
+	return "UsuarioSistema:\t [usuarioSistemaID= " + id + ", " + rolUsuario + ", " + usuario + "]";
     }
+
 }

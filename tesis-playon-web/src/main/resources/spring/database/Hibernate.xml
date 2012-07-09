@@ -51,7 +51,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 				<value>tesis.playon.web.model.TipoDoc</value>
 				<value>tesis.playon.web.model.TipoEstadia</value>
 				<value>tesis.playon.web.model.TipoPago</value>
-<!-- 				<value>tesis.playon.web.model.Usuario</value> -->
+				<value>tesis.playon.web.model.Usuario</value>
 				<value>tesis.playon.web.model.UsuarioSistema</value>
 <!-- 				<value>tesis.playon.web.model.Vehiculo</value> -->
 <!-- 				<value>tesis.playon.web.model.Promocion</value> -->
