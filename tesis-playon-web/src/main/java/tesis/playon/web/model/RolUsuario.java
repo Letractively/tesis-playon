@@ -26,7 +26,7 @@ public class RolUsuario implements Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "rolUsuarioID")
-    private Integer id;
+    private int id;
 
     @Column(name = "nombre")
     private String nombre;
@@ -46,11 +46,11 @@ public class RolUsuario implements Serializable {
 	this.descripcion = descripcion;
     }
 
-    public Integer getId() {
+    public int getId() {
 	return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
 	this.id = id;
     }
 

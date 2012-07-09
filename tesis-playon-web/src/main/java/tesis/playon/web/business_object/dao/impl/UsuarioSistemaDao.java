@@ -1,5 +1,6 @@
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -28,8 +29,17 @@ public class UsuarioSistemaDao extends CustomHibernateDaoSupport implements IUsu
 	getHibernateTemplate().delete(UsuarioSistema);
     }
 
-    // public UsuarioSistema findByNombreUsuarioSistema(String nombreUsuarioSistema) {
-    // List<?> list = getHibernateTemplate().find("from UsuarioSistema where nombre=?", nombreUsuarioSistema);
-    // return (UsuarioSistema) list.get(0);
-    // }
+     public UsuarioSistema findByNombreUsuarioSistema(String nombreUsuarioSistema) {
+	 List<?> list = getHibernateTemplate().find("from UsuarioSistema where nombre=?", nombreUsuarioSistema);
+	 return (UsuarioSistema) list.get(0);
+     }
+     
+     public List<UsuarioSistema> findAll(){
+	 List<UsuarioSistema> usuarios = new ArrayList<UsuarioSistema>();
+	 List<?> list = getHibernateTemplate().find("from UsuarioSistema");
+	 for (Object object : list) {
+	    usuarios.add((UsuarioSistema)object);
+	}
+	 return usuarios;
+     }
 }

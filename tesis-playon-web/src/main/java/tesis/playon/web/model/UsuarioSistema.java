@@ -6,12 +6,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * Clase de negocio que contiene los comentarios sobre una playa
@@ -20,7 +20,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "usuario_sistema", catalog = "tesis_playon")
+@Table(name = "usuario_sistema", catalog = "tesis_playon" , uniqueConstraints = { @UniqueConstraint(columnNames = "rolUsuarioID") })
 public class UsuarioSistema implements Serializable {
 
     private static final long serialVersionUID = 2382561437443895633L;
@@ -28,63 +28,34 @@ public class UsuarioSistema implements Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "usuarioSistemaID")
-    private Integer id;
+    private int id;
 
-    @Column(name = "nombreComercial")
-    private String nombre;
-
-    @Column(name = "descripcion")
-    private String descripcion;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "playaID")
-    private Playa playa;
+    @ManyToOne
+    //@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rolUsuarioID", nullable = false)
+    private RolUsuario rolUsuario;
 
     public UsuarioSistema() {
     }
 
-    public UsuarioSistema(String nombre, String descripcion, Playa playa) {
-	this.nombre = nombre;
-	this.descripcion = descripcion;
-	this.playa = playa;
+    public UsuarioSistema(RolUsuario rolUsuario) {
+	this.rolUsuario = rolUsuario;
     }
 
-    public Integer getId() {
-	return id;
+    public RolUsuario getRolUsuario() {
+        return rolUsuario;
     }
 
-    public void setId(Integer id) {
-	this.id = id;
+    public void setRolUsuario(RolUsuario rolUsuario) {
+        this.rolUsuario = rolUsuario;
     }
 
-    public String getNombre() {
-	return nombre;
-    }
-
-    public void setNombre(String nombre) {
-	this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-	return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-	this.descripcion = descripcion;
-    }
-
-    public Playa getPlaya() {
-	return playa;
-    }
-
-    public void setPlaya(Playa playa) {
-	this.playa = playa;
+    public int getId() {
+        return id;
     }
 
     @Override
     public String toString() {
-	return "PerfilPlaya [perfilPlayaID=" + id + ", nombreComercial=" + nombre + ", descripcion=" + descripcion
-		+ "]";
+	return "UsuarioSistema:\t [usuarioSistemaID= " + id + ", " + rolUsuario + "]";
     }
-
 }
