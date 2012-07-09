@@ -55,5 +55,4 @@ public class TestTipoDoc {
 
 	System.out.println("\nListo!");
     }
-
 }
