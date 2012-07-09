@@ -1,5 +1,6 @@
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,7 @@ import tesis.playon.web.model.TipoEstadia;
 /**
  * 
  * @author garribere
- *
+ * 
  */
 @Repository("tipoEstadiaDao")
 public class TipoEstadiaDao extends CustomHibernateDaoSupport implements ITipoEstadiaDao {
@@ -32,4 +33,14 @@ public class TipoEstadiaDao extends CustomHibernateDaoSupport implements ITipoEs
 	List<?> list = getHibernateTemplate().find("from TipoEstadia where nombre=?", nombreTipoEstadia);
 	return (TipoEstadia) list.get(0);
     }
+
+    public List<TipoEstadia> findAll() {
+	List<TipoEstadia> tipos = new ArrayList<TipoEstadia>();
+	List<?> list = getHibernateTemplate().find("from TipoEstadia");
+	for (Object object : list) {
+	    tipos.add((TipoEstadia) object);
+	}
+	return tipos;
+    }
+
 }

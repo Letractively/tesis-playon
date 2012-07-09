@@ -1,5 +1,8 @@
 package tesis.playon.web.business_object.dao;
 
+import java.util.List;
+
+
 import tesis.playon.web.model.TipoEstadia;
 
 public interface ITipoEstadiaDao {
@@ -11,5 +14,7 @@ public interface ITipoEstadiaDao {
     void delete(TipoEstadia tipoEstadia);
 
     TipoEstadia findByNombreTipoEstadia(String nombreTipoEstadia);
+
+    List<TipoEstadia> findAll();
 
 }
