@@ -1,5 +1,7 @@
 package tesis.playon.web.business_object.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.Posicion;
 
 public interface IPosicionDao {
@@ -10,6 +12,8 @@ public interface IPosicionDao {
 
     void delete(Posicion posicion);
 
-    Posicion findByNombrePosicion(String nombrePosicion);
+    Posicion findByUbicacion(String ubicacion);
+
+    List<Posicion> findAll();
 
 }

@@ -1,5 +1,6 @@
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.business_object.dao.IPosicionDao;
 import tesis.playon.web.model.Posicion;
+import tesis.playon.web.model.Provincia;
 
 /**
  * 
@@ -28,9 +30,18 @@ public class PosicionDao extends CustomHibernateDaoSupport implements IPosicionD
 	getHibernateTemplate().delete(posicion);
     }
 
-    public Posicion findByNombrePosicion(String nombrePosicion) {
-	List<?> list = getHibernateTemplate().find("from Posicion where nombre=?", nombrePosicion);
+    public Posicion findByUbicacion(String ubicacion) {
+	List<?> list = getHibernateTemplate().find("from Posicion where ubicacion=?", ubicacion);
 	return (Posicion) list.get(0);
+    }
+    
+    public List<Posicion> findAll(){
+	List<Posicion> posiciones = new ArrayList<Posicion>();
+	List<?> list = getHibernateTemplate().find("from Posicion");
+	for (Object object : list) {
+	    posiciones.add((Posicion)object);
+	}
+	return posiciones;
     }
 
 }
