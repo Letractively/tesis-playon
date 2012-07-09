@@ -1,5 +1,7 @@
 package tesis.playon.web.business_object;
 
+import java.util.List;
+
 import tesis.playon.web.model.RolUsuario;
 
 public interface IRolUsuarioBo {
@@ -12,4 +14,5 @@ public interface IRolUsuarioBo {
 
     RolUsuario findByNombreRolUsuario(String nombreRolUsuario);
 
+    List<RolUsuario> findAll();
 }

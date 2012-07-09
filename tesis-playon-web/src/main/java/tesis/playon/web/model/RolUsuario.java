@@ -72,7 +72,7 @@ public class RolUsuario implements Serializable {
 
     @Override
     public String toString() {
-	return "RolUsuario [rolUsuarioID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
+	return "RolUsuario:\t [rolUsuarioID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
     }
 
 }

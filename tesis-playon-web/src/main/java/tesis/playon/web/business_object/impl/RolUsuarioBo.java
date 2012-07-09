@@ -1,5 +1,7 @@
 package tesis.playon.web.business_object.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,10 @@ public class RolUsuarioBo implements IRolUsuarioBo {
 
     public RolUsuario findByNombreRolUsuario(String nombreRolUsuario) {
 	return rolUsuarioDao.findByNombreRolUsuario(nombreRolUsuario);
+    }
+    
+    public List<RolUsuario> findAll(){
+	return rolUsuarioDao.findAll();
     }
 
 }
