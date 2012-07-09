@@ -39,7 +39,8 @@ public class Provincia implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paisID")
     private Pais pais;
 
@@ -94,7 +95,7 @@ public class Provincia implements Serializable {
 
     @Override
     public String toString() {
-	return "Provincia [provinciaID=" + id + ", nombre=" + nombre +"]";
+	return "Provincia:\t [provinciaID= " + id + ", nombre= " + nombre + ", " + pais.toString() + "]";
     }
 
 }

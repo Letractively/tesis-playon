@@ -1,5 +1,6 @@
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -31,6 +32,15 @@ public class ProvinciaDao extends CustomHibernateDaoSupport implements IProvinci
     public Provincia findByNombreProvincia(String nombreProvincia) {
 	List<?> list = getHibernateTemplate().find("from Provincia where nombre=?", nombreProvincia);
 	return (Provincia) list.get(0);
+    }
+    
+    public List<Provincia> findAll(){
+	List<Provincia> provincias = new ArrayList<Provincia>();
+	List<?> list = getHibernateTemplate().find("from Provincia");
+	for (Object object : list) {
+	    provincias.add((Provincia)object);
+	}
+	return provincias;
     }
     
 }

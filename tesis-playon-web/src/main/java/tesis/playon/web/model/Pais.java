@@ -77,7 +77,7 @@ public class Pais implements Serializable {
 
     @Override
     public String toString() {
-	return "Pais [paisID=" + id + ", nombre=" + nombre + "]";
+	return "Pais:\t [paisID= " + id + ", nombre= " + nombre + "]";
     }
 
 }

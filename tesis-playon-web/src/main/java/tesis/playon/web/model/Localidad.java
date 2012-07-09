@@ -39,7 +39,8 @@ public class Localidad implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provinciaID")
     private Provincia provincia;
 
@@ -94,7 +95,7 @@ public class Localidad implements Serializable {
 
     @Override
     public String toString() {
-	return "Localidad [localidadID=" + id + ", nombre=" + nombre + "]";
+	return "Localidad:\t [localidadID= " + id + ", nombre= " + nombre + ", "+ provincia.toString() + "]";
     }
 
 }

@@ -1,5 +1,7 @@
 package tesis.playon.web.business_object.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.Localidad;
 
 public interface ILocalidadDao {
@@ -12,4 +14,5 @@ public interface ILocalidadDao {
 
     Localidad findByNombreLocalidad(String nombreLocalidad);
 
+    List<Localidad> findAll();
 }

@@ -1,5 +1,6 @@
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -31,5 +32,14 @@ public class PaisDao extends CustomHibernateDaoSupport implements IPaisDao {
     public Pais findByNombrePais(String nombrePais) {
 	List<?> list = getHibernateTemplate().find("from Pais where nombre=?", nombrePais);
 	return (Pais) list.get(0);
+    }
+    
+    public List<Pais> findAll(){
+	List<Pais> paises = new ArrayList<Pais>();
+	List<?> list = getHibernateTemplate().find("from Pais");
+	for (Object object : list) {
+	    paises.add((Pais)object);
+	}
+	return paises;
     }
 }

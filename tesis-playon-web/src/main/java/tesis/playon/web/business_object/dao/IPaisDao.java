@@ -1,5 +1,7 @@
 package tesis.playon.web.business_object.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.Pais;
 
 public interface IPaisDao {
@@ -12,4 +14,5 @@ public interface IPaisDao {
 
     Pais findByNombrePais(String nombrePais);
 
+    List<Pais> findAll();
 }

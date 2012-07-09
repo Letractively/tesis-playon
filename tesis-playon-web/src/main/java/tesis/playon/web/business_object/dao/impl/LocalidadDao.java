@@ -1,5 +1,6 @@
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -33,4 +34,12 @@ public class LocalidadDao extends CustomHibernateDaoSupport implements ILocalida
 	return (Localidad) list.get(0);
     }
 
+    public List<Localidad> findAll(){
+	List<Localidad> localidades = new ArrayList<Localidad>();
+	List<?> list = getHibernateTemplate().find("from Localidad");
+	for (Object object : list) {
+	    localidades.add((Localidad)object);
+	}
+	return localidades;
+    }
 }
