@@ -1,5 +1,7 @@
 package tesis.playon.web.business_object.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.Barrio;
 
 public interface IBarrioDao {
@@ -12,4 +14,5 @@ public interface IBarrioDao {
 
     Barrio findByNombreBarrio(String nombreBarrio);
 
+    List<Barrio> findAll();
 }

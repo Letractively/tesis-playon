@@ -1,5 +1,6 @@
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -31,5 +32,14 @@ public class BarrioDao extends CustomHibernateDaoSupport implements IBarrioDao {
     public Barrio findByNombreBarrio(String nombreBarrio) {
 	List<?> list = getHibernateTemplate().find("from Barrio where nombre=?", nombreBarrio);
 	return (Barrio) list.get(0);
+    }
+    
+    public List<Barrio> findAll(){
+	List<Barrio> barrios = new ArrayList<Barrio>();
+	List<?> list = getHibernateTemplate().find("from Barrio");
+	for (Object object : list) {
+	    barrios.add((Barrio)object);
+	}
+	return barrios;
     }
 }
