@@ -1,5 +1,6 @@
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -31,5 +32,14 @@ public class TipoDocDao extends CustomHibernateDaoSupport implements ITipoDocDao
     public TipoDoc findByNombreTipoDoc(String nombreTipoDoc) {
 	List<?> list = getHibernateTemplate().find("from TipoDoc where nombre=?", nombreTipoDoc);
 	return (TipoDoc) list.get(0);
+    }
+    
+    public List<TipoDoc> findAll(){
+	List<TipoDoc> documentos = new ArrayList<TipoDoc>();
+	List<?> list = getHibernateTemplate().find("from TipoDoc");
+	for (Object object : list) {
+	    documentos.add((TipoDoc)object);
+	}
+	return documentos;
     }
 }

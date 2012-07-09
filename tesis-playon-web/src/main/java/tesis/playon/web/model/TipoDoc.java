@@ -58,7 +58,7 @@ public class TipoDoc implements Serializable {
 
        @Override
     public String toString() {
-	return "TipoDoc [TipoDocID=" + id + ", nombre=" + nombre + "]";
+	return "TipoDoc:\t [TipoDocID= " + id + ", nombre= " + nombre + "]";
     }
 
 }

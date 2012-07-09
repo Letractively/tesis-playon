@@ -1,5 +1,7 @@
 package tesis.playon.web.business_object.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.TipoDoc;
 
 public interface ITipoDocDao {
@@ -12,4 +14,5 @@ public interface ITipoDocDao {
 
     TipoDoc findByNombreTipoDoc(String nombreTipoDoc);
 
+    List<TipoDoc> findAll();
 }

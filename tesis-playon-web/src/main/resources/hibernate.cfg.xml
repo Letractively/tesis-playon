@@ -31,7 +31,7 @@
 		<mapping class="tesis.playon.web.model.RolUsuario" />
 <!-- 		<mapping class="tesis.playon.web.model.Sesion" /> -->
 <!-- 		<mapping class="tesis.playon.web.model.Tarifa" /> -->
-<!-- 		<mapping class="tesis.playon.web.model.TipoDoc" /> -->
+		<mapping class="tesis.playon.web.model.TipoDoc" />
 <!-- 		<mapping class="tesis.playon.web.model.TipoEstadia" /> -->
 		<mapping class="tesis.playon.web.model.TipoPago" />
 <!-- 		<mapping class="tesis.playon.web.model.Usuario" /> -->
