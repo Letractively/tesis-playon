@@ -3,6 +3,8 @@
  */
 package tesis.playon.web.business_object.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.Cliente;
 
 /**
@@ -18,4 +20,6 @@ public interface IClienteDao {
     void delete(Cliente cliente);
 
     Cliente findByNumeroCliente(String numeroCliente);
+    
+    List<Cliente> findAll();
 }

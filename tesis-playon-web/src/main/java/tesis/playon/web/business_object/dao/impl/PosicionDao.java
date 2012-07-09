@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.business_object.dao.IPosicionDao;
 import tesis.playon.web.model.Posicion;
-import tesis.playon.web.model.Provincia;
 
 /**
  * 

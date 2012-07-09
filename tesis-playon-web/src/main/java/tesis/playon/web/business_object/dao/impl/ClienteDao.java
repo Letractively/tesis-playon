@@ -3,6 +3,7 @@
  */
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -35,4 +36,12 @@ public class ClienteDao extends CustomHibernateDaoSupport implements IClienteDao
 	return (Cliente) list.get(0);
     }
 
+    public List<Cliente> findAll(){
+	List<Cliente> clientes = new ArrayList<Cliente>();
+	List<?> list = getHibernateTemplate().find("from Cliente");
+	for (Object object : list) {
+	    clientes.add((Cliente)object);
+	}
+	return clientes;
+    }
 }

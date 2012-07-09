@@ -13,7 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+//import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -42,7 +42,8 @@ public class Cliente implements Serializable {
     @Column(name = "telefono")
     private String telefono;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
+    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "barrioID")
     private Barrio barrio;
 
@@ -50,7 +51,8 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "cuentaClienteID")
     private CuentaCliente cuentaCliente;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuarioID")
     private Usuario usuario;
 
@@ -63,6 +65,16 @@ public class Cliente implements Serializable {
 	this.telefono = telefono;
 	this.domicilio = domicilio;
 
+    }    
+
+    public Cliente(Integer nroCliente, String domicilio, String telefono, Barrio barrio, CuentaCliente cuentaCliente,
+	    Usuario usuario) {
+	this.nroCliente = nroCliente;
+	this.domicilio = domicilio;
+	this.telefono = telefono;
+	this.barrio = barrio;
+	this.cuentaCliente = cuentaCliente;
+	this.usuario = usuario;
     }
 
     public Integer getId() {
@@ -119,6 +131,6 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-	return "Cliente [clienteID=" + id + ", nroCliente=" + nroCliente + ", domicilio=" + domicilio + "]";
+	return "Cliente:\t [clienteID= " + id + ", nroCliente= " + nroCliente + ", Usuario= " + usuario.getNombreUser() +", domicilio= " + domicilio +", " + barrio +"]";
     }
 }
