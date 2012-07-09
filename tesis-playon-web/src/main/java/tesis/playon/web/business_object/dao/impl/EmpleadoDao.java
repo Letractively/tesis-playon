@@ -3,6 +3,7 @@
  */
 package tesis.playon.web.business_object.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -30,9 +31,17 @@ public class EmpleadoDao extends CustomHibernateDaoSupport implements IEmpleadoD
 	getHibernateTemplate().delete(empleado);
     }
 
-    public Empleado findByLegajo(String legajo) {
+    public Empleado findByLegajo(Integer legajo) {
 	List<?> list = getHibernateTemplate().find("from Empleado where legajo=?", legajo);
 	return (Empleado) list.get(0);
     }
 
+    public List<Empleado> findAll(){
+	List<Empleado> empleados = new ArrayList<Empleado>();
+	List<?> list = getHibernateTemplate().find("from Empleado");
+	for (Object object : list) {
+	    empleados.add((Empleado)object);
+	}
+	return empleados;
+    }
 }

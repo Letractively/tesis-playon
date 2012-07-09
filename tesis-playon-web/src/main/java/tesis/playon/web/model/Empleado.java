@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+//import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -37,11 +37,13 @@ public class Empleado implements Serializable {
     @Column(name = "legajo")
     private Integer legajo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cargoEmpleadoID")
     private CargoEmpleado cargoEmpleado;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
+    //@OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuarioID")
     private Usuario usuario;
 
@@ -51,6 +53,12 @@ public class Empleado implements Serializable {
 
     public Empleado(int legajo) {
 	this.legajo = legajo;
+    }
+
+    public Empleado(Integer legajo, CargoEmpleado cargoEmpleado, Usuario usuario) {
+	this.legajo = legajo;
+	this.cargoEmpleado = cargoEmpleado;
+	this.usuario = usuario;
     }
 
     public Integer getLegajo() {
@@ -83,6 +91,7 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-	return "Empleado [EmpleadoID=" + id + ", legajo=" + legajo + "]";
+	return "Empleado [empleadoID=" + id + ", legajo=" + legajo + ", =" + cargoEmpleado + ", " + usuario + "]";
     }
+
 }

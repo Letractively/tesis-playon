@@ -20,15 +20,15 @@ public class TestCargoEmpleado {
     public static void main(String[] args) {
 	ApplicationContext appContext = new ClassPathXmlApplicationContext("spring/config/BeanLocations.xml");
 
-	ICargoEmpleadoDao icargo = (ICargoEmpleadoDao)appContext.getBean("cargoEmpleadoDao");
+	ICargoEmpleadoDao cargoEmpladoDao = (ICargoEmpleadoDao)appContext.getBean("cargoEmpleadoDao");
 	
 	System.out.println("\n");
 	/** insert **/
 	CargoEmpleado cargo = new CargoEmpleado("Operario", "Operario de Playa");
 	CargoEmpleado cargo1 = new CargoEmpleado("Gerente", "Gerente de Playa");
-	icargo.save(cargo);
-	icargo.save(cargo1);
-	List<CargoEmpleado> cargos = icargo.findAll();
+	cargoEmpladoDao.save(cargo);
+	cargoEmpladoDao.save(cargo1);
+	List<CargoEmpleado> cargos = cargoEmpladoDao.findAll();
 	System.out.println("Nuevos Cargos de empleados:");
 	for (CargoEmpleado cargoEmpleado : cargos) {
 	    System.out.println(cargoEmpleado);
@@ -36,20 +36,20 @@ public class TestCargoEmpleado {
 	
 	System.out.println("\n");	
 	/** select **/
-	CargoEmpleado cargoSolicitada = icargo.findByNombreCargo("Operario");
+	CargoEmpleado cargoSolicitada = cargoEmpladoDao.findByNombreCargo("Operario");
 	System.out.println("Cargo buscado: \t" + cargoSolicitada);
 	
 	System.out.println("\n");
 	/** update **/
 	cargo.setNombre("Propietario");
-	icargo.update(cargo);
-	System.out.println("Cargo Modificada:\t" + icargo.findByNombreCargo("Propietario"));
+	cargoEmpladoDao.update(cargo);
+	System.out.println("Cargo Modificada:\t" + cargoEmpladoDao.findByNombreCargo("Propietario"));
 
 	System.out.println("\n");
 	/** delete **/
-	icargo.delete(cargo);
-	icargo.delete(cargo1);
-	cargos = icargo.findAll();
+	cargoEmpladoDao.delete(cargo);
+	cargoEmpladoDao.delete(cargo1);
+	cargos = cargoEmpladoDao.findAll();
 	System.out.println("Marcas de vehiculos restantes:");
 	for (CargoEmpleado cargoEmpleado : cargos) {
 	    System.out.println(cargoEmpleado);

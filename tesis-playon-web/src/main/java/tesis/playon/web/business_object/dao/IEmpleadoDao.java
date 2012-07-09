@@ -3,6 +3,8 @@
  */
 package tesis.playon.web.business_object.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.Empleado;
 
 /**
@@ -17,5 +19,7 @@ public interface IEmpleadoDao {
 
     void delete(Empleado empleado);
 
-    Empleado findByLegajo(String legajo);
+    Empleado findByLegajo(Integer legajo);
+    
+    List<Empleado> findAll();
 }
