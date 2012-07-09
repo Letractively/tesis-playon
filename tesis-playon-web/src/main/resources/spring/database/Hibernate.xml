@@ -41,7 +41,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 <!-- 				<value>tesis.playon.web.model.DenunciaVehiculo</value> -->
 <!-- 				<value>tesis.playon.web.model.Empleado</value> -->
 				<value>tesis.playon.web.model.EstadoDenuncia</value>
-<!-- 				<value>tesis.playon.web.model.EstadoPromocion</value> -->
+ 				<value>tesis.playon.web.model.EstadoPromocion</value>
 <!-- 				<value>tesis.playon.web.model.Favorito</value> -->
 <!-- 				<value>tesis.playon.web.model.PerfilPlaya</value> -->
 <!-- 				<value>tesis.playon.web.model.Playa</value> -->

@@ -14,17 +14,14 @@ import tesis.playon.web.model.Publicidad;
 @Repository("PublicidadDao")
 public class PublicidadDao extends CustomHibernateDaoSupport implements IPublicidadDao {
 
-    @Override
     public void save(Publicidad publicidad) {
 	getHibernateTemplate().save(publicidad);
     }
 
-    @Override
     public void update(Publicidad publicidad) {
 	getHibernateTemplate().update(publicidad);
     }
 
-    @Override
     public void delete(Publicidad publicidad) {
 	getHibernateTemplate().delete(publicidad);
     }
