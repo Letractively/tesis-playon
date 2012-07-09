@@ -49,12 +49,10 @@
 						<th>Age</th>
 						<th>Sex</th>
 					</tr>
-					<c:forEach items="${users}" var="user">
-						<tr style="background-color: silver;" id="${user.id}" onclick="setUpdateForm('${user.id}');">
-							<td><c:out value="${user.name}"/></td>
-							<td><c:out value="${user.standard}"/></td>
-							<td><c:out value="${user.age}"/></td>
-							<td><c:out value="${user.sex}"/></td>
+					<c:forEach items="${rolUsuario}" var="user">
+						<tr style="background-color: silver;" id="${rolUsuario.id}" onclick="setUpdateForm('${rolUsuario.id}');">
+							<td><c:out value="${rolUsuario.nombre}"/></td>
+							<td><c:out value="${rolUsuario.descripcion}"/></td>
 						</tr>
 					</c:forEach>
 				</table>
