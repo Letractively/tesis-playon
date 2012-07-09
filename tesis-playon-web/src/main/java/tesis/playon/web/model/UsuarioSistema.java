@@ -27,7 +27,7 @@ public class UsuarioSistema implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "usuarioSistemaID")
+    @Column(name = "usuarioID")
     private int id;
 
     @ManyToOne
@@ -37,7 +37,7 @@ public class UsuarioSistema implements Serializable {
 
     @ManyToOne
     //@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuarioID")    
+    @JoinColumn(name = "usuarioSistemaID")    
     private Usuario usuario;
     
     public UsuarioSistema() {

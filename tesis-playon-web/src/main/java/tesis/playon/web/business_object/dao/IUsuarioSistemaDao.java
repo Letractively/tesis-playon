@@ -12,7 +12,7 @@ public interface IUsuarioSistemaDao {
 
     void delete(UsuarioSistema usuarioSistema);
 
-    UsuarioSistema findByNombreUsuarioSistema(String nombreUsuarioSistema);
+    UsuarioSistema findByNombreUsuarioSistema(String usuarioSistemaID);
     
     List<UsuarioSistema> findAll();
 }

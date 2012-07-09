@@ -29,8 +29,8 @@ public class UsuarioSistemaDao extends CustomHibernateDaoSupport implements IUsu
 	getHibernateTemplate().delete(UsuarioSistema);
     }
 
-     public UsuarioSistema findByNombreUsuarioSistema(String nombreUsuarioSistema) {
-	 List<?> list = getHibernateTemplate().find("from UsuarioSistema where nombre=?", nombreUsuarioSistema);
+     public UsuarioSistema findByNombreUsuarioSistema(String usuarioSistemaID) {
+	 List<?> list = getHibernateTemplate().find("from UsuarioSistema where usuario=?", usuarioSistemaID);
 	 return (UsuarioSistema) list.get(0);
      }
      
