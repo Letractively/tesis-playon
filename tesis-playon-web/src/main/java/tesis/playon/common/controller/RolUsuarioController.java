@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import tesis.playon.common.services.RolUsuarioService;
 import tesis.playon.web.model.RolUsuario;
-import tesis.playon.web.services.RolUsuarioService;
 
 /**
  * 

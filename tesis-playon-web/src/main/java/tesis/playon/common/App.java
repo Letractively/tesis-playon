@@ -12,7 +12,10 @@ import tesis.playon.web.model.RolUsuario;
 
 public class App {
     public static void main(String[] args) {
-	ApplicationContext appContext = new ClassPathXmlApplicationContext("WEB-INF/applicationContext.xml");
+
+	ApplicationContext appContext = new ClassPathXmlApplicationContext("/WEB-INF/applicationContext.xml");
+
+	// appContext = WebApplicationContextUtils.getRequiredWebApplicationContext(this.getServletContext());
 
 	// Test para Rol Usuario
 	IRolUsuarioBo rolUsuarioBo = (IRolUsuarioBo) appContext.getBean("rolUsuarioBo");
@@ -75,10 +78,8 @@ public class App {
 
 	/** delete **/
 	paisDao.delete(otroPais);
-	
-	
 
 	System.out.println("Done");
-	
+
     }
 }

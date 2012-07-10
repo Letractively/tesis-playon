@@ -1,4 +1,4 @@
-package tesis.playon.web.services;
+package tesis.playon.common.services;
 
 import java.util.List;
 
@@ -70,5 +70,5 @@ public class RolUsuarioService {
 	// Save updates
 	session.save(existingPerson);
     }
-    
+
 }

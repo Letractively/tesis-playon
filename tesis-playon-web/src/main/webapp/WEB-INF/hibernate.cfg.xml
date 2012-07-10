@@ -4,10 +4,6 @@
 	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
  <session-factory>
-  <!-- We're using MySQL database so the dialect needs to MySQL as well-->
-  <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
-  <!-- Enable this to see the SQL statements in the logs-->
-  <property name="show_sql">false</property>
   <!-- Listado de clases que usan FK o @MappedBy -->
   <mapping class="tesis.playon.web.model.Barrio"/>
   <mapping class="tesis.playon.web.model.CargoEmpleado"/>
