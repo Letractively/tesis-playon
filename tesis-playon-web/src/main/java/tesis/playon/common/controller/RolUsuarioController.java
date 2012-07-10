@@ -16,7 +16,7 @@ import tesis.playon.web.business_object.dao.impl.RolUsuarioDao;
 import tesis.playon.web.model.RolUsuario;
 
 @Controller
-@RequestMapping(value = "/registracionRolUsuario")
+@RequestMapping(value = "/registracionRolUsuario.htm")
 public class RolUsuarioController {
 
     private RolUsuarioValidator validator = null;
