@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -27,7 +28,7 @@ public class UsuarioSistema implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "usuarioID")
+    @Column(name = "usuarioSistemaID")
     private int id;
 
     @ManyToOne
@@ -35,9 +36,9 @@ public class UsuarioSistema implements Serializable {
     @JoinColumn(name = "rolUsuarioID")
     private RolUsuario rolUsuario;
 
-    @ManyToOne
+    @OneToOne
     //@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuarioSistemaID")    
+    @JoinColumn(name = "usuarioID")    
     private Usuario usuario;
     
     public UsuarioSistema() {

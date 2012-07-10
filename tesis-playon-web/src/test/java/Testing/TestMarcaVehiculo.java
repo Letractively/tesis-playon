@@ -44,7 +44,7 @@ public class TestMarcaVehiculo {
 	marca.setNombre("Ferrari");
 	iMarca.update(marca);
 	System.out.println("Marca Modificada:\t" + iMarca.findByNombreMarcaVehiculo("Ferrari"));
-
+	
 	System.out.println("\n");
 	/** delete **/
 	iMarca.delete(marca);
@@ -54,7 +54,7 @@ public class TestMarcaVehiculo {
 	for (MarcaVehiculo marcaVehiculo : marcas) {
 	    System.out.println(marcaVehiculo);
 	}
-
+	
 	System.out.println("\nListo!");
     }
 }

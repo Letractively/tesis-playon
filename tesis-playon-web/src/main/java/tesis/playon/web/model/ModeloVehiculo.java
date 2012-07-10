@@ -91,6 +91,6 @@ public class ModeloVehiculo implements Serializable{
 
     @Override
     public String toString() {
-	return "ModeloVehiculo:\t [modeloVehiculoID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + ", marcaVehiculo= " + marcaVehiculo.toString() + "]";
+	return "ModeloVehiculo:\t [modeloVehiculoID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + ", " + marcaVehiculo.toString() + "]";
     }
 }

@@ -2,6 +2,7 @@ package tesis.playon.web.business_object.dao;
 
 import java.util.List;
 
+import tesis.playon.web.model.Usuario;
 import tesis.playon.web.model.UsuarioSistema;
 
 public interface IUsuarioSistemaDao {
@@ -12,7 +13,7 @@ public interface IUsuarioSistemaDao {
 
     void delete(UsuarioSistema usuarioSistema);
 
-    UsuarioSistema findByNombreUsuarioSistema(String usuarioSistemaID);
+    UsuarioSistema findByNombreUsuarioSistema(Usuario usuario);
     
     List<UsuarioSistema> findAll();
 }

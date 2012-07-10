@@ -3,17 +3,20 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-//import java.util.HashSet;
-//import java.util.Set;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 //import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 //import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+
 /**
  * Clase de negocio que contiene los diferentes Estados de publicidad.
  * 
@@ -37,20 +40,22 @@ public class MarcaVehiculo implements Serializable{
 
     @Column(name = "descripcion")
     private String descripcion;
-    
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "marca_vehiculo")
-//    private Set<ModeloVehiculo> modelos = new HashSet<ModeloVehiculo>(0);
+  
+    @OneToMany
+    //@OneToMany(mappedBy = "marca_vehiculo")
+    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "marca_vehiculo")
+    private Set<ModeloVehiculo> modelos = new HashSet<ModeloVehiculo>(0);
 
     public MarcaVehiculo(String nombre, String descripcion) {
 	this.nombre = nombre;
 	this.descripcion = descripcion;
     }
 
-//    public MarcaVehiculo(String nombre, String descripcion, Set<ModeloVehiculo> modelos) {
-//	this.nombre = nombre;
-//	this.descripcion = descripcion;
-//	this.modelos = modelos;
-//    }
+    public MarcaVehiculo(String nombre, String descripcion, Set<ModeloVehiculo> modelos) {
+	this.nombre = nombre;
+	this.descripcion = descripcion;
+	this.modelos = modelos;
+    }
 
     public MarcaVehiculo() {
     }
@@ -71,13 +76,14 @@ public class MarcaVehiculo implements Serializable{
         this.descripcion = descripcion;
     }
 
-//    public Set<ModeloVehiculo> getModelos() {
-//        return modelos;
-//    }
-//
-//    public void setModelos(Set<ModeloVehiculo> modelos) {
-//        this.modelos = modelos;
-//    }
+
+    public Set<ModeloVehiculo> getModelos() {
+        return modelos;
+    }
+
+    public void setModelos(Set<ModeloVehiculo> modelos) {
+        this.modelos = modelos;
+    }
 
     public Integer getId() {
         return id;
@@ -85,6 +91,6 @@ public class MarcaVehiculo implements Serializable{
 
     @Override
     public String toString() {
-	return "MarcaVehiculo:\t [id= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
-    }
+	return "MarcaVehiculo:\t [marcaVehiculoID=" + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
+    }    
 }

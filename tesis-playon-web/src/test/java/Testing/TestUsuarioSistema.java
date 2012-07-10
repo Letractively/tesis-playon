@@ -48,13 +48,13 @@ public class TestUsuarioSistema {
 	}
 
 	/** select **/
-	UsuarioSistema otroUsuario = usuarioSistemaDao.findByNombreUsuarioSistema(""+usuarioSistema.getUsuario());
+	UsuarioSistema otroUsuario = usuarioSistemaDao.findByNombreUsuarioSistema(usuario);
 	System.out.println("\nEncontrado:\t" + otroUsuario);
 	
 	/** update **/
 	usuarioSistema.setRolUsuario(rolUsuario2);
 	usuarioSistemaDao.update(usuarioSistema);
-	System.out.println("\nModificado:\t" + usuarioSistemaDao.findByNombreUsuarioSistema(""+usuarioSistema.getUsuario()));
+	System.out.println("\nModificado:\t" + usuarioSistemaDao.findByNombreUsuarioSistema(usuario));
 	
 	System.out.println("\n");
 	/** delete **/

@@ -32,34 +32,35 @@ public class Playa implements Serializable {
     @Column(name = "playaID")
     private Integer id;
 
-    @Column(name = "cuit")
+    @Column(name = "cuit", nullable= true)
     private String cuit;
 
-    @Column(name = "disponibilidad")
+    @Column(name = "disponibilidad", nullable= true)
     private Integer disponibilidad;
 
-    @Column(name = "domicilio")
+    @Column(name = "domicilio", nullable= true)
     private String domicilio;
 
     @Column(name = "nombreComercial")
     private String nombreComercial;
 
-    @Column(name = "razonSocial")
+    @Column(name = "razonSocial", nullable= true)
     private String razonSocial;
 
     @ManyToOne
     //@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "barrioID")
+    @JoinColumn(name = "barrioID", nullable= true)
     private Barrio barrio;
 
     @ManyToOne
     //@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "estadoID", nullable= true)
+    @JoinColumn(name = "estadoPlayaID")
     private EstadoPlaya estado;
 
     @OneToOne
     //@OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "estadiaID")
+    @JoinColumn(name = "estadiaID", nullable= true)
+    //@Column(name = "estadiaID")
     private Estadia estadia;
 
     public Playa() {

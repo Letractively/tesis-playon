@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.business_object.dao.IUsuarioSistemaDao;
 import tesis.playon.web.model.UsuarioSistema;
+import tesis.playon.web.model.Usuario;
 
 /**
  * 
@@ -29,8 +30,8 @@ public class UsuarioSistemaDao extends CustomHibernateDaoSupport implements IUsu
 	getHibernateTemplate().delete(UsuarioSistema);
     }
 
-     public UsuarioSistema findByNombreUsuarioSistema(String usuarioSistemaID) {
-	 List<?> list = getHibernateTemplate().find("from UsuarioSistema where usuario=?", usuarioSistemaID);
+     public UsuarioSistema findByNombreUsuarioSistema(Usuario usuario) {
+	 List<?> list = getHibernateTemplate().find("from UsuarioSistema where usuario=?", usuario);
 	 return (UsuarioSistema) list.get(0);
      }
      
