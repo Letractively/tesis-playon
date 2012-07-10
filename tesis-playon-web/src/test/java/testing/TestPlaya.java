@@ -1,13 +1,9 @@
-/**
- * 
- */
-package Testing;
+package testing;
 
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 
 import tesis.playon.web.business_object.dao.IEstadoPlayaDao;
 import tesis.playon.web.business_object.dao.IPlayaDao;
@@ -16,18 +12,17 @@ import tesis.playon.web.model.Playa;
 
 /**
  * @author Pablo
- *
+ * 
  */
 public class TestPlaya {
 
     public static void main(String[] args) {
-	
+
 	ApplicationContext appContext = new ClassPathXmlApplicationContext("spring/config/BeanLocations.xml");
-	
+
 	IEstadoPlayaDao estadoPlayaDao = (IEstadoPlayaDao) appContext.getBean("estadoPlayaDao");
 	EstadoPlaya estado = estadoPlayaDao.findByNombreEstadoPlaya("Pendiente");
 	EstadoPlaya estado1 = estadoPlayaDao.findByNombreEstadoPlaya("Aprobada");
-	
 
 	/** TEST PLAYA DE ESTACIONAMIENTO **/
 	IPlayaDao playaDao = (IPlayaDao) appContext.getBean("playaDao");
@@ -47,13 +42,13 @@ public class TestPlaya {
 	Playa otraPlaya = playaDao.findByNombreComercial("Ituzaingo Parking");
 	System.out.println("\n");
 	System.out.println("\nEncontrada:\t" + otraPlaya);
-	
+
 	/** update **/
 	playa.setNombreComercial("Playon");
 	playaDao.update(playa);
 	System.out.println("\n");
 	System.out.println("\nModificado:\t" + playaDao.findByNombreComercial("Playon"));
-	
+
 	System.out.println("\n");
 	/** delete **/
 	playaDao.delete(playa);

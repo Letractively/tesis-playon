@@ -1,7 +1,4 @@
-/**
- * 
- */
-package Testing;
+package testing;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -15,21 +12,21 @@ import tesis.playon.web.model.Provincia;
 
 /**
  * @author Pablo
- *
+ * 
  */
 public class TestProvincia {
 
     public static void main(String[] args) {
 	ApplicationContext appContext = new ClassPathXmlApplicationContext("spring/config/BeanLocations.xml");
 
-	IProvinciaDao provinciaDao=(IProvinciaDao)appContext.getBean("provinciaDao");
+	IProvinciaDao provinciaDao = (IProvinciaDao) appContext.getBean("provinciaDao");
 	IPaisDao paisDao = (IPaisDao) appContext.getBean("paisDao");
-	
+
 	Pais pais = new Pais("Argentina");
 	Pais pais1 = new Pais("Brasil");
 	paisDao.save(pais);
 	paisDao.save(pais1);
-	
+
 	System.out.println("\n");
 	/** insert **/
 	Provincia provincia = new Provincia("Cordoba", pais);
@@ -41,25 +38,23 @@ public class TestProvincia {
 	for (Provincia provincia2 : provincias) {
 	    System.out.println(provincia2);
 	}
-	
-	System.out.println("\n");	
+
+	System.out.println("\n");
 	/** select **/
 	Provincia otraProvincia = provinciaDao.findByNombreProvincia("Cordoba");
 	System.out.println("\nProvincia encontrada:\t" + otraProvincia.toString());
 
-	
 	System.out.println("\n");
 	/** update **/
 	provincia.setNombre("Buenos Aires");
 	provinciaDao.update(provincia);
 	System.out.println("\nProvincia Modificada:\t" + provinciaDao.findByNombreProvincia("Buenos Aires"));
 
-
 	System.out.println("\n");
 	/** delete **/
 	provinciaDao.delete(provincia);
 	provinciaDao.delete(provincia1);
-	provincias= provinciaDao.findAll();
+	provincias = provinciaDao.findAll();
 	System.out.println("\nProvincias restantes:");
 	for (Provincia _provincia : provincias) {
 	    System.out.println(_provincia);

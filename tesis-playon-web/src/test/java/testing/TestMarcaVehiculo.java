@@ -1,7 +1,4 @@
-/**
- * 
- */
-package Testing;
+package testing;
 
 import java.util.List;
 
@@ -13,15 +10,15 @@ import tesis.playon.web.model.MarcaVehiculo;
 
 /**
  * @author Pablo
- *
+ * 
  */
 public class TestMarcaVehiculo {
 
     public static void main(String[] args) {
 	ApplicationContext appContext = new ClassPathXmlApplicationContext("spring/config/BeanLocations.xml");
 
-	IMarcaVehiculoDao iMarca = (IMarcaVehiculoDao)appContext.getBean("marcaVehiculoDao");
-	
+	IMarcaVehiculoDao iMarca = (IMarcaVehiculoDao) appContext.getBean("marcaVehiculoDao");
+
 	System.out.println("\n");
 	/** insert **/
 	MarcaVehiculo marca = new MarcaVehiculo("Subaru", null);
@@ -33,18 +30,18 @@ public class TestMarcaVehiculo {
 	for (MarcaVehiculo marcaVehiculo : marcas) {
 	    System.out.println(marcaVehiculo);
 	}
-	
-	System.out.println("\n");	
+
+	System.out.println("\n");
 	/** select **/
 	MarcaVehiculo marcaSolicitada = iMarca.findByNombreMarcaVehiculo("Ford");
 	System.out.println("Marca buscada: \t" + marcaSolicitada);
-	
+
 	System.out.println("\n");
 	/** update **/
 	marca.setNombre("Ferrari");
 	iMarca.update(marca);
 	System.out.println("Marca Modificada:\t" + iMarca.findByNombreMarcaVehiculo("Ferrari"));
-	
+
 	System.out.println("\n");
 	/** delete **/
 	iMarca.delete(marca);
@@ -54,7 +51,7 @@ public class TestMarcaVehiculo {
 	for (MarcaVehiculo marcaVehiculo : marcas) {
 	    System.out.println(marcaVehiculo);
 	}
-	
+
 	System.out.println("\nListo!");
     }
 }

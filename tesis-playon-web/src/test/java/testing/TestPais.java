@@ -1,7 +1,4 @@
-/**
- * 
- */
-package Testing;
+package testing;
 
 import java.util.List;
 
@@ -13,7 +10,7 @@ import tesis.playon.web.model.Pais;
 
 /**
  * @author Pablo
- *
+ * 
  */
 public class TestPais {
 
@@ -37,12 +34,12 @@ public class TestPais {
 	/** select **/
 	Pais otroPais = paisDao.findByNombrePais("Argentina");
 	System.out.println("\nPais encontrado:\t" + otroPais);
-	
+
 	/** update **/
 	otroPais.setNombre("Republica Argentina");
 	paisDao.update(otroPais);
 	System.out.println("\nPais Modificado:\t" + paisDao.findByNombrePais("Republica Argentina"));
-	
+
 	System.out.println("\n");
 	/** delete **/
 	paisDao.delete(pais);

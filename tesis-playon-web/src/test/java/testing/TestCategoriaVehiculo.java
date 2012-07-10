@@ -1,7 +1,4 @@
-/**
- * 
- */
-package Testing;
+package testing;
 
 import java.util.List;
 

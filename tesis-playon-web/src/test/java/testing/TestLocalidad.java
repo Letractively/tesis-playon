@@ -1,7 +1,4 @@
-/**
- * 
- */
-package Testing;
+package testing;
 
 import java.util.List;
 
@@ -17,17 +14,17 @@ import tesis.playon.web.model.Provincia;
 
 /**
  * @author Pablo
- *
+ * 
  */
 public class TestLocalidad {
 
     public static void main(String[] args) {
 	ApplicationContext appContext = new ClassPathXmlApplicationContext("spring/config/BeanLocations.xml");
 
-	IProvinciaDao provinciaDao=(IProvinciaDao)appContext.getBean("provinciaDao");
+	IProvinciaDao provinciaDao = (IProvinciaDao) appContext.getBean("provinciaDao");
 	IPaisDao paisDao = (IPaisDao) appContext.getBean("paisDao");
 	ILocalidadDao localidadDao = (ILocalidadDao) appContext.getBean("localidadDao");
-	
+
 	Pais pais = new Pais("Argentina");
 	Pais pais1 = new Pais("Brasil");
 	paisDao.save(pais);
@@ -36,12 +33,11 @@ public class TestLocalidad {
 	Provincia provincia1 = new Provincia("Rio de Janeiro", pais1);
 	provinciaDao.save(provincia);
 	provinciaDao.save(provincia1);
-	
-	
+
 	System.out.println("\n");
 	/** insert **/
-	Localidad localidad = new Localidad("Rio IV",provincia);
-	Localidad localidad1 = new Localidad("Florianopolis",provincia1);
+	Localidad localidad = new Localidad("Rio IV", provincia);
+	Localidad localidad1 = new Localidad("Florianopolis", provincia1);
 	localidadDao.save(localidad);
 	localidadDao.save(localidad1);
 	List<Localidad> localidades = localidadDao.findAll();
@@ -49,36 +45,33 @@ public class TestLocalidad {
 	for (Localidad _localidad : localidades) {
 	    System.out.println(_localidad);
 	}
-	
-	System.out.println("\n");	
+
+	System.out.println("\n");
 	/** select **/
 	Localidad otraLocalidad = localidadDao.findByNombreLocalidad("Rio IV");
 	System.out.println("\nLocalidad encontrada:\t" + otraLocalidad.toString());
 
-	
 	System.out.println("\n");
 	/** update **/
 	localidad.setNombre("Calamuchita");
 	localidadDao.update(localidad);
 	System.out.println("\nLocalidad Modificada:\t" + localidadDao.findByNombreLocalidad("Calamuchita"));
 
-
 	System.out.println("\n");
 	/** delete **/
 	localidadDao.delete(localidad);
 	localidadDao.delete(localidad1);
-	localidades= localidadDao.findAll();
+	localidades = localidadDao.findAll();
 	System.out.println("\nLocalidad restantes:");
 	for (Localidad _localidad : localidades) {
 	    System.out.println(_localidad);
 	}
-	
+
 	provinciaDao.delete(provincia);
 	provinciaDao.delete(provincia1);
 	paisDao.delete(pais);
 	paisDao.delete(pais1);
 
-	
 	System.out.println("\nListo!");
     }
 }

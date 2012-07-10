@@ -1,8 +1,4 @@
-/**
- * 
- */
-package Testing;
-
+package testing;
 
 import java.util.List;
 
@@ -14,13 +10,13 @@ import tesis.playon.web.model.RolUsuario;
 
 /**
  * @author Pablo
- *
+ * 
  */
 public class TestRolUsuario {
 
     public static void main(String[] args) {
 	ApplicationContext appContext = new ClassPathXmlApplicationContext("spring/config/BeanLocations.xml");
-	
+
 	IRolUsuarioBo rolUsuarioBo = (IRolUsuarioBo) appContext.getBean("rolUsuarioBo");
 
 	/** insert **/
@@ -36,7 +32,7 @@ public class TestRolUsuario {
 
 	/** select **/
 	RolUsuario otroRolUsuario = rolUsuarioBo.findByNombreRolUsuario("Cliente");
-	System.out.println("\nEncontrado:\t"+otroRolUsuario);
+	System.out.println("\nEncontrado:\t" + otroRolUsuario);
 
 	/** update **/
 	otroRolUsuario.setNombre("Administrador");
@@ -46,8 +42,7 @@ public class TestRolUsuario {
 
 	/** delete **/
 	rolUsuarioBo.delete(otroRolUsuario);
-	
-	
+
 	System.out.println("\nListo!");
     }
 }
