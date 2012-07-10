@@ -18,29 +18,29 @@ import javax.persistence.Table;
 
 /**
  * @author Pablo
- *
+ * 
  */
 @Entity
 @Table(name = "transaccion_cliente", catalog = "tesis_playon")
-public class TransaccionCliente implements Serializable{
+public class TransaccionCliente implements Serializable {
 
-private static final long serialVersionUID = 1L;
-    
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "transaccionClienteID")
     private Integer id;
-    
+
     @Column(name = "fecha")
     private Date fecha;
-    
+
     @Column(name = "importe")
     private float importe;
-    
+
     @ManyToOne
     @JoinColumn(name = "tipoPagoID", nullable = false)
     private TipoPago tipoPago;
-    
+
     @ManyToOne
     @JoinColumn(name = "cuentaClienteID", nullable = false)
     private CuentaCliente cuentaCliente;
@@ -56,47 +56,44 @@ private static final long serialVersionUID = 1L;
     }
 
     public Date getFecha() {
-        return fecha;
+	return fecha;
     }
 
     public void setFecha(Date fecha) {
-        this.fecha = fecha;
+	this.fecha = fecha;
     }
 
     public float getImporte() {
-        return importe;
+	return importe;
     }
 
     public void setImporte(float importe) {
-        this.importe = importe;
+	this.importe = importe;
     }
 
     public TipoPago getTipoPago() {
-        return tipoPago;
+	return tipoPago;
     }
 
     public void setTipoPago(TipoPago tipoPago) {
-        this.tipoPago = tipoPago;
+	this.tipoPago = tipoPago;
     }
 
     public CuentaCliente getCuentaCliente() {
-        return cuentaCliente;
+	return cuentaCliente;
     }
 
     public void setCuentaCliente(CuentaCliente cuentaCliente) {
-        this.cuentaCliente = cuentaCliente;
+	this.cuentaCliente = cuentaCliente;
     }
 
     public Integer getId() {
-        return id;
+	return id;
     }
 
     @Override
     public String toString() {
-	return "TransaccionCliente:\t [id= " + id + ", fecha= " + fecha.toString() + ", importe= " + importe + ", " + tipoPago
-		+ ", " + cuentaCliente + "]";
+	return "TransaccionCliente:\t [id= " + id + ", fecha= " + fecha.toString() + ", importe= " + importe + ", "
+		+ tipoPago + ", " + cuentaCliente + "]";
     }
-    
-    
-    
 }
