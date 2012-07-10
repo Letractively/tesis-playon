@@ -12,7 +12,7 @@ public interface ICuentaClienteDao {
     
     void delete(CuentaCliente cuentaCliente);
     
-    CuentaCliente findByNroCuenta(String nroCuenta);
+    CuentaCliente findByNroCuenta(Integer nroCuenta);
     
     List<CuentaCliente> findAll();
     

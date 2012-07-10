@@ -24,7 +24,7 @@ public class CuentaClienteDao extends CustomHibernateDaoSupport implements ICuen
 	getHibernateTemplate().delete(cuentaCliente);
     }
 
-    public CuentaCliente findByNroCuenta(String nroCuenta) {
+    public CuentaCliente findByNroCuenta(Integer nroCuenta) {
 	List<?> list = getHibernateTemplate().find("from CuentaCliente where nroCuenta=?", nroCuenta);
 	return (CuentaCliente) list.get(0);
     }
