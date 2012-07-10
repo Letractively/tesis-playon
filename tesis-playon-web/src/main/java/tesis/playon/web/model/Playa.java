@@ -14,7 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+//import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -57,10 +57,10 @@ public class Playa implements Serializable {
     @JoinColumn(name = "estadoPlayaID")
     private EstadoPlaya estado;
 
-    @OneToOne
+    //@OneToOne
     //@OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "estadiaID", nullable= true)
-    //@Column(name = "estadiaID")
+    //@JoinColumn(name = "estadiaID", nullable= true)
+   @Column(name = "estadiaID")
     private Estadia estadia;
 
     public Playa() {

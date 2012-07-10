@@ -47,7 +47,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 				<value>tesis.playon.web.model.Playa</value>
 				<value>tesis.playon.web.model.Posicion</value>
 <!-- 				<value>tesis.playon.web.model.Sesion</value> -->
-<!-- 				<value>tesis.playon.web.model.Tarifa</value> -->
+				<value>tesis.playon.web.model.Tarifa</value>
 				<value>tesis.playon.web.model.TipoDoc</value>
 				<value>tesis.playon.web.model.TipoEstadia</value>
 				<value>tesis.playon.web.model.TipoPago</value>
