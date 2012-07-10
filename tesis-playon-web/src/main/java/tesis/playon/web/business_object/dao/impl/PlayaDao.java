@@ -35,12 +35,12 @@ public class PlayaDao extends CustomHibernateDaoSupport implements IPlayaDao {
     }
 
     public List<Playa> findAll() {
-	List<Playa> colores = new ArrayList<Playa>();
+	List<Playa> playa = new ArrayList<Playa>();
 	List<?> list = getHibernateTemplate().find("from Playa");
 	for (Object object : list) {
-	    colores.add((Playa) object);
+	    playa.add((Playa) object);
 	}
-	return colores;
+	return playa;
     }
 
 }

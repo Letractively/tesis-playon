@@ -32,35 +32,35 @@ public class Playa implements Serializable {
     @Column(name = "playaID")
     private Integer id;
 
-    @Column(name = "cuit", nullable= true)
+    @Column(name = "cuit", nullable = true)
     private String cuit;
 
-    @Column(name = "disponibilidad", nullable= true)
+    @Column(name = "disponibilidad", nullable = true)
     private Integer disponibilidad;
 
-    @Column(name = "domicilio", nullable= true)
+    @Column(name = "domicilio", nullable = true)
     private String domicilio;
 
     @Column(name = "nombreComercial")
     private String nombreComercial;
 
-    @Column(name = "razonSocial", nullable= true)
+    @Column(name = "razonSocial", nullable = true)
     private String razonSocial;
 
     @ManyToOne
-    //@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "barrioID", nullable= true)
+    // @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "barrioID", nullable = true)
     private Barrio barrio;
 
     @ManyToOne
-    //@ManyToOne(fetch = FetchType.LAZY)
+    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estadoPlayaID")
     private EstadoPlaya estado;
 
-    //@OneToOne
-    //@OneToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "estadiaID", nullable= true)
-   @Column(name = "estadiaID")
+    // @OneToOne
+    // @OneToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "estadiaID", nullable= true)
+    @Column(name = "estadiaID")
     private Estadia estadia;
 
     public Playa() {
@@ -78,7 +78,7 @@ public class Playa implements Serializable {
 	this.estado = estado;
 	this.estadia = estadia;
     }
-    
+
     public Playa(String nombreComercial, EstadoPlaya estado) {
 	this.nombreComercial = nombreComercial;
 	this.estado = estado;

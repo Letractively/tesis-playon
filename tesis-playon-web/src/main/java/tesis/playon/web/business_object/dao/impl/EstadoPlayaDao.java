@@ -30,12 +30,12 @@ public class EstadoPlayaDao extends CustomHibernateDaoSupport implements IEstado
     }
 
     public List<EstadoPlaya> findAll() {
-	List<EstadoPlaya> colores = new ArrayList<EstadoPlaya>();
+	List<EstadoPlaya> estadoPlaya = new ArrayList<EstadoPlaya>();
 	List<?> list = getHibernateTemplate().find("from EstadoPlaya");
 	for (Object object : list) {
-	    colores.add((EstadoPlaya) object);
+	    estadoPlaya.add((EstadoPlaya) object);
 	}
-	return colores;
+	return estadoPlaya;
     }
 
 }
