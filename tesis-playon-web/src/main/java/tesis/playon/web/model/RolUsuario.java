@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 /**
  * Clase de negocio que contiene los diferentes roles de usuario.
@@ -18,7 +17,7 @@ import javax.persistence.UniqueConstraint;
  * 
  */
 @Entity
-@Table(name = "rol_usuario", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
+@Table(name = "rol_usuario")
 public class RolUsuario implements Serializable {
 
     private static final long serialVersionUID = 4725165248854057805L;
