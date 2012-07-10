@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import tesis.playon.web.business_object.dao.IEstadoDenunciaDao;
+import tesis.playon.web.dao.IEstadoDenunciaDao;
 import tesis.playon.web.model.EstadoDenuncia;
 
 /**

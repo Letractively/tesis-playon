@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import tesis.playon.web.business_object.impl.RolUsuarioBo;
 import tesis.playon.web.model.RolUsuario;
+import tesis.playon.web.services.RolUsuarioService;
 
 /**
  * 
@@ -26,13 +26,13 @@ public class RolUsuarioController {
 
     protected static Logger logger = Logger.getLogger("RolUsuarioController");
 
-    @Resource(name = "rolUsuarioBo")
-    private RolUsuarioBo rolUsuarioBo = null;
+    @Resource(name = "rolUsuarioService")
+    private RolUsuarioService rolUsuarioService;
 
     @RequestMapping(value = "/rolesUsuario", method = RequestMethod.GET)
     public String getRolUsuarios(Model model) {
 	logger.debug("Recibida peticion para mostrar todos los roles de usuarios");
-	List<RolUsuario> rolesUsuario = rolUsuarioBo.findAll();
+	List<RolUsuario> rolesUsuario = rolUsuarioService.findAll();
 	model.addAttribute("rolesUsuario", rolesUsuario);
 	// Resuelve /WEB-INF/views/personspage.jsp
 	return "personspage";
@@ -54,7 +54,7 @@ public class RolUsuarioController {
 	// The "personAttribute" model has been passed to the controller from the JSP
 	// We use the name "personAttribute" because the JSP uses that name
 	// Call PersonService to do the actual adding
-	rolUsuarioBo.save(rolUsuario);
+	rolUsuarioService.add(rolUsuario);
 	// resuelve /WEB-INF/views/addedpage.jsp
 	return "addedpage";
     }
@@ -63,8 +63,7 @@ public class RolUsuarioController {
     public String delete(@RequestParam(value = "id", required = true) String nombreRol, Model model) {
 	logger.debug("Recibida la peticion para borra un rol de usuario existente");
 	// Call PersonService to do the actual deleting
-	RolUsuario rolUsuario = new RolUsuario(nombreRol);
-	rolUsuarioBo.delete(rolUsuario);
+	rolUsuarioService.delete(nombreRol);
 	// Add id reference to Model
 	model.addAttribute("nombreRol", nombreRol);
 	// Resuelve /WEB-INF/views/deletedpage.jsp
@@ -76,7 +75,7 @@ public class RolUsuarioController {
 	logger.debug("Recibida la peticion para mostrar la pagina de edicion");
 	// Retrieve existing Person and add to model
 	// This is the formBackingOBject
-	model.addAttribute("rolUsuarioAtributo", rolUsuarioBo.findByNombreRolUsuario(nombreRol));
+	model.addAttribute("rolUsuarioAtributo", rolUsuarioService.get(nombreRol));
 	// Resuelve /WEB-INF/views/editpage.jsp
 	return "editpage";
     }
@@ -91,7 +90,7 @@ public class RolUsuarioController {
 	// When a field is disabled it will not be included in the ModelAttribute
 	rolUsuario.setNombre(nombreRol);
 	// Delegate to PersonService for editing
-	rolUsuarioBo.save(rolUsuario);
+	rolUsuarioService.edit(rolUsuario);
 	// Add id reference to Model
 	model.addAttribute("id", nombreRol);
 	// This will resolve to /WEB-INF/views/editedpage.jsp

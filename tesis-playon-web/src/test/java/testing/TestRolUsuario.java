@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import tesis.playon.web.business_object.IRolUsuarioBo;
+import tesis.playon.web.businessobject.IRolUsuarioBo;
 import tesis.playon.web.model.RolUsuario;
 
 /**

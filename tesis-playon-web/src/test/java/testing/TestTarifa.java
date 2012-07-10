@@ -7,10 +7,10 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import tesis.playon.web.business_object.dao.ICategoriaVehiculoDao;
-import tesis.playon.web.business_object.dao.IPlayaDao;
-import tesis.playon.web.business_object.dao.ITarifaDao;
-import tesis.playon.web.business_object.dao.ITipoEstadiaDao;
+import tesis.playon.web.dao.ICategoriaVehiculoDao;
+import tesis.playon.web.dao.IPlayaDao;
+import tesis.playon.web.dao.ITarifaDao;
+import tesis.playon.web.dao.ITipoEstadiaDao;
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Tarifa;

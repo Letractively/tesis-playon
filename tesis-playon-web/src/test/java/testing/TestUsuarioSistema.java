@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import tesis.playon.web.business_object.dao.IRolUsuarioDao;
-import tesis.playon.web.business_object.dao.IUsuarioDao;
-import tesis.playon.web.business_object.dao.IUsuarioSistemaDao;
+import tesis.playon.web.dao.IRolUsuarioDao;
+import tesis.playon.web.dao.IUsuarioDao;
+import tesis.playon.web.dao.IUsuarioSistemaDao;
 import tesis.playon.web.model.RolUsuario;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.model.UsuarioSistema;

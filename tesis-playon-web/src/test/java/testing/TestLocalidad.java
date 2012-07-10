@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import tesis.playon.web.business_object.dao.ILocalidadDao;
-import tesis.playon.web.business_object.dao.IPaisDao;
-import tesis.playon.web.business_object.dao.IProvinciaDao;
+import tesis.playon.web.dao.ILocalidadDao;
+import tesis.playon.web.dao.IPaisDao;
+import tesis.playon.web.dao.IProvinciaDao;
 import tesis.playon.web.model.Localidad;
 import tesis.playon.web.model.Pais;
 import tesis.playon.web.model.Provincia;

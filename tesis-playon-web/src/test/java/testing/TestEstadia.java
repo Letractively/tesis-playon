@@ -8,10 +8,10 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import tesis.playon.web.business_object.dao.IEstadiaDao;
-import tesis.playon.web.business_object.dao.IPlayaDao;
-import tesis.playon.web.model.Playa;
+import tesis.playon.web.dao.IEstadiaDao;
+import tesis.playon.web.dao.IPlayaDao;
 import tesis.playon.web.model.Estadia;
+import tesis.playon.web.model.Playa;
 
 /**
  * @author Pablo

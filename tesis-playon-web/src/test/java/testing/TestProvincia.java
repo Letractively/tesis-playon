@@ -1,12 +1,12 @@
 package testing;
 
+import java.util.List;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.List;
-
-import tesis.playon.web.business_object.dao.IPaisDao;
-import tesis.playon.web.business_object.dao.IProvinciaDao;
+import tesis.playon.web.dao.IPaisDao;
+import tesis.playon.web.dao.IProvinciaDao;
 import tesis.playon.web.model.Pais;
 import tesis.playon.web.model.Provincia;
 

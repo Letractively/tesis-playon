@@ -3,16 +3,16 @@ package tesis.playon.common;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import tesis.playon.web.business_object.IRolUsuarioBo;
-import tesis.playon.web.business_object.dao.IPaisDao;
-import tesis.playon.web.business_object.dao.IProvinciaDao;
+import tesis.playon.web.businessobject.IRolUsuarioBo;
+import tesis.playon.web.dao.IPaisDao;
+import tesis.playon.web.dao.IProvinciaDao;
 import tesis.playon.web.model.Pais;
 import tesis.playon.web.model.Provincia;
 import tesis.playon.web.model.RolUsuario;
 
 public class App {
     public static void main(String[] args) {
-	ApplicationContext appContext = new ClassPathXmlApplicationContext("spring/config/BeanLocations.xml");
+	ApplicationContext appContext = new ClassPathXmlApplicationContext("WEB-INF/applicationContext.xml");
 
 	// Test para Rol Usuario
 	IRolUsuarioBo rolUsuarioBo = (IRolUsuarioBo) appContext.getBean("rolUsuarioBo");
