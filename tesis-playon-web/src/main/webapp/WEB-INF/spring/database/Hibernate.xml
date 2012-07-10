@@ -44,10 +44,10 @@ http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
  				<value>tesis.playon.web.model.EstadoPromocion</value>
                 <!-- <value>tesis.playon.web.model.Favorito</value> -->
                 <!-- <value>tesis.playon.web.model.PerfilPlaya</value> -->
-                <!-- <value>tesis.playon.web.model.Playa</value> -->
+                <value>tesis.playon.web.model.Playa</value>
 				<value>tesis.playon.web.model.Posicion</value>
                 <!-- <value>tesis.playon.web.model.Sesion</value> -->
-                <!-- <value>tesis.playon.web.model.Tarifa</value> -->
+                <value>tesis.playon.web.model.Tarifa</value>
 				<value>tesis.playon.web.model.TipoDoc</value>
 				<value>tesis.playon.web.model.TipoEstadia</value>
 				<value>tesis.playon.web.model.TipoPago</value>
@@ -55,14 +55,14 @@ http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 				<value>tesis.playon.web.model.UsuarioSistema</value>
                 <!-- <value>tesis.playon.web.model.Vehiculo</value> -->
                 <!-- <value>tesis.playon.web.model.Promocion</value> -->
-                <!-- <value>tesis.playon.web.model.EstadoPlaya</value> -->
+                <value>tesis.playon.web.model.EstadoPlaya</value>
                 <!-- <value>tesis.playon.web.model.Publicidad</value> -->
                 <!-- <value>tesis.playon.web.model.Liquidacion</value> -->
                 <!-- <value>tesis.playon.web.model.TransaccionCliente</value> -->
                 <!-- <value>tesis.playon.web.model.HistorialDeCambio</value> -->
                 <!-- <value>tesis.playon.web.model.TransaccionPlaya</value> -->
                 <!-- <value>tesis.playon.web.model.Abono</value> -->
-                <!-- <value>tesis.playon.web.model.Estadia</value> -->
+                <value>tesis.playon.web.model.Estadia</value>
                 <!-- <value>tesis.playon.web.model.DetalleEstadia</value> -->
                 <!-- <value>tesis.playon.web.model.Foto</value> -->
 			</list>

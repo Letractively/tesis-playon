@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.business_object.dao.IEstadiaDao;
 import tesis.playon.web.model.Estadia;
+import tesis.playon.web.model.Playa;
 
 @Repository("estadiaDao")
 public class EstadiaDao extends CustomHibernateDaoSupport implements IEstadiaDao {
@@ -22,6 +23,11 @@ public class EstadiaDao extends CustomHibernateDaoSupport implements IEstadiaDao
 
     public void delete(Estadia estadia) {
 	getHibernateTemplate().delete(estadia);
+    }
+    
+    public Estadia findByPlaya(Playa playa){
+	List<?> list = getHibernateTemplate().find("from Estadia where playa=?", playa);
+	return (Estadia)list.get(0);
     }
 
     public List<Estadia> findAll() {
