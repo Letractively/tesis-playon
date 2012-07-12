@@ -20,7 +20,7 @@ import tesis.playon.web.model.RolUsuario;
  * 
  */
 @Controller
-@RequestMapping(value = "/registracionRolUsuario")
+@RequestMapping(value = "/roles-usuario")
 public class RolUsuarioController {
 
     protected static Logger logger = Logger.getLogger("RolUsuarioController");
@@ -28,53 +28,41 @@ public class RolUsuarioController {
     @Autowired
     private RolUsuarioDao rolUsuarioDao;
 
-    // private RolUsuarioService rolUsuarioService;
-
-    @RequestMapping(value = "/rolesUsuario", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String getRolUsuarios(Model model) {
 	logger.debug("Recibida peticion para mostrar todos los roles de usuarios");
 	List<RolUsuario> rolesUsuario = rolUsuarioDao.findAll();
 	model.addAttribute("rolesUsuario", rolesUsuario);
-	// Resuelve /WEB-INF/views/personspage.jsp
-	return "personspage";
+	return "listrolusuario";
     }
 
-    @RequestMapping(value = "/rolesUsuario/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getAdd(Model model) {
 	logger.debug("Recibida peticion para mostrar pagina agregar");
-	// Create new Person and add to model
-	// This is the formBackingOBject
 	model.addAttribute("rolUsuarioAtributo", new RolUsuario());
-	// Resuelve /WEB-INF/views/addpage.jsp
-	return "addpage";
+	return "addrolusuario";
     }
 
-    @RequestMapping(value = "/rolesUsuario/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(@ModelAttribute("rolUsuarioAtributo") RolUsuario rolUsuario) {
 	logger.debug("Recibido pedido para agregar un rol de usuario");
-	// The "personAttribute" model has been passed to the controller from the JSP
-	// We use the name "personAttribute" because the JSP uses that name
-	// Call PersonService to do the actual adding
-	// rolUsuarioService.add(rolUsuario);
 	rolUsuarioDao.save(rolUsuario);
-	// resuelve /WEB-INF/views/addedpage.jsp
-	return "addedpage";
+	return "addedrolusuario";
     }
 
-    @RequestMapping(value = "/rolesUsuario/delete", method = RequestMethod.GET)
-    public String delete(@RequestParam(value = "id", required = true) String nombreRol, Model model) {
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String delete(@RequestParam(value = "id", required = true) Integer id, @RequestParam(value = "nombre", required = true) String nombre, Model model) {
 	logger.debug("Recibida la peticion para borra un rol de usuario existente");
-	// Call PersonService to do the actual deleting
-	RolUsuario rolUsuario = new RolUsuario(nombreRol);
+	RolUsuario rolUsuario = new RolUsuario(nombre);
 	rolUsuarioDao.delete(rolUsuario);
 	// rolUsuarioService.delete(nombreRol);
 	// Add id reference to Model
-	model.addAttribute("nombreRol", nombreRol);
+	model.addAttribute("nombre", nombre);
 	// Resuelve /WEB-INF/views/deletedpage.jsp
-	return "deletedpage";
+	return "deletedrolusuario";
     }
 
-    @RequestMapping(value = "/rolesUsuario/edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String getEdit(@RequestParam(value = "id", required = true) String nombreRol, Model model) {
 	logger.debug("Recibida la peticion para mostrar la pagina de edicion");
 	// Retrieve existing Person and add to model
@@ -82,10 +70,10 @@ public class RolUsuarioController {
 	// model.addAttribute("rolUsuarioAtributo", rolUsuarioService.get(nombreRol));
 	model.addAttribute("rolUsuarioAtributo", rolUsuarioDao.findByNombreRolUsuario(nombreRol));
 	// Resuelve /WEB-INF/views/editpage.jsp
-	return "editpage";
+	return "editrolusuario";
     }
 
-    @RequestMapping(value = "/rolesUsuario/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String saveEdit(@ModelAttribute("rolUsuarioAtributo") RolUsuario rolUsuario,
 	    @RequestParam(value = "id", required = true) String nombreRol, Model model) {
 	logger.debug("Received request to update person");
@@ -100,7 +88,7 @@ public class RolUsuarioController {
 	// Add id reference to Model
 	model.addAttribute("id", nombreRol);
 	// This will resolve to /WEB-INF/views/editedpage.jsp
-	return "editedpage";
+	return "editedrolusuario";
     }
 
 }

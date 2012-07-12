@@ -10,12 +10,12 @@
 </head>
 <body>
 
-<h1>Persons</h1>
+<h1>Roles de Usuarios</h1>
 
-<p>You have added a new person at <%= new java.util.Date() %></p>
+<p>Ha agregado un nuevo rol de usuario al sistema: <%= new java.util.Date() %></p>
 
-<c:url var="mainUrl" value="/krams/main/persons" />
-<p>Return to <a href="${mainUrl}">Main List</a></p>
+<c:url var="mainUrl" value="/welcome" />
+<p>Regresar a la <a href="${mainUrl}">página principal.</a></p>
 
 </body>
 </html>
