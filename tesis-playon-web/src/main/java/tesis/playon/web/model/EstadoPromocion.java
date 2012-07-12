@@ -70,7 +70,7 @@ public class EstadoPromocion implements Serializable {
     
     @Override
     public String toString() {
-	return "EstadoPromocion [EstadoPromocionID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
+	return "EstadoPromocion:\t [EstadoPromocionID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
     }
 
 }

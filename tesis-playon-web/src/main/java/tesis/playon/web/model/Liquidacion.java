@@ -105,7 +105,7 @@ public class Liquidacion implements Serializable {
 
     @Override
     public String toString() {
-	return "Lquidacion [liquidacionID=" + id + ", fecha=" + fecha.toString() + ", importeTotal=" + importeTotal
+	return "Lquidacion:\t [liquidacionID=" + id + ", fecha=" + fecha.toString() + ", importeTotal=" + importeTotal
 		+ ", fechaDesde=" + fechaDesde.toString() + ", fechaHasta=" + fechaHasta.toString() + "]";
     }
 }

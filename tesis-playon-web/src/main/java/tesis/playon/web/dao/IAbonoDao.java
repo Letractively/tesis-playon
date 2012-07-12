@@ -1,5 +1,7 @@
 package tesis.playon.web.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.Abono;
 
 /**
@@ -17,4 +19,6 @@ public interface IAbonoDao {
     void delete(Abono abono);
 
     // no se que findBy... poner.
+    
+    List<Abono> findAll();
 }

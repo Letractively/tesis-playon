@@ -110,7 +110,7 @@ public class Publicidad implements Serializable {
 
     @Override
     public String toString() {
-	return "Publicidad [publicidadID=" + id + ", urlImagen=" + urlImagen + ", posicion=" + posicion.toString()
-		+ ", estado=" + estado.toString() + "]";
+	return "Publicidad:\t [publicidadID=" + id + ", urlImagen=" + urlImagen + ", " + posicion.toString()
+		+ ", " + estado.toString() + "]";
     }
 }

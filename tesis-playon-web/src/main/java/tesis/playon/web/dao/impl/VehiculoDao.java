@@ -1,5 +1,6 @@
 package tesis.playon.web.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -32,4 +33,12 @@ public class VehiculoDao extends CustomHibernateDaoSupport implements IVehiculoD
 	return (Vehiculo) list.get(0);
     }
 
+    public List<Vehiculo> findAll(){
+	List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
+	List<?> list = getHibernateTemplate().find("from Vehiculo");
+	for (Object object : list) {
+	    vehiculos.add((Vehiculo)object);
+	}
+	return vehiculos;
+    }
 }

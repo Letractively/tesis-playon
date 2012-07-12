@@ -101,7 +101,7 @@ public class EstadoPublicidad implements Serializable {
 
     @Override
     public String toString() {
-	return "EstadoPublicidad [estadoPublicidadID= " + id + "\nnombre= " + nombre + "\ndescripcion= " + descripcion + "]";
+	return "EstadoPublicidad:\t [estadoPublicidadID= " + id + "nombre= " + nombre + "descripcion= " + descripcion + "]";
     }
 
 }

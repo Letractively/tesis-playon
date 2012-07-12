@@ -90,7 +90,7 @@ public class Posicion implements Serializable {
 
     @Override
     public String toString() {
-	return "Posicion [posicionID=" + id + ", tamanioKBMax=" + tamanioKBMax + ", tamanioX=" + tamanioX
+	return "Posicion:\t [posicionID=" + id + ", tamanioKBMax=" + tamanioKBMax + ", tamanioX=" + tamanioX
 		+ ", tamanioY=" + tamanioY + "]";
     }
 

@@ -1,5 +1,6 @@
 package tesis.playon.web.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -28,8 +29,17 @@ public class CuentaPlayaDao extends CustomHibernateDaoSupport implements ICuenta
 	getHibernateTemplate().delete(cuentaPlaya);
     }
 
-    public CuentaPlaya findByNroCuenta(String nroCuenta) {
+    public CuentaPlaya findByNroCuenta(Integer nroCuenta) {
 	List<?> list = getHibernateTemplate().find("from CuentaPlaya where nroCuenta=?", nroCuenta);
 	return (CuentaPlaya) list.get(0);
+    }
+    
+    public List<CuentaPlaya> findAll(){
+	List<CuentaPlaya> cuentas = new ArrayList<CuentaPlaya>();
+	List<?> list = getHibernateTemplate().find("from CuentaPlaya");
+	for (Object object : list) {
+	    cuentas.add((CuentaPlaya)object);
+	}
+	return cuentas;
     }
 }

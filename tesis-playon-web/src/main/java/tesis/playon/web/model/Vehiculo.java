@@ -73,6 +73,8 @@ public class Vehiculo implements Serializable {
 	this.cliente = cliente;
     }
 
+    public Vehiculo(){}
+    
     public CategoriaVehiculo getCategoriaVehiculo() {
 	return categoriaVehiculo;
     }
@@ -147,7 +149,7 @@ public class Vehiculo implements Serializable {
 
     @Override
     public String toString() {
-	return "Vehiculo [vehiculoID=" + id + ", anio=" + anio + ", codigoBarra=" + codigoBarra + ", habilitado="
+	return "Vehiculo:\t [vehiculoID=" + id + ", anio=" + anio + ", codigoBarra=" + codigoBarra + ", habilitado="
 		+ habilitado + ", patente=" + patente + "]";
     }
 

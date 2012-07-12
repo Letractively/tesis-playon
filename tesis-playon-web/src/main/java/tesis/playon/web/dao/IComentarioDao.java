@@ -1,5 +1,7 @@
 package tesis.playon.web.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.Comentario;
 
 /**
@@ -14,5 +16,7 @@ public interface IComentarioDao {
 
     void delete(Comentario comentario);
 
-    Comentario findByNombrePlaya(String nombrePlaya);
+    //Comentario findByNombrePlaya(String nombrePlaya);
+    
+    List<Comentario> findAll();
 }

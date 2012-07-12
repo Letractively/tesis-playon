@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 /**
  * Clase de negocio que contiene los comentarios sobre una playa
  * 
@@ -41,6 +43,7 @@ public class Comentario implements Serializable {
     private String comentario;
 
     @Column(name = "habilitado")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean habilitado;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -129,8 +132,8 @@ public class Comentario implements Serializable {
 
     @Override
     public String toString() {
-	return "Comentario [comentarioID=" + id + ", fecha: =" + fecha.toString() + ", comentario: = " + comentario
-		+ ", habilitado=" + habilitado + "]";
+	return "Comentario:\t [comentarioID= " + id + ", fecha= " + fecha.toString() + ", comentario= " + comentario
+		+ ", habilitado= " + habilitado + "]";
     }
 
 }

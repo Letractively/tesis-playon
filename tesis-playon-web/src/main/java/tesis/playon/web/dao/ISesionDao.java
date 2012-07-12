@@ -1,5 +1,7 @@
 package tesis.playon.web.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.Sesion;
 
 /**
@@ -16,4 +18,6 @@ public interface ISesionDao {
     void delete(Sesion sesion);
 
     Sesion findByIDSesionSesion(String idSesion);
+    
+    List<Sesion> findAll();
 }

@@ -52,6 +52,6 @@ public class Estadia implements Serializable {
     
     @Override
     public String toString() {
-	return "Estadia:\t [estadiaID=" + id + ", playa=" + playa.getNombreComercial() + "]";
+	return "Estadia:\t [estadiaID= " + id + ", playa= " + playa.getNombreComercial() + "]";
     }
 }

@@ -133,7 +133,7 @@ public class Sesion implements Serializable {
 
     @Override
     public String toString() {
-	return "Sesion [sesionID=" + id + ", fechaInicio: =" + fechaInicio.toString() + ", fechaFin: = "
+	return "Sesion:\t [sesionID=" + id + ", fechaInicio: =" + fechaInicio.toString() + ", fechaFin: = "
 		+ fechaFin.toString() + ", idSesion=" + idSesion + "]";
     }
 }

@@ -118,8 +118,8 @@ public class Abono implements Serializable {
 
     @Override
     public String toString() {
-	return "Abono [abonoID=" + id + ", fechaVigenciaDesde=" + fechaVigenciaDesde.toString()
-		+ ", fechaVigenciaHasta=" + fechaVigenciaHasta.toString() + ", cliente=" + cliente.toString()
-		+ ", playa=" + playa.toString() + "]";
+	return "Abono:\t [abonoID=" + id + ", fechaVigenciaDesde=" + fechaVigenciaDesde.toString()
+		+ ", fechaVigenciaHasta=" + fechaVigenciaHasta.toString() + ", " + cliente.toString()
+		+ ", =" + playa.toString() + "]";
     }
 }

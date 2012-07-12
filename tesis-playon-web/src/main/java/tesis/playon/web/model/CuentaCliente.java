@@ -94,6 +94,6 @@ public class CuentaCliente implements Serializable{
     
     @Override
     public String toString() {
-	return "Cuenta Cliente [cuentaClienteID=" + id + ", nroCuenta=" + nroCuenta + "]";
+	return "Cuenta Cliente:\t [cuentaClienteID= " + id + ", nroCuenta= " + nroCuenta + "]";
     }
 }

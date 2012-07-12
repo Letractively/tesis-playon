@@ -93,7 +93,7 @@ public class TransaccionCliente implements Serializable {
 
     @Override
     public String toString() {
-	return "TransaccionCliente:\t [id= " + id + ", fecha= " + fecha.toString() + ", importe= " + importe + ", "
+	return "TransaccionCliente:\t [transaccionClienteID= " + id + ", fecha= " + fecha.toString() + ", importe= " + importe + ", "
 		+ tipoPago + ", " + cuentaCliente + "]";
     }
 }

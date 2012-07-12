@@ -63,6 +63,6 @@ public class EstadoPlaya implements Serializable {
 
     @Override
     public String toString() {
-	return "Estado Playa:\t [estadoPlayaID=" + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
+	return "Estado Playa:\t [estadoPlayaID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
     }
 }

@@ -91,7 +91,7 @@ public class CuentaPlaya implements Serializable {
 
     @Override
     public String toString() {
-	return "Cuenta Playa [cuentaPlayaID=" + id + ", nroCuenta=" + nroCuenta + "]";
+	return "Cuenta Playa:\t [cuentaPlayaID= " + id + ", nroCuenta= " + nroCuenta + "]";
     }
 
 }

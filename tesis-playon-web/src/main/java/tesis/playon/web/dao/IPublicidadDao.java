@@ -1,5 +1,7 @@
 package tesis.playon.web.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.Publicidad;
 
 /**
@@ -14,4 +16,6 @@ public interface IPublicidadDao {
     void update(Publicidad publicidad);
 
     void delete(Publicidad publicidad);
+    
+    List<Publicidad> findAll();
 }

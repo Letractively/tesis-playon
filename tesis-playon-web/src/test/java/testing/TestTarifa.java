@@ -50,14 +50,14 @@ public class TestTarifa {
 	}
 
 	/** select **/
-	Tarifa otraTarifa = tarifaDao.findByPlayaID(playa);
-	System.out.println("\nEncontrado:\t" + otraTarifa);
+//	Tarifa otraTarifa = tarifaDao.findByPlayaID(playa);
+//	System.out.println("\nEncontrado:\t" + otraTarifa);
 
 	/** update **/
 	categoriaVehiculo = categoriaDao.findByNombreCategoriaVehiculo("Moto");
 	tarifa.setCategoriaVehiculo(categoriaVehiculo);
 	tarifaDao.update(tarifa);
-	System.out.println("\nModificado:\t" + tarifaDao.findByPlayaID(playa));
+//	System.out.println("\nModificado:\t" + tarifaDao.findByPlayaID(playa));
 
 	System.out.println("\n");
 	/** delete **/

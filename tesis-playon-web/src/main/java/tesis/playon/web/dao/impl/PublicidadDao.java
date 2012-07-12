@@ -1,5 +1,8 @@
 package tesis.playon.web.dao.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import tesis.playon.util.CustomHibernateDaoSupport;
@@ -26,4 +29,12 @@ public class PublicidadDao extends CustomHibernateDaoSupport implements IPublici
 	getHibernateTemplate().delete(publicidad);
     }
 
+    public List<Publicidad> findAll(){
+	List<Publicidad> publicidades = new ArrayList<Publicidad>();
+	List<?> list = getHibernateTemplate().find("from Publicidad");
+	for (Object object : list) {
+	    publicidades.add((Publicidad)object);
+	}
+	return publicidades;
+    }
 }

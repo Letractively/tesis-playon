@@ -43,8 +43,8 @@ public class TestEstadia {
 	}
 
 	/** select **/
-	Estadia otraEstadia = estadiaDao.findByPlaya(playa);
-	System.out.println("\nEncontrado:\t" + otraEstadia);
+//	Estadia otraEstadia = estadiaDao.findByPlaya(playa);
+//	System.out.println("\nEncontrado:\t" + otraEstadia);
 
 
 	System.out.println("\n");

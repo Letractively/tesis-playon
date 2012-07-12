@@ -1,5 +1,6 @@
 package tesis.playon.web.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -29,9 +30,18 @@ public class ComentarioDao extends CustomHibernateDaoSupport implements IComenta
     }
 
     // no se si este findBy es asi, hay q verlo!
-    public Comentario findByNombrePlaya(String nombrePlaya) {
-	List<?> list = getHibernateTemplate().find("from Comentario where nombre=?", nombrePlaya);
-	return (Comentario) list.get(0);
+//    public Comentario findByNombrePlaya(String nombrePlaya) {
+//	List<?> list = getHibernateTemplate().find("from Comentario where nombre=?", nombrePlaya);
+//	return (Comentario) list.get(0);
+//    }
+    
+    public List<Comentario> findAll(){
+	List<Comentario> comentarios = new ArrayList<Comentario>();
+	List<?> list = getHibernateTemplate().find("from Comentario");
+	for (Object object : list) {
+	    comentarios.add((Comentario)object);
+	}
+	return comentarios;
     }
 
 }

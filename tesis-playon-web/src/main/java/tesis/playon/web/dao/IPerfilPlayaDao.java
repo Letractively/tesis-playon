@@ -1,5 +1,7 @@
 package tesis.playon.web.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.PerfilPlaya;
 
 public interface IPerfilPlayaDao {
@@ -11,5 +13,7 @@ public interface IPerfilPlayaDao {
     void delete(PerfilPlaya perfilPlaya);
 
     PerfilPlaya findByNombrePerfilPlaya(String nombrePerfilPlaya);
+    
+    List<PerfilPlaya> findAll();
 
 }

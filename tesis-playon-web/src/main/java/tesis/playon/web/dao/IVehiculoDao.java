@@ -1,5 +1,7 @@
 package tesis.playon.web.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.Vehiculo;
 
 /**
@@ -15,5 +17,7 @@ public interface IVehiculoDao {
     void delete(Vehiculo vehiculo);
 
     Vehiculo findByPatenteVehiculo(String patenteVehiculo);
+    
+    List<Vehiculo> findAll();
     
 }

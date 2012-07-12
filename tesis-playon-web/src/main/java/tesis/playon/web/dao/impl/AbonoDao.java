@@ -1,5 +1,8 @@
 package tesis.playon.web.dao.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import tesis.playon.util.CustomHibernateDaoSupport;
@@ -19,6 +22,15 @@ public class AbonoDao extends CustomHibernateDaoSupport implements IAbonoDao {
 
     public void delete(Abono abono) {
 	getHibernateTemplate().delete(abono);
+    }
+    
+    public List<Abono> findAll(){
+	List<Abono> abonos = new ArrayList<Abono>();
+	List<?> list = getHibernateTemplate().find("from Abono");
+	for (Object obj : list) {
+	    abonos.add((Abono) obj);
+	}
+	return abonos;
     }
 
 }

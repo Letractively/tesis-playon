@@ -83,7 +83,7 @@ public class PerfilPlaya implements Serializable {
 
     @Override
     public String toString() {
-	return "PerfilPlaya [perfilPlayaID=" + id + ", nombreComercial=" + nombre + ", descripcion=" + descripcion
+	return "PerfilPlaya:\t [perfilPlayaID=" + id + ", nombreComercial=" + nombre + ", descripcion=" + descripcion
 		+ "]";
     }
 

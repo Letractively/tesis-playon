@@ -1,5 +1,6 @@
 package tesis.playon.web.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -31,6 +32,15 @@ public class PerfilPlayaDao extends CustomHibernateDaoSupport implements IPerfil
     public PerfilPlaya findByNombrePerfilPlaya(String nombrePerfilPlaya) {
 	List<?> list = getHibernateTemplate().find("from PerfilPlaya where nombre=?", nombrePerfilPlaya);
 	return (PerfilPlaya) list.get(0);
+    }
+    
+    public List<PerfilPlaya> findAll(){
+	List<PerfilPlaya> perfiles = new ArrayList<PerfilPlaya>();
+	List<?> list = getHibernateTemplate().find("from PerfilPlaya");
+	for (Object object : list) {
+	    perfiles.add((PerfilPlaya)object);
+	}
+	return perfiles;
     }
 
 }

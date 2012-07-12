@@ -1,5 +1,6 @@
 package tesis.playon.web.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -27,5 +28,13 @@ public class SesionDao extends CustomHibernateDaoSupport implements ISesionDao {
 	List<?> list = getHibernateTemplate().find("from Sesion where sesionId=?", idSesion);
 	return (Sesion) list.get(0);
     }
-
+    
+    public List<Sesion> findAll(){
+	List<Sesion> sesiones = new ArrayList<Sesion>();
+	List<?> list = getHibernateTemplate().find("from Sesion");
+	for (Object object : list) {
+	    sesiones.add((Sesion)object);
+	}
+	return sesiones;
+    }
 }

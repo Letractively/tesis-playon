@@ -1,5 +1,7 @@
 package tesis.playon.web.dao;
 
+import java.util.List;
+
 import tesis.playon.web.model.Favorito;
 
 /**
@@ -15,4 +17,6 @@ public interface IFavoritoDao {
     void delete(Favorito favorito);
 
     //Favorito findByPlayas(String playaID);
+    
+    List<Favorito> findAll();
 }

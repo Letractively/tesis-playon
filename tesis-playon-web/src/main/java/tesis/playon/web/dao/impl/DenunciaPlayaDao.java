@@ -1,5 +1,6 @@
 package tesis.playon.web.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -31,5 +32,13 @@ public class DenunciaPlayaDao extends CustomHibernateDaoSupport implements IDenu
 	List<?> list = getHibernateTemplate().find("from DenunciaPlaya where asunto=?", asuntoDenunciaPlaya);
 	return (DenunciaPlaya) list.get(0);
     }
-
+    
+    public List<DenunciaPlaya> findAll(){
+	List<DenunciaPlaya> denuncias= new ArrayList<DenunciaPlaya>();
+	List<?> list = getHibernateTemplate().find("from DenunciaPlaya");
+	for (Object object : list) {
+	    denuncias.add((DenunciaPlaya)object);
+	}
+	return denuncias;
+    }
 }

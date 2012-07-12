@@ -121,7 +121,7 @@ public class TransaccionPlaya implements Serializable {
 
     @Override
     public String toString() {
-	return "TransaccionPlaya:\t [id= " + id + ", fecha= " + fecha.toString() + ", importe= " + importe
-		+ ", tipoPago" + tipoPago.toString() + ", cuentaPlaya" + cuentaPlaya.toString() + "]";
+	return "TransaccionPlaya:\t [transaccionPlayaID= " + id + ", fecha= " + fecha.toString() + ", importe= " + importe
+		+ ", tipoPago" + tipoPago.toString() + ", " + cuentaPlaya.toString() + "]";
     }
 }

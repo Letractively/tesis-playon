@@ -91,7 +91,7 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-	return "Empleado [empleadoID=" + id + ", legajo=" + legajo + ", =" + cargoEmpleado + ", " + usuario + "]";
+	return "Empleado:\t [empleadoID= " + id + ", legajo= " + legajo + ", " + cargoEmpleado + ", " + usuario + "]";
     }
 
 }

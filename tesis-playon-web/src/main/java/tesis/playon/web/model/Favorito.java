@@ -23,6 +23,8 @@ public class Favorito implements Serializable{
     
     private FavoritoPK primaryKey;
     
+    public Favorito(){}
+    
     public Favorito(Playa playa, Cliente cliente)
     {
 	primaryKey = new FavoritoPK(playa, cliente);
@@ -40,7 +42,7 @@ public class Favorito implements Serializable{
 
     @Override
     public String toString() {
-	return "Favorito [Favorito=" + primaryKey + "]";
+	return "Favorito:\t [Favorito= " + primaryKey + "]";
     }
 
 
@@ -81,7 +83,7 @@ public class Favorito implements Serializable{
 
 	@Override
 	public String toString() {
-	    return "FavoritoPK [playaID=" + playa + ", nroCliente=" + cliente.getNroCliente() + "]";
+	    return "FavoritoPK:\t [nombre playa= " + playa.getNombreComercial() + ", nroCliente= " + cliente.getNroCliente() + "]";
 	}
     }
 }

@@ -53,7 +53,7 @@ public class ColorVehiculo implements Serializable {
 
     @Override
     public String toString() {
-	return "ColorVehiculo:\t\t[colorVehiculoID=" + id + ", nombre= " + nombre + "]";
+	return "ColorVehiculo:\t[colorVehiculoID= " + id + ", nombre= " + nombre + "]";
     }
 
 }

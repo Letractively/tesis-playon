@@ -28,7 +28,7 @@ public class ClienteDao extends CustomHibernateDaoSupport implements IClienteDao
 	getHibernateTemplate().delete(cliente);
     }
 
-    public Cliente findByNumeroCliente(String numeroCliente) {
+    public Cliente findByNumeroCliente(Integer numeroCliente) {
 	List<?> list = getHibernateTemplate().find("from Cliente where nroCliente=?", numeroCliente);
 	return (Cliente) list.get(0);
     }

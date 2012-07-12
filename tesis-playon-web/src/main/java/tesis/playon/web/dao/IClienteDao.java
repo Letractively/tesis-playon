@@ -16,7 +16,7 @@ public interface IClienteDao {
 
     void delete(Cliente cliente);
 
-    Cliente findByNumeroCliente(String numeroCliente);
+    Cliente findByNumeroCliente(Integer numeroCliente);
     
     List<Cliente> findAll();
 }
