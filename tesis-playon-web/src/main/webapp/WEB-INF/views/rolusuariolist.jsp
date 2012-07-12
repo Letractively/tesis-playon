@@ -23,9 +23,9 @@
 		<tbody>
 			<c:forEach items="${rolesUsuario}" var="rolUsuario">
 				<c:url var="editUrl"
-					value="/roles-usuario/edit?nombre=${rolUsuario.nombre}" />
+					value="/roles-usuario/update?nombre=${rolUsuario.nombre}" />
 				<c:url var="deleteUrl"
-					value="/roles-usuario/delete?nombre=${rolUsuario.nombre}" />
+					value="/roles-usuario/delete?id=${rolUsuario.id}" />
 				<tr>
 					<td><c:out value="${rolUsuario.id}" /></td>
 					<td><c:out value="${rolUsuario.nombre}" /></td>

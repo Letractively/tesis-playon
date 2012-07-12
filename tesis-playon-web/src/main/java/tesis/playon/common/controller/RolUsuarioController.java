@@ -33,47 +33,50 @@ public class RolUsuarioController {
 	logger.debug("Recibida peticion para mostrar todos los roles de usuarios");
 	List<RolUsuario> rolesUsuario = rolUsuarioDao.findAll();
 	model.addAttribute("rolesUsuario", rolesUsuario);
-	return "listrolusuario";
+	return "rolusuariolist";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getAdd(Model model) {
 	logger.debug("Recibida peticion para mostrar pagina agregar");
 	model.addAttribute("rolUsuarioAtributo", new RolUsuario());
-	return "addrolusuario";
+	return "rolusuarioadd";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(@ModelAttribute("rolUsuarioAtributo") RolUsuario rolUsuario) {
 	logger.debug("Recibido pedido para agregar un rol de usuario");
 	rolUsuarioDao.save(rolUsuario);
-	return "addedrolusuario";
+	return "rolusuarioadded";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.GET)
+    public String getUpdate(@RequestParam(value = "nombre") String nombre, Model model) {
+	logger.debug("Recibida la peticion para mostrar la pagina de edicion");
+	model.addAttribute("rolUsuarioAtributo", rolUsuarioDao.findByNombreRolUsuario(nombre));
+	return "rolusuarioupdate";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String saveUpdate(@ModelAttribute("rolUsuarioAtributo") RolUsuario rolUsuario,
+	    @RequestParam(value = "nombre") String nombre, @RequestParam(value = "descripcion") String descripcion,
+	    Model model) {
+	logger.debug("Recibida la peticion para actualiza un rol de usuario");
+	rolUsuario.setNombre(nombre);
+	rolUsuario.setDescripcion(descripcion);
+	rolUsuarioDao.update(rolUsuario);
+	model.addAttribute("id", rolUsuario.getId());
+	return "rolusuarioupdated";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String delete(@RequestParam(value = "nombre", required = true) String nombre, Model model) {
+    public String delete(@RequestParam(value = "id") Integer id, Model model) {
 	logger.debug("Recibida la peticion para borra un rol de usuario existente");
-	RolUsuario rolUsuario = new RolUsuario(nombre);
+	RolUsuario rolUsuario = new RolUsuario();
+	rolUsuario.setId(id);
 	rolUsuarioDao.delete(rolUsuario);
-	model.addAttribute("nombre", nombre);
-	return "deletedrolusuario";
-    }
-
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String getEdit(@RequestParam(value = "nombre", required = true) String nombre, Model model) {
-	logger.debug("Recibida la peticion para mostrar la pagina de edicion");
-	model.addAttribute("rolUsuarioAtributo", rolUsuarioDao.findByNombreRolUsuario(nombre));
-	return "editrolusuario";
-    }
-
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String saveEdit(@ModelAttribute("rolUsuarioAtributo") RolUsuario rolUsuario,
-	    @RequestParam(value = "nombre", required = true) String nombre, Model model) {
-	logger.debug("Recibida la peticion para actualiza un rol de usuario");
-	rolUsuario.setNombre(nombre);
-	rolUsuarioDao.update(rolUsuario);
-	model.addAttribute("id", nombre);
-	return "editedrolusuario";
+	model.addAttribute("id", id);
+	return "rolusuariodeleted";
     }
 
 }

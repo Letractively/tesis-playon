@@ -13,24 +13,24 @@
 	<h1>Editar Rol de Usuario</h1>
 
 	<c:url var="saveUrl"
-		value="/roles-usuario/edit?nombre=${rolUsuarioAtributo.nombre}" />
+		value="/roles-usuario/update?nombre=${rolUsuarioAtributo.id}&descripcion=%{rolUsuarioAtributo.descripcion}" />
 	<form:form modelAttribute="rolUsuarioAtributo" method="POST"
 		action="${saveUrl}">
 		<table>
 
 			<tr>
 				<td><form:label path="nombre">Nombre</form:label></td>
-				<td><form:input path="nombre"/></td>
+				<td><form:input path="nombre" /></td>
 			</tr>
 
 			<tr>
 				<td><form:label path="descripcion">Descripcion</form:label></td>
-				<td><form:input path="descripcion"/></td>
+				<td><form:input path="descripcion" /></td>
 			</tr>
 
 		</table>
 
-		<input type="submit" value="Grabar" />
+		<input type="submit" value="Actualizar" />
 	</form:form>
 
 </body>
