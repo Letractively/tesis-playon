@@ -58,12 +58,8 @@ public class RolUsuarioController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String saveUpdate(@ModelAttribute("rolUsuarioAtributo") RolUsuario rolUsuario,
-	    @RequestParam(value = "nombre") String nombre, @RequestParam(value = "descripcion") String descripcion,
-	    Model model) {
+    public String saveUpdate(@ModelAttribute("rolUsuarioAtributo") RolUsuario rolUsuario, Model model) {
 	logger.debug("Recibida la peticion para actualiza un rol de usuario");
-	rolUsuario.setNombre(nombre);
-	rolUsuario.setDescripcion(descripcion);
 	rolUsuarioDao.update(rolUsuario);
 	model.addAttribute("id", rolUsuario.getId());
 	return "rolusuarioupdated";

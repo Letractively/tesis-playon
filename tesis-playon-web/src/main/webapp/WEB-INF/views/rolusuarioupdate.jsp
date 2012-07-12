@@ -13,7 +13,7 @@
 	<h1>Editar Rol de Usuario</h1>
 
 	<c:url var="saveUrl"
-		value="/roles-usuario/update?nombre=${rolUsuarioAtributo.id}&descripcion=%{rolUsuarioAtributo.descripcion}" />
+		value="/roles-usuario/update?id=${rolUsuarioAtributo.id}" />
 	<form:form modelAttribute="rolUsuarioAtributo" method="POST"
 		action="${saveUrl}">
 		<table>
