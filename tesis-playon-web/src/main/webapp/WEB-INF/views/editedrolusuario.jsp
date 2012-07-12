@@ -6,16 +6,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Rol de Usuario borrado</title>
 </head>
 <body>
 
-<h1>Persons</h1>
+<h1>Roles de Usuario</h1>
 
-<p>You have edited a person with id ${id} at <%= new java.util.Date() %></p>
+<p>Ha editado el rol de usuario con el ID ${id}: <%= new java.util.Date() %></p>
 
-<c:url var="mainUrl" value="/krams/main/persons" />
-<p>Return to <a href="${mainUrl}">Main List</a></p>
+<c:url var="mainUrl" value="/welcome" />
+<p>Regresar a la <a href="${mainUrl}">página principal</a></p>
 
 </body>
 </html>

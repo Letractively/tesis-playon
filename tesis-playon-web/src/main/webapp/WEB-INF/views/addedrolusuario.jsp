@@ -15,7 +15,7 @@
 <p>Ha agregado un nuevo rol de usuario al sistema: <%= new java.util.Date() %></p>
 
 <c:url var="mainUrl" value="/welcome" />
-<p>Regresar a la <a href="${mainUrl}">página principal.</a></p>
+<p>Regresar a la <a href="${mainUrl}">página principal</a></p>
 
 </body>
 </html>

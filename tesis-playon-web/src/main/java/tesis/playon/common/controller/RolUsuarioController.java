@@ -51,43 +51,28 @@ public class RolUsuarioController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String delete(@RequestParam(value = "id", required = true) Integer id, @RequestParam(value = "nombre", required = true) String nombre, Model model) {
+    public String delete(@RequestParam(value = "nombre", required = true) String nombre, Model model) {
 	logger.debug("Recibida la peticion para borra un rol de usuario existente");
 	RolUsuario rolUsuario = new RolUsuario(nombre);
 	rolUsuarioDao.delete(rolUsuario);
-	// rolUsuarioService.delete(nombreRol);
-	// Add id reference to Model
 	model.addAttribute("nombre", nombre);
-	// Resuelve /WEB-INF/views/deletedpage.jsp
 	return "deletedrolusuario";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String getEdit(@RequestParam(value = "id", required = true) String nombreRol, Model model) {
+    public String getEdit(@RequestParam(value = "nombre", required = true) String nombre, Model model) {
 	logger.debug("Recibida la peticion para mostrar la pagina de edicion");
-	// Retrieve existing Person and add to model
-	// This is the formBackingOBject
-	// model.addAttribute("rolUsuarioAtributo", rolUsuarioService.get(nombreRol));
-	model.addAttribute("rolUsuarioAtributo", rolUsuarioDao.findByNombreRolUsuario(nombreRol));
-	// Resuelve /WEB-INF/views/editpage.jsp
+	model.addAttribute("rolUsuarioAtributo", rolUsuarioDao.findByNombreRolUsuario(nombre));
 	return "editrolusuario";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String saveEdit(@ModelAttribute("rolUsuarioAtributo") RolUsuario rolUsuario,
-	    @RequestParam(value = "id", required = true) String nombreRol, Model model) {
-	logger.debug("Received request to update person");
-	// The "personAttribute" model has been passed to the controller from the JSP
-	// We use the name "personAttribute" because the JSP uses that name
-	// We manually assign the id because we disabled it in the JSP page
-	// When a field is disabled it will not be included in the ModelAttribute
-	rolUsuario.setNombre(nombreRol);
-	// Delegate to PersonService for editing
-	rolUsuarioDao.save(rolUsuario);
-	// rolUsuarioService.edit(rolUsuario);
-	// Add id reference to Model
-	model.addAttribute("id", nombreRol);
-	// This will resolve to /WEB-INF/views/editedpage.jsp
+	    @RequestParam(value = "nombre", required = true) String nombre, Model model) {
+	logger.debug("Recibida la peticion para actualiza un rol de usuario");
+	rolUsuario.setNombre(nombre);
+	rolUsuarioDao.update(rolUsuario);
+	model.addAttribute("id", nombre);
 	return "editedrolusuario";
     }
 
