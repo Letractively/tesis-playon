@@ -11,6 +11,7 @@
 
 	<h1>Cargos de empleado</h1>
 
+	<p><c:out value="${mensaje}" /></p>
 	<c:url var="addUrl" value="/cargos-empleado/add" />
 	<table style="border: 1px solid; width: 500px; text-align: center">
 		<thead style="background: #fcf">
@@ -33,12 +34,12 @@
 					<td><c:out value="${cargoEmpleado.descripcion}" /></td>
 					<td><a href="${editUrl}">Editar</a></td>
 					<td><a href="${deleteUrl}">Borrar</a></td>
-					<td><a href="${addUrl}">Agregar</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-
+	<p>	<a href="${addUrl}">Agregar</a>	</p>
+	
 	<c:if test="${empty cargosEmpleado}">
 		No hay cargos de empleado actualmente en la lista. <a href="${addUrl}">Agregar</a> un cargo de empleado.
 	</c:if>

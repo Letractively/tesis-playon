@@ -46,10 +46,12 @@ public class CargoEmpleadoController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String add(@ModelAttribute("cargoEmpleadoAtributo") CargoEmpleado cargoEmpleado) {
+    public String add(@ModelAttribute("cargoEmpleadoAtributo") CargoEmpleado cargoEmpleado, Model model) {
 	logger.debug("Recibido pedido para agregar un cargo de empleado");
 	cargoEmpleadoDao.save(cargoEmpleado);
-	return "cargoempleadoadded";
+	model.addAttribute("mensaje", "Ha agregado un nuevo cargo de empleado de playas de estacionamiento al sistema");
+	this.getCargosEmpleado(model);
+	return "cargoempleadolist";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)

@@ -14,6 +14,8 @@
 
 	<p>Ha agregado un nuevo cargo de empleado de playas de estacionamiento al sistema: <%= new java.util.Date() %></p>
 	
+	<p><c:out value="${mensaje}" /></p>
+	
 	<c:url var="mainUrl" value="/welcome" />
 	<p>Regresar a la <a href="${mainUrl}">página principal</a></p>
 
