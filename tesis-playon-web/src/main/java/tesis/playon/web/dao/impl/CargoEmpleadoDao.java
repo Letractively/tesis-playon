@@ -11,10 +11,10 @@ import tesis.playon.web.model.CargoEmpleado;
 
 /**
  * @author Pablo
- *
+ * 
  */
 @Repository("cargoEmpleadoDao")
-public class CargoEmpleadoDao extends CustomHibernateDaoSupport implements ICargoEmpleadoDao{
+public class CargoEmpleadoDao extends CustomHibernateDaoSupport implements ICargoEmpleadoDao {
 
     public void save(CargoEmpleado cargo) {
 	getHibernateTemplate().save(cargo);
@@ -32,13 +32,19 @@ public class CargoEmpleadoDao extends CustomHibernateDaoSupport implements ICarg
 	List<?> list = getHibernateTemplate().find("from CargoEmpleado where nombre=?", nombreCargo);
 	return (CargoEmpleado) list.get(0);
     }
-    
-    public List<CargoEmpleado> findAll(){
+
+    public List<CargoEmpleado> findAll() {
 	List<CargoEmpleado> cargos = new ArrayList<CargoEmpleado>();
 	List<?> list = getHibernateTemplate().find("from CargoEmpleado");
 	for (Object object : list) {
-	    cargos.add((CargoEmpleado)object);
+	    cargos.add((CargoEmpleado) object);
 	}
 	return cargos;
+    }
+
+    public CargoEmpleado findById(Integer id) {
+	List<?> list = getHibernateTemplate().find("from CargoEmpleado where id=?", id);
+	return (CargoEmpleado) list.get(0);
+
     }
 }
