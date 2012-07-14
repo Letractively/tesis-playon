@@ -12,14 +12,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 /**
  * @author Pablo
  *
  */
 @Entity
-@Table(name = "cargo_empleado", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre")})
+@Table(name = "cargo_empleado")
 public class CargoEmpleado implements Serializable{
 
     private static final long serialVersionUID = 1L;

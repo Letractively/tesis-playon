@@ -89,6 +89,18 @@ public class Empleado implements Serializable {
 	return id;
     }
 
+    public CargoEmpleado getCargoEmpleado() {
+        return cargoEmpleado;
+    }
+
+    public void setCargoEmpleado(CargoEmpleado cargoEmpleado) {
+        this.cargoEmpleado = cargoEmpleado;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
 	return "Empleado:\t [empleadoID= " + id + ", legajo= " + legajo + ", " + cargoEmpleado + ", " + usuario + "]";
