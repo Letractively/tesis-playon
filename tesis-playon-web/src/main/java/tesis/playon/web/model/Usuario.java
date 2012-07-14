@@ -3,9 +3,9 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-//import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -47,7 +47,7 @@ public class Usuario implements Serializable {
     private String password;
 
     @ManyToOne
-    // @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tipoDocID")
     private TipoDoc tipoDoc;
 
@@ -120,6 +120,7 @@ public class Usuario implements Serializable {
     public void setTipoDoc(TipoDoc tipoDoc) {
 	this.tipoDoc = tipoDoc;
     }
+    
 
     public String getNombreUser() {
 	return nombreUser;

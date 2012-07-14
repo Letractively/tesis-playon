@@ -39,7 +39,12 @@
 				<td><form:label path="password">Password</form:label></td>
 				<td><form:input path="password" /></td>
 			</tr>
-						<tr>
+			<tr>
+				<td><form:label path="tipoDoc">Tipo de documento</form:label></td>
+				<form:select path="tipoDocumento" items="${tiposDocumento}" itemLabel="nombre" itemValue="id">
+				</form:select>
+			</tr>
+			<tr>
 				<td><form:label path="nroDoc">Numero de documento</form:label></td>
 				<td><form:input path="nroDOc" /></td>
 			</tr>

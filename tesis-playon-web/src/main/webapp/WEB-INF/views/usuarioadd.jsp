@@ -26,18 +26,28 @@
 				<td><form:label path="apellido">Apellido</form:label></td>
 				<td><form:input path="apellido" /></td>
 			</tr>
-				<tr>
+			
+			<tr>
 				<td><form:label path="email">email</form:label></td>
 				<td><form:input path="email" /></td>
 			</tr>
-				<tr>
+			
+			<tr>
 				<td><form:label path="password">password</form:label></td>
 				<td><form:input path="password" /></td>
 			</tr>
-				<tr>
+			
+			<tr>
 				<td><form:label path="nombreUser">Nombre de Usuario</form:label></td>
 				<td><form:input path="nombreUser" /></td>
 			</tr>
+			
+			<tr>
+				<td><form:label path="tipoDoc">Tipo de documento</form:label></td>
+				<td><form:select path="tipoDoc" items="${tiposDocumento}" itemLabel="nombre" itemValue="id">
+				</form:select></td>
+			</tr>
+			
 			<tr>
 				<td><form:label path="nroDoc">Numero de Documento</form:label></td>
 				<td><form:input path="nroDoc" /></td>

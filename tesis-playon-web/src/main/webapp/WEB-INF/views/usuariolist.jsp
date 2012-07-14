@@ -14,12 +14,12 @@
 	<table style="border: 1px solid; width: 500px; text-align: center">
 		<thead style="background: #fcf">
 			<tr>
-				<th>id</th>
 				<th>apellido</th>
 				<th>nombre</th>
 				<th>email</th>
 				<th>password</th>
 				<th>nombreUsuario</th>
+				<th>tipoDocumento</th>
 				<th>nroDoc</th>
 				<th colspan="7"></th>
 			</tr>
@@ -27,16 +27,16 @@
 		<tbody>
 			<c:forEach items="${usuarios}" var="usuario">
 				<c:url var="editUrl"
-					value="/usuario/update?nombre=${usuario.id}" />
+					value="/usuario/update?nombre=${usuario.nombreUser}" />
 				<c:url var="deleteUrl"
 					value="/usuario/delete?id=${usuario.id}" />
 				<tr>
-					<td><c:out value="${usuario.id}" /></td>
 					<td><c:out value="${usuario.apellido}" /></td>
 					<td><c:out value="${usuario.nombre}" /></td>
 					<td><c:out value="${usuario.email}" /></td>
 					<td><c:out value="${usuario.password}" /></td>
 					<td><c:out value="${usuario.nombreUser}" /></td>
+					<td><c:out value="${usuario.tipoDoc.getNombre()}" /></td>
 					<td><c:out value="${usuario.nroDoc}" /></td>
 					<td><a href="${editUrl}">Editar</a></td>
 					<td><a href="${deleteUrl}">Borrar</a></td>

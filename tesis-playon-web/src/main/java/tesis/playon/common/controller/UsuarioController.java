@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import tesis.playon.web.dao.impl.TipoDocDao;
 import tesis.playon.web.dao.impl.UsuarioDao;
+import tesis.playon.web.model.CargoEmpleado;
+import tesis.playon.web.model.Empleado;
+import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
 
 /**
@@ -27,7 +31,20 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioDao usuarioDao;
+    
+    @Autowired
+    private TipoDocDao tipoDocumentoDao;
 
+    @ModelAttribute("listaEmpleados")
+    public List<Usuario> popularUsuarios() {
+	return usuarioDao.findAll();
+    }
+    
+    @ModelAttribute("listaTipoDocumentos")
+    public List<TipoDoc> popularTipoDocumento() {
+	return tipoDocumentoDao.findAll();
+    }
+    
     @RequestMapping(method = RequestMethod.GET)
     public String getUsuarios(Model model) {
 	logger.debug("Recibida peticion para mostrar todos los usuarios");
@@ -40,6 +57,9 @@ public class UsuarioController {
     public String getAdd(Model model) {
 	logger.debug("Recibida peticion para mostrar pagina agregar");
 	model.addAttribute("usuarioAtributo", new Usuario());
+	List<TipoDoc> tiposDocumentos = tipoDocumentoDao.findAll();
+	model.addAttribute("tiposDocumento", tiposDocumentos);
+	model.addAttribute("listaTipoDocumentos", tipoDocumentoDao.findAll());
 	return "usuarioadd";
     }
 
