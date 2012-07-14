@@ -62,6 +62,10 @@ public class CargoEmpleado implements Serializable{
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
 	return "CargoEmpleado:\t [cargoEmpleadoID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";

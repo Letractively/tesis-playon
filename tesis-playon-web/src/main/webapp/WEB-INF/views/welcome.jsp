@@ -9,5 +9,6 @@
 	
 	<c:url var="rolesUsuarioUrl" value="/roles-usuario" />
 	<p>Ir a la pagina de <a href="${rolesUsuarioUrl}">roles de usuario.</a></p>	
+	<p>Ir a la pagina de <a href="${cargoEmpleadoUrl}">cargos de empleado.</a></p>	
 </body>
 </html>
