@@ -52,6 +52,8 @@ public class CargoEmpleadoController {
 	model.addAttribute("mensaje", "Ha agregado un nuevo cargo de empleado de playas de estacionamiento al sistema");
 	this.getCargosEmpleado(model);
 	return "cargoempleadolist";
+      
+
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
