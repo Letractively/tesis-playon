@@ -47,7 +47,6 @@ public class Usuario implements Serializable {
     private String password;
 
     @ManyToOne
-//    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tipoDocID")
     private TipoDoc tipoDoc;
 
@@ -139,5 +138,4 @@ public class Usuario implements Serializable {
 	return "Usuario:\t [usuarioID= " + id + ", nombre= " + nombre + ", apellido=" + apellido + ", " + tipoDoc
 		+ ", Nro Documento= " + nroDoc + ", user= " + nombreUser + "]";
     }
-
 }

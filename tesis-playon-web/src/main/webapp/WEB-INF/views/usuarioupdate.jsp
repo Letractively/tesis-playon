@@ -45,7 +45,7 @@
 			
 			<tr>
 				<td><form:label path="tipoDoc">Tipo de documento</form:label></td>
-				<td><form:select path="tipoDoc" items="${listaTipoDocumentos}" itemLabel="nombre" itemValue="id">
+				<td><form:select path="tipoDoc.id" items="${listaTipoDocumentos}" itemLabel="nombre" itemValue="id">
 				</form:select></td>
 			</tr>
 			

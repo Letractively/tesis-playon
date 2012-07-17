@@ -24,12 +24,12 @@
 
 			<tr>
 				<td><form:label path="cargoEmpleado">Cargo de empleado</form:label></td>
-				<td><form:select path="cargoEmpleado" items="${cargosEmpleado}" itemLabel="nombre" itemValue="id">
+				<td><form:select path="cargoEmpleado.id" items="${cargosEmpleado}" itemLabel="nombre" itemValue="id">
 				</form:select></td>
 			</tr>
 			<tr>
 				<td><form:label path="usuario">Usuario</form:label></td>
-				<td><form:input path="usuario" /></td>
+				<td><form:input path="usuario.id" /></td>
 			</tr>
 		</table>
 

@@ -6,7 +6,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,7 +37,7 @@ public class UsuarioController {
     @Autowired
     private TipoDocDao tipoDocumentoDao;
 
-    @ModelAttribute("listaEmpleados")
+    @ModelAttribute("listaUsuarios")
     public List<Usuario> popularUsuarios() {
 	return usuarioDao.findAll();
     }
@@ -74,6 +76,7 @@ public class UsuarioController {
     public String getUpdate(@RequestParam(value = "nombre") String nombre, Model model) {
 	logger.debug("Recibida la peticion para mostrar la pagina de edicion");
 	model.addAttribute("usuarioAtributo", usuarioDao.findByNombreUsuario(nombre));
+	model.addAttribute("tiposDocumento", tipoDocumentoDao.findAll());
 	return "usuarioupdate";
     }
 

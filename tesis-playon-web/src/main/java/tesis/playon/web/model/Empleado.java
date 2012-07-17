@@ -38,12 +38,10 @@ public class Empleado implements Serializable {
     private Integer legajo;
 
     @ManyToOne
-    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cargoEmpleadoID")
     private CargoEmpleado cargoEmpleado;
 
     @OneToOne
-    //@OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuarioID")
     private Usuario usuario;
 
