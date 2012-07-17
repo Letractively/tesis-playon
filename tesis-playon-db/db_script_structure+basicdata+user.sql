@@ -321,6 +321,8 @@ CREATE TABLE `playa` (
   `domicilio` varchar(50) DEFAULT NULL,
   `estadoPlayaID` int(11) NOT NULL,
   `nombreComercial` varchar(50) NOT NULL,
+  `latitud` DOUBLE DEFAULT NULL,
+  `longitud` DOUBLE DEFAULT NULL,
   `razonSocial` varchar(50) DEFAULT NULL,
   `playaID` int(11) NOT NULL auto_increment,
   `estadiaID` int(11) DEFAULT NULL,
