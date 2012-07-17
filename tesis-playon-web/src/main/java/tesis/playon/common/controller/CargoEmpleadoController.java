@@ -52,8 +52,6 @@ public class CargoEmpleadoController {
 	model.addAttribute("mensaje", "Ha agregado un nuevo cargo de empleado de playas de estacionamiento al sistema");
 	this.getCargosEmpleado(model);
 	return "cargoempleadolist";
-      
-
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
@@ -68,7 +66,9 @@ public class CargoEmpleadoController {
 	logger.debug("Recibida la peticion para actualiza un cargo de empleado");
 	cargoEmpleadoDao.update(cargoEmpleado);
 	model.addAttribute("id", cargoEmpleado.getId());
-	return "cargoempleadoupdated";
+	model.addAttribute("mensaje", "Ha modificado el cargo de empleado de playas de estacionamiento");
+	this.getCargosEmpleado(model);
+	return "cargoempleadolist";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -78,6 +78,8 @@ public class CargoEmpleadoController {
 	cargoEmpleado.setId(id);
 	cargoEmpleadoDao.delete(cargoEmpleado);
 	model.addAttribute("id", id);
-	return "cargoempleadodeleted";
+	model.addAttribute("mensaje", "Ha eliminado el cargo de empleado de playas de estacionamiento");
+	this.getCargosEmpleado(model);
+	return "cargoempleadolist";
     }
 }
