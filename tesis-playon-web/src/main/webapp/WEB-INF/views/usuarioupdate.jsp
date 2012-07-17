@@ -1,5 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -27,26 +27,31 @@
 				<td><form:label path="apellido">Apellido</form:label></td>
 				<td><form:input path="apellido" /></td>
 			</tr>
-						<tr>
+			
+			<tr>
 				<td><form:label path="email">Email</form:label></td>
 				<td><form:input path="email" /></td>
 			</tr>
-						<tr>
+			
+			<tr>
 				<td><form:label path="nombreUser">Nombre de usuario</form:label></td>
 				<td><form:input path="nombreUser" /></td>
 			</tr>
-						<tr>
+			
+			<tr>
 				<td><form:label path="password">Password</form:label></td>
 				<td><form:input path="password" /></td>
 			</tr>
+			
 			<tr>
 				<td><form:label path="tipoDoc">Tipo de documento</form:label></td>
-				<form:select path="tipoDocumento" items="${tiposDocumento}" itemLabel="nombre" itemValue="id">
-				</form:select>
+				<td><form:select path="tipoDoc" items="${listaTipoDocumentos}" itemLabel="nombre" itemValue="id">
+				</form:select></td>
 			</tr>
+			
 			<tr>
 				<td><form:label path="nroDoc">Numero de documento</form:label></td>
-				<td><form:input path="nroDOc" /></td>
+				<td><form:input path="nroDoc" /></td>
 			</tr>
 
 		</table>

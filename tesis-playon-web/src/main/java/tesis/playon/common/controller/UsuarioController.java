@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import tesis.playon.web.dao.impl.TipoDocDao;
 import tesis.playon.web.dao.impl.UsuarioDao;
-import tesis.playon.web.model.CargoEmpleado;
-import tesis.playon.web.model.Empleado;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
 
@@ -23,6 +21,8 @@ import tesis.playon.web.model.Usuario;
  * @author garribere
  * 
  */
+
+
 @Controller
 @RequestMapping(value = "/usuario")
 public class UsuarioController {
@@ -73,7 +73,7 @@ public class UsuarioController {
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String getUpdate(@RequestParam(value = "nombre") String nombre, Model model) {
 	logger.debug("Recibida la peticion para mostrar la pagina de edicion");
-	model.addAttribute("rolUsuarioAtributo", usuarioDao.findByNombreUsuario(nombre));
+	model.addAttribute("usuarioAtributo", usuarioDao.findByNombreUsuario(nombre));
 	return "usuarioupdate";
     }
 
@@ -94,5 +94,4 @@ public class UsuarioController {
 	model.addAttribute("id", id);
 	return "usuariodeleted";
     }
-
 }

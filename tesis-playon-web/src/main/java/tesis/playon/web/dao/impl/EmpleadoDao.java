@@ -41,4 +41,9 @@ public class EmpleadoDao extends CustomHibernateDaoSupport implements IEmpleadoD
 	}
 	return empleados;
     }
+
+    public Empleado findById(Integer id) {
+	List<?> list = getHibernateTemplate().find("from Empleado where id=?", id);
+	return (Empleado) list.get(0);
+    }
 }

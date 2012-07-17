@@ -24,8 +24,8 @@
 
 			<tr>
 				<td><form:label path="cargoEmpleado">Cargo de empleado</form:label></td>
-				<form:select path="cargoEmpleado" items="${cargosEmpleado}" itemLabel="nombre" itemValue="id">
-				</form:select>
+				<td><form:select path="cargoEmpleado" items="${cargosEmpleado}" itemLabel="nombre" itemValue="id">
+				</form:select></td>
 			</tr>
 			<tr>
 				<td><form:label path="usuario">Usuario</form:label></td>

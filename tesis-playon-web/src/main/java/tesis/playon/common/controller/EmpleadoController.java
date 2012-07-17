@@ -24,7 +24,7 @@ import tesis.playon.web.model.Empleado;
  * 
  */
 @Controller
-@RequestMapping(value = "/empleados")
+@RequestMapping(value = "/empleado")
 public class EmpleadoController {
 
     protected static Logger logger = Logger.getLogger("EmpleadoController");
@@ -82,14 +82,14 @@ public class EmpleadoController {
 	logger.debug("Recibida la peticion para actualiza un empleado");
 	empleadoDao.update(empleado);
 	model.addAttribute("id", empleado.getId());
+	model.addAttribute("listaCargosEmpleado", cargoEmpleadoDao.findAll());
 	return "empleadoupdated";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String delete(@RequestParam(value = "id") Integer id, Model model) {
 	logger.debug("Recibida la peticion para borra un empleado existente");
-	Empleado empleado = new Empleado();
-	empleado.setId(id);
+	Empleado empleado = empleadoDao.findById(id);
 	empleadoDao.delete(empleado);
 	model.addAttribute("id", id);
 	return "empleadodeleted";
