@@ -57,10 +57,10 @@ public class EmpleadoController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String add(@ModelAttribute("empleadoAtributo") Empleado empleado,
-	    @RequestParam("idCargoEmpleado") Integer idCargoEmpleado,
-	    @RequestParam("nombreUsuario") String nombreUsuario) {
+    public String add(@ModelAttribute("empleadoAtributo") Empleado empleado) {
 	logger.debug("Recibido pedido para agregar un empleado de una playa de estacionamiento");
+	logger.debug("ID Cargo Empleado: " + empleado.getCargoEmpleado().getId());
+	logger.debug("Nombre Usuario: " + empleado.getUsuario().getNombre());
 	empleadoDao.save(empleado, empleado.getCargoEmpleado().getId(), empleado.getUsuario().getNombre());
 	return "empleadosadded";
     }
