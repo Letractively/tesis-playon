@@ -9,14 +9,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-//import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 /**
  * @author garribere
@@ -24,7 +22,7 @@ import javax.persistence.UniqueConstraint;
  */
 
 @Entity
-@Table(name = "empleado", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "legajo")})
+@Table(name = "empleado")
 public class Empleado implements Serializable {
 
     private static final long serialVersionUID = 2382561437443895633L;
@@ -88,15 +86,15 @@ public class Empleado implements Serializable {
     }
 
     public CargoEmpleado getCargoEmpleado() {
-        return cargoEmpleado;
+	return cargoEmpleado;
     }
 
     public void setCargoEmpleado(CargoEmpleado cargoEmpleado) {
-        this.cargoEmpleado = cargoEmpleado;
+	this.cargoEmpleado = cargoEmpleado;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+	this.id = id;
     }
 
     @Override

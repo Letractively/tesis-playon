@@ -12,7 +12,8 @@
 
 	<h1>Crear un empleado de una playa de estacionamiento</h1>
 
-	<c:url var="saveUrl" value="/empleados/add" />
+	<c:url var="saveUrl"
+		value="/empleados/add?idCargoEmpleado=${cargoEmpleado.id}&nombreUsuario=${usuario.id}" />
 	<form:form modelAttribute="empleadoAtributo" method="POST"
 		action="${saveUrl}">
 		<table>
@@ -24,12 +25,17 @@
 
 			<tr>
 				<td><form:label path="cargoEmpleado">Cargo de empleado</form:label></td>
-				<td><form:select path="cargoEmpleado.id" items="${cargosEmpleado}" itemLabel="nombre" itemValue="id">
-				</form:select></td>
+				<td><form:select path="cargoEmpleado.id"
+						items="${cargosEmpleado}" itemLabel="nombre" itemValue="id"
+						accesskey="idCargoEmpleado">
+					</form:select></td>
 			</tr>
+
 			<tr>
 				<td><form:label path="usuario">Usuario</form:label></td>
-				<td><form:input path="usuario.id" /></td>
+				<td><form:select path="usuario.id" items="${listaUsuarios}"
+						itemLabel="nombre" itemValue="id" accesskey="nombreUsuario">
+					</form:select></td>
 			</tr>
 		</table>
 

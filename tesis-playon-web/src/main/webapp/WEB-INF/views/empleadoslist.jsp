@@ -11,7 +11,7 @@
 
 	<h1>Empleado</h1>
 
-	<c:url var="addUrl" value="/empleado/add" />
+	<c:url var="addUrl" value="/empleados/add" />
 	<table style="border: 1px solid; width: 500px; text-align: center">
 		<thead style="background: #fcf">
 			<tr>
@@ -26,9 +26,9 @@
 		<tbody>
 			<c:forEach items="${empleados}" var="empleado">
 				<c:url var="editUrl"
-					value="/empleado/update?legajo=${empleado.legajo}" />
+					value="/empleados/update?legajo=${empleado.legajo}" />
 				<c:url var="deleteUrl"
-					value="/empleado/delete?id=${empleado.id}" />
+					value="/empleados/delete?id=${empleado.id}" />
 				<tr>
 					<td><c:out value="${empleado.legajo}" /></td>
 					<td><c:out value="${empleado.usuario.getApellido()}" /></td>

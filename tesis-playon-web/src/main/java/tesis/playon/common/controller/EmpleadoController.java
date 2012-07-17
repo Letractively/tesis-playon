@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import tesis.playon.web.dao.impl.CargoEmpleadoDao;
 import tesis.playon.web.dao.impl.EmpleadoDao;
-import tesis.playon.web.model.CargoEmpleado;
+import tesis.playon.web.dao.impl.UsuarioDao;
 import tesis.playon.web.model.Empleado;
 
 /**
@@ -24,7 +24,7 @@ import tesis.playon.web.model.Empleado;
  * 
  */
 @Controller
-@RequestMapping(value = "/empleado")
+@RequestMapping(value = "/empleados")
 public class EmpleadoController {
 
     protected static Logger logger = Logger.getLogger("EmpleadoController");
@@ -35,46 +35,41 @@ public class EmpleadoController {
     @Autowired
     private CargoEmpleadoDao cargoEmpleadoDao;
 
-    @ModelAttribute("listaEmpleados")
-    public List<Empleado> popularEmpleados() {
-	return empleadoDao.findAll();
-    }
-    
-    @ModelAttribute("listaCargosEmpleado")
-    public List<CargoEmpleado> popularCargosEmpleado() {
-	return cargoEmpleadoDao.findAll();
-    }
+    @Autowired
+    private UsuarioDao usuarioDao;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getEmpleados(Model model) {
 	logger.debug("Recibida peticion para mostrar todos los empleados de una playa de estacionamiento");
 	List<Empleado> empleados = empleadoDao.findAll();
 	model.addAttribute("empleados", empleados);
-	return "empleadolist";
+	return "empleadoslist";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getAdd(Model model) {
 	logger.debug("Recibida peticion para mostrar pagina agregar");
 	model.addAttribute("empleadoAtributo", new Empleado());
-	List<CargoEmpleado> cargosEmpleado = cargoEmpleadoDao.findAll();
-	model.addAttribute("cargosEmpleado", cargosEmpleado);
+	model.addAttribute("cargosEmpleado", cargoEmpleadoDao.findAll());
 	model.addAttribute("listaCargosEmpleado", cargoEmpleadoDao.findAll());
-	return "empleadoadd";
+	model.addAttribute("listaUsuarios", usuarioDao.findAll());
+	return "empleadosadd";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String add(@ModelAttribute("empleadoAtributo") Empleado empleado) {
+    public String add(@ModelAttribute("empleadoAtributo") Empleado empleado,
+	    @RequestParam("idCargoEmpleado") Integer idCargoEmpleado,
+	    @RequestParam("nombreUsuario") String nombreUsuario) {
 	logger.debug("Recibido pedido para agregar un empleado de una playa de estacionamiento");
-	empleadoDao.save(empleado);
-	return "empleadoadded";
+	empleadoDao.save(empleado, idCargoEmpleado, nombreUsuario);
+	return "empleadosadded";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String getUpdate(@RequestParam(value = "legajo") Integer legajo, Model model) {
 	logger.debug("Recibida la peticion para mostrar la pagina de edicion");
 	model.addAttribute("empleadoAtributo", empleadoDao.findByLegajo(legajo));
-	return "empleadoupdate";
+	return "empleadosupdate";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -83,7 +78,7 @@ public class EmpleadoController {
 	empleadoDao.update(empleado);
 	model.addAttribute("id", empleado.getId());
 	model.addAttribute("listaCargosEmpleado", cargoEmpleadoDao.findAll());
-	return "empleadoupdated";
+	return "empleadosupdated";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -92,6 +87,6 @@ public class EmpleadoController {
 	Empleado empleado = empleadoDao.findById(id);
 	empleadoDao.delete(empleado);
 	model.addAttribute("id", id);
-	return "empleadodeleted";
+	return "empleadosdeleted";
     }
 }
