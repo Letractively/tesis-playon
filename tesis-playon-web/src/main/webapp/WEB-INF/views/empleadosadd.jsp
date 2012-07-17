@@ -26,15 +26,14 @@
 			<tr>
 				<td><form:label path="cargoEmpleado">Cargo de empleado</form:label></td>
 				<td><form:select path="cargoEmpleado.id"
-						items="${cargosEmpleado}" itemLabel="nombre" itemValue="id"
-						accesskey="idCargoEmpleado">
+						items="${cargosEmpleado}" itemLabel="nombre" itemValue="id">
 					</form:select></td>
 			</tr>
 
 			<tr>
 				<td><form:label path="usuario">Usuario</form:label></td>
 				<td><form:select path="usuario.id" items="${listaUsuarios}"
-						itemLabel="nombre" itemValue="id" accesskey="nombreUsuario">
+						itemLabel="nombre" itemValue="id">
 					</form:select></td>
 			</tr>
 		</table>

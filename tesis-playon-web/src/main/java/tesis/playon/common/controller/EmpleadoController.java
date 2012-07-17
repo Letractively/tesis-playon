@@ -61,7 +61,7 @@ public class EmpleadoController {
 	    @RequestParam("idCargoEmpleado") Integer idCargoEmpleado,
 	    @RequestParam("nombreUsuario") String nombreUsuario) {
 	logger.debug("Recibido pedido para agregar un empleado de una playa de estacionamiento");
-	empleadoDao.save(empleado, idCargoEmpleado, nombreUsuario);
+	empleadoDao.save(empleado, empleado.getCargoEmpleado().getId(), empleado.getUsuario().getNombre());
 	return "empleadosadded";
     }
 
@@ -89,4 +89,5 @@ public class EmpleadoController {
 	model.addAttribute("id", id);
 	return "empleadosdeleted";
     }
+
 }
