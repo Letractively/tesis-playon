@@ -1,13 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Cargos de empleado</title>
-</head>
-<body>
+<jsp:include page="template/head.jsp" />
+
+<jsp:include page="template/menu.jsp" />
 
 	<h1>Cargos de empleado</h1>
 
@@ -44,5 +40,4 @@
 		No hay cargos de empleado actualmente en la lista. <a href="${addUrl}">Agregar</a> un cargo de empleado.
 	</c:if>
 
-</body>
-</html>
+<jsp:include page="template/foot.jsp" />

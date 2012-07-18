@@ -105,7 +105,8 @@ ul h4 {
 }
 
 #content {
-	width: 665px;
+	/*width: 665px;*/
+	width: 865px;
 	float: left;
 	padding: 0;
 }
@@ -324,8 +325,10 @@ ul h4 {
 	margin: 0;
 	background: #6E6E6E url(images/img03.jpg) top left no-repeat;
 	border: solid 1px #7E7E7E;
-	width: 888px;
-	padding: 45px 45px 0 45px;
+	width: 978px;
+/* 	width: 888px; */
+/* 	padding: 10px 45px 0 45px; */
+/* 	padding: 45px 45px 0 45px; */
 	color: #DCDCDC;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
@@ -339,7 +342,7 @@ ul h4 {
 #page-bottom h2, #page-bottom h3, #page-bottom h4 {
 	color: #FFFFFF;
 }
-
+/*
 #page-bottom ul {
 	list-style: none;
 }
@@ -353,10 +356,11 @@ ul h4 {
 	padding-top: 0;
 	border-top: 0;
 }
-
+*/
 #page-bottom-content {
-	width: 665px;
-	float: left;
+	/*width: 665px;*/
+	width: 865px;
+	/*float: left;*/
 }
 
 #page-bottom-sidebar {
@@ -426,7 +430,8 @@ ul h4 {
 #wrapper {
 	position: relative;
 	width: 980px;
-	margin: 75px auto 0 auto;
+	margin: 40px auto 0 auto;
+/* 	margin: 75px auto 0 auto; */
 	background: #FFFFFF;
 	border-radius: 6px;
 	box-shadow: 0px 5px 20px 2px rgba(0,0,0,0.1);

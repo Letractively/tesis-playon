@@ -23,6 +23,7 @@ Released   : 20120624
 <title>Big Business 2.0 by FCT</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style.css" />" />
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style_custom.css" />" />
 <script type="text/javascript" src="<c:url value="resources/js/jquery-1.7.1.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="resources/js/jquery.dropotron-1.0.js" />"></script>
 <script type="text/javascript" src="<c:url value="resources/js/jquery.slidertron-1.1.js" />"></script>

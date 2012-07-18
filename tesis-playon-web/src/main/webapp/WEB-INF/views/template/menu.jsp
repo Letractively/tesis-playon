@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <body>
 <div id="wrapper">
 	<div id="header">
@@ -10,7 +11,8 @@
 	</div>
 	<div id="menu">
 		<ul>
-			<li class="first">
+			<li class="first"><a href="<c:url value="/welcome" />">Home</a></li>
+			<li>
 				<span class="opener">Services<b></b></span>
 				<ul>
 					<li><a href="#">Lorem Ipsum</a></li>
@@ -55,9 +57,10 @@
 				</ul>
 			</li>
 			<li><a href="#">About</a></li>
-			<li class="last"><a href="#">Contact</a></li>
+			<li class="last"><a href="<c:url value="/contact" />">Contacto</a></li>
 		</ul>
 		<br class="clearfix" />
 	</div>
 	<div id="page">
 		<div id="content">
+			<div class="box">

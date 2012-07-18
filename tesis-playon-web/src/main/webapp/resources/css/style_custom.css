@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+
+#content h1{
+	padding: 0;
+}
+
+#page-bottom-menu{
+	padding: 10px 45px 0 45px;
+}
+
+#page-bottom-menu ul.list{
+}
+
+#page-bottom-menu li{
+	display: inline;
+	padding-right: 20px;
+}
+
+#page-bottom-menu{
+	text-align:center;
+	margin-bottom: 0em;
+}
+
+#page-bottom{
+	text-align:center;
+	margin-bottom: 0em;
+}
