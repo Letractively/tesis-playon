@@ -3,30 +3,38 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IHistorialDeCambioDao;
 import tesis.playon.web.model.HistorialDeCambio;
 
-@Repository("historialDeCambioDao")
-public class HistorialDeCambioDao extends CustomHibernateDaoSupport implements IHistorialDeCambioDao {
+public class HistorialDeCambioDao implements IHistorialDeCambioDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(HistorialDeCambio historialDeCambio) {
-	getHibernateTemplate().save(historialDeCambio);
+	getSessionFactory().getCurrentSession().save(historialDeCambio);
     }
 
     public void update(HistorialDeCambio historialDeCambio) {
-	getHibernateTemplate().update(historialDeCambio);
+	getSessionFactory().getCurrentSession().update(historialDeCambio);
     }
 
     public void delete(HistorialDeCambio historialDeCambio) {
-	getHibernateTemplate().delete(historialDeCambio);
+	getSessionFactory().getCurrentSession().delete(historialDeCambio);
     }
 
     public List<HistorialDeCambio> findAll() {
 	List<HistorialDeCambio> historialDeCambio = new ArrayList<HistorialDeCambio>();
-	List<?> list = getHibernateTemplate().find("from HistorialDeCambio");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from HistorialDeCambio").list();
 	for (Object object : list) {
 	    historialDeCambio.add((HistorialDeCambio) object);
 	}

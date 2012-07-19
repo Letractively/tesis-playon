@@ -1,41 +1,51 @@
 package tesis.playon.web.dao.impl;
 
-/**
- * @author Pablo
- *
- */
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IMarcaVehiculoDao;
 import tesis.playon.web.model.MarcaVehiculo;
 
-@Repository("marcaVehiculoDao")
-public class MarcaVehiculoDao extends CustomHibernateDaoSupport implements IMarcaVehiculoDao {
+/**
+ * 
+ * @author gmorales
+ * 
+ */
+public class MarcaVehiculoDao implements IMarcaVehiculoDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(MarcaVehiculo marcaVehiculo) {
-	getHibernateTemplate().save(marcaVehiculo);
+	getSessionFactory().getCurrentSession().save(marcaVehiculo);
     }
 
     public void update(MarcaVehiculo marcaVehiculo) {
-	getHibernateTemplate().update(marcaVehiculo);
+	getSessionFactory().getCurrentSession().update(marcaVehiculo);
     }
 
     public void delete(MarcaVehiculo marcaVehiculo) {
-	getHibernateTemplate().delete(marcaVehiculo);
+	getSessionFactory().getCurrentSession().delete(marcaVehiculo);
     }
 
     public MarcaVehiculo findByNombreMarcaVehiculo(String nombreMarcaVehiculo) {
-	List<?> list = getHibernateTemplate().find("from MarcaVehiculo where nombre=?", nombreMarcaVehiculo);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from MarcaVehiculo where nombre=?")
+		.setParameter(0, nombreMarcaVehiculo).list();
 	return (MarcaVehiculo) list.get(0);
     }
 
     public List<MarcaVehiculo> findAll() {
 	List<MarcaVehiculo> marcas = new ArrayList<MarcaVehiculo>();
-	List<?> list = getHibernateTemplate().find("from MarcaVehiculo");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from MarcaVehiculo").list();
 	for (Object object : list) {
 	    marcas.add((MarcaVehiculo) object);
 	}

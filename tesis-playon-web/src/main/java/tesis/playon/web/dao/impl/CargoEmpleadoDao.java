@@ -3,9 +3,8 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.ICargoEmpleadoDao;
 import tesis.playon.web.model.CargoEmpleado;
 
@@ -13,29 +12,39 @@ import tesis.playon.web.model.CargoEmpleado;
  * @author Pablo
  * 
  */
-@Repository("cargoEmpleadoDao")
-public class CargoEmpleadoDao extends CustomHibernateDaoSupport implements ICargoEmpleadoDao {
+public class CargoEmpleadoDao implements ICargoEmpleadoDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(CargoEmpleado cargo) {
-	getHibernateTemplate().save(cargo);
+	getSessionFactory().getCurrentSession().save(cargo);
     }
 
     public void update(CargoEmpleado cargo) {
-	getHibernateTemplate().update(cargo);
+	getSessionFactory().getCurrentSession().update(cargo);
     }
 
     public void delete(CargoEmpleado cargo) {
-	getHibernateTemplate().delete(cargo);
+	getSessionFactory().getCurrentSession().delete(cargo);
     }
 
     public CargoEmpleado findByNombreCargo(String nombreCargo) {
-	List<?> list = getHibernateTemplate().find("from CargoEmpleado where nombre=?", nombreCargo);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CargoEmpleado where nombre=?")
+		.setParameter(0, nombreCargo).list();
 	return (CargoEmpleado) list.get(0);
     }
 
     public List<CargoEmpleado> findAll() {
 	List<CargoEmpleado> cargos = new ArrayList<CargoEmpleado>();
-	List<?> list = getHibernateTemplate().find("from CargoEmpleado");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CargoEmpleado").list();
 	for (Object object : list) {
 	    cargos.add((CargoEmpleado) object);
 	}
@@ -43,7 +52,8 @@ public class CargoEmpleadoDao extends CustomHibernateDaoSupport implements ICarg
     }
 
     public CargoEmpleado findById(Integer id) {
-	List<?> list = getHibernateTemplate().find("from CargoEmpleado where id=?", id);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CargoEmpleado where id=?")
+		.setParameter(0, id).list();
 	return (CargoEmpleado) list.get(0);
 
     }

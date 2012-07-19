@@ -1,4 +1,4 @@
-package tesis.playon.common.validator;
+package tesis.playon.web.validator;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

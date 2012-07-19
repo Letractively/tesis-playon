@@ -3,9 +3,8 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IEstadoPromocionDao;
 import tesis.playon.web.model.EstadoPromocion;
 
@@ -14,29 +13,39 @@ import tesis.playon.web.model.EstadoPromocion;
  * @author garribere
  * 
  */
-@Repository("estadoPromocionDao")
-public class EstadoPromocionDao extends CustomHibernateDaoSupport implements IEstadoPromocionDao {
+public class EstadoPromocionDao implements IEstadoPromocionDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(EstadoPromocion estadoPromocion) {
-	getHibernateTemplate().save(estadoPromocion);
+	getSessionFactory().getCurrentSession().save(estadoPromocion);
     }
 
     public void update(EstadoPromocion estadoPromocion) {
-	getHibernateTemplate().update(estadoPromocion);
+	getSessionFactory().getCurrentSession().update(estadoPromocion);
     }
 
     public void delete(EstadoPromocion estadoPromocion) {
-	getHibernateTemplate().delete(estadoPromocion);
+	getSessionFactory().getCurrentSession().delete(estadoPromocion);
     }
 
     public EstadoPromocion findByNombreEstadoPromocion(String nombreEstadoPromocion) {
-	List<?> list = getHibernateTemplate().find("from EstadoPromocion where nombre=?", nombreEstadoPromocion);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoPromocion where nombre=?")
+		.setParameter(0, nombreEstadoPromocion).list();
 	return (EstadoPromocion) list.get(0);
     }
 
     public List<EstadoPromocion> findAll() {
 	List<EstadoPromocion> listaEstadoPromocion = new ArrayList<EstadoPromocion>();
-	List<?> list = getHibernateTemplate().find("from EstadoPromocion");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoPromocion").list();
 	for (Object obj : list) {
 	    listaEstadoPromocion.add((EstadoPromocion) obj);
 	}

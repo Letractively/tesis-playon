@@ -3,37 +3,46 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IPublicidadDao;
 import tesis.playon.web.model.Publicidad;
 
 /**
  * Clase DAO de Publicidad
+ * 
  * @author alejandro
  * @date 07/07/2012
  */
-@Repository("PublicidadDao")
-public class PublicidadDao extends CustomHibernateDaoSupport implements IPublicidadDao {
+public class PublicidadDao implements IPublicidadDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(Publicidad publicidad) {
-	getHibernateTemplate().save(publicidad);
+	getSessionFactory().getCurrentSession().save(publicidad);
     }
 
     public void update(Publicidad publicidad) {
-	getHibernateTemplate().update(publicidad);
+	getSessionFactory().getCurrentSession().update(publicidad);
     }
 
     public void delete(Publicidad publicidad) {
-	getHibernateTemplate().delete(publicidad);
+	getSessionFactory().getCurrentSession().delete(publicidad);
     }
 
-    public List<Publicidad> findAll(){
+    public List<Publicidad> findAll() {
 	List<Publicidad> publicidades = new ArrayList<Publicidad>();
-	List<?> list = getHibernateTemplate().find("from Publicidad");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Publicidad").list();
 	for (Object object : list) {
-	    publicidades.add((Publicidad)object);
+	    publicidades.add((Publicidad) object);
 	}
 	return publicidades;
     }

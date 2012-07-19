@@ -3,35 +3,44 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IEstadoPlayaDao;
 import tesis.playon.web.model.EstadoPlaya;
 
-@Repository("estadoPlayaDao")
-public class EstadoPlayaDao extends CustomHibernateDaoSupport implements IEstadoPlayaDao {
+public class EstadoPlayaDao implements IEstadoPlayaDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(EstadoPlaya estadoPlaya) {
-	getHibernateTemplate().save(estadoPlaya);
+	getSessionFactory().getCurrentSession().save(estadoPlaya);
     }
 
     public void update(EstadoPlaya estadoPlaya) {
-	getHibernateTemplate().update(estadoPlaya);
+	getSessionFactory().getCurrentSession().update(estadoPlaya);
     }
 
     public void delete(EstadoPlaya estadoPlaya) {
-	getHibernateTemplate().delete(estadoPlaya);
+	getSessionFactory().getCurrentSession().delete(estadoPlaya);
     }
 
     public EstadoPlaya findByNombreEstadoPlaya(String nombreEstado) {
-	List<?> list = getHibernateTemplate().find("from EstadoPlaya where nombre=?", nombreEstado);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoPlaya where nombre=?")
+		.setParameter(0, nombreEstado).list();
 	return (EstadoPlaya) list.get(0);
     }
 
     public List<EstadoPlaya> findAll() {
 	List<EstadoPlaya> estadoPlaya = new ArrayList<EstadoPlaya>();
-	List<?> list = getHibernateTemplate().find("from EstadoPlaya");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoPlaya").list();
 	for (Object object : list) {
 	    estadoPlaya.add((EstadoPlaya) object);
 	}

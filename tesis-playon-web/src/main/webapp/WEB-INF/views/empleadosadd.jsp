@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%-- <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%> --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -13,7 +13,7 @@
 	<h1>Crear un empleado de una playa de estacionamiento</h1>
 
 	<c:url var="saveUrl"
-		value="/empleados/add" />
+		value="/empleados/add?aaaaa=${usuario.nombre}&bbbbb=${cargoEmpleado.id}" />
 	<form:form modelAttribute="empleadoAtributo" method="POST"
 		action="${saveUrl}">
 		<table>
@@ -24,7 +24,7 @@
 			</tr>
 
 			<tr>
-				<td><form:label path="cargoEmpleado">Cargo de empleado</form:label></td>
+				<td><form:label path="cargoEmpleado.id">Cargo de empleado</form:label></td>
 				<td><form:select path="cargoEmpleado.id" items="${cargosEmpleado}"
 						itemLabel="nombre" itemValue="id">
 					</form:select></td>

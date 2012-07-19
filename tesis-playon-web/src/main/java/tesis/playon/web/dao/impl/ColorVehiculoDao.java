@@ -3,39 +3,48 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IColorVehiculoDao;
 import tesis.playon.web.model.ColorVehiculo;
 
 /**
  * @author Pablo
- *
+ * 
  */
-@Repository("colorVehiculoDao")
-public class ColorVehiculoDao extends CustomHibernateDaoSupport implements IColorVehiculoDao {
-    
+public class ColorVehiculoDao implements IColorVehiculoDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
+
     public void save(ColorVehiculo color) {
-	getHibernateTemplate().save(color);
+	getSessionFactory().getCurrentSession().save(color);
     }
 
     public void update(ColorVehiculo color) {
-	getHibernateTemplate().update(color);
+	getSessionFactory().getCurrentSession().update(color);
     }
 
     public void delete(ColorVehiculo color) {
-	getHibernateTemplate().delete(color);
+	getSessionFactory().getCurrentSession().delete(color);
     }
 
     public ColorVehiculo findByNombreColorVehiculo(String colorVehiculo) {
-	List<?> list = getHibernateTemplate().find("from ColorVehiculo where nombre=?", colorVehiculo);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from ColorVehiculo where nombre=?")
+		.setParameter(0, colorVehiculo).list();
 	return (ColorVehiculo) list.get(0);
     }
-    
-    public List<ColorVehiculo> findAll(){
+
+    public List<ColorVehiculo> findAll() {
 	List<ColorVehiculo> colores = new ArrayList<ColorVehiculo>();
-	List<?> list = getHibernateTemplate().find("from ColorVehiculo");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from ColorVehiculo").list();
 	for (Object object : list) {
 	    colores.add((ColorVehiculo) object);
 	}

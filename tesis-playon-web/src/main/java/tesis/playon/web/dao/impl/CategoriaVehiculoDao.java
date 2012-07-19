@@ -3,40 +3,48 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.ICategoriaVehiculoDao;
 import tesis.playon.web.model.CategoriaVehiculo;
 
 /**
  * @author Pablo
- *
+ * 
  */
-@Repository("categoriaVehiculoDao")
-public class CategoriaVehiculoDao extends CustomHibernateDaoSupport implements ICategoriaVehiculoDao{
-    
-    
+public class CategoriaVehiculoDao implements ICategoriaVehiculoDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
+
     public void save(CategoriaVehiculo categoria) {
-	getHibernateTemplate().save(categoria);
+	getSessionFactory().getCurrentSession().save(categoria);
     }
 
     public void update(CategoriaVehiculo categoria) {
-	getHibernateTemplate().update(categoria);
+	getSessionFactory().getCurrentSession().update(categoria);
     }
 
     public void delete(CategoriaVehiculo categoria) {
-	getHibernateTemplate().delete(categoria);
+	getSessionFactory().getCurrentSession().delete(categoria);
     }
 
     public CategoriaVehiculo findByNombreCategoriaVehiculo(String nombreCategoria) {
-	List<?> list = getHibernateTemplate().find("from CategoriaVehiculo where nombre=?", nombreCategoria);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CategoriaVehiculo where nombre=?")
+		.setParameter(0, nombreCategoria).list();
 	return (CategoriaVehiculo) list.get(0);
     }
-    
-    public List<CategoriaVehiculo> findAll(){
+
+    public List<CategoriaVehiculo> findAll() {
 	List<CategoriaVehiculo> categorias = new ArrayList<CategoriaVehiculo>();
-	List<?> list = getHibernateTemplate().find("from CategoriaVehiculo");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CategoriaVehiculo").list();
 	for (Object object : list) {
 	    categorias.add((CategoriaVehiculo) object);
 	}

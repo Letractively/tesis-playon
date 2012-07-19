@@ -1,27 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context-3.1.xsd
-		http://www.springframework.org/schema/mvc 
-		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd" >
 
-	<!-- Activates various annotations to be detected in bean classes -->
-	<context:annotation-config />
-	
-	<!-- Scans the classpath for annotated components that will be auto-registered as Spring beans.
-	 For example @Controller and @Service. Make sure to set the correct base-package-->
-	<context:component-scan base-package="tesis.playon" />
-	
-	<!-- Configures the annotation-driven Spring MVC Controller programming model.
-	Note that, with Spring 3.0, this tag works in Servlet MVC only!  -->
-	<mvc:annotation-driven /> 
-	
-	<!-- Load Hibernate related configuration -->
-	<import resource="hibernate-context.xml" />
+    <!-- Beans Declaration -->
+    <!-- <bean id="Barrio" class="tesis.playon.web.model.Barrio" /> -->
+    <!-- <bean id="CargoEmpleado" class="tesis.playon.web.model.CargoEmpleado " /> -->
+    <!-- <bean id="CategoriaVehiculo" class="tesis.playon.web.model.CategoriaVehiculo" /> -->
+    <!-- <bean id="ColorVehiculo" class="tesis.playon.web.model.ColorVehiculo" /> -->
+    <!-- <bean id="Empleado" class="tesis.playon.web.model.Empleado" /> -->
+    <!-- <bean id="Estadia" class="tesis.playon.web.model.Estadia" /> -->
+    <!-- <bean id="EstadoDenuncia" class="tesis.playon.web.model.EstadoDenuncia" /> -->
+    <!-- <bean id="EstadoPlaya" class="tesis.playon.web.model.EstadoPlaya" /> -->
+    <!-- <bean id="EstadoPromocion" class="tesis.playon.web.model.EstadoPromocion" /> -->
+    <!-- <bean id="EstadoPublicidad" class="tesis.playon.web.model.EstadoPublicidad" /> -->
+    <!-- <bean id="Localidad" class="tesis.playon.web.model.Localidad" /> -->
+    <!-- <bean id="MarcaVehiculo" class="tesis.playon.web.model.MarcaVehiculo" /> -->
+    <!-- <bean id="ModeloVehiculo" class="tesis.playon.web.model.ModeloVehiculo" /> -->
+    <!-- <bean id="Pais" class="tesis.playon.web.model.Pais" /> -->
+    <!-- <bean id="Playa" class="tesis.playon.web.model.Playa" /> -->
+    <!-- <bean id="Posicion" class="tesis.playon.web.model.Posicion" /> -->
+    <!-- <bean id="Provincia" class="tesis.playon.web.model.Provincia" /> -->
+
+    <bean
+        id="RolUsuario"
+        class="tesis.playon.web.model.RolUsuario" />
+    <!-- <bean id="Tarifa" class="tesis.playon.web.model.Tarifa" /> -->
+    <!-- <bean id="TipoDoc" class="tesis.playon.web.model.TipoDoc" /> -->
+    <!-- <bean id="TipoEstadia" class="tesis.playon.web.model.TipoEstadia" /> -->
+    <!-- <bean id="TipoPago" class="tesis.playon.web.model.TipoPago" /> -->
+    <!-- <bean id="Usuario" class="tesis.playon.web.model.Usuario" /> -->
+    <!-- <bean id="UsuarioSistema" class="tesis.playon.web.model.UsuarioSistema" /> -->
+
+
+    <!-- User Service Declaration -->
+
+    <bean
+        id="RolUsuarioService"
+        class="tesis.playon.web.service.impl.RolUsuarioService" >
+
+        <property
+            name="rolUsuarioDao"
+            ref="RolUsuarioDao" />
+    </bean>
+
+    <!-- User DAO Declaration -->
+
+    <bean
+        id="RolUsuarioDao"
+        class="tesis.playon.web.dao.impl.RolUsuarioDao" >
+
+        <property
+            name="sessionFactory"
+            ref="SessionFactory" />
+    </bean>
+
+    <!-- Data Source Declaration -->
+
+    <bean
+        id="DataSource"
+        class="com.mchange.v2.c3p0.ComboPooledDataSource"
+        destroy-method="close" >
+
+        <property
+            name="driverClass"
+            value="com.mysql.jdbc.Driver" />
+
+        <property
+            name="jdbcUrl"
+            value="jdbc:mysql://localhost:3306/tesis_playon" />
+
+        <property
+            name="user"
+            value="playonAdmin" />
+
+        <property
+            name="password"
+            value="playon" />
+
+        <property
+            name="maxPoolSize"
+            value="10" />
+
+        <property
+            name="maxStatements"
+            value="0" />
+
+        <property
+            name="minPoolSize"
+            value="5" />
+    </bean>
+
+    <!-- Session Factory Declaration -->
+
+    <bean
+        id="SessionFactory"
+        class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" >
+
+        <property
+            name="dataSource"
+            ref="DataSource" />
+
+        <property name="annotatedClasses" >
+
+            <list>
+
+                <!-- <value>tesis.playon.web.model.Barrio</value> -->
+                <!-- <value>tesis.playon.web.model.CargoEmpleado</value> -->
+                <!-- <value>tesis.playon.web.model.CategoriaVehiculo</value> -->
+                <!-- <value>tesis.playon.web.model.ColorVehiculo</value> -->
+                <!-- <value>tesis.playon.web.model.Empleado</value> -->
+                <!-- <value>tesis.playon.web.model.Empleado</value> -->
+                <!-- <value>tesis.playon.web.model.Empleado</value> -->
+                <!-- <value>tesis.playon.web.model.Estadia</value> -->
+                <!-- <value>tesis.playon.web.model.EstadoDenuncia</value> -->
+                <!-- <value>tesis.playon.web.model.EstadoPlaya</value> -->
+                <!-- <value>tesis.playon.web.model.EstadoPromocion</value> -->
+                <!-- <value>tesis.playon.web.model.EstadoPublicidad</value> -->
+                <!-- <value>tesis.playon.web.model.Localidad</value> -->
+                <!-- <value>tesis.playon.web.model.MarcaVehiculo</value> -->
+                <!-- <value>tesis.playon.web.model.ModeloVehiculo</value> -->
+                <!-- <value>tesis.playon.web.model.Pais</value> -->
+                <!-- <value>tesis.playon.web.model.Playa</value> -->
+                <!-- <value>tesis.playon.web.model.Posicion</value> -->
+                <!-- <value>tesis.playon.web.model.Provincia</value> -->
+
+                <value>
+tesis.playon.web.model.RolUsuario
+                </value>
+                <!-- <value>tesis.playon.web.model.Tarifa</value> -->
+                <!-- <value>tesis.playon.web.model.TipoDoc</value> -->
+                <!-- <value>tesis.playon.web.model.TipoEstadia</value> -->
+                <!-- <value>tesis.playon.web.model.TipoPago</value> -->
+                <!-- <value>tesis.playon.web.model.Usuario</value> -->
+                <!-- <value>tesis.playon.web.model.UsuarioSistema</value> -->
+            </list>
+        </property>
+
+        <property name="hibernateProperties" >
+
+            <props>
+
+                <prop key="hibernate.dialect" >
+org.hibernate.dialect.MySQLDialect
+                </prop>
+
+                <prop key="hibernate.show_sql" >
+true
+                </prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- Enable the configuration of transactional behavior based on annotations -->
+
+    <tx:annotation-driven transaction-manager="txManager" />
+
+    <!-- Transaction Manager is defined -->
+
+    <bean
+        id="txManager"
+        class="org.springframework.orm.hibernate4.HibernateTransactionManager" >
+
+        <property
+            name="sessionFactory"
+            ref="SessionFactory" />
+    </bean>
 
 </beans>

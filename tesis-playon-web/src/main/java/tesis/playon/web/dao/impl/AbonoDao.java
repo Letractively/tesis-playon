@@ -3,30 +3,43 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IAbonoDao;
 import tesis.playon.web.model.Abono;
 
-@Repository("abonoDao")
-public class AbonoDao extends CustomHibernateDaoSupport implements IAbonoDao {
+/**
+ * 
+ * @author gmorales
+ * 
+ */
+public class AbonoDao implements IAbonoDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(Abono abono) {
-	getHibernateTemplate().save(abono);
+	getSessionFactory().getCurrentSession().save(abono);
     }
 
     public void update(Abono abono) {
-	getHibernateTemplate().update(abono);
+	getSessionFactory().getCurrentSession().update(abono);
     }
 
     public void delete(Abono abono) {
-	getHibernateTemplate().delete(abono);
+	getSessionFactory().getCurrentSession().delete(abono);
     }
-    
-    public List<Abono> findAll(){
+
+    public List<Abono> findAll() {
 	List<Abono> abonos = new ArrayList<Abono>();
-	List<?> list = getHibernateTemplate().find("from Abono");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Abono").list();
 	for (Object obj : list) {
 	    abonos.add((Abono) obj);
 	}

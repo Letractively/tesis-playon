@@ -1,4 +1,4 @@
-package tesis.playon.common.controller;
+package tesis.playon.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,13 +22,13 @@ public class AccessController {
 
     @RequestMapping(value = "/login/failure")
     public String loginFailure() {
-	String message = "¡Usuario y/o contraseña incorrectos!";
+	String message = "ï¿½Usuario y/o contraseï¿½a incorrectos!";
 	return "redirect:/login?message=" + message;
     }
 
     @RequestMapping(value = "/logout/success")
     public String logoutSuccess() {
-	String message = "¡Accesso logrado!";
+	String message = "ï¿½Accesso logrado!";
 	return "redirect:/login?message=" + message;
     }
 }

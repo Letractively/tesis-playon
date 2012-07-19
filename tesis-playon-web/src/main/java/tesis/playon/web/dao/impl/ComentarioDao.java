@@ -3,9 +3,8 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IComentarioDao;
 import tesis.playon.web.model.Comentario;
 
@@ -14,32 +13,35 @@ import tesis.playon.web.model.Comentario;
  * @author garribere
  * 
  */
-@Repository("comentarioDao")
-public class ComentarioDao extends CustomHibernateDaoSupport implements IComentarioDao {
+public class ComentarioDao implements IComentarioDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(Comentario comentario) {
-	getHibernateTemplate().save(comentario);
+	getSessionFactory().getCurrentSession().save(comentario);
     }
 
     public void update(Comentario comentario) {
-	getHibernateTemplate().update(comentario);
+	getSessionFactory().getCurrentSession().update(comentario);
     }
 
     public void delete(Comentario comentario) {
-	getHibernateTemplate().delete(comentario);
+	getSessionFactory().getCurrentSession().delete(comentario);
     }
 
-    // no se si este findBy es asi, hay q verlo!
-//    public Comentario findByNombrePlaya(String nombrePlaya) {
-//	List<?> list = getHibernateTemplate().find("from Comentario where nombre=?", nombrePlaya);
-//	return (Comentario) list.get(0);
-//    }
-    
-    public List<Comentario> findAll(){
+    public List<Comentario> findAll() {
 	List<Comentario> comentarios = new ArrayList<Comentario>();
-	List<?> list = getHibernateTemplate().find("from Comentario");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Comentario").list();
 	for (Object object : list) {
-	    comentarios.add((Comentario)object);
+	    comentarios.add((Comentario) object);
 	}
 	return comentarios;
     }

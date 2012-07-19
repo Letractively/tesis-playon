@@ -3,9 +3,8 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IRolUsuarioDao;
 import tesis.playon.web.model.RolUsuario;
 
@@ -14,24 +13,33 @@ import tesis.playon.web.model.RolUsuario;
  * @author gmorales
  * 
  */
-@Repository("rolUsuarioDao")
-public class RolUsuarioDao extends CustomHibernateDaoSupport implements IRolUsuarioDao {
+public class RolUsuarioDao implements IRolUsuarioDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(RolUsuario rolUsuario) {
-	getHibernateTemplate().save(rolUsuario);
+	getSessionFactory().getCurrentSession().save(rolUsuario);
     }
 
     public void update(RolUsuario rolUsuario) {
-	getHibernateTemplate().update(rolUsuario);
+	getSessionFactory().getCurrentSession().update(rolUsuario);
     }
 
     public void delete(RolUsuario rolUsuario) {
-	getHibernateTemplate().delete(rolUsuario);
+	getSessionFactory().getCurrentSession().delete(rolUsuario);
     }
 
     public List<RolUsuario> findAll() {
 	List<RolUsuario> listaRolUsuario = new ArrayList<RolUsuario>();
-	List<?> list = getHibernateTemplate().find("from RolUsuario");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from RolUsuario").list();
 	for (Object obj : list) {
 	    listaRolUsuario.add((RolUsuario) obj);
 	}
@@ -39,7 +47,8 @@ public class RolUsuarioDao extends CustomHibernateDaoSupport implements IRolUsua
     }
 
     public RolUsuario findByNombreRolUsuario(String nombreRolUsuario) {
-	List<?> list = getHibernateTemplate().find("from RolUsuario where nombre=?", nombreRolUsuario);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from RolUsuario where nombre=?")
+		.setParameter(0, nombreRolUsuario).list();
 	return (RolUsuario) list.get(0);
     }
 

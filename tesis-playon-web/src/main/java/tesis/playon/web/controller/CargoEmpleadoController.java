@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tesis.playon.common.controller;
+package tesis.playon.web.controller;
 
 import java.util.List;
 

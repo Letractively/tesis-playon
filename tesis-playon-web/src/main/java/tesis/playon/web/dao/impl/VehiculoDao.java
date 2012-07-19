@@ -3,41 +3,50 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IVehiculoDao;
 import tesis.playon.web.model.Vehiculo;
 
 /**
  * @author Pablo
- *
+ * 
  */
-@Repository("vehiculoDao")
-public class VehiculoDao extends CustomHibernateDaoSupport implements IVehiculoDao{
-    
+public class VehiculoDao implements IVehiculoDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
+
     public void save(Vehiculo vehiculo) {
-	getHibernateTemplate().save(vehiculo);
+	getSessionFactory().getCurrentSession().save(vehiculo);
     }
 
     public void update(Vehiculo vehiculo) {
-	getHibernateTemplate().update(vehiculo);
+	getSessionFactory().getCurrentSession().update(vehiculo);
     }
 
     public void delete(Vehiculo vehiculo) {
-	getHibernateTemplate().delete(vehiculo);
+	getSessionFactory().getCurrentSession().delete(vehiculo);
     }
 
     public Vehiculo findByPatenteVehiculo(String patenteVehiculo) {
-	List<?> list = getHibernateTemplate().find("from Vehiculo where patente=?", patenteVehiculo);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Vehiculo where patente=?")
+		.setParameter(0, patenteVehiculo).list();
 	return (Vehiculo) list.get(0);
     }
 
-    public List<Vehiculo> findAll(){
+    public List<Vehiculo> findAll() {
 	List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
-	List<?> list = getHibernateTemplate().find("from Vehiculo");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Vehiculo").list();
 	for (Object object : list) {
-	    vehiculos.add((Vehiculo)object);
+	    vehiculos.add((Vehiculo) object);
 	}
 	return vehiculos;
     }

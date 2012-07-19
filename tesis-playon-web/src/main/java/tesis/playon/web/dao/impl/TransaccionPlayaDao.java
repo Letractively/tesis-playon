@@ -3,37 +3,45 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.ITransaccionPlayaDao;
 import tesis.playon.web.model.TransaccionPlaya;
 
 /**
  * 
  * @author alejandro
- *
+ * 
  */
-@Repository("transaccionPlayaDao")
-public class TransaccionPlayaDao extends CustomHibernateDaoSupport implements ITransaccionPlayaDao {
+public class TransaccionPlayaDao implements ITransaccionPlayaDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(TransaccionPlaya transaccionPlaya) {
-	getHibernateTemplate().save(transaccionPlaya);
+	getSessionFactory().getCurrentSession().save(transaccionPlaya);
     }
 
     public void update(TransaccionPlaya transaccionPlaya) {
-	getHibernateTemplate().update(transaccionPlaya);
+	getSessionFactory().getCurrentSession().update(transaccionPlaya);
     }
 
     public void delete(TransaccionPlaya transaccionPlaya) {
-	getHibernateTemplate().delete(transaccionPlaya);
+	getSessionFactory().getCurrentSession().delete(transaccionPlaya);
     }
 
-    public List<TransaccionPlaya> findAll(){
+    public List<TransaccionPlaya> findAll() {
 	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
-	List<?> list = getHibernateTemplate().find("from TransaccionPlaya");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TransaccionPlaya").list();
 	for (Object object : list) {
-	    transaccionPlaya.add((TransaccionPlaya)object);
+	    transaccionPlaya.add((TransaccionPlaya) object);
 	}
 	return transaccionPlaya;
     }

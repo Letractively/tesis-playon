@@ -3,36 +3,47 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IEstadiaDao;
 import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.Playa;
 
 @Repository("estadiaDao")
-public class EstadiaDao extends CustomHibernateDaoSupport implements IEstadiaDao {
+public class EstadiaDao implements IEstadiaDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(Estadia estadia) {
-	getHibernateTemplate().save(estadia);
+	getSessionFactory().getCurrentSession().save(estadia);
     }
 
     public void update(Estadia estadia) {
-	getHibernateTemplate().update(estadia);
+	getSessionFactory().getCurrentSession().update(estadia);
     }
 
     public void delete(Estadia estadia) {
-	getHibernateTemplate().delete(estadia);
+	getSessionFactory().getCurrentSession().delete(estadia);
     }
-    
-    public Estadia findByPlaya(Playa playa){
-	List<?> list = getHibernateTemplate().find("from Estadia where playa=?", playa);
-	return (Estadia)list.get(0);
+
+    public Estadia findByPlaya(Playa playa) {
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Estadia where playa=?")
+		.setParameter(0, playa).list();
+	return (Estadia) list.get(0);
     }
 
     public List<Estadia> findAll() {
 	List<Estadia> colores = new ArrayList<Estadia>();
-	List<?> list = getHibernateTemplate().find("from Estadia");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Estadia").list();
 	for (Object object : list) {
 	    colores.add((Estadia) object);
 	}

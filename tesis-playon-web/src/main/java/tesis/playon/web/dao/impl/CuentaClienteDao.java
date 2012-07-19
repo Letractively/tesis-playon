@@ -3,35 +3,44 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.ICuentaClienteDao;
 import tesis.playon.web.model.CuentaCliente;
 
-@Repository("cuentaClienteDao")
-public class CuentaClienteDao extends CustomHibernateDaoSupport implements ICuentaClienteDao {
+public class CuentaClienteDao implements ICuentaClienteDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(CuentaCliente cuentaCliente) {
-	getHibernateTemplate().save(cuentaCliente);
+	getSessionFactory().getCurrentSession().save(cuentaCliente);
     }
 
     public void update(CuentaCliente cuentaCliente) {
-	getHibernateTemplate().update(cuentaCliente);
+	getSessionFactory().getCurrentSession().update(cuentaCliente);
     }
 
     public void delete(CuentaCliente cuentaCliente) {
-	getHibernateTemplate().delete(cuentaCliente);
+	getSessionFactory().getCurrentSession().delete(cuentaCliente);
     }
 
     public CuentaCliente findByNroCuenta(Integer nroCuenta) {
-	List<?> list = getHibernateTemplate().find("from CuentaCliente where nroCuenta=?", nroCuenta);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaCliente where nroCuenta=?")
+		.setParameter(0, nroCuenta).list();
 	return (CuentaCliente) list.get(0);
     }
-    
+
     public List<CuentaCliente> findAll() {
 	List<CuentaCliente> colores = new ArrayList<CuentaCliente>();
-	List<?> list = getHibernateTemplate().find("from CuentaCliente");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaCliente").list();
 	for (Object object : list) {
 	    colores.add((CuentaCliente) object);
 	}

@@ -3,40 +3,50 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IPlayaDao;
 import tesis.playon.web.model.Playa;
 
-@Repository("playaDao")
-public class PlayaDao extends CustomHibernateDaoSupport implements IPlayaDao {
+public class PlayaDao implements IPlayaDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(Playa playa) {
-	getHibernateTemplate().save(playa);
+	getSessionFactory().getCurrentSession().save(playa);
     }
 
     public void update(Playa playa) {
-	getHibernateTemplate().update(playa);
+	getSessionFactory().getCurrentSession().update(playa);
     }
 
     public void delete(Playa playa) {
-	getHibernateTemplate().delete(playa);
+	getSessionFactory().getCurrentSession().delete(playa);
     }
 
     public Playa findByNombreComercial(String nombreComercial) {
-	List<?> list = getHibernateTemplate().find("from Playa where nombreComercial=?", nombreComercial);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Playa where nombreComercial=?")
+		.setParameter(0, nombreComercial).list();
 	return (Playa) list.get(0);
     }
 
     public Playa findByRazonSocial(String razonSocial) {
-	List<?> list = getHibernateTemplate().find("from Playa where razonSocial=?", razonSocial);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Playa where razonSocial=?")
+		.setParameter(0, razonSocial).list();
 	return (Playa) list.get(0);
     }
 
     public List<Playa> findAll() {
 	List<Playa> playa = new ArrayList<Playa>();
-	List<?> list = getHibernateTemplate().find("from Playa");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Playa").list();
 	for (Object object : list) {
 	    playa.add((Playa) object);
 	}

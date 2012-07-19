@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tesis.playon.common.controller;
+package tesis.playon.web.controller;
 
 import java.util.List;
 
@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import tesis.playon.web.dao.impl.CargoEmpleadoDao;
 import tesis.playon.web.dao.impl.EmpleadoDao;
 import tesis.playon.web.dao.impl.UsuarioDao;
+import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.model.Empleado;
+import tesis.playon.web.model.Usuario;
 
 /**
  * @author Pablo
@@ -50,6 +52,8 @@ public class EmpleadoController {
     public String getAdd(Model model) {
 	logger.debug("Recibida peticion para mostrar pagina agregar");
 	model.addAttribute("empleadoAtributo", new Empleado());
+	model.addAttribute("cargoEmpleadoAtributo", new CargoEmpleado());
+	model.addAttribute("usuarioAtributo", new Usuario());
 	model.addAttribute("cargosEmpleado", cargoEmpleadoDao.findAll());
 	model.addAttribute("listaCargosEmpleado", cargoEmpleadoDao.findAll());
 	model.addAttribute("listaUsuarios", usuarioDao.findAll());
@@ -57,11 +61,13 @@ public class EmpleadoController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String add(@ModelAttribute("empleadoAtributo") Empleado empleado) {
+    public String add(@ModelAttribute("empleadoAtributo") Empleado empleado,
+	    @ModelAttribute("cargoEmpleadoAtributo") CargoEmpleado cargoEmpleado,
+	    @ModelAttribute("usuarioAtributo") Usuario usuario, Model model) {
 	logger.debug("Recibido pedido para agregar un empleado de una playa de estacionamiento");
 	logger.debug("ID Cargo Empleado: " + empleado.getCargoEmpleado().getId());
 	logger.debug("Nombre Usuario: " + empleado.getUsuario().getNombre());
-	empleadoDao.save(empleado, empleado.getCargoEmpleado().getId(), empleado.getUsuario().getNombre());
+	empleadoDao.save(empleado, cargoEmpleado.getId(), usuario.getNombre());
 	return "empleadosadded";
     }
 

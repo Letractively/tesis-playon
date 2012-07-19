@@ -3,37 +3,46 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.ITipoPagoDao;
 import tesis.playon.web.model.TipoPago;
 
-@Repository("tipoPagoDao")
-public class TipoPagoDao extends CustomHibernateDaoSupport implements ITipoPagoDao {
+public class TipoPagoDao implements ITipoPagoDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(TipoPago tipoPago) {
-	getHibernateTemplate().save(tipoPago);
+	getSessionFactory().getCurrentSession().save(tipoPago);
     }
 
     public void update(TipoPago tipoPago) {
-	getHibernateTemplate().update(tipoPago);
+	getSessionFactory().getCurrentSession().update(tipoPago);
     }
 
     public void delete(TipoPago tipoPago) {
-	getHibernateTemplate().delete(tipoPago);
+	getSessionFactory().getCurrentSession().delete(tipoPago);
     }
 
     public TipoPago findByNameTipoPago(String nombreTipoPago) {
-	List<?> list = getHibernateTemplate().find("from TipoPago where nombre=?", nombreTipoPago);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoPago where nombre=?")
+		.setParameter(0, nombreTipoPago).list();
 	return (TipoPago) list.get(0);
     }
-    
-    public List<TipoPago> findAll(){
+
+    public List<TipoPago> findAll() {
 	List<TipoPago> tipos = new ArrayList<TipoPago>();
-	List<?> list = getHibernateTemplate().find("from TipoPago");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoPago").list();
 	for (Object object : list) {
-	    tipos.add((TipoPago)object);
+	    tipos.add((TipoPago) object);
 	}
 	return tipos;
     }

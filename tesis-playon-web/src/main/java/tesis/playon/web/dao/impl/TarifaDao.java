@@ -3,9 +3,8 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.ITarifaDao;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Tarifa;
@@ -15,31 +14,41 @@ import tesis.playon.web.model.Tarifa;
  * @author gmorales
  * 
  */
-@Repository("tarifaDao")
-public class TarifaDao extends CustomHibernateDaoSupport implements ITarifaDao {
+public class TarifaDao implements ITarifaDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(Tarifa tarifa) {
-	getHibernateTemplate().save(tarifa);
+	getSessionFactory().getCurrentSession().save(tarifa);
     }
 
     public void update(Tarifa tarifa) {
-	getHibernateTemplate().update(tarifa);
+	getSessionFactory().getCurrentSession().update(tarifa);
     }
 
     public void delete(Tarifa tarifa) {
-	getHibernateTemplate().delete(tarifa);
+	getSessionFactory().getCurrentSession().delete(tarifa);
     }
 
     public Tarifa findByPlayaID(Playa playa) {
-	List<?> list = getHibernateTemplate().find("from Tarifa where playa=?", playa);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa where playa=?")
+		.setParameter(0, playa).list();
 	return (Tarifa) list.get(0);
     }
 
-    public List<Tarifa> findAll(){
+    public List<Tarifa> findAll() {
 	List<Tarifa> tarifas = new ArrayList<Tarifa>();
-	List<?> list = getHibernateTemplate().find("from Tarifa");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa").list();
 	for (Object object : list) {
-	    tarifas.add((Tarifa)object);
+	    tarifas.add((Tarifa) object);
 	}
 	return tarifas;
     }

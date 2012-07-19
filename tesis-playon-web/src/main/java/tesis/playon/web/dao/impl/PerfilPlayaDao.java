@@ -3,9 +3,8 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IPerfilPlayaDao;
 import tesis.playon.web.model.PerfilPlaya;
 
@@ -14,31 +13,41 @@ import tesis.playon.web.model.PerfilPlaya;
  * @author gmorales
  * 
  */
-@Repository("perfilPlayaDao")
-public class PerfilPlayaDao extends CustomHibernateDaoSupport implements IPerfilPlayaDao {
+public class PerfilPlayaDao implements IPerfilPlayaDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(PerfilPlaya perfilPlaya) {
-	getHibernateTemplate().save(perfilPlaya);
+	getSessionFactory().getCurrentSession().save(perfilPlaya);
     }
 
     public void update(PerfilPlaya perfilPlaya) {
-	getHibernateTemplate().update(perfilPlaya);
+	getSessionFactory().getCurrentSession().update(perfilPlaya);
     }
 
     public void delete(PerfilPlaya perfilPlaya) {
-	getHibernateTemplate().delete(perfilPlaya);
+	getSessionFactory().getCurrentSession().delete(perfilPlaya);
     }
 
     public PerfilPlaya findByNombrePerfilPlaya(String nombrePerfilPlaya) {
-	List<?> list = getHibernateTemplate().find("from PerfilPlaya where nombre=?", nombrePerfilPlaya);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from PerfilPlaya where nombre=?")
+		.setParameter(0, nombrePerfilPlaya).list();
 	return (PerfilPlaya) list.get(0);
     }
-    
-    public List<PerfilPlaya> findAll(){
+
+    public List<PerfilPlaya> findAll() {
 	List<PerfilPlaya> perfiles = new ArrayList<PerfilPlaya>();
-	List<?> list = getHibernateTemplate().find("from PerfilPlaya");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from PerfilPlaya").list();
 	for (Object object : list) {
-	    perfiles.add((PerfilPlaya)object);
+	    perfiles.add((PerfilPlaya) object);
 	}
 	return perfiles;
     }

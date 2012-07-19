@@ -3,43 +3,53 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IBarrioDao;
 import tesis.playon.web.model.Barrio;
 
 /**
  * 
  * @author gmorales
- *
+ * 
  */
-@Repository("barrioDao")
-public class BarrioDao extends CustomHibernateDaoSupport implements IBarrioDao {
+public class BarrioDao implements IBarrioDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(Barrio barrio) {
-	getHibernateTemplate().save(barrio);
+	getSessionFactory().getCurrentSession().save(barrio);
     }
 
     public void update(Barrio barrio) {
-	getHibernateTemplate().update(barrio);
+	getSessionFactory().getCurrentSession().update(barrio);
     }
 
     public void delete(Barrio barrio) {
-	getHibernateTemplate().delete(barrio);
+	getSessionFactory().getCurrentSession().delete(barrio);
     }
 
     public Barrio findByNombreBarrio(String nombreBarrio) {
-	List<?> list = getHibernateTemplate().find("from Barrio where nombre=?", nombreBarrio);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Barrio where nombre=?")
+		.setParameter(0, nombreBarrio).list();
 	return (Barrio) list.get(0);
     }
-    
-    public List<Barrio> findAll(){
+
+    public List<Barrio> findAll() {
 	List<Barrio> barrios = new ArrayList<Barrio>();
-	List<?> list = getHibernateTemplate().find("from Barrio");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Barrio").list();
 	for (Object object : list) {
-	    barrios.add((Barrio)object);
+	    barrios.add((Barrio) object);
 	}
 	return barrios;
     }
+    
 }

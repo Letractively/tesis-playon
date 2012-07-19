@@ -3,42 +3,51 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.ICuentaPlayaDao;
 import tesis.playon.web.model.CuentaPlaya;
 
 /**
  * 
  * @author garribere
- *
+ * 
  */
-@Repository("cuentaPlayaDao")
-public class CuentaPlayaDao extends CustomHibernateDaoSupport implements ICuentaPlayaDao {
+public class CuentaPlayaDao implements ICuentaPlayaDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(CuentaPlaya cuentaPlaya) {
-	getHibernateTemplate().save(cuentaPlaya);
+	getSessionFactory().getCurrentSession().save(cuentaPlaya);
     }
 
     public void update(CuentaPlaya cuentaPlaya) {
-	getHibernateTemplate().update(cuentaPlaya);
+	getSessionFactory().getCurrentSession().update(cuentaPlaya);
     }
 
     public void delete(CuentaPlaya cuentaPlaya) {
-	getHibernateTemplate().delete(cuentaPlaya);
+	getSessionFactory().getCurrentSession().delete(cuentaPlaya);
     }
 
     public CuentaPlaya findByNroCuenta(Integer nroCuenta) {
-	List<?> list = getHibernateTemplate().find("from CuentaPlaya where nroCuenta=?", nroCuenta);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaPlaya where nroCuenta=?")
+		.setParameter(0, nroCuenta).list();
 	return (CuentaPlaya) list.get(0);
     }
-    
-    public List<CuentaPlaya> findAll(){
+
+    public List<CuentaPlaya> findAll() {
 	List<CuentaPlaya> cuentas = new ArrayList<CuentaPlaya>();
-	List<?> list = getHibernateTemplate().find("from CuentaPlaya");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaPlaya").list();
 	for (Object object : list) {
-	    cuentas.add((CuentaPlaya)object);
+	    cuentas.add((CuentaPlaya) object);
 	}
 	return cuentas;
     }

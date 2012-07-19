@@ -3,42 +3,51 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.ITipoDocDao;
 import tesis.playon.web.model.TipoDoc;
 
 /**
  * 
  * @author garribere
- *
+ * 
  */
-@Repository("tipoDocDao")
-public class TipoDocDao extends CustomHibernateDaoSupport implements ITipoDocDao {
+public class TipoDocDao implements ITipoDocDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(TipoDoc tipoDoc) {
-	getHibernateTemplate().save(tipoDoc);
+	getSessionFactory().getCurrentSession().save(tipoDoc);
     }
 
     public void update(TipoDoc tipoDoc) {
-	getHibernateTemplate().update(tipoDoc);
+	getSessionFactory().getCurrentSession().update(tipoDoc);
     }
 
     public void delete(TipoDoc tipoDoc) {
-	getHibernateTemplate().delete(tipoDoc);
+	getSessionFactory().getCurrentSession().delete(tipoDoc);
     }
 
     public TipoDoc findByNombreTipoDoc(String nombreTipoDoc) {
-	List<?> list = getHibernateTemplate().find("from TipoDoc where nombre=?", nombreTipoDoc);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoDoc where nombre=?")
+		.setParameter(0, nombreTipoDoc).list();
 	return (TipoDoc) list.get(0);
     }
-    
-    public List<TipoDoc> findAll(){
+
+    public List<TipoDoc> findAll() {
 	List<TipoDoc> documentos = new ArrayList<TipoDoc>();
-	List<?> list = getHibernateTemplate().find("from TipoDoc");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoDoc").list();
 	for (Object object : list) {
-	    documentos.add((TipoDoc)object);
+	    documentos.add((TipoDoc) object);
 	}
 	return documentos;
     }

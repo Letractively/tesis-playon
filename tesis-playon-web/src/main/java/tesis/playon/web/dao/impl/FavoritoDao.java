@@ -3,9 +3,8 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IFavoritoDao;
 import tesis.playon.web.model.Favorito;
 
@@ -13,31 +12,35 @@ import tesis.playon.web.model.Favorito;
  * @author Pablo
  * 
  */
-@Repository("favoritoDao")
-public class FavoritoDao extends CustomHibernateDaoSupport implements IFavoritoDao {
+public class FavoritoDao implements IFavoritoDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(Favorito favorito) {
-	getHibernateTemplate().save(favorito);
+	getSessionFactory().getCurrentSession().save(favorito);
     }
 
     public void update(Favorito favorito) {
-	getHibernateTemplate().update(favorito);
+	getSessionFactory().getCurrentSession().update(favorito);
     }
 
     public void delete(Favorito favorito) {
-	getHibernateTemplate().delete(favorito);
+	getSessionFactory().getCurrentSession().delete(favorito);
     }
 
-    // public Favorito findByPlayas(String playaID) {
-    // List<?> list = getHibernateTemplate().find("from Favorito where nombre=?", playaID);
-    // return (Favorito) list.get(0);
-    // }
-    
-    public List<Favorito> findAll(){
+    public List<Favorito> findAll() {
 	List<Favorito> favoritos = new ArrayList<Favorito>();
-	List<?> list = getHibernateTemplate().find("from Favorito");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Favorito").list();
 	for (Object object : list) {
-	    favoritos.add((Favorito)object);
+	    favoritos.add((Favorito) object);
 	}
 	return favoritos;
     }

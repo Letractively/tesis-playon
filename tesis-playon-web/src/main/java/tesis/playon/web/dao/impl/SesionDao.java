@@ -3,38 +3,48 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.ISesionDao;
 import tesis.playon.web.model.Sesion;
 
-@Repository("SesionDao")
-public class SesionDao extends CustomHibernateDaoSupport implements ISesionDao {
+public class SesionDao implements ISesionDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(Sesion sesion) {
-	getHibernateTemplate().save(sesion);
+	getSessionFactory().getCurrentSession().save(sesion);
     }
 
     public void update(Sesion sesion) {
-	getHibernateTemplate().update(sesion);
+	getSessionFactory().getCurrentSession().update(sesion);
     }
 
     public void delete(Sesion sesion) {
-	getHibernateTemplate().delete(sesion);
+	getSessionFactory().getCurrentSession().delete(sesion);
     }
 
     public Sesion findByIDSesionSesion(String idSesion) {
-	List<?> list = getHibernateTemplate().find("from Sesion where sesionId=?", idSesion);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Sesion where sesionId=?")
+		.setParameter(0, idSesion).list();
 	return (Sesion) list.get(0);
     }
-    
-    public List<Sesion> findAll(){
+
+    public List<Sesion> findAll() {
 	List<Sesion> sesiones = new ArrayList<Sesion>();
-	List<?> list = getHibernateTemplate().find("from Sesion");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Sesion").list();
 	for (Object object : list) {
-	    sesiones.add((Sesion)object);
+	    sesiones.add((Sesion) object);
 	}
 	return sesiones;
     }
+
 }

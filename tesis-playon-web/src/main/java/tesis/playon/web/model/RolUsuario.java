@@ -2,8 +2,6 @@ package tesis.playon.web.model;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,16 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Clase de negocio que contiene los diferentes roles de usuario.
  * 
  * @author gmorales
  * 
  */
 @Entity
 @Table(name = "rol_usuario")
-public class RolUsuario implements Serializable {
-
-    private static final long serialVersionUID = 4725165248854057805L;
+public class RolUsuario {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

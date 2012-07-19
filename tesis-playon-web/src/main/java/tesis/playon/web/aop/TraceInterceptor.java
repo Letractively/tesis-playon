@@ -1,4 +1,4 @@
-package tesis.playon.common.aop;
+package tesis.playon.web.aop;
 
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;

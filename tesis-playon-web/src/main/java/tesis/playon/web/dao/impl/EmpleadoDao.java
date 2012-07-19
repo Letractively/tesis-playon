@@ -3,9 +3,8 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.hibernate.SessionFactory;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IEmpleadoDao;
 import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.model.Empleado;
@@ -15,8 +14,17 @@ import tesis.playon.web.model.Usuario;
  * @author garribere
  * 
  */
-@Repository("empleadoDao")
-public class EmpleadoDao extends CustomHibernateDaoSupport implements IEmpleadoDao {
+public class EmpleadoDao implements IEmpleadoDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(Empleado empleado, Integer idCargoEmpleado, String nombreUsuario) {
 	CargoEmpleadoDao cargoEmpleadoDao = new CargoEmpleadoDao();
@@ -25,25 +33,26 @@ public class EmpleadoDao extends CustomHibernateDaoSupport implements IEmpleadoD
 	UsuarioDao usuarioDao = new UsuarioDao();
 	Usuario usuario = usuarioDao.findByNombreUsuario(nombreUsuario);
 	empleado.setUsuario(usuario);
-	getHibernateTemplate().save(empleado);
+	getSessionFactory().getCurrentSession().save(empleado);
     }
 
     public void update(Empleado empleado) {
-	getHibernateTemplate().update(empleado);
+	getSessionFactory().getCurrentSession().update(empleado);
     }
 
     public void delete(Empleado empleado) {
-	getHibernateTemplate().delete(empleado);
+	getSessionFactory().getCurrentSession().delete(empleado);
     }
 
     public Empleado findByLegajo(Integer legajo) {
-	List<?> list = getHibernateTemplate().find("from Empleado where legajo=?", legajo);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Empleado where legajo=?")
+		.setParameter(0, legajo).list();
 	return (Empleado) list.get(0);
     }
 
     public List<Empleado> findAll() {
 	List<Empleado> empleados = new ArrayList<Empleado>();
-	List<?> list = getHibernateTemplate().find("from Empleado");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Empleado").list();
 	for (Object object : list) {
 	    empleados.add((Empleado) object);
 	}
@@ -52,7 +61,8 @@ public class EmpleadoDao extends CustomHibernateDaoSupport implements IEmpleadoD
 
     public List<Empleado> findAll(Integer idCargoEmpleado) {
 	List<Empleado> empleados = new ArrayList<Empleado>();
-	List<?> list = getHibernateTemplate().find("from Empleado where cargoEmpleado.id=?", idCargoEmpleado);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Empleado where cargoEmpleado.id=?")
+		.setParameter(0, idCargoEmpleado).list();
 	for (Object object : list) {
 	    empleados.add((Empleado) object);
 	}
@@ -60,7 +70,8 @@ public class EmpleadoDao extends CustomHibernateDaoSupport implements IEmpleadoD
     }
 
     public Empleado findById(Integer id) {
-	List<?> list = getHibernateTemplate().find("from Empleado where id=?", id);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Empleado where id=?")
+		.setParameter(0, id).list();
 	return (Empleado) list.get(0);
     }
 }

@@ -3,9 +3,9 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-import tesis.playon.util.CustomHibernateDaoSupport;
 import tesis.playon.web.dao.IDenunciaVehiculoDao;
 import tesis.playon.web.model.DenunciaVehiculo;
 
@@ -14,28 +14,39 @@ import tesis.playon.web.model.DenunciaVehiculo;
  * 
  */
 @Repository("denunciaVehiculoDao")
-public class DenunciaVehiculoDao extends CustomHibernateDaoSupport implements IDenunciaVehiculoDao {
+public class DenunciaVehiculoDao implements IDenunciaVehiculoDao {
+
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
 
     public void save(DenunciaVehiculo denunciaVehiculo) {
-	getHibernateTemplate().save(denunciaVehiculo);
+	getSessionFactory().getCurrentSession().save(denunciaVehiculo);
     }
 
     public void update(DenunciaVehiculo denunciaVehiculo) {
-	getHibernateTemplate().update(denunciaVehiculo);
+	getSessionFactory().getCurrentSession().update(denunciaVehiculo);
     }
 
     public void delete(DenunciaVehiculo denunciaVehiculo) {
-	getHibernateTemplate().delete(denunciaVehiculo);
+	getSessionFactory().getCurrentSession().delete(denunciaVehiculo);
     }
 
     public DenunciaVehiculo findByAsuntoDenunciaVehiculo(String asuntoDenunciaVehiculo) {
-	List<?> list = getHibernateTemplate().find("from DenunciaVehiculo where asunto=?", asuntoDenunciaVehiculo);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DenunciaVehiculo where asunto=?")
+		.setParameter(0, asuntoDenunciaVehiculo).list();
 	return (DenunciaVehiculo) list.get(0);
     }
 
     public List<DenunciaVehiculo> findAll() {
 	List<DenunciaVehiculo> denuncias = new ArrayList<DenunciaVehiculo>();
-	List<?> list = getHibernateTemplate().find("from DenunciaVehiculo");
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DenunciaVehiculo").list();
 	for (Object object : list) {
 	    denuncias.add((DenunciaVehiculo) object);
 	}

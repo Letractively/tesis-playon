@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@ page import="org.springframework.security.core.context.SecurityContextHolder"%>
+<%-- <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%> --%>
+<%-- <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%> --%>
+<%-- <%@ page	import="org.springframework.security.core.context.SecurityContextHolder"%> --%>
 
 <c:url value="/" var="homeUrl" />
 <c:url value="user" var="userUrl" />
@@ -19,6 +19,6 @@
 
 		<li><a href="${logoutUrl}">Logout</a></li>
 	</ul>
-	<span id="menu-username"><%=SecurityContextHolder.getContext().getAuthentication().getName()%></span>
+	<%-- 	<span id="menu-username"><%=SecurityContextHolder.getContext().getAuthentication().getName()%></span> --%>
 	<br style="clear: left" />
 </div>
