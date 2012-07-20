@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>PLAYON: Usuario</title>
+</h:head>
+<h:body>
+	<h:form>
+		<table>
+			<tr>
+				<td><h:outputLabel for="nombre" value="Nombre: " /></td>
+				<td><p:inputText id="nombre" value="#{usuarioMB.nombre}">
+						<f:validateLength minimum="5" />
+						<p:ajax event="blur" update="nombreMsg" />
+					</p:inputText> <p:message id="nombreMsg" for="nombre" display="icon" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="apellido" value="Nombre: " /></td>
+				<td><p:inputText id="apellido" value="#{usuarioMB.apellido}">
+						<f:validateLength minimum="5" />
+						<p:ajax event="blur" update="apellidoMsg" />
+					</p:inputText> <p:message id="apellidoMsg" for="apellido" display="icon" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="email" value="E-mail: " /></td>
+				<td><p:inputText id="email" value="#{usuarioMB.email}">
+						<f:validateLength minimum="5" />
+						<p:ajax event="blur" update="emailMsg" />
+					</p:inputText> <p:message id="emailMsg" for="email" display="icon" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="nroDoc" value="Nro. Documento: " /></td>
+				<td><p:inputText id="nroDoc" value="#{usuarioMB.nroDoc}">
+						<f:validateLength minimum="5" />
+						<p:ajax event="blur" update="nroDocMsg" />
+					</p:inputText> <p:message id="nroDocMsg" for="nroDoc" display="icon" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="password" value="Password: " /></td>
+				<td><p:inputText id="password" value="#{usuarioMB.password}">
+						<f:validateLength minimum="5" />
+						<p:ajax event="blur" update="passwordMsg" />
+					</p:inputText> <p:message id="passwordMsg" for="password" display="icon" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="nombreUser" value="Nombre usuario: " /></td>
+				<td><p:inputText id="nombreUser"
+						value="#{usuarioMB.nombreUser}">
+						<f:validateLength minimum="5" />
+						<p:ajax event="blur" update="nombreUserMsg" />
+					</p:inputText> <p:message id="nombreUserMsg" for="nombreUser" display="icon" /></td>
+			</tr>
+			<tr>
+				<td><p:commandButton id="addUser" value="Add"
+						action="#{rolUsuarioMB.addRolUsuario}" ajax="false" /></td>
+				<td><p:commandButton id="reset" value="Reset"
+						action="#{rolUsuarioMB.reset}" ajax="false" /></td>
+			</tr>
+		</table>
+	</h:form>
+</h:body>
+</html>

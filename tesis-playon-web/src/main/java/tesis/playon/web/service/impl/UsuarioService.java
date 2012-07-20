@@ -1,0 +1,52 @@
+package tesis.playon.web.service.impl;
+
+import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
+
+import tesis.playon.web.dao.IUsuarioDao;
+import tesis.playon.web.model.Usuario;
+import tesis.playon.web.service.IUsuarioService;
+
+@Transactional(readOnly = true)
+public class UsuarioService implements IUsuarioService {
+
+    IUsuarioDao usuarioDao;
+
+    @Transactional(readOnly = false)
+    @Override
+    public void save(Usuario usuario, String nombreTipoDoc) {
+	getUsuarioDao().save(usuario, nombreTipoDoc);
+    }
+
+    @Transactional(readOnly = false)
+    @Override
+    public void update(Usuario usuario, String nombreTipoDoc) {
+	getUsuarioDao().update(usuario, nombreTipoDoc);
+    }
+
+    @Transactional(readOnly = false)
+    @Override
+    public void delete(Usuario usuario) {
+	getUsuarioDao().delete(usuario);
+    }
+
+    @Override
+    public List<Usuario> findAll() {
+	return getUsuarioDao().findAll();
+    }
+
+    @Override
+    public Usuario findByNombreUsuario(String nombreUsuario) {
+	return getUsuarioDao().findByNombreUsuario(nombreUsuario);
+    }
+
+    public IUsuarioDao getUsuarioDao() {
+	return usuarioDao;
+    }
+
+    public void setUsuarioDao(IUsuarioDao usuarioDao) {
+	this.usuarioDao = usuarioDao;
+    }
+
+}

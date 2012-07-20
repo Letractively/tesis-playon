@@ -4,13 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 
-import org.primefaces.event.RowEditEvent;
 import org.springframework.dao.DataAccessException;
 
 import tesis.playon.web.model.RolUsuario;
@@ -52,9 +49,8 @@ public class RolUsuarioManagedBean implements Serializable {
 	getRolUsuarioService().delete(rolUsuario);
     }
 
-    public void updateRolusuario(RowEditEvent event) {
-	getRolUsuarioService().update((RolUsuario) event.getObject());
-	System.out.println("Rol USuario: " + ((RolUsuario) event.getObject()).toString());
+    public void updateRolusuario(RolUsuario rolUsuario) {
+	getRolUsuarioService().update(rolUsuario);
     }
 
     public void reset() {
@@ -94,11 +90,6 @@ public class RolUsuarioManagedBean implements Serializable {
 
     public void setDescripcion(String descripcion) {
 	this.descripcion = descripcion;
-    }
-
-    public void onCancel(RowEditEvent event) {
-	FacesMessage msg = new FacesMessage("Rol Usuario Cancelado ", ((RolUsuario) event.getObject()).getNombre());
-	FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
 }
