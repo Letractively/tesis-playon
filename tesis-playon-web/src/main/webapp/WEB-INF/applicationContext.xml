@@ -48,6 +48,9 @@
 	<bean id="RolUsuarioService" class="tesis.playon.web.service.impl.RolUsuarioService">
 		<property name="rolUsuarioDao" ref="RolUsuarioDao" />
 	</bean>
+	<bean id="TipoDocService" class="tesis.playon.web.service.impl.TipoDocService">
+		<property name="tipoDocDao" ref="TipoDocDao" />
+	</bean>
 	<bean id="UsuarioService" class="tesis.playon.web.service.impl.UsuarioService">
 		<property name="usuarioDao" ref="UsuarioDao" />
 	</bean>
@@ -56,10 +59,12 @@
 	<bean id="RolUsuarioDao" class="tesis.playon.web.dao.impl.RolUsuarioDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
+	<bean id="TipoDocDao" class="tesis.playon.web.dao.impl.TipoDocDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
 	<bean id="UsuarioDao" class="tesis.playon.web.dao.impl.UsuarioDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
-
 
 	<!-- Data Source Declaration -->
 	<bean id="DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -100,7 +105,7 @@
 				<!-- <value>tesis.playon.web.model.Provincia</value> -->
 				<value>tesis.playon.web.model.RolUsuario</value>
 				<!-- <value>tesis.playon.web.model.Tarifa</value> -->
-				<!-- <value>tesis.playon.web.model.TipoDoc</value> -->
+				<value>tesis.playon.web.model.TipoDoc</value>
 				<!-- <value>tesis.playon.web.model.TipoEstadia</value> -->
 				<!-- <value>tesis.playon.web.model.TipoPago</value> -->
 				<value>tesis.playon.web.model.Usuario</value>
