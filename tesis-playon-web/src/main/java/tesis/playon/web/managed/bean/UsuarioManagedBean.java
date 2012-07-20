@@ -59,11 +59,11 @@ public class UsuarioManagedBean implements Serializable {
 	return ERROR;
     }
 
-    public void deleteRolUsuario(Usuario usuario) {
+    public void deleteUsuario(Usuario usuario) {
 	getUsuarioService().delete(usuario);
     }
 
-    public void updateRolusuario(Usuario usuario) {
+    public void updateUsuario(Usuario usuario) {
 	getUsuarioService().update(usuario, getNombreTipoDoc());
     }
 

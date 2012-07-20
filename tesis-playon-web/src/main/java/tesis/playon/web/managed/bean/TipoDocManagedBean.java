@@ -42,11 +42,11 @@ public class TipoDocManagedBean implements Serializable {
 	return ERROR;
     }
 
-    public void deleteRolUsuario(TipoDoc tipoDoc) {
+    public void deleteTipoDoc(TipoDoc tipoDoc) {
 	getTipoDocService().delete(tipoDoc);
     }
 
-    public void updateRolusuario(TipoDoc tipoDoc) {
+    public void updateTipoDoc(TipoDoc tipoDoc) {
 	getTipoDocService().update(tipoDoc);
     }
 
