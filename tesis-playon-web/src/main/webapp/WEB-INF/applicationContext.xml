@@ -37,7 +37,7 @@
 	<!-- <bean id="Provincia" class="tesis.playon.web.model.Provincia" /> -->
 	<bean id="RolUsuario" class="tesis.playon.web.model.RolUsuario" />
 	<!-- <bean id="Tarifa" class="tesis.playon.web.model.Tarifa" /> -->
-	<!-- <bean id="TipoDoc" class="tesis.playon.web.model.TipoDoc" /> -->
+	<bean id="TipoDoc" class="tesis.playon.web.model.TipoDoc" />
 	<!-- <bean id="TipoEstadia" class="tesis.playon.web.model.TipoEstadia" /> -->
 	<!-- <bean id="TipoPago" class="tesis.playon.web.model.TipoPago" /> -->
 	<bean id="Usuario" class="tesis.playon.web.model.Usuario" />

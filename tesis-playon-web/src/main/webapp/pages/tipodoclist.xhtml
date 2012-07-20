@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+	<h:form>
+		<p:dataTable id="tiposDoc" var="tipoDoc" editable="true"
+			paginator="true" rows="5" value="#{tipoDocMB.tipoDocList}"
+			style="width: 10%">
+
+			<f:facet name="header">
+				Tipos Documento
+            </f:facet>
+
+			<p:column headerText="ID" style="width:125px">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{tipoDoc.id}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{tipoDoc.id}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Nombre" style="width:125px">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{tipoDoc.nombre}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{tipoDoc.nombre}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Opciones" style="width:25px">
+				<p:rowEditor />
+			</p:column>
+
+			<p:column>
+				<h:commandButton value="Borrar"
+					action="#{tipoDocMB.deleteTipoDoc(tipoDoc)}" />
+			</p:column>
+
+		</p:dataTable>
+
+		<tr>
+			<td><p:commandButton id="addTipoDoc" value="Agregar"
+					action="/pages/tipodocadd.jsf?faces-redirect=true" ajax="false" /></td>
+		</tr>
+
+	</h:form>
+</h:body>
+
+</html>

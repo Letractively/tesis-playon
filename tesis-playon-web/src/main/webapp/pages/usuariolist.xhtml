@@ -7,7 +7,7 @@
 <h:body>
 	<h:form>
 		<p:dataTable id="usuarios" var="usuario" editable="true"
-			paginator="true" rows="5" value="#{usuarioMB.usuariosList}"
+			paginator="true" rows="5" value="#{usuarioMB.usuarioList}"
 			style="width: 10%">
 
 			<f:facet name="header">
@@ -96,14 +96,14 @@
 			</p:column>
 
 			<p:column>
-				<h:commandButton value="Delete"
+				<h:commandButton value="Borrar"
 					action="#{usuarioMB.deleteUsuario(usuario)}" />
 			</p:column>
 
 		</p:dataTable>
 
 		<tr>
-			<td><p:commandButton id="addUser" value="Agregar"
+			<td><p:commandButton id="addUsuario" value="Agregar"
 					action="/pages/usuarioadd.jsf?faces-redirect=true" ajax="false" /></td>
 		</tr>
 
