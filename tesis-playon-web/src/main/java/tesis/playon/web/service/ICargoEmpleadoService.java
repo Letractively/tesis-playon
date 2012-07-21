@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tesis.playon.web.dao;
+package tesis.playon.web.service;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import tesis.playon.web.model.CargoEmpleado;
  * @author Pablo
  *
  */
-public interface ICargoEmpleadoDao {
+public interface ICargoEmpleadoService {
     
     void save(CargoEmpleado cargo);
 
