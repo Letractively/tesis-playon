@@ -6,7 +6,6 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IUsuarioDao;
-import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
 
 /**
@@ -26,17 +25,11 @@ public class UsuarioDao implements IUsuarioDao {
 	this.sessionFactory = sessionFactory;
     }
 
-    public void save(Usuario usuario, String nombreTipoDoc) {
-	TipoDocDao tipoDocDao = new TipoDocDao();
-	TipoDoc tipoDoc = tipoDocDao.findByNombreTipoDoc(nombreTipoDoc);
-	usuario.setTipoDoc(tipoDoc);
+    public void save(Usuario usuario) {
 	getSessionFactory().getCurrentSession().save(usuario);
     }
 
-    public void update(Usuario usuario, String nombreTipoDoc) {
-	TipoDocDao tipoDocDao = new TipoDocDao();
-	TipoDoc tipoDoc = tipoDocDao.findByNombreTipoDoc(nombreTipoDoc);
-	usuario.setTipoDoc(tipoDoc);
+    public void update(Usuario usuario) {
 	getSessionFactory().getCurrentSession().update(usuario);
     }
 

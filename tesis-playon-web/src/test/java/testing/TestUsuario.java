@@ -29,8 +29,8 @@ public class TestUsuario {
 		32987654);
 	Usuario usuario1 = new Usuario("Pablo1", "Moreno1", "pablo_la_31", "123456", "pablola31@hotmail.com", tipoDoc,
 		32111111);
-	usuarioDao.save(usuario, tipoDoc.getNombre());
-	usuarioDao.save(usuario1, tipoDoc.getNombre());
+	usuarioDao.save(usuario);
+	usuarioDao.save(usuario1);
 	List<Usuario> usuarios = usuarioDao.findAll();
 	System.out.println("\nUsuarios:");
 	for (Usuario _usuario : usuarios) {
@@ -43,7 +43,7 @@ public class TestUsuario {
 
 	/** update **/
 	usuario.setNombre("Carlos");
-	usuarioDao.update(usuario, tipoDoc.getNombre());
+	usuarioDao.update(usuario);
 	System.out.println("\nModificado:\t" + usuarioDao.findByNombreUsuario("pablo_la31"));
 
 	System.out.println("\n");

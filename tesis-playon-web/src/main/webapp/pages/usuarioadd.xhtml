@@ -30,18 +30,17 @@
 					</p:inputText> <p:message id="emailMsg" for="email" display="icon" /></td>
 			</tr>
 			<tr>
-				<td><h:outputText for="nombreTipoDoc" value="Tipo Documento: " /></td>
-				<td><p:selectOneMenu value="#{usuarioMB.nombreTipoDoc}"
-						effect="fade">
-						<f:selectItem itemLabel="-- Tipo Documento --" itemValue="" />
+				<td><h:outputText for="tipoDoc" value="Tipo Documento: " /></td>
+				<td><p:selectOneMenu value="#{usuarioMB.tipoDoc}" effect="fade">
+						<f:converter converterId="tipoDocConverter" />
 						<f:selectItems value="#{tipoDocMB.tipoDocList}" var="tipoDoc"
-							itemLabel="#{tipoDoc.nombre}" itemValue="#{tipoDoc.nombre}" />
+							itemLabel="#{tipoDoc.nombre}" itemValue="#{tipoDoc}" />
 					</p:selectOneMenu></td>
 			</tr>
 			<tr>
 				<td><h:outputLabel for="nroDoc" value="Nro. Documento: " /></td>
 				<td><p:inputText id="nroDoc" value="#{usuarioMB.nroDoc}">
-						<f:validateLength minimum="5" />
+						<f:validateLength minimum="8" />
 						<p:ajax event="blur" update="nroDocMsg" />
 					</p:inputText> <p:message id="nroDocMsg" for="nroDoc" display="icon" /></td>
 			</tr>

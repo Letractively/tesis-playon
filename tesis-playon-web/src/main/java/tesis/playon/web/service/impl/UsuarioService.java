@@ -15,14 +15,14 @@ public class UsuarioService implements IUsuarioService {
 
     @Transactional(readOnly = false)
     @Override
-    public void save(Usuario usuario, String nombreTipoDoc) {
-	getUsuarioDao().save(usuario, nombreTipoDoc);
+    public void save(Usuario usuario) {
+	getUsuarioDao().save(usuario);
     }
 
     @Transactional(readOnly = false)
     @Override
-    public void update(Usuario usuario, String nombreTipoDoc) {
-	getUsuarioDao().update(usuario, nombreTipoDoc);
+    public void update(Usuario usuario) {
+	getUsuarioDao().update(usuario);
     }
 
     @Transactional(readOnly = false)

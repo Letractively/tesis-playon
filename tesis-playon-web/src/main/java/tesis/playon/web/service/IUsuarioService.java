@@ -6,9 +6,9 @@ import tesis.playon.web.model.Usuario;
 
 public interface IUsuarioService {
 
-    void save(Usuario usuario, String nombreTipoDoc);
+    void save(Usuario usuario);
 
-    void update(Usuario usuario, String nombreTipoDoc);
+    void update(Usuario usuario);
 
     void delete(Usuario usuario);
 
