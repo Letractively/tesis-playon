@@ -52,11 +52,7 @@ public class UsuarioManagedBean implements Serializable {
 	    usuario.setNroDoc(getNroDoc());
 	    usuario.setPassword(getPassword());
 	    usuario.setNombreUser(getNombreUser());
-	    // usuario.setTipoDoc(getTipoDoc());
-	    TipoDoc td = new TipoDoc();
-	    td.setId(1);
-	    td.setNombre("D.N.I.");
-	    usuario.setTipoDoc(td);
+	    usuario.setTipoDoc(getTipoDoc());
 	    getUsuarioService().save(usuario);
 	    return LISTA_USUARIOS;
 	} catch (DataAccessException e) {
