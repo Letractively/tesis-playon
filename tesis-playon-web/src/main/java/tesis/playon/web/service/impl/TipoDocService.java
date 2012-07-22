@@ -38,6 +38,7 @@ public class TipoDocService implements ITipoDocService {
 
     @Override
     public TipoDoc findByNombreTipoDoc(String nombreTipoDoc) {
+	System.out.println("findByNombreTipoDoc" + nombreTipoDoc);
 	return getTipoDocDao().findByNombreTipoDoc(nombreTipoDoc);
     }
 

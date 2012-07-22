@@ -12,6 +12,12 @@
     		org.springframework.web.jsf.el.SpringBeanFacesELResolver
     	</el-resolver>
   	</application>
+  	
+  	<!-- JSF and Spring are integrated -->
+  	<converter>
+        <converter-id>TipoDocConverter</converter-id>
+        <converter-class>tesis.playon.web.converter.TipoDocConverter</converter-class>
+    </converter>
 	
 	<!-- configuration of navigation rules -->	
 	<navigation-rule>

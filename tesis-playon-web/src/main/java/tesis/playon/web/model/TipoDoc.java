@@ -12,10 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * Clase de negocio que contiene los diferentes tipos documentos
  * 
  * @author garribere
- * @date 05/07/2012
  * 
  */
 @Entity
@@ -32,7 +30,6 @@ public class TipoDoc implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
-        
     public TipoDoc() {
     }
 
@@ -56,7 +53,22 @@ public class TipoDoc implements Serializable {
 	this.nombre = nombre;
     }
 
-       @Override
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	TipoDoc otroTipoDoc = (TipoDoc) object;
+	if (id != otroTipoDoc.id)
+	    return false;
+	if (nombre == null ? otroTipoDoc.nombre != null : !nombre.equals(otroTipoDoc.nombre))
+	    return false;
+
+	return true;
+    }
+
+    @Override
     public String toString() {
 	return "TipoDoc:\t [TipoDocID= " + id + ", nombre= " + nombre + "]";
     }

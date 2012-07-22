@@ -39,8 +39,6 @@ public class UsuarioManagedBean implements Serializable {
 
     private String password;
 
-    private String nombreTipoDoc;
-
     private String nombreUser;
 
     private TipoDoc tipoDoc;
@@ -54,7 +52,11 @@ public class UsuarioManagedBean implements Serializable {
 	    usuario.setNroDoc(getNroDoc());
 	    usuario.setPassword(getPassword());
 	    usuario.setNombreUser(getNombreUser());
-	    usuario.setTipoDoc(getTipoDoc());
+	    // usuario.setTipoDoc(getTipoDoc());
+	    TipoDoc td = new TipoDoc();
+	    td.setId(1);
+	    td.setNombre("D.N.I.");
+	    usuario.setTipoDoc(td);
 	    getUsuarioService().save(usuario);
 	    return LISTA_USUARIOS;
 	} catch (DataAccessException e) {
@@ -137,14 +139,6 @@ public class UsuarioManagedBean implements Serializable {
 
     public void setPassword(String password) {
 	this.password = password;
-    }
-
-    public String getNombreTipoDoc() {
-	return nombreTipoDoc;
-    }
-
-    public void setNombreTipoDoc(String nombreTipoDoc) {
-	this.nombreTipoDoc = nombreTipoDoc;
     }
 
     public String getNombreUser() {
