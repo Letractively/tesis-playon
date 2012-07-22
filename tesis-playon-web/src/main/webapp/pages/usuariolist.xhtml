@@ -47,6 +47,17 @@
 				</p:cellEditor>
 			</p:column>
 
+			<p:column headerText="Tipo Doc.:" style="width:125px">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{usuario.tipoDoc.nombre}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{usuario.tipoDoc.nombre}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
 			<p:column headerText="Nro. Documento" style="width:125px">
 				<p:cellEditor>
 					<f:facet name="output">

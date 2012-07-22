@@ -30,8 +30,8 @@
 					</p:inputText> <p:message id="emailMsg" for="email" display="icon" /></td>
 			</tr>
 			<tr>
-				<td><h:outputText value="Tipo Documento: " /></td>
-				<td><p:selectOneMenu value="#{usuarioMB.tipoDoc}">
+				<td><h:outputText for="tipoDoc" value="Tipo Documento: " /></td>
+				<td><p:selectOneMenu value="#{usuarioMB.tipoDoc}" effect="fade">
 						<f:selectItems value="#{tipoDocMB.tipoDocList}" var="tipoDoc"
 							itemValue="#{tipoDoc}" itemLabel="#{tipoDoc.nombre}" />
 						<f:converter converterId="tipoDocConverter" />

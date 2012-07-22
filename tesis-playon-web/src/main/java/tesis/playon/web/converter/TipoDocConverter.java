@@ -17,13 +17,10 @@ public class TipoDocConverter implements Converter {
 	tipoDoc.setId(Integer.parseInt(toObject[0]));
 	tipoDoc.setNombre(toObject[1]);
 	return tipoDoc;
-	// System.out.println("Key: " + key);
-	// return tipoDocDao.findByNombreTipoDoc(key);
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-	System.out.println("El objeto: " + ((TipoDoc) value).toString());
 	if (value instanceof TipoDoc) {
 	    TipoDoc tipoDoc = (TipoDoc) value;
 	    String idTipoDoc = Integer.toString(tipoDoc.getId());
@@ -33,8 +30,6 @@ public class TipoDocConverter implements Converter {
 	} else {
 	    return "No se pudo parsear el objeto.";
 	}
-	// System.out.println("Objeto: " + ((TipoDoc) value).toString());
-	// return ((TipoDoc) value).getNombre().toString();
     }
 
 }
