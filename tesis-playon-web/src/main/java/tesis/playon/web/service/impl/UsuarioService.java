@@ -8,6 +8,11 @@ import tesis.playon.web.dao.IUsuarioDao;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IUsuarioService;
 
+/**
+ * 
+ * @author gmorales
+ *
+ */
 @Transactional(readOnly = true)
 public class UsuarioService implements IUsuarioService {
 

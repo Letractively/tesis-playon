@@ -8,6 +8,11 @@ import tesis.playon.web.dao.ITipoDocDao;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.service.ITipoDocService;
 
+/**
+ * 
+ * @author gmorales
+ *
+ */
 @Transactional(readOnly = true)
 public class TipoDocService implements ITipoDocService {
 

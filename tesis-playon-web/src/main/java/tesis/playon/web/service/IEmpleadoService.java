@@ -1,14 +1,15 @@
-package tesis.playon.web.dao;
+package tesis.playon.web.service;
 
 import java.util.List;
 
 import tesis.playon.web.model.Empleado;
 
 /**
- * @author garribere
+ * 
+ * @author gmorales
  * 
  */
-public interface IEmpleadoDao {
+public interface IEmpleadoService {
 
     void save(Empleado empleado);
 
@@ -18,8 +19,8 @@ public interface IEmpleadoDao {
 
     List<Empleado> findAll();
 
-    List<Empleado> findAll(Integer idCargoEmpleado);
+    List<Empleado> findAll(Integer cargoEmpleado);
 
-    Empleado findByLegajo(Integer legajo);
+    Empleado findByLegajoEmpleado(Integer legajoEmpleado);
 
 }

@@ -11,7 +11,6 @@ import tesis.playon.web.service.IRolUsuarioService;
 @Transactional(readOnly = true)
 public class RolUsuarioService implements IRolUsuarioService {
 
-    // RolUsuarioDao es inyectado...
     IRolUsuarioDao rolUsuarioDao;
     
     @Transactional(readOnly = false)

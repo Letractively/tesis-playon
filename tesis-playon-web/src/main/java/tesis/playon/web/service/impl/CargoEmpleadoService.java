@@ -1,6 +1,3 @@
-/**
- * 
- */
 package tesis.playon.web.service.impl;
 
 import java.util.List;
@@ -12,6 +9,7 @@ import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.service.ICargoEmpleadoService;
 
 /**
+ * 
  * @author Pablo
  *
  */
@@ -32,21 +30,18 @@ public class CargoEmpleadoService implements ICargoEmpleadoService {
     @Override
     public void save(CargoEmpleado cargo) {
 	getCargoEmpleadoDao().save(cargo);
-
     }
 
     @Transactional(readOnly = false)
     @Override
     public void update(CargoEmpleado cargo) {
 	getCargoEmpleadoDao().update(cargo);
-
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(CargoEmpleado cargo) {
 	getCargoEmpleadoDao().delete(cargo);
-
     }
 
     @Override

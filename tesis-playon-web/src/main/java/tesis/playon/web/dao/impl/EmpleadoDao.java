@@ -6,9 +6,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IEmpleadoDao;
-import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.model.Empleado;
-import tesis.playon.web.model.Usuario;
 
 /**
  * @author garribere
@@ -26,13 +24,7 @@ public class EmpleadoDao implements IEmpleadoDao {
 	this.sessionFactory = sessionFactory;
     }
 
-    public void save(Empleado empleado, Integer idCargoEmpleado, String nombreUsuario) {
-	CargoEmpleadoDao cargoEmpleadoDao = new CargoEmpleadoDao();
-	CargoEmpleado cargoEmpleado = cargoEmpleadoDao.findById(idCargoEmpleado);
-	empleado.setCargoEmpleado(cargoEmpleado);
-	UsuarioDao usuarioDao = new UsuarioDao();
-	Usuario usuario = usuarioDao.findByNombreUsuario(nombreUsuario);
-	empleado.setUsuario(usuario);
+    public void save(Empleado empleado) {
 	getSessionFactory().getCurrentSession().save(empleado);
     }
 

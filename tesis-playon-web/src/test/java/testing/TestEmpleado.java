@@ -36,8 +36,8 @@ public class TestEmpleado {
 	/** insert **/
 	Empleado empleado = new Empleado(1002, cargoEmpleado, usuario);
 	Empleado empleado1 = new Empleado(1003, cargoEmpleado1, usuario1);
-	empleadoDao.save(empleado, cargoEmpleado.getId(), usuario.getNombre());
-	empleadoDao.save(empleado1, cargoEmpleado1.getId(), usuario1.getNombre());
+	empleadoDao.save(empleado);
+	empleadoDao.save(empleado1);
 	List<Empleado> empleados = empleadoDao.findAll();
 	System.out.println("\nEmpleados:");
 	for (Empleado _empleado : empleados) {
