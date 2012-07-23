@@ -11,7 +11,7 @@ import tesis.playon.web.service.IUsuarioService;
 /**
  * 
  * @author gmorales
- *
+ * 
  */
 @Transactional(readOnly = true)
 public class UsuarioService implements IUsuarioService {

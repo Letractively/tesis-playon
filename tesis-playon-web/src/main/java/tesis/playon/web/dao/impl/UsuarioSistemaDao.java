@@ -26,16 +26,16 @@ public class UsuarioSistemaDao implements IUsuarioSistemaDao {
 	this.sessionFactory = sessionFactory;
     }
 
-    public void save(UsuarioSistema UsuarioSistema) {
-	getSessionFactory().getCurrentSession().save(UsuarioSistema);
+    public void save(UsuarioSistema usuarioSistema) {
+	getSessionFactory().getCurrentSession().save(usuarioSistema);
     }
 
-    public void update(UsuarioSistema UsuarioSistema) {
-	getSessionFactory().getCurrentSession().update(UsuarioSistema);
+    public void update(UsuarioSistema usuarioSistema) {
+	getSessionFactory().getCurrentSession().update(usuarioSistema);
     }
 
-    public void delete(UsuarioSistema UsuarioSistema) {
-	getSessionFactory().getCurrentSession().delete(UsuarioSistema);
+    public void delete(UsuarioSistema usuarioSistema) {
+	getSessionFactory().getCurrentSession().delete(usuarioSistema);
     }
 
     public UsuarioSistema findByNombreUsuarioSistema(Usuario usuario) {
