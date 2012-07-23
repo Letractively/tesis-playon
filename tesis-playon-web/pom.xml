@@ -61,7 +61,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		
 
 		<!-- Spring Security -->
 		<dependency>
@@ -93,7 +92,6 @@
 			<artifactId>jsr250-api</artifactId>
 			<version>1.0</version>
 		</dependency>
-
 
 		<!-- JSF library -->
 		<dependency>

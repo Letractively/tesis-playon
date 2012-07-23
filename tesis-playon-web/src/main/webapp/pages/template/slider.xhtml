@@ -1,38 +1,33 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:c="http://java.sun.com/jsp/jstl/core">
-    
-    		<div id="slider">
-			<div class="viewer">
-				<div class="reel">
-					<div class="slide">
-						<img src="images/slide01.jpg" alt="" />
-					</div>
-					<div class="slide">
-						<img src="images/slide02.jpg" alt="" />
-					</div>
-					<div class="slide">
-						<img src="images/slide03.jpg" alt="" />
-					</div>
-					<div class="slide">
-						<img src="images/slide04.jpg" alt="" />
-					</div>
-					<div class="slide">
-						<img src="images/slide05.jpg" alt="" />
-					</div>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<div id="slider">
+		<div class="viewer">
+			<div class="reel">
+				<div class="slide">
+					<h:graphicImage library="images" name="slide01.jpg" />
+				</div>
+				<div class="slide">
+					<h:graphicImage library="images" name="slide02.jpg" />
+				</div>
+				<div class="slide">
+					<h:graphicImage library="images" name="slide03.jpg" />
+				</div>
+				<div class="slide">
+					<h:graphicImage library="images" name="slide04.jpg" />
+				</div>
+				<div class="slide">
+					<h:graphicImage library="images" name="slide05.jpg" />
 				</div>
 			</div>
-			<div class="indicator">
-				<span>1</span>
-				<span>2</span>
-				<span>3</span>
-				<span>4</span>
-				<span>5</span>
-			</div>
 		</div>
-		
+		<div class="indicator">
+			<span>1</span> <span>2</span> <span>3</span> <span>4</span> <span>5</span>
+		</div>
+	</div>
+
 </ui:composition>

@@ -26,17 +26,15 @@ Released   : 20120624
 	<h:outputScript library="js" name="jquery-1.7.1.min.js" target="head" />
 	<h:outputScript library="js" name="jquery.dropotron-1.0.js"
 		target="head" />
-	<f:if test="#{yourExpression}">
-		<h:outputScript library="js" name="jquery.slidertron-1.1.js"
-			target="head" />
-	</f:if>
+	<h:outputScript library="js" name="jquery.slidertron-1.1.js"
+		target="head" />
 
 	<script type="text/javascript">
 		$(function() {
 			$('#menu > ul').dropotron({
-				mode: 'fade',
-				globalOffsetY: 11,
-				offsetY: -15
+				mode : 'fade',
+				globalOffsetY : 11,
+				offsetY : -15
 			});
 		});
 	</script>
@@ -44,17 +42,17 @@ Released   : 20120624
 	<script type="text/javascript">
 		$(function() {
 			$('#slider').slidertron({
-				viewerSelector: '.viewer',
-				indicatorSelector: '.indicator span',
-				reelSelector: '.reel',
-				slidesSelector: '.slide',
-				speed: 'slow',
-				advanceDelay: 4000
+				viewerSelector : '.viewer',
+				indicatorSelector : '.indicator span',
+				reelSelector : '.reel',
+				slidesSelector : '.slide',
+				speed : 'slow',
+				advanceDelay : 4000
 			});
 		});
 	</script>
 
-	<title>Playon | <ui:insert name="title">Default title</ui:insert>
+	<title>Playon | <ui:insert name="title">Red de playas de estacionamiento</ui:insert>
 	</title>
 
 </h:head>
@@ -62,7 +60,7 @@ Released   : 20120624
 	<div id="wrapper">
 
 		<ui:include src="header.xhtml" />
-		<ui:include src="menu.xhtml" />
+		<!-- 		<ui:include src="menu.xhtml" /> -->
 		<ui:include src="slider.xhtml" />
 
 		<div id="page">
@@ -83,6 +81,6 @@ Released   : 20120624
 		<ui:include src="page-bottom.xhtml" />
 
 	</div>
-
+	<ui:include src="footer.xhtml" />
 </h:body>
 </html>
