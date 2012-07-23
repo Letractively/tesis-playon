@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import tesis.playon.web.dao.IEstadiaDao;
 import tesis.playon.web.model.Estadia;
 import tesis.playon.web.service.IEstadiaService;
 
@@ -15,31 +16,37 @@ import tesis.playon.web.service.IEstadiaService;
 @Transactional(readOnly = true)
 public class EstadiaService implements IEstadiaService {
 
+    IEstadiaDao estadiaDao;
+    
     @Transactional(readOnly = false)
     @Override
     public void save(Estadia estadia) {
-	// TODO Auto-generated method stub
-
+	getEstadiaDao().save(estadia);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void update(Estadia estadia) {
-	// TODO Auto-generated method stub
-
+	getEstadiaDao().update(estadia);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(Estadia estadia) {
-	// TODO Auto-generated method stub
-
+	getEstadiaDao().delete(estadia);
     }
 
     @Override
     public List<Estadia> findAll() {
-	// TODO Auto-generated method stub
-	return null;
+	return getEstadiaDao().findAll();
+    }
+
+    public IEstadiaDao getEstadiaDao() {
+        return estadiaDao;
+    }
+
+    public void setEstadiaDao(IEstadiaDao estadiaDao) {
+        this.estadiaDao = estadiaDao;
     }
 
 }

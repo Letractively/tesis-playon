@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import tesis.playon.web.dao.ILocalidadDao;
 import tesis.playon.web.model.Localidad;
 import tesis.playon.web.service.ILocalidadService;
 
@@ -15,37 +16,42 @@ import tesis.playon.web.service.ILocalidadService;
 @Transactional(readOnly = true)
 public class LocalidadService implements ILocalidadService {
 
+    ILocalidadDao localidadDao;
+
     @Transactional(readOnly = false)
     @Override
     public void save(Localidad localidad) {
-	// TODO Auto-generated method stub
-
+	getLocalidadDao().save(localidad);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void update(Localidad localidad) {
-	// TODO Auto-generated method stub
-
+	getLocalidadDao().update(localidad);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(Localidad localidad) {
-	// TODO Auto-generated method stub
-
+	getLocalidadDao().delete(localidad);
     }
 
     @Override
     public List<Localidad> findAll() {
-	// TODO Auto-generated method stub
-	return null;
+	return getLocalidadDao().findAll();
     }
 
     @Override
     public Localidad findByNombreLocalidad(String nombreLocalidad) {
-	// TODO Auto-generated method stub
-	return null;
+	return getLocalidadDao().findByNombreLocalidad(nombreLocalidad);
+    }
+
+    public ILocalidadDao getLocalidadDao() {
+	return localidadDao;
+    }
+
+    public void setLocalidadDao(ILocalidadDao localidadDao) {
+	this.localidadDao = localidadDao;
     }
 
 }

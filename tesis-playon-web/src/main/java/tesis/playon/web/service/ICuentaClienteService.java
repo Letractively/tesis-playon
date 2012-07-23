@@ -19,6 +19,6 @@ public interface ICuentaClienteService {
 
     List<CuentaCliente> findAll();
 
-    CuentaCliente findByNroCuentaCliente(String nroCuentaCliente);
+    CuentaCliente findByNroCuentaCliente(Integer nroCuentaCliente);
 
 }

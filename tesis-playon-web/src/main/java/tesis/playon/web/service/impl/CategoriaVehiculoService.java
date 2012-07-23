@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import tesis.playon.web.dao.ICategoriaVehiculoDao;
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.service.ICategoriaVehiculoService;
 
@@ -15,37 +16,42 @@ import tesis.playon.web.service.ICategoriaVehiculoService;
 @Transactional(readOnly = true)
 public class CategoriaVehiculoService implements ICategoriaVehiculoService {
 
+    ICategoriaVehiculoDao categoriaVehiculoDao;
+    
     @Transactional(readOnly = false)
     @Override
     public void save(CategoriaVehiculo categoriaVehiculo) {
-	// TODO Auto-generated method stub
-
+	getCategoriaVehiculoDao().save(categoriaVehiculo);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void update(CategoriaVehiculo categoriaVehiculo) {
-	// TODO Auto-generated method stub
-
+	getCategoriaVehiculoDao().update(categoriaVehiculo);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(CategoriaVehiculo categoriaVehiculo) {
-	// TODO Auto-generated method stub
-
+	getCategoriaVehiculoDao().delete(categoriaVehiculo);
     }
 
     @Override
     public List<CategoriaVehiculo> findAll() {
-	// TODO Auto-generated method stub
-	return null;
+	return getCategoriaVehiculoDao().findAll();
     }
 
     @Override
     public CategoriaVehiculo findByNombreCategoriaVehiculo(String nombreCategoriaVehiculo) {
-	// TODO Auto-generated method stub
-	return null;
+	return getCategoriaVehiculoDao().findByNombreCategoriaVehiculo(nombreCategoriaVehiculo);
+    }
+
+    public ICategoriaVehiculoDao getCategoriaVehiculoDao() {
+        return categoriaVehiculoDao;
+    }
+
+    public void setCategoriaVehiculoDao(ICategoriaVehiculoDao categoriaVehiculoDao) {
+        this.categoriaVehiculoDao = categoriaVehiculoDao;
     }
 
 }

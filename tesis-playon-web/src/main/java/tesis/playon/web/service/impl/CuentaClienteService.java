@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import tesis.playon.web.dao.ICuentaClienteDao;
 import tesis.playon.web.model.CuentaCliente;
 import tesis.playon.web.service.ICuentaClienteService;
 
@@ -15,37 +16,42 @@ import tesis.playon.web.service.ICuentaClienteService;
 @Transactional(readOnly = true)
 public class CuentaClienteService implements ICuentaClienteService {
 
+    ICuentaClienteDao cuentaClienteDao;
+
     @Transactional(readOnly = false)
     @Override
     public void save(CuentaCliente cuentaCliente) {
-	// TODO Auto-generated method stub
-
+	getCuentaClienteDao().save(cuentaCliente);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void update(CuentaCliente cuentaCliente) {
-	// TODO Auto-generated method stub
-
+	getCuentaClienteDao().update(cuentaCliente);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(CuentaCliente cuentaCliente) {
-	// TODO Auto-generated method stub
-
+	getCuentaClienteDao().delete(cuentaCliente);
     }
 
     @Override
     public List<CuentaCliente> findAll() {
-	// TODO Auto-generated method stub
-	return null;
+	return getCuentaClienteDao().findAll();
     }
 
     @Override
-    public CuentaCliente findByNroCuentaCliente(String nroCuentaCliente) {
-	// TODO Auto-generated method stub
-	return null;
+    public CuentaCliente findByNroCuentaCliente(Integer nroCuentaCliente) {
+	return getCuentaClienteDao().findByNroCuenta(nroCuentaCliente);
+    }
+
+    public ICuentaClienteDao getCuentaClienteDao() {
+	return cuentaClienteDao;
+    }
+
+    public void setCuentaClienteDao(ICuentaClienteDao cuentaClienteDao) {
+	this.cuentaClienteDao = cuentaClienteDao;
     }
 
 }

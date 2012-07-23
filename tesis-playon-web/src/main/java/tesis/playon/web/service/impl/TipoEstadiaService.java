@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import tesis.playon.web.dao.ITipoEstadiaDao;
 import tesis.playon.web.model.TipoEstadia;
 import tesis.playon.web.service.ITipoEstadiaService;
 
@@ -14,38 +15,43 @@ import tesis.playon.web.service.ITipoEstadiaService;
  */
 @Transactional(readOnly = true)
 public class TipoEstadiaService implements ITipoEstadiaService {
-    
+
+    ITipoEstadiaDao tipoEstadiDao;
+
     @Transactional(readOnly = false)
     @Override
     public void save(TipoEstadia tipoEstadia) {
-	// TODO Auto-generated method stub
-
+	getTipoEstadiDao().save(tipoEstadia);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void update(TipoEstadia tipoEstadia) {
-	// TODO Auto-generated method stub
-
+	getTipoEstadiDao().update(tipoEstadia);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(TipoEstadia tipoEstadia) {
-	// TODO Auto-generated method stub
-
+	getTipoEstadiDao().delete(tipoEstadia);
     }
 
     @Override
     public List<TipoEstadia> findAll() {
-	// TODO Auto-generated method stub
-	return null;
+	return getTipoEstadiDao().findAll();
     }
 
     @Override
     public TipoEstadia findByNombreTipoEstadia(String nombreTipoEstadia) {
-	// TODO Auto-generated method stub
-	return null;
+	return getTipoEstadiDao().findByNombreTipoEstadia(nombreTipoEstadia);
+    }
+
+    public ITipoEstadiaDao getTipoEstadiDao() {
+	return tipoEstadiDao;
+    }
+
+    public void setTipoEstadiDao(ITipoEstadiaDao tipoEstadiDao) {
+	this.tipoEstadiDao = tipoEstadiDao;
     }
 
 }

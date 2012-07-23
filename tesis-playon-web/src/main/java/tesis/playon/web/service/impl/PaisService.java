@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import tesis.playon.web.dao.IPaisDao;
 import tesis.playon.web.model.Pais;
 import tesis.playon.web.service.IPaisService;
 
@@ -14,37 +15,42 @@ import tesis.playon.web.service.IPaisService;
  */
 public class PaisService implements IPaisService {
 
+    IPaisDao paisDao;
+
     @Transactional(readOnly = false)
     @Override
     public void save(Pais pais) {
-	// TODO Auto-generated method stub
-
+	getPaisDao().save(pais);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void update(Pais pais) {
-	// TODO Auto-generated method stub
-
+	getPaisDao().update(pais);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(Pais pais) {
-	// TODO Auto-generated method stub
-
+	getPaisDao().delete(pais);
     }
 
     @Override
     public List<Pais> findAll() {
-	// TODO Auto-generated method stub
-	return null;
+	return getPaisDao().findAll();
     }
 
     @Override
     public Pais findByNombrPais(String nombrePais) {
-	// TODO Auto-generated method stub
-	return null;
+	return getPaisDao().findByNombrePais(nombrePais);
+    }
+
+    public IPaisDao getPaisDao() {
+	return paisDao;
+    }
+
+    public void setPaisDao(IPaisDao paisDao) {
+	this.paisDao = paisDao;
     }
 
 }

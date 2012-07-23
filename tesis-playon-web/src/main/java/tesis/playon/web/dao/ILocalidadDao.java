@@ -6,11 +6,11 @@ import tesis.playon.web.model.Localidad;
 
 public interface ILocalidadDao {
 
-    void save(Localidad pais);
+    void save(Localidad localidad);
 
-    void update(Localidad pais);
+    void update(Localidad localidad);
 
-    void delete(Localidad pais);
+    void delete(Localidad localidad);
 
     Localidad findByNombreLocalidad(String nombreLocalidad);
 

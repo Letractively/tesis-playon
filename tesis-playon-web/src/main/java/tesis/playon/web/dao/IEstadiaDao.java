@@ -12,7 +12,5 @@ public interface IEstadiaDao {
 
     void delete(Estadia estadia);
     
-    //Estadia findByPlaya(Playa playa);
-
     List<Estadia> findAll();
 }

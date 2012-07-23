@@ -11,11 +11,11 @@ import tesis.playon.web.model.EstadoPlaya;
  */
 public interface IEstadoPlayaService {
 
-    void save(EstadoPlaya EstadoPlaya);
+    void save(EstadoPlaya estadoPlaya);
 
-    void update(EstadoPlaya EstadoPlaya);
+    void update(EstadoPlaya estadoPlaya);
 
-    void delete(EstadoPlaya EstadoPlaya);
+    void delete(EstadoPlaya estadoPlaya);
 
     List<EstadoPlaya> findAll();
 

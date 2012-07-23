@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import tesis.playon.web.dao.ITarifaDao;
 import tesis.playon.web.model.Tarifa;
 import tesis.playon.web.service.ITarifaService;
 
@@ -15,37 +16,37 @@ import tesis.playon.web.service.ITarifaService;
 @Transactional(readOnly = true)
 public class TarifaService implements ITarifaService {
 
+    ITarifaDao tarifaDao;
+
     @Transactional(readOnly = false)
     @Override
     public void save(Tarifa tarifa) {
-	// TODO Auto-generated method stub
-
+	getTarifaDao().save(tarifa);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void update(Tarifa tarifa) {
-	// TODO Auto-generated method stub
-
+	getTarifaDao().update(tarifa);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(Tarifa tarifa) {
-	// TODO Auto-generated method stub
-
+	getTarifaDao().delete(tarifa);
     }
 
     @Override
     public List<Tarifa> findAll() {
-	// TODO Auto-generated method stub
-	return null;
+	return getTarifaDao().findAll();
     }
 
-    @Override
-    public Tarifa findByTarifaVigente(String tarifaVigente) {
-	// TODO Auto-generated method stub
-	return null;
+    public ITarifaDao getTarifaDao() {
+	return tarifaDao;
+    }
+
+    public void setTarifaDao(ITarifaDao tarifaDao) {
+	this.tarifaDao = tarifaDao;
     }
 
 }

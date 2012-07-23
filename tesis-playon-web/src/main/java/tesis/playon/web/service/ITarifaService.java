@@ -7,7 +7,7 @@ import tesis.playon.web.model.Tarifa;
 /**
  * 
  * @author gmorales
- *
+ * 
  */
 public interface ITarifaService {
 
@@ -18,7 +18,5 @@ public interface ITarifaService {
     void delete(Tarifa tarifa);
 
     List<Tarifa> findAll();
-
-    Tarifa findByTarifaVigente(String tarifaVigente);
 
 }

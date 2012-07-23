@@ -11,20 +11,12 @@ import tesis.playon.web.service.ICargoEmpleadoService;
 /**
  * 
  * @author Pablo
- *
+ * 
  */
 @Transactional(readOnly = true)
 public class CargoEmpleadoService implements ICargoEmpleadoService {
 
     CargoEmpleadoDao cargoEmpleadoDao;
-
-    public CargoEmpleadoDao getCargoEmpleadoDao() {
-        return cargoEmpleadoDao;
-    }
-
-    public void setCargoEmpleadoDao(CargoEmpleadoDao cargoEmpleadoDao) {
-        this.cargoEmpleadoDao = cargoEmpleadoDao;
-    }
 
     @Transactional(readOnly = false)
     @Override
@@ -49,15 +41,22 @@ public class CargoEmpleadoService implements ICargoEmpleadoService {
 	return getCargoEmpleadoDao().findByNombreCargo(nombreCargo);
     }
 
-    
     @Override
     public List<CargoEmpleado> findAll() {
 	return getCargoEmpleadoDao().findAll();
     }
-    
+
     @Override
     public CargoEmpleado findById(Integer id) {
 	return getCargoEmpleadoDao().findById(id);
+    }
+
+    public CargoEmpleadoDao getCargoEmpleadoDao() {
+	return cargoEmpleadoDao;
+    }
+
+    public void setCargoEmpleadoDao(CargoEmpleadoDao cargoEmpleadoDao) {
+	this.cargoEmpleadoDao = cargoEmpleadoDao;
     }
 
 }

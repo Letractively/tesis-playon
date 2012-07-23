@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import tesis.playon.web.dao.IProvinciaDao;
 import tesis.playon.web.model.Provincia;
 import tesis.playon.web.service.IProvinciaService;
 
@@ -15,37 +16,42 @@ import tesis.playon.web.service.IProvinciaService;
 @Transactional(readOnly = true)
 public class ProvinciaService implements IProvinciaService {
 
+    IProvinciaDao provinciaDao;
+
     @Transactional(readOnly = false)
     @Override
     public void save(Provincia provincia) {
-	// TODO Auto-generated method stub
-
+	getProvinciaDao().save(provincia);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void update(Provincia provincia) {
-	// TODO Auto-generated method stub
-
+	getProvinciaDao().update(provincia);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(Provincia provincia) {
-	// TODO Auto-generated method stub
-
+	getProvinciaDao().delete(provincia);
     }
 
     @Override
     public List<Provincia> findAll() {
-	// TODO Auto-generated method stub
-	return null;
+	return getProvinciaDao().findAll();
     }
 
     @Override
     public Provincia findByNombreProvincia(String nombreProvincia) {
-	// TODO Auto-generated method stub
-	return null;
+	return getProvinciaDao().findByNombreProvincia(nombreProvincia);
+    }
+
+    public IProvinciaDao getProvinciaDao() {
+	return provinciaDao;
+    }
+
+    public void setProvinciaDao(IProvinciaDao provinciaDao) {
+	this.provinciaDao = provinciaDao;
     }
 
 }
