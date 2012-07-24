@@ -68,6 +68,22 @@ public class TipoEstadia implements Serializable {
         this.descripcion = descripcion;
     }
     
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	TipoEstadia otroTipoEstadia = (TipoEstadia) object;
+	if (id != otroTipoEstadia.id)
+	    return false;
+	if (nombre == null ? otroTipoEstadia.nombre != null : !nombre.equals(otroTipoEstadia.nombre))
+	    return false;
+
+	return true;
+    }
+
+    
     @Override
     public String toString() {
 	return "TipoEstadia:\t [TipoEstadiaID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";

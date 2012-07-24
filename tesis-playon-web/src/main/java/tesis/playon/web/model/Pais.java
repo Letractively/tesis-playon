@@ -81,15 +81,17 @@ public class Pais implements Serializable {
 	if (object == null || getClass() != object.getClass())
 	    return false;
 
-	Pais otroTipoDoc = (Pais) object;
-	if (id != otroTipoDoc.id)
+	Pais otroPais = (Pais) object;
+	if (id != otroPais.id)
 	    return false;
-	if (nombre == null ? otroTipoDoc.nombre != null : !nombre.equals(otroTipoDoc.nombre))
+	if (nombre == null ? otroPais.nombre != null : !nombre.equals(otroPais.nombre))
 	    return false;
 
 	return true;
     }
 
+    
+    
     @Override
     public String toString() {
 	return "Pais:\t [paisID= " + id + ", nombre= " + nombre + "]";

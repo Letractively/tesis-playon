@@ -61,6 +61,22 @@ public class CategoriaVehiculo implements Serializable{
     public Integer getId() {
         return id;
     }   
+    
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	CategoriaVehiculo otroCategoriaVehiculo = (CategoriaVehiculo) object;
+	if (id != otroCategoriaVehiculo.id)
+	    return false;
+	if (nombre == null ? otroCategoriaVehiculo.nombre != null : !nombre.equals(otroCategoriaVehiculo.nombre))
+	    return false;
+
+	return true;
+    }
+
 
     public void setId(Integer id) {
         this.id = id;

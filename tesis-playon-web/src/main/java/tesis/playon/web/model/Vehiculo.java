@@ -147,6 +147,23 @@ public class Vehiculo implements Serializable {
 	this.anio = anio;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Vehiculo otroVehiculo = (Vehiculo) object;
+	if (id != otroVehiculo.id)
+	    return false;
+	if (patente == null ? otroVehiculo.patente != null : !patente.equals(otroVehiculo.patente))
+	    return false;
+
+	return true;
+    }
+
+    
+    
     @Override
     public String toString() {
 	return "Vehiculo:\t [vehiculoID=" + id + ", anio=" + anio + ", codigoBarra=" + codigoBarra + ", habilitado="

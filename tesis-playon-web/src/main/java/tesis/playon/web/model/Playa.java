@@ -151,6 +151,21 @@ public class Playa implements Serializable {
     public Integer getId() {
 	return id;
     }
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Playa otroPlaya = (Playa) object;
+	if (id != otroPlaya.id)
+	    return false;
+	if (nombreComercial == null ? otroPlaya.nombreComercial != null : !nombreComercial.equals(otroPlaya.nombreComercial))
+	    return false;
+
+	return true;
+    }
+
 
     @Override
     public String toString() {

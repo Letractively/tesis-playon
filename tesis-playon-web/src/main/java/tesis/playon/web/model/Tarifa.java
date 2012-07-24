@@ -129,7 +129,9 @@ public class Tarifa implements Serializable {
     public CategoriaVehiculo getCategoriaVehiculo() {
 	return categoriaVehiculo;
     }
-
+    
+    
+    
     public void setCategoriaVehiculo(CategoriaVehiculo categoriaVehiculo) {
 	this.categoriaVehiculo = categoriaVehiculo;
     }
