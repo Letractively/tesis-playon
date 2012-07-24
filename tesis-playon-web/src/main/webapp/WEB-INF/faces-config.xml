@@ -26,4 +26,8 @@
         </navigation-case>
     </navigation-rule>
     
+<!--     <lifecycle> -->
+<!-- 		<phase-listener>login.LoginErrorPhaseListener</phase-listener> -->
+<!-- 	</lifecycle> -->
+    
 </faces-config>

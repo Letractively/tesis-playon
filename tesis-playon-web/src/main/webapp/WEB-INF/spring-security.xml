@@ -10,7 +10,7 @@
 	</global-method-security>
 
 	<!-- resource security -->
-	<http auto-config="true" access-denied-page="/accessDenied.html">
+	<http auto-config="true" access-denied-page="/accessdenied.html">
 		<intercept-url pattern="/admin/*" access="ROLE_ADMIN" />
 		<form-login login-processing-url="/j_spring_security_check"
 			login-page="/login.html" default-target-url="/"
