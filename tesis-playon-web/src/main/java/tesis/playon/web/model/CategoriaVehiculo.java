@@ -60,13 +60,14 @@ public class CategoriaVehiculo implements Serializable{
 
     public Integer getId() {
         return id;
+    }   
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
 	return "CategoriaVehiculo:\t[categoriaVehiculoID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
     }
-    
-    
-    
 }

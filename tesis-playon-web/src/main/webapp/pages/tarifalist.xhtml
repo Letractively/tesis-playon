@@ -1,0 +1,103 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>PLAYON: Tarifas</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:dataTable id="tarifas" var="tarifa" editable="true"
+			paginator="true" rows="5" value="#{tarifaMB.tarifaList}"
+			style="width: 10%">
+
+			<f:facet name="header">
+				Usuarios
+            </f:facet>
+            
+            <p:column headerText="Playa" style="width:125px">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{tarifa.playa.nombreComercial}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{tarifa.playa.nombreComercial}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Tipo Estadia" style="width:125px">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{tarifa.tipoEstadia.nombre}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{tarifa.tipoEstadia.nombre}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Categoria:" style="width:125px">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{tarifa.categoriaVehiculo.nombre}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{tarifa.categoriaVehiculo.nombre}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Importe" style="width:125px">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{tarifa.importe}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{tarifa.importe}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column headerText="Fecha Alta" style="width:125px">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{tarifa.fechaAlta}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{tarifa.fechaAlta}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Vigente" style="width:125px">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:selectBooleanCheckbox value="#{tarifa.vigente}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:selectBooleanCheckbox value="#{tarifa.vigente}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Opciones" style="width:25px">
+				<p:rowEditor />
+			</p:column>
+
+			<p:column>
+				<h:commandButton value="Borrar"
+					action="#{tarifaMB.deleteTarifa(tarifa)}" />
+			</p:column>
+
+		</p:dataTable>
+
+		<tr>
+			<td><p:commandButton id="addTarifaNueva" value="Agregar"
+					action="/pages/tarifaadd.jsf?faces-redirect=true" ajax="false" /></td>
+		</tr>
+
+	</h:form>
+</h:body>
+
+</html>

@@ -71,7 +71,6 @@ public class UsuarioManagedBean implements Serializable {
 
     public void reset() {
 	this.setNombre("");
-	this.setNombre("");
 	this.setApellido("");
 	this.setEmail("");
 	this.setNroDoc(0);

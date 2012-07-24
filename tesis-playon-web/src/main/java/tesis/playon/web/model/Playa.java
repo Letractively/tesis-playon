@@ -157,4 +157,9 @@ public class Playa implements Serializable {
 	return "Playa:\t [playaID=" + id + ", cuit=" + cuit + ", nombreComercial=" + nombreComercial + ", razonSocial="
 		+ razonSocial + ", domicilio=" + domicilio + "]";
     }
+
+    public void setId(int id) {
+	this.id= id;
+	
+    }
 }

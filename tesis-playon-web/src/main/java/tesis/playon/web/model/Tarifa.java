@@ -47,21 +47,19 @@ public class Tarifa implements Serializable {
     private Date fechaBaja;
 
     @ManyToOne
-    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "playaID")
     private Playa playa;
 
     @ManyToOne
-    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tipoEstadiaID")
     private TipoEstadia tipoEstadia;
 
     @ManyToOne
-    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoriaVehiculoID")
     private CategoriaVehiculo categoriaVehiculo;
 
     public Tarifa() {
+	this.fechaAlta= new Date();
     }
 
     public Tarifa(Float importe, Playa playa, TipoEstadia tipoEstadia, CategoriaVehiculo categoriaVehiculo) {
@@ -69,6 +67,7 @@ public class Tarifa implements Serializable {
 	this.playa = playa;
 	this.tipoEstadia = tipoEstadia;
 	this.categoriaVehiculo = categoriaVehiculo;
+	this.fechaAlta= new Date();
     }
 
     public Integer getId() {
