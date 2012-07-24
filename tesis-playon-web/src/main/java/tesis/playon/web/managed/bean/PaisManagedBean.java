@@ -10,9 +10,14 @@ import javax.faces.bean.RequestScoped;
 
 import org.springframework.dao.DataAccessException;
 
-import tesis.playon.web.model.TipoDoc;
-import tesis.playon.web.service.ITipoDocService;
+import tesis.playon.web.model.Pais;
+import tesis.playon.web.service.IPaisService;
 
+/**
+ * 
+ * @author gmorales
+ *
+ */
 @ManagedBean(name = "paisMB")
 @RequestScoped
 public class PaisManagedBean implements Serializable {
@@ -24,17 +29,17 @@ public class PaisManagedBean implements Serializable {
     private static final String ERROR = "error";
 
     @ManagedProperty(value = "#{PaisService}")
-    ITipoDocService tipoDocService;
+    IPaisService paisService;
 
-    List<TipoDoc> tipoDocList;
+    List<Pais> paisList;
 
     private String nombre;
 
-    public String addTipoDoc() {
+    public String addPais() {
 	try {
-	    TipoDoc tipoDoc = new TipoDoc();
-	    tipoDoc.setNombre(getNombre());
-	    getTipoDocService().save(tipoDoc);
+	    Pais pais = new Pais();
+	    pais.setNombre(getNombre());
+	    getPaisService().save(pais);
 	    return LISTA_PAIS;
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
@@ -42,34 +47,34 @@ public class PaisManagedBean implements Serializable {
 	return ERROR;
     }
 
-    public void deleteTipoDoc(TipoDoc tipoDoc) {
-	getTipoDocService().delete(tipoDoc);
+    public void deletePais(Pais pais) {
+	getPaisService().delete(pais);
     }
 
-    public void updateTipoDoc(TipoDoc tipoDoc) {
-	getTipoDocService().update(tipoDoc);
+    public void updatePais(Pais pais) {
+	getPaisService().update(pais);
     }
 
     public void reset() {
 	this.setNombre("");
     }
 
-    public ITipoDocService getTipoDocService() {
-	return tipoDocService;
+    public IPaisService getPaisService() {
+	return paisService;
     }
 
-    public void setTipoDocService(ITipoDocService tipoDocService) {
-	this.tipoDocService = tipoDocService;
+    public void setPaisService(IPaisService paisService) {
+	this.paisService = paisService;
     }
 
-    public List<TipoDoc> getTipoDocList() {
-	tipoDocList = new ArrayList<TipoDoc>();
-	tipoDocList.addAll(getTipoDocService().findAll());
-	return tipoDocList;
+    public List<Pais> getPaisList() {
+	paisList = new ArrayList<Pais>();
+	paisList.addAll(getPaisService().findAll());
+	return paisList;
     }
 
-    public void setUsuarioList(List<TipoDoc> tipoDocList) {
-	this.tipoDocList = tipoDocList;
+    public void setPaisList(List<Pais> paisList) {
+	this.paisList = paisList;
     }
 
     public String getNombre() {

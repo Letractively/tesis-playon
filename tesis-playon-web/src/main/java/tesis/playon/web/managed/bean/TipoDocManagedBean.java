@@ -68,7 +68,7 @@ public class TipoDocManagedBean implements Serializable {
 	return tipoDocList;
     }
 
-    public void setUsuarioList(List<TipoDoc> tipoDocList) {
+    public void setTipoDocList(List<TipoDoc> tipoDocList) {
 	this.tipoDocList = tipoDocList;
     }
 

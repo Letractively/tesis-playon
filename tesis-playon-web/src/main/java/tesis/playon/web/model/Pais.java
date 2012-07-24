@@ -75,6 +75,21 @@ public class Pais implements Serializable {
 	this.provincias = provincias;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Pais otroTipoDoc = (Pais) object;
+	if (id != otroTipoDoc.id)
+	    return false;
+	if (nombre == null ? otroTipoDoc.nombre != null : !nombre.equals(otroTipoDoc.nombre))
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
 	return "Pais:\t [paisID= " + id + ", nombre= " + nombre + "]";

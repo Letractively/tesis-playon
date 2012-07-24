@@ -7,28 +7,29 @@
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Bike Shop 2.0</title>
+	<title>PLAYON: Red de Playas</title>
 </h:head>
 
 <h:body>
+	<h1>Inicie sesion</h1>
 	<h:form>
 		<div style="text-align:center;">
-			<h:outputText value="#{msg['loginscreen.loginmessage']}" />
+			<h:outputText value="Inicie sesion: " />
 			<br />
 			<br />
-			<h:outputText value="#{msg['loginscreen.loginfield']} " /><h:inputText value="#{loginBean.login}" />
+			<h:outputText value="Usuario: " /><h:inputText value="#{loginMB.login}" />
 			<br />
-			<h:outputText value="#{msg['loginscreen.passfield']} " /><h:inputSecret value="#{loginBean.password}" />
+			<h:outputText value="Contrasena: " /><h:inputSecret value="#{loginMB.password}" />
 			<br />
 			<h:messages />
 			<br />			
-			<h:commandButton action="#{loginBean.login}" value="#{msg['loginscreen.loginbutton']}" />
+			<h:commandButton action="#{loginMB.login}" value="Ingresar" />
 			<br />
 			<br />
-			<h:outputText value="#{msg['loginscreen.backmessage']}" />
+			<h:outputText value="Volver" />
 			<br />
 			<br />
-			<h:commandButton action="shopTemplate" value="#{msg['loginscreen.backbutton']}" />			
+			<h:commandButton action="shopTemplate" value="Atras" />			
 		</div>
 	</h:form>
 </h:body>

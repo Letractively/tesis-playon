@@ -25,19 +25,29 @@ public class LoginBean implements Serializable {
 
     private String password;
 
-    @ManagedProperty(value = "#{autenticacionService}")
+    @ManagedProperty(value = "#{AutenticacionService}")
     private IAutenticacionService autenticacionService;
 
     public String login() {
+
+	// ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+	// RequestDispatcher dispatcher = ((ServletRequest) context.getRequest()).getRequestDispatcher("");
+	// dispatcher.forward((ServletRequest) context.getContext(), (ServletResponse) context.getResponse());
+	// FacesContext.getCurrentInstance().responseComplete();
 
 	boolean success = autenticacionService.login(login, password);
 
 	if (success) {
 	    return "pages/usuariolist.xhtml";
 	} else {
-	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario o contraseña incorrecta."));
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario o contrasena incorrecta."));
 	    return "pages/login.xhtml";
 	}
+    }
+
+    public String logout() {
+	FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+	return "pages/logout.xhtml";
     }
 
     public String getLogin() {
