@@ -1,14 +1,16 @@
 package tesis.playon.web.managed.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-
-import tesis.playon.web.service.IAutenticacionService;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 /**
  * 
@@ -21,41 +23,47 @@ public class LoginBean implements Serializable {
 
     private static final long serialVersionUID = -4825514920026120523L;
 
-    private String login;
+    private String usuario;
 
     private String password;
 
-    @ManagedProperty(value = "#{AutenticacionService}")
-    private IAutenticacionService autenticacionService;
+    // @ManagedProperty(value = "#{AutenticacionService}")
+    // private IAutenticacionService autenticacionService;
 
-    public String login() {
+    public String login() throws IOException, ServletException {
 
-	// ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-	// RequestDispatcher dispatcher = ((ServletRequest) context.getRequest()).getRequestDispatcher("");
-	// dispatcher.forward((ServletRequest) context.getContext(), (ServletResponse) context.getResponse());
-	// FacesContext.getCurrentInstance().responseComplete();
+	ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 
-	boolean success = autenticacionService.login(login, password);
+	RequestDispatcher dispatcher = ((ServletRequest) context.getRequest())
+		.getRequestDispatcher("/j_spring_security_check");
 
-	if (success) {
-	    return "pages/usuariolist.xhtml";
-	} else {
-	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario o contrasena incorrecta."));
-	    return "pages/login.xhtml";
-	}
+	dispatcher.forward((ServletRequest) context.getRequest(), (ServletResponse) context.getResponse());
+
+	FacesContext.getCurrentInstance().responseComplete();
+	// It's OK to return null here because Faces is just going to exit.
+	return null;
+
+	// boolean success = autenticacionService.login(login, password);
+
+	// if (success) {
+	// return "pages/usuariolist.xhtml";
+	// } else {
+	// FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario o contrasena incorrecta."));
+	// return "pages/login.xhtml";
+	// }
     }
 
     public String logout() {
 	FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-	return "pages/logout.xhtml";
+	return "logout.xhtml";
     }
 
-    public String getLogin() {
-	return login;
+    public String getUsuario() {
+	return usuario;
     }
 
-    public void setLogin(String login) {
-	this.login = login;
+    public void setUsuario(String usuario) {
+	this.usuario = usuario;
     }
 
     public String getPassword() {
@@ -64,10 +72,6 @@ public class LoginBean implements Serializable {
 
     public void setPassword(String password) {
 	this.password = password;
-    }
-
-    public void setAuthenticationService(IAutenticacionService autenticacionService) {
-	this.autenticacionService = autenticacionService;
     }
 
 }

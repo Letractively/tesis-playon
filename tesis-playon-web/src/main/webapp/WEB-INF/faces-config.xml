@@ -13,22 +13,16 @@
     	</el-resolver>
   	</application>
   	
-  	<!-- JSF and Spring are integrated -->
-  	<converter>
-        <converter-id>TipoDocConverter</converter-id>
-        <converter-class>tesis.playon.web.converter.TipoDocConverter</converter-class>
-    </converter>
-	
-	<!-- configuration of navigation rules -->	
+  	<!-- configuration of navigation rules -->	
 	<navigation-rule>
-	    <from-view-id>/pages/index.xhtml</from-view-id> 
+	    <from-view-id>/index.xhtml</from-view-id> 
 	    <navigation-case>
 	        <from-outcome>success</from-outcome>
-            <to-view-id>/pages/success.xhtml</to-view-id>
+            <to-view-id>/success.xhtml</to-view-id>
         </navigation-case>
          <navigation-case>
 	        <from-outcome>error</from-outcome>
-            <to-view-id>/pages/error.xhtml</to-view-id>
+            <to-view-id>/error.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     
