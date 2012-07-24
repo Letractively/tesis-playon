@@ -28,7 +28,7 @@
 	
 	<!-- <bean id="Barrio" class="tesis.playon.web.model.Barrio" /> -->
 	<!-- <bean id="CargoEmpleado" class="tesis.playon.web.model.CargoEmpleado" /> -->
-	<bean id="CategoriaVehiculo" class="tesis.playon.web.model.CategoriaVehiculo" />
+<!-- 	<bean id="CategoriaVehiculo" class="tesis.playon.web.model.CategoriaVehiculo" /> -->
 	<!-- <bean id="ColorVehiculo" class="tesis.playon.web.model.ColorVehiculo" /> -->
 	<!-- <bean id="Empleado" class="tesis.playon.web.model.Empleado" /> -->
 	<!-- <bean id="Estadia" class="tesis.playon.web.model.Estadia" /> -->
@@ -44,9 +44,9 @@
 	<!-- <bean id="Posicion" class="tesis.playon.web.model.Posicion" /> -->
 	<!-- <bean id="Provincia" class="tesis.playon.web.model.Provincia" /> -->
 	<bean id="RolUsuario" class="tesis.playon.web.model.RolUsuario" />
-	<bean id="Tarifa" class="tesis.playon.web.model.Tarifa" />
+<!-- 	<bean id="Tarifa" class="tesis.playon.web.model.Tarifa" /> -->
 	<bean id="TipoDoc" class="tesis.playon.web.model.TipoDoc" />
-	<bean id="TipoEstadia" class="tesis.playon.web.model.TipoEstadia" />
+<!-- 	<bean id="TipoEstadia" class="tesis.playon.web.model.TipoEstadia" /> -->
 	<!-- <bean id="TipoPago" class="tesis.playon.web.model.TipoPago" /> -->
 	<bean id="Usuario" class="tesis.playon.web.model.Usuario" />
 	<!-- <bean id="UsuarioSistema" class="tesis.playon.web.model.UsuarioSistema" /> -->
@@ -100,7 +100,7 @@
 			<list>
 				<!-- <value>tesis.playon.web.model.Barrio</value> -->
 				<!-- <value>tesis.playon.web.model.CargoEmpleado</value> -->
-				<value>tesis.playon.web.model.CategoriaVehiculo</value>
+<!-- 				<value>tesis.playon.web.model.CategoriaVehiculo</value> -->
 				<!-- <value>tesis.playon.web.model.ColorVehiculo</value> -->
 				<!-- <value>tesis.playon.web.model.Empleado</value> -->
 				<!-- <value>tesis.playon.web.model.Empleado</value> -->
@@ -118,9 +118,9 @@
 				<!-- <value>tesis.playon.web.model.Posicion</value> -->
 				<!-- <value>tesis.playon.web.model.Provincia</value> -->
 				<value>tesis.playon.web.model.RolUsuario</value>
-				<value>tesis.playon.web.model.Tarifa</value>
+<!-- 				<value>tesis.playon.web.model.Tarifa</value> -->
 				<value>tesis.playon.web.model.TipoDoc</value>
-				<value>tesis.playon.web.model.TipoEstadia</value>
+<!-- 				<value>tesis.playon.web.model.TipoEstadia</value> -->
 				<!-- <value>tesis.playon.web.model.TipoPago</value> -->
 				<value>tesis.playon.web.model.Usuario</value>
 				<!-- <value>tesis.playon.web.model.UsuarioSistema</value> -->
