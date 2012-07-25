@@ -176,6 +176,14 @@
 			<version>6.4</version>
 		</dependency>
 
+		<!-- PrimeFaces Templates -->
+
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>afterwork</artifactId>
+			<version>1.0.6</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
