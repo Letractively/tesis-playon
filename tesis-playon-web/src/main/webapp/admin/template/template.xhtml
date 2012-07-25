@@ -1,69 +1,63 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsf/jstl/core"
 	xmlns:p="http://primefaces.org/ui">
 
 <f:view contentType="text/html">
-	<h:head>
-		<f:facet name="first">
-			<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
-			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
-			<title>Playon | Panel de administración</title>
-		</f:facet>
 
-		<link type="text/css" rel="stylesheet"
-			href="#{request.contextPath}/css/default.css" />
-		<link type="text/css" rel="stylesheet"
-			href="#{request.contextPath}/css/syntaxhighlighter/syntaxhighlighter.css" />
+	<h:head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<h:outputStylesheet library="css" name="style_admin.css" />
+		<title>Playon | Administración</title>
+		<ui:insert name="head"></ui:insert>
+
+
 	</h:head>
 
-
 	<h:body>
+		<div class="mainbody">
 
-		<p:layout fullPage="true">
+			<div class="admin-header ui-corner-all">
+				<div id="header" class="ui-widget ui-widget-header ui-corner-all">
 
+					<ui:include src="header.xhtml" />
 
-			<p:layoutUnit position="north" size="100" resizable="false"
-				closable="false" collapsible="false">
-				<h1>Playon - Panel de administración</h1>
-			</p:layoutUnit>
+				</div>
+			</div>
 
-			<p:layoutUnit position="south" size="50" resizable="false"
-				closable="false" collapsible="false">
-				<h:outputText value="Copyright playon.com.ar | Derechos reservados" />
-			</p:layoutUnit>
-
-			<p:layoutUnit position="west" size="200" header="Menú principal"
-				resizable="false" closable="false" collapsible="false">
-				<div
-					class="ui-widget-content ui-corner-bottom ui-helper-clearfix ui-shadow">
+			<div class="admin-container">
+				<div class="ui-widget-content ui-corner-all ui-shadow admin-menu">
 					<ui:include src="menu.xhtml" />
 				</div>
-			</p:layoutUnit>
+
+				<div class=" ui-corner-all admin-content">
+					<h:form>
+
+						<c:if test="#{panelTitle}">
+							<c:set var="panelTitle"
+								value="Playon (Red de playas) - Panel de administración" />
+						</c:if>
+
+						<p:panel header="#{panelTitle}" style="width: 100%;">
+							<ui:insert name="panelContent">Contenido</ui:insert>
+						</p:panel>
+
+					</h:form>
+				</div>
+			</div>
+			<div style="clear: both;"></div>
+			<div id="footer"
+				class="ui-widget ui-widget-header ui-corner-all admin-footer">
+				<ui:include src="footer.xhtml" />
+			</div>
+		</div>
 
 
 
-			<!-- <p:layoutUnit position="east" size="200" header="Right"
-				resizable="true" closable="true" collapsible="true" effect="drop">
-				<h:outputText value="Right unit content." />
-			</p:layoutUnit> -->
-
-			<p:layoutUnit position="center">
-				<h:form>
-            		This fullPage layout consists of five different layoutUnits which are resizable and closable by default.
-
-        		</h:form>
-			</p:layoutUnit>
-
-		</p:layout>
-
-		<p:dialog header="Basic Dialog" widgetVar="dlg1" modal="true">
-			<h:outputText value="Resistance to PrimeFaces is futile!" />
-		</p:dialog>
 
 	</h:body>
-
 </f:view>
+
 </html>
