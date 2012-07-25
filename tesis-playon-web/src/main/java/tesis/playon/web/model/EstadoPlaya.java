@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 //import javax.persistence.UniqueConstraint;
 
 /**
@@ -17,7 +18,11 @@ import javax.persistence.Table;
  * @date 08/07/2012
  */
 @Entity
-@Table(name = "estado_playa", catalog = "tesis_playon"/**, uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") }**/)
+@Table(name = "estado_playa", catalog = "tesis_playon"/**
+ * , uniqueConstraints = { @UniqueConstraint(columnNames =
+ * "nombre") }
+ **/
+)
 public class EstadoPlaya implements Serializable {
 
     private static final long serialVersionUID = 9126225080245683593L;
@@ -59,6 +64,21 @@ public class EstadoPlaya implements Serializable {
 
     public void setDescripcion(String descripcion) {
 	this.descripcion = descripcion;
+    }
+
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	EstadoPlaya otroEstado = (EstadoPlaya) object;
+	if (id != otroEstado.id)
+	    return false;
+	if (nombre == null ? otroEstado.nombre != null : !nombre.equals(otroEstado.nombre))
+	    return false;
+
+	return true;
     }
 
     @Override

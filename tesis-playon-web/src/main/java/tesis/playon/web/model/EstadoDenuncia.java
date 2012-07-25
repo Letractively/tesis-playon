@@ -16,11 +16,11 @@ import javax.persistence.UniqueConstraint;
 
 /**
  * @author Pablo
- *
+ * 
  */
 @Entity
 @Table(name = "estado_denuncia", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
-public class EstadoDenuncia implements Serializable{
+public class EstadoDenuncia implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,29 +44,44 @@ public class EstadoDenuncia implements Serializable{
     }
 
     public String getNombre() {
-        return nombre;
+	return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+	this.nombre = nombre;
     }
 
     public String getDescripcion() {
-        return descripcion;
+	return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+	this.descripcion = descripcion;
     }
 
     public Integer getId() {
-        return id;
+	return id;
+    }
+
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	EstadoDenuncia otroEstado = (EstadoDenuncia) object;
+	if (id != otroEstado.id)
+	    return false;
+	if (nombre == null ? otroEstado.nombre != null : !nombre.equals(otroEstado.nombre))
+	    return false;
+
+	return true;
     }
 
     @Override
     public String toString() {
-	return "EstadoDenuncia:\t [estadoDenunciaID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
+	return "EstadoDenuncia:\t [estadoDenunciaID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion
+		+ "]";
     }
-    
-    
+
 }

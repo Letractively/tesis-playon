@@ -92,6 +92,21 @@ public class Provincia implements Serializable {
     public void setLocalidades(Set<Localidad> localidades) {
 	this.localidades = localidades;
     }
+    
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Provincia otroProvincia = (Provincia) object;
+	if (id != otroProvincia.id)
+	    return false;
+	if (nombre == null ? otroProvincia.nombre != null : !nombre.equals(otroProvincia.nombre))
+	    return false;
+
+	return true;
+    }
 
     @Override
     public String toString() {

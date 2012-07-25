@@ -130,6 +130,19 @@ public class Comentario implements Serializable {
 	this.patente = patente;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Comentario otroComent = (Comentario) object;
+	if (id != otroComent.id)
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
 	return "Comentario:\t [comentarioID= " + id + ", fecha= " + fecha.toString() + ", comentario= " + comentario

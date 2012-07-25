@@ -88,6 +88,19 @@ public class Posicion implements Serializable {
 	this.ubicacion = ubicacion;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Posicion otroPosicion = (Posicion) object;
+	if (id != otroPosicion.id)
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
 	return "Posicion:\t [posicionID=" + id + ", tamanioKBMax=" + tamanioKBMax + ", tamanioX=" + tamanioX

@@ -162,6 +162,19 @@ public class DetalleEstadia implements Serializable {
 	return id;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	DetalleEstadia otroDetalle = (DetalleEstadia) object;
+	if (id != otroDetalle.id)
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
 	return "DetalleEstadia:\t [id= " + id + ", fechaHoraIngreso= " + fechaHoraIngreso.toString()

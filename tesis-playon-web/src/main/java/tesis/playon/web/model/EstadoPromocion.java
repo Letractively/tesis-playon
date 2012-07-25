@@ -35,13 +35,12 @@ public class EstadoPromocion implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
 
-    
     public EstadoPromocion() {
     }
 
     public EstadoPromocion(String nombre, String descripcion) {
 	this.nombre = nombre;
-	this.descripcion=descripcion;
+	this.descripcion = descripcion;
     }
 
     public Integer getId() {
@@ -61,16 +60,32 @@ public class EstadoPromocion implements Serializable {
     }
 
     public String getDescripcion() {
-        return descripcion;
+	return descripcion;
+    }
+
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	EstadoPromocion otroEstado = (EstadoPromocion) object;
+	if (id != otroEstado.id)
+	    return false;
+	if (nombre == null ? otroEstado.nombre != null : !nombre.equals(otroEstado.nombre))
+	    return false;
+
+	return true;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+	this.descripcion = descripcion;
     }
-    
+
     @Override
     public String toString() {
-	return "EstadoPromocion:\t [EstadoPromocionID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
+	return "EstadoPromocion:\t [EstadoPromocionID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion
+		+ "]";
     }
 
 }

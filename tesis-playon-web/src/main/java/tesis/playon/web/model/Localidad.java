@@ -40,7 +40,7 @@ public class Localidad implements Serializable {
     private String nombre;
 
     @ManyToOne
-    //@ManyToOne(fetch = FetchType.LAZY)
+    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provinciaID")
     private Provincia provincia;
 
@@ -93,9 +93,24 @@ public class Localidad implements Serializable {
 	this.barrios = barrios;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Localidad otroLoc = (Localidad) object;
+	if (id != otroLoc.id)
+	    return false;
+	if (nombre == null ? otroLoc.nombre != null : !nombre.equals(otroLoc.nombre))
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
-	return "Localidad:\t [localidadID= " + id + ", nombre= " + nombre + ", "+ provincia.toString() + "]";
+	return "Localidad:\t [localidadID= " + id + ", nombre= " + nombre + ", " + provincia.toString() + "]";
     }
 
 }

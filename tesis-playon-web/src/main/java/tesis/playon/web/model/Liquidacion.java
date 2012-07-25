@@ -103,6 +103,19 @@ public class Liquidacion implements Serializable {
 	return id;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Liquidacion otroLiquidacion = (Liquidacion) object;
+	if (id != otroLiquidacion.id)
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
 	return "Lquidacion:\t [liquidacionID=" + id + ", fecha=" + fecha.toString() + ", importeTotal=" + importeTotal

@@ -132,6 +132,20 @@ public class Usuario implements Serializable {
     public Integer getId() {
 	return id;
     }
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Usuario otroUsuario = (Usuario) object;
+	if (id != otroUsuario.id)
+	    return false;
+	if (nombreUser == null ? otroUsuario.nombreUser != null : !nombreUser.equals(otroUsuario.nombreUser))
+	    return false;
+
+	return true;
+    }
 
     @Override
     public String toString() {

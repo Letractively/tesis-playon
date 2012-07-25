@@ -97,6 +97,21 @@ public class Empleado implements Serializable {
 	this.id = id;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Empleado otroEmpleado = (Empleado) object;
+	if (id != otroEmpleado.id)
+	    return false;
+	if (legajo == null ? otroEmpleado.legajo != null : !legajo.equals(otroEmpleado.legajo))
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
 	return "Empleado:\t [empleadoID= " + id + ", legajo= " + legajo + ", " + cargoEmpleado + ", " + usuario + "]";

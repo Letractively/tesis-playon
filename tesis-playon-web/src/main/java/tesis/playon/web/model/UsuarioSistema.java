@@ -74,6 +74,19 @@ public class UsuarioSistema implements Serializable {
         return id;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	UsuarioSistema otroUsuarioSistema = (UsuarioSistema) object;
+	if (id != otroUsuarioSistema.id)
+	    return false;
+	
+	return true;
+    }
+
     @Override
     public String toString() {
 	return "UsuarioSistema:\t [usuarioSistemaID= " + id + ", " + rolUsuario + ", " + usuario + "]";

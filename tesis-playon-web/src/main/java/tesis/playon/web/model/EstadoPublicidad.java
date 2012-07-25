@@ -46,7 +46,6 @@ public class EstadoPublicidad implements Serializable {
 	this.nombre = nombre;
 	this.descripcion = descripcion;
     }
-    
 
     public EstadoPublicidad() {
 	super();
@@ -99,9 +98,25 @@ public class EstadoPublicidad implements Serializable {
 	this.descripcion = descripcion;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	EstadoPublicidad otroEstado = (EstadoPublicidad) object;
+	if (id != otroEstado.id)
+	    return false;
+	if (nombre == null ? otroEstado.nombre != null : !nombre.equals(otroEstado.nombre))
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
-	return "EstadoPublicidad:\t [estadoPublicidadID= " + id + "nombre= " + nombre + "descripcion= " + descripcion + "]";
+	return "EstadoPublicidad:\t [estadoPublicidadID= " + id + "nombre= " + nombre + "descripcion= " + descripcion
+		+ "]";
     }
 
 }

@@ -63,7 +63,21 @@ public class RolUsuario {
     public void setDescripcion(String descripcion) {
 	this.descripcion = descripcion;
     }
+    
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
 
+	RolUsuario otroRolUsuario = (RolUsuario) object;
+	if (id != otroRolUsuario.id)
+	    return false;
+	if (nombre == null ? otroRolUsuario.nombre != null : !nombre.equals(otroRolUsuario.nombre))
+	    return false;
+
+	return true;
+    }
     @Override
     public String toString() {
 	return "RolUsuario:\t [rolUsuarioID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";

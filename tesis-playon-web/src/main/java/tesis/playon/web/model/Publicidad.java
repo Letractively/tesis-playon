@@ -108,9 +108,22 @@ public class Publicidad implements Serializable {
 	return id;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Publicidad otroPublicidad = (Publicidad) object;
+	if (id != otroPublicidad.id)
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
-	return "Publicidad:\t [publicidadID=" + id + ", urlImagen=" + urlImagen + ", " + posicion.toString()
-		+ ", " + estado.toString() + "]";
+	return "Publicidad:\t [publicidadID=" + id + ", urlImagen=" + urlImagen + ", " + posicion.toString() + ", "
+		+ estado.toString() + "]";
     }
 }

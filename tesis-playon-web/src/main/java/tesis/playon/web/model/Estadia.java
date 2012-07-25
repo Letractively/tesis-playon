@@ -27,9 +27,9 @@ public class Estadia implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "estadiaID")
     private Integer id;
-    
+
     @OneToOne
-    //@OneToOne(fetch = FetchType.LAZY)
+    // @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "playaID")
     private Playa playa;
 
@@ -43,13 +43,26 @@ public class Estadia implements Serializable {
     }
 
     public Integer getId() {
-        return id;
+	return id;
     }
 
     public Playa getPlaya() {
-        return playa;
+	return playa;
     }
-    
+
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Estadia otroEstadia = (Estadia) object;
+	if (id != otroEstadia.id)
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
 	return "Estadia:\t [estadiaID= " + id + ", playa= " + playa.getNombreComercial() + "]";

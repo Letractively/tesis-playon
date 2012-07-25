@@ -90,6 +90,19 @@ public class HistorialDeCambio implements Serializable {
 	return fecha;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	HistorialDeCambio otroHistorial = (HistorialDeCambio) object;
+	if (id != otroHistorial.id)
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
 	return "Historial de cambio:\t [hisotorialDeCambioID=" + id + ", comentario=" + comentario + ", fecha="

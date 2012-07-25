@@ -69,7 +69,24 @@ public class TipoPago implements Serializable{
 
     public Integer getId() {
         return id;
+    
     }
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	TipoPago otroTipoPago = (TipoPago) object;
+	if (id != otroTipoPago.id)
+	    return false;
+	if (nombre == null ? otroTipoPago.nombre != null : !nombre.equals(otroTipoPago.nombre))
+	    return false;
+
+	return true;
+    }
+    
+    
     
     public String toString(){
 	return "TipoPago:\t [TipoPagoID= " + id + ", nombre= " + nombre + ", descripcion=" + descripcion + "]";
