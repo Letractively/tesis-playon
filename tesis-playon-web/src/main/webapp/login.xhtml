@@ -1,37 +1,47 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-
 <h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>PLAYON: Red de Playas</title>
 </h:head>
-
 <h:body>
-	<h1>Inicie sesion</h1>
-	<h:form>
-		<div style="text-align:center;">
-			<h:outputText value="Inicie sesion: " />
-			<br />
-			<br />
-			<h:outputText value="Usuario: " /><h:inputText value="#{loginMB.usuario}" />
-			<br />
-			<h:outputText value="Contrasena: " /><h:inputSecret value="#{loginMB.password}" />
-			<br />
-			<h:messages />
-			<br />			
-			<h:commandButton action="#{loginMB.login}" value="Ingresar" />
-			<br />
-			<br />
-			<h:outputText value="Volver" />
-			<br />
-			<br />
-			<h:commandButton action="shopTemplate" value="Atras" />			
-		</div>
-	</h:form>
+	<div align="right" style="">
+		<h:form id="loginFormId" prependId="false">
+			<div id="loginFieldsPnlId">
+				<div id="loginFieldUsrContId">
+					<h:outputText id="outTxtUserNameId" value="Usuario:"
+						name="outTxtUserNameNm"></h:outputText>
+					<h:inputText id="usuario" required="true"
+						value="#{loginMB.usuario}"
+						requiredMessage="Por favor ingrese su nombre de usuario"></h:inputText>
+					<h:outputLabel id="outLblUserNameId" for="userName"
+						name="outLblUserNameNm"></h:outputLabel>
+				</div>
+				<div id="loginFieldPassContId">
+					<h:outputText id="outTxtPasswordId" value="Contraseña:"
+						name="outTxtPasswordNm"></h:outputText>
+					<h:inputSecret id="password" required="true"
+						value="#{loginMB.password}"
+						requiredMessage="Por favor ingrese su contraseña"
+						name="inTxtPasswordNm"></h:inputSecret>
+					<h:outputLabel id="outLblPasswordId" for="password"
+						name="outLblPasswordNm"></h:outputLabel>
+				</div>
+			</div>
+			<div id="loginBtnPanelId">
+				<h:commandButton id="btnLoginId" value="Ingresar"
+					action="#{loginMB.login}" styleClass="loginPanelBtn"></h:commandButton>
+				<h:commandButton id="btnCancelId" value="Cancelar"
+					action="#{loginMB.cancel}" styleClass="loginPanelBtn"
+					immediate="true" update="loginFormId"></h:commandButton>
+			</div>
+		</h:form>
+	</div>
+	<div>
+		<h:messages></h:messages>
+	</div>
 </h:body>
 </html>

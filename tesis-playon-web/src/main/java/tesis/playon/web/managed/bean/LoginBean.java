@@ -1,16 +1,14 @@
 package tesis.playon.web.managed.bean;
 
-import java.io.IOException;
-import java.io.Serializable;
-
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * 
@@ -18,44 +16,42 @@ import javax.servlet.ServletResponse;
  * 
  */
 @ManagedBean(name = "loginMB")
-@SessionScoped
-public class LoginBean implements Serializable {
+@RequestScoped
+public class LoginBean {
 
-    private static final long serialVersionUID = -4825514920026120523L;
+    private String usuario = null;
 
-    private String usuario;
+    private String password = null;
 
-    private String password;
+    @ManagedProperty(value = "#{authenticationManager}")
+    private AuthenticationManager authenticationManager = null;
 
-    // @ManagedProperty(value = "#{AutenticacionService}")
-    // private IAutenticacionService autenticacionService;
-
-    public String login() throws IOException, ServletException {
-
-	ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-
-	RequestDispatcher dispatcher = ((ServletRequest) context.getRequest())
-		.getRequestDispatcher("/j_spring_security_check");
-
-	dispatcher.forward((ServletRequest) context.getRequest(), (ServletResponse) context.getResponse());
-
-	FacesContext.getCurrentInstance().responseComplete();
-	// It's OK to return null here because Faces is just going to exit.
-	return null;
-
-	// boolean success = autenticacionService.login(login, password);
-
-	// if (success) {
-	// return "pages/usuariolist.xhtml";
-	// } else {
-	// FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario o contrasena incorrecta."));
-	// return "pages/login.xhtml";
-	// }
+    public String login() {
+	try {
+	    Authentication request = new UsernamePasswordAuthenticationToken(this.getUsuario(), this.getPassword());
+	    Authentication result = authenticationManager.authenticate(request);
+	    SecurityContextHolder.getContext().setAuthentication(result);
+	} catch (AuthenticationException e) {
+	    e.printStackTrace();
+	}
+	return "secured";
     }
 
-    public String logout() {
-	FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-	return "logout.xhtml";
+    /**
+     * Cancel.
+     * 
+     * @return the string
+     */
+    public String cancel() {
+	return null;
+    }
+
+    public AuthenticationManager getAuthenticationManager() {
+	return authenticationManager;
+    }
+
+    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+	this.authenticationManager = authenticationManager;
     }
 
     public String getUsuario() {
