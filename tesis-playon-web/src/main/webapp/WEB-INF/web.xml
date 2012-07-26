@@ -26,12 +26,8 @@
 
 	<error-page>
 		<exception-type>org.springframework.security.access.AccessDeniedException</exception-type>
-		<location>/pages/login.xhtml</location>
+		<location>/login.html</location>
 	</error-page>
-
-	<session-config>
-		<session-timeout>30</session-timeout>
-	</session-config>
 
 	<!-- //////////////////////// END: FACES RELATED /////////////////////////// -->
 
@@ -49,16 +45,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-	<!-- <listener> -->
-	<!-- <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class> -->
-	<!-- </listener> -->
-
-	<!-- Spring Security -->	<!-- <context-param> -->
-	<!-- <param-name>javax.faces.PROJECT_STAGE</param-name> -->
-	<!-- <param-value>Development</param-value> -->
-	<!-- </context-param> -->
-
-	<filter>
+	<!-- Spring Security -->	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>

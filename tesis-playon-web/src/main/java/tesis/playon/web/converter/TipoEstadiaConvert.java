@@ -8,7 +8,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.TipoEstadia;
 
 /**

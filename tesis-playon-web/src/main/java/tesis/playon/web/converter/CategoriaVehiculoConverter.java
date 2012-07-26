@@ -9,7 +9,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 import tesis.playon.web.model.CategoriaVehiculo;
-import tesis.playon.web.model.TipoDoc;
 
 /**
  * @author Pablo
