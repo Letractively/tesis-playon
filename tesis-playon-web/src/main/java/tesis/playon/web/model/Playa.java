@@ -37,6 +37,12 @@ public class Playa implements Serializable {
 
     @Column(name = "disponibilidad", nullable = true)
     private Integer disponibilidad;
+    
+    @Column(name = "longitud", nullable = true)
+    private Double longitud;
+    
+    @Column(name = "latitud", nullable = true)
+    private Double latitud;
 
     @Column(name = "domicilio", nullable = true)
     private String domicilio;
@@ -90,6 +96,27 @@ public class Playa implements Serializable {
 
     public void setCuit(String cuit) {
 	this.cuit = cuit;
+    }
+   
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
+    }
+
+    public Double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getDisponibilidad() {
