@@ -1,51 +1,67 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition template="admin/template/templateLogin.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-<h:head>
-</h:head>
-<h:body>
-	<div align="right" style="">
+
+	<ui:define name="Content">
 		<h:form id="loginFormId" prependId="false">
-			<div id="loginFieldsPnlId">
-				<div id="loginFieldUsrContId">
-					<h:outputText id="outTxtUserNameId" value="Usuario:"
-						name="outTxtUserNameNm"></h:outputText>
-					<h:inputText id="usuario" required="true"
-						value="#{loginMB.usuario}"
-						requiredMessage="Por favor ingrese su nombre de usuario"></h:inputText>
-					<h:outputLabel id="outLblUserNameId" for="usuario"
-						name="outLblUserNameNm"></h:outputLabel>
-				</div>
-				<div id="loginFieldPassContId">
-					<h:outputText id="outTxtPasswordId" value="Contraseña:"
-						name="outTxtPasswordNm"></h:outputText>
-					<h:inputSecret id="password" required="true"
-						value="#{loginMB.password}"
-						requiredMessage="Por favor ingrese su contraseña"
-						name="inTxtPasswordNm"></h:inputSecret>
-					<h:outputLabel id="outLblPasswordId" for="password"
-						name="outLblPasswordNm"></h:outputLabel>
-				</div>
-				<div id="loginFieldPassContId">
-					<h:selectBooleanCheckbox id="recordar" value="#{loginMB.recordar}"
-						label="Recordar">Recordar</h:selectBooleanCheckbox>
-				</div>
-			</div>
-			<div id="loginBtnPanelId">
-				<h:commandButton id="btnLoginId" value="Ingresar"
-					action="#{loginMB.login}" styleClass="loginPanelBtn"></h:commandButton>
-				<h:commandButton id="btnCancelId" value="Cancelar"
-					action="#{loginMB.cancel}" styleClass="loginPanelBtn"
-					immediate="true" update="loginFormId"></h:commandButton>
-			</div>
+
+			<table class="login-font">
+				<tr>
+					<td><h:outputText id="outTxtUserNameId" value="Usuario:"
+							name="outTxtUserNameNm" /></td>
+					<td><h:inputText id="usuario" required="true"
+							value="#{loginMB.usuario}"
+							requiredMessage="Por favor ingrese su nombre de usuario" /></td>
+				</tr>
+				<tr>
+					<td><h:outputText id="outTxtPasswordId" value="Contraseña:"
+							name="outTxtPasswordNm" /></td>
+					<td><h:inputSecret id="password" required="true"
+							value="#{loginMB.password}"
+							requiredMessage="Por favor ingrese su contraseña"
+							name="inTxtPasswordNm" /></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><h:selectBooleanCheckbox id="recordar"
+							value="#{loginMB.recordar}" label="Recordar" />Recordar usuario</td>
+				</tr>
+				<tr>
+					<td colspan="2" height="10">
+						<!-- Separador -->
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center"><h:commandButton
+							id="btnLoginId" value="Ingresar" action="#{loginMB.login}"
+							styleClass="loginPanelBtn" /> <h:commandButton id="btnCancelId"
+							value="Cancelar" action="#{loginMB.cancel}"
+							styleClass="loginPanelBtn" immediate="true" update="loginFormId" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" height="10">
+						<!-- Separador -->
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="login-message"><h:outputLabel
+							id="outLblUserNameId" for="usuario" name="outLblUserNameNm" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="login-message"><h:outputLabel
+							id="outLblPasswordId" for="password" name="outLblPasswordNm" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="login-message"><h:messages /></td>
+				</tr>
+			</table>
 		</h:form>
-	</div>
-	<div>
-		<h:messages></h:messages>
-	</div>
-</h:body>
-</html>
+	</ui:define>
+</ui:composition>
+
+
+
