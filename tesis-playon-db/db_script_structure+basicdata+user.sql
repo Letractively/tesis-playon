@@ -1,6 +1,6 @@
 /*
- *  Script de generación de la estructura, carga de datos básicos, 
- *  creación del usuario y asignación de permisos
+ *  Script de generaciÃ³n de la estructura, carga de datos bÃ¡sicos, 
+ *  creaciÃ³n del usuario y asignaciÃ³n de permisos
  *  de de la base de datos del proyecto tesis-playon.
  *
  *  Proyecto: Playon
@@ -15,7 +15,7 @@
 
 /************************************************************ 
  ******* OJO QUE ESTO BORRA TODA LA BASE DE DATOS!!! ******** */
-/* Comentar la siguiente li­nea para NO borrar la base de datos
+/* Comentar la siguiente liÂ­nea para NO borrar la base de datos
    antes de crear las tablas en caso de que fuera necesario.  */
  UNLOCK TABLES;
  DROP DATABASE IF EXISTS `tesis_playon`;
@@ -153,7 +153,7 @@ CREATE TABLE `estado_publicidad` (
 
 LOCK TABLES `estado_publicidad` WRITE;
 /*!40000 ALTER TABLE `estado_publicidad` DISABLE KEYS */;
-INSERT INTO `estado_publicidad` (`descripcion`, `nombre`, `estadoPublicidadID`) VALUES ('Pendiente de AprobaciÃ³n','Pendiente',1),('Aprobada y pendiente de publicaciÃ³n','Aprobada',2),('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),('PerÃ­odo de publicaciÃ³n vencido','Vencida',5);
+INSERT INTO `estado_publicidad` (`descripcion`, `nombre`, `estadoPublicidadID`) VALUES ('Pendiente de AprobaciÃƒÂ³n','Pendiente',1),('Aprobada y pendiente de publicaciÃƒÂ³n','Aprobada',2),('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),('PerÃƒÂ­odo de publicaciÃƒÂ³n vencido','Vencida',5);
 /*!40000 ALTER TABLE `estado_publicidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,7 +272,7 @@ CREATE TABLE `estado_denuncia` (
 
 LOCK TABLES `estado_denuncia` WRITE;
 /*!40000 ALTER TABLE `estado_denuncia` DISABLE KEYS */;
-INSERT INTO `estado_denuncia` (`descripcion`, `nombre`, `estadoDenunciaID`) VALUES ('Pendiente de auditorÃ­a','Pendiente',1),('En proceso de investigaciÃ³n','En Proceso',2),('Acepatada','Aceptada',3),('Rechazada','Rechazada',4),('Anulada','Anulada',5),('Dada de Baja / Cancelada','De Baja',6);
+INSERT INTO `estado_denuncia` (`descripcion`, `nombre`, `estadoDenunciaID`) VALUES ('Pendiente de auditorÃƒÂ­a','Pendiente',1),('En proceso de investigaciÃƒÂ³n','En Proceso',2),('Acepatada','Aceptada',3),('Rechazada','Rechazada',4),('Anulada','Anulada',5),('Dada de Baja / Cancelada','De Baja',6);
 /*!40000 ALTER TABLE `estado_denuncia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -388,7 +388,7 @@ CREATE TABLE `categoria_vehiculo` (
   `nombre` varchar(50) NOT NULL,
   `categoriaVehiculoID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`categoriaVehiculoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Son los tÃ­pos de vehÃ­culos. Moto, Auto, Utilitario, PickUp, etc.   ';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Son los tÃƒÂ­pos de vehÃƒÂ­culos. Moto, Auto, Utilitario, PickUp, etc.   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -424,7 +424,7 @@ CREATE TABLE `estado_playa` (
 
 LOCK TABLES `estado_playa` WRITE;
 /*!40000 ALTER TABLE `estado_playa` DISABLE KEYS */;
-INSERT INTO `estado_playa` (`descripcion`, `nombre`, `estadoPlayaID`) VALUES ('Pendiente de AuditorÃ­a','Pendiente',1),('Aprobada luego de auditorÃ­a','Aprobada',2),('Rechazada luego de auditorÃ­a','Rechazada',3),('Dada de baja','De Baja',4);
+INSERT INTO `estado_playa` (`descripcion`, `nombre`, `estadoPlayaID`) VALUES ('Pendiente de AuditorÃƒÂ­a','Pendiente',1),('Aprobada luego de auditorÃƒÂ­a','Aprobada',2),('Rechazada luego de auditorÃƒÂ­a','Rechazada',3),('Dada de baja','De Baja',4);
 /*!40000 ALTER TABLE `estado_playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -481,7 +481,7 @@ CREATE TABLE `tipo_estadia` (
 
 LOCK TABLES `tipo_estadia` WRITE;
 /*!40000 ALTER TABLE `tipo_estadia` DISABLE KEYS */;
-INSERT INTO `tipo_estadia` (`descripcion`, `nombre`, `tipoEstadiaID`) VALUES ('','Por Hora',1),('','Por Mes',2),('','Por Noche',3),('','Por DÃ­a',4),('','Por Semana',5);
+INSERT INTO `tipo_estadia` (`descripcion`, `nombre`, `tipoEstadiaID`) VALUES ('','Por Hora',1),('','Por Mes',2),('','Por Noche',3),('','Por DÃƒÂ­a',4),('','Por Semana',5);
 /*!40000 ALTER TABLE `tipo_estadia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -655,7 +655,7 @@ CREATE TABLE `perfil_playa` (
   PRIMARY KEY (`perfilPlayaID`),
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_perfil_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Esta clase va a contener todos los datos del perfil de la playa que se muestra en el sitio: fotos, nombre para mostrar, descripciÃ³n, etc.    ';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Esta clase va a contener todos los datos del perfil de la playa que se muestra en el sitio: fotos, nombre para mostrar, descripciÃƒÂ³n, etc.    ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -748,7 +748,7 @@ CREATE TABLE `tarifa` (
   CONSTRAINT `FK_tarifa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
   CONSTRAINT `FK_tarifa_tipo_estadia` FOREIGN KEY (`tipoEstadiaID`) REFERENCES `tipo_estadia` (`tipoEstadiaID`),
   CONSTRAINT `FK_tarifa_categoria_vehiculo` FOREIGN KEY (`categoriaVehiculoID`) REFERENCES `categoria_vehiculo` (`categoriaVehiculoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cada instancia contiene un precio de la tarifa que depende del CategorÃ­a de vehÃ­culo, tipo de estadÃ­a (mensual, por hora, etc).      CategorÃ­aVehiculo: utilitario   TipoEstadÃ­a: Mensual   Precio/tarifa: $720      CategorÃ­aVehiculo: utilitario   TipoEstadÃ­a: Por hora   Precio/tarifa: $14      CategorÃ­aVehiculo: auto   TipoEstadÃ­a: Por hora   Precio/tarifa: $12   ';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cada instancia contiene un precio de la tarifa que depende del CategorÃƒÂ­a de vehÃƒÂ­culo, tipo de estadÃƒÂ­a (mensual, por hora, etc).      CategorÃƒÂ­aVehiculo: utilitario   TipoEstadÃƒÂ­a: Mensual   Precio/tarifa: $720      CategorÃƒÂ­aVehiculo: utilitario   TipoEstadÃƒÂ­a: Por hora   Precio/tarifa: $14      CategorÃƒÂ­aVehiculo: auto   TipoEstadÃƒÂ­a: Por hora   Precio/tarifa: $12   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -872,7 +872,7 @@ CREATE TABLE `tipo_pago` (
 
 LOCK TABLES `tipo_pago` WRITE;
 /*!40000 ALTER TABLE `tipo_pago` DISABLE KEYS */;
-INSERT INTO `tipo_pago` (`descripcion`, `nombre`, `tipoPagoID`) VALUES ('Contado Efectivo','Contado',1),('Tarjeta de dÃ©bito','Tarjeta DÃ©bito',2),('Tarjeta de crÃ©dito','Tarjeta CrÃ©dito',3),('DineroMail','DineroMail',4),('Cheque','Cheque',5),('Pago con saldo de la cuenta del cliente','Cuenta',6);
+INSERT INTO `tipo_pago` (`descripcion`, `nombre`, `tipoPagoID`) VALUES ('Contado Efectivo','Contado',1),('Tarjeta de dÃƒÂ©bito','Tarjeta DÃƒÂ©bito',2),('Tarjeta de crÃƒÂ©dito','Tarjeta CrÃƒÂ©dito',3),('DineroMail','DineroMail',4),('Cheque','Cheque',5),('Pago con saldo de la cuenta del cliente','Cuenta',6);
 /*!40000 ALTER TABLE `tipo_pago` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1232,7 +1232,7 @@ CREATE TABLE `estado_promocion` (
 
 LOCK TABLES `estado_promocion` WRITE;
 /*!40000 ALTER TABLE `estado_promocion` DISABLE KEYS */;
-INSERT INTO `estado_promocion` (`descripcion`, `nombre`, `estadoPromocionID`) VALUES ('Pendiente de AprobaciÃ³n','Pendiente',1),('Aprobada y pendiente de publicaciÃ³n','Aprobada',2),('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),('PerÃ­odo de publicaciÃ³n vencido','Vencida',5);
+INSERT INTO `estado_promocion` (`descripcion`, `nombre`, `estadoPromocionID`) VALUES ('Pendiente de AprobaciÃƒÂ³n','Pendiente',1),('Aprobada y pendiente de publicaciÃƒÂ³n','Aprobada',2),('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),('PerÃƒÂ­odo de publicaciÃƒÂ³n vencido','Vencida',5);
 /*!40000 ALTER TABLE `estado_promocion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1277,14 +1277,14 @@ DROP TABLE IF EXISTS `roles_por_usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `roles_por_usuario` (
-  `rolUsuarioID` int(11) NOT NULL,
   `rolesPorUsuarioID` int(11) NOT NULL auto_increment,
-  `usuarioID` int(11) NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `rolUsuario` varchar(50) NOT NULL,
   PRIMARY KEY (`rolesPorUsuarioID`),
-  KEY `rolUsuarioID` (`rolUsuarioID`),
-  KEY `usuarioID` (`usuarioID`),
-  CONSTRAINT `FK_roles_por_usuario_usuario` FOREIGN KEY (`usuarioID`) REFERENCES `usuario` (`usuarioID`),
-  CONSTRAINT `FK_roles_por_usuario_rol_usuario` FOREIGN KEY (`rolUsuarioID`) REFERENCES `rol_usuario` (`rolUsuarioID`)
+  KEY `usuario` (`usuario`),
+  KEY `rolUsuario` (`rolUsuario`),
+  CONSTRAINT `FK_roles_por_usuario_usuario` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`nombre`),
+  CONSTRAINT `FK_roles_por_usuario_rol_usuario` FOREIGN KEY (`rolUsuario`) REFERENCES `rol_usuario` (`nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1377,14 +1377,14 @@ UNLOCK TABLES;
 
 LOCK TABLES `roles_por_usuario` WRITE;
 /*!40000 ALTER TABLE `roles_por_usuario` DISABLE KEYS */;
-INSERT INTO `roles_por_usuario` (`rolUsuarioID`, `rolesPorUsuarioID`) 
-VALUES (1,1),   /* pablo_la31   --> ROLE_ADMIN */
-    (1,2),      /* alejandro    --> ROLE_ADMIN */
-    (1,3),      /* gonzalo      --> ROLE_ADMIN */
-    (1,4),      /* gmorales     --> ROLE_ADMIN */
-    (1,5),      /* eric         --> ROLE_ADMIN */
-    (5,6),      /* guest        --> ROLE_CLIENT */
-    (1,7);      /* admin        --> ROLE_ADMIN */
+INSERT INTO `roles_por_usuario` (`rolesPorUsuarioID`, `usuario`, `rolUsuario`) 
+VALUES (1,'pablo_la31', 'ROLE_ADMIN'),   /* pablo_la31   --> ROLE_ADMIN */
+    (2,'alejandro', 'ROLE_ADMIN'),       /* alejandro    --> ROLE_ADMIN */
+    (3,'gonzalo', 'ROLE_ADMIN'),         /* gonzalo      --> ROLE_ADMIN */
+    (4,'gmorales', 'ROLE_ADMIN'),        /* gmorales     --> ROLE_ADMIN */
+    (5,'eric', 'ROLE_ADMIN'),            /* eric         --> ROLE_ADMIN */
+    (6,'guest', 'ROLE_CLIENT'),          /* guest        --> ROLE_CLIENT */
+    (7,'admin', 'ROLE_ADMIN');           /* admin        --> ROLE_ADMIN */
 /*!40000 ALTER TABLE `roles_por_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
