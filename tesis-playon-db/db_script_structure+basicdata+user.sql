@@ -825,14 +825,15 @@ DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuario` (
   `apellido` varchar(50) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `nombre` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL UNIQUE,
+  `nombre` varchar(50) DEFAULT NULL UNIQUE,
   `password` varchar(50) DEFAULT NULL,
   `sesion` varchar(50) DEFAULT NULL,
   `usuario` varchar(50) NOT NULL,
   `usuarioID` int(11) NOT NULL auto_increment,
   `tipoDocID` int(11) DEFAULT NULL,
   `nroDoc` varchar(50) DEFAULT NULL,
+  `enable` tinyint(1) DEFAULT 1,
   PRIMARY KEY (`usuarioID`),
   KEY `tipoDocID` (`tipoDocID`),
   CONSTRAINT `FK_usuario_tipo_doc` FOREIGN KEY (`tipoDocID`) REFERENCES `tipo_doc` (`tipoDocID`)
@@ -1269,32 +1270,32 @@ LOCK TABLES `comentario` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `usuario_sistema`
+-- Table structure for table `roles_por_usuario`
 --
 
-DROP TABLE IF EXISTS `usuario_sistema`;
+DROP TABLE IF EXISTS `roles_por_usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuario_sistema` (
+CREATE TABLE `roles_por_usuario` (
   `rolUsuarioID` int(11) NOT NULL,
-  `usuarioSistemaID` int(11) NOT NULL auto_increment,
+  `rolesPorUsuarioID` int(11) NOT NULL auto_increment,
   `usuarioID` int(11) NOT NULL,
-  PRIMARY KEY (`usuarioSistemaID`),
+  PRIMARY KEY (`rolesPorUsuarioID`),
   KEY `rolUsuarioID` (`rolUsuarioID`),
   KEY `usuarioID` (`usuarioID`),
-  CONSTRAINT `FK_usuario_sistema_usuario` FOREIGN KEY (`usuarioID`) REFERENCES `usuario` (`usuarioID`),
-  CONSTRAINT `FK_usuario_sistema_rol_usuario` FOREIGN KEY (`rolUsuarioID`) REFERENCES `rol_usuario` (`rolUsuarioID`)
+  CONSTRAINT `FK_roles_por_usuario_usuario` FOREIGN KEY (`usuarioID`) REFERENCES `usuario` (`usuarioID`),
+  CONSTRAINT `FK_roles_por_usuario_rol_usuario` FOREIGN KEY (`rolUsuarioID`) REFERENCES `rol_usuario` (`rolUsuarioID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuario_sistema`
+-- Dumping data for table `roles_por_usuario`
 --
--- ORDER BY:  `usuarioSistemaID`
+-- ORDER BY:  `rolesPorUsuarioID`
 
-LOCK TABLES `usuario_sistema` WRITE;
-/*!40000 ALTER TABLE `usuario_sistema` DISABLE KEYS */;
-/*!40000 ALTER TABLE `usuario_sistema` ENABLE KEYS */;
+LOCK TABLES `roles_por_usuario` WRITE;
+/*!40000 ALTER TABLE `roles_por_usuario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `roles_por_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1306,10 +1307,10 @@ DROP TABLE IF EXISTS `rol_usuario`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rol_usuario` (
   `descripcion` text DEFAULT NULL,
-  `nombre` varchar(50) NOT NULL,
+  `nombre` varchar(50) NOT NULL UNIQUE,
   `rolUsuarioID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`rolUsuarioID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Los roles van a ser: Administrador, Cliente, DueÃ±o, Playero, Gerente, etc. y de estos van a depender los permisos que tenga cada uno dentro del sistema.   ';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1319,7 +1320,14 @@ CREATE TABLE `rol_usuario` (
 
 LOCK TABLES `rol_usuario` WRITE;
 /*!40000 ALTER TABLE `rol_usuario` DISABLE KEYS */;
-INSERT INTO `rol_usuario` (`descripcion`, `nombre`, `rolUsuarioID`) VALUES ('Administrador del sistema','Administrador',1),('Auditor del sistema','Auditor',2),('usuario del Area administrativa/contable','AdministraciÃ³n',3),('Usuario sin permisos especiales','usuario',4);
+INSERT INTO `rol_usuario` (`descripcion`, `nombre`, `rolUsuarioID`) 
+VALUES ('Administrador del sistema','ROLE_ADMIN',1),
+    ('Auditor del sistema','ROLE_AUDITOR',2),
+    ('Usuario del Area administrativa/contable','ROLE_CONTADOR',3),
+    ('Usuario sin permisos especiales','ROLE_USER',4),
+    ('Cliente de las playas de estacionamiento','ROLE_CLIENT',5),
+    ('Empleado de la playa de estacionamiento','ROLE_PLAYA_EMPLEADO',6),
+    ('Gerente de la playa de estacionamiento','ROLE_PLAYA_GERENTE',7);
 /*!40000 ALTER TABLE `rol_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1353,8 +1361,13 @@ LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` (`apellido`, `email`, `nombre`, `password`, `sesion`, `usuario`, 
     `usuarioID`, `tipoDocID`, `nroDoc`) 
-VALUES ('Pablo','pablo_la31@hotmail.com','Moreno','123456',NULL,'pablo_la31',8,1,'32987654'),
-    ('Pablo1','pablola31@hotmail.com','Moreno1','123456',NULL,'pablo_la_31',9,1,'32111111');
+VALUES ('Moreno','pablo_la31@hotmail.com','Pablo','123456',NULL,'pablo_la31',1,1,'32987654'),
+    ('Bostico','alebostico@hotmail.com','Alejandro','123456',NULL,'alejandro',2,1,'11111111'),
+    ('Arribere','gonzaloarribere@gmail.com','Gonzalo','123456',NULL,'gonzalo',3,1,'22222222'),
+    ('Morales','morales.batvski@gmail.com','Gustavo','123456',NULL,'gmorales',4,1,'33333333'),
+    ('Perez Villar','ericperezvillar@gmail.com','Eric','123456',NULL,'eric',5,1,'44444444'),
+    ('Guest','guest@playon.com.ar','Guest','123456',NULL,'guest',6,1,'55555555'),
+    ('Admin','admin@playon.com.ar','Admin','123456',NULL,'admin',7,1,'66666666');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1362,11 +1375,17 @@ UNLOCK TABLES;
 -- Dumping data for table `usuario_sistema`
 --
 
-LOCK TABLES `usuario_sistema` WRITE;
-/*!40000 ALTER TABLE `usuario_sistema` DISABLE KEYS */;
-INSERT INTO `usuario_sistema` (`rolUsuarioID`, `usuarioSistemaID`) 
-VALUES (1,9),(2,8);
-/*!40000 ALTER TABLE `usuario_sistema` ENABLE KEYS */;
+LOCK TABLES `roles_por_usuario` WRITE;
+/*!40000 ALTER TABLE `roles_por_usuario` DISABLE KEYS */;
+INSERT INTO `roles_por_usuario` (`rolUsuarioID`, `rolesPorUsuarioID`) 
+VALUES (1,1),   /* pablo_la31   --> ROLE_ADMIN */
+    (1,2),      /* alejandro    --> ROLE_ADMIN */
+    (1,3),      /* gonzalo      --> ROLE_ADMIN */
+    (1,4),      /* gmorales     --> ROLE_ADMIN */
+    (1,5),      /* eric         --> ROLE_ADMIN */
+    (5,6),      /* guest        --> ROLE_CLIENT */
+    (1,7);      /* admin        --> ROLE_ADMIN */
+/*!40000 ALTER TABLE `roles_por_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1376,7 +1395,7 @@ UNLOCK TABLES;
 LOCK TABLES `empleado` WRITE;
 /*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
 INSERT INTO `empleado` (`cargoEmpleadoID`, `legajo`, `empleadoID`, `usuarioID`) 
-VALUES (2,1000,8,9),(3,1001,9,8);
+VALUES (2,1000,8,1),(3,1001,9,2);
 /*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
 UNLOCK TABLES;
 
