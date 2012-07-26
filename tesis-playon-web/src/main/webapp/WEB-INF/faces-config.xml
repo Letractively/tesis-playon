@@ -34,7 +34,6 @@
     		<redirect></redirect>
     	</navigation-case>
     </navigation-rule>
-    
     <navigation-rule>
     	<display-name>secure/logout.xhtml</display-name>
     	<from-view-id>/secure/logout.xhtml</from-view-id>
@@ -44,7 +43,6 @@
     		<to-view-id>/index.xhtml</to-view-id>
     	</navigation-case>
     </navigation-rule>
-    
     <navigation-rule>
     	<display-name>login.xhtml</display-name>
     	<from-view-id>/login.xhtml</from-view-id>
@@ -54,5 +52,4 @@
     		<to-view-id>/secure/logout.xhtml</to-view-id>
     	</navigation-case>
     </navigation-rule>
-    
 </faces-config>
