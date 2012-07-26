@@ -1,10 +1,7 @@
 package tesis.playon.web.managed.bean;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-
-import tesis.playon.web.model.ModeloNegocios;
 
 /**
  * 
@@ -15,26 +12,20 @@ import tesis.playon.web.model.ModeloNegocios;
 @SessionScoped
 public class NavegadorManagedBean {
 
-    private String paginaParaNavegar = "";
+    private static final String TO_SECURE_KEY = "ToSecure";
 
-    @ManagedProperty(value = "modeloNegocios")
-    private ModeloNegocios modeloNegocios = null;
+    private static final String TO_UN_SECURE_KEY = "ToUnSecure";
 
-    private String ultimasNoticias = null;
+    private String paginaParaNavegar;
 
     public String navegarA() {
-	if ("ToSecure".equalsIgnoreCase(paginaParaNavegar)) {
+	if (TO_SECURE_KEY.equalsIgnoreCase(paginaParaNavegar)) {
 	    return "Secured";
-	} else if ("ToUnSecure".equalsIgnoreCase(paginaParaNavegar)) {
+	} else if (TO_UN_SECURE_KEY.equalsIgnoreCase(paginaParaNavegar)) {
 	    return "UnSecured";
 	} else {
 	    return "none";
 	}
-    }
-
-    public String showAdminPersonalPage() {
-	this.setUltimasNoticias(this.getModeloNegocios().getUltimasNoticiasDelNegocio());
-	return "adminPersonalDetails.xhtml";
     }
 
     public String getPaginaParaNavegar() {
@@ -43,22 +34,6 @@ public class NavegadorManagedBean {
 
     public void setPaginaParaNavegar(String paginaParaNavegar) {
 	this.paginaParaNavegar = paginaParaNavegar;
-    }
-
-    public ModeloNegocios getModeloNegocios() {
-	return modeloNegocios;
-    }
-
-    public void setModeloNegocios(ModeloNegocios modeloNegocios) {
-	this.modeloNegocios = modeloNegocios;
-    }
-
-    public String getUltimasNoticias() {
-	return ultimasNoticias;
-    }
-
-    public void setUltimasNoticias(String ultimasNoticias) {
-	this.ultimasNoticias = ultimasNoticias;
     }
 
 }

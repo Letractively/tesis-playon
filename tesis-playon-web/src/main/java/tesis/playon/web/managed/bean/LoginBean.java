@@ -34,14 +34,14 @@ public class LoginBean {
 	} catch (AuthenticationException e) {
 	    e.printStackTrace();
 	}
-	return "secured";
+	return "Secured";
     }
 
-    /**
-     * Cancel.
-     * 
-     * @return the string
-     */
+    public String logout() {
+	SecurityContextHolder.clearContext();
+	return "loggedout";
+    }
+
     public String cancel() {
 	return null;
     }
