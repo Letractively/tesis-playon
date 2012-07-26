@@ -1,10 +1,12 @@
 package tesis.playon.web.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IProvinciaDao;
+import tesis.playon.web.model.Localidad;
 import tesis.playon.web.model.Provincia;
 import tesis.playon.web.service.IProvinciaService;
 
@@ -44,6 +46,11 @@ public class ProvinciaService implements IProvinciaService {
     @Override
     public Provincia findByNombreProvincia(String nombreProvincia) {
 	return getProvinciaDao().findByNombreProvincia(nombreProvincia);
+    }
+    
+    @Override
+    public Set<Localidad> findLocalidades(Provincia provincia){
+	return getProvinciaDao().findLocalidades(provincia);
     }
 
     public IProvinciaDao getProvinciaDao() {

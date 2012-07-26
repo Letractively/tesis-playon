@@ -2,7 +2,9 @@ package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -10,6 +12,7 @@ import javax.faces.bean.RequestScoped;
 
 import org.springframework.dao.DataAccessException;
 
+import tesis.playon.web.model.Localidad;
 import tesis.playon.web.model.Pais;
 import tesis.playon.web.model.Provincia;
 import tesis.playon.web.service.IProvinciaService;
@@ -32,12 +35,15 @@ public class ProvinciaManagedBean implements Serializable {
     private String nombre;
 
     private Pais pais;
+    
+    private Set<Localidad> localidades;
 
     public String addPais() {
 	try {
 	    Provincia provincia = new Provincia();
 	    provincia.setNombre(getNombre());
 	    provincia.setPais(getPais());
+	    provincia.setLocalidades(getLocalidades());
 	    getProvinciaService().save(provincia);
 	    return PROVINCIA_PAIS;
 	} catch (DataAccessException e) {
@@ -56,6 +62,8 @@ public class ProvinciaManagedBean implements Serializable {
 
     public void reset() {
 	this.setNombre("");
+	this.setPais(null);
+	this.setLocalidades(null);    
     }
 
     public IProvinciaService getProvinciaService() {
@@ -92,4 +100,15 @@ public class ProvinciaManagedBean implements Serializable {
 	this.pais = pais;
     }
 
+    public Set<Localidad> getLocalidades() {
+	localidades  = new HashSet<Localidad>(0);
+	Provincia provincia = getProvinciaService().findByNombreProvincia(getNombre());
+	localidades.addAll(getProvinciaService().findLocalidades(provincia));
+        return localidades;
+    }
+
+    public void setLocalidades(Set<Localidad> localidades) {
+        this.localidades = localidades;
+    }
+    
 }

@@ -1,11 +1,13 @@
 package tesis.playon.web.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IPaisDao;
 import tesis.playon.web.model.Pais;
+import tesis.playon.web.model.Provincia;
 import tesis.playon.web.service.IPaisService;
 
 /**
@@ -43,6 +45,11 @@ public class PaisService implements IPaisService {
     @Override
     public Pais findByNombrPais(String nombrePais) {
 	return getPaisDao().findByNombrePais(nombrePais);
+    }
+    
+    @Override
+    public Set<Provincia> findProvincia(Pais pais){
+	return getPaisDao().findProvincia(pais);
     }
 
     public IPaisDao getPaisDao() {

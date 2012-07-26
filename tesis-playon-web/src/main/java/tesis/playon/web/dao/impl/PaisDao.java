@@ -1,12 +1,15 @@
 package tesis.playon.web.dao.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IPaisDao;
 import tesis.playon.web.model.Pais;
+import tesis.playon.web.model.Provincia;
 
 /**
  * 
@@ -50,5 +53,15 @@ public class PaisDao implements IPaisDao {
 	    paises.add((Pais) object);
 	}
 	return paises;
+    }
+    
+    public Set<Provincia> findProvincia(Pais pais){
+	Set<Provincia> provincias = new HashSet<Provincia>(0);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Localidad where provincia=?")
+		.setParameter(0, pais).list();
+	for (Object object : list) {
+	    provincias.add((Provincia) object);
+	}
+	return provincias;
     }
 }

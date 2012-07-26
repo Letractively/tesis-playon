@@ -1,11 +1,14 @@
 package tesis.playon.web.dao.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.ILocalidadDao;
+import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Localidad;
 
 /**
@@ -50,5 +53,15 @@ public class LocalidadDao implements ILocalidadDao {
 	    localidades.add((Localidad) object);
 	}
 	return localidades;
+    }
+    
+    public Set<Barrio> findBarrio(Localidad localidad){
+	Set<Barrio> barrios = new HashSet<Barrio>(0);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Barrio where localidad=?")
+		.setParameter(0, localidad).list();
+	for (Object object : list) {
+	    barrios.add((Barrio) object);
+	}
+	return barrios;
     }
 }

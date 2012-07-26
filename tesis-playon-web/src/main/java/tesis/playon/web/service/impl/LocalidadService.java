@@ -1,10 +1,12 @@
 package tesis.playon.web.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.ILocalidadDao;
+import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Localidad;
 import tesis.playon.web.service.ILocalidadService;
 
@@ -45,6 +47,11 @@ public class LocalidadService implements ILocalidadService {
     public Localidad findByNombreLocalidad(String nombreLocalidad) {
 	return getLocalidadDao().findByNombreLocalidad(nombreLocalidad);
     }
+    
+    @Override
+    public Set<Barrio> findBarrio(Localidad localidad){
+	return getLocalidadDao().findBarrio(localidad);
+    }
 
     public ILocalidadDao getLocalidadDao() {
 	return localidadDao;
@@ -53,5 +60,4 @@ public class LocalidadService implements ILocalidadService {
     public void setLocalidadDao(ILocalidadDao localidadDao) {
 	this.localidadDao = localidadDao;
     }
-
 }

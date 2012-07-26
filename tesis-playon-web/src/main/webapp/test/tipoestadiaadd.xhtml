@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+     xmlns:h="http://java.sun.com/jsf/html"      
+      xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.org/ui">  
+ <h:head><title>PLAYON: Nuevo Tipo de Estadia</title></h:head>  
+ <h:body>
+     <h:form>      
+	     <table> 
+		     <tr>
+		     	<td><h:outputLabel for="nombre" value="Nombre: " /></td>
+		     	<td><p:inputText id="nombre" value="#{tipoEstadiaMB.nombre}">
+		     			<f:validateLength minimum="5" /> 
+		     			<p:ajax event="blur" update="nombreMsg" />
+		     		</p:inputText>
+		     		<p:message id="nombreMsg" for="nombre" display="icon"/> 
+		     	</td>
+		     </tr>
+		     <tr>
+		     	<td><h:outputLabel for="descripcion" value="Descripcion: " /></td>   
+		     	<td><p:inputText id="descripcion" value="#{tipoEstadiaMB.descripcion}"> 
+		     			<f:validateLength minimum="10" /> 
+		     			<p:ajax event="blur" update="descripcionMsg" />  
+		     		</p:inputText>
+		     		<p:message id="descripcionMsg" for="descripcion" display="icon"/> 
+		     	</td>    
+		     </tr>            
+	         <tr>
+		     	<td><p:commandButton id="addTipoE" value="Agregar" action="#{tipoEstadiaMB.addTipoEstadia}" ajax="false"/></td>
+		     	<td><p:commandButton id="reset" value="Limpiar" action="#{tipoEstadiaMB.reset}" ajax="false"/></td>
+		     </tr>   
+	     </table>
+     </h:form>      
+</h:body>
+</html>

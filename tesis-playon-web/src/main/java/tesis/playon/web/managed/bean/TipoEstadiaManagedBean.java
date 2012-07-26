@@ -97,5 +97,4 @@ public class TipoEstadiaManagedBean implements Serializable {
 	public void setTipoEstadiaList(List<TipoEstadia> tipoEstadiaList) {
 	    this.tipoEstadiaList = tipoEstadiaList;
 	}
-	
 }

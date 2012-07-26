@@ -1,7 +1,9 @@
 package tesis.playon.web.service;
 
 import java.util.List;
+import java.util.Set;
 
+import tesis.playon.web.model.Localidad;
 import tesis.playon.web.model.Provincia;
 
 /**
@@ -21,4 +23,5 @@ public interface IProvinciaService {
 
     Provincia findByNombreProvincia(String nombreProvincia);
 
+    Set<Localidad> findLocalidades(Provincia provincia);
 }
