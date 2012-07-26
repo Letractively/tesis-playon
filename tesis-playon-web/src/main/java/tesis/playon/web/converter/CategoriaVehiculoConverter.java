@@ -29,7 +29,7 @@ public class CategoriaVehiculoConverter implements Converter{
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-	if (value instanceof TipoDoc) {
+	if (value instanceof CategoriaVehiculo) {
 	    CategoriaVehiculo categoriaVehiculo = (CategoriaVehiculo) value;
 	    String idCategoriaVehiculo = Integer.toString(categoriaVehiculo.getId());
 	    String nombreCategoriaVehiculo = categoriaVehiculo.getNombre();

@@ -25,7 +25,7 @@ public class CargoEmpleadoManagedBean implements Serializable{
 
     private static final long serialVersionUID = -1085389423375986168L;
 
-    private static final String LISTA_CARGO_EMPLEADO = "cargoempleadolist";
+    private static final String LISTA_CARGO_EMPLEADOS = "cargoempleadolist";
 
     private static final String ERROR = "error";
 
@@ -76,7 +76,7 @@ public class CargoEmpleadoManagedBean implements Serializable{
 	    cargoEmpleado.setNombre(getNombre());
 	    cargoEmpleado.setDescripcion(getDescripcion());
 	    getCargoEmpleadoService().save(cargoEmpleado);
-	    return LISTA_CARGO_EMPLEADO;
+	    return LISTA_CARGO_EMPLEADOS;
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
 	}

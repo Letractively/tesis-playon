@@ -16,42 +16,41 @@ import tesis.playon.web.service.ITipoEstadiaService;
 @Transactional(readOnly = true)
 public class TipoEstadiaService implements ITipoEstadiaService {
 
-    ITipoEstadiaDao tipoEstadiDao;
+    ITipoEstadiaDao tipoEstadiaDao;
 
     @Transactional(readOnly = false)
     @Override
     public void save(TipoEstadia tipoEstadia) {
-	getTipoEstadiDao().save(tipoEstadia);
+	getTipoEstadiaDao().save(tipoEstadia);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void update(TipoEstadia tipoEstadia) {
-	getTipoEstadiDao().update(tipoEstadia);
+	getTipoEstadiaDao().update(tipoEstadia);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(TipoEstadia tipoEstadia) {
-	getTipoEstadiDao().delete(tipoEstadia);
+	getTipoEstadiaDao().delete(tipoEstadia);
     }
 
     @Override
     public List<TipoEstadia> findAll() {
-	return getTipoEstadiDao().findAll();
+	return getTipoEstadiaDao().findAll();
     }
 
     @Override
     public TipoEstadia findByNombreTipoEstadia(String nombreTipoEstadia) {
-	return getTipoEstadiDao().findByNombreTipoEstadia(nombreTipoEstadia);
+	return getTipoEstadiaDao().findByNombreTipoEstadia(nombreTipoEstadia);
     }
 
-    public ITipoEstadiaDao getTipoEstadiDao() {
-	return tipoEstadiDao;
+    public ITipoEstadiaDao getTipoEstadiaDao() {
+        return tipoEstadiaDao;
     }
 
-    public void setTipoEstadiDao(ITipoEstadiaDao tipoEstadiDao) {
-	this.tipoEstadiDao = tipoEstadiDao;
+    public void setTipoEstadiaDao(ITipoEstadiaDao tipoEstadiaDao) {
+        this.tipoEstadiaDao = tipoEstadiaDao;
     }
-
 }

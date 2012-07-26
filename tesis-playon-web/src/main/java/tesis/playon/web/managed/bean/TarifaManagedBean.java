@@ -77,7 +77,7 @@ public class TarifaManagedBean implements Serializable{
 	getTarifaService().delete(tarifa);
     }
 
-    public void updateUsuario(Tarifa tarifa) {
+    public void updateTarifa(Tarifa tarifa) {
 	getTarifaService().update(tarifa);
     }
 

@@ -18,138 +18,138 @@ import tesis.playon.web.service.IUsuarioService;
 @RequestScoped
 public class UsuarioManagedBean implements Serializable {
 
-    private static final long serialVersionUID = -1085389423375986168L;
+	private static final long serialVersionUID = -1085389423375986168L;
 
-    private static final String LISTA_USUARIOS = "usuariolist";
+	private static final String LISTA_USUARIOS = "usuariolist";
 
-    private static final String ERROR = "error";
+	private static final String ERROR = "error";
 
-    @ManagedProperty(value = "#{UsuarioService}")
-    IUsuarioService usuarioService;
+	@ManagedProperty(value = "#{UsuarioService}")
+	IUsuarioService usuarioService;
 
-    List<Usuario> usuarioList;
+	List<Usuario> usuarioList;
 
-    private String apellido;
+	private String apellido;
 
-    private String nombre;
+	private String nombre;
 
-    private String email;
+	private String email;
 
-    private Integer nroDoc;
+	private Integer nroDoc;
 
-    private String password;
+	private String password;
 
-    private String nombreUser;
+	private String nombreUser;
 
-    private TipoDoc tipoDoc;
+	private TipoDoc tipoDoc;
 
-    public String addUsuario() {
-	try {
-	    Usuario usuario = new Usuario();
-	    usuario.setNombre(getNombre());
-	    usuario.setApellido(getApellido());
-	    usuario.setEmail(getEmail());
-	    usuario.setNroDoc(getNroDoc());
-	    usuario.setPassword(getPassword());
-	    usuario.setNombreUser(getNombreUser());
-	    usuario.setTipoDoc(getTipoDoc());
-	    getUsuarioService().save(usuario);
-	    return LISTA_USUARIOS;
-	} catch (DataAccessException e) {
-	    e.printStackTrace();
+	public String addUsuario() {
+		try {
+			Usuario usuario = new Usuario();
+			usuario.setNombre(getNombre());
+			usuario.setApellido(getApellido());
+			usuario.setEmail(getEmail());
+			usuario.setNroDoc(getNroDoc());
+			usuario.setPassword(getPassword());
+			usuario.setNombreUser(getNombreUser());
+			usuario.setTipoDoc(getTipoDoc());
+			getUsuarioService().save(usuario);
+			return LISTA_USUARIOS;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return ERROR;
 	}
-	return ERROR;
-    }
 
-    public void deleteUsuario(Usuario usuario) {
-	getUsuarioService().delete(usuario);
-    }
+	public void deleteUsuario(Usuario usuario) {
+		getUsuarioService().delete(usuario);
+	}
 
-    public void updateUsuario(Usuario usuario) {
-	getUsuarioService().update(usuario);
-    }
+	public void updateUsuario(Usuario usuario) {
+		getUsuarioService().update(usuario);
+	}
 
-    public void reset() {
-	this.setNombre("");
-	this.setApellido("");
-	this.setEmail("");
-	this.setNroDoc(0);
-	this.setPassword("");
-	this.setNombreUser("");
-    }
+	public void reset() {
+		this.setNombre("");
+		this.setApellido("");
+		this.setEmail("");
+		this.setNroDoc(0);
+		this.setPassword("");
+		this.setNombreUser("");
+	}
 
-    public IUsuarioService getUsuarioService() {
-	return usuarioService;
-    }
+	public IUsuarioService getUsuarioService() {
+		return usuarioService;
+	}
 
-    public void setUsuarioService(IUsuarioService usuarioService) {
-	this.usuarioService = usuarioService;
-    }
+	public void setUsuarioService(IUsuarioService usuarioService) {
+		this.usuarioService = usuarioService;
+	}
 
-    public List<Usuario> getUsuarioList() {
-	usuarioList = new ArrayList<Usuario>();
-	usuarioList.addAll(getUsuarioService().findAll());
-	return usuarioList;
-    }
+	public List<Usuario> getUsuarioList() {
+		usuarioList = new ArrayList<Usuario>();
+		usuarioList.addAll(getUsuarioService().findAll());
+		return usuarioList;
+	}
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-	this.usuarioList = usuarioList;
-    }
+	public void setUsuarioList(List<Usuario> usuarioList) {
+		this.usuarioList = usuarioList;
+	}
 
-    public String getApellido() {
-	return apellido;
-    }
+	public String getApellido() {
+		return apellido;
+	}
 
-    public void setApellido(String apellido) {
-	this.apellido = apellido;
-    }
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
 
-    public String getNombre() {
-	return nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setNombre(String nombre) {
-	this.nombre = nombre;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public String getEmail() {
-	return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(String email) {
-	this.email = email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public Integer getNroDoc() {
-	return nroDoc;
-    }
+	public Integer getNroDoc() {
+		return nroDoc;
+	}
 
-    public void setNroDoc(Integer nroDoc) {
-	this.nroDoc = nroDoc;
-    }
+	public void setNroDoc(Integer nroDoc) {
+		this.nroDoc = nroDoc;
+	}
 
-    public String getPassword() {
-	return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setPassword(String password) {
-	this.password = password;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public String getNombreUser() {
-	return nombreUser;
-    }
+	public String getNombreUser() {
+		return nombreUser;
+	}
 
-    public void setNombreUser(String nombreUser) {
-	this.nombreUser = nombreUser;
-    }
+	public void setNombreUser(String nombreUser) {
+		this.nombreUser = nombreUser;
+	}
 
-    public TipoDoc getTipoDoc() {
-	return tipoDoc;
-    }
+	public TipoDoc getTipoDoc() {
+		return tipoDoc;
+	}
 
-    public void setTipoDoc(TipoDoc tipoDoc) {
-	this.tipoDoc = tipoDoc;
-    }
+	public void setTipoDoc(TipoDoc tipoDoc) {
+		this.tipoDoc = tipoDoc;
+	}
 
 }

@@ -26,35 +26,34 @@
 
 	<!-- Beans Declaration -->
 	
-	<!-- <bean id="Barrio" class="tesis.playon.web.model.Barrio" /> -->
+	<bean id="Barrio" class="tesis.playon.web.model.Barrio" />
 	<!-- <bean id="CargoEmpleado" class="tesis.playon.web.model.CargoEmpleado" /> -->
-<!-- 	<bean id="CategoriaVehiculo" class="tesis.playon.web.model.CategoriaVehiculo" /> -->
+	<bean id="CategoriaVehiculo" class="tesis.playon.web.model.CategoriaVehiculo" />
 	<!-- <bean id="ColorVehiculo" class="tesis.playon.web.model.ColorVehiculo" /> -->
 	<!-- <bean id="Empleado" class="tesis.playon.web.model.Empleado" /> -->
-	<!-- <bean id="Estadia" class="tesis.playon.web.model.Estadia" /> -->
+<!-- 	<bean id="Estadia" class="tesis.playon.web.model.Estadia" /> -->
 	<!-- <bean id="EstadoDenuncia" class="tesis.playon.web.model.EstadoDenuncia" /> -->
-	<!-- <bean id="EstadoPlaya" class="tesis.playon.web.model.EstadoPlaya" /> -->
+	<bean id="EstadoPlaya" class="tesis.playon.web.model.EstadoPlaya" />
 	<!-- <bean id="EstadoPromocion" class="tesis.playon.web.model.EstadoPromocion" 	/> -->
 	<!-- <bean id="EstadoPublicidad" class="tesis.playon.web.model.EstadoPublicidad" /> -->
 	<!-- <bean id="Localidad" class="tesis.playon.web.model.Localidad" /> -->
 	<!-- <bean id="MarcaVehiculo" class="tesis.playon.web.model.MarcaVehiculo" /> -->
 	<!-- <bean id="ModeloVehiculo" class="tesis.playon.web.model.ModeloVehiculo" /> -->
 	<!-- <bean id="Pais" class="tesis.playon.web.model.Pais" /> -->
-	<!-- <bean id="Playa" class="tesis.playon.web.model.Playa" /> -->
+	<bean id="Playa" class="tesis.playon.web.model.Playa" />
 	<!-- <bean id="Posicion" class="tesis.playon.web.model.Posicion" /> -->
 	<!-- <bean id="Provincia" class="tesis.playon.web.model.Provincia" /> -->
 	<bean id="RolUsuario" class="tesis.playon.web.model.RolUsuario" />
-<!-- 	<bean id="Tarifa" class="tesis.playon.web.model.Tarifa" /> -->
+	<bean id="Tarifa" class="tesis.playon.web.model.Tarifa" />
 	<bean id="TipoDoc" class="tesis.playon.web.model.TipoDoc" />
-<!-- 	<bean id="TipoEstadia" class="tesis.playon.web.model.TipoEstadia" /> -->
+	<bean id="TipoEstadia" class="tesis.playon.web.model.TipoEstadia" />
 	<!-- <bean id="TipoPago" class="tesis.playon.web.model.TipoPago" /> -->
 	<bean id="Usuario" class="tesis.playon.web.model.Usuario" />
 	<!-- <bean id="UsuarioSistema" class="tesis.playon.web.model.UsuarioSistema" /> -->
 
+
+
 	<!-- User Service Declaration -->
-	<bean id="tarifaService" class="tesis.playon.web.service.impl.TarifaService">
-		<property name="tarifaDao" ref="TarifaDao" />
-	</bean>
 	<bean id="RolUsuarioService" class="tesis.playon.web.service.impl.RolUsuarioService">
 		<property name="rolUsuarioDao" ref="RolUsuarioDao" />
 	</bean>
@@ -64,6 +63,18 @@
 	<bean id="UsuarioService" class="tesis.playon.web.service.impl.UsuarioService">
 		<property name="usuarioDao" ref="UsuarioDao" />
 	</bean>	
+	<bean id="TarifaService" class="tesis.playon.web.service.impl.TarifaService">
+		<property name="tarifaDao" ref="TarifaDao" />
+	</bean>
+	<bean id="TipoEstadiaService" class="tesis.playon.web.service.impl.TipoEstadiaService">
+		<property name="tipoEstadiaDao" ref="TipoEstadiaDao" />
+	</bean>
+	<bean id="PlayaService" class="tesis.playon.web.service.impl.PlayaService">
+		<property name="playaDao" ref="PlayaDao" />
+	</bean>
+	<bean id="CategoriaVehiculoService" class="tesis.playon.web.service.impl.CategoriaVehiculoService">
+		<property name="categoriaVehiculoDao" ref="CategoriaVehiculoDao" />
+	</bean>
 	
 
 	<!-- User DAO Declaration -->
@@ -79,6 +90,16 @@
 	<bean id="TarifaDao" class="tesis.playon.web.dao.impl.TarifaDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
+	<bean id="TipoEstadiaDao" class="tesis.playon.web.dao.impl.TipoEstadiaDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
+	<bean id="PlayaDao" class="tesis.playon.web.dao.impl.PlayaDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
+	<bean id="CategoriaVehiculoDao" class="tesis.playon.web.dao.impl.CategoriaVehiculoDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
+
 
 	<!-- Data Source Declaration -->
 	<bean id="DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -92,40 +113,41 @@
 		<property name="minPoolSize" value="5" />
 	</bean>
 
+
+
 	<!-- Session Factory Declaration -->
 	<bean id="SessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="DataSource" />
 		<property name="annotatedClasses">
 			<list>
-				<!-- <value>tesis.playon.web.model.Barrio</value> -->
-				<!-- <value>tesis.playon.web.model.CargoEmpleado</value> -->
-<!-- 				<value>tesis.playon.web.model.CategoriaVehiculo</value> -->
-				<!-- <value>tesis.playon.web.model.ColorVehiculo</value> -->
-				<!-- <value>tesis.playon.web.model.Empleado</value> -->
-				<!-- <value>tesis.playon.web.model.Empleado</value> -->
-				<!-- <value>tesis.playon.web.model.Empleado</value> -->
-				<!-- <value>tesis.playon.web.model.Estadia</value> -->
-				<!-- <value>tesis.playon.web.model.EstadoDenuncia</value> -->
-				<!-- <value>tesis.playon.web.model.EstadoPlaya</value> -->
-				<!-- <value>tesis.playon.web.model.EstadoPromocion</value> -->
-				<!-- <value>tesis.playon.web.model.EstadoPublicidad</value> -->
-				<!-- <value>tesis.playon.web.model.Localidad</value> -->
-				<!-- <value>tesis.playon.web.model.MarcaVehiculo</value> -->
-				<!-- <value>tesis.playon.web.model.ModeloVehiculo</value> -->
-				<!-- <value>tesis.playon.web.model.Pais</value> -->
-				<!-- <value>tesis.playon.web.model.Playa</value> -->
-				<!-- <value>tesis.playon.web.model.Posicion</value> -->
-				<!-- <value>tesis.playon.web.model.Provincia</value> -->
+				<value>tesis.playon.web.model.Barrio</value>
+				<value>tesis.playon.web.model.CargoEmpleado</value>
+				<value>tesis.playon.web.model.CategoriaVehiculo</value>
+				<value>tesis.playon.web.model.ColorVehiculo</value>
+				<value>tesis.playon.web.model.Empleado</value>
+				<value>tesis.playon.web.model.Estadia</value>
+				<value>tesis.playon.web.model.EstadoDenuncia</value>
+				<value>tesis.playon.web.model.EstadoPlaya</value>
+				<value>tesis.playon.web.model.EstadoPromocion</value>
+				<value>tesis.playon.web.model.EstadoPublicidad</value>
+				<value>tesis.playon.web.model.Localidad</value>
+				<value>tesis.playon.web.model.MarcaVehiculo</value>
+				<value>tesis.playon.web.model.ModeloVehiculo</value>
+				<value>tesis.playon.web.model.Pais</value>
+				<value>tesis.playon.web.model.Playa</value>
+				<value>tesis.playon.web.model.Posicion</value>
+				<value>tesis.playon.web.model.Provincia</value>
 				<value>tesis.playon.web.model.RolUsuario</value>
-<!-- 				<value>tesis.playon.web.model.Tarifa</value> -->
+				<value>tesis.playon.web.model.Tarifa</value>
 				<value>tesis.playon.web.model.TipoDoc</value>
-<!-- 				<value>tesis.playon.web.model.TipoEstadia</value> -->
-				<!-- <value>tesis.playon.web.model.TipoPago</value> -->
+				<value>tesis.playon.web.model.TipoEstadia</value>
+				<value>tesis.playon.web.model.TipoPago</value>
 				<value>tesis.playon.web.model.Usuario</value>
-				<!-- <value>tesis.playon.web.model.UsuarioSistema</value> -->
+				<value>tesis.playon.web.model.UsuarioSistema</value>
 			</list>
 		</property>
+
 
 		<property name="hibernateProperties">
 			<props>
@@ -134,6 +156,7 @@
 			</props>
 		</property>
 	</bean>
+
 
 	<!-- Enable the configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven transaction-manager="txManager" />

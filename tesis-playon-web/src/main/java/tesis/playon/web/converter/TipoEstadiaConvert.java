@@ -29,7 +29,7 @@ public class TipoEstadiaConvert implements Converter{
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-	if (value instanceof TipoDoc) {
+	if (value instanceof TipoEstadia) {
 	    TipoEstadia tipoEstadia = (TipoEstadia) value;
 	    String idTipoDoc = Integer.toString(tipoEstadia.getId());
 	    String nombreTipoDoc = tipoEstadia.getNombre();

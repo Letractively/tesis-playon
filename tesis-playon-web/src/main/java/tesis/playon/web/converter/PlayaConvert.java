@@ -9,7 +9,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 import tesis.playon.web.model.Playa;
-import tesis.playon.web.model.TipoDoc;
+import tesis.playon.web.service.IPlayaService;
 
 /**
  * @author Pablo
@@ -18,9 +18,11 @@ import tesis.playon.web.model.TipoDoc;
 @FacesConverter(value = "playaConverter")
 public class PlayaConvert implements Converter{
 
+	IPlayaService playaService;
+	
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-	String toObject[] = value.split(":");
+    String toObject[] = value.split(":");
 	Playa playa = new Playa();
 	playa.setId(Integer.parseInt(toObject[0]));
 	playa.setNombreComercial(toObject[1]);
@@ -29,7 +31,7 @@ public class PlayaConvert implements Converter{
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-	if (value instanceof TipoDoc) {
+	if (value instanceof Playa) {
 	    Playa playa = (Playa) value;
 	    String idPlaya = Integer.toString(playa.getId());
 	    String nombrePlaya = playa.getNombreComercial();
@@ -39,5 +41,4 @@ public class PlayaConvert implements Converter{
 	    return "No se pudo parsear el objeto.";
 	}
     }
-    
 }

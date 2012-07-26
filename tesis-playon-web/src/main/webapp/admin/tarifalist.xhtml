@@ -12,7 +12,7 @@
 			style="width: 10%">
 
 			<f:facet name="header">
-				Usuarios
+				Tarifas
             </f:facet>
             
             <p:column headerText="Playa" style="width:125px">
@@ -37,7 +37,7 @@
 				</p:cellEditor>
 			</p:column>
 
-			<p:column headerText="Categoria:" style="width:125px">
+			<p:column headerText="Categoria" style="width:125px">
 				<p:cellEditor>
 					<f:facet name="output">
 						<h:outputText value="#{tarifa.categoriaVehiculo.nombre}" />
@@ -94,7 +94,7 @@
 
 		<tr>
 			<td><p:commandButton id="addTarifaNueva" value="Agregar"
-					action="/pages/tarifaadd.jsf?faces-redirect=true" ajax="false" /></td>
+					action="/tarifaadd.jsf?faces-redirect=true" ajax="false" /></td>
 		</tr>
 
 	</h:form>
