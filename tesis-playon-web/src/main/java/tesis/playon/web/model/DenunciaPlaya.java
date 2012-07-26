@@ -49,8 +49,9 @@ public class DenunciaPlaya implements Serializable {
     @JoinColumn(name = "playaID", nullable = false)
     private Playa playa;
 
-    public DenunciaPlaya(){}
-    
+    public DenunciaPlaya() {
+    }
+
     public DenunciaPlaya(String asunto, Date fechaAlta, Playa playa, Cliente cliente) {
 	this.asunto = asunto;
 	this.fechaAlta = fechaAlta;
@@ -90,10 +91,23 @@ public class DenunciaPlaya implements Serializable {
 	this.playa = playa;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	DenunciaPlaya otroDenuncia = (DenunciaPlaya) object;
+	if (id != otroDenuncia.id)
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
-	return "DenunciaPlaya:\t [denunciaPlayaID= " + id + ", asunto= " + asunto + ", fechaAlta= " + fechaAlta.toString()
-		+ ", Cliente= " + cliente.getNroCliente() + ", " + playa + "]";
+	return "DenunciaPlaya:\t [denunciaPlayaID= " + id + ", asunto= " + asunto + ", fechaAlta= "
+		+ fechaAlta.toString() + ", Cliente= " + cliente.getNroCliente() + ", " + playa + "]";
     }
 
 }

@@ -49,8 +49,9 @@ public class DenunciaVehiculo implements Serializable {
     @JoinColumn(name = "playaID", nullable = false)
     private Playa playa;
 
-    public DenunciaVehiculo(){}
-    
+    public DenunciaVehiculo() {
+    }
+
     public DenunciaVehiculo(String asunto, Date fechaAlta, Vehiculo vehiculo, Playa playa) {
 	this.asunto = asunto;
 	this.fechaAlta = fechaAlta;
@@ -92,6 +93,19 @@ public class DenunciaVehiculo implements Serializable {
 
     public Integer getId() {
 	return id;
+    }
+
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	DenunciaVehiculo otroDenuncia = (DenunciaVehiculo) object;
+	if (id != otroDenuncia.id)
+	    return false;
+
+	return true;
     }
 
     @Override

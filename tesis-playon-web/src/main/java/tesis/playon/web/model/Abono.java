@@ -57,6 +57,7 @@ public class Abono implements Serializable {
 
     /**
      * Constructor con parámetros.
+     * 
      * @param fechaVigenciaDesde
      * @param fechaVigenciaHasta
      * @param tarifa
@@ -116,10 +117,19 @@ public class Abono implements Serializable {
 	return id;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
 	return "Abono:\t [abonoID=" + id + ", fechaVigenciaDesde=" + fechaVigenciaDesde.toString()
-		+ ", fechaVigenciaHasta=" + fechaVigenciaHasta.toString() + ", " + cliente.toString()
-		+ ", =" + playa.toString() + "]";
+		+ ", fechaVigenciaHasta=" + fechaVigenciaHasta.toString() + ", " + cliente.toString() + ", ="
+		+ playa.toString() + "]";
     }
 }

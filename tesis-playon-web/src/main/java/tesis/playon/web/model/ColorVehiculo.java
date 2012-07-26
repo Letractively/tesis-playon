@@ -50,6 +50,22 @@ public class ColorVehiculo implements Serializable {
     public Integer getId() {
         return id;
     }
+    
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	ColorVehiculo otroColor = (ColorVehiculo) object;
+	if (id != otroColor.id)
+	    return false;
+	if (nombre == null ? otroColor.nombre != null : !nombre.equals(otroColor.nombre))
+	    return false;
+
+	return true;
+    }
+
 
     @Override
     public String toString() {

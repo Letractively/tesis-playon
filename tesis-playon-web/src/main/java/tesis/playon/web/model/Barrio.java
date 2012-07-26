@@ -72,6 +72,21 @@ public class Barrio implements Serializable {
     public void setLocalidad(Localidad localidad) {
         this.localidad = localidad;
     }
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Barrio otroBarrio = (Barrio) object;
+	if (id != otroBarrio.id)
+	    return false;
+	if (nombre == null ? otroBarrio.nombre != null : !nombre.equals(otroBarrio.nombre))
+	    return false;
+
+	return true;
+    }
+
     
     @Override
     public String toString() {

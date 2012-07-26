@@ -34,7 +34,7 @@ public class CuentaPlaya implements Serializable {
     private Integer id;
 
     @Column(name = "numero")
-    private int nroCuenta;
+    private Integer nroCuenta;
 
     @Column(name = "fechaCreacion")
     private Date fechaCreacion;
@@ -88,6 +88,23 @@ public class CuentaPlaya implements Serializable {
     public Integer getId() {
 	return id;
     }
+    
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	CuentaPlaya otroCuenta = (CuentaPlaya) object;
+	if (id != otroCuenta.id)
+	    return false;
+	if (nroCuenta == null ? otroCuenta.nroCuenta != null : !nroCuenta.equals(otroCuenta.nroCuenta))
+	    return false;
+
+	return true;
+    }
+
+
 
     @Override
     public String toString() {

@@ -92,6 +92,22 @@ public class CuentaCliente implements Serializable{
         return id;
     }
     
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	CuentaCliente otroCuenta = (CuentaCliente) object;
+	if (id != otroCuenta.id)
+	    return false;
+	if (nroCuenta == null ? otroCuenta.nroCuenta != null : !nroCuenta.equals(otroCuenta.nroCuenta))
+	    return false;
+
+	return true;
+    }
+
+    
     @Override
     public String toString() {
 	return "Cuenta Cliente:\t [cuentaClienteID= " + id + ", nroCuenta= " + nroCuenta + "]";

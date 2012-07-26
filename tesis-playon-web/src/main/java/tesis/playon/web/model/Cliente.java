@@ -43,7 +43,7 @@ public class Cliente implements Serializable {
     private String telefono;
 
     @OneToOne
-    //@ManyToOne(fetch = FetchType.LAZY)
+    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "barrioID")
     private Barrio barrio;
 
@@ -51,7 +51,6 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "cuentaClienteID")
     private CuentaCliente cuentaCliente;
 
-    
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuarioID")
     private Usuario usuario;
@@ -65,7 +64,7 @@ public class Cliente implements Serializable {
 	this.telefono = telefono;
 	this.domicilio = domicilio;
 
-    }    
+    }
 
     public Cliente(Integer nroCliente, String domicilio, String telefono, Barrio barrio, CuentaCliente cuentaCliente,
 	    Usuario usuario) {
@@ -129,8 +128,24 @@ public class Cliente implements Serializable {
 	this.usuario = usuario;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Cliente otroCliente = (Cliente) object;
+	if (id != otroCliente.id)
+	    return false;
+	if (nroCliente == null ? otroCliente.nroCliente != null : !nroCliente.equals(otroCliente.nroCliente))
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
-	return "Cliente:\t [clienteID= " + id + ", nroCliente= " + nroCliente + ", Usuario= " + usuario.getNombreUser() +", domicilio= " + domicilio +", " + barrio +"]";
+	return "Cliente:\t [clienteID= " + id + ", nroCliente= " + nroCliente + ", Usuario= " + usuario.getNombreUser()
+		+ ", domicilio= " + domicilio + ", " + barrio + "]";
     }
 }

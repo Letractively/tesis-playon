@@ -64,6 +64,21 @@ public class CargoEmpleado implements Serializable{
     public void setId(Integer id) {
         this.id = id;
     }
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	CargoEmpleado otroCargo = (CargoEmpleado) object;
+	if (id != otroCargo.id)
+	    return false;
+	if (nombre == null ? otroCargo.nombre != null : !nombre.equals(otroCargo.nombre))
+	    return false;
+
+	return true;
+    }
+
 
     @Override
     public String toString() {
