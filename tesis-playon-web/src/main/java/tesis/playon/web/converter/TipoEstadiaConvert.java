@@ -31,9 +31,9 @@ public class TipoEstadiaConvert implements Converter{
     public String getAsString(FacesContext context, UIComponent component, Object value) {
 	if (value instanceof TipoEstadia) {
 	    TipoEstadia tipoEstadia = (TipoEstadia) value;
-	    String idTipoDoc = Integer.toString(tipoEstadia.getId());
-	    String nombreTipoDoc = tipoEstadia.getNombre();
-	    String toString = idTipoDoc + ":" + nombreTipoDoc;
+	    String idTipoEstadia = Integer.toString(tipoEstadia.getId());
+	    String nombreTipoEstadia = tipoEstadia.getNombre();
+	    String toString = idTipoEstadia + ":" + nombreTipoEstadia;
 	    return toString;
 	} else {
 	    return "No se pudo parsear el objeto.";
