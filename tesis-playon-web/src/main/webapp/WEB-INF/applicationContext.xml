@@ -56,9 +56,6 @@
 	<bean id="TipoEstadia" class="tesis.playon.web.model.TipoEstadia" />
 	<!-- <bean id="TipoPago" class="tesis.playon.web.model.TipoPago" /> -->
 	<bean id="Usuario" class="tesis.playon.web.model.Usuario" />
-	<!-- <bean id="UsuarioSistema" class="tesis.playon.web.model.UsuarioSistema" 
-		/> -->
-
 
 	<!-- Provider Declaration -->
 	<bean id="rememberMeAuthenticationProvider"
@@ -77,49 +74,26 @@
 	<bean id="rememberMeServices"
 		class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
 		<property name="key" value="jsfspring-sec" />
-		<property name="userDetailsService" ref="userDetailsService" />
-		<!-- <property name="userDetailsService" ref="customJDBCUserService" /> -->
+		<property name="userDetailsService" ref="customJDBCUserService" />
 		<property name="alwaysRemember" value="true" />
 		<property name="tokenValiditySeconds" value="60" />
 	</bean>
-<!-- 	<bean id="customJDBCUserService" class="tesis.playon.web.dao.impl.CustomJDBCDao"> -->
-<!-- 		<property name="dataSource" ref="dataSource" /> -->
-<!-- 		<property name="enableAuthorities" value="true" /> -->
-<!-- 		<property name="usersByUsernameQuery"> -->
-<!-- 			<value> -->
-<!-- 				SELECT usuario, password FROM usuario WHERE usuario = ? -->
-<!-- 			</value> -->
-<!-- 		</property> -->
-<!-- 		<property name="authoritiesByUsernameQuery"> -->
-<!-- 			<value> -->
-<!-- 				SELECT usuario, rol FROM rol_usuario WHERE usuario = ? -->
-<!-- 			</value> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
-<!-- 	<bean id="passwordEncoder" -->
-<!-- 		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"> -->
-<!-- 	</bean> -->
-<!-- 	<bean id="databasePasswordEncrypter" -->
-<!-- 		class="tesis.playon.web.dao.impl.security.DBPasswordEncrypterBean" -->
-<!-- 		init-method="encryptDBPassword" depends-on="dataSource"> -->
-<!-- 		<property name="passwordEncoder" ref="passwordEncoder"> -->
-<!-- 		</property> -->
-<!-- 		<property name="dataSource" ref="dataSource"></property> -->
-<!-- 		<property name="selectQuery"> -->
-<!-- 			<value> -->
-<!-- 				SELECT usuario, password, usuario_encriptado FROM usuario -->
-<!-- 				WHERE -->
-<!-- 				(usuario_encriptado = 'no' || usuario_encriptado IS NULL) -->
-<!-- 			</value> -->
-<!-- 		</property> -->
-<!-- 		<property name="updateQuery"> -->
-<!-- 			<value> -->
-<!-- 				UPDATE usuario SET password = ?, usuario_encriptado = 'yes' -->
-<!-- 				WHERE usuario -->
-<!-- 				= ? -->
-<!-- 			</value> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
+	<bean id="customJDBCUserService" class="tesis.playon.web.dao.impl.CustomJDBCDao">
+		<property name="dataSource" ref="dataSource" />
+		<property name="enableAuthorities" value="true" />
+		<property name="usersByUsernameQuery">
+			<value>
+				SELECT usuario, password, enable FROM usuario WHERE usuario =
+				?
+			</value>
+		</property>
+		<property name="authoritiesByUsernameQuery">
+			<value>
+				SELECT usuario, rolUsuario FROM roles_por_usuario WHERE
+				usuario = ?
+			</value>
+		</property>
+	</bean>
 	<bean id="RolUsuarioService" class="tesis.playon.web.service.impl.RolUsuarioService">
 		<property name="rolUsuarioDao" ref="RolUsuarioDao" />
 	</bean>

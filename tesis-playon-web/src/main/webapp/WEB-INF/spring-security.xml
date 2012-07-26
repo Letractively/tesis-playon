@@ -9,7 +9,8 @@
 	<!-- resource security -->
 	<http auto-config="true" use-expressions="true">
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/secure/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/secure/**"
+			access="hasRole('ROLE_ADMIN','ROLE_USER')" />
 		<intercept-url pattern="/**" access="permitAll" />
 		<form-login login-page="/login.html" />
 		<remember-me key="jsfspring-sec" services-ref="rememberMeServices" />
@@ -21,13 +22,7 @@
 	<!-- manager responsible for loading user account with assigned roles -->
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="rememberMeAuthenticationProvider"></authentication-provider>
-		<!-- <authentication-provider user-service-ref="customJDBCUserService"> -->
-		<!-- <password-encoder hash="sha" ref="passwordEncoder"></password-encoder> -->
-		<!-- </authentication-provider> -->
-		<authentication-provider>
-			<user-service id="userDetailsService">
-				<user authorities="ROLE_ADMIN" name="admin" password="admin" />
-			</user-service>
+		<authentication-provider user-service-ref="customJDBCUserService">
 		</authentication-provider>
 	</authentication-manager>
 
