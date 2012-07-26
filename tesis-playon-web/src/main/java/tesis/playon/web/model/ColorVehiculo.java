@@ -16,12 +16,12 @@ import javax.persistence.UniqueConstraint;
 
 /**
  * @author Pablo
- *
+ * 
  */
 @Entity
 @Table(name = "color_vehiculo", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
 public class ColorVehiculo implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -35,22 +35,27 @@ public class ColorVehiculo implements Serializable {
     public ColorVehiculo(String nombre) {
 	this.nombre = nombre;
     }
-    
+
     public ColorVehiculo() {
     }
 
     public String getNombre() {
-        return nombre;
+	return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+	this.nombre = nombre;
     }
 
     public Integer getId() {
-        return id;
+	return id;
     }
-    
+
+    public void setId(int id) {
+	this.id = id;
+
+    }
+
     public boolean equals(Object object) {
 	if (object == this)
 	    return true;
@@ -65,7 +70,6 @@ public class ColorVehiculo implements Serializable {
 
 	return true;
     }
-
 
     @Override
     public String toString() {

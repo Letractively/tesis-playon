@@ -66,6 +66,10 @@ public class Comentario implements Serializable {
 	this.fecha = fecha;
     }
 
+    public Comentario() {
+	// TODO Auto-generated constructor stub
+    }
+
     public Integer getId() {
 	return id;
     }
