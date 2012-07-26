@@ -51,8 +51,6 @@
 	<bean id="Usuario" class="tesis.playon.web.model.Usuario" />
 	<!-- <bean id="UsuarioSistema" class="tesis.playon.web.model.UsuarioSistema" /> -->
 
-
-
 	<!-- User Service Declaration -->
 	<bean id="RolUsuarioService" class="tesis.playon.web.service.impl.RolUsuarioService">
 		<property name="rolUsuarioDao" ref="RolUsuarioDao" />
@@ -100,7 +98,6 @@
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
 
-
 	<!-- Data Source Declaration -->
 	<bean id="DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
@@ -112,8 +109,6 @@
 		<property name="maxStatements" value="0" />
 		<property name="minPoolSize" value="5" />
 	</bean>
-
-
 
 	<!-- Session Factory Declaration -->
 	<bean id="SessionFactory"
@@ -148,7 +143,6 @@
 			</list>
 		</property>
 
-
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
@@ -156,7 +150,6 @@
 			</props>
 		</property>
 	</bean>
-
 
 	<!-- Enable the configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven transaction-manager="txManager" />

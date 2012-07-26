@@ -13,21 +13,46 @@
     	</el-resolver>
   	</application>
   	
-  	<!-- configuration of navigation rules -->	
-	<navigation-rule>
-	    <from-view-id>/index.xhtml</from-view-id> 
-	    <navigation-case>
-	        <from-outcome>success</from-outcome>
-            <to-view-id>/success.xhtml</to-view-id>
-        </navigation-case>
-         <navigation-case>
-	        <from-outcome>error</from-outcome>
-            <to-view-id>/error.xhtml</to-view-id>
-        </navigation-case>
+  	<!-- Simple Navigation Rule -->
+    <!-- If  user keys in ToSecure, move to /admin/rolusuarilolist.xhtml-->
+    <!-- Else If user keys in ToUnSecure, move to /index.xhtml-->
+    <navigation-rule>
+    	<display-name>index.xhtml</display-name>
+    	<from-view-id>/index.xhtml</from-view-id>
+    	<navigation-case>
+    		<from-action>#{navegadorMB.navegarA}</from-action>
+    		<from-outcome>Secured</from-outcome>
+    		<to-view-id>/admin/rolusuariolist.xhtml</to-view-id>
+    		<redirect></redirect>
+    	</navigation-case>
     </navigation-rule>
-    
-<!--     <lifecycle> -->
-<!-- 		<phase-listener>login.LoginErrorPhaseListener</phase-listener> -->
-<!-- 	</lifecycle> -->
+    <navigation-rule>
+    	<display-name>index.xhtml</display-name>
+    	<from-view-id>/index.xhtml</from-view-id>
+    	<navigation-case>
+    		<from-action>#{navegadorMB.navegarA}</from-action>
+    		<from-outcome>UnSecured</from-outcome>
+    		<to-view-id>/index.xhtml</to-view-id>
+    		<redirect></redirect>
+    	</navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+    	<display-name>admin/rolusuariolist.xhtml</display-name>
+    	<from-view-id>/admin/rolusuariolist.xhtml</from-view-id>
+    	<navigation-case>
+    		<from-action>#{loginMB.logout}</from-action>
+    		<from-outcome>loggedout</from-outcome>
+    		<to-view-id>/index.xhtml</to-view-id>
+    	</navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+    	<display-name>login.xhtml</display-name>
+    	<from-view-id>/login.xhtml</from-view-id>
+    	<navigation-case>
+    		<from-action>#{loginMB.login}</from-action>
+    		<from-outcome>Secured</from-outcome>
+    		<to-view-id>/admin/rolusuariolist.xhtml</to-view-id>
+    	</navigation-case>
+    </navigation-rule>
     
 </faces-config>
