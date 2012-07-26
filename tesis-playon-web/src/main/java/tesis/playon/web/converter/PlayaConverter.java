@@ -16,7 +16,7 @@ import tesis.playon.web.service.IPlayaService;
  *
  */
 @FacesConverter(value = "playaConverter")
-public class PlayaConvert implements Converter{
+public class PlayaConverter implements Converter{
 
 	IPlayaService playaService;
 	
