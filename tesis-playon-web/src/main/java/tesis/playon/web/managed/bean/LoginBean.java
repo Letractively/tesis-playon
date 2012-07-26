@@ -39,8 +39,8 @@ public class LoginBean {
     @ManagedProperty(value = "#{rememberMeServices}")
     private RememberMeServices rememberMeServices = null;
 
-    // @ManagedProperty(value = "#{userDetailsService}")
-    @ManagedProperty(value = "#{customJDBCUserService}")
+    @ManagedProperty(value = "#{userDetailsService}")
+    // @ManagedProperty(value = "#{customJDBCUserService}")
     private UserDetailsService userDetailsService = null;
 
     public String login() {

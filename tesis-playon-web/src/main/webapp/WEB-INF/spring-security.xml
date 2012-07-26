@@ -21,14 +21,14 @@
 	<!-- manager responsible for loading user account with assigned roles -->
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="rememberMeAuthenticationProvider"></authentication-provider>
-		<authentication-provider user-service-ref="customJDBCUserService">
-			<password-encoder hash="sha" ref="passwordEncoder"></password-encoder>
-		</authentication-provider>
-		<!-- <authentication-provider> -->
-		<!-- <user-service id="userDetailsService"> -->
-		<!-- <user authorities="ROLE_ADMIN" name="admin" password="admin" /> -->
-		<!-- </user-service> -->
+		<!-- <authentication-provider user-service-ref="customJDBCUserService"> -->
+		<!-- <password-encoder hash="sha" ref="passwordEncoder"></password-encoder> -->
 		<!-- </authentication-provider> -->
+		<authentication-provider>
+			<user-service id="userDetailsService">
+				<user authorities="ROLE_ADMIN" name="admin" password="admin" />
+			</user-service>
+		</authentication-provider>
 	</authentication-manager>
 
 </beans:beans>

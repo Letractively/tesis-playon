@@ -59,7 +59,7 @@ public class Tarifa implements Serializable {
     private CategoriaVehiculo categoriaVehiculo;
 
     public Tarifa() {
-	this.fechaAlta= new Date();
+	this.fechaAlta = new Date();
     }
 
     public Tarifa(Float importe, Playa playa, TipoEstadia tipoEstadia, CategoriaVehiculo categoriaVehiculo) {
@@ -67,7 +67,7 @@ public class Tarifa implements Serializable {
 	this.playa = playa;
 	this.tipoEstadia = tipoEstadia;
 	this.categoriaVehiculo = categoriaVehiculo;
-	this.fechaAlta= new Date();
+	this.fechaAlta = new Date();
     }
 
     public Integer getId() {
@@ -129,16 +129,15 @@ public class Tarifa implements Serializable {
     public CategoriaVehiculo getCategoriaVehiculo() {
 	return categoriaVehiculo;
     }
-    
-    
-    
+
     public void setCategoriaVehiculo(CategoriaVehiculo categoriaVehiculo) {
 	this.categoriaVehiculo = categoriaVehiculo;
     }
 
     @Override
     public String toString() {
-	return "Tarifa:\t [tarifaID=" + id + ", importe=" + importe + ", "+ playa + ", "+ categoriaVehiculo + ", "+ tipoEstadia + "]";
+	return "Tarifa:\t [tarifaID=" + id + ", importe=" + importe + ", " + playa + ", " + categoriaVehiculo + ", "
+		+ tipoEstadia + "]";
     }
 
 }
