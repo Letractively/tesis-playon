@@ -1,8 +1,21 @@
+/* ********************************************** */
+/*	PrimeFaces	*/
+.ui-widget,.ui-widget .ui-widget { /* 	font-size: 8pt !important; */
+	
+}
+
+/* ********************************************** */
+/*	General	*/
+.data {
+	font-size: 10pt;
+}
+
 .mainbody {
 	margin-left: auto;
 	margin-right: auto;
-	width: 980px;
-	/* 	width: 100%; */
+	/* 	width: 980px; */
+	width: 100%;
+	/* 	overflow: hidden; */
 }
 
 #mainbody-login {
@@ -10,16 +23,42 @@
 	margin-right: auto;
 	/* 	width: 980px; */
 	width: 100%;
-	font-size: 12pt;
+	/* 	font-size: 12pt; */
 }
 
-.ui-widget {
+/* ********************************************** */
+/*	Layout Admin	*/
+.admin-container { /* 	overflow: hidden; */
+	/* 	height: 100%; */
+	
+}
+
+.admin-font { /* 	font-size: 0.875em; */
 	font-size: 10pt;
 }
 
-/*	Layout Admin	*/
-.admin-container { /* 	overflow: hidden; */
-	
+.column-font {
+	font-size: 10pt;
+	width: 125px;
+}
+
+.input-font {
+	font-size: 10pt;
+	width: 100%;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+.input-font:hover {
+	font-size: 10pt;
+	width: 100%;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+.option-font{
+	width:25px; 
+	font-size:12px;
 }
 
 .admin-menu {
@@ -32,13 +71,14 @@
 	float: left;
 }
 
-.admin-content {
-	width: 750px;
+.admin-content { /* 	width: 750px; */
 	/* 	position: relative; */
 	/* 	width: 70%; */
+	margin-right: 7px;
+	margin-left: 200px;
 	padding-left: 20px;
 	padding-top: 0;
-	float: left;
+	/* 	float: left; */
 	/* 	height: 100%; */
 	/* 	height: 400px; */
 }
@@ -69,9 +109,14 @@
 	padding: 10px 10px 10px 10px;
 }
 
+/* ********************************************** */
 /*	Layout Login	*/
 .login-font {
 	font-size: 1em;
+}
+
+.login-separador {
+	height: 10px;
 }
 
 .login-message {
