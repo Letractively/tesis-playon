@@ -9,8 +9,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 import tesis.playon.web.model.Localidad;
-import tesis.playon.web.model.Provincia;
-import tesis.playon.web.service.IPaisService;
 import tesis.playon.web.service.IProvinciaService;
 
 /**

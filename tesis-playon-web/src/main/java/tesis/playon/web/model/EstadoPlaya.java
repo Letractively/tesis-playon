@@ -50,6 +50,11 @@ public class EstadoPlaya implements Serializable {
 	return id;
     }
 
+    public void setId(Integer id) {
+	this.id = id;
+
+    }
+
     public String getNombre() {
 	return nombre;
     }
@@ -85,4 +90,5 @@ public class EstadoPlaya implements Serializable {
     public String toString() {
 	return "Estado Playa:\t [estadoPlayaID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
     }
+
 }
