@@ -1,6 +1,6 @@
 /*
- *  Script de generaciÃ³n de la estructura, carga de datos bÃ¡sicos, 
- *  creaciÃ³n del usuario y asignaciÃ³n de permisos
+ *  Script de generación de la estructura, carga de datos básicos, 
+ *  creación del usuario y asignación de permisos
  *  de de la base de datos del proyecto tesis-playon.
  *
  *  Proyecto: Playon
@@ -15,7 +15,7 @@
 
 /************************************************************ 
  ******* OJO QUE ESTO BORRA TODA LA BASE DE DATOS!!! ******** */
-/* Comentar la siguiente liÂ­nea para NO borrar la base de datos
+/* Comentar la siguiente lí­nea para NO borrar la base de datos
    antes de crear las tablas en caso de que fuera necesario.  */
  UNLOCK TABLES;
  DROP DATABASE IF EXISTS `tesis_playon`;
@@ -25,7 +25,7 @@
    en caso de que fuera necesario. */
  DROP USER 'playonAdmin'@'localhost';
 
-CREATE DATABASE  IF NOT EXISTS `tesis_playon` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE  IF NOT EXISTS `tesis_playon` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `tesis_playon`;
 -- MySQL dump 10.13  Distrib 5.5.24, for debian-linux-gnu (x86_64)
 --
@@ -60,7 +60,7 @@ CREATE TABLE `cuenta_playa` (
   PRIMARY KEY (`cuentaPlayaID`),
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_cuenta_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `denuncia_vehiculo` (
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_denuncia_vehiculo_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
   CONSTRAINT `FK_denuncia_vehiculo_vehiculo` FOREIGN KEY (`vehiculoID`) REFERENCES `vehiculo` (`vehiculoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,7 +118,7 @@ CREATE TABLE `provincia` (
   PRIMARY KEY (`provinciaID`),
   KEY `paisID` (`paisID`),
   CONSTRAINT `FK_provincia_pais` FOREIGN KEY (`paisID`) REFERENCES `pais` (`paisID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +143,7 @@ CREATE TABLE `estado_publicidad` (
   `nombre` varchar(50) NOT NULL,
   `estadoPublicidadID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`estadoPublicidadID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='ESTADOS:   *Vigente   *Vencida   *Cancelada   *Pendiente   ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ESTADOS:   *Vigente   *Vencida   *Cancelada   *Pendiente   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,7 @@ CREATE TABLE `estado_publicidad` (
 
 LOCK TABLES `estado_publicidad` WRITE;
 /*!40000 ALTER TABLE `estado_publicidad` DISABLE KEYS */;
-INSERT INTO `estado_publicidad` (`descripcion`, `nombre`, `estadoPublicidadID`) VALUES ('Pendiente de AprobaciÃƒÂ³n','Pendiente',1),('Aprobada y pendiente de publicaciÃƒÂ³n','Aprobada',2),('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),('PerÃƒÂ­odo de publicaciÃƒÂ³n vencido','Vencida',5);
+INSERT INTO `estado_publicidad` (`descripcion`, `nombre`, `estadoPublicidadID`) VALUES ('Pendiente de Aprobación','Pendiente',1),('Aprobada y pendiente de publicación','Aprobada',2),('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),('Perí­odo de publicación vencido','Vencida',5);
 /*!40000 ALTER TABLE `estado_publicidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,7 +183,7 @@ CREATE TABLE `promocion` (
   CONSTRAINT `FK_promocion_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
   CONSTRAINT `FK_promocion_estado_promocion` FOREIGN KEY (`estadoPromocionID`) REFERENCES `estado_promocion` (`estadoPromocionID`),
   CONSTRAINT `FK_promocion_tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `tarifa` (`tarifaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +207,7 @@ CREATE TABLE `color_vehiculo` (
   `nombre` varchar(50) NOT NULL,
   `colorVehiculoID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`colorVehiculoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,7 +217,7 @@ CREATE TABLE `color_vehiculo` (
 
 LOCK TABLES `color_vehiculo` WRITE;
 /*!40000 ALTER TABLE `color_vehiculo` DISABLE KEYS */;
-INSERT INTO `color_vehiculo` (`nombre`, `colorVehiculoID`) VALUES ('Blanco',1),('Negro',2),('Rojo',3),('Amarillo',4),('Verde Claro',5),('Azul',6),('Celeste',7),('Gris Claro',8),('Gris Oscuro',9),('Naranja',10),('Verde Oscuro',11),('Bordo',12);
+INSERT INTO `color_vehiculo` (`nombre`, `colorVehiculoID`) VALUES ('Blanco',1),('Negro',2),('Rojo',3),('Amarillo',4),('Verde Claro',5),('Azul',6),('Celeste',7),('Gris Claro',8),('Gris Oscuro',9),('Naranja',10),('Verde Oscuro',11),('Bordó',12);
 /*!40000 ALTER TABLE `color_vehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -237,7 +237,7 @@ CREATE TABLE `cuenta_cliente` (
   PRIMARY KEY (`cuentaClienteID`),
   KEY `clienteID` (`clienteID`),
   CONSTRAINT `FK_cuenta_cliente_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,7 +262,7 @@ CREATE TABLE `estado_denuncia` (
   `nombre` varchar(50) NOT NULL,
   `estadoDenunciaID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`estadoDenunciaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -272,7 +272,7 @@ CREATE TABLE `estado_denuncia` (
 
 LOCK TABLES `estado_denuncia` WRITE;
 /*!40000 ALTER TABLE `estado_denuncia` DISABLE KEYS */;
-INSERT INTO `estado_denuncia` (`descripcion`, `nombre`, `estadoDenunciaID`) VALUES ('Pendiente de auditorÃƒÂ­a','Pendiente',1),('En proceso de investigaciÃƒÂ³n','En Proceso',2),('Acepatada','Aceptada',3),('Rechazada','Rechazada',4),('Anulada','Anulada',5),('Dada de Baja / Cancelada','De Baja',6);
+INSERT INTO `estado_denuncia` (`descripcion`, `nombre`, `estadoDenunciaID`) VALUES ('Pendiente de auditorí­a','Pendiente',1),('En proceso de investigación','En Proceso',2),('Acepatada','Aceptada',3),('Rechazada','Rechazada',4),('Anulada','Anulada',5),('Dada de Baja / Cancelada','De Baja',6);
 /*!40000 ALTER TABLE `estado_denuncia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,7 +294,7 @@ CREATE TABLE `denuncia_playa` (
   KEY `clienteID` (`clienteID`),
   CONSTRAINT `FK_denuncia_playa_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
   CONSTRAINT `FK_denuncia_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -333,7 +333,7 @@ CREATE TABLE `playa` (
   CONSTRAINT `FK_playa_estadia` FOREIGN KEY (`estadiaID`) REFERENCES `estadia` (`estadiaID`),
   CONSTRAINT `FK_playa_barrio` FOREIGN KEY (`barrioID`) REFERENCES `barrio` (`barrioID`),
   CONSTRAINT `FK_playa_estado_playa` FOREIGN KEY (`estadoPlayaID`) REFERENCES `estado_playa` (`estadoPlayaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cada instancia representa los datos administrativos de una playa.   ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cada instancia representa los datos administrativos de una playa.   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -363,7 +363,7 @@ CREATE TABLE `liquidacion` (
   PRIMARY KEY (`liquidacionID`),
   KEY `estadiaID` (`estadiaID`),
   CONSTRAINT `FK_liquidacion_estadia` FOREIGN KEY (`estadiaID`) REFERENCES `estadia` (`estadiaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -388,7 +388,7 @@ CREATE TABLE `categoria_vehiculo` (
   `nombre` varchar(50) NOT NULL,
   `categoriaVehiculoID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`categoriaVehiculoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Son los tÃƒÂ­pos de vehÃƒÂ­culos. Moto, Auto, Utilitario, PickUp, etc.   ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Son los tí­pos de vehí­culos. Moto, Auto, Utilitario, PickUp, etc.   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,7 +414,7 @@ CREATE TABLE `estado_playa` (
   `nombre` varchar(50) NOT NULL,
   `estadoPlayaID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`estadoPlayaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -424,7 +424,7 @@ CREATE TABLE `estado_playa` (
 
 LOCK TABLES `estado_playa` WRITE;
 /*!40000 ALTER TABLE `estado_playa` DISABLE KEYS */;
-INSERT INTO `estado_playa` (`descripcion`, `nombre`, `estadoPlayaID`) VALUES ('Pendiente de AuditorÃƒÂ­a','Pendiente',1),('Aprobada luego de auditorÃƒÂ­a','Aprobada',2),('Rechazada luego de auditorÃƒÂ­a','Rechazada',3),('Dada de baja','De Baja',4);
+INSERT INTO `estado_playa` (`descripcion`, `nombre`, `estadoPlayaID`) VALUES ('Pendiente de Auditorí­a','Pendiente',1),('Aprobada luego de auditoría','Aprobada',2),('Rechazada luego de auditorí­a','Rechazada',3),('Dada de baja','De Baja',4);
 /*!40000 ALTER TABLE `estado_playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -446,7 +446,7 @@ CREATE TABLE `transaccion_cliente` (
   KEY `tipoPagoID` (`tipoPagoID`),
   CONSTRAINT `FK_transaccion_cliente_tipo_pago` FOREIGN KEY (`tipoPagoID`) REFERENCES `tipo_pago` (`tipoPagoID`),
   CONSTRAINT `FK_transaccion_cliente_cuenta_cliente` FOREIGN KEY (`cuentaClienteID`) REFERENCES `cuenta_cliente` (`cuentaClienteID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -471,7 +471,7 @@ CREATE TABLE `tipo_estadia` (
   `nombre` varchar(50) NOT NULL,
   `tipoEstadiaID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`tipoEstadiaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='TIPOS DE ESTADIA:   * Por hora   * Por dia   * Por noche   * Por Mes   * Por Semana   ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='TIPOS DE ESTADIA:   * Por hora   * Por día   * Por noche   * Por mes   * Por semana   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -481,7 +481,7 @@ CREATE TABLE `tipo_estadia` (
 
 LOCK TABLES `tipo_estadia` WRITE;
 /*!40000 ALTER TABLE `tipo_estadia` DISABLE KEYS */;
-INSERT INTO `tipo_estadia` (`descripcion`, `nombre`, `tipoEstadiaID`) VALUES ('','Por Hora',1),('','Por Mes',2),('','Por Noche',3),('','Por DÃƒÂ­a',4),('','Por Semana',5);
+INSERT INTO `tipo_estadia` (`descripcion`, `nombre`, `tipoEstadiaID`) VALUES ('','Por Hora',1),('','Por Mes',2),('','Por Noche',3),('','Por Dí­a',4),('','Por Semana',5);
 /*!40000 ALTER TABLE `tipo_estadia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -506,7 +506,7 @@ CREATE TABLE `historial_de_cambio` (
   CONSTRAINT `FK_historial_de_cambio_denuncia_vehiculo` FOREIGN KEY (`denunciaVehiculoID`) REFERENCES `denuncia_vehiculo` (`denunciaVehiculoID`),
   CONSTRAINT `FK_historial_de_cambio_denuncia_playa` FOREIGN KEY (`denunciaPlayaID`) REFERENCES `denuncia_playa` (`denunciaPlayaID`),
   CONSTRAINT `FK_historial_de_cambio_estado_denuncia` FOREIGN KEY (`estadoDenunciaID`) REFERENCES `estado_denuncia` (`estadoDenunciaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -534,7 +534,7 @@ CREATE TABLE `foto` (
   PRIMARY KEY (`fotoID`),
   KEY `perfilPlayaID` (`perfilPlayaID`),
   CONSTRAINT `FK_foto_perfil_playa` FOREIGN KEY (`perfilPlayaID`) REFERENCES `perfil_playa` (`perfilPlayaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -571,7 +571,7 @@ CREATE TABLE `vehiculo` (
   CONSTRAINT `FK_vehiculo_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
   CONSTRAINT `FK_vehiculo_categoria_vehiculo` FOREIGN KEY (`categoriaID`) REFERENCES `categoria_vehiculo` (`categoriaVehiculoID`),
   CONSTRAINT `FK_vehiculo_modelo_vehiculo` FOREIGN KEY (`modeloVehiculoID`) REFERENCES `modelo_vehiculo` (`modeloVehiculoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -601,7 +601,7 @@ CREATE TABLE `empleado` (
   KEY `usuarioID` (`usuarioID`),
   CONSTRAINT `FK_empleado_usuario` FOREIGN KEY (`usuarioID`) REFERENCES `usuario` (`usuarioID`),
   CONSTRAINT `FK_empleado_cargo_empleado` FOREIGN KEY (`cargoEmpleadoID`) REFERENCES `cargo_empleado` (`cargoEmpleadoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -626,7 +626,7 @@ CREATE TABLE `cargo_empleado` (
   `nombre` varchar(50) NOT NULL,
   `cargoEmpleadoID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`cargoEmpleadoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -655,7 +655,7 @@ CREATE TABLE `perfil_playa` (
   PRIMARY KEY (`perfilPlayaID`),
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_perfil_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Esta clase va a contener todos los datos del perfil de la playa que se muestra en el sitio: fotos, nombre para mostrar, descripciÃƒÂ³n, etc.    ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Esta clase va a contener todos los datos del perfil de la playa que se muestra en el sitio: fotos, nombre para mostrar, descripción, etc.    ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -689,7 +689,7 @@ CREATE TABLE `abono` (
   CONSTRAINT `FK_abono_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
   CONSTRAINT `FK_abono_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
   CONSTRAINT `FK_abono_tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `tarifa` (`tarifaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -713,7 +713,7 @@ CREATE TABLE `pais` (
   `nombre` varchar(50) NOT NULL,
   `paisID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`paisID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -748,7 +748,7 @@ CREATE TABLE `tarifa` (
   CONSTRAINT `FK_tarifa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
   CONSTRAINT `FK_tarifa_tipo_estadia` FOREIGN KEY (`tipoEstadiaID`) REFERENCES `tipo_estadia` (`tipoEstadiaID`),
   CONSTRAINT `FK_tarifa_categoria_vehiculo` FOREIGN KEY (`categoriaVehiculoID`) REFERENCES `categoria_vehiculo` (`categoriaVehiculoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cada instancia contiene un precio de la tarifa que depende del CategorÃƒÂ­a de vehÃƒÂ­culo, tipo de estadÃƒÂ­a (mensual, por hora, etc).      CategorÃƒÂ­aVehiculo: utilitario   TipoEstadÃƒÂ­a: Mensual   Precio/tarifa: $720      CategorÃƒÂ­aVehiculo: utilitario   TipoEstadÃƒÂ­a: Por hora   Precio/tarifa: $14      CategorÃƒÂ­aVehiculo: auto   TipoEstadÃƒÂ­a: Por hora   Precio/tarifa: $12   ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cada instancia contiene un precio de la tarifa que depende del Categorí­a de vehí­culo, tipo de estadí­a (mensual, por hora, etc).      Categorí­aVehiculo: utilitario   TipoEstadí­a: Mensual   Precio/tarifa: $720      Categorí­aVehiculo: utilitario   TipoEstadí­a: Por hora   Precio/tarifa: $14      Categorí­aVehiculo: auto   TipoEstadí­a: Por hora   Precio/tarifa: $12   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -775,7 +775,7 @@ CREATE TABLE `barrio` (
   PRIMARY KEY (`barrioID`),
   KEY `localidadID` (`localidadID`),
   CONSTRAINT `FK_barrio_localidad` FOREIGN KEY (`localidadID`) REFERENCES `localidad` (`localidadID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -803,7 +803,7 @@ CREATE TABLE `favorito` (
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_favorito_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
   CONSTRAINT `FK_favorito_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -837,7 +837,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`usuarioID`),
   KEY `tipoDocID` (`tipoDocID`),
   CONSTRAINT `FK_usuario_tipo_doc` FOREIGN KEY (`tipoDocID`) REFERENCES `tipo_doc` (`tipoDocID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -862,7 +862,7 @@ CREATE TABLE `tipo_pago` (
   `nombre` varchar(50) NOT NULL,
   `tipoPagoID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`tipoPagoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -872,7 +872,7 @@ CREATE TABLE `tipo_pago` (
 
 LOCK TABLES `tipo_pago` WRITE;
 /*!40000 ALTER TABLE `tipo_pago` DISABLE KEYS */;
-INSERT INTO `tipo_pago` (`descripcion`, `nombre`, `tipoPagoID`) VALUES ('Contado Efectivo','Contado',1),('Tarjeta de dÃƒÂ©bito','Tarjeta DÃƒÂ©bito',2),('Tarjeta de crÃƒÂ©dito','Tarjeta CrÃƒÂ©dito',3),('DineroMail','DineroMail',4),('Cheque','Cheque',5),('Pago con saldo de la cuenta del cliente','Cuenta',6);
+INSERT INTO `tipo_pago` (`descripcion`, `nombre`, `tipoPagoID`) VALUES ('Contado Efectivo','Contado',1),('Tarjeta de débito','Tarjeta Débito',2),('Tarjeta de crédito','Tarjeta Crédito',3),('DineroMail','DineroMail',4),('Cheque','Cheque',5),('Pago con saldo de la cuenta del cliente','Cuenta',6);
 /*!40000 ALTER TABLE `tipo_pago` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -900,7 +900,7 @@ CREATE TABLE `transaccion_playa` (
   CONSTRAINT `FK_transaccion_playa_cuenta_playa` FOREIGN KEY (`cuentaPlayaID`) REFERENCES `cuenta_playa` (`cuentaPlayaID`),
   CONSTRAINT `FK_transaccion_playa_detalle_estadia` FOREIGN KEY (`detalleEstadiaID`) REFERENCES `detalle_estadia` (`detalleEstadiaID`),
   CONSTRAINT `FK_transaccion_playa_tipo_pago` FOREIGN KEY (`tipoPagoID`) REFERENCES `tipo_pago` (`tipoPagoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -925,7 +925,7 @@ CREATE TABLE `marca_vehiculo` (
   `nombre` varchar(50) NOT NULL,
   `marcaVehiculoID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`marcaVehiculoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -951,7 +951,7 @@ CREATE TABLE `estadia` (
   PRIMARY KEY (`estadiaID`),
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_estadia_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Cada instancia de esta clase representa un conjunto de ingreso y egreso de los autos en cada playa.   ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cada instancia de esta clase representa un conjunto de ingreso y egreso de los autos en cada playa.   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -979,7 +979,7 @@ CREATE TABLE `modelo_vehiculo` (
   PRIMARY KEY (`modeloVehiculoID`),
   KEY `marcaVehiculoID` (`marcaVehiculoID`),
   CONSTRAINT `FK_modelo_vehiculo_marca_vehiculo` FOREIGN KEY (`marcaVehiculoID`) REFERENCES `marca_vehiculo` (`marcaVehiculoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1006,7 +1006,7 @@ CREATE TABLE `localidad` (
   PRIMARY KEY (`localidadID`),
   KEY `provinciaID` (`provinciaID`),
   CONSTRAINT `FK_localidad_provincia` FOREIGN KEY (`provinciaID`) REFERENCES `provincia` (`provinciaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1039,7 +1039,7 @@ CREATE TABLE `cliente` (
   KEY `usuarioID` (`usuarioID`),
   CONSTRAINT `FK_cliente_usuario` FOREIGN KEY (`usuarioID`) REFERENCES `usuario` (`usuarioID`),
   CONSTRAINT `FK_cliente_barrio` FOREIGN KEY (`barrioID`) REFERENCES `barrio` (`barrioID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1063,7 +1063,7 @@ CREATE TABLE `tipo_doc` (
   `nombre` varchar(50) NOT NULL,
   `tipoDocID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`tipoDocID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1097,7 +1097,7 @@ CREATE TABLE `publicidad` (
   CONSTRAINT `FK_publicidad_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
   CONSTRAINT `FK_publicidad_estado_publicidad` FOREIGN KEY (`estadoPublicidadID`) REFERENCES `estado_publicidad` (`estadoPublicidadID`),
   CONSTRAINT `FK_publicidad_posicion` FOREIGN KEY (`posicionID`) REFERENCES `posicion` (`posicionID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1141,7 +1141,7 @@ CREATE TABLE `detalle_estadia` (
   CONSTRAINT `FK_detalle_estadia_promocion` FOREIGN KEY (`promocionID`) REFERENCES `promocion` (`promocionID`),
   CONSTRAINT `FK_detalle_estadia_tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `tarifa` (`tarifaID`),
   CONSTRAINT `FK_detalle_estadia_transaccion_cliente` FOREIGN KEY (`transaccionClienteID`) REFERENCES `transaccion_cliente` (`transaccionClienteID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1170,7 +1170,7 @@ CREATE TABLE `sesion` (
   PRIMARY KEY (`sesionID`),
   KEY `usuarioID` (`usuarioID`),
   CONSTRAINT `FK_sesion_usuario` FOREIGN KEY (`usuarioID`) REFERENCES `usuario` (`usuarioID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1197,7 +1197,7 @@ CREATE TABLE `posicion` (
   `ubicacion` text DEFAULT NULL,
   `posicionID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`posicionID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Clase que contiene los datos sobre las ubicaciones y posiciones de las publicidades. (layout de publicidades)   ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Clase que contiene los datos sobre las ubicaciones y posiciones de las publicidades. (layout de publicidades)   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1222,7 +1222,7 @@ CREATE TABLE `estado_promocion` (
   `nombre` varchar(50) NOT NULL,
   `estadoPromocionID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`estadoPromocionID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='ESTADOS:   *Vigente   *Vencida   *Cancelada   *Pendiente   ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ESTADOS:   *Vigente   *Vencida   *Cancelada   *Pendiente   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1232,7 +1232,7 @@ CREATE TABLE `estado_promocion` (
 
 LOCK TABLES `estado_promocion` WRITE;
 /*!40000 ALTER TABLE `estado_promocion` DISABLE KEYS */;
-INSERT INTO `estado_promocion` (`descripcion`, `nombre`, `estadoPromocionID`) VALUES ('Pendiente de AprobaciÃƒÂ³n','Pendiente',1),('Aprobada y pendiente de publicaciÃƒÂ³n','Aprobada',2),('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),('PerÃƒÂ­odo de publicaciÃƒÂ³n vencido','Vencida',5);
+INSERT INTO `estado_promocion` (`descripcion`, `nombre`, `estadoPromocionID`) VALUES ('Pendiente de Aprobación','Pendiente',1),('Aprobada y pendiente de publicación','Aprobada',2),('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),('Período de publicación vencido','Vencida',5);
 /*!40000 ALTER TABLE `estado_promocion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1256,7 +1256,7 @@ CREATE TABLE `comentario` (
   KEY `clienteID` (`clienteID`),
   CONSTRAINT `FK_comentario_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
   CONSTRAINT `FK_comentario_perfil_playa` FOREIGN KEY (`playaID`) REFERENCES `perfil_playa` (`perfilPlayaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1285,7 +1285,7 @@ CREATE TABLE `roles_por_usuario` (
   KEY `rolUsuario` (`rolUsuario`),
   CONSTRAINT `FK_roles_por_usuario_usuario` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`nombre`),
   CONSTRAINT `FK_roles_por_usuario_rol_usuario` FOREIGN KEY (`rolUsuario`) REFERENCES `rol_usuario` (`nombre`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1310,7 +1310,7 @@ CREATE TABLE `rol_usuario` (
   `nombre` varchar(50) NOT NULL UNIQUE,
   `rolUsuarioID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`rolUsuarioID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1364,7 +1364,7 @@ INSERT INTO `usuario` (`apellido`, `email`, `nombre`, `password`, `sesion`, `usu
 VALUES ('Moreno','pablo_la31@hotmail.com','Pablo','123456',NULL,'pablo_la31',1,1,'32987654'),
     ('Bostico','alebostico@hotmail.com','Alejandro','123456',NULL,'alejandro',2,1,'11111111'),
     ('Arribere','gonzaloarribere@gmail.com','Gonzalo','123456',NULL,'gonzalo',3,1,'22222222'),
-    ('Morales','morales.batvski@gmail.com','Gustavo','123456',NULL,'gmorales',4,1,'33333333'),
+    ('Morales Batovski','morales.batovski@gmail.com','Raúl Gustavo','123456',NULL,'gmorales',4,1,'33333333'),
     ('Perez Villar','ericperezvillar@gmail.com','Eric','123456',NULL,'eric',5,1,'44444444'),
     ('Guest','guest@playon.com.ar','Guest','123456',NULL,'guest',6,1,'55555555'),
     ('Admin','admin@playon.com.ar','Admin','123456',NULL,'admin',7,1,'66666666');
