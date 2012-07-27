@@ -116,7 +116,6 @@
 		<property name="categoriaVehiculoDao" ref="CategoriaVehiculoDao" />
 	</bean>
 
-
 	<!-- User DAO Declaration -->
 	<bean id="RolUsuarioDao" class="tesis.playon.web.dao.impl.RolUsuarioDao">
 		<property name="sessionFactory" ref="SessionFactory" />
@@ -144,7 +143,7 @@
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/tesis_playon" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/tesis_playon?useUnicode=true&amp;characterEncoding=UTF-8" />
 		<property name="user" value="playonAdmin" />
 		<property name="password" value="playon" />
 		<property name="maxPoolSize" value="10" />

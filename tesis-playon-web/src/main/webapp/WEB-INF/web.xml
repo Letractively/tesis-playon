@@ -68,4 +68,22 @@
 
 	<!-- ///////////////////// END: PRIMEFACES RELATED ///////////////////////// -->
 
+	<!-- ======================= CHARSET FILTER RELATED ======================== -->
+
+	<filter>
+		<filter-name>CharsetFilter</filter-name>
+		<filter-class>tesis.playon.web.util.CharsetFilter</filter-class>
+		<init-param>
+			<param-name>requestEncoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>CharsetFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- ===================== END: CHARSET FILTER RELATED ====================== -->
+
 </web-app>
