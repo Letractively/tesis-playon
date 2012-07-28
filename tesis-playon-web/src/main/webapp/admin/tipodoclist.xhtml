@@ -1,11 +1,13 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-<h:head>
-</h:head>
-<h:body>
-	<h:form>
+
+	<ui:param name="panelTitle" value="Listado de Tipo de Documento" />
+
+	<ui:define name="panelContent">
 		<p:dataTable id="tiposDoc" var="tipoDoc" editable="true"
 			paginator="true" rows="5" value="#{tipoDocMB.tipoDocList}"
 			style="width: 10%">
@@ -14,29 +16,29 @@
 				Tipos Documento
             </f:facet>
 
-			<p:column headerText="ID" style="width:125px">
+			<p:column headerText="ID" styleClass="column-font">
 				<p:cellEditor>
 					<f:facet name="output">
 						<h:outputText value="#{tipoDoc.id}" />
 					</f:facet>
 					<f:facet name="input">
-						<p:inputText value="#{tipoDoc.id}" style="width:100%" />
+						<p:inputText value="#{tipoDoc.id}" styleClass="input-font" />
 					</f:facet>
 				</p:cellEditor>
 			</p:column>
 
-			<p:column headerText="Nombre" style="width:125px">
+			<p:column headerText="Nombre" styleClass="column-font">
 				<p:cellEditor>
 					<f:facet name="output">
 						<h:outputText value="#{tipoDoc.nombre}" />
 					</f:facet>
 					<f:facet name="input">
-						<p:inputText value="#{tipoDoc.nombre}" style="width:100%" />
+						<p:inputText value="#{tipoDoc.nombre}" styleClass="input-font" />
 					</f:facet>
 				</p:cellEditor>
 			</p:column>
 
-			<p:column headerText="Opciones" style="width:25px">
+			<p:column headerText="Opciones" styleClass="option-font">
 				<p:rowEditor />
 			</p:column>
 
@@ -52,7 +54,6 @@
 					action="/pages/tipodocadd.jsf?faces-redirect=true" ajax="false" /></td>
 		</tr>
 
-	</h:form>
-</h:body>
-
-</html>
+		</h:form>
+	</ui:define>
+</ui:composition>
