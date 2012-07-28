@@ -49,10 +49,10 @@
 <!-- 	<bean id="Playa" class="tesis.playon.web.model.Playa" /> -->
 	<!-- <bean id="Posicion" class="tesis.playon.web.model.Posicion" /> -->
 <!-- 	<bean id="Provincia" class="tesis.playon.web.model.Provincia" /> -->
-<!-- 	<bean id="RolUsuario" class="tesis.playon.web.model.RolUsuario" /> -->
+	<bean id="RolUsuario" class="tesis.playon.web.model.RolUsuario" />
 <!-- 	<bean id="Tarifa" class="tesis.playon.web.model.Tarifa" /> -->
 	<bean id="TipoDoc" class="tesis.playon.web.model.TipoDoc" />
-<!-- 	<bean id="TipoEstadia" class="tesis.playon.web.model.TipoEstadia" /> -->
+	<bean id="TipoEstadia" class="tesis.playon.web.model.TipoEstadia" />
 	<!-- <bean id="TipoPago" class="tesis.playon.web.model.TipoPago" /> -->
 <!-- 	<bean id="Usuario" class="tesis.playon.web.model.Usuario" /> -->
 <!-- 	<bean id="Cliente" class="tesis.playon.web.model.Cliente" /> -->
@@ -98,9 +98,9 @@
 	</bean>
 
 
-<!-- 	<bean id="RolUsuarioService" class="tesis.playon.web.service.impl.RolUsuarioService"> -->
-<!-- 		<property name="rolUsuarioDao" ref="RolUsuarioDao" /> -->
-<!-- 	</bean> -->
+	<bean id="RolUsuarioService" class="tesis.playon.web.service.impl.RolUsuarioService">
+		<property name="rolUsuarioDao" ref="RolUsuarioDao" />
+	</bean>
 	<bean id="TipoDocService" class="tesis.playon.web.service.impl.TipoDocService">
 		<property name="tipoDocDao" ref="TipoDocDao" />
 	</bean>
@@ -110,9 +110,9 @@
 <!-- 	<bean id="TarifaService" class="tesis.playon.web.service.impl.TarifaService"> -->
 <!-- 		<property name="tarifaDao" ref="TarifaDao" /> -->
 <!-- 	</bean> -->
-<!-- 	<bean id="TipoEstadiaService" class="tesis.playon.web.service.impl.TipoEstadiaService"> -->
-<!-- 		<property name="tipoEstadiaDao" ref="TipoEstadiaDao" /> -->
-<!-- 	</bean> -->
+	<bean id="TipoEstadiaService" class="tesis.playon.web.service.impl.TipoEstadiaService">
+		<property name="tipoEstadiaDao" ref="TipoEstadiaDao" />
+	</bean>
 <!-- 	<bean id="PlayaService" class="tesis.playon.web.service.impl.PlayaService"> -->
 <!-- 		<property name="playaDao" ref="PlayaDao" /> -->
 <!-- 	</bean> -->
@@ -137,9 +137,9 @@
 <!-- 	<bean id="BarrioDao" class="tesis.playon.web.dao.impl.BarrioDao"> -->
 <!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
 <!-- 	</bean> -->
-<!-- 	<bean id="RolUsuarioDao" class="tesis.playon.web.dao.impl.RolUsuarioDao"> -->
-<!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
-<!-- 	</bean> -->
+	<bean id="RolUsuarioDao" class="tesis.playon.web.dao.impl.RolUsuarioDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
 	<bean id="TipoDocDao" class="tesis.playon.web.dao.impl.TipoDocDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
@@ -149,9 +149,9 @@
 <!-- 	<bean id="TarifaDao" class="tesis.playon.web.dao.impl.TarifaDao"> -->
 <!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
 <!-- 	</bean> -->
-<!-- 	<bean id="TipoEstadiaDao" class="tesis.playon.web.dao.impl.TipoEstadiaDao"> -->
-<!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
-<!-- 	</bean> -->
+	<bean id="TipoEstadiaDao" class="tesis.playon.web.dao.impl.TipoEstadiaDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
 <!-- 	<bean id="PlayaDao" class="tesis.playon.web.dao.impl.PlayaDao"> -->
 <!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
 <!-- 	</bean> -->
@@ -202,7 +202,7 @@
 				<value>tesis.playon.web.model.Playa</value>
 				<value>tesis.playon.web.model.Posicion</value>
 				<value>tesis.playon.web.model.Provincia</value>
-<!-- 				<value>tesis.playon.web.model.RolUsuario</value> -->
+				<value>tesis.playon.web.model.RolUsuario</value>
 				<value>tesis.playon.web.model.Tarifa</value>
 				<value>tesis.playon.web.model.TipoDoc</value>
 				<value>tesis.playon.web.model.TipoEstadia</value>
