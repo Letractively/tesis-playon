@@ -56,9 +56,9 @@
 	font-weight: normal;
 }
 
-.option-font{
-	width:25px; 
-	font-size:12px;
+.option-font {
+	width: 25px;
+	font-size: 12px;
 }
 
 .admin-menu {
@@ -119,8 +119,19 @@
 	height: 10px;
 }
 
-.login-message {
+.login-message { /* 	border: 1px solid darkred; */
+	/* 	background-color: IndianRed;  */
 	color: red;
+	font-size: 12pt;
+}
+
+ul.login-message {
+	color: red;
+	list-style-type: none;
+}
+
+ul.ui-widget {
+	list-style-type: none;
 }
 
 #login-main {
@@ -132,6 +143,12 @@
 	/* 	height: 300px; */
 	float: left;
 	margin-top: 100px;
+}
+
+#login-main ul {
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
 }
 
 #login-main table,#login-main td,#login-main tr {

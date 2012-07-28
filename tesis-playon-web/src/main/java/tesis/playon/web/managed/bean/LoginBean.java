@@ -1,5 +1,6 @@
 package tesis.playon.web.managed.bean;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -43,8 +44,8 @@ public class LoginBean {
     private UserDetailsService userDetailsService = null;
 
     public String login() {
+	Authentication result = null;
 	try {
-	    Authentication result = null;
 	    if ("TRUE".equalsIgnoreCase(this.getRecordar())) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(getUsuario());
 		RememberMeAuthenticationToken rememberMeAuthenticationToken = new RememberMeAuthenticationToken(
@@ -60,10 +61,14 @@ public class LoginBean {
 		result = authenticationManager.authenticate(request);
 	    }
 	    SecurityContextHolder.getContext().setAuthentication(result);
+	    return "Secured";
 	} catch (AuthenticationException e) {
 	    e.printStackTrace();
+	    FacesMessage fm = new FacesMessage("Usuario o contraseña incorrecto");
+	    FacesContext.getCurrentInstance().addMessage("Usuario o contraseña incorrecto", fm);
+	    return "UnSecured";
 	}
-	return "Secured";
+
     }
 
     public String logout() {
@@ -77,11 +82,11 @@ public class LoginBean {
 	cookie.setMaxAge(0);
 	cookie.setPath(httpServletRequest.getContextPath().length() > 0 ? httpServletRequest.getContextPath() : "/");
 	httpServletResponse.addCookie(cookie);
-	return "loggedout";
+	return "index";
     }
 
     public String cancel() {
-	return null;
+	return "index";
     }
 
     public AuthenticationManager getAuthenticationManager() {
