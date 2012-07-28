@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
 //import javax.persistence.FetchType;
 
 /**
@@ -99,5 +100,9 @@ public class ModeloVehiculo implements Serializable {
     public String toString() {
 	return "ModeloVehiculo:\t [modeloVehiculoID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion
 		+ ", " + marcaVehiculo.toString() + "]";
+    }
+
+    public void setId(Integer id) {
+	this.id = id;
     }
 }

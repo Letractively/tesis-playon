@@ -13,15 +13,16 @@ import javax.persistence.UniqueConstraint;
 
 /**
  * Tipos de pago para las transacciones de los clientes y de las playas.
+ * 
  * @author alejandro
  * @date 07/07/2012
  */
 @Entity
 @Table(name = "tipo_pago", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
-public class TipoPago implements Serializable{
-    
+public class TipoPago implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "tipoPagoID")
@@ -30,7 +31,7 @@ public class TipoPago implements Serializable{
     @Column(name = "nombre")
     private String nombre;
 
-    @Column(name="descripcion")
+    @Column(name = "descripcion")
     private String descripcion;
 
     /**
@@ -42,8 +43,11 @@ public class TipoPago implements Serializable{
 
     /**
      * Constructor con parámetros.
-     * @param nombre El nombre del Tipo de Pago.
-     * @param descripcion La descripción del Tipo de Pago.
+     * 
+     * @param nombre
+     *            El nombre del Tipo de Pago.
+     * @param descripcion
+     *            La descripción del Tipo de Pago.
      */
     public TipoPago(String nombre, String descripcion) {
 	super();
@@ -52,25 +56,26 @@ public class TipoPago implements Serializable{
     }
 
     public String getNombre() {
-        return nombre;
+	return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+	this.nombre = nombre;
     }
 
     public String getDescripcion() {
-        return descripcion;
+	return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+	this.descripcion = descripcion;
     }
 
     public Integer getId() {
-        return id;
-    
+	return id;
+
     }
+
     public boolean equals(Object object) {
 	if (object == this)
 	    return true;
@@ -85,10 +90,13 @@ public class TipoPago implements Serializable{
 
 	return true;
     }
-    
-    
-    
-    public String toString(){
+
+    public String toString() {
 	return "TipoPago:\t [TipoPagoID= " + id + ", nombre= " + nombre + ", descripcion=" + descripcion + "]";
+    }
+
+    public void setId(Integer id) {
+	this.id = id;
+
     }
 }

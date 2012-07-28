@@ -107,4 +107,9 @@ public class MarcaVehiculo implements Serializable {
 	return "MarcaVehiculo:\t [marcaVehiculoID=" + id + ", nombre= " + nombre + ", descripcion= " + descripcion
 		+ "]";
     }
+
+    public void setId(Integer id) {
+	this.id = id;
+
+    }
 }
