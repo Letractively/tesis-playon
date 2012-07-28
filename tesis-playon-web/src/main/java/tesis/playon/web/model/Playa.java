@@ -62,8 +62,8 @@ public class Playa implements Serializable {
     @JoinColumn(name = "estadoPlayaID")
     private EstadoPlaya estado;
 
-    @OneToOne
-    @Column(name = "estadiaID")
+    @OneToOne(mappedBy="playa")
+    @JoinColumn(name = "estadiaID")
     private Estadia estadia;
 
     public Playa() {

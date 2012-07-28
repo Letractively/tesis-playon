@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -46,7 +47,7 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "barrioID", nullable = true)
     private Barrio barrio;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cuentaClienteID")
     private CuentaCliente cuentaCliente;
 

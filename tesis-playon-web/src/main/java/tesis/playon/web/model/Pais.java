@@ -37,7 +37,7 @@ public class Pais implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
-    @OneToMany(mappedBy = "pais")
+    @OneToMany//(mappedBy = "pais")
     @JoinTable(name = "provincia", joinColumns = { @JoinColumn(name = "paisID") })
     private Set<Provincia> provincias = new HashSet<Provincia>(0);
 
