@@ -5,17 +5,17 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:param name="panelTitle" value="Titulo de la página" />
+	<ui:param name="panelTitle" value="Listado de Usuarios" />
 
 	<ui:define name="panelContent">
 		<h:form>
 			<p:dataTable id="usuarios" var="usuario" editable="true"
 				paginator="true" rows="5" value="#{usuarioMB.usuarioList}"
-				style="width: 10%" >
+				style="width: 10%">
 
 				<f:facet name="header">
 				Usuarios
-            </f:facet>
+            	</f:facet>
 
 				<p:column headerText="Nombre" styleClass="column-font">
 					<p:cellEditor>
@@ -56,7 +56,8 @@
 							<h:outputText value="#{usuario.tipoDoc.nombre}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{usuario.tipoDoc.nombre}" styleClass="input-font" />
+							<p:inputText value="#{usuario.tipoDoc.nombre}"
+								styleClass="input-font" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -89,7 +90,8 @@
 							<h:outputText value="#{usuario.nombreUser}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{usuario.nombreUser}" styleClass="input-font" />
+							<p:inputText value="#{usuario.nombreUser}"
+								styleClass="input-font" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>

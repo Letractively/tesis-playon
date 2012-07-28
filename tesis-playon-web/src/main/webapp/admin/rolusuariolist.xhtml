@@ -1,69 +1,71 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-<h:head>
-</h:head>
-<h:body>
-	<h:form>
-		<p:dataTable id="rolesUsuario" var="rolUsuario" editable="true"
-			paginator="true" rows="5" value="#{rolUsuarioMB.rolUsuarioList}"
-			style="width: 10%">
 
-			<f:facet name="header">
+	<ui:param name="panelTitle" value="Listado de Roles de Usuarios" />
+
+	<ui:define name="panelContent">
+		<h:form>
+			<p:dataTable id="rolesUsuario" var="rolUsuario" editable="true"
+				paginator="true" rows="5" value="#{rolUsuarioMB.rolUsuarioList}"
+				style="width: 10%">
+
+				<f:facet name="header">
 				Roles de usuario
             </f:facet>
 
-			<p:column headerText="ID" style="width:125px">
-				<p:cellEditor>
-					<f:facet name="output">
-						<h:outputText value="#{rolUsuario.id}" />
-					</f:facet>
-					<f:facet name="input">
-						<p:inputText value="#{rolUsuario.id}" style="width:100%" />
-					</f:facet>
-				</p:cellEditor>
-			</p:column>
+				<p:column headerText="ID" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{rolUsuario.id}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{rolUsuario.id}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 
-			<p:column headerText="Nombre" style="width:125px">
-				<p:cellEditor>
-					<f:facet name="output">
-						<h:outputText value="#{rolUsuario.nombre}" />
-					</f:facet>
-					<f:facet name="input">
-						<p:inputText value="#{rolUsuario.nombre}" style="width:100%" />
-					</f:facet>
-				</p:cellEditor>
-			</p:column>
+				<p:column headerText="Nombre" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{rolUsuario.nombre}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{rolUsuario.nombre}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 
-			<p:column headerText="Descripcion" style="width:125px">
-				<p:cellEditor>
-					<f:facet name="output">
-						<h:outputText value="#{rolUsuario.descripcion}" />
-					</f:facet>
-					<f:facet name="input">
-						<p:inputText value="#{rolUsuario.descripcion}" style="width:100%" />
-					</f:facet>
-				</p:cellEditor>
-			</p:column>
+				<p:column headerText="Descripcion" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{rolUsuario.descripcion}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{rolUsuario.descripcion}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 
-			<p:column headerText="Opciones" style="width:25px">
-				<p:rowEditor />
-			</p:column>
+				<p:column headerText="Opciones" styleClass="option-font">
+					<p:rowEditor />
+				</p:column>
 
-			<p:column>
-				<h:commandButton value="Borrar"
-					action="#{rolUsuarioMB.deleteRolUsuario(rolUsuario)}" />
-			</p:column>
+				<p:column>
+					<h:commandButton value="Borrar"
+						action="#{rolUsuarioMB.deleteRolUsuario(rolUsuario)}" />
+				</p:column>
 
-		</p:dataTable>
+			</p:dataTable>
 
-		<tr>
-			<td><p:commandButton id="addRolUsuario" value="Agregar"
-					action="/admin/rolusuarioadd.jsf?faces-redirect=true" ajax="false" /></td>
-		</tr>
+			<tr>
+				<td><p:commandButton id="addRolUsuario" value="Agregar"
+						action="/admin/rolusuarioadd.jsf?faces-redirect=true" ajax="false" /></td>
+			</tr>
 
-	</h:form>
-</h:body>
-
-</html>
+		</h:form>
+	</ui:define>
+</ui:composition>
