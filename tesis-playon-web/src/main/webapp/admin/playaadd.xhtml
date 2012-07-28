@@ -1,0 +1,70 @@
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="panelTitle" value="Nueva playa" />
+
+	<ui:define name="panelContent">
+
+		<h:form>
+			<table>
+				<tr>
+					<td><h:outputLabel for="razonSocial" value="Razon Social: " /></td>
+					<td><p:inputText id="razonSocial"
+							value="#{playaMB.razonSocial}">
+							<f:validateLength minimum="2" />
+							<p:ajax event="blur" update="razonSocialMsg" />
+						</p:inputText> <p:message id="razonSocialMsg" for="razonSocial" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="nombreComercial" value="Nombre Comercial: " /></td>
+					<td><p:inputText id="nombreComercial" value="#{playaMB.nombreComercial}">
+							<f:validateLength minimum="2" />
+							<p:ajax event="blur" update="nombreComercialMsg" />
+						</p:inputText> <p:message id="nombreComercialMsg" for="nombreComercial" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="cuit" value="C.U.I.T.: " /></td>
+					<td><p:inputText id="cuit" value="#{playaMB.cuit}">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="cuitMsg" />
+						</p:inputText> <p:message id="cuitMsg" for="cuit" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputText for="domicilio" value="Domicilio: " /></td>
+					<td><p:inputText id="domicilio" value="#{playaMB.domicilio}">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="domicilioMsg" />
+						</p:inputText> <p:message id="domicilioMsg" for="domicilio" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputText for="barrio" value="Barrio: " /></td>
+					<td><p:selectOneMenu value="#{playaMB.barrio}"
+							effect="fade">
+							<f:selectItems value="#{barrioMB.barrioList}" var="barrio"
+								itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
+							<f:converter converterId="barrioConverter" />
+						</p:selectOneMenu></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="disponibilidad" value="Disponibilidad: " /></td>
+					<td><p:inputText id="disponibilidad" value="#{playaMB.disponibilidad}">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="disponibilidadMsg" />
+						</p:inputText> <p:message id="disponibilidadMsg" for="disponibilidad" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><p:commandButton id="addPlaya" value="Agregar"
+							action="#{playaMB.addPlaya}" ajax="false" /></td>
+					<td><p:commandButton id="reset" value="Reset"
+							action="#{playaMB.reset}" ajax="false" /></td>
+				</tr>
+			</table>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

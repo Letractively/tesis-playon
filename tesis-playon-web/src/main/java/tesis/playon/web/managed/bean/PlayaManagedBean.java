@@ -18,6 +18,7 @@ import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.service.IPlayaService;
+import tesis.playon.web.service.impl.EstadoPlayaService;
 import tesis.playon.web.util.LatitudlongitudUtil;
 
 /**
@@ -59,15 +60,19 @@ public class PlayaManagedBean implements Serializable {
 
     public String addPlaya() {
 	try {
+	    EstadoPlayaService eps = new EstadoPlayaService();
+	    EstadoPlaya estado = eps.findByNombreEstadoPlaya("Pendiente");
+	    
 	    Playa playa = new Playa();
 	    playa.setBarrio(getBarrio());
 	    playa.setCuit(getCuit());
 	    playa.setDisponibilidad(getDisponibilidad());
 	    playa.setDomicilio(getDomicilio());
 	    playa.setEstadia(getEstadia());
-	    playa.setEstado(getEstado());
+	    playa.setEstado(estado);
 	    playa.setNombreComercial(getNombreComercial());
 	    playa.setRazonSocial(getRazonSocial());
+	    getPlayaService().save(playa);
 	    return LISTA_PLAYAS;
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
@@ -87,7 +92,7 @@ public class PlayaManagedBean implements Serializable {
 
 	try {
 	    String respuesta = LatitudlongitudUtil.getLocationFromAddress(getDireccionBusqueda()
-		    + ", Córdoba, Argentina");
+		    + ", Cï¿½rdoba, Argentina");
 	    System.out.println("\n\n\n" + respuesta + "\n\n\n");
 	} catch (Exception e) {
 	    e.printStackTrace();

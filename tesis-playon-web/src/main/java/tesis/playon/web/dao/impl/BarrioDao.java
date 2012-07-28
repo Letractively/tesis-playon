@@ -51,5 +51,5 @@ public class BarrioDao implements IBarrioDao {
 	}
 	return barrios;
     }
-    
+
 }
