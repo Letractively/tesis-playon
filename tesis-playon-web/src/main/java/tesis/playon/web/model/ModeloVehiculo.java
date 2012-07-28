@@ -9,13 +9,13 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-//import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+//import javax.persistence.FetchType;
 
 /**
  * @author Pablo
@@ -39,7 +39,6 @@ public class ModeloVehiculo implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
 
-    // Hay q buscar una solucion para esto xq carga todo los objetos en memoria!!!
     @ManyToOne
     @JoinColumn(name = "marcaVehiculoID")
     private MarcaVehiculo marcaVehiculo;

@@ -37,7 +37,6 @@ public class Barrio implements Serializable {
     private String nombre;
 
     @ManyToOne
-    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "localidadID")
     private Localidad localidad;
     

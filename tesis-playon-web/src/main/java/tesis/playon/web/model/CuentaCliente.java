@@ -1,13 +1,12 @@
 package tesis.playon.web.model;
 
-import java.io.Serializable;
-import java.sql.Date;
-
 import static javax.persistence.GenerationType.IDENTITY;
+
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -40,19 +39,21 @@ public class CuentaCliente implements Serializable{
     @Column(name="fechaCreacion")
     private Date fechaCreacion;
     
-    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(mappedBy="cliente")
     @JoinColumn(name="clienteID")
     private Cliente cliente;
 
     public CuentaCliente() {
 	super();
+	this.nroCuenta=((int) Math.random() * 10000);
+	this.fechaCreacion = new Date();
     }
 
-    public CuentaCliente(Integer nroCuenta, float saldo, Date fechaCreacion, Cliente cliente) {
+    public CuentaCliente(float saldo, Date fechaCreacion, Cliente cliente) {
 	super();
-	this.nroCuenta = nroCuenta;
+	this.nroCuenta = ((int) Math.random() * 10000);
 	this.saldo = saldo;
-	this.fechaCreacion = fechaCreacion;
+	this.fechaCreacion = new Date();
 	this.cliente = cliente;
     }
 

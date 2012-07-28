@@ -7,7 +7,6 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -42,7 +41,7 @@ public class Liquidacion implements Serializable {
     @Column(name = "importeTotal")
     private float importeTotal;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "estadiaID")
     private Estadia estadia;
 

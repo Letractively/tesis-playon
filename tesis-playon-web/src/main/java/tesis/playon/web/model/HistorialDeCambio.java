@@ -36,12 +36,10 @@ public class HistorialDeCambio implements Serializable {
     private Date fecha;
 
     @ManyToOne
-    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "denunciaPlayaID")
     private DenunciaPlaya denunciaPlaya;
 
     @ManyToOne
-    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "denunciaVehiculoID")
     private DenunciaVehiculo denunciaVehiculoID;
 

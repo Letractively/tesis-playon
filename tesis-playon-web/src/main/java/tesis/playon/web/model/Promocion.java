@@ -53,16 +53,14 @@ public class Promocion implements Serializable {
     private float montoFijo;
 
     @ManyToOne
-    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "playaID")
     private Playa playa;
+    
     @ManyToOne
-    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tarifaID")
     private Tarifa tarifa;
 
     @ManyToOne
-    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estadoPromocionID")
     private EstadoPromocion estadoPromocion;
 

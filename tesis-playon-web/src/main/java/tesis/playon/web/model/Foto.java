@@ -9,7 +9,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -37,7 +36,7 @@ public class Foto implements Serializable {
     @Column(name = "link")
     private String link;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "perfilPlayaID")
     private PerfilPlaya perfilPlaya;
 

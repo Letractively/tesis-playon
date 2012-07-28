@@ -8,9 +8,10 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -36,7 +37,8 @@ public class Pais implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pais")
+    @OneToMany(mappedBy = "pais")
+    @JoinTable(name = "provincia", joinColumns = { @JoinColumn(name = "paisID") })
     private Set<Provincia> provincias = new HashSet<Provincia>(0);
 
     public Pais() {
@@ -94,5 +96,4 @@ public class Pais implements Serializable {
     public String toString() {
 	return "Pais:\t [paisID= " + id + ", nombre= " + nombre + "]";
     }
-
 }

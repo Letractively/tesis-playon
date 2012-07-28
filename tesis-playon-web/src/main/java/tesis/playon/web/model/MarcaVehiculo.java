@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 //import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -40,8 +42,7 @@ public class MarcaVehiculo implements Serializable {
     private String descripcion;
 
     @OneToMany
-    // @OneToMany(mappedBy = "marca_vehiculo")
-    // @OneToMany(fetch = FetchType.LAZY, mappedBy = "marca_vehiculo")
+    @JoinTable(name = "marca_vehiculo", joinColumns = { @JoinColumn(name = "modeloVehiculoID") })
     private Set<ModeloVehiculo> modelos = new HashSet<ModeloVehiculo>(0);
 
     public MarcaVehiculo(String nombre, String descripcion) {

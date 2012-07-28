@@ -9,7 +9,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -36,28 +35,28 @@ public class Vehiculo implements Serializable {
     @Column(name = "anio")
     private int anio;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "categoriaID")
     private CategoriaVehiculo categoriaVehiculo;
 
     @Column(name = "codigoBarra")
     private String codigoBarra;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "colorID")
     private ColorVehiculo colorVehiculo;
 
     @Column(name = "habilitado")
     private boolean habilitado;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "modeloVehiculoID")
     private ModeloVehiculo modeloVehiculo;
 
     @Column(name = "patente")
     private String patente;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "clienteID")
     private Cliente cliente;
 

@@ -7,7 +7,6 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -46,11 +45,11 @@ public class Comentario implements Serializable {
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean habilitado;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "playaID")
     private Playa playa;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "clienteID")
     private Cliente cliente;
 

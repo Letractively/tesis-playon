@@ -9,13 +9,13 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-//import javax.persistence.ManyToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+//import javax.persistence.ManyToOne;
 
 /**
  * @author Alejandro
@@ -42,33 +42,32 @@ public class Cliente implements Serializable {
     @Column(name = "telefono")
     private String telefono;
 
-    @OneToOne
-    // @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "barrioID")
+    @ManyToOne
+    @JoinColumn(name = "barrioID", nullable = true)
     private Barrio barrio;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "cuentaClienteID")
     private CuentaCliente cuentaCliente;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "usuarioID")
     private Usuario usuario;
 
     public Cliente() {
-
+	this.nroCliente= ((int) Math.random() * 10000);
     }
 
-    public Cliente(int nroCliente, String telefono, String domicilio) {
-	this.nroCliente = nroCliente;
+    public Cliente(String telefono, String domicilio) {
+	this.nroCliente = ((int) Math.random() * 10000);
 	this.telefono = telefono;
 	this.domicilio = domicilio;
 
     }
 
-    public Cliente(Integer nroCliente, String domicilio, String telefono, Barrio barrio, CuentaCliente cuentaCliente,
+    public Cliente(String domicilio, String telefono, Barrio barrio, CuentaCliente cuentaCliente,
 	    Usuario usuario) {
-	this.nroCliente = nroCliente;
+	this.nroCliente = ((int) Math.random() * 10000);
 	this.domicilio = domicilio;
 	this.telefono = telefono;
 	this.barrio = barrio;

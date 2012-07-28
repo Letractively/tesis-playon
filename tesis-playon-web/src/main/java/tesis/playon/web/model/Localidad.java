@@ -8,10 +8,10 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -40,12 +40,12 @@ public class Localidad implements Serializable {
     private String nombre;
 
     @ManyToOne
-    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provinciaID")
     private Provincia provincia;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "localidad")
-    private Set<Barrio> barrios = new HashSet<Barrio>(0);
+    @OneToMany//(mappedBy = "localidad")
+    @JoinTable(name = "barrio", joinColumns = { @JoinColumn(name = "localidadID") })
+    private Set<Barrio> barrios = new HashSet<Barrio>();
 
     public Localidad() {
     }
@@ -112,5 +112,4 @@ public class Localidad implements Serializable {
     public String toString() {
 	return "Localidad:\t [localidadID= " + id + ", nombre= " + nombre + ", " + provincia.toString() + "]";
     }
-
 }

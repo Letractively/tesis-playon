@@ -10,7 +10,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -41,11 +40,11 @@ public class DenunciaPlaya implements Serializable {
     @Column(name = "fechaAlta", unique = true, nullable = false)
     private Date fechaAlta;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "clienteID", nullable = false)
     private Cliente cliente;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "playaID", nullable = false)
     private Playa playa;
 

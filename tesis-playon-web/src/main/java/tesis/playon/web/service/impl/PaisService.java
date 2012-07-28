@@ -53,11 +53,11 @@ public class PaisService implements IPaisService {
     }
 
     public IPaisDao getPaisDao() {
-	return paisDao;
+        return paisDao;
     }
 
     public void setPaisDao(IPaisDao paisDao) {
-	this.paisDao = paisDao;
+        this.paisDao = paisDao;
     }
 
 }

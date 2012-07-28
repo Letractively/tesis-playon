@@ -29,7 +29,6 @@ public class Estadia implements Serializable {
     private Integer id;
 
     @OneToOne
-    // @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "playaID")
     private Playa playa;
 

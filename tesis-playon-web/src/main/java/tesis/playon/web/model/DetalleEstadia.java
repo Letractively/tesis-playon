@@ -48,22 +48,18 @@ public class DetalleEstadia implements Serializable {
     private Empleado empleado;
 
     @ManyToOne
-    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vehiculoID")
     private Vehiculo vehiculo;
 
     @ManyToOne
-    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estadiaID")
     private Estadia estadia;
 
     @ManyToOne
-    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tarifaID")
     private Tarifa tarifa;
 
     @ManyToOne
-    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "promocionID")
     private Promocion promocion;
 

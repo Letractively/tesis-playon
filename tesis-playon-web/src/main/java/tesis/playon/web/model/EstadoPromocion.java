@@ -87,5 +87,4 @@ public class EstadoPromocion implements Serializable {
 	return "EstadoPromocion:\t [EstadoPromocionID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion
 		+ "]";
     }
-
 }

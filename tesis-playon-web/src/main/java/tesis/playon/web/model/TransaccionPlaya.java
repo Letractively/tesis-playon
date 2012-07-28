@@ -36,7 +36,6 @@ public class TransaccionPlaya implements Serializable {
     private float importe;
 
     @ManyToOne
-    //@ManyToOne(fetch = FetchType.LAZY)	
     @JoinColumn(name = "tipoPagoID", nullable = false)
     private TipoPago tipoPago;
 
