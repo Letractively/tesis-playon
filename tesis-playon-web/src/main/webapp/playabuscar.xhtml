@@ -1,0 +1,32 @@
+<ui:composition template="admin/template/templateLogin.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="Content">
+		<h:form id="loginFormId" prependId="false">
+			<table>
+				
+				<tr>
+					<td><h:outputLabel for="direccionBusqueda" value="Direccion de busqueda" /></td>
+					<td><p:inputText id="direccionBusqueda"
+							value="#{playaMB.direccionBusqueda}">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="direccionBusquedaMsg" />
+						</p:inputText> <p:message id="direccionBusquedaMsg" for="direccionBusqueda" display="icon" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center"><h:commandButton
+							id="btnBuscarId" value="Buscar" action="#{playaMB.buscarPlaya}"
+							styleClass="loginPanelBtn" /></td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+
+
