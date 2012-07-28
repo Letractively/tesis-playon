@@ -1,27 +1,29 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<title>PLAYON: Tipo Documento</title>
-</h:head>
-<h:body>
-	<h:form>
-		<table>
-			<tr>
-				<td><h:outputLabel for="nombre" value="Nombre: " /></td>
-				<td><p:inputText id="nombre" value="#{tipoDocMB.nombre}">
-						<f:validateLength minimum="5" />
-						<p:ajax event="blur" update="nombreMsg" />
-					</p:inputText> <p:message id="nombreMsg" for="nombre" display="icon" /></td>
-			</tr>
-			<tr>
-				<td><p:commandButton id="addUser" value="Add"
-						action="#{tipoDocMB.addTipoDoc}" ajax="false" /></td>
-				<td><p:commandButton id="reset" value="Reset"
-						action="#{tipoDocMB.reset}" ajax="false" /></td>
-			</tr>
-		</table>
-	</h:form>
-</h:body>
-</html>
+
+	<ui:param name="panelTitle" value="Listado de Tipo de Documento" />
+
+	<ui:define name="panelContent">
+		<h:form>
+			<table>
+				<tr>
+					<td><h:outputLabel for="nombre" value="Nombre: " /></td>
+					<td><p:inputText id="nombre" value="#{tipoDocMB.nombre}">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="nombreMsg" />
+						</p:inputText> <p:message id="nombreMsg" for="nombre" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><p:commandButton id="addUser" value="Add"
+							action="#{tipoDocMB.addTipoDoc}" ajax="false" /></td>
+					<td><p:commandButton id="reset" value="Reset"
+							action="#{tipoDocMB.reset}" ajax="false" /></td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>
