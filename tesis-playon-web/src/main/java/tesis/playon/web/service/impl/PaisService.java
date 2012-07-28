@@ -9,46 +9,52 @@ import tesis.playon.web.dao.IPaisDao;
 import tesis.playon.web.model.Pais;
 import tesis.playon.web.model.Provincia;
 import tesis.playon.web.service.IPaisService;
-
 /**
  * 
- * @author gmorales
- * 
+ * @author pablo
+ *
  */
+@Transactional(readOnly = true)
 public class PaisService implements IPaisService {
 
     IPaisDao paisDao;
-
+    
     @Transactional(readOnly = false)
     @Override
     public void save(Pais pais) {
+	// TODO Auto-generated method stub
 	getPaisDao().save(pais);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void update(Pais pais) {
+	// TODO Auto-generated method stub
 	getPaisDao().update(pais);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(Pais pais) {
+	// TODO Auto-generated method stub
 	getPaisDao().delete(pais);
     }
 
     @Override
+    public Pais findByNombrePais(String nombrePais) {
+	// TODO Auto-generated method stub
+	return getPaisDao().findByNombrePais(nombrePais);
+    }
+
+    @Override
     public List<Pais> findAll() {
+	// TODO Auto-generated method stub
 	return getPaisDao().findAll();
     }
 
     @Override
-    public Pais findByNombrPais(String nombrePais) {
-	return getPaisDao().findByNombrePais(nombrePais);
-    }
-    
-    @Override
-    public Set<Provincia> findProvincia(Pais pais){
+    public Set<Provincia> findProvincia(Pais pais) {
+	// TODO Auto-generated method stub
 	return getPaisDao().findProvincia(pais);
     }
 

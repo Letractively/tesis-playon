@@ -26,7 +26,7 @@ public class ProvinciaConvert implements Converter{
 	Provincia provincia = new Provincia();
 	provincia.setId(Integer.parseInt(toObject[0]));
 	provincia.setNombre(toObject[1]);
-	provincia.setPais(getPaisService().findByNombrPais(toObject[2]));
+	provincia.setPais(getPaisService().findByNombrePais(toObject[2]));
 	return provincia;
     }
 

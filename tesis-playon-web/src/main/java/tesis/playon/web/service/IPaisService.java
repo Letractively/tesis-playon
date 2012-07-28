@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package tesis.playon.web.service;
 
 import java.util.List;
@@ -7,8 +10,7 @@ import tesis.playon.web.model.Pais;
 import tesis.playon.web.model.Provincia;
 
 /**
- * 
- * @author gmorales
+ * @author pablo
  *
  */
 public interface IPaisService {
@@ -19,9 +21,10 @@ public interface IPaisService {
 
     void delete(Pais pais);
 
+    Pais findByNombrePais(String nombrePais);
+
     List<Pais> findAll();
-
-    Pais findByNombrPais(String nombrePais);
-
+    
     Set<Provincia> findProvincia(Pais pais);
+    
 }

@@ -56,8 +56,13 @@
 							<h:outputText value="#{usuario.tipoDoc.nombre}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{usuario.tipoDoc.nombre}"
-								styleClass="input-font" />
+							<h:selectOneMenu value="#{usuario.tipoDoc}" >  
+                        	<f:selectItems value="#{tipoDocMB.tipoDocList}"  
+	                            var="tipoDoc"
+	                            itemValue="#{tipoDoc}"
+	                            itemLabel="#{tipoDoc.nombre}" />
+	                        <f:converter converterId="tipoDocConverter" />
+                    		</h:selectOneMenu> 
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -107,11 +112,10 @@
 
 			</p:dataTable>
 
-			<tr>
-				<td><p:commandButton id="addUsuarioNuevo" value="Agregar"
-						action="/admin/usuarioadd.html?faces-redirect=true" ajax="false" /></td>
-			</tr>
-
+			<p>
+				<p:commandButton id="addUsuarioNuevo" value="Agregar"
+						action="/admin/usuarioadd.html?faces-redirect=true" ajax="false" />
+			</p>
 		</h:form>
 	</ui:define>
 </ui:composition>

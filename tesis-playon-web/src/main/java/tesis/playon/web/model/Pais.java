@@ -3,16 +3,11 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -37,9 +32,9 @@ public class Pais implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
-    @OneToMany//(mappedBy = "pais")
-    @JoinTable(name = "provincia", joinColumns = { @JoinColumn(name = "paisID") })
-    private Set<Provincia> provincias = new HashSet<Provincia>(0);
+//    @OneToMany//(mappedBy = "pais")
+//    @JoinTable(name = "provincia", joinColumns = { @JoinColumn(name = "paisID") })
+//    private Set<Provincia> provincias = new HashSet<Provincia>(0);
 
     public Pais() {
     }
@@ -48,10 +43,10 @@ public class Pais implements Serializable {
 	this.nombre = nombre;
     }
 
-    public Pais(String nombre, Set<Provincia> provincias) {
-	this.nombre = nombre;
-	this.provincias = provincias;
-    }
+//    public Pais(String nombre, Set<Provincia> provincias) {
+//	this.nombre = nombre;
+//	this.provincias = provincias;
+//    }
 
     public Integer getId() {
 	return id;
@@ -69,13 +64,13 @@ public class Pais implements Serializable {
 	this.nombre = nombre;
     }
 
-    public Set<Provincia> getProvincias() {
-	return provincias;
-    }
-
-    public void setProvincias(Set<Provincia> provincias) {
-	this.provincias = provincias;
-    }
+//    public Set<Provincia> getProvincias() {
+//	return provincias;
+//    }
+//
+//    public void setProvincias(Set<Provincia> provincias) {
+//	this.provincias = provincias;
+//    }
 
     public boolean equals(Object object) {
 	if (object == this)

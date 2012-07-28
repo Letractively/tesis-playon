@@ -27,6 +27,9 @@
 	<!-- Beans Declaration -->
 
 <!-- 	<bean id="Barrio" class="tesis.playon.web.model.Barrio" /> -->
+<!-- 	<bean id="Localidad" class="tesis.playon.web.model.Localidad" /> -->
+	<bean id="Provincia" class="tesis.playon.web.model.Provincia" />
+	<bean id="Pais" class="tesis.playon.web.model.Pais" />
 	<!-- <bean id="CargoEmpleado" class="tesis.playon.web.model.CargoEmpleado"	/> -->
 <!-- 	<bean id="CategoriaVehiculo" class="tesis.playon.web.model.CategoriaVehiculo" /> -->
 	<!-- <bean id="ColorVehiculo" class="tesis.playon.web.model.ColorVehiculo" 
@@ -40,22 +43,19 @@
 		/> -->
 	<!-- <bean id="EstadoPublicidad" class="tesis.playon.web.model.EstadoPublicidad" 
 		/> -->
-<!-- 	<bean id="Localidad" class="tesis.playon.web.model.Localidad" /> -->
 	<!-- <bean id="MarcaVehiculo" class="tesis.playon.web.model.MarcaVehiculo" 
 		/> -->
 	<!-- <bean id="ModeloVehiculo" class="tesis.playon.web.model.ModeloVehiculo" 
 		/> -->
-<!-- 	<bean id="Pais" class="tesis.playon.web.model.Pais" /> -->
 <!-- 	<bean id="Playa" class="tesis.playon.web.model.Playa" /> -->
 	<!-- <bean id="Posicion" class="tesis.playon.web.model.Posicion" /> -->
-<!-- 	<bean id="Provincia" class="tesis.playon.web.model.Provincia" /> -->
 	<bean id="RolUsuario" class="tesis.playon.web.model.RolUsuario" />
 <!-- 	<bean id="Tarifa" class="tesis.playon.web.model.Tarifa" /> -->
 	<bean id="TipoDoc" class="tesis.playon.web.model.TipoDoc" />
 	<bean id="TipoEstadia" class="tesis.playon.web.model.TipoEstadia" />
 	<!-- <bean id="TipoPago" class="tesis.playon.web.model.TipoPago" /> -->
-<!-- 	<bean id="Usuario" class="tesis.playon.web.model.Usuario" /> -->
-<!-- 	<bean id="Cliente" class="tesis.playon.web.model.Cliente" /> -->
+	<bean id="Usuario" class="tesis.playon.web.model.Usuario" />
+	<bean id="Cliente" class="tesis.playon.web.model.Cliente" />
 <!-- 	<bean id="CuentaCliente" class="tesis.playon.web.model.CuentaCliente" /> -->
 	
 
@@ -98,15 +98,27 @@
 	</bean>
 
 
+	<bean id="PaisService" class="tesis.playon.web.service.impl.PaisService">
+		<property name="paisDao" ref="PaisDao" />
+	</bean>
+	<bean id="ProvinciaService" class="tesis.playon.web.service.impl.ProvinciaService">
+		<property name="provinciaDao" ref="ProvinciaDao" />
+	</bean>
+<!-- 	<bean id="LocalidadService" class="tesis.playon.web.service.impl.LocalidadService"> -->
+<!-- 		<property name="localidadDao" ref="LocalidadDao" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="BarrioService" class="tesis.playon.web.service.impl.BarrioService"> -->
+<!-- 		<property name="barrioDao" ref="BarrioDao" /> -->
+<!-- 	</bean> -->
 	<bean id="RolUsuarioService" class="tesis.playon.web.service.impl.RolUsuarioService">
 		<property name="rolUsuarioDao" ref="RolUsuarioDao" />
 	</bean>
 	<bean id="TipoDocService" class="tesis.playon.web.service.impl.TipoDocService">
 		<property name="tipoDocDao" ref="TipoDocDao" />
 	</bean>
-<!-- 	<bean id="UsuarioService" class="tesis.playon.web.service.impl.UsuarioService"> -->
-<!-- 		<property name="usuarioDao" ref="UsuarioDao" /> -->
-<!-- 	</bean> -->
+	<bean id="UsuarioService" class="tesis.playon.web.service.impl.UsuarioService">
+		<property name="usuarioDao" ref="UsuarioDao" />
+	</bean>
 <!-- 	<bean id="TarifaService" class="tesis.playon.web.service.impl.TarifaService"> -->
 <!-- 		<property name="tarifaDao" ref="TarifaDao" /> -->
 <!-- 	</bean> -->
@@ -119,18 +131,18 @@
 <!-- 	<bean id="CategoriaVehiculoService" class="tesis.playon.web.service.impl.CategoriaVehiculoService"> -->
 <!-- 		<property name="categoriaVehiculoDao" ref="CategoriaVehiculoDao" /> -->
 <!-- 	</bean> -->
-<!-- 	<bean id="ClienteService" class="tesis.playon.web.service.impl.ClienteService"> -->
-<!-- 		<property name="clienteDao" ref="ClienteDao" /> -->
-<!-- 	</bean> -->
+	<bean id="ClienteService" class="tesis.playon.web.service.impl.ClienteService">
+		<property name="clienteDao" ref="ClienteDao" />
+	</bean>
 	
 
 	<!-- User DAO Declaration -->
-<!-- 	<bean id="PaisDao" class="tesis.playon.web.dao.impl.PaisDao"> -->
-<!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
-<!-- 	</bean> -->
-<!-- 	<bean id="ProvinciaDao" class="tesis.playon.web.dao.impl.ProvinciaDao"> -->
-<!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
-<!-- 	</bean> -->
+	<bean id="PaisDao" class="tesis.playon.web.dao.impl.PaisDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
+	<bean id="ProvinciaDao" class="tesis.playon.web.dao.impl.ProvinciaDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
 <!-- 	<bean id="LocalidadDao" class="tesis.playon.web.dao.impl.LocalidadDao"> -->
 <!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
 <!-- 	</bean> -->
@@ -143,9 +155,9 @@
 	<bean id="TipoDocDao" class="tesis.playon.web.dao.impl.TipoDocDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
-<!-- 	<bean id="UsuarioDao" class="tesis.playon.web.dao.impl.UsuarioDao"> -->
-<!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
-<!-- 	</bean> -->
+	<bean id="UsuarioDao" class="tesis.playon.web.dao.impl.UsuarioDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
 <!-- 	<bean id="TarifaDao" class="tesis.playon.web.dao.impl.TarifaDao"> -->
 <!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
 <!-- 	</bean> -->
@@ -158,9 +170,9 @@
 <!-- 	<bean id="CategoriaVehiculoDao" class="tesis.playon.web.dao.impl.CategoriaVehiculoDao"> -->
 <!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
 <!-- 	</bean> -->
-<!-- 	<bean id="ClienteDao" class="tesis.playon.web.dao.impl.ClienteDao"> -->
-<!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
-<!-- 	</bean> -->
+	<bean id="ClienteDao" class="tesis.playon.web.dao.impl.ClienteDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
 <!-- 	<bean id="CuentaClienteDao" class="tesis.playon.web.dao.impl.CuentaClienteDao"> -->
 <!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
 <!-- 	</bean> -->
@@ -210,7 +222,6 @@
 				<value>tesis.playon.web.model.Usuario</value>
 			</list>
 		</property>
-
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
@@ -227,5 +238,4 @@
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
-
 </beans>

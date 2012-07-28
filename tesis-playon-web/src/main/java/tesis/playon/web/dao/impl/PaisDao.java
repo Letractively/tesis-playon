@@ -27,7 +27,7 @@ public class PaisDao implements IPaisDao {
     public void setSessionFactory(SessionFactory sessionFactory) {
 	this.sessionFactory = sessionFactory;
     }
-
+    
     public void save(Pais pais) {
 	getSessionFactory().getCurrentSession().save(pais);
     }

@@ -11,18 +11,18 @@
 		<h:form>
 			<table>
 				<tr>
+					<td><h:outputLabel for="apellido" value="Apellido " /></td>
+					<td><p:inputText id="apellido" value="#{usuarioMB.apellido}">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="apellidoMsg" />
+						</p:inputText> <p:message id="apellidoMsg" for="apellido" display="icon" /></td>
+				</tr>
+				<tr>
 					<td><h:outputLabel for="nombre" value="Nombre: " /></td>
 					<td><p:inputText id="nombre" value="#{usuarioMB.nombre}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="nombreMsg" />
 						</p:inputText> <p:message id="nombreMsg" for="nombre" display="icon" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel for="apellido" value="Nombre: " /></td>
-					<td><p:inputText id="apellido" value="#{usuarioMB.apellido}">
-							<f:validateLength minimum="5" />
-							<p:ajax event="blur" update="apellidoMsg" />
-						</p:inputText> <p:message id="apellidoMsg" for="apellido" display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="email" value="E-mail: " /></td>
@@ -65,7 +65,7 @@
 				<tr>
 					<td><p:commandButton id="addUser" value="Agregar"
 							action="#{usuarioMB.addUsuario}" ajax="false" /></td>
-					<td><p:commandButton id="reset" value="Reset"
+					<td><p:commandButton id="reset" value="Limpiar"
 							action="#{usuarioMB.reset}" ajax="false" /></td>
 				</tr>
 			</table>

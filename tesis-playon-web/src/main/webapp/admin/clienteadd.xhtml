@@ -1,0 +1,92 @@
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="panelTitle" value="Nuevo Cliente"/>
+
+	<ui:define name="panelContent">
+		<h:form>
+		<h:outputLabel for="usuario" value="Datos de Usuario: " />
+		<table>
+			<tr>
+				<td/>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="nombreUser" value="Nombre usuario: " /></td>
+				<td><p:inputText id="nombreUser"
+						value="#{clienteMB.nombreUser}">
+						<f:validateLength minimum="5" />
+						<p:ajax event="blur" update="nombreUserMsg" />
+					</p:inputText> </td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="password" value="Contraseña: " /></td>
+				<td><p:password id="password" value="#{clienteMB.password}" match="passwordRepeat" required="true">
+						<f:validateLength minimum="5" />
+						<p:ajax event="blur" update="passwordMsg" />
+					</p:password></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="passwordRepeat" value="Repita Contraseña: " /></td>
+				<td><p:password id="passwordRepeat" value="#{clienteMB.password}" required="true">
+						<f:validateLength minimum="5" />
+						<p:ajax event="blur" update="passwordMsg" />
+					</p:password></td>
+			</tr>
+		</table>
+		<div>
+			<p:message id="nombreUserMsg" for="nombreUser" display="icon" />
+			<p:message id="passwordMsg" for="password" display="icon" />
+		</div>
+		
+		<h:outputLabel for="cliente" value="Datos de Cliente " />
+		<table>
+			<tr>
+				<td/>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="nombre" value="Nombre: " /></td>
+				<td><p:inputText id="nombre" value="#{clienteMB.nombre}">
+						<f:validateLength minimum="5" />
+						<p:ajax event="blur" update="nombreMsg" />
+					</p:inputText> </td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="apellido" value="Apellidp: " /></td>
+				<td><p:inputText id="apellido" value="#{clienteMB.apellido}">
+						<f:validateLength minimum="5" />
+						<p:ajax event="blur" update="apellidoMsg" />
+					</p:inputText> <p:message id="apellidoMsg" for="apellido" display="icon" /></td>
+			</tr>
+			<tr>
+				<td><h:outputText for="tipoDoc" value="Tipo Documento: " /></td>
+				<td><p:selectOneMenu value="#{clienteMB.tipoDoc}" effect="fade">
+						<f:selectItems value="#{tipoDocMB.tipoDocList}" var="tipoDoc"
+							itemValue="#{tipoDoc}" itemLabel="#{tipoDoc.nombre}" />
+						<f:converter converterId="tipoDocConverter" />
+					</p:selectOneMenu></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="nroDoc" value="Nro. Documento: " /></td>
+				<td><p:inputText id="nroDoc" value="#{clienteMB.nroDoc}">
+						<f:validateLength minimum="8" />
+						<p:ajax event="blur" update="nroDocMsg" />
+					</p:inputText> <p:message id="nroDocMsg" for="nroDoc" display="icon" /></td>
+			</tr>
+			<tr>
+				<td><h:outputLabel for="email" value="E-mail: " /></td>
+				<td><p:inputText id="email" value="#{clienteMB.email}">
+						<f:validateLength minimum="5" />
+						<p:ajax event="blur" update="emailMsg" />
+					</p:inputText> <p:message id="emailMsg" for="email" display="icon" /></td>
+			</tr>
+		</table>
+		<div>
+			<p:message id="nombreMsg" for="nombre" display="icon" />			
+		</div>
+	</h:form>
+	</ui:define>
+</ui:composition>

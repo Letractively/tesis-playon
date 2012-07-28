@@ -84,7 +84,7 @@ public class PaisManagedBean implements Serializable {
     
     public Set<Provincia> getProvincias() {
 	provincias = new HashSet<Provincia>(0);
-	Pais pais = getPaisService().findByNombrPais(getNombre());
+	Pais pais = getPaisService().findByNombrePais(getNombre());
 	provincias.addAll(getPaisService().findProvincia(pais));
         return provincias;
     }
