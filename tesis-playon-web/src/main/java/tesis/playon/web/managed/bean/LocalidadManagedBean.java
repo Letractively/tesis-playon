@@ -34,7 +34,7 @@ public class LocalidadManagedBean implements Serializable{
 
     private static final String ERROR = "error";
 
-    @ManagedProperty(value = "#LocalidadService}")
+    @ManagedProperty(value = "#{LocalidadService}")
     ILocalidadService localidadService;
 
     List<Localidad> localidadList;

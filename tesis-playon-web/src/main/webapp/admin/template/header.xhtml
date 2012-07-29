@@ -13,7 +13,18 @@
 										alt="Logo" />
 
 								</div></td>
-							<td><h3>Panel de administración</h3></td>
+							<td style="width: 400px; text-align: left; vertical-align: center;">
+								<h3>Panel de administración</h3>
+							</td>
+							<td style="width: 100%; text-align: right; 
+									vertical-align: bottom; padding-right: 10px;">
+								<h:form>
+									<h:commandLink id="logout"
+										action="#{loginMB.logout}"
+										value="Cerrar sesión">
+									</h:commandLink>
+								</h:form>
+							</td>
 						</tr>
 					</table>
 					

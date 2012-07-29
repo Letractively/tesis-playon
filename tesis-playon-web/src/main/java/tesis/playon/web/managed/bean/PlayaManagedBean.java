@@ -92,7 +92,7 @@ public class PlayaManagedBean implements Serializable {
 
 	try {
 	    String respuesta = LatitudlongitudUtil.getLocationFromAddress(getDireccionBusqueda()
-		    + ", C�rdoba, Argentina");
+		    + ", Córdoba, Argentina");
 	    System.out.println("\n\n\n" + respuesta + "\n\n\n");
 	} catch (Exception e) {
 	    e.printStackTrace();

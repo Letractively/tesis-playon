@@ -37,8 +37,8 @@
 <!--     </navigation-rule> -->
    
    	<navigation-rule>
-    	<display-name>admin/*</display-name>
-    	<from-view-id>/admin/*</from-view-id>
+    	<display-name>admin/**</display-name>
+    	<from-view-id>/admin/**</from-view-id>
     	<navigation-case>
     		<from-action>#{loginMB.logout}</from-action>
     		<from-outcome>LoggedOut</from-outcome>
