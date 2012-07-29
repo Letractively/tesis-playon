@@ -109,6 +109,12 @@
 	padding: 10px 10px 10px 10px;
 }
 
+.admin-subtitle {
+	text-decoration: underline;
+	font-size: 12pt;
+	font-weight: bold;
+}
+
 /* ********************************************** */
 /*	Layout Login	*/
 .login-font {

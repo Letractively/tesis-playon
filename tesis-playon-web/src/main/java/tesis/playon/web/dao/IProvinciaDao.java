@@ -1,9 +1,8 @@
 package tesis.playon.web.dao;
 
 import java.util.List;
-import java.util.Set;
 
-import tesis.playon.web.model.Localidad;
+import tesis.playon.web.model.Pais;
 import tesis.playon.web.model.Provincia;
 
 public interface IProvinciaDao {
@@ -15,8 +14,10 @@ public interface IProvinciaDao {
     void delete(Provincia provincia);
 
     Provincia findByNombreProvincia(String nombreProvincia);
+    
+    Provincia findByProvinciaId(Integer id);
 
     List<Provincia> findAll();
     
-    Set<Localidad> findLocalidades(Provincia provincia);
+    List<Provincia> findProvincias(Pais pais);
 }

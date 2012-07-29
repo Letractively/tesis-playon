@@ -1,7 +1,6 @@
 package tesis.playon.web.service.impl;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,11 +50,14 @@ public class PaisService implements IPaisService {
 	// TODO Auto-generated method stub
 	return getPaisDao().findAll();
     }
-
+    
     @Override
-    public Set<Provincia> findProvincia(Pais pais) {
-	// TODO Auto-generated method stub
-	return getPaisDao().findProvincia(pais);
+    public Pais findByPaisId(Integer id){
+	return getPaisDao().findByPaisId(id);
+    }
+    
+    public List<Provincia> getProvincias(Integer idPais){
+	return getPaisDao().getProvincias(idPais);
     }
 
     public IPaisDao getPaisDao() {

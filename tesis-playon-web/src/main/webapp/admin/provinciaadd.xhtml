@@ -1,0 +1,39 @@
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="panelTitle" value="Nuevo Barrio" />
+
+	<ui:define name="panelContent">
+		<h:form>
+			<table>
+				<tr>
+					<td><h:outputText for="pais" value="Pais: " /></td>
+					<td><p:selectOneMenu id="pais" value="#{provinciaMB.pais}" effect="fade">
+					<f:selectItem itemLabel="Seleccione un Pais" itemValue="-1" />
+						<f:selectItems value="#{paisMB.paisList}" var="pais"
+							itemValue="#{pais}"
+							itemLabel="#{pais.nombre}" />
+							<f:converter converterId="paisConverter" />
+							<p:ajax update="provincia" process="@this" event="change" listener="#{provinciaMB.getProvinciaList}" />
+						</p:selectOneMenu></td>
+				</tr>
+		
+				<tr>
+					<td><h:outputText for="provincia" value="Provincia: " /></td>
+					<td><p:selectOneMenu id="provincia" value="#{paisMB.provincia}" effect="fade">
+						<f:selectItem itemLabel="Seleccione una provincia" />
+						<f:selectItems value="#{provinciaMB.provinciaList}" var="provincia"
+							itemValue="#{provincia}"
+							itemLabel="#{provincia.nombre}" />
+						<f:converter converterId="provinciaConverter" />
+						<p:ajax process="@this" update="provincia" />
+						</p:selectOneMenu></td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>

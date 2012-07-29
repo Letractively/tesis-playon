@@ -2,9 +2,7 @@ package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -36,14 +34,13 @@ public class ProvinciaManagedBean implements Serializable {
 
     private Pais pais;
     
-    private Set<Localidad> localidades;
+    private List<Localidad> localidadList;
 
     public String addPais() {
 	try {
 	    Provincia provincia = new Provincia();
 	    provincia.setNombre(getNombre());
 	    provincia.setPais(getPais());
-	    provincia.setLocalidades(getLocalidades());
 	    getProvinciaService().save(provincia);
 	    return PROVINCIA_PAIS;
 	} catch (DataAccessException e) {
@@ -63,7 +60,7 @@ public class ProvinciaManagedBean implements Serializable {
     public void reset() {
 	this.setNombre("");
 	this.setPais(null);
-	this.setLocalidades(null);    
+	this.setLocalidadList(null);    
     }
 
     public IProvinciaService getProvinciaService() {
@@ -75,40 +72,46 @@ public class ProvinciaManagedBean implements Serializable {
     }
 
     public List<Provincia> getProvinciaList() {
-	provinciaList = new ArrayList<Provincia>();
-	provinciaList.addAll(getProvinciaService().findAll());
+	if(pais != null){
+	    provinciaList = getProvinciaService().findProvincias(getPais());
+	}
+	else
+	    provinciaList = new ArrayList<Provincia>();
 	return provinciaList;
     }
 
-    public void setProvinciaList(List<Provincia> provinciaList) {
-	this.provinciaList = provinciaList;
-    }
+    public List<Localidad> getLocalidadList() {
+   	try
+   	{
+   	    localidadList = new ArrayList<Localidad>();
+            return localidadList;
+   	}catch (Exception e) {
+   	    return null;
+   	}
+       }
 
     public String getNombre() {
-	return nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-	this.nombre = nombre;
+        this.nombre = nombre;
     }
 
     public Pais getPais() {
-	return pais;
+        return pais;
     }
 
     public void setPais(Pais pais) {
-	this.pais = pais;
+        this.pais = pais;
     }
 
-    public Set<Localidad> getLocalidades() {
-	localidades  = new HashSet<Localidad>(0);
-	Provincia provincia = getProvinciaService().findByNombreProvincia(getNombre());
-	localidades.addAll(getProvinciaService().findLocalidades(provincia));
-        return localidades;
+    public void setProvinciaList(List<Provincia> provinciaList) {
+        this.provinciaList = provinciaList;
     }
 
-    public void setLocalidades(Set<Localidad> localidades) {
-        this.localidades = localidades;
+    public void setLocalidadList(List<Localidad> localidadList) {
+        this.localidadList = localidadList;
     }
     
 }

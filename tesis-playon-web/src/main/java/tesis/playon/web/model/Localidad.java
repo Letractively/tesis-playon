@@ -45,7 +45,7 @@ public class Localidad implements Serializable {
 
     @OneToMany//(mappedBy = "localidad")
     @JoinTable(name = "barrio", joinColumns = { @JoinColumn(name = "localidadID") })
-    private Set<Barrio> barrios = new HashSet<Barrio>();
+    private Set<Barrio> barrios = new HashSet<Barrio>(0);
 
     public Localidad() {
     }
