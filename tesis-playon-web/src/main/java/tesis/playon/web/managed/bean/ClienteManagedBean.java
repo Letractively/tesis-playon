@@ -4,6 +4,7 @@
 package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -173,6 +174,8 @@ public class ClienteManagedBean implements Serializable {
     }
 
     public List<Cliente> getClienteList() {
+	clienteList = new ArrayList<Cliente>();
+	clienteList.addAll(getClienteService().findAll());
 	return clienteList;
     }
 
@@ -237,7 +240,7 @@ public class ClienteManagedBean implements Serializable {
     }
 
     public Integer getNroCliente() {
-        return nroCliente = ((int) Math.random() * 10000);
+        return nroCliente;
     }
 
     public void setNroCliente(Integer nroCliente) {

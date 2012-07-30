@@ -5,9 +5,102 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:param name="panelTitle" value="Titulo de la página"/>
+	<ui:param name="panelTitle" value="Listado de Clientes" />
 
 	<ui:define name="panelContent" class="admin-font">
-		
+		<h:form>
+			<p:dataTable id="clientes" var="cliente" editable="true"
+				paginator="true" rows="5" value="#{clienteMB.clienteList}"
+				style="width: 10%">
+
+				<f:facet name="header">
+				Clientes
+            	</f:facet>
+            	
+            	<p:column headerText="Usuario" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cliente.usuario.nombreUser}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{cliente.usuario.nombreUser}"
+								styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Apellido" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cliente.usuario.apellido}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{cliente.usuario.apellido}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Nombre" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cliente.usuario.nombre}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{cliente.usuario.nombre}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Tipo Doc." styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cliente.usuario.tipoDoc.nombre}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:selectOneMenu value="#{cliente.usuario.tipoDoc}">
+								<f:selectItems value="#{tipoDocMB.tipoDocList}" var="tipoDoc"
+									itemValue="#{tipoDoc}" itemLabel="#{tipoDoc.nombre}" />
+								<f:converter converterId="tipoDocConverter" />
+							</h:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Nro. Documento" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cliente.usuario.nroDoc}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{cliente.usuario.nroDoc}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Nro. Cliente" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cliente.nroCliente}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{cliente.nroCliente}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Opciones" styleClass="option-font">
+					<p:rowEditor />
+				</p:column>
+
+				<p:column>
+					<h:commandButton value="Borrar"
+						action="#{clienteMB.deleteCliente(cliente)}" />
+				</p:column>
+
+			</p:dataTable>
+			<p>
+				<p:commandButton id="addCliente" value="Agregar"
+					action="/admin/clienteadd.html?faces-redirect=true" ajax="false" />
+			</p>
+		</h:form>
 	</ui:define>
 </ui:composition>
