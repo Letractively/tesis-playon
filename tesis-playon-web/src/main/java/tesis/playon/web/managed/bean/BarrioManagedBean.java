@@ -74,9 +74,7 @@ public class BarrioManagedBean implements Serializable{
 
     public List<Barrio> getBarrioList() {
 	barrioList = new  ArrayList<Barrio>();
-	IBarrioService ibs= getBarrioService();
-	List<Barrio> lista = ibs.findAll();
-	barrioList.addAll(lista);
+	barrioList.addAll(getBarrioService().findAll());
         return barrioList;
     }
 

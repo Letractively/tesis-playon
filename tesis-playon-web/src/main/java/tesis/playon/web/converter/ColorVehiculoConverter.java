@@ -7,7 +7,7 @@ import javax.faces.convert.FacesConverter;
 
 import tesis.playon.web.model.ColorVehiculo;
 
-@FacesConverter(value = "barrioConverter")
+@FacesConverter(value = "colorVehiculoConverter")
 public class ColorVehiculoConverter implements Converter {
 
     @Override

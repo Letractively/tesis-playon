@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package tesis.playon.web.service;
 
 import java.util.List;
@@ -5,8 +8,7 @@ import java.util.List;
 import tesis.playon.web.model.Barrio;
 
 /**
- * 
- * @author gmorales
+ * @author pablo
  *
  */
 public interface IBarrioService {
@@ -17,8 +19,7 @@ public interface IBarrioService {
 
     void delete(Barrio barrio);
 
-    List<Barrio> findAll();
-
     Barrio findByNombreBarrio(String nombreBarrio);
 
+    List<Barrio> findAll();
 }

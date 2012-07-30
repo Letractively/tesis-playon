@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package tesis.playon.web.service.impl;
 
 import java.util.List;
@@ -9,49 +12,52 @@ import tesis.playon.web.model.Barrio;
 import tesis.playon.web.service.IBarrioService;
 
 /**
- * 
- * @author gmorales
- * 
+ * @author pablo
+ *
  */
 @Transactional(readOnly = true)
 public class BarrioService implements IBarrioService {
 
     IBarrioDao barrioDao;
-
+    
     @Transactional(readOnly = false)
     @Override
     public void save(Barrio barrio) {
+	// TODO Auto-generated method stub
 	getBarrioDao().save(barrio);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void update(Barrio barrio) {
+	// TODO Auto-generated method stub
 	getBarrioDao().update(barrio);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(Barrio barrio) {
+	// TODO Auto-generated method stub
 	getBarrioDao().delete(barrio);
     }
 
     @Override
-    public List<Barrio> findAll() {
-	return getBarrioDao().findAll();
-    }
-
-    @Override
     public Barrio findByNombreBarrio(String nombreBarrio) {
+	// TODO Auto-generated method stub
 	return getBarrioDao().findByNombreBarrio(nombreBarrio);
     }
 
+    @Override
+    public List<Barrio> findAll() {
+	// TODO Auto-generated method stub
+	return getBarrioDao().findAll();
+    }
+
     public IBarrioDao getBarrioDao() {
-	return barrioDao;
+        return barrioDao;
     }
 
     public void setBarrioDao(IBarrioDao barrioDao) {
-	this.barrioDao = barrioDao;
+        this.barrioDao = barrioDao;
     }
-
 }

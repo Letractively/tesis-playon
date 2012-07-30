@@ -52,7 +52,6 @@
 				<tr>
 					<td><h:outputLabel for="disponibilidad" value="Disponibilidad: " /></td>
 					<td><p:inputText id="disponibilidad" value="#{playaMB.disponibilidad}">
-							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="disponibilidadMsg" />
 						</p:inputText> <p:message id="disponibilidadMsg" for="disponibilidad" display="icon" /></td>
 				</tr>

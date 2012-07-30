@@ -17,8 +17,8 @@ import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
+import tesis.playon.web.service.IEstadoPlayaService;
 import tesis.playon.web.service.IPlayaService;
-import tesis.playon.web.service.impl.EstadoPlayaService;
 import tesis.playon.web.util.LatitudlongitudUtil;
 
 /**
@@ -37,6 +37,9 @@ public class PlayaManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{PlayaService}")
     IPlayaService playaService;
+    
+    @ManagedProperty(value = "#{EstadoPlayaService}")
+    IEstadoPlayaService estadoPlayaService;
 
     List<Playa> playaList;
 
@@ -60,8 +63,8 @@ public class PlayaManagedBean implements Serializable {
 
     public String addPlaya() {
 	try {
-	    EstadoPlayaService eps = new EstadoPlayaService();
-	    EstadoPlaya estado = eps.findByNombreEstadoPlaya("Pendiente");
+	    EstadoPlaya estado = new EstadoPlaya();
+	    estado= getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
 	    
 	    Playa playa = new Playa();
 	    playa.setBarrio(getBarrio());
@@ -116,6 +119,14 @@ public class PlayaManagedBean implements Serializable {
 
     public void setPlayaService(IPlayaService playaService) {
 	this.playaService = playaService;
+    }
+
+    public IEstadoPlayaService getEstadoPlayaService() {
+        return estadoPlayaService;
+    }
+
+    public void setEstadoPlayaService(IEstadoPlayaService estadoPlayaService) {
+        this.estadoPlayaService = estadoPlayaService;
     }
 
     public List<Playa> getPlayaList() {

@@ -14,7 +14,7 @@ import tesis.playon.web.model.Barrio;
  * 
  */
 public class BarrioDao implements IBarrioDao {
-
+    
     private SessionFactory sessionFactory;
 
     public SessionFactory getSessionFactory() {
