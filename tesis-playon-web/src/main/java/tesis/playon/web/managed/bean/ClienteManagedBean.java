@@ -38,8 +38,10 @@ public class ClienteManagedBean implements Serializable {
     @ManagedProperty(value = "#{ClienteService}")
     IClienteService clienteService;
 
+    @ManagedProperty(value = "#{UsuarioService}")
     IUsuarioService usuarioService;
 
+    @ManagedProperty(value = "#{CuentaClienteService}")
     ICuentaClienteService cuentaClienteService;
 
     List<Cliente> clienteList;
@@ -81,8 +83,12 @@ public class ClienteManagedBean implements Serializable {
 	    cliente.setDomicilio(getDomicilio());
 	    cliente.setTelefono(getTelefono());
 	    cliente.setUsuario(usuario);
+	    cliente.setNroCliente(getNroCliente());
 	    
 	    getClienteService().save(cliente);
+	    cliente = getClienteService().findByNumeroCliente(cliente.getNroCliente());
+	    cuenta.setCliente(cliente);
+	    getCuentaClienteService().update(cuenta);
 	    return LISTA_CLIENTES;
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
@@ -231,7 +237,7 @@ public class ClienteManagedBean implements Serializable {
     }
 
     public Integer getNroCliente() {
-        return nroCliente;
+        return nroCliente = ((int) Math.random() * 10000);
     }
 
     public void setNroCliente(Integer nroCliente) {
