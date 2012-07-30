@@ -1430,6 +1430,51 @@ VALUES (NULL,'Clio',1,1),(NULL,'Fluence',2,1),(NULL,'Ka',3,2),(NULL,'Ranger',4,2
 /*!40000 ALTER TABLE `modelo_vehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Dumping data for table `pais`
+--
+
+LOCK TABLES `pais` WRITE;
+/*!40000 ALTER TABLE `pais` DISABLE KEYS */;
+INSERT INTO `pais` (`paisID`, `nombre`) 
+VALUES (1,'Argentina');
+/*!40000 ALTER TABLE `pais` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `provincia`
+--
+
+LOCK TABLES `provincia` WRITE;
+/*!40000 ALTER TABLE `provincia` DISABLE KEYS */;
+INSERT INTO `provincia` (`provinciaID`, `paisID`, `nombre`) 
+VALUES (1,1,'Córdoba');
+/*!40000 ALTER TABLE `provincia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `localidad`
+--
+
+LOCK TABLES `localidad` WRITE;
+/*!40000 ALTER TABLE `localidad` DISABLE KEYS */;
+INSERT INTO `localidad` (`localidadID`, `provinciaID`, `nombre`) 
+VALUES (1,1,'Córdoba');
+/*!40000 ALTER TABLE `localidad` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- Dumping data for table `barrio`
+--
+
+LOCK TABLES `barrio` WRITE;
+/*!40000 ALTER TABLE `barrio` DISABLE KEYS */;
+INSERT INTO `barrio` (`barrioID`, `localidadID`, `nombre`) 
+VALUES (1,1,'Centro'),(2,1,'Nueva Córdoba'),(3,1,'Jardín'),(4,1,'Alta Córdoba'),(5,1,'Alberdi');
+/*!40000 ALTER TABLE `barrio` ENABLE KEYS */;
+UNLOCK TABLES;
+
 -- -- =================================================================== --
 
 
