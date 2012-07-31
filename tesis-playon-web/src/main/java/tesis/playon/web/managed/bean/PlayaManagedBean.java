@@ -17,8 +17,11 @@ import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
+import tesis.playon.web.model.TipoDoc;
+import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IEstadoPlayaService;
 import tesis.playon.web.service.IPlayaService;
+import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.util.LatitudlongitudUtil;
 
 /**
@@ -37,12 +40,16 @@ public class PlayaManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{PlayaService}")
     IPlayaService playaService;
-    
+
     @ManagedProperty(value = "#{EstadoPlayaService}")
     IEstadoPlayaService estadoPlayaService;
 
+    @ManagedProperty(value = "#{UsuarioService}")
+    IUsuarioService usuarioService;
+
     List<Playa> playaList;
 
+    // Atributos de las playas.
     private String cuit;
 
     private Integer disponibilidad;
@@ -61,11 +68,26 @@ public class PlayaManagedBean implements Serializable {
 
     private Estadia estadia;
 
+    // Atributos del encargado
+    private String apellido;
+
+    private String nombre;
+
+    private String email;
+
+    private Integer nroDoc;
+
+    private String password;
+
+    private String nombreUser;
+
+    private TipoDoc tipoDoc;
+
     public String addPlaya() {
 	try {
 	    EstadoPlaya estado = new EstadoPlaya();
-	    estado= getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
-	    
+	    estado = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
+
 	    Playa playa = new Playa();
 	    playa.setBarrio(getBarrio());
 	    playa.setCuit(getCuit());
@@ -81,6 +103,67 @@ public class PlayaManagedBean implements Serializable {
 	    e.printStackTrace();
 	}
 	return ERROR;
+    }
+
+    public String addSolicitudPlaya() {
+	try {
+	    EstadoPlaya estado = new EstadoPlaya();
+	    estado = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
+
+	    Playa playa = new Playa();
+	    Usuario usuario = addUsuario();
+
+	    playa.setBarrio(getBarrio());
+	    playa.setCuit(getCuit());
+	    playa.setDisponibilidad(getDisponibilidad());
+	    playa.setDomicilio(getDomicilio());
+	    playa.setEstadia(getEstadia());
+	    playa.setEstado(estado);
+	    playa.setNombreComercial(getNombreComercial());
+	    playa.setRazonSocial(getRazonSocial());
+	    
+	    getPlayaService().save(playa);
+	    getUsuarioService().save(usuario);
+	    
+	    return LISTA_PLAYAS;
+	} catch (DataAccessException e) {
+	    e.printStackTrace();
+	}
+	return ERROR;
+    }
+
+    public Usuario addUsuario() {
+	try {
+	    Usuario usuario = new Usuario();
+	    usuario.setNombre(getNombre());
+	    usuario.setApellido(getApellido());
+	    usuario.setEmail(getEmail());
+	    usuario.setNroDoc(getNroDoc());
+	    usuario.setPassword(getPassword());
+	    usuario.setNombreUser(getNombreUser());
+	    usuario.setTipoDoc(getTipoDoc());
+	    getUsuarioService().save(usuario);
+	    return usuario;
+	} catch (DataAccessException e) {
+	    e.printStackTrace();
+	}
+	return null;
+    }
+
+    public void deleteUsuario(Usuario usuario) {
+	getUsuarioService().delete(usuario);
+    }
+
+    public void updateUsuario(Usuario usuario) {
+	getUsuarioService().update(usuario);
+    }
+
+    public IUsuarioService getUsuarioService() {
+	return usuarioService;
+    }
+
+    public void setUsuarioService(IUsuarioService usuarioService) {
+	this.usuarioService = usuarioService;
     }
 
     public void deletePlaya(Playa playa) {
@@ -122,11 +205,11 @@ public class PlayaManagedBean implements Serializable {
     }
 
     public IEstadoPlayaService getEstadoPlayaService() {
-        return estadoPlayaService;
+	return estadoPlayaService;
     }
 
     public void setEstadoPlayaService(IEstadoPlayaService estadoPlayaService) {
-        this.estadoPlayaService = estadoPlayaService;
+	this.estadoPlayaService = estadoPlayaService;
     }
 
     public List<Playa> getPlayaList() {
@@ -209,6 +292,62 @@ public class PlayaManagedBean implements Serializable {
 
     public void setDireccionBusqueda(String direccionBusqueda) {
 	this.direccionBusqueda = direccionBusqueda;
+    }
+
+    public String getApellido() {
+	return apellido;
+    }
+
+    public void setApellido(String apellido) {
+	this.apellido = apellido;
+    }
+
+    public String getNombre() {
+	return nombre;
+    }
+
+    public void setNombre(String nombre) {
+	this.nombre = nombre;
+    }
+
+    public String getEmail() {
+	return email;
+    }
+
+    public void setEmail(String email) {
+	this.email = email;
+    }
+
+    public Integer getNroDoc() {
+	return nroDoc;
+    }
+
+    public void setNroDoc(Integer nroDoc) {
+	this.nroDoc = nroDoc;
+    }
+
+    public String getPassword() {
+	return password;
+    }
+
+    public void setPassword(String password) {
+	this.password = password;
+    }
+
+    public String getNombreUser() {
+	return nombreUser;
+    }
+
+    public void setNombreUser(String nombreUser) {
+	this.nombreUser = nombreUser;
+    }
+
+    public TipoDoc getTipoDoc() {
+	return tipoDoc;
+    }
+
+    public void setTipoDoc(TipoDoc tipoDoc) {
+	this.tipoDoc = tipoDoc;
     }
 
 }

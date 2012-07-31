@@ -1,0 +1,36 @@
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+		Solicitud de alta de playa
+    </ui:define>
+
+	<ui:define name="content">
+		<h1>Solicitud de alta de playa</h1>
+		<p>Con el siguiente formulario puede solicitar la incorporación de
+			una nueva playa al sistema, luego de la revisión de un auditor quién
+			realizará la verificación de los datos datos cargados.</p>
+
+		<h:form>
+			<table border="1">
+				<tr>
+					<td colspan="2"><h:outputLabel styleClass="admin-subtitle"
+							for="usuario" value="Datos sobre la Playa: " /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="razonSocial" value="Razon Social: " /></td>
+					<td><p:inputText id="razonSocial"
+							value="#{playaMB.razonSocial}">
+							<f:validateLength minimum="2" />
+							<p:ajax event="blur" update="razonSocialMsg" />
+						</p:inputText> <p:message id="razonSocialMsg" for="razonSocial" display="icon" /></td>
+				</tr>
+			</table>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
