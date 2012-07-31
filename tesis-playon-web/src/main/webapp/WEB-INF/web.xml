@@ -41,6 +41,12 @@
 		</param-value>
 	</context-param>
 
+	<!-- Ver: http://java.net/jira/browse/JAVASERVERFACES-2215  -->
+	<context-param>
+		<param-name>com.sun.faces.writeStateAtFormEnd</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>

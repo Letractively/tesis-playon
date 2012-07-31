@@ -38,7 +38,6 @@ public class PlayaManagedBean implements Serializable {
     
     private static final String LISTA_PLAYAS_PENDIENTES = "playaspendientes";
 
-
     private static final String ERROR = "error";
 
     @ManagedProperty(value = "#{PlayaService}")
@@ -124,10 +123,10 @@ public class PlayaManagedBean implements Serializable {
 	    playa.setEstado(estado);
 	    playa.setNombreComercial(getNombreComercial());
 	    playa.setRazonSocial(getRazonSocial());
-	    
+
 	    getPlayaService().save(playa);
 	    getUsuarioService().save(usuario);
-	    
+
 	    return LISTA_PLAYAS;
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
@@ -197,6 +196,28 @@ public class PlayaManagedBean implements Serializable {
 	this.setEstado(null);
 	this.setNombreComercial("");
 	this.setRazonSocial("");
+    }
+
+    public void solicitudReset() {
+	// Atributos de la playa
+	this.setCuit("");
+	this.setDisponibilidad(0);
+	this.setDireccionBusqueda("");
+	this.setDomicilio("");
+	this.setNombreComercial("");
+	this.setRazonSocial("");
+	this.setBarrio(null);
+	this.setEstado(null);
+	this.setEstadia(null);
+	
+	// Atributos del encargado
+	this.setApellido("");
+	this.setApellido("");
+	this.setEmail("");
+	this.setNroDoc(0);
+	this.setPassword("");
+	this.setNombre("");
+	this.setTipoDoc(null);
     }
 
     public IPlayaService getPlayaService() {

@@ -117,19 +117,19 @@
 						</p:inputText> <p:message id="nroDocMsg" for="nroDoc" display="icon" /></td>
 				</tr>
 				<tr>
+					<td><h:outputLabel for="password" value="Password: " /></td>
+					<td><p:inputText id="password" value="#{usuarioMB.password}">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="passwordMsg" />
+						</p:inputText> <p:message id="passwordMsg" for="password" display="icon" /></td>
+				</tr>
+				<tr>
 					<td><h:outputLabel for="nombreUser" value="Nombre usuario: " /></td>
 					<td><p:inputText id="nombreUser"
 							value="#{usuarioMB.nombreUser}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="nombreUserMsg" />
 						</p:inputText> <p:message id="nombreUserMsg" for="nombreUser" display="icon" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel for="password" value="Password: " /></td>
-					<td><p:inputText id="password" value="#{usuarioMB.password}">
-							<f:validateLength minimum="5" />
-							<p:ajax event="blur" update="passwordMsg" />
-						</p:inputText> <p:message id="passwordMsg" for="password" display="icon" /></td>
 				</tr>
 				<tr>
 					<td><p:commandButton id="addUser" value="Agregar Solicitud"
