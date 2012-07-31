@@ -81,28 +81,28 @@
 				</tr>
 				<tr>
 					<td><h:outputLabel for="apellido" value="Apellido " /></td>
-					<td><p:inputText id="apellido" value="#{usuarioMB.apellido}">
+					<td><p:inputText id="apellido" value="#{playaMB.apellido}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="apellidoMsg" />
 						</p:inputText> <p:message id="apellidoMsg" for="apellido" display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="nombre" value="Nombre: " /></td>
-					<td><p:inputText id="nombre" value="#{usuarioMB.nombre}">
+					<td><p:inputText id="nombre" value="#{playaMB.nombre}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="nombreMsg" />
 						</p:inputText> <p:message id="nombreMsg" for="nombre" display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="email" value="E-mail: " /></td>
-					<td><p:inputText id="email" value="#{usuarioMB.email}">
+					<td><p:inputText id="email" value="#{playaMB.email}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="emailMsg" />
 						</p:inputText> <p:message id="emailMsg" for="email" display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputText for="tipoDoc" value="Tipo Documento: " /></td>
-					<td><p:selectOneMenu value="#{usuarioMB.tipoDoc}"
+					<td><p:selectOneMenu value="#{playaMB.tipoDoc}"
 							effect="fade">
 							<f:selectItems value="#{tipoDocMB.tipoDocList}" var="tipoDoc"
 								itemValue="#{tipoDoc}" itemLabel="#{tipoDoc.nombre}" />
@@ -111,7 +111,7 @@
 				</tr>
 				<tr>
 					<td><h:outputLabel for="nroDoc" value="Nro. Documento: " /></td>
-					<td><p:inputText id="nroDoc" value="#{usuarioMB.nroDoc}">
+					<td><p:inputText id="nroDoc" value="#{playaMB.nroDoc}">
 							<f:validateLength minimum="8" />
 							<p:ajax event="blur" update="nroDocMsg" />
 						</p:inputText> <p:message id="nroDocMsg" for="nroDoc" display="icon" /></td>
@@ -119,25 +119,26 @@
 				<tr>
 					<td><h:outputLabel for="nombreUser" value="Nombre usuario: " /></td>
 					<td><p:inputText id="nombreUser"
-							value="#{usuarioMB.nombreUser}">
+							value="#{playaMB.nombreUser}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="nombreUserMsg" />
 						</p:inputText> <p:message id="nombreUserMsg" for="nombreUser" display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="password" value="Password: " /></td>
-					<td><p:inputText id="password" value="#{usuarioMB.password}">
+					<td><p:inputText id="password" value="#{playaMB.password}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="passwordMsg" />
 						</p:inputText> <p:message id="passwordMsg" for="password" display="icon" /></td>
 				</tr>
-				<tr>
-					<td><p:commandButton id="addUser" value="Agregar Solicitud"
-							action="#{playaMB.addSolicitudPlaya}" ajax="false" /></td>
-					<td><p:commandButton id="reset" value="Limpiar"
-							action="#{playaMB.solicitudReset}" ajax="false" /></td>
-				</tr>
 			</table>
+				<p>
+					<p:commandButton id="addUser" value="Agregar Solicitud"
+							action="#{playaMB.addSolicitudPlaya}" ajax="false" />
+					<p:commandButton id="reset" value="Limpiar"
+							action="#{playaMB.solicitudReset}" ajax="false" />	
+				</p>
+			
 		</h:form>
 
 	</ui:define>

@@ -36,6 +36,8 @@ public class PlayaManagedBean implements Serializable {
 
     private static final String LISTA_PLAYAS = "playalist";
     
+    private static final String SOLICITUD_PLAYA_END = "solicitudplayaend";
+    
     private static final String LISTA_PLAYAS_PENDIENTES = "playaspendientes";
 
     private static final String ERROR = "error";
@@ -125,9 +127,9 @@ public class PlayaManagedBean implements Serializable {
 	    playa.setRazonSocial(getRazonSocial());
 
 	    getPlayaService().save(playa);
-	    getUsuarioService().save(usuario);
+	    //getUsuarioService().save(usuario);
 
-	    return LISTA_PLAYAS;
+	    return SOLICITUD_PLAYA_END;
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
 	}
