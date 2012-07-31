@@ -7,7 +7,7 @@ import javax.faces.convert.FacesConverter;
 
 import tesis.playon.web.model.EstadoPlaya;
 
-@FacesConverter(value = "EstadoPlayaConverter")
+@FacesConverter(value = "estadoPlayaConverter")
 public class EstadoPlayaConverter implements Converter {
 
     @Override
