@@ -845,10 +845,10 @@ DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `apellido` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL UNIQUE,
-  `nombre` varchar(50) DEFAULT NULL UNIQUE,
+  `nombre` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
   `sesion` varchar(50) DEFAULT NULL,
-  `usuario` varchar(50) NOT NULL,
+  `usuario` varchar(50) NOT NULL UNIQUE,
   `usuarioID` int(11) NOT NULL auto_increment,
   `tipoDocID` int(11) DEFAULT NULL,
   `nroDoc` varchar(50) DEFAULT NULL,
@@ -1313,7 +1313,7 @@ CREATE TABLE `roles_por_usuario` (
   PRIMARY KEY (`rolesPorUsuarioID`),
   KEY `usuario` (`usuario`),
   KEY `rolUsuario` (`rolUsuario`),
-  CONSTRAINT `FK_roles_por_usuario_usuario` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`nombre`),
+  CONSTRAINT `FK_roles_por_usuario_usuario` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`usuario`),
   CONSTRAINT `FK_roles_por_usuario_rol_usuario` FOREIGN KEY (`rolUsuario`) REFERENCES `rol_usuario` (`nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
