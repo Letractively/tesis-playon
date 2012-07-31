@@ -35,6 +35,9 @@ public class PlayaManagedBean implements Serializable {
     private static final long serialVersionUID = -1085389423375986168L;
 
     private static final String LISTA_PLAYAS = "playalist";
+    
+    private static final String LISTA_PLAYAS_PENDIENTES = "playaspendientes";
+
 
     private static final String ERROR = "error";
 
@@ -217,7 +220,13 @@ public class PlayaManagedBean implements Serializable {
 	playaList.addAll(getPlayaService().findAll());
 	return playaList;
     }
-
+    
+    public List<Playa> getPlayasPendientes() {
+	playaList = new ArrayList<Playa>();
+	playaList.addAll(getPlayaService().findPlayasPendientes());
+	return playaList;
+    }
+    
     public void setPlayaList(List<Playa> playaList) {
 	this.playaList = playaList;
     }

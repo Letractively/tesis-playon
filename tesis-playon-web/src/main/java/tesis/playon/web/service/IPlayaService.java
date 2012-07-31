@@ -26,4 +26,7 @@ void save(Playa playa);
     List<Playa> findAll();
 
     List <Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia );
+    
+    List<Playa> findPlayasPendientes();
+    
 }

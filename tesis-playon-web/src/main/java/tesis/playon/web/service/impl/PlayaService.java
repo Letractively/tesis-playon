@@ -72,4 +72,11 @@ public class PlayaService implements IPlayaService {
 	return getPlayaDao().findPlayasCercanas(longitud, latitud, distancia);
     }
 
+    @Transactional(readOnly = false)
+    @Override
+    public List<Playa> findPlayasPendientes() {
+	// TODO Auto-generated method stub
+	return getPlayaDao().findPlayasPendientes();
+    }
+
 }

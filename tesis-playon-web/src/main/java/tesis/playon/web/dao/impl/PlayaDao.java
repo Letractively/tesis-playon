@@ -43,14 +43,18 @@ public class PlayaDao implements IPlayaDao {
 		.setParameter(0, razonSocial).list();
 	return (Playa) list.get(0);
     }
-    
-    public List<Playa>  findPlayasCercanas(Double longitud, Double latitud, int distancia )
-    {//.setParameter("platitud",latitud).setParameter("plongitud", longitud).setParameter("pdistance",distancia)
-	//Query query
-	List<?> list= getSessionFactory().getCurrentSession().createSQLQuery(/**"CALL busquedaplaya(:platidad :plongitud :pdistancia"**/"SELECT * FROM playa WHERE playaID=1").list();
+
+    public List<Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia) {// .setParameter("platitud",latitud).setParameter("plongitud",
+											   // longitud).setParameter("pdistance",distancia)
+											   // Query query
+	List<?> list = getSessionFactory().getCurrentSession().createSQLQuery(/**
+	 * 
+	 * "CALL busquedaplaya(:platidad :plongitud :pdistancia"
+	 **/
+	"SELECT * FROM playa WHERE playaID=1").list();
 	List<Playa> playas = new ArrayList<Playa>();
-	//List<?> list=query.list();
-	
+	// List<?> list=query.list();
+
 	for (Object object : list) {
 	    playas.add((Playa) object);
 	}
@@ -60,6 +64,18 @@ public class PlayaDao implements IPlayaDao {
     public List<Playa> findAll() {
 	List<Playa> playa = new ArrayList<Playa>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Playa").list();
+	for (Object object : list) {
+	    playa.add((Playa) object);
+	}
+	return playa;
+    }
+
+    /*
+     * Este metodo busca las playas con id pendiente y devuelve una lista
+     */
+    public List<Playa> findPlayasPendientes() {
+	List<Playa> playa = new ArrayList<Playa>();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Playa where estado=1 ").list();
 	for (Object object : list) {
 	    playa.add((Playa) object);
 	}
