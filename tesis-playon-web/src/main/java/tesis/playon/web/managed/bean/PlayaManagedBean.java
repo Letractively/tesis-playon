@@ -244,7 +244,7 @@ public class PlayaManagedBean implements Serializable {
     
     public List<Playa> getPlayasPendientes() {
 	playaList = new ArrayList<Playa>();
-	playaList.addAll(getPlayaService().findPlayasPendientes());
+	playaList.addAll(getPlayaService().findPlayasPendientes(getEstado()));
 	return playaList;
     }
     

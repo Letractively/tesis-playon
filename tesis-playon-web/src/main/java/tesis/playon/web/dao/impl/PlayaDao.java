@@ -3,9 +3,11 @@ package tesis.playon.web.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IPlayaDao;
+import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
 
 public class PlayaDao implements IPlayaDao {
@@ -44,19 +46,19 @@ public class PlayaDao implements IPlayaDao {
 	return (Playa) list.get(0);
     }
 
-    public List<Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia) {// .setParameter("platitud",latitud).setParameter("plongitud",
-											   // longitud).setParameter("pdistance",distancia)
-											   // Query query
-	List<?> list = getSessionFactory().getCurrentSession().createSQLQuery(/**
-	 * 
-	 * "CALL busquedaplaya(:platidad :plongitud :pdistancia"
-	 **/
-	"SELECT * FROM playa WHERE playaID=1").list();
+    public List<Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia) {
+//	 Query query = getSessionFactory().getCurrentSession()
+//	 .createSQLQuery("CALL busquedaplaya(:platitud, :plongitud, :pdistancia")
+//	 .setParameter("platitud", latitud).setParameter("plongitud", longitud)
+//	 .setParameter("pdistancia", distancia);
+	Query query = getSessionFactory().getCurrentSession().getNamedQuery("callPlayasStoreProcedure")
+		.setParameter("platitud", latitud).setParameter("plongitud", longitud)
+		.setParameter("pdistancia", distancia);
+	List<?> list = query.list();
 	List<Playa> playas = new ArrayList<Playa>();
-	// List<?> list=query.list();
 
 	for (Object object : list) {
-	    playas.add((Playa) object);
+	    playas.add((Playa)object);
 	}
 	return playas;
     }
@@ -69,17 +71,14 @@ public class PlayaDao implements IPlayaDao {
 	}
 	return playa;
     }
-
-    /*
-     * Este metodo busca las playas con id pendiente y devuelve una lista
-     */
-    public List<Playa> findPlayasPendientes() {
+    
+    public List<Playa> findPlayasPendientes(EstadoPlaya estado){
 	List<Playa> playa = new ArrayList<Playa>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Playa where estado=1 ").list();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Playa where estado=?")
+		.setParameter(0, estado).list();
 	for (Object object : list) {
 	    playa.add((Playa) object);
 	}
 	return playa;
     }
-
 }

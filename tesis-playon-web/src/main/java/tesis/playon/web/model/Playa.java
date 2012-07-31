@@ -15,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.NamedNativeQueries;
+import org.hibernate.annotations.NamedNativeQuery;
 //import javax.persistence.FetchType;
 //import javax.persistence.OneToOne;
 
@@ -22,6 +25,7 @@ import javax.persistence.Table;
  * @author Alejandro
  * @date 08/07/2012
  */
+@NamedNativeQueries({ @NamedNativeQuery(name = "callPlayasStoreProcedure", query = "CALL busquedaplaya(:platitud,:plongitud, :pdistancia)", resultClass = Playa.class) })
 @Entity
 @Table(name = "playa", catalog = "tesis_playon")
 public class Playa implements Serializable {
@@ -38,10 +42,10 @@ public class Playa implements Serializable {
 
     @Column(name = "disponibilidad", nullable = true)
     private Integer disponibilidad;
-    
+
     @Column(name = "longitud", nullable = true)
     private Double longitud;
-    
+
     @Column(name = "latitud", nullable = true)
     private Double latitud;
 
@@ -62,7 +66,7 @@ public class Playa implements Serializable {
     @JoinColumn(name = "estadoPlayaID")
     private EstadoPlaya estado;
 
-    @OneToOne(mappedBy="playa")
+    @OneToOne(mappedBy = "playa")
     @JoinColumn(name = "estadiaID")
     private Estadia estadia;
 
@@ -94,26 +98,25 @@ public class Playa implements Serializable {
     public void setCuit(String cuit) {
 	this.cuit = cuit;
     }
-   
 
     public Double getLongitud() {
-        return longitud;
+	return longitud;
     }
 
     public void setLongitud(Double longitud) {
-        this.longitud = longitud;
+	this.longitud = longitud;
     }
 
     public Double getLatitud() {
-        return latitud;
+	return latitud;
     }
 
     public void setLatitud(Double latitud) {
-        this.latitud = latitud;
+	this.latitud = latitud;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+	this.id = id;
     }
 
     public Integer getDisponibilidad() {
@@ -175,6 +178,7 @@ public class Playa implements Serializable {
     public Integer getId() {
 	return id;
     }
+
     public boolean equals(Object object) {
 	if (object == this)
 	    return true;
@@ -184,12 +188,12 @@ public class Playa implements Serializable {
 	Playa otroPlaya = (Playa) object;
 	if (id != otroPlaya.id)
 	    return false;
-	if (nombreComercial == null ? otroPlaya.nombreComercial != null : !nombreComercial.equals(otroPlaya.nombreComercial))
+	if (nombreComercial == null ? otroPlaya.nombreComercial != null : !nombreComercial
+		.equals(otroPlaya.nombreComercial))
 	    return false;
 
 	return true;
     }
-
 
     @Override
     public String toString() {
@@ -198,7 +202,7 @@ public class Playa implements Serializable {
     }
 
     public void setId(int id) {
-	this.id= id;
-	
+	this.id = id;
+
     }
 }

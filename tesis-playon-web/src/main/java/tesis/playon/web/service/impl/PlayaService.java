@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IPlayaDao;
+import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.service.IPlayaService;
 /**
@@ -38,21 +39,19 @@ public class PlayaService implements IPlayaService {
 	getPlayaDao().delete(playa);
     }
 
-    @Transactional(readOnly = false)
+
     @Override
     public Playa findByNombreComercial(String nombreComercial) {
 	// TODO Auto-generated method stub
 	return getPlayaDao().findByNombreComercial(nombreComercial);
     }
 
-    @Transactional(readOnly = false)
     @Override
     public Playa findByRazonSocial(String razonSocial) {
 	// TODO Auto-generated method stub
 	return getPlayaDao().findByRazonSocial(razonSocial);
     }
 
-    @Transactional(readOnly = false)
     @Override
     public List<Playa> findAll() {
 	// TODO Auto-generated method stub
@@ -72,11 +71,10 @@ public class PlayaService implements IPlayaService {
 	return getPlayaDao().findPlayasCercanas(longitud, latitud, distancia);
     }
 
-    @Transactional(readOnly = false)
     @Override
-    public List<Playa> findPlayasPendientes() {
+    public List<Playa> findPlayasPendientes(EstadoPlaya estado) {
 	// TODO Auto-generated method stub
-	return getPlayaDao().findPlayasPendientes();
+	return getPlayaDao().findPlayasPendientes(estado);
     }
 
 }

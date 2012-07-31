@@ -14,9 +14,8 @@ import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
-import tesis.playon.web.service.IEstadoPlayaService;
+import tesis.playon.web.service.IBarrioService;
 import tesis.playon.web.service.IPlayaService;
-import tesis.playon.web.util.LatitudlongitudUtil;
 
 @ManagedBean(name = "busquedaMB")
 @RequestScoped
@@ -31,6 +30,9 @@ public class BusquedaManagedBean implements Serializable{
     @ManagedProperty(value = "#{PlayaService}")
     IPlayaService playaService;
 
+    @ManagedProperty(value = "#{BarrioService}")
+    IBarrioService barrioService;
+    
     List<Playa> playaList;
     
     List<Playa> playasCercanasList;
@@ -62,8 +64,8 @@ public class BusquedaManagedBean implements Serializable{
     public String searchPlaya() {
 	try {
 	    playasCercanasList = new ArrayList<Playa>();
-	    playasCercanasList.addAll(getPlayaService().findPlayasCercanas(longitud, latitud, distancia));
-	    setPlayaList(playasCercanasList);
+	    playasCercanasList.addAll(getPlayaService().findPlayasCercanas(getLongitud(), getLatitud(), getDistancia()));
+	    //setPlayaList(playasCercanasList);
 	    return LISTA_PLAYAS;
 	} catch (DataAccessException e) {
 	    System.out.println("NO SE CONECTAAAAAAAAAAAAAAAAAAAAAAAAAAA");
@@ -194,7 +196,21 @@ public class BusquedaManagedBean implements Serializable{
 
     public void setDireccionBusqueda(String direccionBusqueda) {
 	this.direccionBusqueda = direccionBusqueda;
+    }   
+
+    public IBarrioService getBarrioService() {
+        return barrioService;
     }
 
+    public void setBarrioService(IBarrioService barrioService) {
+        this.barrioService = barrioService;
+    }
 
+    public List<Playa> getPlayasCercanasList() {
+        return playasCercanasList;
+    }
+
+    public void setPlayasCercanasList(List<Playa> playasCercanasList) {
+        this.playasCercanasList = playasCercanasList;
+    }
 }

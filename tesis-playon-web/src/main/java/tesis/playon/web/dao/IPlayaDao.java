@@ -2,6 +2,7 @@ package tesis.playon.web.dao;
 
 import java.util.List;
 
+import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
 
 public interface IPlayaDao {
@@ -20,6 +21,6 @@ public interface IPlayaDao {
 
     List<Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia);
 
-    List<Playa> findPlayasPendientes();
+    List<Playa> findPlayasPendientes(EstadoPlaya estado);
 
 }
