@@ -24,5 +24,6 @@ void save(Playa playa);
     Playa findByRazonSocial(String razonSocial);
     
     List<Playa> findAll();
-    
+
+    List <Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia );
 }

@@ -66,5 +66,10 @@ public class PlayaService implements IPlayaService {
     public void setPlayaDao(IPlayaDao playaDao) {
         this.playaDao = playaDao;
     }
+    
+    @Override
+    public List <Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia ){
+	return getPlayaDao().findPlayasCercanas(longitud, latitud, distancia);
+    }
 
 }
