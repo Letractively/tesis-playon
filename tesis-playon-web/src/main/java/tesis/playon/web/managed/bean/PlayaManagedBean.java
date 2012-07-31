@@ -36,9 +36,11 @@ public class PlayaManagedBean implements Serializable {
 
     private static final String LISTA_PLAYAS = "playalist";
     
+    private static final String LISTA_PLAYAS_PENDIENTES = "playaspendienteslist";
+
     private static final String SOLICITUD_PLAYA_END = "solicitudplayaend";
     
-    private static final String LISTA_PLAYAS_PENDIENTES = "playaspendientes";
+
 
     private static final String ERROR = "error";
 
@@ -52,6 +54,8 @@ public class PlayaManagedBean implements Serializable {
     IUsuarioService usuarioService;
 
     List<Playa> playaList;
+    
+    List<Playa> playaspendientesList;
 
     // Atributos de las playas.
     private String cuit;
@@ -244,12 +248,6 @@ public class PlayaManagedBean implements Serializable {
 	return playaList;
     }
     
-    public List<Playa> getPlayasPendientes() {
-	playaList = new ArrayList<Playa>();
-	playaList.addAll(getPlayaService().findPlayasPendientes(getEstado()));
-	return playaList;
-    }
-    
     public void setPlayaList(List<Playa> playaList) {
 	this.playaList = playaList;
     }
@@ -382,4 +380,16 @@ public class PlayaManagedBean implements Serializable {
 	this.tipoDoc = tipoDoc;
     }
 
+    public List<Playa> getPlayaspendientesList() {
+	playaspendientesList = new ArrayList<Playa>();
+	EstadoPlaya estado = new EstadoPlaya();
+	estado = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
+	playaspendientesList.addAll(getPlayaService().findPlayasPendientes(estado));
+        return playaspendientesList;
+    }
+
+    public void setPlayaspendientesList(List<Playa> playaspendientesList) {
+	
+        this.playaspendientesList = playaspendientesList;
+    }
 }

@@ -1,0 +1,124 @@
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="panelTitle" value="Titulo de la página" />
+
+	<ui:define name="panelContent" class="admin-font">
+		<h:form>
+			<p:dataTable id="playas" var="playa" editable="true" paginator="true"
+				rows="5" value="#{playaMB.playaspendientesList}" style="width: 10%">
+
+				<f:facet name="header">
+				Usuarios
+            	</f:facet>
+
+				<p:column headerText="Razón Social" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{playa.razonSocial}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{playa.razonSocial}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Nombre Comercial" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{playa.nombreComercial}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{playa.nombreComercial}"
+								styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="C.U.I.T." styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{playa.cuit}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{playa.cuit}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Domicilio" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{playa.domicilio}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{playa.domicilio}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Barrio" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{playa.barrio.nombre}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:selectOneMenu value="#{playa.barrio}">
+								<f:selectItems value="#{barrioMB.barrioList}" var="barrio"
+									itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
+								<f:converter converterId="barrioConverter" />
+							</h:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Disponibilidad" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{playa.disponibilidad}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{playa.disponibilidad}"
+								styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Estado" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{playa.estado.nombre}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:selectOneMenu value="#{playa.estado}">
+								<f:selectItems value="#{estadoPlayaMB.estadoPlayaList}"
+									var="estadoPlaya" itemValue="#{estadoPlaya}"
+									itemLabel="#{estadoPlaya.nombre}" />
+								<f:converter converterId="estadoPlayaConverter" />
+							</h:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Opciones" styleClass="option-font">
+					<p:rowEditor />
+				</p:column>
+
+				<p:column>
+					<h:commandButton value="Borrar"
+						action="#{playaMB.deletePlaya(playa)}" />
+				</p:column>
+
+			</p:dataTable>
+
+			<p>
+				<p:commandButton id="addPlayaNueva" value="Agregar"
+					action="/admin/playaadd.html?faces-redirect=true" ajax="false" />
+			</p>
+		</h:form>
+	</ui:define>
+</ui:composition>
