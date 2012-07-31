@@ -5,6 +5,7 @@ package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -66,6 +67,14 @@ public class ClienteManagedBean implements Serializable {
     private String domicilio;
 
     private String telefono;
+    
+    private Integer nroCuenta;
+    
+    private float saldo;
+    
+    private Date fechaCreacion;
+    
+    private Cliente cliente;
 
     private Barrio barrio;
 
@@ -84,7 +93,7 @@ public class ClienteManagedBean implements Serializable {
 	    cliente.setDomicilio(getDomicilio());
 	    cliente.setTelefono(getTelefono());
 	    cliente.setUsuario(usuario);
-	    cliente.setNroCliente(getNroCliente());
+	    cliente.setNroCliente(cliente.getNroCliente());
 	    
 	    getClienteService().save(cliente);
 	    cliente = getClienteService().findByNumeroCliente(cliente.getNroCliente());
@@ -118,6 +127,10 @@ public class ClienteManagedBean implements Serializable {
     public CuentaCliente addCuentaCliente() {
 	try {
 	    CuentaCliente cuenta = new CuentaCliente();
+	    cuenta.setFechaCreacion(cuenta.getFechaCreacion());
+	    cuenta.setNroCuenta(cuenta.getNroCuenta());
+	    cuenta.setSaldo(getSaldo());
+	    cuenta.setCliente(getCliente());
 	    getCuentaClienteService().save(cuenta);
 	    return cuenta;
 	} catch (DataAccessException e) {
@@ -286,4 +299,37 @@ public class ClienteManagedBean implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public Integer getNroCuenta() {
+        return nroCuenta;
+    }
+
+    public void setNroCuenta(Integer nroCuenta) {
+        this.nroCuenta = nroCuenta;
+    }
+
+    public float getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    
 }

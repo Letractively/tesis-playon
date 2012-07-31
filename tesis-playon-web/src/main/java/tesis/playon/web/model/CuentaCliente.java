@@ -46,13 +46,13 @@ public class CuentaCliente implements Serializable{
 
     public CuentaCliente() {
 	super();
-	this.nroCuenta = (int) Math.random() * 1000 + 1;
+	this.nroCuenta = (int) (Math.random() * 1000) + 1;
 	this.fechaCreacion = new Date();
     }
 
     public CuentaCliente(float saldo, Date fechaCreacion, Cliente cliente) {
 	super();
-	this.nroCuenta = (int) Math.random() * 1000 + 1;
+	this.nroCuenta = (int) (Math.random() * 1000) + 1;
 	this.saldo = saldo;
 	this.fechaCreacion = new Date();
 	this.cliente = cliente;

@@ -56,11 +56,11 @@ public class Cliente implements Serializable {
     private Usuario usuario;
 
     public Cliente() {
-	this.nroCliente= (int) Math.random() * 1000 + 1;
+	this.nroCliente= (int) (Math.random() * 1000) + 1;
     }
 
     public Cliente(String telefono, String domicilio) {
-	this.nroCliente = (int) Math.random() * 1000 + 1;
+	this.nroCliente = (int) (Math.random() * 1000) + 1;
 	this.telefono = telefono;
 	this.domicilio = domicilio;
 
@@ -68,7 +68,7 @@ public class Cliente implements Serializable {
 
     public Cliente(String domicilio, String telefono, Barrio barrio, CuentaCliente cuentaCliente,
 	    Usuario usuario) {
-	this.nroCliente = (int) Math.random() * 1000 + 1;
+	this.nroCliente = (int) (Math.random() * 1000) + 1;
 	this.domicilio = domicilio;
 	this.telefono = telefono;
 	this.barrio = barrio;
