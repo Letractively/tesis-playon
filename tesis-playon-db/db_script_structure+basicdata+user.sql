@@ -853,9 +853,11 @@ CREATE TABLE `usuario` (
   `tipoDocID` int(11) DEFAULT NULL,
   `nroDoc` varchar(50) DEFAULT NULL,
   `enable` tinyint(1) DEFAULT 1,
+  `playaID` int(11) DEFAULT NULL,
   PRIMARY KEY (`usuarioID`),
   KEY `tipoDocID` (`tipoDocID`),
-  CONSTRAINT `FK_usuario_tipo_doc` FOREIGN KEY (`tipoDocID`) REFERENCES `tipo_doc` (`tipoDocID`)
+  CONSTRAINT `FK_usuario_tipo_doc` FOREIGN KEY (`tipoDocID`) REFERENCES `tipo_doc` (`tipoDocID`),
+  CONSTRAINT `FK_usuario_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
