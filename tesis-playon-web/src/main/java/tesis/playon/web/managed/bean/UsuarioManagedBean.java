@@ -10,6 +10,7 @@ import javax.faces.bean.RequestScoped;
 
 import org.springframework.dao.DataAccessException;
 
+import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IUsuarioService;
@@ -42,6 +43,8 @@ public class UsuarioManagedBean implements Serializable {
 	private String nombreUser;
 
 	private TipoDoc tipoDoc;
+	
+	private Playa playa;
 
 	public String addUsuario() {
 		try {
@@ -53,6 +56,7 @@ public class UsuarioManagedBean implements Serializable {
 			usuario.setPassword(getPassword());
 			usuario.setNombreUser(getNombreUser());
 			usuario.setTipoDoc(getTipoDoc());
+			usuario.setPlaya(getPlaya());
 			getUsuarioService().save(usuario);
 			return LISTA_USUARIOS;
 		} catch (DataAccessException e) {
@@ -150,6 +154,14 @@ public class UsuarioManagedBean implements Serializable {
 
 	public void setTipoDoc(TipoDoc tipoDoc) {
 		this.tipoDoc = tipoDoc;
+	}
+
+	public Playa getPlaya() {
+	    return playa;
+	}
+
+	public void setPlaya(Playa playa) {
+	    this.playa = playa;
 	}
 
 }

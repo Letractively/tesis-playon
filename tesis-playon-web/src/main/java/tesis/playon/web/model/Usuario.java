@@ -50,21 +50,28 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "tipoDocID")
     private TipoDoc tipoDoc;
 
+    @ManyToOne
+    @JoinColumn(name = "playaID")
+    private Playa playa;
+
     @Column(name = "usuario", unique = true)
     private String nombreUser;
 
     public Usuario() {
+	super();
     }
 
-    public Usuario(String apellido, String nombre, String nombreUser, String passwd, String email, TipoDoc tipoDoc,
-	    int nroDoc) {
+    public Usuario(String nombre, String apellido, String nombreUser, String password,
+	    String email, TipoDoc tipoDoc, int nroDoc, Playa playa) {
+	super();
 	this.apellido = apellido;
 	this.nombre = nombre;
 	this.email = email;
 	this.nroDoc = nroDoc;
+	this.password = password;
 	this.tipoDoc = tipoDoc;
+	this.playa = playa;
 	this.nombreUser = nombreUser;
-	this.password = passwd;
     }
 
     public void setID(int id) {
@@ -119,7 +126,6 @@ public class Usuario implements Serializable {
     public void setTipoDoc(TipoDoc tipoDoc) {
 	this.tipoDoc = tipoDoc;
     }
-    
 
     public String getNombreUser() {
 	return nombreUser;
@@ -132,6 +138,15 @@ public class Usuario implements Serializable {
     public Integer getId() {
 	return id;
     }
+    
+    public Playa getPlaya() {
+        return playa;
+    }
+
+    public void setPlaya(Playa playa) {
+        this.playa = playa;
+    }
+
     public boolean equals(Object object) {
 	if (object == this)
 	    return true;

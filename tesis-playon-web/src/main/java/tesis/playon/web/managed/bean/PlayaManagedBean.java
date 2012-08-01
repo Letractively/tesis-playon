@@ -109,6 +109,8 @@ public class PlayaManagedBean implements Serializable {
 
     private TipoDoc tipoDoc;
 
+    private Playa playa;
+
     private Double distancia;
 
     public String addPlaya() {
@@ -139,7 +141,6 @@ public class PlayaManagedBean implements Serializable {
 	    estado = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
 
 	    Playa playa = new Playa();
-	    Usuario usuario = addUsuario();
 
 	    playa.setBarrio(getBarrio());
 	    playa.setCuit(getCuit());
@@ -151,7 +152,8 @@ public class PlayaManagedBean implements Serializable {
 	    playa.setRazonSocial(getRazonSocial());
 
 	    getPlayaService().save(playa);
-	    // getUsuarioService().save(usuario);
+	    setPlaya(playa);
+	    Usuario usuario = addUsuario();
 
 	    return SOLICITUD_PLAYA_END;
 	} catch (DataAccessException e) {
@@ -170,6 +172,7 @@ public class PlayaManagedBean implements Serializable {
 	    usuario.setPassword(getPassword());
 	    usuario.setNombreUser(getNombreUser());
 	    usuario.setTipoDoc(getTipoDoc());
+	    usuario.setPlaya(getPlaya());
 	    getUsuarioService().save(usuario);
 	    return usuario;
 	} catch (DataAccessException e) {
@@ -457,6 +460,14 @@ public class PlayaManagedBean implements Serializable {
 
     public void setDistancia(Double distancia) {
 	this.distancia = distancia;
+    }
+
+    public Playa getPlaya() {
+	return playa;
+    }
+
+    public void setPlaya(Playa playa) {
+	this.playa = playa;
     }
 
     public List<Playa> getFilteredPlayas() {

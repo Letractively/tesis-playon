@@ -26,9 +26,9 @@ public class TestUsuario {
 
 	/** insert **/
 	Usuario usuario = new Usuario("Pablo", "Moreno", "pablo_la31", "123456", "pablo_la31@hotmail.com", tipoDoc,
-		32987654);
+		32987654, null);
 	Usuario usuario1 = new Usuario("Pablo1", "Moreno1", "pablo_la_31", "123456", "pablola31@hotmail.com", tipoDoc,
-		32111111);
+		32111111, null);
 	usuarioDao.save(usuario);
 	usuarioDao.save(usuario1);
 	List<Usuario> usuarios = usuarioDao.findAll();
