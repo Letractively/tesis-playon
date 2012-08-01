@@ -8,22 +8,68 @@
 	<ui:define name="Content">
 		<h:form id="loginFormId" prependId="false">
 			<table>
-				
+
 				<tr>
-					<td><h:outputLabel for="direccionBusqueda" value="Direccion de busqueda" /></td>
+					<td><h:outputLabel for="direccionBusqueda"
+							value="Direccion de busqueda" /></td>
 					<td><p:inputText id="direccionBusqueda"
 							value="#{playaMB.direccionBusqueda}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="direccionBusquedaMsg" />
-						</p:inputText> <p:message id="direccionBusquedaMsg" for="direccionBusqueda" display="icon" />
-					</td>
+						</p:inputText> <p:message id="direccionBusquedaMsg" for="direccionBusqueda"
+							display="icon" /></td>
+					<td><h:outputLabel for="distancia" value="Distancia: " /></td>
+					<td><p:inputText id="distancia" value="#{playaMB.distancia}">
+							<f:validateLength minimum="1" />
+							<p:ajax event="blur" update="distanciaMsg" />
+						</p:inputText> <p:message id="distanciaMsg" for="distancia" display="icon" /></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center"><h:commandButton
 							id="btnBuscarId" value="Buscar" action="#{playaMB.buscarPlaya}"
 							styleClass="loginPanelBtn" /></td>
 				</tr>
+
 			</table>
+
+			
+			<p:dataTable id="playas" var="playa" paginator="true"
+				rows="5" value="#{playaMB.playaResultadoBusqueda}"
+				style="width: 10%">
+
+				<f:facet name="header">
+					Playas
+            	</f:facet>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Nombre Comercial" />
+					</f:facet>
+					<h:outputText value="#{playa.nombreComercial}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Domicilio" />
+					</f:facet>
+					<h:outputText value="#{playa.domicilio}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Barrio" />
+					</f:facet>
+					<h:outputText value="#{playa.barrio.nombre}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Disponibilidad" />
+					</f:facet>
+					<h:outputText value="#{playa.disponibilidad}" />
+				</p:column>
+				
+			</p:dataTable>
 		</h:form>
 	</ui:define>
 </ui:composition>

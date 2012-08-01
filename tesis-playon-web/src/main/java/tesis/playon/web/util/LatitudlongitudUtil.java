@@ -11,9 +11,9 @@ import org.json.JSONObject;
 
 public class LatitudlongitudUtil {
 
-    public static String getLocationFromAddress(String address) throws Exception {
+    public GeoposicionDePlaya getLocationFromAddress(String address) throws Exception {
 
-	String respuesta;
+	GeoposicionDePlaya gpdp = new GeoposicionDePlaya();
 
 	String encodedAddress = URLEncoder.encode(address, "UTF-8");
 	URL url = new URL("http://maps.googleapis.com/maps/api/geocode/json?address=" + encodedAddress
@@ -31,13 +31,12 @@ public class LatitudlongitudUtil {
 	    JSONObject result = results.getJSONObject(0);
 	    JSONObject jsonLocation = result.getJSONObject(LatitudLongitudConstantes.GEOMETRY_LABEL).getJSONObject(
 		    LatitudLongitudConstantes.LOCATION_LABEL);
-	    Double latitude = (Double) jsonLocation.get(LatitudLongitudConstantes.LATITUDE_LABEL);
-	    Double longitude = (Double) jsonLocation.get(LatitudLongitudConstantes.LONGITUDE_LABEL);
-	    respuesta = "Lat: " + latitude.toString() + " - Long: " + longitude.toString();
+	    gpdp.setLatitud((Double) jsonLocation.get(LatitudLongitudConstantes.LATITUDE_LABEL));
+	    gpdp.setLongitud((Double) jsonLocation.get(LatitudLongitudConstantes.LONGITUDE_LABEL));
 	} else {
 	    return null;
 	}
-	return respuesta;
+	return gpdp;
     }
 
     private static String readURL(URL url) throws Exception {
@@ -49,6 +48,30 @@ public class LatitudlongitudUtil {
 	    builder.append(line);
 	}
 	return builder.toString();
+    }
+
+    public class GeoposicionDePlaya {
+
+	Double latitud;
+
+	Double longitud;
+
+	public Double getLatitud() {
+	    return latitud;
+	}
+
+	public void setLatitud(Double latitud) {
+	    this.latitud = latitud;
+	}
+
+	public Double getLongitud() {
+	    return longitud;
+	}
+
+	public void setLongitud(Double longitud) {
+	    this.longitud = longitud;
+	}
+
     }
 
 }
