@@ -7,6 +7,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.model.SelectItem;
 
 import org.springframework.dao.DataAccessException;
 
@@ -16,6 +17,7 @@ import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
+import tesis.playon.web.service.IBarrioService;
 import tesis.playon.web.service.IEstadoPlayaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IUsuarioService;
@@ -48,12 +50,17 @@ public class PlayaManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{UsuarioService}")
     IUsuarioService usuarioService;
+    
+    @ManagedProperty(value = "#{BarrioService}")
+    IBarrioService barrioService;
 
     List<Playa> playaList;
 
     List<Playa> playaspendientesList;
 
     List<Playa> playaResultadoBusqueda = new ArrayList<Playa>();
+    
+    private List<Playa> filteredPlayas; 
 
     LatitudlongitudUtil latLonUtil;
 
@@ -71,8 +78,12 @@ public class PlayaManagedBean implements Serializable {
     private String razonSocial;
 
     private Barrio barrio;
+    
+    private SelectItem[] barriosOptions;
 
     private EstadoPlaya estado;
+    
+    private SelectItem[] estadosOptions; 
 
     private Estadia estadia;
 
@@ -165,7 +176,7 @@ public class PlayaManagedBean implements Serializable {
 	try {
 	    latLonUtil = new LatitudlongitudUtil();
 	    GeoposicionDePlaya respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda()
-		    + ", Córdoba, Argentina");
+		    + ", Cï¿½rdoba, Argentina");
 	    playaResultadoBusqueda = new ArrayList<Playa>();
 	    for (Playa playaAux : getPlayaList()) {
 		Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
@@ -251,17 +262,19 @@ public class PlayaManagedBean implements Serializable {
 	this.estadoPlayaService = estadoPlayaService;
     }
 
+    public IBarrioService getBarrioService() {
+        return barrioService;
+    }
+
+    public void setBarrioService(IBarrioService barrioService) {
+        this.barrioService = barrioService;
+    }
+
     public List<Playa> getPlayaList() {
 	playaList = new ArrayList<Playa>();
 	playaList.addAll(getPlayaService().findAll());
 	return playaList;
     }
-
-    // public List<Playa> getPlayasPendientes() {
-    // playaList = new ArrayList<Playa>();
-    // playaList.addAll(getPlayaService().findPlayasPendientes());
-    // return playaList;
-    // }
 
     public List<Playa> getPlayaspendientesList() {
 	playaspendientesList = new ArrayList<Playa>();
@@ -432,4 +445,44 @@ public class PlayaManagedBean implements Serializable {
 	this.distancia = distancia;
     }
 
+    public List<Playa> getFilteredPlayas() {
+        return filteredPlayas;
+    }
+
+    public void setFilteredPlayas(List<Playa> filteredPlayas) {
+        this.filteredPlayas = filteredPlayas;
+    }
+
+    public SelectItem[] getBarriosOptions() {
+	List<Barrio> barrios = new ArrayList<Barrio>();
+	barrios.addAll(getBarrioService().findAll());
+	SelectItem[] options = new SelectItem[barrios.size() + 1];
+	options[0] = new SelectItem("", "Todos");
+	
+        for(int i = 0; i < barrios.size(); i++) {  
+            options[i + 1] = new SelectItem(barrios.get(i),barrios.get(i).getNombre());  
+        } 
+        return options;
+    }
+
+    public void setBarriosOptions(SelectItem[] barriosOptions) {
+        this.barriosOptions = barriosOptions;
+    }
+
+    public SelectItem[] getEstadosOptions() {
+	List<EstadoPlaya> estados = new ArrayList<EstadoPlaya>();
+	estados.addAll(getEstadoPlayaService().findAll());
+	SelectItem[] options = new SelectItem[estados.size() + 1];
+	options[0] = new SelectItem("", "Todos");
+	
+        for(int i = 0; i < estados.size(); i++) {  
+            options[i + 1] = new SelectItem(estados.get(i),estados.get(i).getNombre());  
+        } 
+        return options;
+    }
+
+    public void setEstadosOptions(SelectItem[] estadosOptions) {
+        this.estadosOptions = estadosOptions;
+    }
+    
 }

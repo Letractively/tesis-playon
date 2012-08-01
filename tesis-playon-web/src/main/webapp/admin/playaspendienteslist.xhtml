@@ -5,18 +5,23 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:param name="panelTitle" value="Titulo de la página" />
+	<ui:param name="panelTitle" value="Auditoría de Playas de Estacinamiento" />
 
 	<ui:define name="panelContent" class="admin-font">
 		<h:form>
-			<p:dataTable id="playas" var="playa" editable="true" paginator="true"
-				rows="5" value="#{playaMB.playaspendientesList}" style="width: 10%">
+
+			<p:dataTable id="playas" var="playa"
+				value="#{playaMB.playaspendientesList}" style="width: 10%"
+				editable="true" paginator="true" rows="5"
+				emptyMessage="No existen playas para auditar"
+				filteredValue="#{playaMB.filteredPlayas}" widgetVar="playasTable">
 
 				<f:facet name="header">
-				Usuarios
-            	</f:facet>
+				Listado de playas pendientes de auditoría
+				</f:facet>
 
-				<p:column headerText="Razón Social" styleClass="column-font">
+				<p:column headerText="Razón Social" styleClass="column-font"
+					filterBy="#{playa.razonSocial}" filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{playa.razonSocial}" />
@@ -27,7 +32,8 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Nombre Comercial" styleClass="column-font">
+				<p:column headerText="Nombre Comercial" styleClass="column-font"
+					filterBy="#{playa.nombreComercial}" filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{playa.nombreComercial}" />
@@ -39,7 +45,8 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="C.U.I.T." styleClass="column-font">
+				<p:column headerText="C.U.I.T." styleClass="column-font"
+					filterBy="#{playa.cuit}" filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{playa.cuit}" />
@@ -50,7 +57,8 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Domicilio" styleClass="column-font">
+				<p:column headerText="Domicilio" styleClass="column-font"
+					filterBy="#{playa.domicilio}" filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{playa.domicilio}" />
@@ -61,7 +69,9 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Barrio" styleClass="column-font">
+				<p:column headerText="Barrio" styleClass="column-font"
+					filterBy="#{playa.barrio}"
+					filterOptions="#{playaMB.barriosOptions}" filterMatchMode="exact">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{playa.barrio.nombre}" />
@@ -76,7 +86,8 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Disponibilidad" styleClass="column-font">
+				<p:column headerText="Disponibilidad" styleClass="column-font"
+					filterBy="#{playa.disponibilidad}" filterMatchMode="startsWith">>
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{playa.disponibilidad}" />
@@ -88,7 +99,9 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Estado" styleClass="column-font">
+				<p:column headerText="Estado" styleClass="column-font"
+					filterBy="#{playa.estado}"
+					filterOptions="#{playaMB.estadosOptions}" filterMatchMode="exact">>
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{playa.estado.nombre}" />
@@ -105,19 +118,14 @@
 				</p:column>
 
 				<p:column headerText="Opciones" styleClass="option-font">
-					<p:rowEditor />
+					<p:rowEditor id="editar"/>
+					<p:tooltip for="editar" value="Editar Playa"/>
 				</p:column>
-
-				<p:column>
-					<h:commandButton value="Borrar"
-						action="#{playaMB.deletePlaya(playa)}" />
-				</p:column>
-
 			</p:dataTable>
 
 			<p>
-				<p:commandButton id="addPlayaNueva" value="Agregar"
-					action="/admin/playaadd.html?faces-redirect=true" ajax="false" />
+				<p:commandButton id="addPlayaNueva" value="Quitar Filtro"
+					action="/admin/playaspendienteslist.html?faces-redirect=true" ajax="false" />
 			</p>
 		</h:form>
 	</ui:define>
