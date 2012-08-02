@@ -1,10 +1,5 @@
 package tesis.playon.web.managed.bean;
 
-import org.primefaces.model.map.DefaultMapModel;
-import org.primefaces.model.map.LatLng;
-import org.primefaces.model.map.MapModel;
-import org.primefaces.model.map.Marker;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +9,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 import org.springframework.dao.DataAccessException;
 
 import tesis.playon.web.model.Barrio;
@@ -187,7 +186,7 @@ public class PlayaManagedBean implements Serializable {
 	    simpleModel = new DefaultMapModel();
 	    latLonUtil = new LatitudlongitudUtil();
 	    GeoposicionDePlaya respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda()
-		    + ", C�rdoba, Argentina");
+		    + ", Cordoba, Argentina");
 	    playaResultadoBusqueda = new ArrayList<Playa>();
 	    for (Playa playaAux : getPlayaList()) {
 		Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
