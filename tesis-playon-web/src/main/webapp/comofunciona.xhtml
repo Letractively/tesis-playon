@@ -1,0 +1,45 @@
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+		¿Cómo funciona?
+    </ui:define>
+
+	<ui:define name="content">
+		<h1>¿Cómo funciona Playón?</h1>
+		<p>Conocé los beneficios para tu negocio.</p>
+		<h:graphicImage library="images" name="paraPlayas.jpg"
+			style="width:660px; margin:0px 0 40px 0; border:1px solid lightgrey;" />
+		<h4>¿Qué es Playón?</h4>
+		<p>
+			<i>Playón</i> es una red de playas de estacionamiento que permite
+			crear un nexo de interacción y comunicación entre las playas de
+			estacionamiento y sus potenciales clientes. El objetivo principal es
+			brindar una plataforma de publicidades y promociones a las playas de
+			estacionamiento y al mismo tiempo, ofrecer un lugar en donde
+			centralizar la información.
+		</p>
+
+
+		<h4>Beneficios</h4>
+		<ul>
+			<li>Beneficio 1</li>
+			<li>Beneficio 2</li>
+			<li>Beneficio 3</li>
+		</ul>
+		<!-- 
+		<p>
+			<h:link value="¡Asociate a Playón!" outcome="solicitudplayaadd">
+				<h:graphicImage library="images" name="botonPlayas.png" />
+			</h:link>
+		</p>
+		 -->
+		<h:button value="¡Asociate a Playón!" outcome="solicitudplayaadd" />
+
+	</ui:define>
+
+</ui:composition>

@@ -40,7 +40,7 @@ public class PlayaManagedBean implements Serializable {
 
     private static final String LISTA_PLAYAS = "playalist";
 
-    private static final String LISTA_PLAYAS_PENDIENTES = "playaspendienteslist";
+    //	private static final String LISTA_PLAYAS_PENDIENTES = "playaspendienteslist";
 
     private static final String SOLICITUD_PLAYA_END = "solicitudplayaend";
 
@@ -253,7 +253,7 @@ public class PlayaManagedBean implements Serializable {
 	this.setEstadia(null);
 
 	// Atributos del encargado
-	this.setApellido("");
+	this.setNombreUser("");
 	this.setApellido("");
 	this.setEmail("");
 	this.setNroDoc(0);

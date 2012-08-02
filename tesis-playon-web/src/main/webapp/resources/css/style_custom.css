@@ -11,6 +11,15 @@
 	border-bottom: 1px solid lightgrey;
 }
 
+#content h2,h3,h4 {
+	border-bottom: 1px dotted lightgrey;
+}
+
+#content ul {
+	list-style: disc;
+	list-style-type: circle;
+}
+
 #page-bottom-menu {
 	padding: 10px 45px 0 45px;
 }
@@ -39,29 +48,4 @@
 	height: 133px;
 	padding: 10px 0 0 10px;
 	/* 	background-color: white; */
-}
-
-
-
-/* PRIMEFACES COMPATIBITITY */
-
-.ui-inputfield {
-	
-}
-
-.ui-inputtext {
-	
-}
-
-.ui-widget {
-	
-}
-
-.ui-state-default {
-	
-	
-}
-
-.ui-corner-all{
-	
 }
