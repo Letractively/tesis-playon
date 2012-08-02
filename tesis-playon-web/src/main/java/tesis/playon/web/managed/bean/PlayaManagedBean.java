@@ -111,6 +111,8 @@ public class PlayaManagedBean implements Serializable {
     private Playa playa;
 
     private Double distancia;
+    
+    private static GeoposicionDePlaya respuesta;
 
     public String addPlaya() {
 	try {
@@ -185,7 +187,8 @@ public class PlayaManagedBean implements Serializable {
 	try {
 	    simpleModel = new DefaultMapModel();
 	    latLonUtil = new LatitudlongitudUtil();
-	    GeoposicionDePlaya respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda()
+//	    GeoposicionDePlaya 
+	    respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda()
 		    + ", Cordoba, Argentina");
 	    playaResultadoBusqueda = new ArrayList<Playa>();
 	    for (Playa playaAux : getPlayaList()) {
@@ -196,7 +199,7 @@ public class PlayaManagedBean implements Serializable {
 		    // Shared coordinates
 		    LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
 		    // Basic marker
-		    simpleModel.addOverlay(new Marker(coord1, playaAux.getNombreComercial()));
+		    simpleModel.addOverlay(new Marker(coord1, playaAux.getNombreComercial(),null,"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
 
 		}
 	    }
