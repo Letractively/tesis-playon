@@ -64,7 +64,7 @@ public class PlayaManagedBean implements Serializable {
 
     List<Playa> playaspendientesList;
 
-    List<Playa> playaResultadoBusqueda = new ArrayList<Playa>();
+    static List<Playa> playaResultadoBusqueda;
 
     private List<Playa> filteredPlayas;
 
