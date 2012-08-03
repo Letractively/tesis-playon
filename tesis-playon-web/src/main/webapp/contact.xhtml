@@ -1,17 +1,61 @@
 <ui:composition template="template/template.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="title">
+	<ui:define name="title">
 		Contacto
     </ui:define>
 
-    <ui:define name="content">
-        <h1>Contacto</h1>
-        <p>Bienvenido a Playón: Red de playas de estacionamiento.</p>
-    </ui:define>
-    
+	<!-- 
+	TODO: Falta crear el contactoMB para enviar el mail y  manejar esto.
+	
+	 -->
+	<ui:define name="content">
+		<h1>Contacto</h1>
+		<p>Utilice el siguiente formulario para ponerse en contacto con
+			nosotros. Por favor complete todos los campos solicitados.</p>
+
+		<h:form>
+			<table>
+				<tr>
+					<td style="width:150px;"><h:outputLabel for="nombre" value="Nombre: " /></td>
+					<td><p:inputText id="nombre" value="#{contactoMB.nombre}">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="nombreMsg" />
+						</p:inputText> <p:message id="nombreMsg" for="nombre" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="email" value="Correo electrónico: " /></td>
+					<td><p:inputText id="email" value="#{contactoMB.email}">
+							<f:validateLength minimum="2" />
+							<p:ajax event="blur" update="emailMsg" />
+						</p:inputText> <p:message id="emailMsg" for="email" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="asunto" value="Asunto: " /></td>
+					<td><p:inputText id="asunto" value="#{contactoMB.asunto}">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="asuntoMsg" />
+						</p:inputText> <p:message id="asuntoMsg" for="asunto" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputText for="mensaje" value="Mensaje: " /></td>
+					<td><p:inputTextarea id="mensaje" rows="6" cols="33"
+							value="#{contactoMB.mensaje}"> <f:validateLength minimum="5" />
+						<p:ajax event="blur" update="mensajeMsg" /> </p:inputTextarea> <p:message
+							id="mensajeMsg" for="mensaje" display="icon" /></td>
+				</tr>
+			</table><br />
+			<p>
+				<p:commandButton id="enviar" value="Enviar Mensaje"
+					action="#{contactoMB.enviar}" ajax="false" />
+				<p:commandButton id="reset" value="Limpiar"
+					action="#{contactoMB.Reset}" ajax="false" />
+			</p>
+		</h:form>
+	</ui:define>
+
 </ui:composition>
