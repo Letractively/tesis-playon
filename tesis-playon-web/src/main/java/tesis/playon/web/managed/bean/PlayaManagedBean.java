@@ -110,7 +110,7 @@ public class PlayaManagedBean implements Serializable {
 
     private Playa playa;
 
-    private Double distancia;
+    private Double distancia=(double) 25;
     
     private static GeoposicionDePlaya respuesta;
 
