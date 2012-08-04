@@ -47,6 +47,8 @@ public class LoginBean {
     private String password = null;
 
     private String recordar = null;
+    
+    private Boolean logueado = false;
 
     @ManagedProperty(value = "#{authenticationManager}")
     private AuthenticationManager authenticationManager = null;
@@ -75,6 +77,7 @@ public class LoginBean {
 		result = authenticationManager.authenticate(request);
 	    }
 	    SecurityContextHolder.getContext().setAuthentication(result);
+	    setLogueado(true);
 	    if (ROLE_ADMIN.equals(result.getAuthorities().toString())) {
 		return "SecuredAdmin";
 	    } else if (ROLE_CLIENT.equals(result.getAuthorities().toString())) {
@@ -102,7 +105,7 @@ public class LoginBean {
 	cookie.setMaxAge(0);
 	cookie.setPath(httpServletRequest.getContextPath().length() > 0 ? httpServletRequest.getContextPath() : "/");
 	httpServletResponse.addCookie(cookie);
-	// return "LoggedOut";
+	setLogueado(false);
 	return "index?faces-redirect=true";
     }
 
@@ -156,6 +159,14 @@ public class LoginBean {
 
     public void setRecordar(String recordar) {
 	this.recordar = recordar;
+    }
+
+    public Boolean getLogueado() {
+        return logueado;
+    }
+
+    public void setLogueado(Boolean logueado) {
+        this.logueado = logueado;
     }
 
 }

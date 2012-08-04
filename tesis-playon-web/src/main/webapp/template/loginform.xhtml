@@ -5,6 +5,20 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="loginFormId" prependId="false">
+
+		<h:panelGroup rendered="#{!loginMB.logueado}">
+			<h:link outcome="/login.xhtml">
+				<f:verbatim>Iniciar sesi&#243;n</f:verbatim>
+			</h:link> |
+			<h:link outcome="/contact.xhtml">
+				<f:verbatim>Registrarse</f:verbatim>
+			</h:link>
+		</h:panelGroup>
+
+		<h:panelGroup rendered="#{loginMB.logueado}">
+			<h:commandLink action="#{loginMB.logout}">Cerrar sesi&#243;n</h:commandLink>
+		</h:panelGroup>
+
 		<table>
 			<tr>
 				<td><h:outputText id="outTxtUserNameId" value="Usuario:"
@@ -26,9 +40,7 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td colspan="2" class="login-separador">
-					<!-- Separador -->
-				</td>
+				<td colspan="2" class="login-separador">Separador</td>
 			</tr>
 			<tr>
 				<td colspan="2" align="right"><h:selectBooleanCheckbox
