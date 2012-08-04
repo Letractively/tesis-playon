@@ -102,7 +102,8 @@ public class LoginBean {
 	cookie.setMaxAge(0);
 	cookie.setPath(httpServletRequest.getContextPath().length() > 0 ? httpServletRequest.getContextPath() : "/");
 	httpServletResponse.addCookie(cookie);
-	return "LoggedOut";
+	// return "LoggedOut";
+	return "index?faces-redirect=true";
     }
 
     public String cancel() {
