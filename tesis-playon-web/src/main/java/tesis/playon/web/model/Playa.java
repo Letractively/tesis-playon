@@ -18,8 +18,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
-//import javax.persistence.FetchType;
-//import javax.persistence.OneToOne;
+
+import tesis.playon.web.util.LatitudlongitudUtil;
+import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
 
 /**
  * @author Alejandro
@@ -70,8 +71,10 @@ public class Playa implements Serializable {
     @JoinColumn(name = "estadiaID")
     private Estadia estadia;
 
+
     public Playa() {
 	super();
+
     }
 
     public Playa(String cuit, Integer disponibilidad, String domicilio, String nombreComercial, String razonSocial,
@@ -84,6 +87,7 @@ public class Playa implements Serializable {
 	this.barrio = barrio;
 	this.estado = estado;
 	this.estadia = estadia;
+
     }
 
     public Playa(String nombreComercial, EstadoPlaya estado) {
@@ -133,6 +137,18 @@ public class Playa implements Serializable {
 
     public void setDomicilio(String domicilio) {
 	this.domicilio = domicilio;
+	 LatitudlongitudUtil latLonUtil;
+	 GeoposicionDePlaya respuesta;
+
+	latLonUtil = new LatitudlongitudUtil();
+	try {
+	    respuesta = latLonUtil.getLocationFromAddress(domicilio + ", Cordoba, Argentina");
+	    this.latitud = respuesta.getLatitud();
+	    this.longitud = respuesta.getLongitud();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+
     }
 
     public String getNombreComercial() {
