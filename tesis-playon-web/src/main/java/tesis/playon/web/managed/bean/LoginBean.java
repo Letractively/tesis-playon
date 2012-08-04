@@ -28,19 +28,19 @@ import org.springframework.security.web.authentication.RememberMeServices;
 @RequestScoped
 public class LoginBean {
 
-    private static final String ROLE_ADMIN = "ROLE_ADMIN";
+    private static final String ROLE_ADMIN = "[ROLE_ADMIN]";
 
-    private static final String ROLE_AUDITOR = "ROLE_AUDITOR";
+    private static final String ROLE_AUDITOR = "[ROLE_AUDITOR]";
 
-    private static final String ROLE_CONTADOR = "ROLE_CONTADOR";
+    private static final String ROLE_CONTADOR = "[ROLE_CONTADOR]";
 
-    private static final String ROLE_USER = "ROLE_USER";
+    private static final String ROLE_USER = "[ROLE_USER]";
 
-    private static final String ROLE_CLIENT = "ROLE_CLIENT";
+    private static final String ROLE_CLIENT = "[ROLE_CLIENT]";
 
-    private static final String ROLE_PLAYA_EMPLEADO = "ROLE_PLAYA_EMPLEADO";
+    private static final String ROLE_PLAYA_EMPLEADO = "[ROLE_PLAYA_EMPLEADO]";
 
-    private static final String ROLE_PLAYA_GERENTE = "ROLE_PLAYA_GERENTE";
+    private static final String ROLE_PLAYA_GERENTE = "[ROLE_PLAYA_GERENTE]";
 
     private String usuario = null;
 
@@ -75,12 +75,13 @@ public class LoginBean {
 		result = authenticationManager.authenticate(request);
 	    }
 	    SecurityContextHolder.getContext().setAuthentication(result);
-	    if (ROLE_ADMIN.equals(result.getAuthorities())) {
+	    if (ROLE_ADMIN.equals(result.getAuthorities().toString())) {
 		return "SecuredAdmin";
-	    } else if (ROLE_CLIENT.equals(result.getAuthorities())) {
+	    } else if (ROLE_CLIENT.equals(result.getAuthorities().toString())) {
+		return "SecuredClient";
+	    } else {
 		return "SecuredClient";
 	    }
-	    return "SecuredClient";
 	} catch (AuthenticationException e) {
 	    e.printStackTrace();
 	    FacesMessage fm = new FacesMessage("Usuario o contraseña incorrecto");
