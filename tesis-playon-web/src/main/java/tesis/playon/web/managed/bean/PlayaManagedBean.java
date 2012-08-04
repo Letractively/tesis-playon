@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -47,6 +48,8 @@ public class PlayaManagedBean implements Serializable {
     private static final String ERROR = "error";
 
     private MapModel simpleModel;
+    private MapModel advancedModel;
+    private static  Marker marker;
 
     @ManagedProperty(value = "#{PlayaService}")
     IPlayaService playaService;
@@ -115,8 +118,8 @@ public class PlayaManagedBean implements Serializable {
     private GeoposicionDePlaya respuesta;
 
     private String coordenadas;
-    
-    //para modificar una playa
+
+    // para modificar una playa
     private static Playa playaSelected;
 
     public String addPlaya() {
@@ -190,8 +193,10 @@ public class PlayaManagedBean implements Serializable {
     public void buscarPlaya() {
 
 	try {
-	    simpleModel = new DefaultMapModel();
+	   	    
+	    advancedModel = new DefaultMapModel();
 	    latLonUtil = new LatitudlongitudUtil();
+
 	    // GeoposicionDePlaya
 	    respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda() + ", Cordoba, Argentina");
 	    coordenadas = respuesta.toString();
@@ -205,10 +210,14 @@ public class PlayaManagedBean implements Serializable {
 		    // Shared coordinates
 		    LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
 		    // Basic marker
-		    simpleModel.addOverlay(new Marker(coord1, playaAux.getNombreComercial(), null,
-			    "http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
-
+		    
+		    marker=new Marker(coord1, playaAux.toString2(), null,"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png");
+		    advancedModel.addOverlay(marker);
+		    
 		}
+		LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
+		marker= new Marker (coordenada, "¡Usted está aquí!", null,"http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg");
+		advancedModel.addOverlay(marker);
 	    }
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -248,7 +257,7 @@ public class PlayaManagedBean implements Serializable {
 	this.setEstado(null);
 	this.setNombreComercial("");
 	this.setRazonSocial("");
-	this.playaSelected= null;
+	this.playaSelected = null;
     }
 
     public void solicitudReset() {
@@ -545,14 +554,27 @@ public class PlayaManagedBean implements Serializable {
     }
 
     public Playa getPlayaSelected() {
-        return playaSelected;
+	return playaSelected;
     }
 
     public void setPlayaSelected(Playa playaSelected) {
-        this.playaSelected = playaSelected;
+	this.playaSelected = playaSelected;
     }
-    
-    public String updatePlayaAuditoria(){
+
+    public MapModel getAdvancedModel() {
+	return advancedModel;
+    }
+
+    public void onMarkerSelect(OverlaySelectEvent event) {
+//	marker=new Marker("", ", null,"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png");
+	marker = (Marker) event.getOverlay();
+    }
+
+    public Marker getMarker() {
+	return marker;
+    }
+
+    public String updatePlayaAuditoria() {
 	try {
 
 	    getPlayaService().update(playaSelected);
