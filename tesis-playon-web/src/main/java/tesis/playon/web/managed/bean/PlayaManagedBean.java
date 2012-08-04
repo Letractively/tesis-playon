@@ -40,7 +40,7 @@ public class PlayaManagedBean implements Serializable {
 
     private static final String LISTA_PLAYAS = "playalist";
 
-    //	private static final String LISTA_PLAYAS_PENDIENTES = "playaspendienteslist";
+    // private static final String LISTA_PLAYAS_PENDIENTES = "playaspendienteslist";
 
     private static final String SOLICITUD_PLAYA_END = "solicitudplayaend";
 
@@ -110,10 +110,13 @@ public class PlayaManagedBean implements Serializable {
 
     private Playa playa;
 
-    private Double distancia=(double) 25;
-    
-    private static GeoposicionDePlaya respuesta;
+    private Double distancia = (double) 25;
 
+    private  GeoposicionDePlaya respuesta;
+
+    private  String coordenadas;
+
+    
     public String addPlaya() {
 	try {
 	    EstadoPlaya estado = new EstadoPlaya();
@@ -187,9 +190,10 @@ public class PlayaManagedBean implements Serializable {
 	try {
 	    simpleModel = new DefaultMapModel();
 	    latLonUtil = new LatitudlongitudUtil();
-//	    GeoposicionDePlaya 
-	    respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda()
-		    + ", Cordoba, Argentina");
+	    // GeoposicionDePlaya
+	    respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda() + ", Cordoba, Argentina");
+	    coordenadas=respuesta.toString();
+	    
 	    playaResultadoBusqueda = new ArrayList<Playa>();
 	    for (Playa playaAux : getPlayaList()) {
 		Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
@@ -199,7 +203,8 @@ public class PlayaManagedBean implements Serializable {
 		    // Shared coordinates
 		    LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
 		    // Basic marker
-		    simpleModel.addOverlay(new Marker(coord1, playaAux.getNombreComercial(),null,"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
+		    simpleModel.addOverlay(new Marker(coord1, playaAux.getNombreComercial(), null,
+			    "http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
 
 		}
 	    }
@@ -479,6 +484,27 @@ public class PlayaManagedBean implements Serializable {
     public void setFilteredPlayas(List<Playa> filteredPlayas) {
 	this.filteredPlayas = filteredPlayas;
     }
+    
+    public  GeoposicionDePlaya getRespuesta() {
+	return respuesta;
+    }
+
+    public  void setRespuesta(GeoposicionDePlaya respuesta) {
+	this.respuesta = respuesta;
+    }
+
+    public String getCoordenadas() {
+	return coordenadas;
+    }
+
+    public void setCoordenadas(String coordenadas) {
+	this.coordenadas = coordenadas;
+    }
+
+    public void setSimpleModel(MapModel simpleModel) {
+	this.simpleModel = simpleModel;
+    }
+
 
     public SelectItem[] getBarriosOptions() {
 	List<Barrio> barrios = new ArrayList<Barrio>();

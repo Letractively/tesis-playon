@@ -71,6 +71,10 @@ public class LatitudlongitudUtil {
 	public void setLongitud(Double longitud) {
 	    this.longitud = longitud;
 	}
+	
+	public String toString (){
+	    return  latitud.toString() + "," + longitud.toString();  
+	}
 
     }
 
