@@ -61,8 +61,18 @@
     	<from-view-id>/login.xhtml</from-view-id>
     	<navigation-case>
     		<from-action>#{loginMB.login}</from-action>
-    		<from-outcome>Secured</from-outcome>
+    		<from-outcome>SecuredAdmin</from-outcome>
     		<to-view-id>/admin/index.xhtml</to-view-id>
+    	</navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+    	<display-name>login.xhtml</display-name>
+    	<from-view-id>/login.xhtml</from-view-id>
+    	<navigation-case>
+    		<from-action>#{loginMB.login}</from-action>
+    		<from-outcome>SecuredClient</from-outcome>
+    		<to-view-id>/index.xhtml</to-view-id>
     	</navigation-case>
     </navigation-rule>
     

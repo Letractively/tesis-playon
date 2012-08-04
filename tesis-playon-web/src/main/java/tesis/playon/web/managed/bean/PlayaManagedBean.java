@@ -112,11 +112,10 @@ public class PlayaManagedBean implements Serializable {
 
     private Double distancia = (double) 25;
 
-    private  GeoposicionDePlaya respuesta;
+    private GeoposicionDePlaya respuesta;
 
-    private  String coordenadas;
+    private String coordenadas;
 
-    
     public String addPlaya() {
 	try {
 	    EstadoPlaya estado = new EstadoPlaya();
@@ -157,7 +156,7 @@ public class PlayaManagedBean implements Serializable {
 
 	    getPlayaService().save(playa);
 	    setPlaya(playa);
-	    Usuario usuario = addUsuario();
+	    // Usuario usuario = addUsuario();
 
 	    return SOLICITUD_PLAYA_END;
 	} catch (DataAccessException e) {
@@ -192,8 +191,8 @@ public class PlayaManagedBean implements Serializable {
 	    latLonUtil = new LatitudlongitudUtil();
 	    // GeoposicionDePlaya
 	    respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda() + ", Cordoba, Argentina");
-	    coordenadas=respuesta.toString();
-	    
+	    coordenadas = respuesta.toString();
+
 	    playaResultadoBusqueda = new ArrayList<Playa>();
 	    for (Playa playaAux : getPlayaList()) {
 		Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
@@ -484,12 +483,12 @@ public class PlayaManagedBean implements Serializable {
     public void setFilteredPlayas(List<Playa> filteredPlayas) {
 	this.filteredPlayas = filteredPlayas;
     }
-    
-    public  GeoposicionDePlaya getRespuesta() {
+
+    public GeoposicionDePlaya getRespuesta() {
 	return respuesta;
     }
 
-    public  void setRespuesta(GeoposicionDePlaya respuesta) {
+    public void setRespuesta(GeoposicionDePlaya respuesta) {
 	this.respuesta = respuesta;
     }
 
@@ -504,7 +503,6 @@ public class PlayaManagedBean implements Serializable {
     public void setSimpleModel(MapModel simpleModel) {
 	this.simpleModel = simpleModel;
     }
-
 
     public SelectItem[] getBarriosOptions() {
 	List<Barrio> barrios = new ArrayList<Barrio>();
