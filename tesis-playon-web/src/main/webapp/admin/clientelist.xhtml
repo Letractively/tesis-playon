@@ -9,9 +9,11 @@
 
 	<ui:define name="panelContent" class="admin-font">
 		<h:form>
-			<p:dataTable id="clientes" var="cliente" editable="true"
+			<p:dataTable id="clientes" var="cliente"
 				paginator="true" rows="5" value="#{clienteMB.clienteList}"
-				style="width: 10%">
+				emptyMessage="No existen clientes" paginatorPosition="bottom"
+				selection="#{clienteMB.clienteSelected}"
+				rowKey="#{cliente.nroCliente}" selectionMode="single">
 
 				<f:facet name="header">
 				Clientes
@@ -87,13 +89,20 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Opciones" styleClass="option-font">
-					<p:rowEditor />
+				<p:column>
+					<p:commandButton id="editar" value=""
+							icon="ui-icon-pencil"
+							action="/admin/clienteedit.html?faces-redirect=true"
+							ajax="false" style="height:20px; width:34px;"/>
+					<p:tooltip for="editar" value="Editar Cliente"/>
 				</p:column>
 
 				<p:column>
-					<h:commandButton value="Borrar"
-						action="#{clienteMB.deleteCliente(cliente)}" />
+					<p:commandButton id="delete" value=""
+						icon="ui-icon-circle-close"
+						action="#{clienteMB.deleteCliente(cliente)}"
+						style="height:20px; width:34px;" />
+						<p:tooltip for="delete" value="Dar de baja cliente"/>
 				</p:column>
 
 			</p:dataTable>

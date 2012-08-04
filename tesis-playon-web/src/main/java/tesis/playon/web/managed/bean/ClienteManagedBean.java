@@ -81,6 +81,8 @@ public class ClienteManagedBean implements Serializable {
     private CuentaCliente cuentaCliente;
 
     private Usuario usuario;
+    
+    private static Cliente clienteSelected;
 
     public String addCliente() {
 	try {
@@ -331,5 +333,12 @@ public class ClienteManagedBean implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    
+
+    public Cliente getClienteSelected() {
+        return clienteSelected;
+    }
+
+    public void setClienteSelected(Cliente clienteSelected) {
+        this.clienteSelected = clienteSelected;
+    }
 }

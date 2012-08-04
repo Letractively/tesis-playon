@@ -10,7 +10,8 @@
 	<ui:define name="panelContent">
 		<h:form>
 			<p:dataTable id="usuarios" var="usuario" editable="true"
-				paginator="true" rows="5" value="#{usuarioMB.usuarioList}"
+				paginator="true" rows="5" paginatorPosition="bottom"
+				value="#{usuarioMB.usuarioList}"
 				style="width: 10%">
 
 				<f:facet name="header">
