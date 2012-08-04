@@ -40,7 +40,7 @@ public class PlayaManagedBean implements Serializable {
 
     private static final String LISTA_PLAYAS = "playalist";
 
-    // private static final String LISTA_PLAYAS_PENDIENTES = "playaspendienteslist";
+    private static final String LISTA_PLAYAS_PENDIENTES = "playaspendienteslist";
 
     private static final String SOLICITUD_PLAYA_END = "solicitudplayaend";
 
@@ -115,6 +115,9 @@ public class PlayaManagedBean implements Serializable {
     private GeoposicionDePlaya respuesta;
 
     private String coordenadas;
+    
+    //para modificar una playa
+    private static Playa playaSelected;
 
     public String addPlaya() {
 	try {
@@ -245,6 +248,7 @@ public class PlayaManagedBean implements Serializable {
 	this.setEstado(null);
 	this.setNombreComercial("");
 	this.setRazonSocial("");
+	this.playaSelected= null;
     }
 
     public void solicitudReset() {
@@ -540,4 +544,22 @@ public class PlayaManagedBean implements Serializable {
 	return simpleModel;
     }
 
+    public Playa getPlayaSelected() {
+        return playaSelected;
+    }
+
+    public void setPlayaSelected(Playa playaSelected) {
+        this.playaSelected = playaSelected;
+    }
+    
+    public String updatePlayaAuditoria(){
+	try {
+
+	    getPlayaService().update(playaSelected);
+	    return LISTA_PLAYAS_PENDIENTES;
+	} catch (DataAccessException e) {
+	    e.printStackTrace();
+	}
+	return ERROR;
+    }
 }

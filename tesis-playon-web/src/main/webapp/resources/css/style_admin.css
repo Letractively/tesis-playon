@@ -115,6 +115,10 @@
 	font-weight: bold;
 }
 
+.admin-input-text input{
+	width:250px;
+}
+
 /* ********************************************** */
 /*	Layout Login	*/
 .login-font {
