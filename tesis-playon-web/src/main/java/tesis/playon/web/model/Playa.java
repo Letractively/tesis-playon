@@ -216,6 +216,12 @@ public class Playa implements Serializable {
 	return "Playa:\t [playaID=" + id + ", cuit=" + cuit + ", nombreComercial=" + nombreComercial + ", razonSocial="
 		+ razonSocial + ", domicilio=" + domicilio + "]";
     }
+    
+    public String toString2 () {
+	
+	return  "Nombre: \t " + nombreComercial + "\n Domicilio: " + domicilio + "\n Lugares disponibles: " + disponibilidad ;  
+	
+    }
 
     public void setId(int id) {
 	this.id = id;
