@@ -16,50 +16,10 @@
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{loginMB.logueado}">
-			<h:commandLink action="#{loginMB.logout}">Cerrar sesi&#243;n</h:commandLink>
+			<td>Bienvenido "#{loginMB.usuario}", con rol #{loginMB.rol} </td>
+			<td><h:commandLink action="#{loginMB.logout}">Cerrar sesi&#243;n</h:commandLink></td>
 		</h:panelGroup>
 
-		<table>
-			<tr>
-				<td><h:outputText id="outTxtUserNameId" value="Usuario:"
-						name="outTxtUserNameNm" /></td>
-				<td><h:inputText id="usuario" required="true"
-						value="#{loginMB.usuario}"
-						requiredMessage="Por favor ingrese su nombre de usuario" /></td>
-			</tr>
-			<tr>
-				<td><h:outputText id="outTxtPasswordId" value="Contraseña:"
-						name="outTxtPasswordNm" /></td>
-				<td><h:inputSecret id="password" required="true"
-						value="#{loginMB.password}"
-						requiredMessage="Por favor ingrese su contraseña"
-						name="inTxtPasswordNm" /></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td colspan="2" class="login-separador">Separador</td>
-			</tr>
-			<tr>
-				<td colspan="2" align="right"><h:selectBooleanCheckbox
-						id="recordar" value="#{loginMB.recordar}" label="Recordar" />Recordar
-					usuario <h:commandButton id="btnLoginId" value="Ingresar"
-						action="#{loginMB.login}" styleClass="loginPanelBtn" /></td>
-			</tr>
-			<tr>
-				<td colspan="2" class="login-message"><h:outputLabel
-						id="outLblUserNameId" for="usuario" name="outLblUserNameNm" /></td>
-			</tr>
-			<tr>
-				<td colspan="2" class="login-message"><h:outputLabel
-						id="outLblPasswordId" for="password" name="outLblPasswordNm" /></td>
-			</tr>
-			<tr>
-				<td colspan="2" class="login-message"><h:messages /></td>
-			</tr>
-		</table>
 	</h:form>
 
 </ui:composition>

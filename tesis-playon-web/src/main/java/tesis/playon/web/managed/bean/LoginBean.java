@@ -46,8 +46,10 @@ public class LoginBean {
 
     private String password = null;
 
+    private String rol = null;
+
     private String recordar = null;
-    
+
     private Boolean logueado = false;
 
     @ManagedProperty(value = "#{authenticationManager}")
@@ -78,6 +80,7 @@ public class LoginBean {
 	    }
 	    SecurityContextHolder.getContext().setAuthentication(result);
 	    setLogueado(true);
+	    setRol(result.getAuthorities().toString());
 	    if (ROLE_ADMIN.equals(result.getAuthorities().toString())) {
 		return "SecuredAdmin";
 	    } else if (ROLE_CLIENT.equals(result.getAuthorities().toString())) {
@@ -161,12 +164,20 @@ public class LoginBean {
 	this.recordar = recordar;
     }
 
+    public String getRol() {
+	return rol;
+    }
+
+    public void setRol(String rol) {
+	this.rol = rol;
+    }
+
     public Boolean getLogueado() {
-        return logueado;
+	return logueado;
     }
 
     public void setLogueado(Boolean logueado) {
-        this.logueado = logueado;
+	this.logueado = logueado;
     }
 
 }
