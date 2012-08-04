@@ -18,6 +18,9 @@
 				<p:menuitem value="Cliente"
 					url="#{request.contextPath}/../admin/clientelist.html"
 					icon="ui-icon-person" />
+				<p:menuitem value="Playas"
+					url="#{request.contextPath}/../admin/playalist.html"
+					icon="ui-icon-arrowthick-1-e" />
 				<p:menuitem value="Roles de Usuarios"
 					url="#{request.contextPath}/../admin/rolusuariolist.html"
 					icon="ui-icon-tag" />
@@ -34,7 +37,7 @@
 			<p:submenu label="Usuario">
 				<p:menuitem value="Cambiar Contraseña"
 					url="#{request.contextPath}/../admin/"
-					icon="ui-icon-arrowthick-1-e" />
+					icon="ui-icon-locked" />
 				<p:menuitem value="Cerrar sesión" icon="ui-icon-circle-close"
 					action="#{loginMB.logout}" />
 			</p:submenu>

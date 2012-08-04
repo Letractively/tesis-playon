@@ -43,6 +43,13 @@
 	margin-bottom: 0em;
 }
 
+#loginform { 
+	padding: 5px 0 0 0;
+	position: absolute;
+	right: 45px;
+	top: 20px;
+}
+
 .logo {
 	width: 320px;
 	height: 133px;

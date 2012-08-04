@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<table>
+		<tr>
+			<td><h:outputText id="outTxtUserNameId" value="Usuario:"
+					name="outTxtUserNameNm" /></td>
+			<td><h:inputText id="usuario" required="true"
+					value="#{loginMB.usuario}"
+					requiredMessage="Por favor ingrese su nombre de usuario" /></td>
+		</tr>
+		<tr>
+			<td><h:outputText id="outTxtPasswordId" value="Contraseña:"
+					name="outTxtPasswordNm" /></td>
+			<td><h:inputSecret id="password" required="true"
+					value="#{loginMB.password}"
+					requiredMessage="Por favor ingrese su contraseña"
+					name="inTxtPasswordNm" /></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td colspan="2" class="login-separador">
+				<!-- Separador -->
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="right"><h:selectBooleanCheckbox
+					id="recordar" value="#{loginMB.recordar}" label="Recordar" />Recordar
+				usuario <h:commandButton id="btnLoginId" value="Ingresar"
+					action="#{loginMB.login}" styleClass="loginPanelBtn" /></td>
+		</tr>
+		<tr>
+			<td colspan="2" class="login-message"><h:outputLabel
+					id="outLblUserNameId" for="usuario" name="outLblUserNameNm" /></td>
+		</tr>
+		<tr>
+			<td colspan="2" class="login-message"><h:outputLabel
+					id="outLblPasswordId" for="password" name="outLblPasswordNm" /></td>
+		</tr>
+		<tr>
+			<td colspan="2" class="login-message"><h:messages /></td>
+		</tr>
+	</table>
+
+</ui:composition>
