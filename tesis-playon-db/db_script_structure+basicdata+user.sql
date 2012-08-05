@@ -330,6 +330,8 @@ CREATE TABLE `playa` (
   `cuit` varchar(50) DEFAULT NULL,
   `disponibilidad` int(11) DEFAULT NULL,
   `domicilio` varchar(50) DEFAULT NULL,
+  `telefono` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
   `estadoPlayaID` int(11) NOT NULL,
   `nombreComercial` varchar(50) NOT NULL,
   `latitud` DOUBLE DEFAULT NULL,
