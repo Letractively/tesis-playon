@@ -104,8 +104,48 @@ public class ClienteManagedBean implements Serializable {
 	    cliente = getClienteService().findByNumeroCliente(cliente.getNroCliente());
 	    cuenta.setCliente(cliente);
 	    getCuentaClienteService().update(cuenta);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+		    "Se agregó el cliente "+ cliente.getUsuario().getApellido() + " "
+			    + cliente.getUsuario().getNombre()+" correctamente.", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_CLIENTES;
 	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo agregar el cliente: " + cliente.getUsuario().getApellido() + " "
+			    + cliente.getUsuario().getNombre(), "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
+	}
+	return ERROR;
+    }
+    
+    public String addSolicitudCliente() {
+	try {
+	    Cliente cliente = new Cliente();
+	    Usuario usuario = addUsuario();
+	    CuentaCliente cuenta = addCuentaCliente();
+
+	    cliente.setBarrio(getBarrio());
+	    cliente.setCuentaCliente(cuenta);
+	    cliente.setDomicilio(getDomicilio());
+	    cliente.setTelefono(getTelefono());
+	    cliente.setUsuario(usuario);
+	    cliente.setNroCliente(cliente.getNroCliente());
+
+	    getClienteService().save(cliente);
+	    cliente = getClienteService().findByNumeroCliente(cliente.getNroCliente());
+	    cuenta.setCliente(cliente);
+	    getCuentaClienteService().update(cuenta);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+		    "Se agregó el cliente "+ cliente.getUsuario().getApellido() + " "
+			    + cliente.getUsuario().getNombre()+" correctamente.", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return "solicitudclienteend";
+	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo agregar el cliente: " + cliente.getUsuario().getApellido() + " "
+			    + cliente.getUsuario().getNombre(), "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
 	return ERROR;
