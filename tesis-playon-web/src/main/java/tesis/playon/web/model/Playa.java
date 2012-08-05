@@ -60,8 +60,11 @@ public class Playa implements Serializable {
     @Column(name = "razonSocial", nullable = true)
     private String razonSocial;
 
-    //@Column(name = "telefono")
-//    private String telefono;
+    @Column(name = "telefono")
+    private String telefono;
+    
+    @Column(name = "email")
+    private String email;
 
     @ManyToOne
     @JoinColumn(name = "barrioID", nullable = true)
@@ -190,13 +193,21 @@ public class Playa implements Serializable {
 	return estadia;
     }
 
-//    public String getTelefono() {
-//	return telefono;
-//    }
-//
-//    public void setTelefono(String telefono) {
-//	this.telefono = telefono;
-//    }
+    public String getTelefono() {
+	return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+	this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public void setEstadia(Estadia estadia) {
 	this.estadia = estadia;

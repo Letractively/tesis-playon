@@ -19,7 +19,6 @@ import org.springframework.dao.DataAccessException;
 import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.CuentaCliente;
-import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IClienteService;
@@ -105,8 +104,8 @@ public class ClienteManagedBean implements Serializable {
 	    cuenta.setCliente(cliente);
 	    getCuentaClienteService().update(cuenta);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
-		    "Se agregó el cliente "+ cliente.getUsuario().getApellido() + " "
-			    + cliente.getUsuario().getNombre()+" correctamente.", "");
+		    "Se agregó correctamente el cliente: "+ cliente.getUsuario().getApellido() + " "
+			    + cliente.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_CLIENTES;
 	} catch (DataAccessException e) {
@@ -137,8 +136,8 @@ public class ClienteManagedBean implements Serializable {
 	    cuenta.setCliente(cliente);
 	    getCuentaClienteService().update(cuenta);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
-		    "Se agregó el cliente "+ cliente.getUsuario().getApellido() + " "
-			    + cliente.getUsuario().getNombre()+" correctamente.", "");
+		    "Se agregó correctamente el cliente: "+ cliente.getUsuario().getApellido() + " "
+			    + cliente.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return "solicitudclienteend";
 	} catch (DataAccessException e) {
@@ -246,7 +245,7 @@ public class ClienteManagedBean implements Serializable {
 	this.setNroDoc(0);
 	this.setPassword("");
 	this.setNombreUser("");
-	clienteSelected=null;
+	ClienteManagedBean.clienteSelected=null;
     }
 
     public IUsuarioService getUsuarioService() {
@@ -424,7 +423,7 @@ public class ClienteManagedBean implements Serializable {
     }
 
     public void setClienteSelected(Cliente clienteSelected) {
-	this.clienteSelected = clienteSelected;
+	ClienteManagedBean.clienteSelected = clienteSelected;
     }
     public String modificarClienteAdmin(Cliente cliente){
 	clienteSelected= cliente;

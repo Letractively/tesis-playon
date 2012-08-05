@@ -90,12 +90,16 @@ public class PlayaManagedBean implements Serializable {
 
     private Barrio barrio;
     
-//    private String telefono;
+    private String telefono;
+    
+    private String emailPlaya;
 
+    @SuppressWarnings("unused")
     private SelectItem[] barriosOptions;
 
     private EstadoPlaya estado;
 
+    @SuppressWarnings("unused")
     private SelectItem[] estadosOptions;
 
     private Estadia estadia;
@@ -126,7 +130,7 @@ public class PlayaManagedBean implements Serializable {
     // para modificar una playa
     private static Playa playaSelected;
 
-    public String addPlaya() {
+    public String addPlayaAdmin() {
 	try {
 	    EstadoPlaya estado = new EstadoPlaya();
 	    estado = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
@@ -140,9 +144,20 @@ public class PlayaManagedBean implements Serializable {
 	    playa.setEstado(estado);
 	    playa.setNombreComercial(getNombreComercial());
 	    playa.setRazonSocial(getRazonSocial());
+	    playa.setTelefono(getTelefono());
+	    playa.setEmail(getEmailPlaya());
+	    
 	    getPlayaService().save(playa);
+	    
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+		    "Se agregó correctamente : "+ playa.getNombreComercial(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    
 	    return LISTA_PLAYAS;
 	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo agregar: " + playa.getNombreComercial(), "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
 	return ERROR;
@@ -163,13 +178,21 @@ public class PlayaManagedBean implements Serializable {
 	    playa.setEstado(estado);
 	    playa.setNombreComercial(getNombreComercial());
 	    playa.setRazonSocial(getRazonSocial());
+	    playa.setTelefono(getTelefono());
+	    playa.setEmail(getEmailPlaya());
 
 	    getPlayaService().save(playa);
 	    setPlaya(playa);
-	    // Usuario usuario = addUsuario();
+	    
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+		    "Se agregó correctamente : "+ playa.getNombreComercial(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return SOLICITUD_PLAYA_END;
 	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo agregar: " + playa.getNombreComercial(), "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
 	return ERROR;
@@ -192,6 +215,74 @@ public class PlayaManagedBean implements Serializable {
 	    e.printStackTrace();
 	}
 	return null;
+    }
+    
+    public void deleteUsuario(Usuario usuario) {
+	getUsuarioService().delete(usuario);
+    }
+    
+    public void updatePlaya(Playa playa) {
+	getPlayaService().update(playa);
+    }
+    
+    public String updatePlayaAuditoria() {
+	try {
+	    getPlayaService().update(playaSelected);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+		    playaSelected.getNombreComercial()+ " se modificó correctamente", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_PLAYAS_PENDIENTES;
+	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, "+ playaSelected.getNombreComercial() +" no se pudo modificar"
+		    , "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
+	}
+	return ERROR;
+    }
+    public String modificarPlayaAdmin(Playa playon){
+	playaSelected= playon;
+	return "playapendienteedit";
+    }
+
+    public void reset() {
+	this.setBarrio(null);
+	this.setCuit("");
+	this.setDisponibilidad(0);
+	this.setDomicilio("");
+	this.setEstadia(null);
+	this.setEstado(null);
+	this.setNombreComercial("");
+	this.setRazonSocial("");
+	this.setTelefono(null);
+	this.setEmailPlaya(null);
+	PlayaManagedBean.playaSelected = null;
+    }
+
+    public void solicitudReset() {
+	// Atributos de la playa
+	this.setCuit("");
+	this.setDisponibilidad(0);
+	this.setDireccionBusqueda("");
+	this.setDomicilio("");
+	this.setNombreComercial("");
+	this.setRazonSocial("");
+	this.setBarrio(null);
+	this.setEstado(null);
+	this.setEstadia(null);
+	this.setTelefono(null);
+	this.setEmailPlaya(null);
+	
+	// Atributos del encargado
+	this.setNombreUser("");
+	this.setApellido("");
+	this.setEmail("");
+	this.setNroDoc(0);
+	this.setPassword("");
+	this.setNombre("");
+	this.setTipoDoc(null);
+	this.setPlaya(null);
     }
 
     public void buscarPlaya() {
@@ -221,14 +312,6 @@ public class PlayaManagedBean implements Serializable {
 	}
     }
 
-    public void deleteUsuario(Usuario usuario) {
-	getUsuarioService().delete(usuario);
-    }
-
-    public void updateUsuario(Usuario usuario) {
-	getUsuarioService().update(usuario);
-    }
-
     public IUsuarioService getUsuarioService() {
 	return usuarioService;
     }
@@ -239,44 +322,6 @@ public class PlayaManagedBean implements Serializable {
 
     public void deletePlaya(Playa playa) {
 	getPlayaService().delete(playa);
-    }
-
-    public void updatePlaya(Playa playa) {
-	getPlayaService().update(playa);
-    }
-
-    public void reset() {
-	this.setBarrio(null);
-	this.setCuit("");
-	this.setDisponibilidad(0);
-	this.setDomicilio("");
-	this.setEstadia(null);
-	this.setEstado(null);
-	this.setNombreComercial("");
-	this.setRazonSocial("");
-	this.playaSelected = null;
-    }
-
-    public void solicitudReset() {
-	// Atributos de la playa
-	this.setCuit("");
-	this.setDisponibilidad(0);
-	this.setDireccionBusqueda("");
-	this.setDomicilio("");
-	this.setNombreComercial("");
-	this.setRazonSocial("");
-	this.setBarrio(null);
-	this.setEstado(null);
-	this.setEstadia(null);
-
-	// Atributos del encargado
-	this.setNombreUser("");
-	this.setApellido("");
-	this.setEmail("");
-	this.setNroDoc(0);
-	this.setPassword("");
-	this.setNombre("");
-	this.setTipoDoc(null);
     }
 
     public IPlayaService getPlayaService() {
@@ -309,6 +354,10 @@ public class PlayaManagedBean implements Serializable {
 	return playaList;
     }
 
+    public void setPlayaList(List<Playa> playaList) {
+	this.playaList = playaList;
+    }
+    
     public List<Playa> getPlayaspendientesList() {
 	playaspendientesList = new ArrayList<Playa>();
 	EstadoPlaya estado = new EstadoPlaya();
@@ -316,14 +365,10 @@ public class PlayaManagedBean implements Serializable {
 	playaspendientesList.addAll(getPlayaService().findPlayasPendientes(estado));
 	return playaspendientesList;
     }
-
+    
     public void setPlayaspendientesList(List<Playa> playaspendientesList) {
 
 	this.playaspendientesList = playaspendientesList;
-    }
-
-    public void setPlayaList(List<Playa> playaList) {
-	this.playaList = playaList;
     }
 
     public List<Playa> getPlayaResultadoBusqueda() {
@@ -331,7 +376,7 @@ public class PlayaManagedBean implements Serializable {
     }
 
     public void setPlayaResultadoBusqueda(List<Playa> playaResultadoBusqueda) {
-	this.playaResultadoBusqueda = playaResultadoBusqueda;
+	PlayaManagedBean.playaResultadoBusqueda = playaResultadoBusqueda;
     }
 
     public String getCuit() {
@@ -486,13 +531,21 @@ public class PlayaManagedBean implements Serializable {
 	this.playa = playa;
     }
 
-//    public String getTelefono() {
-//        return telefono;
-//    }
-//
-//    public void setTelefono(String telefono) {
-//        this.telefono = telefono;
-//    }
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmailPlaya() {
+        return emailPlaya;
+    }
+
+    public void setEmailPlaya(String emailPlaya) {
+        this.emailPlaya = emailPlaya;
+    }
 
     public List<Playa> getFilteredPlayas() {
 	return filteredPlayas;
@@ -525,6 +578,7 @@ public class PlayaManagedBean implements Serializable {
     public SelectItem[] getBarriosOptions() {
 	List<Barrio> barrios = new ArrayList<Barrio>();
 	barrios.addAll(getBarrioService().findAll());
+	barriosOptions = new SelectItem[barrios.size() + 1];
 	SelectItem[] options = new SelectItem[barrios.size() + 1];
 	options[0] = new SelectItem("", "Todos");
 
@@ -541,6 +595,7 @@ public class PlayaManagedBean implements Serializable {
     public SelectItem[] getEstadosOptions() {
 	List<EstadoPlaya> estados = new ArrayList<EstadoPlaya>();
 	estados.addAll(getEstadoPlayaService().findAll());
+	estadosOptions = new SelectItem[estados.size() + 1];
 	SelectItem[] options = new SelectItem[estados.size() + 1];
 	options[0] = new SelectItem("", "Todos");
 
@@ -563,7 +618,7 @@ public class PlayaManagedBean implements Serializable {
     }
 
     public void setPlayaSelected(Playa playaSelected) {
-	this.playaSelected = playaSelected;
+	PlayaManagedBean.playaSelected = playaSelected;
     }
 
     public MapModel getAdvancedModel() {
@@ -576,26 +631,5 @@ public class PlayaManagedBean implements Serializable {
 
     public Marker getMarker() {
 	return marker;
-    }
-
-    public String updatePlayaAuditoria() {
-	try {
-	    getPlayaService().update(playaSelected);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
-		    playaSelected.getNombreComercial()+ " se modificó correctamente", "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return LISTA_PLAYAS_PENDIENTES;
-	} catch (DataAccessException e) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, "+ playaSelected.getNombreComercial() +" no se pudo modificar"
-		    , "Por favos, intentelo mas tarde.");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    e.printStackTrace();
-	}
-	return ERROR;
-    }
-    public String modificarPlayaAdmin(Playa playon){
-	playaSelected= playon;
-	return "playapendienteedit";
     }
 }
