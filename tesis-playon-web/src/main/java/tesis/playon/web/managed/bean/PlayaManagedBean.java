@@ -7,6 +7,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.event.map.OverlaySelectEvent;
@@ -34,7 +35,7 @@ import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
  * 
  */
 @ManagedBean(name = "playaMB")
-@RequestScoped
+@SessionScoped
 public class PlayaManagedBean implements Serializable {
 
     private static final long serialVersionUID = -1085389423375986168L;
@@ -48,8 +49,8 @@ public class PlayaManagedBean implements Serializable {
     private static final String ERROR = "error";
 
     private MapModel simpleModel;
-    private MapModel advancedModel;
-    private static  Marker marker;
+    private final MapModel advancedModel = new DefaultMapModel();
+    private  Marker marker;
 
     @ManagedProperty(value = "#{PlayaService}")
     IPlayaService playaService;
@@ -194,9 +195,7 @@ public class PlayaManagedBean implements Serializable {
 
 	try {
 	   	    
-	    advancedModel = new DefaultMapModel();
 	    latLonUtil = new LatitudlongitudUtil();
-
 	    // GeoposicionDePlaya
 	    respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda() + ", Cordoba, Argentina");
 	    coordenadas = respuesta.toString();
@@ -206,19 +205,12 @@ public class PlayaManagedBean implements Serializable {
 		Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
 		if (comparacion < getDistancia()) {
 		    playaResultadoBusqueda.add(playaAux);
-
-		    // Shared coordinates
 		    LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
-		    // Basic marker
-		    
-		    marker=new Marker(coord1, playaAux.toString2(), null,"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png");
-		    advancedModel.addOverlay(marker);
-		    
+		    advancedModel.addOverlay(new Marker(coord1, playaAux.toString2(), null,"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
 		}
 		LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
-		marker= new Marker (coordenada, "¡Usted está aquí!", null,"http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg");
-		advancedModel.addOverlay(marker);
-	    }
+		advancedModel.addOverlay(new Marker (coordenada, "¡Usted está aquí!", null,"http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
+		}
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
@@ -566,7 +558,6 @@ public class PlayaManagedBean implements Serializable {
     }
 
     public void onMarkerSelect(OverlaySelectEvent event) {
-//	marker=new Marker("", ", null,"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png");
 	marker = (Marker) event.getOverlay();
     }
 

@@ -7,7 +7,7 @@
 
 	<ui:define name="content" class="admin-font">
 		<h1>¡Buscá tu playa!</h1>
-		<h:form prependId="false">
+		<h:form>
 			<table>
 				<tr>
 					<td><h:outputLabel for="direccionBusqueda"
@@ -22,7 +22,7 @@
 					<td><h:outputLabel for="distancia"
 							value="Ingrese la cantidad de cuadras: " />
 						<p /></td>
-					<td><h:panelGrid columns="1" style="margin-bottom:10px">
+						<td><h:panelGrid columns="1" style="margin-bottom:10px">
 							<p:inputText id="distancia" value="#{playaMB.distancia}" />
 							<p:slider for="distancia" minValue="1" maxValue="50" />
 						</h:panelGrid></td>
@@ -36,7 +36,7 @@
 			<p></p>
 
 			<p:dataTable id="playas" var="playa" editable="true" paginator="true"
-				paginatorPosition="top" rows="5" emptyMessage="No existen playas!"
+				paginatorPosition="bottom" rows="5" emptyMessage="No existen playas!"
 				value="#{playaMB.playaResultadoBusqueda}">
 
 				<f:facet name="header">
@@ -76,7 +76,7 @@
 			<p></p>
 			<h:body>
 				<f:view contentType="text/html">
-					<h1>Playas encontradas: </h1>
+					<h1>Playas encontradas:</h1>
 					<script src="http://maps.google.com/maps/api/js?sensor=false"
 						type="text/javascript"></script>
 
@@ -87,11 +87,11 @@
 
 						<p:gmapInfoWindow>
 							<p:outputPanel
-								style="text-align:center;margin:auto:">
-								<p:graphicImage
-									value="http://montehermoso.porinternet.com.ar/complejo/moriscos/cochera1.jpg"
-									height="150" />
-								<h:outputText value="#{playaMB.coordenadas}" />
+								style="text-align:center;display:block;margin:auto:">
+								<!-- 								<p:graphicImage -->
+								<!-- 									value="http://montehermoso.porinternet.com.ar/complejo/moriscos/cochera1.jpg" -->
+								<!-- 									height="150" /> -->
+								<h:outputText value="#{playaMB.marker.title}" />
 
 							</p:outputPanel>
 

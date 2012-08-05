@@ -219,7 +219,7 @@ public class Playa implements Serializable {
     
     public String toString2 () {
 	
-	return  "Nombre: \t " + nombreComercial + "\n Domicilio: " + domicilio + "\n Lugares disponibles: " + disponibilidad ;  
+	return  "\nNombre: " + nombreComercial + "\nDomicilio: " + domicilio + "\nLugares disponibles: " + disponibilidad ;  
 	
     }
 
