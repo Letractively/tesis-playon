@@ -13,13 +13,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 import org.springframework.dao.DataAccessException;
 
 import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.CuentaCliente;
+import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IClienteService;
@@ -87,7 +87,7 @@ public class ClienteManagedBean implements Serializable {
 
     private static Cliente clienteSelected;
 
-    public String addCliente() {
+    public String addClienteAdmin() {
 	try {
 	    Cliente cliente = new Cliente();
 	    Usuario usuario = addUsuario();
@@ -146,13 +146,13 @@ public class ClienteManagedBean implements Serializable {
 
     public String deleteClienteAdmin(Cliente clienteSelected) {
 	try {
-	    Usuario usuario = clienteSelected.getUsuario();
-	    getUsuarioService().delete(usuario);
 	    CuentaCliente cuenta = clienteSelected.getCuentaCliente();
 	    getCuentaClienteService().delete(cuenta);
+	    Usuario usuario = clienteSelected.getUsuario();
 	    getClienteService().delete(clienteSelected);
+	    getUsuarioService().delete(usuario);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
-		    "Se borro el cliente: " + clienteSelected.getUsuario().getApellido() + " "
+		    "Se borró el cliente: " + clienteSelected.getUsuario().getApellido() + " "
 	    + clienteSelected.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_CLIENTES;
@@ -164,9 +164,33 @@ public class ClienteManagedBean implements Serializable {
 	}
 	return ERROR;
     }
+    
+    public String updateClienteAdmin(Cliente cliente){
+	clienteSelected= cliente;
+	return "clienteeditadmin";
+    }
+    
+    public String updateClienteAdmin(){
+	try {
+	    Usuario usuario = clienteSelected.getUsuario();
+	    getUsuarioService().update(usuario);
+	    getClienteService().update(clienteSelected);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+		    "La cliente se modificó correctamente", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_CLIENTES;
+	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error,el cliente no se pudo modificar"
+		    , "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
+	}
+	return ERROR;
+    }
 
-    public void updateUsuario(Usuario usuario) {
-	getUsuarioService().update(usuario);
+    public void updateCliente(Cliente cliente) {
+	getClienteService().update(cliente);
     }
 
     public void reset() {
@@ -182,6 +206,7 @@ public class ClienteManagedBean implements Serializable {
 	this.setNroDoc(0);
 	this.setPassword("");
 	this.setNombreUser("");
+	clienteSelected=null;
     }
 
     public IUsuarioService getUsuarioService() {
@@ -361,7 +386,6 @@ public class ClienteManagedBean implements Serializable {
     public void setClienteSelected(Cliente clienteSelected) {
 	this.clienteSelected = clienteSelected;
     }
-    
     public String modificarClienteAdmin(Cliente cliente){
 	clienteSelected= cliente;
 	return "clienteeditadmin";

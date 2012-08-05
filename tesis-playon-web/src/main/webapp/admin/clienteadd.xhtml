@@ -7,78 +7,100 @@
 
 	<ui:param name="panelTitle" value="Nuevo Cliente" />
 
-	<ui:define name="panelContent">
+	<ui:define name="panelContent" class="admin-font">
 		<h:form>
-			<h:outputLabel styleClass="admin-subtitle" for="usuario"
-				value="Datos de Usuario: " />
+			<p:growl id="messages" />
+
 			<table>
 				<tr>
-					<td />
+					<td><h:outputLabel styleClass="admin-subtitle" for="usuario"
+							value="Datos de Usuario: " /></td>
+				</tr>
+				<tr>
+					<td><br/></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="nombreUser" value="Nombre usuario: " /></td>
-					<td><p:inputText id="nombreUser" value="#{clienteMB.nombreUser}">
+					<td><p:inputText id="nombreUser"
+							value="#{clienteMB.nombreUser}" required="true"
+							requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="nombreUserMsg" />
 						</p:inputText></td>
+					<td><p:message id="nombreUserMsg" for="nombreUser"
+							display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="password" value="Contraseña: " /></td>
 					<td><p:password id="password" value="#{clienteMB.password}"
-							match="passwordRepeat" required="true">
+							match="passwordRepeat" required="true"
+							requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="passwordMsg" />
 						</p:password></td>
+					<td></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="passwordRepeat"
 							value="Repita Contraseña: " /></td>
 					<td><p:password id="passwordRepeat"
-							value="#{clienteMB.password}" required="true">
+							value="#{clienteMB.password}" required="true"
+							requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="passwordMsg" />
 						</p:password></td>
+					<td><p:message id="passwordMsg" for="password" display="icon" /></td>
 				</tr>
-			</table>
-			<div>
-				<p:message id="nombreUserMsg" for="nombreUser" display="icon" />
-				<p:message id="passwordMsg" for="password" display="icon" />
-			</div>
-			<p></p>
-			<h:outputLabel styleClass="admin-subtitle" for="cliente"
-				value="Datos de Cliente: " />
-			<table>
 				<tr>
-					<td />
+					<td><br/></td>
+				</tr>
+				<tr>
+					<td><br/></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel styleClass="admin-subtitle" for="cliente"
+							value="Datos de Cliente: " /></td>
+				</tr>
+				<tr>
+					<td><br/></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="nombre" value="Nombre: " /></td>
-					<td><p:inputText id="nombre" value="#{clienteMB.nombre}">
-							<f:validateLength minimum="5" />
+					<td><p:inputText id="nombre" value="#{clienteMB.nombre}"
+							required="true" requiredMessage="Campo obligatorio" type="text">
+							<f:validateLength minimum="3" />
 							<p:ajax event="blur" update="nombreMsg" />
 						</p:inputText></td>
+					<td><p:message id="nombreMsg" for="nombre" display="icon"
+							type="text" /></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="apellido" value="Apellido: " /></td>
-					<td><p:inputText id="apellido" value="#{clienteMB.apellido}">
-							<f:validateLength minimum="5" />
+					<td><p:inputText id="apellido" value="#{clienteMB.apellido}"
+							required="true" requiredMessage="Campo obligatorio" type="text">
+							<f:validateLength minimum="3" />
 							<p:ajax event="blur" update="apellidoMsg" />
 						</p:inputText></td>
+					<td><p:message id="apellidoMsg" for="apellido" display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputText for="tipoDoc" value="Tipo Documento: " /></td>
-					<td><p:selectOneMenu value="#{clienteMB.tipoDoc}" effect="fade">
+					<td><p:selectOneMenu value="#{clienteMB.tipoDoc}"
+							effect="fade">
 							<f:selectItems value="#{tipoDocMB.tipoDocList}" var="tipoDoc"
 								itemValue="#{tipoDoc}" itemLabel="#{tipoDoc.nombre}" />
 							<f:converter converterId="tipoDocConverter" />
 						</p:selectOneMenu></td>
+					<td></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="nroDoc" value="Nro. Documento: " /></td>
-					<td><p:inputText id="nroDoc" value="#{clienteMB.nroDoc}">
+					<td><p:inputText id="nroDoc" value="#{clienteMB.nroDoc}"
+							required="true" requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="7" />
 							<p:ajax event="blur" update="nroDocMsg" />
 						</p:inputText></td>
+					<td><p:message id="nroDocMsg" for="nroDoc" display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputText for="barrio" value="Barrio: " /></td>
@@ -91,16 +113,20 @@
 				<tr>
 					<td><h:outputLabel for="domicilio" value="Domicilio: " /></td>
 					<td><p:inputText id="domicilio" value="#{clienteMB.domicilio}">
-							<f:validateLength minimum="5" />
+							<f:validateLength minimum="4" />
 							<p:ajax event="blur" update="domicilioMsg" />
 						</p:inputText></td>
+					<td><p:message id="domicilioMsg" for="domicilio"
+							display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="email" value="E-mail: " /></td>
-					<td><p:inputText id="email" value="#{clienteMB.email}">
+					<td><p:inputText id="email" value="#{clienteMB.email}"
+							required="true" requiredMessage="Campo obligatorio" type="email">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="emailMsg" />
 						</p:inputText></td>
+					<td><p:message id="emailMsg" for="email" display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="telefono" value="Telefono: " /></td>
@@ -108,23 +134,17 @@
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="telefonoMsg" />
 						</p:inputText></td>
+					<td><p:message id="telefonoMsg" for="telefono" display="icon" /></td>
 				</tr>
-				<tr>
-					<p:message id="nombreMsg" for="nombre" display="icon" />
-					<p:message id="apellidoMsg" for="apellido" display="icon" />
-					<p:message id="nroDocMsg" for="nroDoc" display="icon" />
-					<p:message id="emailMsg" for="email" display="icon" />
-					<p:message id="domicilioMsg" for="domicilio" display="icon" />
-					<p:message id="telefonoMsg" for="telefono" display="icon" />
-				</tr>
-				<tr>
+				<tr style="text-align: right;">
+					<td></td>
 					<td><p:commandButton id="addCliente" value="Agregar"
-							action="#{clienteMB.addCliente}" ajax="false" /></td>
-					<td><p:commandButton id="reset" value="Limpiar"
-							action="#{clienteMB.reset}" ajax="false" /></td>
+							action="#{clienteMB.addCliente}" ajax="false" />
+						<p:commandButton id="reset" value="Limpiar"
+							action="#{clienteMB.reset}"	ajax="false" /></td>
+					<td></td>
 				</tr>
 			</table>
-
 		</h:form>
 	</ui:define>
 </ui:composition>

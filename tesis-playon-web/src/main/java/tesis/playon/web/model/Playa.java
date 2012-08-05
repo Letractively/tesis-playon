@@ -26,7 +26,8 @@ import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
  * @author Alejandro
  * @date 08/07/2012
  */
-@NamedNativeQueries({ @NamedNativeQuery(name = "callPlayasStoreProcedure", query = "CALL busquedaplaya(:platitud,:plongitud, :pdistancia)", resultClass = Playa.class) })
+@NamedNativeQueries({ @NamedNativeQuery(name = "callPlayasStoreProcedure",
+	query = "CALL busquedaplaya(:platitud,:plongitud, :pdistancia)", resultClass = Playa.class) })
 @Entity
 @Table(name = "playa", catalog = "tesis_playon")
 public class Playa implements Serializable {
@@ -59,6 +60,9 @@ public class Playa implements Serializable {
     @Column(name = "razonSocial", nullable = true)
     private String razonSocial;
 
+    //@Column(name = "telefono")
+//    private String telefono;
+
     @ManyToOne
     @JoinColumn(name = "barrioID", nullable = true)
     private Barrio barrio;
@@ -71,14 +75,13 @@ public class Playa implements Serializable {
     @JoinColumn(name = "estadiaID")
     private Estadia estadia;
 
-
     public Playa() {
 	super();
 
     }
 
-    public Playa(String cuit, Integer disponibilidad, String domicilio, String nombreComercial, String razonSocial,
-	    Barrio barrio, EstadoPlaya estado, Estadia estadia) {
+    public Playa(String cuit, Integer disponibilidad, String domicilio, String nombreComercial,
+	    String razonSocial, Barrio barrio, EstadoPlaya estado, Estadia estadia/*, String telefono*/) {
 	this.cuit = cuit;
 	this.disponibilidad = disponibilidad;
 	this.domicilio = domicilio;
@@ -87,7 +90,7 @@ public class Playa implements Serializable {
 	this.barrio = barrio;
 	this.estado = estado;
 	this.estadia = estadia;
-
+//	this.telefono = telefono;
     }
 
     public Playa(String nombreComercial, EstadoPlaya estado) {
@@ -137,8 +140,8 @@ public class Playa implements Serializable {
 
     public void setDomicilio(String domicilio) {
 	this.domicilio = domicilio;
-	 LatitudlongitudUtil latLonUtil;
-	 GeoposicionDePlaya respuesta;
+	LatitudlongitudUtil latLonUtil;
+	GeoposicionDePlaya respuesta;
 
 	latLonUtil = new LatitudlongitudUtil();
 	try {
@@ -187,6 +190,14 @@ public class Playa implements Serializable {
 	return estadia;
     }
 
+//    public String getTelefono() {
+//	return telefono;
+//    }
+//
+//    public void setTelefono(String telefono) {
+//	this.telefono = telefono;
+//    }
+
     public void setEstadia(Estadia estadia) {
 	this.estadia = estadia;
     }
@@ -213,14 +224,15 @@ public class Playa implements Serializable {
 
     @Override
     public String toString() {
-	return "Playa:\t [playaID=" + id + ", cuit=" + cuit + ", nombreComercial=" + nombreComercial + ", razonSocial="
-		+ razonSocial + ", domicilio=" + domicilio + "]";
+	return "Playa:\t [playaID=" + id + ", cuit=" + cuit + ", nombreComercial=" + nombreComercial
+		+ ", razonSocial=" + razonSocial + ", domicilio=" + domicilio + "]";
     }
-    
-    public String toString2 () {
-	
-	return  "\nNombre: " + nombreComercial + "\nDomicilio: " + domicilio + "\nLugares disponibles: " + disponibilidad ;  
-	
+
+    public String toString2() {
+
+	return "\nNombre: " + nombreComercial + "\nDomicilio: " + domicilio + "\nLugares disponibles: "
+		+ disponibilidad;
+
     }
 
     public void setId(int id) {

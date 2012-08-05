@@ -89,6 +89,8 @@ public class PlayaManagedBean implements Serializable {
     private String razonSocial;
 
     private Barrio barrio;
+    
+//    private String telefono;
 
     private SelectItem[] barriosOptions;
 
@@ -483,6 +485,14 @@ public class PlayaManagedBean implements Serializable {
     public void setPlaya(Playa playa) {
 	this.playa = playa;
     }
+
+//    public String getTelefono() {
+//        return telefono;
+//    }
+//
+//    public void setTelefono(String telefono) {
+//        this.telefono = telefono;
+//    }
 
     public List<Playa> getFilteredPlayas() {
 	return filteredPlayas;

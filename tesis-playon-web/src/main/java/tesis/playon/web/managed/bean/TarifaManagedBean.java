@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 import org.springframework.dao.DataAccessException;
 
@@ -22,25 +24,25 @@ import tesis.playon.web.service.ITarifaService;
 
 /**
  * @author Pablo
- *
+ * 
  */
 @ManagedBean(name = "tarifaMB")
 @RequestScoped
-public class TarifaManagedBean implements Serializable{
+public class TarifaManagedBean implements Serializable {
 
     private static final long serialVersionUID = -1085389423375986168L;
-    
+
     private static final String LISTA_TARIFAS = "tarifalist";
 
     private static final String ERROR = "error";
-    
+
     @ManagedProperty(value = "#{TarifaService}")
     ITarifaService tarifaService;
 
     List<Tarifa> tarifaList;
 
     private Integer id;
-    
+
     private Float importe;
 
     private Boolean vigente;
@@ -55,26 +57,75 @@ public class TarifaManagedBean implements Serializable{
 
     private CategoriaVehiculo categoriaVehiculo;
 
-    public String addTarifa() {
+    private static Tarifa tarifaSelected;
+
+    public String addTarifaAdmin() {
 	try {
 	    Tarifa tarifa = new Tarifa();
-	    tarifa.setFechaAlta(getFechaAlta());
-	    tarifa.setFechaBaja(getFechaBaja());
 	    tarifa.setImporte(getImporte());
-	    tarifa.setVigente(getVigente());
+	    tarifa.setVigente(true);
 	    tarifa.setPlaya(getPlaya());
 	    tarifa.setTipoEstadia(getTipoEstadia());
 	    tarifa.setCategoriaVehiculo(getCategoriaVehiculo());
 	    getTarifaService().save(tarifa);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+		    "Se agregó la tarifa correctamente", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_TARIFAS;
 	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(
+		    FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo agregar la tarifa" + 
+		    tarifaSelected.getPlaya().getNombreComercial(),
+		    "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
+	}
+	return ERROR;
+    }
+
+    public String deleteTarifaAdmin(Tarifa tarifa) {
+	try {
+	    getTarifaService().delete(tarifa);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se borró la tarifa de la playa: "
+		    + tarifaSelected.getPlaya().getNombreComercial(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_TARIFAS;
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(
+		    FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo borrar la tarifa de la playa: " + 
+		    tarifaSelected.getPlaya().getNombreComercial(),
+		    "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	return ERROR;
     }
 
     public void deleteTarifa(Tarifa tarifa) {
 	getTarifaService().delete(tarifa);
+    }
+
+    public String updateTarifaAdmin(Tarifa tarifa) {
+	tarifaSelected = tarifa;
+	return "tarifaeditadmin";
+    }
+    
+    public String updateTarifaAdmin(){
+	try {
+	    getTarifaService().update(tarifaSelected);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+		    "La tarifa se modificó correctamente", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_TARIFAS;
+	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error,la tarifa no se pudo modificar"
+		    , "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
+	}
+	return ERROR;
     }
 
     public void updateTarifa(Tarifa tarifa) {
@@ -85,84 +136,88 @@ public class TarifaManagedBean implements Serializable{
 	this.setFechaBaja(null);
 	this.setImporte(0.f);
 	this.setVigente(false);
-	
+
     }
 
     public ITarifaService getTarifaService() {
-        return tarifaService;
+	return tarifaService;
     }
 
     public void setTarifaService(ITarifaService tarifaService) {
-        this.tarifaService = tarifaService;
+	this.tarifaService = tarifaService;
     }
 
     public List<Tarifa> getTarifaList() {
 	tarifaList = new ArrayList<Tarifa>();
-        tarifaList.addAll(getTarifaService().findAll());
-        return tarifaList;
+	tarifaList.addAll(getTarifaService().findAll());
+	return tarifaList;
     }
 
     public void setTarifaList(List<Tarifa> tarifaList) {
-        this.tarifaList = tarifaList;
+	this.tarifaList = tarifaList;
     }
 
     public Float getImporte() {
-        return importe;
+	return importe;
     }
 
     public void setImporte(Float importe) {
-        this.importe = importe;
+	this.importe = importe;
     }
 
     public Boolean getVigente() {
-        return vigente;
+	return vigente;
     }
 
     public void setVigente(Boolean vigente) {
-        this.vigente = vigente;
+	this.vigente = vigente;
     }
 
     public Date getFechaAlta() {
-        return fechaAlta;
+	return fechaAlta;
     }
 
     public void setFechaAlta(Date fechaAlta) {
-        this.fechaAlta = fechaAlta;
+	this.fechaAlta = fechaAlta;
     }
 
     public Date getFechaBaja() {
-        return fechaBaja;
+	return fechaBaja;
     }
 
     public void setFechaBaja(Date fechaBaja) {
-        this.fechaBaja = fechaBaja;
+	this.fechaBaja = fechaBaja;
     }
 
     public Playa getPlaya() {
-        return playa;
+	return playa;
     }
 
     public void setPlaya(Playa playa) {
-        this.playa = playa;
+	this.playa = playa;
     }
 
     public TipoEstadia getTipoEstadia() {
-        return tipoEstadia;
+	return tipoEstadia;
     }
 
     public void setTipoEstadia(TipoEstadia tipoEstadia) {
-        this.tipoEstadia = tipoEstadia;
+	this.tipoEstadia = tipoEstadia;
     }
 
     public CategoriaVehiculo getCategoriaVehiculo() {
-        return categoriaVehiculo;
+	return categoriaVehiculo;
     }
 
     public void setCategoriaVehiculo(CategoriaVehiculo categoriaVehiculo) {
-        this.categoriaVehiculo = categoriaVehiculo;
+	this.categoriaVehiculo = categoriaVehiculo;
     }
 
     public Integer getId() {
-        return id;
+	return id;
+    }
+
+    public static Tarifa getTarifaSelected() {
+	return tarifaSelected;
     }
 }

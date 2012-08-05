@@ -7,11 +7,15 @@
 
 	<ui:param name="panelTitle" value="Listado de Tarifas" />
 
-	<ui:define name="panelContent">
+	<ui:define name="panelContent" class="admin-font">
 		<h:form>
-			<p:dataTable id="tarifas" var="tarifa" editable="true"
+		
+			<p:growl id="messages" />
+		
+			<p:dataTable id="tarifas" var="tarifa" style="width: 90%"
 				paginator="true" rows="5" paginatorPosition="bottom"
-				value="#{tarifaMB.tarifaList}">
+				value="#{tarifaMB.tarifaList}"
+				emptyMessage="No existen clientes" paginatorPosition="bottom">
 
 				<f:facet name="header">
 				Tarifas
@@ -63,6 +67,18 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
+				
+				<p:column headerText="Playa" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{tarifa.playa.telefono}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{tarifa.playa.telefono}"
+								styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 
 				<p:column headerText="Fecha Alta" styleClass="column-font">
 					<p:cellEditor>
@@ -86,28 +102,31 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
+				
 				<p:column>
-					<p:commandButton id="editar" value="" icon="ui-icon-pencil"
-						action="/admin/playapendienteedit.html?faces-redirect=true"
-						ajax="false" style="height:20px; width:34px;" />
-					<p:tooltip for="editar" value="Editar Cliente" />
+					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
+						action="#{tarifaMB.updateTarifaAdmin(tarifa)}"
+						style="height:20px; width:22px;">
+					</h:commandButton>
+					<p:tooltip for="editar" value="Editar Tarifa" />
 				</p:column>
 
 				<p:column>
-					<p:commandButton id="delete" value="" icon="ui-icon-circle-close"
-						action="#{tarifaMB.deleteTarifa(tarifa)}"
-						style="height:20px; width:34px;" />
-					<p:tooltip for="delete" value="Dar de baja cliente" />
+					<h:commandButton id="delete" class="ui-icon ui-icon-trash"
+						style="height:20px; width:22px;"
+						action="#{tarifaMB.deleteTarifaAdmin(cliente)}"
+						onclick="if(!confirm('¿Está seguro que desea eliminar la tarifa?')) return false;">
+					</h:commandButton>
+					<p:tooltip for="delete" value="Dar de baja Tarifa" />
 				</p:column>
-
 			</p:dataTable>
 
-			<tr>
-				<td><p:commandButton id="addTarifaNueva" value="Agregar"
-						action="/tarifaadd.jsf?faces-redirect=true" ajax="false" /></td>
-			</tr>
-
+			<p>
+				<h:panelGroup layout="block" style="text-align: right; width: 90%;">
+					<p:commandButton id="addTarifaNueva" value="Agregar"
+						action="/tarifaadd.jsf?faces-redirect=true" ajax="false" />
+				</h:panelGroup>
+			</p>
 		</h:form>
 	</ui:define>
 </ui:composition>
