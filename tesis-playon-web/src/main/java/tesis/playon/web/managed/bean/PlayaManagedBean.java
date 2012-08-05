@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.event.map.OverlaySelectEvent;
@@ -209,7 +211,7 @@ public class PlayaManagedBean implements Serializable {
 			    "http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
 		}
 		LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
-		advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
+		advancedModel.addOverlay(new Marker(coordenada, "ï¿½Usted estï¿½ aquï¿½!", null,
 			"http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
 	    }
 	} catch (Exception e) {
@@ -568,12 +570,22 @@ public class PlayaManagedBean implements Serializable {
 
     public String updatePlayaAuditoria() {
 	try {
-
 	    getPlayaService().update(playaSelected);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+		    playaSelected.getNombreComercial()+ " se modificÃ³ correctamente", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_PLAYAS_PENDIENTES;
 	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, "+ playaSelected.getNombreComercial() +" no se pudo modificar"
+		    , "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
 	return ERROR;
+    }
+    public String modificarPlayaAdmin(Playa playon){
+	playaSelected= playon;
+	return "playapendienteedit";
     }
 }

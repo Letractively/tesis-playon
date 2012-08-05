@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 import org.springframework.dao.DataAccessException;
 
@@ -67,13 +70,13 @@ public class ClienteManagedBean implements Serializable {
     private String domicilio;
 
     private String telefono;
-    
+
     private Integer nroCuenta;
-    
+
     private float saldo;
-    
+
     private Date fechaCreacion;
-    
+
     private Cliente cliente;
 
     private Barrio barrio;
@@ -81,7 +84,7 @@ public class ClienteManagedBean implements Serializable {
     private CuentaCliente cuentaCliente;
 
     private Usuario usuario;
-    
+
     private static Cliente clienteSelected;
 
     public String addCliente() {
@@ -96,7 +99,7 @@ public class ClienteManagedBean implements Serializable {
 	    cliente.setTelefono(getTelefono());
 	    cliente.setUsuario(usuario);
 	    cliente.setNroCliente(cliente.getNroCliente());
-	    
+
 	    getClienteService().save(cliente);
 	    cliente = getClienteService().findByNumeroCliente(cliente.getNroCliente());
 	    cuenta.setCliente(cliente);
@@ -141,8 +144,25 @@ public class ClienteManagedBean implements Serializable {
 	return null;
     }
 
-    public void deleteUsuario(Usuario usuario) {
-	getUsuarioService().delete(usuario);
+    public String deleteClienteAdmin(Cliente clienteSelected) {
+	try {
+	    Usuario usuario = clienteSelected.getUsuario();
+	    getUsuarioService().delete(usuario);
+	    CuentaCliente cuenta = clienteSelected.getCuentaCliente();
+	    getCuentaClienteService().delete(cuenta);
+	    getClienteService().delete(clienteSelected);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+		    "Se borro el cliente: " + clienteSelected.getUsuario().getApellido() + " "
+	    + clienteSelected.getUsuario().getNombre(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_CLIENTES;
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo borrar el cliente: " + clienteSelected.getUsuario().getApellido() + " "
+			    + clienteSelected.getUsuario().getNombre(), "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	return ERROR;
     }
 
     public void updateUsuario(Usuario usuario) {
@@ -255,90 +275,95 @@ public class ClienteManagedBean implements Serializable {
     }
 
     public Integer getNroCliente() {
-        return nroCliente;
+	return nroCliente;
     }
 
     public void setNroCliente(Integer nroCliente) {
-        this.nroCliente = nroCliente;
+	this.nroCliente = nroCliente;
     }
 
     public String getDomicilio() {
-        return domicilio;
+	return domicilio;
     }
 
     public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
+	this.domicilio = domicilio;
     }
 
     public String getTelefono() {
-        return telefono;
+	return telefono;
     }
 
     public void setTelefono(String telefono) {
-        this.telefono = telefono;
+	this.telefono = telefono;
     }
 
     public Barrio getBarrio() {
-        return barrio;
+	return barrio;
     }
 
     public void setBarrio(Barrio barrio) {
-        this.barrio = barrio;
+	this.barrio = barrio;
     }
 
     public CuentaCliente getCuentaCliente() {
-        return cuentaCliente;
+	return cuentaCliente;
     }
 
     public void setCuentaCliente(CuentaCliente cuentaCliente) {
-        this.cuentaCliente = cuentaCliente;
+	this.cuentaCliente = cuentaCliente;
     }
 
     public Usuario getUsuario() {
-        return usuario;
+	return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+	this.usuario = usuario;
     }
 
     public Integer getNroCuenta() {
-        return nroCuenta;
+	return nroCuenta;
     }
 
     public void setNroCuenta(Integer nroCuenta) {
-        this.nroCuenta = nroCuenta;
+	this.nroCuenta = nroCuenta;
     }
 
     public float getSaldo() {
-        return saldo;
+	return saldo;
     }
 
     public void setSaldo(float saldo) {
-        this.saldo = saldo;
+	this.saldo = saldo;
     }
 
     public Date getFechaCreacion() {
-        return fechaCreacion;
+	return fechaCreacion;
     }
 
     public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+	this.fechaCreacion = fechaCreacion;
     }
 
     public Cliente getCliente() {
-        return cliente;
+	return cliente;
     }
 
     public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+	this.cliente = cliente;
     }
 
     public Cliente getClienteSelected() {
-        return clienteSelected;
+	return clienteSelected;
     }
 
     public void setClienteSelected(Cliente clienteSelected) {
-        this.clienteSelected = clienteSelected;
+	this.clienteSelected = clienteSelected;
+    }
+    
+    public String modificarClienteAdmin(Cliente cliente){
+	clienteSelected= cliente;
+	return "clienteeditadmin";
     }
 }

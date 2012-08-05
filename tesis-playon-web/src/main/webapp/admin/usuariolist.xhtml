@@ -107,8 +107,10 @@
 				</p:column>
 
 				<p:column>
-					<h:commandButton value="Borrar"
-						action="#{usuarioMB.deleteUsuario(usuario)}" />
+					<h:commandButton class="ui-icon ui-icon-trash"
+						action="#{usuarioMB.deleteUsuario(usuario)}"
+						style="height:20px; width:22px;">
+					</h:commandButton>
 				</p:column>
 
 			</p:dataTable>

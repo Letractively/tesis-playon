@@ -11,13 +11,13 @@
 	<ui:define name="panelContent" class="admin-font">
 		<h:form id="form">
 
+			<p:growl id="messages" />
+
 			<p:dataTable id="playas" var="playa"
-				value="#{playaMB.playaspendientesList}"
-				paginatorPosition="bottom" paginator="true" rows="8"
+				value="#{playaMB.playaspendientesList}" paginatorPosition="bottom"
+				paginator="true" rows="8"
 				emptyMessage="No existen playas para auditar"
-				filteredValue="#{playaMB.filteredPlayas}" widgetVar="playasTable"
-				selection="#{playaMB.playaSelected}"
-				rowKey="#{playa.nombreComercial}" selectionMode="single">
+				filteredValue="#{playaMB.filteredPlayas}" widgetVar="playasTable">
 
 				<f:facet name="header">
 				Listado de playas pendientes de auditoría
@@ -119,20 +119,20 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-				
+
 				<p:column>
-					<p:commandButton id="editar" value=""
-							icon="ui-icon-pencil"
-							action="/admin/playapendienteedit.html?faces-redirect=true"
-							ajax="false" style="height:20px; width:34px;"/>
-					<p:tooltip for="editar" value="Editar Playa"/>
+					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
+						action="#{playaMB.modificarPlayaAdmin(playa)}"
+						style="height:20px; width:22px;">
+					</h:commandButton>
+					<p:tooltip for="editar" value="Editar Cliente" />
 				</p:column>
 			</p:dataTable>
 
 			<p>
 				<p:commandButton id="addPlayaNueva" value="Quitar Filtro"
 					action="/admin/playaspendienteslist.html?faces-redirect=true"
-					ajax="false" style="text-align:right;" />
+					ajax="false" />
 			</p>
 		</h:form>
 	</ui:define>

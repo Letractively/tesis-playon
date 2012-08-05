@@ -105,14 +105,13 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
-				<p:column headerText="Opciones" styleClass="option-font">
-					<p:rowEditor />
-				</p:column>
-
+				
 				<p:column>
-					<h:commandButton value="Borrar"
-						action="#{playaMB.deletePlaya(playa)}" />
+					<p:commandButton id="editar" value=""
+							icon="ui-icon-pencil"
+							action="/admin/playaedit.html?faces-redirect=true"
+							ajax="false" style="height:20px; width:34px;"/>
+					<p:tooltip for="editar" value="Editar Playa"/>
 				</p:column>
 
 			</p:dataTable>

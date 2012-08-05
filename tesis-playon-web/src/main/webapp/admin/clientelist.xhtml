@@ -8,18 +8,19 @@
 	<ui:param name="panelTitle" value="Listado de Clientes" />
 
 	<ui:define name="panelContent" class="admin-font">
-		<h:form>
-			<p:dataTable id="clientes" var="cliente"
+		<h:form id="form">
+
+			<p:growl id="messages" />
+
+			<p:dataTable id="clientes" var="cliente" style="width: 90%"
 				paginator="true" rows="5" value="#{clienteMB.clienteList}"
-				emptyMessage="No existen clientes" paginatorPosition="bottom"
-				selection="#{clienteMB.clienteSelected}"
-				rowKey="#{cliente.nroCliente}" selectionMode="single">
+				emptyMessage="No existen clientes" paginatorPosition="bottom">
 
 				<f:facet name="header">
 				Clientes
             	</f:facet>
-            	
-            	<p:column headerText="Usuario" styleClass="column-font">
+
+				<p:column headerText="Usuario" styleClass="column-font">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{cliente.usuario.nombreUser}" />
@@ -31,13 +32,26 @@
 					</p:cellEditor>
 				</p:column>
 
+				<p:column headerText="Nro. Cliente" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cliente.nroCliente}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{cliente.nroCliente}"
+								styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
 				<p:column headerText="Apellido" styleClass="column-font">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{cliente.usuario.apellido}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{cliente.usuario.apellido}" styleClass="input-font" />
+							<p:inputText value="#{cliente.usuario.apellido}"
+								styleClass="input-font" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -47,7 +61,8 @@
 							<h:outputText value="#{cliente.usuario.nombre}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{cliente.usuario.nombre}" styleClass="input-font" />
+							<p:inputText value="#{cliente.usuario.nombre}"
+								styleClass="input-font" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -73,42 +88,46 @@
 							<h:outputText value="#{cliente.usuario.nroDoc}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{cliente.usuario.nroDoc}" styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-
-				<p:column headerText="Nro. Cliente" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{cliente.nroCliente}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{cliente.nroCliente}" styleClass="input-font" />
+							<p:inputText value="#{cliente.usuario.nroDoc}"
+								styleClass="input-font" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
 
 				<p:column>
-					<p:commandButton id="editar" value=""
-							icon="ui-icon-pencil"
-							action="/admin/clienteedit.html?faces-redirect=true"
-							ajax="false" style="height:20px; width:34px;"/>
-					<p:tooltip for="editar" value="Editar Cliente"/>
+					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
+						action="#{clienteMB.modificarClienteAdmin(cliente)}"
+						style="height:20px; width:22px;">
+					</h:commandButton>
+					<p:tooltip for="editar" value="Editar Cliente" />
 				</p:column>
 
 				<p:column>
-					<p:commandButton id="delete" value=""
-						icon="ui-icon-circle-close"
-						action="#{clienteMB.deleteCliente(cliente)}"
-						style="height:20px; width:34px;" />
-						<p:tooltip for="delete" value="Dar de baja cliente"/>
+					<h:commandButton id="delete" class="ui-icon ui-icon-trash"
+						style="height:20px; width:22px;"
+						action="#{clienteMB.deleteClienteAdmin(cliente)}"
+						onclick="if(!confirm('¿Está seguro que desea eliminar el cliente?')) return false;">
+					</h:commandButton>
+					<p:tooltip for="delete" value="Dar de baja Cliente" />
 				</p:column>
-
 			</p:dataTable>
+
+			<p:confirmDialog id="confirmDialog"
+				message="¿Está seguro que desea eliminar el cliente #{cliente.nroCliente}?"
+				header="Eliminar cliente" severity="alert" widgetVar="confirmDelete">
+				<h:panelGroup layout="block" style="text-align: right">
+					<h:commandButton id="confirm" value="Si, estoy seguro"
+						update="clientes" oncomplete="confirmDelete.hide()" type="button" />
+					<h:commandButton id="decline" value="No"
+						onclick="confirmDelete.hide()" type="button" />
+				</h:panelGroup>
+			</p:confirmDialog>
+
 			<p>
-				<p:commandButton id="addCliente" value="Agregar"
-					action="/admin/clienteadd.html?faces-redirect=true" ajax="false" />
+				<h:panelGroup layout="block" style="text-align: right; width: 90%;">
+					<p:commandButton id="addCliente" value="Agregar"
+						action="/admin/clienteadd.html?faces-redirect=true" ajax="false" />
+				</h:panelGroup>
 			</p>
 		</h:form>
 	</ui:define>
