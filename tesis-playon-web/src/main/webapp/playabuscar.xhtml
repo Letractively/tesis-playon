@@ -85,13 +85,12 @@
 
 						<p:ajax event="overlaySelect" listener="#{playaMB.onMarkerSelect}" />
 
-						<p:gmapInfoWindow>
-							<p:outputPanel
-								style="text-align:center;display:block;margin:auto:">
+						<p:gmapInfoWindow height="10">
+							<p:outputPanel>
 								<!-- 								<p:graphicImage -->
 								<!-- 									value="http://montehermoso.porinternet.com.ar/complejo/moriscos/cochera1.jpg" -->
 								<!-- 									height="150" /> -->
-								<h:outputText value="#{playaMB.marker.title}" />
+								<h:outputText value="#{playaMB.marker.title}" height="4" />
 
 							</p:outputPanel>
 
