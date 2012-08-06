@@ -63,7 +63,7 @@ public class Playa implements Serializable {
     @Column(name = "telefono")
     private String telefono;
     
-    @Column(name = "email")
+    @Column(name = "mail")
     private String email;
 
     @ManyToOne
