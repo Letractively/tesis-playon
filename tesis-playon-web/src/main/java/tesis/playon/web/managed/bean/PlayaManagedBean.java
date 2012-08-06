@@ -131,7 +131,7 @@ public class PlayaManagedBean implements Serializable {
 
     private Playa playa;
 
-    private Double distancia = (double) 25;
+    private Integer distancia = 25;
 
     private GeoposicionDePlaya respuesta;
 
@@ -630,11 +630,11 @@ public class PlayaManagedBean implements Serializable {
 	this.latLonUtil = latLonUtil;
     }
 
-    public Double getDistancia() {
+    public Integer getDistancia() {
 	return distancia;
     }
 
-    public void setDistancia(Double distancia) {
+    public void setDistancia(Integer distancia) {
 	this.distancia = distancia;
     }
 

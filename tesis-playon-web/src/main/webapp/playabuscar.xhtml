@@ -9,7 +9,7 @@
 		<h1>¡Buscá tu playa!</h1>
 		<h:form>
 			<p:growl id="messages" />
-			<table style="margin-left:100px">
+			<table style="margin-left: 100px">
 				<tr>
 					<td><h:outputLabel for="direccionBusqueda"
 							value="Dirección de búsqueda: " /></td>
@@ -26,15 +26,14 @@
 							value="Ingrese la cantidad de cuadras: " />
 						<p /></td>
 					<td><h:panelGrid columns="1" style="margin-bottom:10px">
-							<p:inputText id="distancia" value="#{playaMB.distancia}" 
-							 disabled="true" />
+							<p:inputText id="distancia" value="#{playaMB.distancia}" />
 							<p:slider for="distancia" minValue="1" maxValue="50" />
 						</h:panelGrid></td>
-						<td></td>
+					<td></td>
 				</tr>
 				<tr style="text-align: right;">
-					<td colspan="3"><p:commandButton id="btnBuscarId" value="Buscar"
-							action="#{playaMB.buscarPlaya}" ajax="false"/></td>
+					<td colspan="3"><p:commandButton id="btnBuscarId"
+							value="Buscar" action="#{playaMB.buscarPlaya}" ajax="false" /></td>
 				</tr>
 			</table>
 			<p></p>
