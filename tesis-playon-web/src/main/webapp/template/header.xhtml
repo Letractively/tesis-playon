@@ -12,8 +12,10 @@
 				</h:link></h1>
 			</div>
 			<div id="loginform">
+				<h:outputText value="#{LoginMB.getLoggedUser}" />
 				<ui:include src="loginform.xhtml" />
+				
 			</div>
 		</div>
 		
-</ui:composition>
+</ui:composition>	

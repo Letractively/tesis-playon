@@ -5,7 +5,6 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="loginFormId" prependId="false">
-
 		<h:panelGroup rendered="#{!loginMB.logueado}">
 			<h:link outcome="/login.xhtml">
 				<f:verbatim>Iniciar sesi&#243;n</f:verbatim>
@@ -16,10 +15,9 @@
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{loginMB.logueado}">
-			<td>Bienvenido "#{loginMB.usuario}", con rol #{loginMB.rol} </td>
+			<td>Bienvenido "#{loginMB.usuario}"</td>
 			<td><h:commandLink action="#{loginMB.logout}">Cerrar sesi&#243;n</h:commandLink></td>
 		</h:panelGroup>
-
 	</h:form>
 
 </ui:composition>
