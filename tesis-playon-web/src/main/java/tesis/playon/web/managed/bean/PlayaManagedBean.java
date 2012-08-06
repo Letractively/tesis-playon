@@ -89,9 +89,9 @@ public class PlayaManagedBean implements Serializable {
     private String razonSocial;
 
     private Barrio barrio;
-    
+
     private String telefono;
-    
+
     private String emailPlaya;
 
     @SuppressWarnings("unused")
@@ -146,17 +146,17 @@ public class PlayaManagedBean implements Serializable {
 	    playa.setRazonSocial(getRazonSocial());
 	    playa.setTelefono(getTelefono());
 	    playa.setEmail(getEmailPlaya());
-	    
+
 	    getPlayaService().save(playa);
-	    
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
-		    "Se agregó correctamente : "+ playa.getNombreComercial(), "");
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente : "
+		    + playa.getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    
+
 	    return LISTA_PLAYAS;
 	} catch (DataAccessException e) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo agregar: " + playa.getNombreComercial(), "Por favos, intentelo mas tarde.");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo agregar: "
+		    + playa.getNombreComercial(), "Por favos, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -183,15 +183,15 @@ public class PlayaManagedBean implements Serializable {
 
 	    getPlayaService().save(playa);
 	    setPlaya(playa);
-	    
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
-		    "Se agregó correctamente : "+ playa.getNombreComercial(), "");
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente : "
+		    + playa.getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return SOLICITUD_PLAYA_END;
 	} catch (DataAccessException e) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo agregar: " + playa.getNombreComercial(), "Por favos, intentelo mas tarde.");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo agregar: "
+		    + playa.getNombreComercial(), "Por favos, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -216,33 +216,66 @@ public class PlayaManagedBean implements Serializable {
 	}
 	return null;
     }
-    
-    public void deleteUsuario(Usuario usuario) {
-	getUsuarioService().delete(usuario);
+
+    public String deletePlayaAdmin(Playa playa) {
+	try {
+	    EstadoPlaya estado = getEstadoPlayaService().findByNombreEstadoPlaya("De Baja");
+
+	    playa.setEstado(estado);
+
+	    getPlayaService().update(playa);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se dió de baja la playa: "
+		    + playa.getNombreComercial(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_PLAYAS;
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo dar de baja la playa: " + playa.getNombreComercial(),
+		    "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	return ERROR;
     }
-    
-    public void updatePlaya(Playa playa) {
-	getPlayaService().update(playa);
+
+    public String updatePlayaAdmin(Playa playa) {
+	playaSelected = playa;
+	return "playaeditadmin";
     }
-    
-    public String updatePlayaAuditoria() {
+
+    public String updatePlayaAdmin() {
 	try {
 	    getPlayaService().update(playaSelected);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
-		    playaSelected.getNombreComercial()+ " se modificó correctamente", "");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, playaSelected.getNombreComercial()
+		    + " se modificó correctamente", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return LISTA_PLAYAS_PENDIENTES;
+	    return LISTA_PLAYAS;
 	} catch (DataAccessException e) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, "+ playaSelected.getNombreComercial() +" no se pudo modificar"
-		    , "Por favos, intentelo mas tarde.");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, "
+		    + playaSelected.getNombreComercial() + " no se pudo modificar", "Por favos, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
 	return ERROR;
     }
-    public String modificarPlayaAdmin(Playa playon){
-	playaSelected= playon;
+    
+    public String updatePlayaAuditoria() {
+	try {
+	    getPlayaService().update(playaSelected);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, playaSelected.getNombreComercial()
+		    + " se modificó correctamente", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_PLAYAS_PENDIENTES;
+	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, "
+		    + playaSelected.getNombreComercial() + " no se pudo modificar", "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
+	}
+	return ERROR;
+    }
+    
+    public String modificarPlayaAdmin(Playa playon) {
+	playaSelected = playon;
 	return "playapendienteedit";
     }
 
@@ -273,7 +306,7 @@ public class PlayaManagedBean implements Serializable {
 	this.setEstadia(null);
 	this.setTelefono(null);
 	this.setEmailPlaya(null);
-	
+
 	// Atributos del encargado
 	this.setNombreUser("");
 	this.setApellido("");
@@ -286,7 +319,6 @@ public class PlayaManagedBean implements Serializable {
     }
 
     public void buscarPlaya() {
-
 	try {
 
 	    latLonUtil = new LatitudlongitudUtil();
@@ -357,7 +389,7 @@ public class PlayaManagedBean implements Serializable {
     public void setPlayaList(List<Playa> playaList) {
 	this.playaList = playaList;
     }
-    
+
     public List<Playa> getPlayaspendientesList() {
 	playaspendientesList = new ArrayList<Playa>();
 	EstadoPlaya estado = new EstadoPlaya();
@@ -365,7 +397,7 @@ public class PlayaManagedBean implements Serializable {
 	playaspendientesList.addAll(getPlayaService().findPlayasPendientes(estado));
 	return playaspendientesList;
     }
-    
+
     public void setPlayaspendientesList(List<Playa> playaspendientesList) {
 
 	this.playaspendientesList = playaspendientesList;
@@ -532,19 +564,19 @@ public class PlayaManagedBean implements Serializable {
     }
 
     public String getTelefono() {
-        return telefono;
+	return telefono;
     }
 
     public void setTelefono(String telefono) {
-        this.telefono = telefono;
+	this.telefono = telefono;
     }
 
     public String getEmailPlaya() {
-        return emailPlaya;
+	return emailPlaya;
     }
 
     public void setEmailPlaya(String emailPlaya) {
-        this.emailPlaya = emailPlaya;
+	this.emailPlaya = emailPlaya;
     }
 
     public List<Playa> getFilteredPlayas() {
