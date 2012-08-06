@@ -25,8 +25,8 @@
 	</welcome-file-list>
 
 	<error-page>
-		<exception-type>org.springframework.security.access.AccessDeniedException</exception-type>
-		<location>/login.html</location>
+		<error-code>403</error-code>
+		<location>/accessdenied.html</location>
 	</error-page>
 
 	<!-- //////////////////////// END: FACES RELATED /////////////////////////// -->
@@ -41,12 +41,11 @@
 		</param-value>
 	</context-param>
 
-	<!-- Ver: http://java.net/jira/browse/JAVASERVERFACES-2215  -->
 	<context-param>
 		<param-name>com.sun.faces.writeStateAtFormEnd</param-name>
 		<param-value>false</param-value>
 	</context-param>
-	
+
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
