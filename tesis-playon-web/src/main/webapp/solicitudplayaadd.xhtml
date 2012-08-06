@@ -14,11 +14,13 @@
 		<p>Con el siguiente formulario puede solicitar la incorporación de
 			una nueva playa al sistema, luego de la revisión de un auditor quién
 			realizará la verificación de los datos datos cargados.</p>
-			<p><strong>Todos los campos son obligatorios.</strong></p>
+		<p>
+			<strong>Todos los campos son obligatorios.</strong>
+		</p>
 
 		<h:form>
-		
-			<table class="admin-input-text" style="margin-left:25px">
+
+			<table class="admin-input-text" style="margin-left: 25px">
 				<tr>
 					<td colspan="2"><h:outputLabel styleClass="admin-subtitle"
 							for="usuario" value="Datos sobre la Playa: " /></td>
@@ -86,7 +88,8 @@
 					<td><p:inputText id="emailPlaya" value="#{playaMB.emailPlaya}">
 							<p:ajax event="blur" update="emailPlayaMsg" />
 						</p:inputText></td>
-					<td><p:message id="emailPlayaMsg" for="emailPlaya" display="icon" /></td>
+					<td><p:message id="emailPlayaMsg" for="emailPlaya"
+							display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="disponibilidad"
@@ -187,20 +190,16 @@
 					<td><p:message id="passwordMsg" for="password" display="icon" /></td>
 				</tr>
 				<tr>
-					<td colspan="3">
-						<br />
-					</td>
+					<td colspan="3"><br /></td>
 				</tr>
 				<tr style="text-align: right;">
-					<td colspan="2">
-						<p:commandButton
-							id="reset" value="Limpiar" action="#{playaMB.solicitudReset}"
-							ajax="false" style="margin-right:15px" />
-						<p:commandButton id="addPlaya" value="Enviar Solicitud"
-							action="#{playaMB.addSolicitudPlaya}" ajax="false"/></td>
+					<td colspan="2"><p:commandButton id="reset" value="Limpiar"
+							action="#{playaMB.solicitudReset}" ajax="false"
+							style="margin-right:15px" /> <p:commandButton id="addPlaya"
+							value="Enviar Solicitud" action="#{playaMB.addSolicitudPlaya}" /></td>
 					<td></td>
 				</tr>
-			</table>			
+			</table>
 		</h:form>
 	</ui:define>
 </ui:composition>
