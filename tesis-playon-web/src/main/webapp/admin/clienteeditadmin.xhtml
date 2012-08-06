@@ -11,7 +11,16 @@
 		<h:form>
 			<p:growl id="messages" />
 
-			<table>
+			<table class="admin-input-text">
+				<tr>
+					<td><h:outputLabel for="apellido" value="Apellido: " /></td>
+					<td><p:inputText id="apellido" value="#{clienteMB.clienteSelected.usuario.apellido}"
+							required="true" requiredMessage="Campo obligatorio" type="text">
+							<f:validateLength minimum="3" />
+							<p:ajax event="blur" update="apellidoMsg" />
+						</p:inputText></td>
+					<td><p:message id="apellidoMsg" for="apellido" display="icon" /></td>
+				</tr>
 				<tr>
 					<td><h:outputLabel for="nombre" value="Nombre: " /></td>
 					<td><p:inputText id="nombre" value="#{clienteMB.clienteSelected.usuario.nombre}"
@@ -21,15 +30,6 @@
 						</p:inputText></td>
 					<td><p:message id="nombreMsg" for="nombre" display="icon"
 							type="text" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel for="apellido" value="Apellido: " /></td>
-					<td><p:inputText id="apellido" value="#{clienteMB.clienteSelected.usuario.apellido}"
-							required="true" requiredMessage="Campo obligatorio" type="text">
-							<f:validateLength minimum="3" />
-							<p:ajax event="blur" update="apellidoMsg" />
-						</p:inputText></td>
-					<td><p:message id="apellidoMsg" for="apellido" display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputText for="tipoDoc" value="Tipo Documento: " /></td>
@@ -85,8 +85,7 @@
 					<td><p:message id="telefonoMsg" for="telefono" display="icon" /></td>
 				</tr>
 				<tr style="text-align: right;">
-					<td></td>
-					<td><p:commandButton id="addCliente" value="Modificar"
+					<td colspan="2"><p:commandButton id="addCliente" value="Modificar Cliente"
 							action="#{clienteMB.updateClienteAdmin}" ajax="false" />
 						<p:commandButton id="reset" value="Limpiar"
 							action="#{clienteMB.reset}"	ajax="false" /></td>

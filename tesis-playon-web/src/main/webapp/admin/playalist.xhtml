@@ -10,11 +10,13 @@
 
 	<ui:define name="panelContent" class="admin-font">
 		<h:form>
-			<p:dataTable id="playas" var="playa" editable="true" paginator="true"
-				rows="5" paginatorPosition="bottom" value="#{playaMB.playaList}" style="width: 10%">
+			<p:growl id="messages" />
+			<p:dataTable id="playas" var="playa" paginator="true"
+				rows="5" paginatorPosition="bottom" value="#{playaMB.playaList}"
+				emptyMessage="No existen clientes">
 
 				<f:facet name="header">
-				Usuarios
+				Playas de estacionamiento
             	</f:facet>
 
 				<p:column headerText="Razón Social" styleClass="column-font">
@@ -51,17 +53,6 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Domicilio" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.domicilio}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{playa.domicilio}" styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-
 				<p:column headerText="Barrio" styleClass="column-font">
 					<p:cellEditor>
 						<f:facet name="output">
@@ -73,6 +64,41 @@
 									itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
 								<f:converter converterId="barrioConverter" />
 							</h:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column headerText="Domicilio" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{playa.domicilio}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{playa.domicilio}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column headerText="Teléfono" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{playa.telefono}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{playa.telefono}"
+								styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column headerText="E-mail" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{playa.email}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{playa.email}"
+								styleClass="input-font" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -88,7 +114,7 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
+				
 				<p:column headerText="Estado" styleClass="column-font">
 					<p:cellEditor>
 						<f:facet name="output">
@@ -107,18 +133,28 @@
 				</p:column>
 				
 				<p:column>
-					<p:commandButton id="editar" value=""
-							icon="ui-icon-pencil"
-							action="/admin/playaedit.html?faces-redirect=true"
-							ajax="false" style="height:20px; width:34px;"/>
-					<p:tooltip for="editar" value="Editar Playa"/>
+					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
+						action="#{playaMB.modificarPlayaAdmin(playa)}"
+						style="height:20px; width:22px;">
+					</h:commandButton>
+					<p:tooltip for="editar" value="Editar Playa" />
+				</p:column>
+
+				<p:column>
+					<h:commandButton id="delete" class="ui-icon ui-icon-trash"
+						style="height:20px; width:22px;"
+						action="#{playaMB.deletePlayaAdmin(playa)}"
+						onclick="if(!confirm('¿Está seguro que desea dar de baja la playa?')) return false;">
+					</h:commandButton>
+					<p:tooltip for="delete" value="Dar de baja Playa" />
 				</p:column>
 
 			</p:dataTable>
-
 			<p>
-				<p:commandButton id="addPlayaNueva" value="Agregar"
-					action="/admin/playaadd.html?faces-redirect=true" ajax="false" />
+				<h:panelGroup layout="block" style="text-align: right;">
+					<p:commandButton id="addPlayaNueva" value="Nueva Playa"
+						action="/admin/playaadd.html?faces-redirect=true" ajax="false" />
+				</h:panelGroup>
 			</p>
 		</h:form>
 	</ui:define>

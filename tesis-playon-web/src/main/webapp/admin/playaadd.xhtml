@@ -5,49 +5,55 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:param name="panelTitle" value="Nueva playa" />
+	<ui:param name="panelTitle" value="Nueva Playa de Estacionamiento" />
 
 	<ui:define name="panelContent">
-
 		<h:form>
-			<table>
+			<p:growl id="messages" />
+			<table class="admin-input-text">
+				<tr>
+					<td colspan="2"><h:outputLabel styleClass="admin-subtitle" for="playa"
+							value="Datos de Playa: " /></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="3"></td>
+				</tr>
 				<tr>
 					<td><h:outputLabel for="razonSocial" value="Razon Social: " /></td>
 					<td><p:inputText id="razonSocial"
-							value="#{playaMB.razonSocial}">
-							<f:validateLength minimum="2" />
+							value="#{playaMB.razonSocial}" required="true"
+							requiredMessage="Campo obligatorio">
+							<f:validateLength minimum="4" />
 							<p:ajax event="blur" update="razonSocialMsg" />
-						</p:inputText> <p:message id="razonSocialMsg" for="razonSocial" display="icon" /></td>
-					<td></td>
+						</p:inputText></td>
+					<td><p:message id="razonSocialMsg" for="razonSocial"
+							display="icon" /></td>
 				</tr>
 				<tr>
-					<td><h:outputLabel for="nombreComercial" value="Nombre Comercial: " /></td>
-					<td><p:inputText id="nombreComercial" value="#{playaMB.nombreComercial}">
+					<td><h:outputLabel for="nombreComercial"
+							value="Nombre Comercial: " /></td>
+					<td><p:inputText id="nombreComercial"
+							value="#{playaMB.nombreComercial}" required="true"
+							requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="2" />
 							<p:ajax event="blur" update="nombreComercialMsg" />
-						</p:inputText> <p:message id="nombreComercialMsg" for="nombreComercial" display="icon" /></td>
-					<td></td>
+						</p:inputText></td>
+					<td><p:message id="nombreComercialMsg" for="nombreComercial"
+							display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="cuit" value="C.U.I.T.: " /></td>
-					<td><p:inputText id="cuit" value="#{playaMB.cuit}">
+					<td><p:inputText id="cuit" value="#{playaMB.cuit}"
+							required="true" requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="cuitMsg" />
-						</p:inputText> <p:message id="cuitMsg" for="cuit" display="icon" /></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><h:outputText for="domicilio" value="Domicilio: " /></td>
-					<td><p:inputText id="domicilio" value="#{playaMB.domicilio}">
-							<f:validateLength minimum="5" />
-							<p:ajax event="blur" update="domicilioMsg" />
-						</p:inputText> <p:message id="domicilioMsg" for="domicilio" display="icon" /></td>
-					<td></td>
+						</p:inputText></td>
+					<td><p:message id="cuitMsg" for="cuit" display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputText for="barrio" value="Barrio: " /></td>
-					<td><p:selectOneMenu value="#{playaMB.barrio}"
-							effect="fade">
+					<td><p:selectOneMenu value="#{playaMB.barrio}" effect="fade">
 							<f:selectItems value="#{barrioMB.barrioList}" var="barrio"
 								itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
 							<f:converter converterId="barrioConverter" />
@@ -55,21 +61,144 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td><h:outputLabel for="disponibilidad" value="Disponibilidad: " /></td>
-					<td><p:inputText id="disponibilidad" value="#{playaMB.disponibilidad}">
+					<td><h:outputText for="domicilio" value="Domicilio: " /></td>
+					<td><p:inputText id="domicilio" value="#{playaMB.domicilio}"
+							required="true" requiredMessage="Campo obligatorio">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="domicilioMsg" />
+						</p:inputText></td>
+					<td><p:message id="domicilioMsg" for="domicilio"
+							display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="telefono" value="Teléfono: " /></td>
+					<td><p:inputText id="telefono" value="#{playaMB.telefono}">
+							<p:ajax event="blur" update="telefonoMsg" />
+						</p:inputText></td>
+					<td><p:message id="telefonoMsg" for="telefono" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="emailPlaya" value="E-mail " /></td>
+					<td><p:inputText id="emailPlaya" value="#{playaMB.emailPlaya}">
+							<p:ajax event="blur" update="emailPlayaMsg" />
+						</p:inputText></td>
+					<td><p:message id="emailPlayaMsg" for="emailPlaya" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="disponibilidad"
+							value="Disponibilidad: " /></td>
+					<td><p:inputText id="disponibilidad"
+							value="#{playaMB.disponibilidad}">
 							<p:ajax event="blur" update="disponibilidadMsg" />
-						</p:inputText> <p:message id="disponibilidadMsg" for="disponibilidad" display="icon" /></td>
+						</p:inputText> <p:message id="disponibilidadMsg" for="disponibilidad"
+							display="icon" /></td>
 					<td></td>
 				</tr>
 				<tr>
-					<td><p:commandButton id="addPlaya" value="Agregar"
-							action="#{playaMB.addPlaya}" ajax="false" /></td>
-					<td><p:commandButton id="reset" value="Limpiar"
-							action="#{playaMB.reset}" ajax="false" /></td>
+					<td colspan="3"><br/></td>
+				</tr>
+				<tr>
+					<td colspan="2"><h:outputLabel styleClass="admin-subtitle" for="usuario"
+							value="Datos del Resposable de la Playa: " /></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="3"></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="apellido" value="Apellido: " /></td>
+					<td><p:inputText id="apellido" value="#{clienteMB.apellido}"
+							required="true" requiredMessage="Campo obligatorio" type="text">
+							<f:validateLength minimum="3" />
+							<p:ajax event="blur" update="apellidoMsg" />
+						</p:inputText></td>
+					<td><p:message id="apellidoMsg" for="apellido" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="nombre" value="Nombre: " /></td>
+					<td><p:inputText id="nombre" value="#{clienteMB.nombre}"
+							required="true" requiredMessage="Campo obligatorio" type="text">
+							<f:validateLength minimum="3" />
+							<p:ajax event="blur" update="nombreMsg" />
+						</p:inputText></td>
+					<td><p:message id="nombreMsg" for="nombre" display="icon"
+							type="text" /></td>
+				</tr>
+				<tr>
+					<td><h:outputText for="tipoDoc" value="Tipo Documento: " /></td>
+					<td><p:selectOneMenu value="#{clienteMB.tipoDoc}"
+							effect="fade">
+							<f:selectItems value="#{tipoDocMB.tipoDocList}" var="tipoDoc"
+								itemValue="#{tipoDoc}" itemLabel="#{tipoDoc.nombre}" />
+							<f:converter converterId="tipoDocConverter" />
+						</p:selectOneMenu></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="nroDoc" value="Nro. Documento: " /></td>
+					<td><p:inputText id="nroDoc" value="#{clienteMB.nroDoc}"
+							required="true" requiredMessage="Campo obligatorio">
+							<f:validateLength minimum="7" />
+							<p:ajax event="blur" update="nroDocMsg" />
+						</p:inputText></td>
+					<td><p:message id="nroDocMsg" for="nroDoc" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="email" value="E-mail: " /></td>
+					<td><p:inputText id="email" value="#{clienteMB.email}"
+							required="true" requiredMessage="Campo obligatorio" type="email">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="emailMsg" />
+						</p:inputText></td>
+					<td><p:message id="emailMsg" for="email" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="nombreUser" value="Nombre usuario: " /></td>
+					<td><p:inputText id="nombreUser"
+							value="#{clienteMB.nombreUser}" required="true"
+							requiredMessage="Campo obligatorio">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="nombreUserMsg" />
+						</p:inputText></td>
+					<td><p:message id="nombreUserMsg" for="nombreUser"
+							display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="password" value="Contraseña: " /></td>
+					<td><p:password id="password" value="#{clienteMB.password}"
+							match="passwordRepeat" required="true"
+							requiredMessage="Campo obligatorio">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="passwordMsg" />
+						</p:password></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="passwordRepeat"
+							value="Repita Contraseña: " /></td>
+					<td><p:password id="passwordRepeat"
+							value="#{clienteMB.password}" required="true"
+							requiredMessage="Campo obligatorio">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="passwordMsg" />
+						</p:password></td>
+					<td><p:message id="passwordMsg" for="password" display="icon" /></td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<br />
+					</td>
+				</tr>
+				<tr style="text-align: right;">
+					<td colspan="2"><p:commandButton id="addCliente" value="Registrar Playa"
+							action="#{clienteMB.addPlayaAdmin}" ajax="false"
+							style="margin-right:15px" />
+						<p:commandButton
+							id="reset" value="Limpiar" action="#{clienteMB.reset}"
+							ajax="false" /></td>
+					<td></td>
 				</tr>
 			</table>
 		</h:form>
-
 	</ui:define>
-
 </ui:composition>

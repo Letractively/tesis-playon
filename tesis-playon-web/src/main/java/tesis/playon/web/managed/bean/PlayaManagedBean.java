@@ -69,7 +69,7 @@ public class PlayaManagedBean implements Serializable {
 
     List<Playa> playaspendientesList;
 
-    static List<Playa> playaResultadoBusqueda;
+    private static List<Playa> playaResultadoBusqueda;
 
     private List<Playa> filteredPlayas;
 
@@ -236,6 +236,66 @@ public class PlayaManagedBean implements Serializable {
 	}
 	return ERROR;
     }
+    
+    public String deletePlayaAuditoria(Playa playa) {
+	try {
+	    EstadoPlaya estado = getEstadoPlayaService().findByNombreEstadoPlaya("De Baja");
+
+	    playa.setEstado(estado);
+
+	    getPlayaService().update(playa);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se dió de baja la playa: "
+		    + playa.getNombreComercial(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_PLAYAS_PENDIENTES;
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo dar de baja la playa: " + playa.getNombreComercial(),
+		    "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	return ERROR;
+    }
+    
+    public String rejectPlayaAuditoria(Playa playa) {
+	try {
+	    EstadoPlaya estado = getEstadoPlayaService().findByNombreEstadoPlaya("Rechazada");
+
+	    playa.setEstado(estado);
+
+	    getPlayaService().update(playa);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se rechazó la playa: "
+		    + playa.getNombreComercial(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_PLAYAS_PENDIENTES;
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo rechazar la playa: " + playa.getNombreComercial(),
+		    "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	return ERROR;
+    }
+    
+    public String approvePlayaAuditoria(Playa playa) {
+	try {
+	    EstadoPlaya estado = getEstadoPlayaService().findByNombreEstadoPlaya("Aprobada");
+
+	    playa.setEstado(estado);
+
+	    getPlayaService().update(playa);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se aprobó la playa: "
+		    + playa.getNombreComercial(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_PLAYAS_PENDIENTES;
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo aprobar la playa: " + playa.getNombreComercial(),
+		    "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	return ERROR;
+    }
 
     public String updatePlayaAdmin(Playa playa) {
 	playaSelected = playa;
@@ -258,25 +318,9 @@ public class PlayaManagedBean implements Serializable {
 	return ERROR;
     }
     
-    public String updatePlayaAuditoria() {
-	try {
-	    getPlayaService().update(playaSelected);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, playaSelected.getNombreComercial()
-		    + " se modificó correctamente", "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return LISTA_PLAYAS_PENDIENTES;
-	} catch (DataAccessException e) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, "
-		    + playaSelected.getNombreComercial() + " no se pudo modificar", "Por favos, intentelo mas tarde.");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    e.printStackTrace();
-	}
-	return ERROR;
-    }
-    
     public String modificarPlayaAdmin(Playa playon) {
 	playaSelected = playon;
-	return "playapendienteedit";
+	return "playaeditadmin";
     }
 
     public void reset() {

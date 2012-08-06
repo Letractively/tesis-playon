@@ -10,11 +10,11 @@
 	<ui:define name="panelContent" class="admin-font">
 		<h:form>
 			<p:growl id="messages" />
-
-			<table>
-				<tr>
-					<td><h:outputLabel styleClass="admin-subtitle" for="usuario"
+			<table class="admin-input-text">
+				<tr >
+					<td colspan="2"><h:outputLabel styleClass="admin-subtitle" for="usuario"
 							value="Datos de Usuario: " /></td>
+					<TD />
 				</tr>
 				<tr>
 					<td><br/></td>
@@ -58,11 +58,21 @@
 					<td><br/></td>
 				</tr>
 				<tr>
-					<td><h:outputLabel styleClass="admin-subtitle" for="cliente"
+					<td colspan="2"><h:outputLabel styleClass="admin-subtitle" for="cliente"
 							value="Datos de Cliente: " /></td>
+					<TD />
 				</tr>
 				<tr>
 					<td><br/></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="apellido" value="Apellido: " /></td>
+					<td><p:inputText id="apellido" value="#{clienteMB.apellido}"
+							required="true" requiredMessage="Campo obligatorio" type="text">
+							<f:validateLength minimum="3" />
+							<p:ajax event="blur" update="apellidoMsg" />
+						</p:inputText></td>
+					<td><p:message id="apellidoMsg" for="apellido" display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="nombre" value="Nombre: " /></td>
@@ -73,15 +83,6 @@
 						</p:inputText></td>
 					<td><p:message id="nombreMsg" for="nombre" display="icon"
 							type="text" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel for="apellido" value="Apellido: " /></td>
-					<td><p:inputText id="apellido" value="#{clienteMB.apellido}"
-							required="true" requiredMessage="Campo obligatorio" type="text">
-							<f:validateLength minimum="3" />
-							<p:ajax event="blur" update="apellidoMsg" />
-						</p:inputText></td>
-					<td><p:message id="apellidoMsg" for="apellido" display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputText for="tipoDoc" value="Tipo Documento: " /></td>
@@ -136,9 +137,13 @@
 						</p:inputText></td>
 					<td><p:message id="telefonoMsg" for="telefono" display="icon" /></td>
 				</tr>
+				<tr>
+					<td colspan="3">
+						<br />
+					</td>
+				</tr>
 				<tr style="text-align: right;">
-					<td></td>
-					<td><p:commandButton id="addCliente" value="Agregar"
+					<td colspan="2"><p:commandButton id="addCliente" value="Registrar Cliente"
 							action="#{clienteMB.addCliente}" ajax="false" />
 						<p:commandButton id="reset" value="Limpiar"
 							action="#{clienteMB.reset}"	ajax="false" /></td>

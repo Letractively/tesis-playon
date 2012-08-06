@@ -23,8 +23,7 @@
 				Listado de playas pendientes de auditoría
 				</f:facet>
 
-				<p:column headerText="Razón Social" styleClass="column-font"
-					filterBy="#{playa.razonSocial}" filterMatchMode="contains">
+				<p:column headerText="Razón Social" styleClass="column-font">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{playa.razonSocial}" />
@@ -35,8 +34,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Nombre Comercial" styleClass="column-font"
-					filterBy="#{playa.nombreComercial}" filterMatchMode="contains">
+				<p:column headerText="Nombre Comercial" styleClass="column-font">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{playa.nombreComercial}" />
@@ -48,8 +46,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="C.U.I.T." styleClass="column-font"
-					filterBy="#{playa.cuit}" filterMatchMode="contains">
+				<p:column headerText="C.U.I.T." styleClass="column-font">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{playa.cuit}" />
@@ -60,21 +57,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Domicilio" styleClass="column-font"
-					filterBy="#{playa.domicilio}" filterMatchMode="contains">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.domicilio}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{playa.domicilio}" styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-
-				<p:column headerText="Barrio" styleClass="column-font"
-					filterBy="#{playa.barrio}"
-					filterOptions="#{playaMB.barriosOptions}" filterMatchMode="exact">
+				<p:column headerText="Barrio" styleClass="column-font">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{playa.barrio.nombre}" />
@@ -89,8 +72,40 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Disponibilidad" styleClass="column-font"
-					filterBy="#{playa.disponibilidad}" filterMatchMode="startsWith">
+				<p:column headerText="Domicilio" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{playa.domicilio}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{playa.domicilio}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Teléfono" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{playa.telefono}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{playa.telefono}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="E-mail" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{playa.email}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{playa.email}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Disponibilidad" styleClass="column-font">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{playa.disponibilidad}" />
@@ -102,9 +117,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Estado" styleClass="column-font"
-					filterBy="#{playa.estado}"
-					filterOptions="#{playaMB.estadosOptions}" filterMatchMode="exact">
+				<p:column headerText="Estado" styleClass="column-font">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{playa.estado.nombre}" />
@@ -121,11 +134,28 @@
 				</p:column>
 
 				<p:column>
-					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
-						action="#{playaMB.modificarPlayaAdmin(playa)}"
-						style="height:20px; width:22px;">
+					<h:commandButton id="aprobar" class="ui-icon ui-icon-check"
+						action="#{playaMB.approvePlayaAuditoria(playa)}"
+						style="height:20px; width:22px;"
+						onclick="if(!confirm('¿Está seguro que desea aprobar la playa?')) return false;">
 					</h:commandButton>
-					<p:tooltip for="editar" value="Editar Cliente" />
+					<p:tooltip for="aprobar" value="Aprobar Playa" />
+				</p:column>
+				<p:column>
+					<h:commandButton id="rechazar" class="ui-icon ui-icon-closethick"
+						style="height:20px; width:22px;"
+						action="#{playaMB.rejectPlayaAuditoria(playa)}"
+						onclick="if(!confirm('¿Está seguro que desea rechazar la playa?')) return false;">
+					</h:commandButton>
+					<p:tooltip for="rechazar" value="Rechazar Playa" />
+				</p:column>
+				<p:column>
+					<h:commandButton id="delete" class="ui-icon ui-icon-trash"
+						style="height:20px; width:22px;"
+						action="#{playaMB.deletePlayaAuditoria(playa)}"
+						onclick="if(!confirm('¿Está seguro que desea dar de baja la playa?')) return false;">
+					</h:commandButton>
+					<p:tooltip for="delete" value="Dar de baja Playa" />
 				</p:column>
 			</p:dataTable>
 

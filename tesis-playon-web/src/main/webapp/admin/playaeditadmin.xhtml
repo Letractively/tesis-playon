@@ -1,0 +1,114 @@
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="panelTitle" value="Editar playa" />
+
+	<ui:define name="panelContent">
+
+		<h:form>
+		
+			<p:growl id="messages" />
+			
+			<table class="admin-input-text">
+				<tr>
+					<td><h:outputLabel for="razonSocial" value="Razon Social: " /></td>
+					<td><p:inputText id="razonSocial"
+							value="#{playaMB.playaSelected.razonSocial}" required="true"
+							requiredMessage="Campo obligatorio">
+							<f:validateLength minimum="4" />
+							<p:ajax event="blur" update="razonSocialMsg" />
+						</p:inputText></td>
+					<td><p:message id="razonSocialMsg" for="razonSocial"
+							display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="nombreComercial"
+							value="Nombre Comercial: " /></td>
+					<td><p:inputText id="nombreComercial"
+							value="#{playaMB.playaSelected.nombreComercial}" required="true"
+							requiredMessage="Campo obligatorio">
+							<f:validateLength minimum="2" />
+							<p:ajax event="blur" update="nombreComercialMsg" />
+						</p:inputText></td>
+					<td><p:message id="nombreComercialMsg" for="nombreComercial"
+							display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="cuit" value="C.U.I.T.: " /></td>
+					<td><p:inputText id="cuit" value="#{playaMB.playaSelected.cuit}"
+							required="true" requiredMessage="Campo obligatorio">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="cuitMsg" />
+						</p:inputText></td>
+					<td><p:message id="cuitMsg" for="cuit" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputText for="barrio" value="Barrio: " /></td>
+					<td><p:selectOneMenu value="#{playaMB.playaSelected.barrio}" effect="fade">
+							<f:selectItems value="#{barrioMB.barrioList}" var="barrio"
+								itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
+							<f:converter converterId="barrioConverter" />
+						</p:selectOneMenu></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><h:outputText for="domicilio" value="Domicilio: " /></td>
+					<td><p:inputText id="domicilio" value="#{playaMB.playaSelected.domicilio}"
+							required="true" requiredMessage="Campo obligatorio">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="domicilioMsg" />
+						</p:inputText></td>
+					<td><p:message id="domicilioMsg" for="domicilio"
+							display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="telefono" value="Teléfono: " /></td>
+					<td><p:inputText id="telefono" value="#{playaMB.playaSelected.telefono}">
+							<p:ajax event="blur" update="telefonoMsg" />
+						</p:inputText></td>
+					<td><p:message id="telefonoMsg" for="telefono" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="emailPlaya" value="E-mail " /></td>
+					<td><p:inputText id="emailPlaya" value="#{playaMB.playaSelected.email}">
+							<p:ajax event="blur" update="emailPlayaMsg" />
+						</p:inputText></td>
+					<td><p:message id="emailPlayaMsg" for="emailPlaya" display="icon" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="disponibilidad"
+							value="Disponibilidad: " /></td>
+					<td><p:inputText id="disponibilidad"
+							value="#{playaMB.playaSelected.disponibilidad}">
+							<p:ajax event="blur" update="disponibilidadMsg" />
+						</p:inputText> <p:message id="disponibilidadMsg" for="disponibilidad"
+							display="icon" /></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><h:outputText for="estado" value="Estado: " /></td>
+					<td><p:selectOneMenu value="#{playaMB.playaSelected.estado}"
+							effect="fade">
+							<f:selectItems value="#{estadoPlayaMB.estadoPlayaList}" var="estado"
+								itemValue="#{estado}" itemLabel="#{estado.nombre}" />
+							<f:converter converterId="estadoPlayaConverter" />
+						</p:selectOneMenu></td>
+						<td></td>
+				</tr>
+				<tr style="text-align: right;">
+					<td colspan="2"><p:commandButton
+							id="reset" value="Limpiar" action="#{playaMB.reset}"
+							ajax="false" style="margin-right:15px" />
+						<p:commandButton id="addCliente" value="Modificar Playa"
+							action="#{playaMB.updatePlayaAdmin}" ajax="false" />
+						</td>
+					<td></td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>
