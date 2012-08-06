@@ -27,33 +27,26 @@
 	<!-- Beans Declaration -->
 
 	<bean id="Barrio" class="tesis.playon.web.model.Barrio" />
-<!-- 	<bean id="Localidad" class="tesis.playon.web.model.Localidad" /> -->
+	<!-- 	<bean id="Localidad" class="tesis.playon.web.model.Localidad" /> -->
 	<bean id="Provincia" class="tesis.playon.web.model.Provincia" />
 	<bean id="Pais" class="tesis.playon.web.model.Pais" />
-	<!-- <bean id="CargoEmpleado" class="tesis.playon.web.model.CargoEmpleado"	/> -->
-<!-- 	<bean id="CategoriaVehiculo" class="tesis.playon.web.model.CategoriaVehiculo" /> -->
-	<!-- <bean id="ColorVehiculo" class="tesis.playon.web.model.ColorVehiculo" 
-		/> -->
+	<!-- <bean id="CargoEmpleado" class="tesis.playon.web.model.CargoEmpleado" /> -->
+	<!-- <bean id="ColorVehiculo" class="tesis.playon.web.model.ColorVehiculo" /> -->
 	<!-- <bean id="Empleado" class="tesis.playon.web.model.Empleado" /> -->
 	<!-- <bean id="Estadia" class="tesis.playon.web.model.Estadia" /> -->
-	<!-- <bean id="EstadoDenuncia" class="tesis.playon.web.model.EstadoDenuncia" 
-		/> -->
-	<bean id="EstadoPlaya" class="tesis.playon.web.model.EstadoPlaya" />
-	<!-- <bean id="EstadoPromocion" class="tesis.playon.web.model.EstadoPromocion" 
-		/> -->
-	<!-- <bean id="EstadoPublicidad" class="tesis.playon.web.model.EstadoPublicidad" 
-		/> -->
-	<!-- <bean id="MarcaVehiculo" class="tesis.playon.web.model.MarcaVehiculo" 
-		/> -->
-	<!-- <bean id="ModeloVehiculo" class="tesis.playon.web.model.ModeloVehiculo" 
-		/> -->
-<!-- 	<bean id="Playa" class="tesis.playon.web.model.Playa" /> -->
+	<!-- <bean id="EstadoDenuncia" class="tesis.playon.web.model.EstadoDenuncia" /> -->
+	<!-- <bean id="EstadoPromocion" class="tesis.playon.web.model.EstadoPromocion" /> -->
+	<!-- <bean id="EstadoPublicidad" class="tesis.playon.web.model.EstadoPublicidad" /> -->
+	<!-- <bean id="MarcaVehiculo" class="tesis.playon.web.model.MarcaVehiculo" /> -->
+	<!-- <bean id="ModeloVehiculo" class="tesis.playon.web.model.ModeloVehiculo" /> -->
 	<!-- <bean id="Posicion" class="tesis.playon.web.model.Posicion" /> -->
+	<!-- 	<bean id="Tarifa" class="tesis.playon.web.model.Tarifa" /> -->
+	<!-- <bean id="TipoPago" class="tesis.playon.web.model.TipoPago" /> -->
+	<bean id="EstadoPlaya" class="tesis.playon.web.model.EstadoPlaya" />
+	<bean id="CategoriaVehiculo" class="tesis.playon.web.model.CategoriaVehiculo" />
 	<bean id="RolUsuario" class="tesis.playon.web.model.RolUsuario" />
-<!-- 	<bean id="Tarifa" class="tesis.playon.web.model.Tarifa" /> -->
 	<bean id="TipoDoc" class="tesis.playon.web.model.TipoDoc" />
 	<bean id="TipoEstadia" class="tesis.playon.web.model.TipoEstadia" />
-	<!-- <bean id="TipoPago" class="tesis.playon.web.model.TipoPago" /> -->
 	<bean id="Usuario" class="tesis.playon.web.model.Usuario" />
 	<bean id="Cliente" class="tesis.playon.web.model.Cliente" />
 	<bean id="CuentaCliente" class="tesis.playon.web.model.CuentaCliente" />
@@ -120,15 +113,9 @@
 	<bean id="UsuarioService" class="tesis.playon.web.service.impl.UsuarioService">
 		<property name="usuarioDao" ref="UsuarioDao" />
 	</bean>
-<!-- 	<bean id="TarifaService" class="tesis.playon.web.service.impl.TarifaService"> -->
-<!-- 		<property name="tarifaDao" ref="TarifaDao" /> -->
-<!-- 	</bean> -->
 	<bean id="TipoEstadiaService" class="tesis.playon.web.service.impl.TipoEstadiaService">
 		<property name="tipoEstadiaDao" ref="TipoEstadiaDao" />
 	</bean>
-<!-- 	<bean id="CategoriaVehiculoService" class="tesis.playon.web.service.impl.CategoriaVehiculoService"> -->
-<!-- 		<property name="categoriaVehiculoDao" ref="CategoriaVehiculoDao" /> -->
-<!-- 	</bean> -->
 	<bean id="ClienteService" class="tesis.playon.web.service.impl.ClienteService">
 		<property name="clienteDao" ref="ClienteDao" />
 	</bean>
@@ -141,7 +128,15 @@
 	<bean id="EstadoPlayaService" class="tesis.playon.web.service.impl.EstadoPlayaService">
 		<property name="estadoPlayaDao" ref="EstadoPlayaDao" />
 	</bean>
-	
+<!-- 	<bean id="TarifaService" class="tesis.playon.web.service.impl.TarifaService"> -->
+<!-- 		<property name="tarifaDao" ref="TarifaDao" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="CategoriaVehiculoService" class="tesis.playon.web.service.impl.CategoriaVehiculoService"> -->
+<!-- 		<property name="categoriaVehiculoDao" ref="CategoriaVehiculoDao" /> -->
+<!-- 	</bean> -->
+
+
+
 
 	<!-- User DAO Declaration -->
 	<bean id="PaisDao" class="tesis.playon.web.dao.impl.PaisDao">
@@ -165,15 +160,9 @@
 	<bean id="UsuarioDao" class="tesis.playon.web.dao.impl.UsuarioDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
-<!-- 	<bean id="TarifaDao" class="tesis.playon.web.dao.impl.TarifaDao"> -->
-<!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
-<!-- 	</bean> -->
 	<bean id="TipoEstadiaDao" class="tesis.playon.web.dao.impl.TipoEstadiaDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
-<!-- 	<bean id="CategoriaVehiculoDao" class="tesis.playon.web.dao.impl.CategoriaVehiculoDao"> -->
-<!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
-<!-- 	</bean> -->
 	<bean id="ClienteDao" class="tesis.playon.web.dao.impl.ClienteDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
@@ -186,7 +175,14 @@
 	<bean id="EstadoPlayaDao" class="tesis.playon.web.dao.impl.EstadoPlayaDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
+<!-- 	<bean id="TarifaDao" class="tesis.playon.web.dao.impl.TarifaDao"> -->
+<!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="CategoriaVehiculoDao" class="tesis.playon.web.dao.impl.CategoriaVehiculoDao"> -->
+<!-- 		<property name="sessionFactory" ref="SessionFactory" /> -->
+<!-- 	</bean> -->
 	
+
 
 	<!-- Data Source Declaration -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
