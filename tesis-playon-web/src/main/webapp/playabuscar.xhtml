@@ -35,8 +35,8 @@
 			<p></p>
 			<p></p>
 
-			<p:dataTable id="playas" var="playa" editable="true" paginator="true"
-				paginatorPosition="bottom" rows="5" emptyMessage="No existen playas!"
+			<p:dataTable id="playas" var="playa" paginator="true"
+				paginatorPosition="bottom" rows="5" emptyMessage="¡No existen playas!"
 				value="#{playaMB.playaResultadoBusqueda}">
 
 				<f:facet name="header">
@@ -69,6 +69,14 @@
 						<h:outputText value="Disponibilidad" />
 					</f:facet>
 					<h:outputText value="#{playa.disponibilidad}" />
+				</p:column>
+				
+				<p:column>
+					<h:commandButton id="verTarifa" class="ui-icon ui-icon-tag"
+						action="#{tarifaMB.tomarSeleccionPlaya(playa)}"
+						style="height:20px; width:22px;">
+					</h:commandButton>
+					<p:tooltip for="verTarifa" value="Ver Tarifas y Promociones" />
 				</p:column>
 
 			</p:dataTable>

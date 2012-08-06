@@ -59,7 +59,7 @@ public class Usuario implements Serializable {
     @Column(name = "usuario", unique = true)
     private String nombreUser;
     
-    @Column(name = "vigente", columnDefinition = "TINYINT default 1")
+    @Column(name = "enable", columnDefinition = "TINYINT default 1")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean enable;
 

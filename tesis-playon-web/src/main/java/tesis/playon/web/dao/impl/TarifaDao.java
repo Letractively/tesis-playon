@@ -38,10 +38,14 @@ public class TarifaDao implements ITarifaDao {
 	getSessionFactory().getCurrentSession().delete(tarifa);
     }
 
-    public Tarifa findByPlayaID(Playa playa) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa where playa=?")
+    public List<Tarifa> findByPlaya(Playa playa) {
+	List<Tarifa> tarifas = new ArrayList<Tarifa>();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa where playa=? and vigente = 1")
 		.setParameter(0, playa).list();
-	return (Tarifa) list.get(0);
+	for (Object object : list) {
+	    tarifas.add((Tarifa) object);
+	}
+	return tarifas;
     }
 
     public List<Tarifa> findAll() {

@@ -30,16 +30,21 @@ public class LoginBean {
 
     private static final String ROLE_ADMIN = "[ROLE_ADMIN]";
 
+    @SuppressWarnings("unused")
     private static final String ROLE_AUDITOR = "[ROLE_AUDITOR]";
 
+    @SuppressWarnings("unused")
     private static final String ROLE_CONTADOR = "[ROLE_CONTADOR]";
 
+    @SuppressWarnings("unused")
     private static final String ROLE_USER = "[ROLE_USER]";
 
     private static final String ROLE_CLIENT = "[ROLE_CLIENT]";
 
+    @SuppressWarnings("unused")
     private static final String ROLE_PLAYA_EMPLEADO = "[ROLE_PLAYA_EMPLEADO]";
 
+    @SuppressWarnings("unused")
     private static final String ROLE_PLAYA_GERENTE = "[ROLE_PLAYA_GERENTE]";
 
     private String usuario = null;
@@ -179,5 +184,4 @@ public class LoginBean {
     public void setLogueado(Boolean logueado) {
 	this.logueado = logueado;
     }
-
 }

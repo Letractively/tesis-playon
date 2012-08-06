@@ -40,6 +40,8 @@ public class TarifaManagedBean implements Serializable {
     ITarifaService tarifaService;
 
     List<Tarifa> tarifaList;
+    
+    private static List<Tarifa> tarifaPlayaList;
 
     private Integer id;
 
@@ -58,6 +60,8 @@ public class TarifaManagedBean implements Serializable {
     private CategoriaVehiculo categoriaVehiculo;
 
     private static Tarifa tarifaSelected;
+    
+    private static Playa playaSelected;
 
     public String addTarifaAdmin() {
 	try {
@@ -131,6 +135,12 @@ public class TarifaManagedBean implements Serializable {
     public void updateTarifa(Tarifa tarifa) {
 	getTarifaService().update(tarifa);
     }
+    
+    public String tomarSeleccionPlaya(Playa playa){
+	playaSelected = playa;
+	this.playa = playa;
+	return "/admin/tarifaplayalist";
+    }
 
     public void reset() {
 	this.setFechaBaja(null);
@@ -155,6 +165,16 @@ public class TarifaManagedBean implements Serializable {
 
     public void setTarifaList(List<Tarifa> tarifaList) {
 	this.tarifaList = tarifaList;
+    }
+
+    public List<Tarifa> getTarifaPlayaList() {
+	tarifaPlayaList = new ArrayList<Tarifa>();
+	tarifaPlayaList.addAll(getTarifaService().findByPlaya(playaSelected));
+        return tarifaPlayaList;
+    }
+
+    public void setTarifaPlayaList(List<Tarifa> tarifaPlayaList) {
+        TarifaManagedBean.tarifaPlayaList = tarifaPlayaList;
     }
 
     public Float getImporte() {
@@ -219,5 +239,9 @@ public class TarifaManagedBean implements Serializable {
 
     public static Tarifa getTarifaSelected() {
 	return tarifaSelected;
+    }
+
+    public static Playa getPlayaSelected() {
+        return playaSelected;
     }
 }

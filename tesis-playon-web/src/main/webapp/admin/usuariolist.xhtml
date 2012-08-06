@@ -83,10 +83,11 @@
 				<p:column headerText="Password" styleClass="column-font">
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{usuario.password}" />
+							<h:outputText value="#{usuario.password}" type="password" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{usuario.password}" styleClass="input-font" />
+							<p:inputText value="#{usuario.password}" styleClass="input-font"
+								type="password" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
