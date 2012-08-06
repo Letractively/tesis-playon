@@ -11,8 +11,7 @@
 		<h:form>
 		
 			<p:growl id="messages" />
-		
-			<table>
+			<table class="admin-input-text">
 				<tr>
 					<td><h:outputText for="playa" value="Playa: " /></td>
 					<td><p:selectOneMenu value="#{tarifaMB.playa}" effect="fade">
@@ -48,9 +47,11 @@
 
 				<tr>
 					<td><h:outputLabel for="importe" value="Importe: " /></td>
-					<td><p:inputText id="importe" value="#{tarifaMB.importe}">
+					<td><p:inputText id="importe" value="#{tarifaMB.importe}"
+							required="true" requiredMessage="Campo obligatorio">
 							<p:ajax event="blur" update="importeMsg" />
-						</p:inputText> <p:message id="importeMsg" for="importe" display="icon" /></td>
+						</p:inputText></td>
+					<td><p:message id="importeMsg" for="importe" display="icon" /></td>
 				</tr>
 
 				<tr>
@@ -58,13 +59,17 @@
 					<td><p:selectBooleanCheckbox id="vigente"
 							value="#{tarifaMB.vigente}">
 						</p:selectBooleanCheckbox></td>
+					<td></td>
 				</tr>
 
-				<tr>
-					<td><p:commandButton id="addTarifa" value="Agregar"
-							action="#{tarifaMB.addTarifa}" ajax="false" /></td>
-					<td><p:commandButton id="reset" value="Reset"
-							action="#{tarifaMB.reset}" ajax="false" /></td>
+				<tr style="text-align: right;">
+					<td colspan="2"><p:commandButton id="reset" value="Limpiar"
+							action="#{tarifaMB.reset}" ajax="false"
+							style="margin-right:15px" />
+						<p:commandButton id="addTarifa" value="Registrar Tarifa"
+							action="#{tarifaMB.addTarifaAdmin}" ajax="false" />
+						</td>
+					<td></td>
 				</tr>
 			</table>
 		</h:form>

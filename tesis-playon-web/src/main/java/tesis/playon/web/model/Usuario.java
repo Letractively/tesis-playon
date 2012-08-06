@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Type;
+
 /**
  * Clase de negocio que contiene los usuarios.
  * 
@@ -56,6 +58,10 @@ public class Usuario implements Serializable {
 
     @Column(name = "usuario", unique = true)
     private String nombreUser;
+    
+    @Column(name = "vigente", columnDefinition = "TINYINT default 1")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private Boolean enable;
 
     public Usuario() {
 	super();
@@ -145,6 +151,14 @@ public class Usuario implements Serializable {
 
     public void setPlaya(Playa playa) {
         this.playa = playa;
+    }
+
+    public Boolean getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
     }
 
     public boolean equals(Object object) {

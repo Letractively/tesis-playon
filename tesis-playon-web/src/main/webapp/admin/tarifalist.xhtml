@@ -9,13 +9,12 @@
 
 	<ui:define name="panelContent" class="admin-font">
 		<h:form>
-		
+
 			<p:growl id="messages" />
-		
-			<p:dataTable id="tarifas" var="tarifa" style="width: 90%"
-				paginator="true" rows="5" paginatorPosition="bottom"
-				value="#{tarifaMB.tarifaList}"
-				emptyMessage="No existen clientes" paginatorPosition="bottom">
+
+			<p:dataTable id="tarifas" var="tarifa" paginator="true" rows="8"
+				paginatorPosition="bottom" value="#{tarifaMB.tarifaList}"
+				emptyMessage="No existen tarifas">
 
 				<f:facet name="header">
 				Tarifas
@@ -33,7 +32,19 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Tipo Estadia" styleClass="column-font">
+				<p:column headerText="Teléfono" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{tarifa.playa.telefono}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{tarifa.playa.telefono}"
+								styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Tipo Estadía" styleClass="column-font">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{tarifa.tipoEstadia.nombre}" />
@@ -67,26 +78,15 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-				
-				<p:column headerText="Playa" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{tarifa.playa.telefono}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{tarifa.playa.telefono}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
 
 				<p:column headerText="Fecha Alta" styleClass="column-font">
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{tarifa.fechaAlta}" />
+							<h:outputText value="#{tarifa.fechaAlta}" type="datetime" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{tarifa.fechaAlta}" styleClass="input-font" />
+							<p:inputText value="#{tarifa.fechaAlta}" styleClass="input-font"
+								type="datetime" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -102,7 +102,7 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-				
+
 				<p:column>
 					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
 						action="#{tarifaMB.updateTarifaAdmin(tarifa)}"
@@ -114,7 +114,7 @@
 				<p:column>
 					<h:commandButton id="delete" class="ui-icon ui-icon-trash"
 						style="height:20px; width:22px;"
-						action="#{tarifaMB.deleteTarifaAdmin(cliente)}"
+						action="#{tarifaMB.deleteTarifaAdmin(tarifa)}"
 						onclick="if(!confirm('¿Está seguro que desea eliminar la tarifa?')) return false;">
 					</h:commandButton>
 					<p:tooltip for="delete" value="Dar de baja Tarifa" />
@@ -122,9 +122,9 @@
 			</p:dataTable>
 
 			<p>
-				<h:panelGroup layout="block" style="text-align: right; width: 90%;">
-					<p:commandButton id="addTarifaNueva" value="Agregar"
-						action="/tarifaadd.jsf?faces-redirect=true" ajax="false" />
+				<h:panelGroup layout="block" style="text-align: right;">
+					<p:commandButton id="addTarifaNueva" value="Nueva Tarifa"
+						action="/admin/tarifaadd.html?faces-redirect=true" ajax="false" />
 				</h:panelGroup>
 			</p>
 		</h:form>

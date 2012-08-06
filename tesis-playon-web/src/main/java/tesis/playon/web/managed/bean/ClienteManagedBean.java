@@ -19,10 +19,14 @@ import org.springframework.dao.DataAccessException;
 import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.CuentaCliente;
+import tesis.playon.web.model.RolUsuario;
+import tesis.playon.web.model.RolesPorUsuario;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IClienteService;
 import tesis.playon.web.service.ICuentaClienteService;
+import tesis.playon.web.service.IRolUsuarioService;
+import tesis.playon.web.service.IRolesPorUsuarioService;
 import tesis.playon.web.service.IUsuarioService;
 
 /**
@@ -44,9 +48,15 @@ public class ClienteManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{UsuarioService}")
     IUsuarioService usuarioService;
+    
+    @ManagedProperty(value = "#{RolUsuarioService}")
+    IRolUsuarioService rolUsuarioService;
 
     @ManagedProperty(value = "#{CuentaClienteService}")
     ICuentaClienteService cuentaClienteService;
+    
+    @ManagedProperty(value = "#{RolesPorUsuarioService}")
+    IRolesPorUsuarioService rolesPorUsuarioService;
 
     List<Cliente> clienteList;
 
@@ -103,6 +113,11 @@ public class ClienteManagedBean implements Serializable {
 	    cliente = getClienteService().findByNumeroCliente(cliente.getNroCliente());
 	    cuenta.setCliente(cliente);
 	    getCuentaClienteService().update(cuenta);
+	    
+	    RolUsuario rol = getRolUsuarioService().findByNombreRolUsuario("ROLE_CLIENT");
+	    RolesPorUsuario rp= new RolesPorUsuario(usuario, rol);
+	    getRolesPorUsuarioService().save(rp);
+	    
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
 		    "Se agregó correctamente el cliente: "+ cliente.getUsuario().getApellido() + " "
 			    + cliente.getUsuario().getNombre(), "");
@@ -135,6 +150,11 @@ public class ClienteManagedBean implements Serializable {
 	    cliente = getClienteService().findByNumeroCliente(cliente.getNroCliente());
 	    cuenta.setCliente(cliente);
 	    getCuentaClienteService().update(cuenta);
+	    
+	    RolUsuario rol = getRolUsuarioService().findByNombreRolUsuario("ROLE_CLIENT");
+	    RolesPorUsuario rp= new RolesPorUsuario(usuario, rol);
+	    getRolesPorUsuarioService().save(rp);
+	    
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
 		    "Se agregó correctamente el cliente: "+ cliente.getUsuario().getApellido() + " "
 			    + cliente.getUsuario().getNombre(), "");
@@ -270,6 +290,22 @@ public class ClienteManagedBean implements Serializable {
 
     public void setCuentaClienteService(ICuentaClienteService cuentaClienteService) {
 	this.cuentaClienteService = cuentaClienteService;
+    }
+
+    public IRolesPorUsuarioService getRolesPorUsuarioService() {
+        return rolesPorUsuarioService;
+    }
+
+    public void setRolesPorUsuarioService(IRolesPorUsuarioService rolesPorUsuarioService) {
+        this.rolesPorUsuarioService = rolesPorUsuarioService;
+    }
+
+    public IRolUsuarioService getRolUsuarioService() {
+        return rolUsuarioService;
+    }
+
+    public void setRolUsuarioService(IRolUsuarioService rolUsuarioService) {
+        this.rolUsuarioService = rolUsuarioService;
     }
 
     public List<Cliente> getClienteList() {

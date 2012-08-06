@@ -7,16 +7,28 @@
 
 	<ui:param name="panelTitle" value="Listado de Usuarios" />
 
-	<ui:define name="panelContent">
+	<ui:define name="panelContent" class="admin-font">
 		<h:form>
-			<p:dataTable id="usuarios" var="usuario" editable="true"
-				paginator="true" rows="5" paginatorPosition="bottom"
+			<p:growl id="messages" />
+			<p:dataTable id="usuarios" var="usuario"
+				paginator="true" rows="8" paginatorPosition="bottom"
 				value="#{usuarioMB.usuarioList}"
-				style="width: 10%">
+				emptyMessage="No existen usuarios en el sistema">
 
 				<f:facet name="header">
 				Usuarios
             	</f:facet>
+            	
+            	<p:column headerText="Apellido" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.apellido}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.apellido}" styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 
 				<p:column headerText="Nombre" styleClass="column-font">
 					<p:cellEditor>
@@ -25,17 +37,6 @@
 						</f:facet>
 						<f:facet name="input">
 							<p:inputText value="#{usuario.nombre}" styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-
-				<p:column headerText="Apellido" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{usuario.apellido}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{usuario.apellido}" styleClass="input-font" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -101,23 +102,42 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
-				<p:column headerText="Opciones" styleClass="option-font">
-					<p:rowEditor />
+				
+				<p:column headerText="Playa" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.playa.nombreComercial}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.playa.nombreComercial}"
+								styleClass="input-font" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column>
+					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
+						action="#{usuarioMB.modificarUsuarioAdmin(usuario)}"
+						style="height:20px; width:22px;">
+					</h:commandButton>
+					<p:tooltip for="editar" value="Editar Usuario" />
 				</p:column>
 
 				<p:column>
-					<h:commandButton class="ui-icon ui-icon-trash"
-						action="#{usuarioMB.deleteUsuario(usuario)}"
-						style="height:20px; width:22px;">
+					<h:commandButton id="delete" class="ui-icon ui-icon-trash"
+						style="height:20px; width:22px;"
+						action="#{usuarioMB.deleteUsuarioAdmin(usuario)}"
+						onclick="if(!confirm('¿Está seguro que desea eliminar el usuario?')) return false;">
 					</h:commandButton>
+					<p:tooltip for="delete" value="Eliminar Usuario" />
 				</p:column>
 
 			</p:dataTable>
-
 			<p>
-				<p:commandButton id="addUsuarioNuevo" value="Agregar"
+				<h:panelGroup layout="block" style="text-align: right;">
+					<p:commandButton id="addUsuario" value="Nuevo Usuario"
 						action="/admin/usuarioadd.html?faces-redirect=true" ajax="false" />
+				</h:panelGroup>
 			</p>
 		</h:form>
 	</ui:define>

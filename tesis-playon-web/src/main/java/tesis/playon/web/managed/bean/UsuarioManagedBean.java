@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 import org.springframework.dao.DataAccessException;
 
@@ -45,8 +47,10 @@ public class UsuarioManagedBean implements Serializable {
 	private TipoDoc tipoDoc;
 	
 	private Playa playa;
+	
+	private static Usuario usuarioSelected;
 
-	public String addUsuario() {
+	public String addUsuarioAdmin() {
 		try {
 			Usuario usuario = new Usuario();
 			usuario.setNombre(getNombre());
@@ -64,6 +68,25 @@ public class UsuarioManagedBean implements Serializable {
 		}
 		return ERROR;
 	}
+	
+	public String deleteUsuarioAdmin(Usuario usuario){
+	    try {
+		    usuario.setEnable(false);
+
+		    getUsuarioService().update(usuario);
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+			    "Se dió de baja al usuario: "
+			    + usuario.getNombreUser(), "");
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+		    return LISTA_USUARIOS;
+		} catch (Exception e) {
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+			    "Error, no se pudo dar de baja al usuario: " + usuario.getNombreUser(),
+			    "Por favos, intentelo mas tarde.");
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+		return ERROR;
+	}
 
 	public void deleteUsuario(Usuario usuario) {
 		getUsuarioService().delete(usuario);
@@ -71,6 +94,11 @@ public class UsuarioManagedBean implements Serializable {
 
 	public void updateUsuario(Usuario usuario) {
 		getUsuarioService().update(usuario);
+	}
+	
+	public String modificarUsuarioAdmin(Usuario usuario){
+	    usuarioSelected= usuario;
+	    return "usuarioeditadmin";
 	}
 
 	public void reset() {
@@ -164,4 +192,7 @@ public class UsuarioManagedBean implements Serializable {
 	    this.playa = playa;
 	}
 
+	public static Usuario getUsuarioSelected() {
+	    return usuarioSelected;
+	}
 }
