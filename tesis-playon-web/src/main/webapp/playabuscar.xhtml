@@ -5,38 +5,44 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="content" class="admin-font">
+	<ui:define name="content">
 		<h1>¡Buscá tu playa!</h1>
 		<h:form>
-			<table>
+			<p:growl id="messages" />
+			<table style="margin-left:100px">
 				<tr>
 					<td><h:outputLabel for="direccionBusqueda"
-							value="Direccion de busqueda: " /></td>
+							value="Dirección de búsqueda: " /></td>
 					<td><p:inputText id="direccionBusqueda"
-							value="#{playaMB.direccionBusqueda}">
+							value="#{playaMB.direccionBusqueda}" required="true"
+							requiredMessage="Debe colocar una dirección">
 							<p:ajax event="blur" update="direccionBusquedaMsg" />
-						</p:inputText> <p:message id="direccionBusquedaMsg" for="direccionBusqueda"
-							display="icon" /></td>
+						</p:inputText></td>
+					<td><p:message id="direccionBusquedaMsg"
+							for="direccionBusqueda" display="icon" /></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel for="distancia"
 							value="Ingrese la cantidad de cuadras: " />
 						<p /></td>
-						<td><h:panelGrid columns="1" style="margin-bottom:10px">
-							<p:inputText id="distancia" value="#{playaMB.distancia}" />
+					<td><h:panelGrid columns="1" style="margin-bottom:10px">
+							<p:inputText id="distancia" value="#{playaMB.distancia}" 
+							 disabled="true" />
 							<p:slider for="distancia" minValue="1" maxValue="50" />
 						</h:panelGrid></td>
+						<td></td>
 				</tr>
-				<tr>
-					<td><h:commandButton id="btnBuscarId" value="Buscar"
-							action="#{playaMB.buscarPlaya}" /></td>
+				<tr style="text-align: right;">
+					<td colspan="3"><p:commandButton id="btnBuscarId" value="Buscar"
+							action="#{playaMB.buscarPlaya}" ajax="false"/></td>
 				</tr>
 			</table>
 			<p></p>
 			<p></p>
 
 			<p:dataTable id="playas" var="playa" paginator="true"
-				paginatorPosition="bottom" rows="5" emptyMessage="¡No existen playas!"
+				paginatorPosition="bottom" rows="5"
+				emptyMessage="¡No existen playas!"
 				value="#{playaMB.playaResultadoBusqueda}">
 
 				<f:facet name="header">
@@ -70,7 +76,7 @@
 					</f:facet>
 					<h:outputText value="#{playa.disponibilidad}" />
 				</p:column>
-				
+
 				<p:column>
 					<h:commandButton id="verTarifa" class="ui-icon ui-icon-tag"
 						action="#{tarifaMB.tomarSeleccionPlaya(playa)}"
