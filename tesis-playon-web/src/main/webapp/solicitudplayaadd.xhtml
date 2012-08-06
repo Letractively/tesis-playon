@@ -109,7 +109,7 @@
 				</tr>
 				<tr>
 					<td><h:outputLabel for="apellido" value="Apellido: " /></td>
-					<td><p:inputText id="apellido" value="#{clienteMB.apellido}"
+					<td><p:inputText id="apellido" value="#{playaMB.apellido}"
 							required="true" requiredMessage="Campo obligatorio" type="text">
 							<f:validateLength minimum="3" />
 							<p:ajax event="blur" update="apellidoMsg" />
@@ -118,7 +118,7 @@
 				</tr>
 				<tr>
 					<td><h:outputLabel for="nombre" value="Nombre: " /></td>
-					<td><p:inputText id="nombre" value="#{clienteMB.nombre}"
+					<td><p:inputText id="nombre" value="#{playaMB.nombre}"
 							required="true" requiredMessage="Campo obligatorio" type="text">
 							<f:validateLength minimum="3" />
 							<p:ajax event="blur" update="nombreMsg" />
@@ -128,7 +128,7 @@
 				</tr>
 				<tr>
 					<td><h:outputText for="tipoDoc" value="Tipo Documento: " /></td>
-					<td><p:selectOneMenu value="#{clienteMB.tipoDoc}"
+					<td><p:selectOneMenu value="#{playaMB.tipoDoc}"
 							effect="fade">
 							<f:selectItems value="#{tipoDocMB.tipoDocList}" var="tipoDoc"
 								itemValue="#{tipoDoc}" itemLabel="#{tipoDoc.nombre}" />
@@ -138,7 +138,7 @@
 				</tr>
 				<tr>
 					<td><h:outputLabel for="nroDoc" value="Nro. Documento: " /></td>
-					<td><p:inputText id="nroDoc" value="#{clienteMB.nroDoc}"
+					<td><p:inputText id="nroDoc" value="#{playaMB.nroDoc}"
 							required="true" requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="7" />
 							<p:ajax event="blur" update="nroDocMsg" />
@@ -147,7 +147,7 @@
 				</tr>
 				<tr>
 					<td><h:outputLabel for="email" value="E-mail: " /></td>
-					<td><p:inputText id="email" value="#{clienteMB.email}"
+					<td><p:inputText id="email" value="#{playaMB.email}"
 							required="true" requiredMessage="Campo obligatorio" type="email">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="emailMsg" />
@@ -157,7 +157,7 @@
 				<tr>
 					<td><h:outputLabel for="nombreUser" value="Nombre usuario: " /></td>
 					<td><p:inputText id="nombreUser"
-							value="#{clienteMB.nombreUser}" required="true"
+							value="#{playaMB.nombreUser}" required="true"
 							requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="nombreUserMsg" />
@@ -167,7 +167,7 @@
 				</tr>
 				<tr>
 					<td><h:outputLabel for="password" value="Contraseña: " /></td>
-					<td><p:password id="password" value="#{clienteMB.password}"
+					<td><p:password id="password" value="#{playaMB.password}"
 							match="passwordRepeat" required="true"
 							requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
@@ -179,7 +179,7 @@
 					<td><h:outputLabel for="passwordRepeat"
 							value="Repita Contraseña: " /></td>
 					<td><p:password id="passwordRepeat"
-							value="#{clienteMB.password}" required="true"
+							value="#{playaMB.password}" required="true"
 							requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="passwordMsg" />

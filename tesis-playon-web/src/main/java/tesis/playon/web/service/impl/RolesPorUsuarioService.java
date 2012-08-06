@@ -16,17 +16,13 @@ import tesis.playon.web.service.IRolesPorUsuarioService;
 @Transactional(readOnly = true)
 public class RolesPorUsuarioService implements IRolesPorUsuarioService {
 
-    IRolesPorUsuarioDao rolPorUserDao;
+    IRolesPorUsuarioDao rolesPorUsuarioDao;
+    
 
     @Transactional(readOnly = false)
     @Override
     public void save(RolesPorUsuario rolPorUser) {
 	getRolesPorUsuarioDao().save(rolPorUser);
-    }
-
-    private IRolesPorUsuarioDao getRolesPorUsuarioDao() {
-
-	return rolPorUserDao;
     }
 
     @Transactional(readOnly = false)
@@ -51,8 +47,11 @@ public class RolesPorUsuarioService implements IRolesPorUsuarioService {
 	return getRolesPorUsuarioDao().findByNombreRolUsuario(nombreUser);
     }
 
-    public void setRolesPorUsuarioDao(IRolesPorUsuarioDao rolPorUserDao) {
-	this.rolPorUserDao = rolPorUserDao;
+    public IRolesPorUsuarioDao getRolesPorUsuarioDao() {
+        return rolesPorUsuarioDao;
     }
 
+    public void setRolesPorUsuarioDao(IRolesPorUsuarioDao rolesPorUsuarioDao) {
+        this.rolesPorUsuarioDao = rolesPorUsuarioDao;
+    }
 }

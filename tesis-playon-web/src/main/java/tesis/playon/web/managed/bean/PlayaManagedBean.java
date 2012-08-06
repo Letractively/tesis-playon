@@ -164,9 +164,9 @@ public class PlayaManagedBean implements Serializable {
 	    usuario.setPlaya(playa);
 	    getUsuarioService().save(usuario);
 
-	    RolUsuario rol = getRolUsuarioService().findByNombreRolUsuario("ROLE_PLAYA_GERENTE");
-	    RolesPorUsuario rp = new RolesPorUsuario(usuario, rol);
-	    getRolesPorUsuarioService().save(rp);
+//	    RolUsuario rol = getRolUsuarioService().findByNombreRolUsuario("ROLE_PLAYA_GERENTE");
+//	    RolesPorUsuario rp = new RolesPorUsuario(usuario, rol);
+//	    getRolesPorUsuarioService().save(rp);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente : "
 		    + playa.getNombreComercial(), "");
@@ -206,9 +206,9 @@ public class PlayaManagedBean implements Serializable {
 	    usuario.setPlaya(playa);
 	    getUsuarioService().save(usuario);
 
-	    RolUsuario rol = getRolUsuarioService().findByNombreRolUsuario("ROLE_PLAYA_GERENTE");
-	    RolesPorUsuario rp = new RolesPorUsuario(usuario, rol);
-	    getRolesPorUsuarioService().save(rp);
+//	    RolUsuario rol = getRolUsuarioService().findByNombreRolUsuario("ROLE_PLAYA_GERENTE");
+//	    RolesPorUsuario rp = new RolesPorUsuario(usuario, rol);
+//	    getRolesPorUsuarioService().save(rp);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente : "
 		    + playa.getNombreComercial(), "");
