@@ -28,6 +28,16 @@
 		<error-code>403</error-code>
 		<location>/accessdenied.html</location>
 	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/transactionerror.html</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>503</error-code>
+		<location>/serviceunavailable.html</location>
+	</error-page>
 
 	<!-- //////////////////////// END: FACES RELATED /////////////////////////// -->
 
