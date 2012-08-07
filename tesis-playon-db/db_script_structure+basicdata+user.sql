@@ -1516,9 +1516,7 @@ UNLOCK TABLES;
 LOCK TABLES `playa` WRITE;
 /*!40000 ALTER TABLE `playa` DISABLE KEYS */;
 INSERT INTO `playa` (`barrioID`, `cuit`, `disponibilidad`, `domicilio`, `estadoPlayaID`, `nombreComercial`, `latitud`, `longitud`, `razonSocial`, `playaID`, `estadiaID`) 
-VALUES (1,'30-11111111-1',100,'PueyRedon y Velez',4,'Playita',-31.426448,-64.19172,'Playa',1,NULL),
-	(1,'30-11111111-1',100,'Estrada e Ituzaingo',4,'Playon',-31.428205,-64.186356,'Playa2',2,NULL),
-	(2,'30-11111111-1',55,'Buenos Aires 548',2,'Estacionamiento Europa',-31.422895,-64.185659,'Estacionamiento Europa',3,NULL),
+VALUES (2,'30-11111111-1',55,'Buenos Aires 548',2,'Estacionamiento Europa',-31.422895,-64.185659,'Estacionamiento Europa',3,NULL),
 	(2,'30-11111111-1',100,'Independencia 770',2,'Estacionamiento Independencia',-31.425024,-64.188105,'Estacionamiento Independencia',4,NULL),
 	(2,'30-11111111-1',100,'Obispo Trejo 758',2,'Parkingcity',-31.424615,-64.189357,'Parkingcity',5,NULL),
 	(1,'30-11111111-1',100,'Bv. Ilia 156',2,'Estacionamiento Mercado Sur',-31.421251,-64.184234,'Estacionamiento Mercado Sur',6,NULL),
