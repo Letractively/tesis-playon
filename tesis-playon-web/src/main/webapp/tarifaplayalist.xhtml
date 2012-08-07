@@ -5,15 +5,69 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:param name="panelTitle" value="Listado de Tarifas y Promociones" />
+	<ui:define name="title">
+		Título de la página
+    </ui:define>
 
-	<ui:define name="panelContent" class="admin-font">
+	<ui:define name="content">
+		<h1>Tarifas y Promociones</h1>
+
 		<h:form>
 
 			<p:growl id="messages" />
 
-			<p:dataTable id="tarifas" var="tarifa" paginator="true" rows="5"
-				paginatorPosition="bottom" value="#{tarifaMB.tarifaPlayaList}"
+			<p:dataTable id="playa" var="playaSeleccionada" value=""
+				style="width: 100%">
+				<f:facet name="header">
+				Información sobre la playa de estacionamiento seleccionada
+            	</f:facet>
+
+				<p:column styleClass="column-font">
+					<f:facet name="header">
+						<h:outputText value="Nombre Comercial" />
+					</f:facet>#{tarifaMB.playa.nombreComercial}
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column styleClass="column-font">
+					<f:facet name="header">
+						<h:outputText value="Barrio" />
+					</f:facet>#{tarifaMB.playa.barrio.nombre}
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column styleClass="column-font">
+					<f:facet name="header">
+						<h:outputText value="Domicilio" />
+					</f:facet>#{tarifaMB.playa.domicilio}
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column styleClass="column-font">
+					<f:facet name="header">
+						<h:outputText value="Teléfono" />
+					</f:facet>#{tarifaMB.playa.telefono}
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column styleClass="column-font">
+					<f:facet name="header">
+						<h:outputText value="E-mail" />
+					</f:facet>#{tarifaMB.playa.email}
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column styleClass="column-font">
+					<f:facet name="header">
+						<h:outputText value="Disponibilidad" />
+					</f:facet>#{tarifaMB.playa.disponibilidad}
+					<h:outputText value="" />
+				</p:column>
+			</p:dataTable>
+			<br />
+			<br />
+			<p:dataTable id="tarifas" var="tarifa"
+				value="#{tarifaMB.tarifaPlayaList}"
 				emptyMessage="No existen tarifas en la playa seleccionada"
 				style="width: 100%">
 
@@ -58,20 +112,14 @@
 			</p:dataTable>
 			<br />
 			<br />
-			<p:dataTable id="promociones" var="promocion" paginator="true"
-				rows="5" paginatorPosition="bottom" value=""
+			<p:dataTable id="promociones" var="promocion"
+				value="#{tarifaMB.promocionesPlayaList}"
 				emptyMessage="No existen promociones en la playa seleccionada"
 				style="width: 100%">
 
 				<f:facet name="header">
 				Promociones
             	</f:facet>
-				<p:column styleClass="column-font">
-					<f:facet name="header">
-						<h:outputText value="Nombre" />
-					</f:facet>
-					<h:outputText value="" />
-				</p:column>
 
 				<p:column styleClass="column-font">
 					<f:facet name="header">
@@ -102,55 +150,13 @@
 				</p:column>
 			</p:dataTable>
 			<br />
-			<br />
-			<p:dataTable id="playa" var="playaSeleccionada" value=""
-				style="width: 100%">
-				<f:facet name="header">
-				Información sobre la playa de estacionamiento seleccionada
-            	</f:facet>
-            	
-            	<p:column styleClass="column-font">
-					<f:facet name="header">
-						<h:outputText value="Nombre Comercial" />
-					</f:facet>#{tarifaMB.playa.nombreComercial}
-					<h:outputText value="" />
-				</p:column>
-
-				<p:column styleClass="column-font">
-					<f:facet name="header">
-						<h:outputText value="Barrio" />
-					</f:facet>#{tarifaMB.playa.barrio.nombre}
-					<h:outputText value="" />
-				</p:column>
-				
-				<p:column styleClass="column-font">
-					<f:facet name="header">
-						<h:outputText value="Domicilio" />
-					</f:facet>#{tarifaMB.playa.domicilio}
-					<h:outputText value="" />
-				</p:column>
-				
-				<p:column styleClass="column-font">
-					<f:facet name="header">
-						<h:outputText value="Teléfono" />
-					</f:facet>#{tarifaMB.playa.telefono}
-					<h:outputText value="" />
-				</p:column>
-				
-				<p:column styleClass="column-font">
-					<f:facet name="header">
-						<h:outputText value="E-mail" />
-					</f:facet>#{tarifaMB.playa.email}
-					<h:outputText value="" />
-				</p:column>
-				
-				<p:column styleClass="column-font">
-					<f:facet name="header">
-						<h:outputText value="Disponibilidad" />
-					</f:facet>#{tarifaMB.playa.disponibilidad}
-					<h:outputText value="" />
-				</p:column>
-			</p:dataTable>
 		</h:form>
+		<table style="width: 100%">
+			<tr style="text-align: right;">
+				<td>
+					<h:link value="Volver" outcome="index" />
+				</td>
+			</tr>
+		</table>
 	</ui:define>
 </ui:composition>

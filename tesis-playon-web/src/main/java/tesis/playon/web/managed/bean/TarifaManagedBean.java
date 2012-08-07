@@ -42,6 +42,8 @@ public class TarifaManagedBean implements Serializable {
     List<Tarifa> tarifaList;
     
     private static List<Tarifa> tarifaPlayaList;
+    
+    private static List<Tarifa> promocionesPlayaList;
 
     private Integer id;
 
@@ -139,7 +141,7 @@ public class TarifaManagedBean implements Serializable {
     public String tomarSeleccionPlaya(Playa playa){
 	playaSelected = playa;
 	this.playa = playa;
-	return "/admin/tarifaplayalist";
+	return "/tarifaplayalist";
     }
 
     public void reset() {
@@ -243,5 +245,10 @@ public class TarifaManagedBean implements Serializable {
 
     public static Playa getPlayaSelected() {
         return playaSelected;
+    }
+
+    public List<Tarifa> getPromocionesPlayaList() {
+	promocionesPlayaList = new ArrayList<Tarifa>();
+        return promocionesPlayaList;
     }
 }

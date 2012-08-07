@@ -22,8 +22,6 @@ import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
-import tesis.playon.web.model.RolUsuario;
-import tesis.playon.web.model.RolesPorUsuario;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IBarrioService;
