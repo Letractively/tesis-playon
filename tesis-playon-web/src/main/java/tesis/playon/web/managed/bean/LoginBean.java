@@ -44,7 +44,6 @@ public class LoginBean {
     @SuppressWarnings("unused")
     private static final String ROLE_PLAYA_EMPLEADO = "[ROLE_PLAYA_EMPLEADO]";
 
-    @SuppressWarnings("unused")
     private static final String ROLE_PLAYA_GERENTE = "[ROLE_PLAYA_GERENTE]";
 
     private String usuario = null;
@@ -88,6 +87,8 @@ public class LoginBean {
 	    setRol(result.getAuthorities().toString());
 	    if (ROLE_ADMIN.equals(result.getAuthorities().toString())) {
 		return "SecuredAdmin";
+	    } else if (ROLE_PLAYA_GERENTE.equals(result.getAuthorities().toString())) {
+		return "SecuredGerentePlaya";
 	    } else if (ROLE_CLIENT.equals(result.getAuthorities().toString())) {
 		return "SecuredClient";
 	    } else {
@@ -184,4 +185,5 @@ public class LoginBean {
     public void setLogueado(Boolean logueado) {
 	this.logueado = logueado;
     }
+
 }

@@ -15,6 +15,8 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Playa;
@@ -40,9 +42,9 @@ public class TarifaManagedBean implements Serializable {
     ITarifaService tarifaService;
 
     List<Tarifa> tarifaList;
-    
+
     private static List<Tarifa> tarifaPlayaList;
-    
+
     private static List<Tarifa> promocionesPlayaList;
 
     private Integer id;
@@ -62,7 +64,7 @@ public class TarifaManagedBean implements Serializable {
     private CategoriaVehiculo categoriaVehiculo;
 
     private static Tarifa tarifaSelected;
-    
+
     private static Playa playaSelected;
 
     public String addTarifaAdmin() {
@@ -74,16 +76,12 @@ public class TarifaManagedBean implements Serializable {
 	    tarifa.setTipoEstadia(getTipoEstadia());
 	    tarifa.setCategoriaVehiculo(getCategoriaVehiculo());
 	    getTarifaService().save(tarifa);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
-		    "Se agregó la tarifa correctamente", "");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó la tarifa correctamente", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_TARIFAS;
 	} catch (DataAccessException e) {
-	    FacesMessage message = new FacesMessage(
-		    FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo agregar la tarifa" + 
-		    tarifaSelected.getPlaya().getNombreComercial(),
-		    "Por favos, intentelo mas tarde.");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo agregar la tarifa"
+		    + tarifaSelected.getPlaya().getNombreComercial(), "Por favos, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -100,8 +98,7 @@ public class TarifaManagedBean implements Serializable {
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(
 		    FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo borrar la tarifa de la playa: " + 
-		    tarifaSelected.getPlaya().getNombreComercial(),
+		    "Error, no se pudo borrar la tarifa de la playa: " + tarifaSelected.getPlaya().getNombreComercial(),
 		    "Por favos, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
@@ -116,18 +113,17 @@ public class TarifaManagedBean implements Serializable {
 	tarifaSelected = tarifa;
 	return "tarifaeditadmin";
     }
-    
-    public String updateTarifaAdmin(){
+
+    public String updateTarifaAdmin() {
 	try {
 	    getTarifaService().update(tarifaSelected);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
-		    "La tarifa se modificó correctamente", "");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La tarifa se modificó correctamente",
+		    "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_TARIFAS;
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error,la tarifa no se pudo modificar"
-		    , "Por favos, intentelo mas tarde.");
+		    "Error,la tarifa no se pudo modificar", "Por favos, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -137,11 +133,28 @@ public class TarifaManagedBean implements Serializable {
     public void updateTarifa(Tarifa tarifa) {
 	getTarifaService().update(tarifa);
     }
-    
-    public String tomarSeleccionPlaya(Playa playa){
+
+    public String tomarSeleccionPlaya(Playa playa) {
 	playaSelected = playa;
 	this.playa = playa;
-	return "/tarifaplayalist";
+	if ("Secured".equals(estaLogueado())) {
+	    return "tarifaplayalist";
+	} else {
+	    return "accessdenied?faces-redirect=true";    
+	}
+	
+    }
+
+    public String estaLogueado() {
+
+	Authentication sc = SecurityContextHolder.getContext().getAuthentication();
+
+	if (!"[ROLE_ADMIN]".equals(sc.getAuthorities().toString())
+		&& !"[ROLE_PLAYA_GERENTE]".equals(sc.getAuthorities().toString())
+		&& !"[ROLE_CLIENT]".equals(sc.getAuthorities().toString())) {
+	    return "UnSecured";
+	}
+	return "Secured";
     }
 
     public void reset() {
@@ -172,11 +185,11 @@ public class TarifaManagedBean implements Serializable {
     public List<Tarifa> getTarifaPlayaList() {
 	tarifaPlayaList = new ArrayList<Tarifa>();
 	tarifaPlayaList.addAll(getTarifaService().findByPlaya(playaSelected));
-        return tarifaPlayaList;
+	return tarifaPlayaList;
     }
 
     public void setTarifaPlayaList(List<Tarifa> tarifaPlayaList) {
-        TarifaManagedBean.tarifaPlayaList = tarifaPlayaList;
+	TarifaManagedBean.tarifaPlayaList = tarifaPlayaList;
     }
 
     public Float getImporte() {
@@ -244,11 +257,11 @@ public class TarifaManagedBean implements Serializable {
     }
 
     public static Playa getPlayaSelected() {
-        return playaSelected;
+	return playaSelected;
     }
 
     public List<Tarifa> getPromocionesPlayaList() {
 	promocionesPlayaList = new ArrayList<Tarifa>();
-        return promocionesPlayaList;
+	return promocionesPlayaList;
     }
 }
