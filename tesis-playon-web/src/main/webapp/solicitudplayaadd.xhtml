@@ -131,8 +131,7 @@
 				</tr>
 				<tr>
 					<td><h:outputText for="tipoDoc" value="Tipo Documento: " /></td>
-					<td><p:selectOneMenu value="#{playaMB.tipoDoc}"
-							effect="fade">
+					<td><p:selectOneMenu value="#{playaMB.tipoDoc}" effect="fade">
 							<f:selectItems value="#{tipoDocMB.tipoDocList}" var="tipoDoc"
 								itemValue="#{tipoDoc}" itemLabel="#{tipoDoc.nombre}" />
 							<f:converter converterId="tipoDocConverter" />
@@ -159,9 +158,8 @@
 				</tr>
 				<tr>
 					<td><h:outputLabel for="nombreUser" value="Nombre usuario: " /></td>
-					<td><p:inputText id="nombreUser"
-							value="#{playaMB.nombreUser}" required="true"
-							requiredMessage="Campo obligatorio">
+					<td><p:inputText id="nombreUser" value="#{playaMB.nombreUser}"
+							required="true" requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="nombreUserMsg" />
 						</p:inputText></td>
@@ -196,7 +194,8 @@
 					<td colspan="2"><p:commandButton id="reset" value="Limpiar"
 							action="#{playaMB.solicitudReset}" ajax="false"
 							style="margin-right:15px" /> <p:commandButton id="addPlaya"
-							value="Enviar Solicitud" action="#{playaMB.addSolicitudPlaya}" /></td>
+							value="Enviar Solicitud" action="#{playaMB.addSolicitudPlaya}"
+							ajax="false" /></td>
 					<td></td>
 				</tr>
 			</table>
