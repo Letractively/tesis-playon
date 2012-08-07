@@ -13,7 +13,7 @@
 			<p:growl id="messages" />
 			<p:dataTable id="playas" var="playa" paginator="true"
 				rows="5" paginatorPosition="bottom" value="#{playaMB.playaList}"
-				emptyMessage="No existen clientes">
+				emptyMessage="No existen clientes" style="width: 100%">
 
 				<f:facet name="header">
 				Playas de estacionamiento
@@ -38,17 +38,6 @@
 						<f:facet name="input">
 							<p:inputText value="#{playa.nombreComercial}"
 								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-
-				<p:column headerText="C.U.I.T." styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.cuit}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{playa.cuit}" styleClass="input-font" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -151,7 +140,7 @@
 
 			</p:dataTable>
 			<p>
-				<h:panelGroup layout="block" style="text-align: right;">
+				<h:panelGroup layout="block" style="text-align: right; width: 100%;">
 					<p:commandButton id="addPlayaNueva" value="Nueva Playa"
 						action="/admin/playaadd.html?faces-redirect=true" ajax="false" />
 				</h:panelGroup>

@@ -9,10 +9,10 @@
 
 	<ui:define name="panelContent">
 		<h:form>
-			<p:dataTable id="tiposEstadia" var="tipoEstadia" editable="true"
+			<p:dataTable id="tiposEstadia" var="tipoEstadia"
 				paginator="true" rows="5" paginatorPosition="bottom"
 				value="#{tipoEstadiaMB.tipoEstadiaList}"
-				style="width: 10%">
+				style="width: 35%">
 
 				<f:facet name="header">
 				Tipos de estadía
@@ -51,20 +51,29 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
-				<p:column headerText="Opciones" styleClass="option-font">
-					<p:rowEditor />
+				
+				<p:column>
+					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
+						style="height:20px; width:22px;">
+					</h:commandButton>
+					<p:tooltip for="editar" value="Editar Tipo Estadía" />
 				</p:column>
 
 				<p:column>
-					<h:commandButton value="Borrar"
-						action="#{tipoEstadiaMB.deleteTipoEstadia(tipoEstadia)}" />
+					<h:commandButton id="delete" class="ui-icon ui-icon-trash"
+						style="height:20px; width:22px;"
+						action="#{tipoEstadiaMB.deleteTipoEstadia(tipoEstadia)}"
+						onclick="if(!confirm('¿Está seguro que desea eliminar el Tipo Estadía?')) return false;">
+					</h:commandButton>
+					<p:tooltip for="delete" value="Eliminar Tipo Estadía" />
 				</p:column>
 
 			</p:dataTable>
-
-			<p><p:commandButton id="addTipoEstadia" value="Agregar"
+			<p>
+				<h:panelGroup layout="block" style="text-align: right; width: 35%;">
+					<p:commandButton id="addUsuario" value="Nuevo Tipo Estadía"
 						action="/admin/tipoestadiaadd.html?faces-redirect=true" ajax="false" />
+				</h:panelGroup>
 			</p>
 		</h:form>
 	</ui:define>

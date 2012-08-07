@@ -401,7 +401,7 @@ public class PlayaManagedBean implements Serializable {
 			    "http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
 		}
 		LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
-		advancedModel.addOverlay(new Marker(coordenada, "�Usted est� aqu�!", null,
+		advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
 			"http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
 	    }
 	} catch (Exception e) {

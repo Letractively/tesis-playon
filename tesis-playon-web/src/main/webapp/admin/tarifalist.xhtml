@@ -14,7 +14,7 @@
 
 			<p:dataTable id="tarifas" var="tarifa" paginator="true" rows="8"
 				paginatorPosition="bottom" value="#{tarifaMB.tarifaList}"
-				emptyMessage="No existen tarifas">
+				emptyMessage="No existen tarifas" style="width: 90%">
 
 				<f:facet name="header">
 				Tarifas
@@ -110,7 +110,7 @@
 			</p:dataTable>
 
 			<p>
-				<h:panelGroup layout="block" style="text-align: right;">
+				<h:panelGroup layout="block" style="text-align: right; width: 90%">
 					<p:commandButton id="addTarifaNueva" value="Nueva Tarifa"
 						action="/admin/tarifaadd.html?faces-redirect=true" ajax="false" />
 				</h:panelGroup>

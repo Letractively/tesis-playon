@@ -9,7 +9,7 @@
 
 	<ui:define name="panelContent">
 		<h:form>
-			<p:dataTable id="rolesUsuario" var="rolUsuario" editable="true"
+			<p:dataTable id="rolesUsuario" var="rolUsuario"
 				paginator="true" rows="5" paginatorPosition="bottom"
 				value="#{rolUsuarioMB.rolUsuarioList}"
 				style="width: 10%">
@@ -50,21 +50,30 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
-				<p:column headerText="Opciones" styleClass="option-font">
-					<p:rowEditor />
+				
+				<p:column>
+					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
+						style="height:20px; width:22px;">
+					</h:commandButton>
+					<p:tooltip for="editar" value="Editar Rol" />
 				</p:column>
 
 				<p:column>
-					<h:commandButton value="Borrar"
-						action="#{rolUsuarioMB.deleteRolUsuario(rolUsuario)}" />
+					<h:commandButton id="delete" class="ui-icon ui-icon-trash"
+						style="height:20px; width:22px;"
+						action="#{rolUsuarioMB.deleteRolUsuario(rolUsuario)}"
+						onclick="if(!confirm('¿Está seguro que desea eliminar el rol de usuario?')) return false;">
+					</h:commandButton>
+					<p:tooltip for="delete" value="Eliminar Rol" />
 				</p:column>
 
 			</p:dataTable>
-
+			
 			<p>
-			<p:commandButton id="addRolUsuario" value="Agregar"
+				<h:panelGroup layout="block" style="text-align: right; width: 40%;">
+					<p:commandButton id="addUsuario" value="Nuevo Rol"
 						action="/admin/rolusuarioadd.html?faces-redirect=true" ajax="false" />
+				</h:panelGroup>
 			</p>
 		</h:form>
 	</ui:define>

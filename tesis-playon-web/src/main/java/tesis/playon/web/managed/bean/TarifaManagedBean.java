@@ -239,7 +239,7 @@ public class TarifaManagedBean implements Serializable {
 	return id;
     }
 
-    public static Tarifa getTarifaSelected() {
+    public Tarifa getTarifaSelected() {
 	return tarifaSelected;
     }
 

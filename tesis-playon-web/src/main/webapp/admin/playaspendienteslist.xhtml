@@ -13,7 +13,7 @@
 
 			<p:growl id="messages" />
 
-			<p:dataTable id="playas" var="playa"
+			<p:dataTable id="playas" var="playa" style="width: 100%"
 				value="#{playaMB.playaspendientesList}" paginatorPosition="bottom"
 				paginator="true" rows="8"
 				emptyMessage="No existen playas para auditar"
@@ -42,17 +42,6 @@
 						<f:facet name="input">
 							<p:inputText value="#{playa.nombreComercial}"
 								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-
-				<p:column headerText="C.U.I.T." styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.cuit}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{playa.cuit}" styleClass="input-font" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -158,11 +147,12 @@
 					<p:tooltip for="delete" value="Dar de baja Playa" />
 				</p:column>
 			</p:dataTable>
-
 			<p>
-				<p:commandButton id="addPlayaNueva" value="Quitar Filtro"
+				<h:panelGroup layout="block" style="text-align: right; width: 100%;">
+					<p:commandButton id="addPlayaNueva" value="Quitar Filtro"
 					action="/admin/playaspendienteslist.html?faces-redirect=true"
 					ajax="false" />
+				</h:panelGroup>
 			</p>
 		</h:form>
 	</ui:define>

@@ -13,7 +13,8 @@
 			<p:dataTable id="usuarios" var="usuario"
 				paginator="true" rows="8" paginatorPosition="bottom"
 				value="#{usuarioMB.usuarioList}"
-				emptyMessage="No existen usuarios en el sistema">
+				emptyMessage="No existen usuarios en el sistema"
+				style="width: 100%">
 
 				<f:facet name="header">
 				Usuarios
@@ -104,18 +105,6 @@
 					</p:cellEditor>
 				</p:column>
 				
-				<p:column headerText="Playa" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{usuario.playa.nombreComercial}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{usuario.playa.nombreComercial}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				
 				<p:column>
 					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
 						action="#{usuarioMB.modificarUsuarioAdmin(usuario)}"
@@ -135,7 +124,7 @@
 
 			</p:dataTable>
 			<p>
-				<h:panelGroup layout="block" style="text-align: right;">
+				<h:panelGroup layout="block" style="text-align: right; width: 100%;">
 					<p:commandButton id="addUsuario" value="Nuevo Usuario"
 						action="/admin/usuarioadd.html?faces-redirect=true" ajax="false" />
 				</h:panelGroup>
