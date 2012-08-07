@@ -394,7 +394,7 @@ public class PlayaManagedBean implements Serializable {
 	    playaResultadoBusqueda = new ArrayList<Playa>();
 	    for (Playa playaAux : getPlayaList()) {
 		Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
-		if (comparacion < getDistancia()) {
+		if (comparacion < getDistancia() && playaAux.getEstado().getId()!=1) {
 		    playaResultadoBusqueda.add(playaAux);
 		    LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
 		    advancedModel.addOverlay(new Marker(coord1, playaAux.toString2(), null,
