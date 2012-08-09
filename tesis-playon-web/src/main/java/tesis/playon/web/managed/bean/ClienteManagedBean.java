@@ -19,6 +19,7 @@ import org.springframework.dao.DataAccessException;
 import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.CuentaCliente;
+import tesis.playon.web.model.RolesPorUsuario;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IClienteService;
@@ -112,9 +113,8 @@ public class ClienteManagedBean implements Serializable {
 	    cuenta.setCliente(cliente);
 	    getCuentaClienteService().update(cuenta);
 	    
-//	    RolUsuario rol = getRolUsuarioService().findByNombreRolUsuario("ROLE_CLIENT");
-//	    RolesPorUsuario rp= new RolesPorUsuario(usuario, rol);
-//	    getRolesPorUsuarioService().save(rp);
+	    RolesPorUsuario rp= new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
+	    getRolesPorUsuarioService().save(rp);
 	    
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
 		    "Se agregó correctamente el cliente: "+ cliente.getUsuario().getApellido() + " "
@@ -149,9 +149,8 @@ public class ClienteManagedBean implements Serializable {
 	    cuenta.setCliente(cliente);
 	    getCuentaClienteService().update(cuenta);
 	    
-//	    RolUsuario rol = getRolUsuarioService().findByNombreRolUsuario("ROLE_CLIENT");
-//	    RolesPorUsuario rp= new RolesPorUsuario(usuario, rol);
-//	    getRolesPorUsuarioService().save(rp);
+	    RolesPorUsuario rp= new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
+	    getRolesPorUsuarioService().save(rp);
 	    
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
 		    "Se agregó correctamente el cliente: "+ cliente.getUsuario().getApellido() + " "

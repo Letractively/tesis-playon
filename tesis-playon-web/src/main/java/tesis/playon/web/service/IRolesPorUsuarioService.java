@@ -14,6 +14,6 @@ public interface IRolesPorUsuarioService {
 
     List<RolesPorUsuario> findAll();
 
-    RolesPorUsuario findByNombreRolUsuario(String nombreUsuario);
+    RolesPorUsuario findByNombreUsuario(String nombreUsuario);
 
 }

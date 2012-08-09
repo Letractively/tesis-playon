@@ -27,15 +27,15 @@ public class RolesPorUsuario implements Serializable {
     private Integer id;
 
     @Column(name = "usuario")
-    private Usuario usuario;
+    private String usuario;
 
     @Column(name = "rolUsuario")
-    private RolUsuario rol;
+    private String rol;
 
     public RolesPorUsuario() {
     }
 
-    public RolesPorUsuario(Usuario usuario, RolUsuario rol) {
+    public RolesPorUsuario(String usuario, String rol) {
 	this.usuario = usuario;
 	this.rol = rol;
     }
@@ -48,19 +48,19 @@ public class RolesPorUsuario implements Serializable {
 	this.id = id;
     }
 
-    public Usuario getUsuario() {
+    public String getUsuario() {
 	return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(String usuario) {
 	this.usuario = usuario;
     }
 
-    public RolUsuario getRol() {
+    public String getRol() {
 	return rol;
     }
 
-    public void setRol(RolUsuario rol) {
+    public void setRol(String rol) {
 	this.rol = rol;
     }
 
@@ -79,8 +79,8 @@ public class RolesPorUsuario implements Serializable {
 
     @Override
     public String toString() {
-	return "RolesPorUsuario:\t [RolPorUserID= " + id + ", Usuario= " + usuario.getNombre() + "ROL: "
-		+ rol.getNombre() + "]";
+	return "RolesPorUsuario:\t [RolPorUserID= " + id + ", Usuario= " + usuario + "ROL: "
+		+ rol + "]";
     }
 
 }

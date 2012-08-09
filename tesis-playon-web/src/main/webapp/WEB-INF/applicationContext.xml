@@ -40,7 +40,7 @@
         <bean id="CuentaCliente" class="tesis.playon.web.model.CuentaCliente" />
         <bean id="Playa" class="tesis.playon.web.model.Playa" />
         <bean id="Tarifa" class="tesis.playon.web.model.Tarifa" />
-<!--         <bean id="RolesPorUsuario" class="tesis.playon.web.model.RolesPorUsuario" /> -->
+        <bean id="RolesPorUsuario" class="tesis.playon.web.model.RolesPorUsuario" />
         
         <!-- <bean id="CargoEmpleado" class="tesis.playon.web.model.CargoEmpleado" /> -->
         <!-- <bean id="ColorVehiculo" class="tesis.playon.web.model.ColorVehiculo" /> -->
@@ -227,7 +227,7 @@
                                 <value>tesis.playon.web.model.Posicion</value>
                                 <value>tesis.playon.web.model.Provincia</value>
                                 <value>tesis.playon.web.model.RolUsuario</value>
-<!--                                 <value>tesis.playon.web.model.RolesPorUsuario</value> -->
+                                <value>tesis.playon.web.model.RolesPorUsuario</value>
                                 <value>tesis.playon.web.model.Tarifa</value>
                                 <value>tesis.playon.web.model.TipoDoc</value>
                                 <value>tesis.playon.web.model.TipoEstadia</value>

@@ -22,6 +22,7 @@ import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
+import tesis.playon.web.model.RolesPorUsuario;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IBarrioService;
@@ -162,9 +163,8 @@ public class PlayaManagedBean implements Serializable {
 	    usuario.setPlaya(playa);
 	    getUsuarioService().save(usuario);
 
-//	    RolUsuario rol = getRolUsuarioService().findByNombreRolUsuario("ROLE_PLAYA_GERENTE");
-//	    RolesPorUsuario rp = new RolesPorUsuario(usuario, rol);
-//	    getRolesPorUsuarioService().save(rp);
+	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_PLAYA_GERENTE");
+	    getRolesPorUsuarioService().save(rp);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente : "
 		    + playa.getNombreComercial(), "");
@@ -204,9 +204,8 @@ public class PlayaManagedBean implements Serializable {
 	    usuario.setPlaya(playa);
 	    getUsuarioService().save(usuario);
 
-//	    RolUsuario rol = getRolUsuarioService().findByNombreRolUsuario("ROLE_PLAYA_GERENTE");
-//	    RolesPorUsuario rp = new RolesPorUsuario(usuario, rol);
-//	    getRolesPorUsuarioService().save(rp);
+	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_PLAYA_GERENTE");
+	    getRolesPorUsuarioService().save(rp);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente : "
 		    + playa.getNombreComercial(), "");

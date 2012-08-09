@@ -43,8 +43,8 @@ public class RolesPorUsuarioService implements IRolesPorUsuarioService {
     }
 
     @Override
-    public RolesPorUsuario findByNombreRolUsuario(String nombreUser) {
-	return getRolesPorUsuarioDao().findByNombreRolUsuario(nombreUser);
+    public RolesPorUsuario findByNombreUsuario(String nombreUser) {
+	return getRolesPorUsuarioDao().findByNombreUsuario(nombreUser);
     }
 
     public IRolesPorUsuarioDao getRolesPorUsuarioDao() {

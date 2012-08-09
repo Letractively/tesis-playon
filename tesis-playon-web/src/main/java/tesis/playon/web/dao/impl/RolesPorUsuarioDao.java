@@ -37,7 +37,7 @@ public class RolesPorUsuarioDao implements IRolesPorUsuarioDao {
 	getSessionFactory().getCurrentSession().delete(rolPorUser);
     }
 
-    public RolesPorUsuario findByNombreRolUsuario(String nombreUser) {
+    public RolesPorUsuario findByNombreUsuario(String nombreUser) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from RolesPorUsuario where usuario=?")
 		.setParameter(0, nombreUser).list();
 	return (RolesPorUsuario) list.get(0);

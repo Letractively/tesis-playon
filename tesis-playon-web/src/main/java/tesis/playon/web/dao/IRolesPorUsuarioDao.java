@@ -12,7 +12,7 @@ public interface IRolesPorUsuarioDao {
 
     void delete(RolesPorUsuario rolesPorUsuario);
 
-    RolesPorUsuario findByNombreRolUsuario(String nombreUsuario);
+    RolesPorUsuario findByNombreUsuario(String nombreUsuario);
 
     List<RolesPorUsuario> findAll();
 }
