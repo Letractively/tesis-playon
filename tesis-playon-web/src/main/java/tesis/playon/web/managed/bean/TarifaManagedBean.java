@@ -71,7 +71,7 @@ public class TarifaManagedBean implements Serializable {
 	try {
 	    Tarifa tarifa = new Tarifa();
 	    tarifa.setImporte(getImporte());
-	    tarifa.setVigente(true);
+	    tarifa.setVigente(getVigente());
 	    tarifa.setPlaya(getPlaya());
 	    tarifa.setTipoEstadia(getTipoEstadia());
 	    tarifa.setCategoriaVehiculo(getCategoriaVehiculo());
@@ -90,7 +90,8 @@ public class TarifaManagedBean implements Serializable {
 
     public String deleteTarifaAdmin(Tarifa tarifa) {
 	try {
-	    getTarifaService().delete(tarifa);
+	    tarifa.setFechaBaja(new Date());
+	    getTarifaService().update(tarifa);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se borró la tarifa de la playa: "
 		    + tarifaSelected.getPlaya().getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
@@ -106,7 +107,7 @@ public class TarifaManagedBean implements Serializable {
     }
 
     public void deleteTarifa(Tarifa tarifa) {
-	getTarifaService().delete(tarifa);
+	//getTarifaService().delete(tarifa);
     }
 
     public String updateTarifaAdmin(Tarifa tarifa) {

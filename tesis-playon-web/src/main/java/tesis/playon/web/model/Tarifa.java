@@ -40,12 +40,10 @@ public class Tarifa implements Serializable {
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean vigente;
 
-    @Column(name = "fechaAlta", columnDefinition ="datetime")
-    @Type(type = "org.hibernate.type.DateType")
+    @Column(name = "fechaAlta")
     private Date fechaAlta;
 
-    @Column(name = "fechaBaja", columnDefinition ="datetime")
-    @Type(type = "org.hibernate.type.DateType")
+    @Column(name = "fechaBaja")
     private Date fechaBaja;
 
     @ManyToOne
