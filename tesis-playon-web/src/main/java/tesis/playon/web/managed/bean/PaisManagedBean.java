@@ -37,18 +37,23 @@ public class PaisManagedBean implements Serializable {
     @ManagedProperty(value = "#{ProvinciaService}")
     IProvinciaService provinciaService;
 
-    private Map<String, Pais> paises = new HashMap<String, Pais>();
+    private Map<String, String> paises = new HashMap<String, String>();
 
-    private Map<String, Provincia> provincias = new HashMap<String, Provincia>();
+    private Map<String, String> provincias = new HashMap<String, String>();
 
-    private Map<String, Map<String, Provincia>> provinciasData = new HashMap<String, Map<String, Provincia>>();
+    private Map<String, Map<String, String>> provinciasData = new HashMap<String, Map<String, String>>();
 
     private String pais;
+    
+    @SuppressWarnings("unused")
+    private Pais paisSeleccionado;
 
     private String provincia;
 
+    @SuppressWarnings("unused")
     private Localidad localidad;
 
+    @SuppressWarnings("unused")
     private Barrio barrio;
 
     List<Localidad> localidadList;
@@ -71,41 +76,39 @@ public class PaisManagedBean implements Serializable {
 	this.provinciaService = provinciaService;
     }
 
-    public Map<String, Pais> getPaises() {
+    public Map<String, String> getPaises() {
 	List<Pais> paisList = getPaisService().findAll();
 	for (Pais pais : paisList) {
-	    System.out.println(pais.getNombre());
-	    paises.put(pais.getNombre(), pais);
+	    paises.put(pais.getNombre(), pais.getNombre());
 
-	    Map<String, Provincia> prov = new HashMap<String, Provincia>();
+	    Map<String, String> prov = new HashMap<String, String>();
 	    List<Provincia> provinciaList = getProvinciaService().findProvincias(pais);
 	    for (Provincia provincia : provinciaList) {
-		System.out.println(provincia.getNombre());
-		prov.put(provincia.getNombre(), provincia);
+		prov.put(provincia.getNombre(), provincia.getNombre());
 	    }
 	    provinciasData.put(pais.getNombre(), prov);
 	}
 	return paises;
     }
 
-    public void setPaises(Map<String, Pais> paises) {
+    public void setPaises(Map<String, String> paises) {
 	this.paises = paises;
     }
 
-    public Map<String, Provincia> getProvincias() {
-	return provincias;
+    public Map<String, String> getProvincias() {
+        return provincias;
     }
 
-    public Map<String, Map<String, Provincia>> getProvinciasData() {
-	return provinciasData;
+    public void setProvincias(Map<String, String> provincias) {
+        this.provincias = provincias;
     }
 
-    public void setProvinciasData(Map<String, Map<String, Provincia>> provinciasData) {
-	this.provinciasData = provinciasData;
+    public Map<String, Map<String, String>> getProvinciasData() {
+        return provinciasData;
     }
 
-    public void setProvincias(Map<String, Provincia> provincias) {
-	this.provincias = provincias;
+    public void setProvinciasData(Map<String, Map<String, String>> provinciasData) {
+        this.provinciasData = provinciasData;
     }
 
     public String getPais() {
@@ -126,12 +129,11 @@ public class PaisManagedBean implements Serializable {
 
     public void handlePaisChange() {
 	if (pais != null && !pais.equals("")) {
-	    System.out.println("EL PAIS VALIA ALGOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 	    System.out.println("PAIS: " + pais);
 	    provincias = provinciasData.get(pais);
 	} else {
 	    System.out.println("EL PAIS ERA NULOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-	    provincias = new HashMap<String, Provincia>();
+	    provincias = new HashMap<String, String>();
 	}
     }
 }

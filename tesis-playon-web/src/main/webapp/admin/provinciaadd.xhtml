@@ -9,26 +9,26 @@
 
 	<ui:define name="panelContent">
 		<h:form>
-
-			<p:panel header="Double Combo" style="margin-bottom:10px;">
-				<h:panelGrid columns="2" cellpadding="5">
-					<p:selectOneMenu id="pais" value="#{paisMB.pais}" effect="fade">
+			<table>
+				<tr>
+					<td><h:outputText for="pais" value="Pais: " /></td>
+					<td><p:selectOneMenu id="pais" value="#{paisMB.pais}" effect="fade">
 						<f:selectItem itemLabel="Seleccione un Pais" itemValue="" />
 						<f:selectItems value="#{paisMB.paises}" />
 						<p:ajax event="change" update="provincias" process="@this"
 							listener="#{paisMB.handlePaisChange}" />
-					</p:selectOneMenu>
+					</p:selectOneMenu></td>
+				</tr>
 
-					<p:selectOneMenu id="provincias" value="#{paisMB.provincia}"
+				<tr>
+					<td><h:outputText for="provincia" value="Provincia: " /></td>
+					<td><p:selectOneMenu id="provincias" value="#{paisMB.provincia}"
 						effect="fade">
 						<f:selectItem itemLabel="Seleccione una provincia" itemvalue="" />
 						<f:selectItems value="#{paisMB.provincias}" />
-					</p:selectOneMenu>
-				</h:panelGrid>
-
-				<p:separator />
-
-			</p:panel>
+					</p:selectOneMenu></td>
+				</tr>
+			</table>
 		</h:form>
 	</ui:define>
 </ui:composition>
