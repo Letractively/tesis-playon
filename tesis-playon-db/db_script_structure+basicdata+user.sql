@@ -209,6 +209,7 @@ DROP TABLE IF EXISTS `color_vehiculo`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `color_vehiculo` (
   `nombre` varchar(50) NOT NULL,
+  `valorHexadecimal` varchar(6) NOT NULL,
   `colorVehiculoID` int(11) NOT NULL auto_increment,
   PRIMARY KEY (`colorVehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -221,10 +222,10 @@ CREATE TABLE `color_vehiculo` (
 
 LOCK TABLES `color_vehiculo` WRITE;
 /*!40000 ALTER TABLE `color_vehiculo` DISABLE KEYS */;
-INSERT INTO `color_vehiculo` (`nombre`, `colorVehiculoID`) 
-VALUES ('Blanco',1),('Negro',2),('Rojo',3),('Amarillo',4),
-	('Verde Claro',5),('Azul',6),('Celeste',7),('Gris Claro',8),
-	('Gris Oscuro',9),('Naranja',10),('Verde Oscuro',11),('Bordó',12);
+INSERT INTO `color_vehiculo` (`nombre`, `valorHexadecimal`, `colorVehiculoID`) 
+VALUES ('Blanco','FFFFFF',1),('Negro','000000',2),('Rojo','FF0000',3),('Amarillo','FFFF00',4),
+	('Verde Claro','32CD32',5),('Azul','0000FF',6),('Celeste','ADD8E6',7),('Gris Claro','D3D3D3',8),
+	('Gris Oscuro','A9A9A9',9),('Naranja','FF4500',10),('Verde Oscuro','006400',11),('Bordó','65212C',12);
 /*!40000 ALTER TABLE `color_vehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
