@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IModeloVehiculoDao;
+import tesis.playon.web.model.MarcaVehiculo;
 import tesis.playon.web.model.ModeloVehiculo;
 import tesis.playon.web.service.IModeloVehiculoService;
 
@@ -51,6 +52,12 @@ public class ModeloVehiculoService implements IModeloVehiculoService {
     public List<ModeloVehiculo> findAll() {
 	// TODO Auto-generated method stub
 	return getModeloVehiculoDao().findAll();
+    }
+    
+    @Override
+    public List<ModeloVehiculo> findByMarca(MarcaVehiculo marca) {
+	// TODO Auto-generated method stub
+	return getModeloVehiculoDao().findByMarca(marca);
     }
 
     public IModeloVehiculoDao getModeloVehiculoDao() {

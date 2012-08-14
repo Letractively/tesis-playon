@@ -41,6 +41,9 @@
         <bean id="Playa" class="tesis.playon.web.model.Playa" />
         <bean id="Tarifa" class="tesis.playon.web.model.Tarifa" />
         <bean id="RolesPorUsuario" class="tesis.playon.web.model.RolesPorUsuario" />
+        <bean id="MarcaVehiculo" class="tesis.playon.web.model.MarcaVehiculo" />
+        <bean id="ModeloVehiculo" class="tesis.playon.web.model.ModeloVehiculo" />
+        
         
         <!-- <bean id="CargoEmpleado" class="tesis.playon.web.model.CargoEmpleado" /> -->
         <!-- <bean id="ColorVehiculo" class="tesis.playon.web.model.ColorVehiculo" /> -->
@@ -49,8 +52,6 @@
         <!-- <bean id="EstadoDenuncia" class="tesis.playon.web.model.EstadoDenuncia" /> -->
         <!-- <bean id="EstadoPromocion" class="tesis.playon.web.model.EstadoPromocion" /> -->
         <!-- <bean id="EstadoPublicidad" class="tesis.playon.web.model.EstadoPublicidad" /> -->
-        <!-- <bean id="MarcaVehiculo" class="tesis.playon.web.model.MarcaVehiculo" /> -->
-        <!-- <bean id="ModeloVehiculo" class="tesis.playon.web.model.ModeloVehiculo" /> -->
         <!-- <bean id="Posicion" class="tesis.playon.web.model.Posicion" /> -->
         <!-- <bean id="TipoPago" class="tesis.playon.web.model.TipoPago" /> -->
         
@@ -101,6 +102,13 @@
         <bean id="RolesPorUsuarioService" class="tesis.playon.web.service.impl.RolesPorUsuarioService">
                 <property name="rolesPorUsuarioDao" ref="RolesPorUsuarioDao" />
         </bean>
+        
+        <bean id="MarcaVehiculoService" class="tesis.playon.web.service.impl.MarcaVehiculoService">
+                <property name="marcaVehiculoDao" ref="MarcaVehiculoDao" />
+        </bean>
+        <bean id="ModeloVehiculoService" class="tesis.playon.web.service.impl.ModeloVehiculoService">
+                <property name="modeloVehiculoDao" ref="ModeloVehiculoDao" />
+        </bean>
 
 
         <!-- User DAO Declaration -->
@@ -147,6 +155,13 @@
                 <property name="sessionFactory" ref="SessionFactory" />
         </bean>
         <bean id="RolesPorUsuarioDao" class="tesis.playon.web.dao.impl.RolesPorUsuarioDao">
+                <property name="sessionFactory" ref="SessionFactory" />
+        </bean>
+        
+        <bean id="MarcaVehiculoDao" class="tesis.playon.web.dao.impl.MarcaVehiculoDao">
+                <property name="sessionFactory" ref="SessionFactory" />
+        </bean>
+        <bean id="ModeloVehiculoDao" class="tesis.playon.web.dao.impl.ModeloVehiculoDao">
                 <property name="sessionFactory" ref="SessionFactory" />
         </bean>
       

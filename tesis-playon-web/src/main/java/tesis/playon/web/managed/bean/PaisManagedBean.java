@@ -129,10 +129,8 @@ public class PaisManagedBean implements Serializable {
 
     public void handlePaisChange() {
 	if (pais != null && !pais.equals("")) {
-	    System.out.println("PAIS: " + pais);
 	    provincias = provinciasData.get(pais);
 	} else {
-	    System.out.println("EL PAIS ERA NULOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 	    provincias = new HashMap<String, String>();
 	}
     }

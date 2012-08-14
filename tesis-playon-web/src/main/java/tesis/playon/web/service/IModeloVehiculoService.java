@@ -5,6 +5,7 @@ package tesis.playon.web.service;
 
 import java.util.List;
 
+import tesis.playon.web.model.MarcaVehiculo;
 import tesis.playon.web.model.ModeloVehiculo;
 
 /**
@@ -20,6 +21,8 @@ public interface IModeloVehiculoService {
     void delete(ModeloVehiculo modelo);
 
     ModeloVehiculo findByNombreModeloVehiculo(String nombreModelo);
+    
+    List<ModeloVehiculo> findByMarca(MarcaVehiculo marca);
     
     List<ModeloVehiculo> findAll();
 }
