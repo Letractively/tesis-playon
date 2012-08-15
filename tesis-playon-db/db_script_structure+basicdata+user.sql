@@ -224,8 +224,8 @@ LOCK TABLES `color_vehiculo` WRITE;
 /*!40000 ALTER TABLE `color_vehiculo` DISABLE KEYS */;
 INSERT INTO `color_vehiculo` (`nombre`, `valorHexadecimal`, `colorVehiculoID`) 
 VALUES ('Blanco','FFFFFF',1),('Negro','000000',2),('Rojo','FF0000',3),('Amarillo','FFFF00',4),
-	('Verde Claro','32CD32',5),('Azul','0000FF',6),('Celeste','ADD8E6',7),('Gris Claro','D3D3D3',8),
-	('Gris Oscuro','A9A9A9',9),('Naranja','FF4500',10),('Verde Oscuro','006400',11),('Bordó','65212C',12);
+	('Verde Claro','32CD32',5),('Azul','0000FF',6),('Celeste','1E90FF',7),('Gris Claro','C0C0C0',8),
+	('Gris Oscuro','696969',9),('Naranja','FF4500',10),('Verde Oscuro','006400',11),('Bordó','65212C',12);
 /*!40000 ALTER TABLE `color_vehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -579,8 +579,8 @@ CREATE TABLE `vehiculo` (
   `anio` int(11) DEFAULT NULL,
   `categoriaID` int(11) NOT NULL,
   `codigoBarra` varchar(50) DEFAULT NULL,
-  `colorID` int(11) DEFAULT NULL,
-  `habilitado` tinyint(1) DEFAULT NULL,
+  `colorVehiculoID` int(11) NOT NULL,
+  `habilitado` tinyint(1) DEFAULT 1,
   `modeloVehiculoID` int(11) NOT NULL,
   `patente` varchar(50) NOT NULL UNIQUE,
   `vehiculoID` int(11) NOT NULL auto_increment,
@@ -588,8 +588,10 @@ CREATE TABLE `vehiculo` (
   PRIMARY KEY (`vehiculoID`),
   KEY `categoriaID` (`categoriaID`),
   KEY `modeloVehiculoID` (`modeloVehiculoID`),
+  KEY `colorVehiculoID` (`colorVehiculoID`),
   KEY `clienteID` (`clienteID`),
   CONSTRAINT `FK_vehiculo_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
+  CONSTRAINT `FK_vehiculo_color_vehiculo` FOREIGN KEY (`colorVehiculoID`) REFERENCES `color_vehiculo` (`colorVehiculoID`),
   CONSTRAINT `FK_vehiculo_categoria_vehiculo` FOREIGN KEY (`categoriaID`) REFERENCES `categoria_vehiculo` (`categoriaVehiculoID`),
   CONSTRAINT `FK_vehiculo_modelo_vehiculo` FOREIGN KEY (`modeloVehiculoID`) REFERENCES `modelo_vehiculo` (`modeloVehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
