@@ -43,7 +43,7 @@ public class Vehiculo implements Serializable {
     private String codigoBarra;
 
     @ManyToOne
-    @JoinColumn(name = "colorID")
+    @JoinColumn(name = "colorVehiculoID")
     private ColorVehiculo colorVehiculo;
 
     @Column(name = "habilitado")

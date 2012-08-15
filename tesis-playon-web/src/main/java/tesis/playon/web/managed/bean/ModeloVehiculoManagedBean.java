@@ -87,6 +87,7 @@ public class ModeloVehiculoManagedBean implements Serializable {
     }
 
     public MarcaVehiculo getMarcaNula() {
+	modelosList = new ArrayList<ModeloVehiculo>();
         return null;
     }
 

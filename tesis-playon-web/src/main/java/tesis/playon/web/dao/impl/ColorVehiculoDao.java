@@ -37,14 +37,14 @@ public class ColorVehiculoDao implements IColorVehiculoDao {
     }
 
     public ColorVehiculo findByNombreColorVehiculo(String colorVehiculo) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from ColorVehiculo where nombre=?")
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from ColorVehiculo where nombre=? order by nombre")
 		.setParameter(0, colorVehiculo).list();
 	return (ColorVehiculo) list.get(0);
     }
 
     public List<ColorVehiculo> findAll() {
 	List<ColorVehiculo> colores = new ArrayList<ColorVehiculo>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from ColorVehiculo").list();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from ColorVehiculo order by nombre").list();
 	for (Object object : list) {
 	    colores.add((ColorVehiculo) object);
 	}

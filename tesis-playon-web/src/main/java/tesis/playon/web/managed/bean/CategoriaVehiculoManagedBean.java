@@ -39,6 +39,8 @@ public class CategoriaVehiculoManagedBean implements Serializable{
 
     private String descripcion;
     
+    private CategoriaVehiculo categoriaNula;
+    
     public String addCategoriaVehiculo() {
 	try {
 	    CategoriaVehiculo categoria = new CategoriaVehiculo();
@@ -97,5 +99,14 @@ public class CategoriaVehiculoManagedBean implements Serializable{
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public CategoriaVehiculo getCategoriaNula() {
+	categoriaNula = categoriaVehiculoList.get(0);
+        return categoriaNula;
+    }
+
+    public void setCategoriaNula(CategoriaVehiculo categoriaNula) {
+        this.categoriaNula = categoriaNula;
     }
 }

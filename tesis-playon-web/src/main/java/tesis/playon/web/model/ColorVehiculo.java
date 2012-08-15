@@ -32,6 +32,9 @@ public class ColorVehiculo implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
+    @Column(name = "valorHexadecimal")
+    private String valorHexadecimal;
+
     public ColorVehiculo(String nombre) {
 	this.nombre = nombre;
     }
@@ -51,9 +54,17 @@ public class ColorVehiculo implements Serializable {
 	return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
 	this.id = id;
 
+    }
+
+    public String getValorHexadecimal() {
+	return valorHexadecimal;
+    }
+
+    public void setValorHexadecimal(String valorHexadecimal) {
+	this.valorHexadecimal = valorHexadecimal;
     }
 
     public boolean equals(Object object) {
@@ -66,6 +77,9 @@ public class ColorVehiculo implements Serializable {
 	if (id != otroColor.id)
 	    return false;
 	if (nombre == null ? otroColor.nombre != null : !nombre.equals(otroColor.nombre))
+	    return false;
+	if (valorHexadecimal == null ? otroColor.valorHexadecimal != null : !valorHexadecimal
+		.equals(otroColor.valorHexadecimal))
 	    return false;
 
 	return true;
