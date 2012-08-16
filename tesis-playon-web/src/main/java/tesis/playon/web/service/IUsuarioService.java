@@ -3,7 +3,11 @@ package tesis.playon.web.service;
 import java.util.List;
 
 import tesis.playon.web.model.Usuario;
-
+/**
+ * 
+ * @author pablo
+ *
+ */
 public interface IUsuarioService {
 
     void save(Usuario usuario);

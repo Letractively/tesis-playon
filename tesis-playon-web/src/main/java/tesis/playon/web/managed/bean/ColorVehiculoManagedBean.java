@@ -28,6 +28,8 @@ public class ColorVehiculoManagedBean implements Serializable  {
     IColorVehiculoService colorVehiculoService;
     
     private List<ColorVehiculo> colorVehiculoList;
+    
+    private ColorVehiculo colorNulo;
 
     public IColorVehiculoService getColorVehiculoService() {
         return colorVehiculoService;
@@ -45,5 +47,14 @@ public class ColorVehiculoManagedBean implements Serializable  {
 
     public void setColorVehiculoList(List<ColorVehiculo> colorVehiculoList) {
         this.colorVehiculoList = colorVehiculoList;
+    }
+
+    public ColorVehiculo getColorNulo() {
+	colorNulo = new ColorVehiculo();
+        return colorNulo;
+    }
+
+    public void setColorNulo(ColorVehiculo colorNulo) {
+        this.colorNulo = colorNulo;
     } 
 }

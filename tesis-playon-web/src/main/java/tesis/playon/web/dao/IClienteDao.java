@@ -18,5 +18,7 @@ public interface IClienteDao {
 
     Cliente findByNumeroCliente(Integer numeroCliente);
     
+    Cliente findByNombreUsuario(String nombreUser);
+    
     List<Cliente> findAll();
 }

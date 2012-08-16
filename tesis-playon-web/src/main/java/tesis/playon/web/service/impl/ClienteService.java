@@ -47,6 +47,11 @@ public class ClienteService implements IClienteService{
     public Cliente findByNumeroCliente(Integer numeroCliente) {
 	return getClienteDao().findByNumeroCliente(numeroCliente);
     }
+    
+    @Override
+    public Cliente findByNombreUsuario(String nombreUser){
+	return getClienteDao().findByNombreUsuario(nombreUser);
+    }
 
     public IClienteDao getClienteDao() {
 	return clienteDao;
