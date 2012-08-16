@@ -9,8 +9,12 @@
 	<!-- resource security -->
 	<http auto-config="true" use-expressions="true">
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/secure/**"
+		<intercept-url pattern="/cliente/**"
 			access="hasRole('ROLE_ADMIN','ROLE_CLIENT')" />
+		<intercept-url pattern="/playa/**"
+			access="hasRole('ROLE_ADMIN','ROLE_PLAYA_EMPLEADO','ROLE_PLAYA_GERENTE')" />
+		<intercept-url pattern="/secure/**"
+			access="hasRole('ROLE_ADMIN','ROLE_AUDITOR','ROLE_CONTADOR','ROLE_USER','ROLE_CLIENT','ROLE_PLAYA_EMPLEADO','ROLE_PLAYA_GERENTE')" />
 		<intercept-url pattern="/**" access="permitAll" />
 		<form-login login-page="/login.html" />
 		<remember-me key="jsfspring-sec" services-ref="rememberMeServices" />

@@ -12,33 +12,30 @@
     		org.springframework.web.jsf.el.SpringBeanFacesELResolver
     	</el-resolver>
   	</application>
-  	
-  	<!-- Simple Navigation Rule -->
-<!--     <navigation-rule> -->
-<!--     	<display-name>index.xhtml</display-name> -->
-<!--     	<from-view-id>/index.xhtml</from-view-id> -->
-<!--     	<navigation-case> -->
-<!--     		<from-action>#{navegadorMB.navegarA}</from-action> -->
-<!--     		<from-outcome>Secured</from-outcome> -->
-<!--     		<to-view-id>/secure/logout.xhtml</to-view-id> -->
-<!--     		<redirect></redirect> -->
-<!--     	</navigation-case> -->
-<!--     </navigation-rule> -->
-    
-<!--     <navigation-rule> -->
-<!--     	<display-name>index.xhtml</display-name> -->
-<!--     	<from-view-id>/index.xhtml</from-view-id> -->
-<!--     	<navigation-case> -->
-<!--     		<from-action>#{navegadorMB.navegarA}</from-action> -->
-<!--     		<from-outcome>UnSecured</from-outcome> -->
-<!--     		<to-view-id>/about.xhtml</to-view-id> -->
-<!--     		<redirect></redirect> -->
-<!--     	</navigation-case> -->
-<!--     </navigation-rule> -->
    
    	<navigation-rule>
     	<display-name>admin/**</display-name>
     	<from-view-id>/admin/**</from-view-id>
+    	<navigation-case>
+    		<from-action>#{loginMB.logout}</from-action>
+    		<from-outcome>LoggedOut</from-outcome>
+    		<to-view-id>/login.xhtml</to-view-id>
+    	</navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+    	<display-name>cliente/**</display-name>
+    	<from-view-id>/cliente/**</from-view-id>
+    	<navigation-case>
+    		<from-action>#{loginMB.logout}</from-action>
+    		<from-outcome>LoggedOut</from-outcome>
+    		<to-view-id>/login.xhtml</to-view-id>
+    	</navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+    	<display-name>playa/**</display-name>
+    	<from-view-id>/playa/**</from-view-id>
     	<navigation-case>
     		<from-action>#{loginMB.logout}</from-action>
     		<from-outcome>LoggedOut</from-outcome>
@@ -66,6 +63,26 @@
     	</navigation-case>
     	<navigation-case>
     		<from-action>#{loginMB.login}</from-action>
+    		<from-outcome>SecuredAuditor</from-outcome>
+    		<to-view-id>/index.xhtml</to-view-id>
+    	</navigation-case>
+    	<navigation-case>
+    		<from-action>#{loginMB.login}</from-action>
+    		<from-outcome>SecuredContador</from-outcome>
+    		<to-view-id>/index.xhtml</to-view-id>
+    	</navigation-case>
+    	<navigation-case>
+    		<from-action>#{loginMB.login}</from-action>
+    		<from-outcome>SecuredGerentePlaya</from-outcome>
+    		<to-view-id>/index.xhtml</to-view-id>
+    	</navigation-case>
+    	<navigation-case>
+    		<from-action>#{loginMB.login}</from-action>
+    		<from-outcome>SecuredUser</from-outcome>
+    		<to-view-id>/index.xhtml</to-view-id>
+    	</navigation-case>
+    	<navigation-case>
+    		<from-action>#{loginMB.login}</from-action>
     		<from-outcome>SecuredClient</from-outcome>
     		<to-view-id>/index.xhtml</to-view-id>
     	</navigation-case>
@@ -88,6 +105,26 @@
     		<from-action>#{loginMB.login}</from-action>
     		<from-outcome>SecuredAdmin</from-outcome>
     		<to-view-id>/admin/index.xhtml</to-view-id>
+    	</navigation-case>
+    	<navigation-case>
+    		<from-action>#{loginMB.login}</from-action>
+    		<from-outcome>SecuredAuditor</from-outcome>
+    		<to-view-id>/index.xhtml</to-view-id>
+    	</navigation-case>
+    	<navigation-case>
+    		<from-action>#{loginMB.login}</from-action>
+    		<from-outcome>SecuredContador</from-outcome>
+    		<to-view-id>/index.xhtml</to-view-id>
+    	</navigation-case>
+    	<navigation-case>
+    		<from-action>#{loginMB.login}</from-action>
+    		<from-outcome>SecuredGerentePlaya</from-outcome>
+    		<to-view-id>/index.xhtml</to-view-id>
+    	</navigation-case>
+    	<navigation-case>
+    		<from-action>#{loginMB.login}</from-action>
+    		<from-outcome>SecuredUser</from-outcome>
+    		<to-view-id>/index.xhtml</to-view-id>
     	</navigation-case>
     	<navigation-case>
     		<from-action>#{loginMB.login}</from-action>

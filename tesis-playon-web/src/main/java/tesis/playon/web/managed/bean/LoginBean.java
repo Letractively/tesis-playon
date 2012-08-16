@@ -30,18 +30,14 @@ public class LoginBean {
 
     private static final String ROLE_ADMIN = "[ROLE_ADMIN]";
 
-    @SuppressWarnings("unused")
     private static final String ROLE_AUDITOR = "[ROLE_AUDITOR]";
 
-    @SuppressWarnings("unused")
     private static final String ROLE_CONTADOR = "[ROLE_CONTADOR]";
 
-    @SuppressWarnings("unused")
     private static final String ROLE_USER = "[ROLE_USER]";
 
     private static final String ROLE_CLIENT = "[ROLE_CLIENT]";
 
-    @SuppressWarnings("unused")
     private static final String ROLE_PLAYA_EMPLEADO = "[ROLE_PLAYA_EMPLEADO]";
 
     private static final String ROLE_PLAYA_GERENTE = "[ROLE_PLAYA_GERENTE]";
@@ -87,8 +83,16 @@ public class LoginBean {
 	    setRol(result.getAuthorities().toString());
 	    if (ROLE_ADMIN.equals(result.getAuthorities().toString())) {
 		return "SecuredAdmin";
+	    } else if (ROLE_AUDITOR.equals(result.getAuthorities().toString())) {
+		return "SecuredAuditor";
+	    } else if (ROLE_CONTADOR.equals(result.getAuthorities().toString())) {
+		return "SecuredContador";
 	    } else if (ROLE_PLAYA_GERENTE.equals(result.getAuthorities().toString())) {
 		return "SecuredGerentePlaya";
+	    } else if (ROLE_USER.equals(result.getAuthorities().toString())) {
+		return "SecuredUser";
+	    } else if (ROLE_PLAYA_EMPLEADO.equals(result.getAuthorities().toString())) {
+		return "SecuredEmpleadoPlaya";
 	    } else if (ROLE_CLIENT.equals(result.getAuthorities().toString())) {
 		return "SecuredClient";
 	    } else {
