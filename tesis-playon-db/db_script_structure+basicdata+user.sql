@@ -1401,10 +1401,13 @@ INSERT INTO `usuario` (`apellido`, `email`, `nombre`, `password`, `sesion`, `usu
 VALUES ('Moreno','pablo_la31@hotmail.com','Pablo','123456',NULL,'pablo_la31',1,1,'32987654'),
     ('Bostico','alebostico@hotmail.com','Alejandro','123456',NULL,'alejandro',2,1,'11111111'),
     ('Arribere','gonzaloarribere@gmail.com','Gonzalo','123456',NULL,'gonzalo',3,1,'22222222'),
-    ('Morales Batovski','morales.batovski@gmail.com','Raúl Gustavo','123456',NULL,'gmorales',4,1,'33333333'),
+    ('Morales Batovski','morales.batovski@gmail.com','Raúl Gustavo','123456',NULL,'gmorales',4,1,'29966905'),
     ('Perez Villar','ericperezvillar@gmail.com','Eric','123456',NULL,'eric',5,1,'44444444'),
     ('Guest','guest@playon.com.ar','Guest','123456',NULL,'guest',6,1,'55555555'),
-    ('Admin','admin@playon.com.ar','Admin','123456',NULL,'admin',7,1,'66666666');
+    ('Admin','admin@playon.com.ar','Admin','123456',NULL,'admin',7,1,'66666666'),
+    ('Pérez','jperez@playon.com.ar','Juan','123456',NULL,'jperez',8,1,'31234234'),
+    ('Rico','jrico@playon.com.ar','Jorge','123456',NULL,'jrico',9,1,'13450450'),
+    ('García','jgarcia@playon.com.ar','Javier','123456',NULL,'jgarcia',10,1,'20567653');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1415,13 +1418,16 @@ UNLOCK TABLES;
 LOCK TABLES `roles_por_usuario` WRITE;
 /*!40000 ALTER TABLE `roles_por_usuario` DISABLE KEYS */;
 INSERT INTO `roles_por_usuario` (`rolesPorUsuarioID`, `usuario`, `rolUsuario`) 
-VALUES (1,'pablo_la31', 'ROLE_ADMIN'),   /* pablo_la31   --> ROLE_ADMIN */
-    (2,'alejandro', 'ROLE_ADMIN'),       /* alejandro    --> ROLE_ADMIN */
-    (3,'gonzalo', 'ROLE_ADMIN'),         /* gonzalo      --> ROLE_ADMIN */
-    (4,'gmorales', 'ROLE_ADMIN'),        /* gmorales     --> ROLE_ADMIN */
-    (5,'eric', 'ROLE_ADMIN'),            /* eric         --> ROLE_ADMIN */
-    (6,'guest', 'ROLE_CLIENT'),          /* guest        --> ROLE_CLIENT */
-    (7,'admin', 'ROLE_ADMIN');           /* admin        --> ROLE_ADMIN */
+VALUES (1,'pablo_la31', 'ROLE_ADMIN'),   	/* pablo_la31   --> ROLE_ADMIN */
+    (2,'alejandro', 'ROLE_ADMIN'),       	/* alejandro    --> ROLE_ADMIN */
+    (3,'gonzalo', 'ROLE_ADMIN'),         	/* gonzalo      --> ROLE_ADMIN */
+    (4,'gmorales', 'ROLE_ADMIN'),        	/* gmorales     --> ROLE_ADMIN */
+    (5,'eric', 'ROLE_ADMIN'),            	/* eric         --> ROLE_ADMIN */
+    (6,'guest', 'ROLE_CLIENT'),          	/* guest        --> ROLE_CLIENT */
+    (7,'admin', 'ROLE_ADMIN'),           	/* admin        --> ROLE_ADMIN */
+    (8,'jperez', 'ROLE_CLIENT'),         	/* jperez  	    --> ROLE_CLIENT */
+    (9,'jrico', 'ROLE_PLAYA_GERENTE'),   	/* jrico        --> ROLE_PLAYA_GERENTE */
+    (10,'jgarcia', 'ROLE_PLAYA_EMPLEADO');	/* jgarcia      --> ROLE_PLAYA_EMPLEADO */    
 /*!40000 ALTER TABLE `roles_por_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
