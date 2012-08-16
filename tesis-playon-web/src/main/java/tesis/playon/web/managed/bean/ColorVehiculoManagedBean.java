@@ -51,6 +51,8 @@ public class ColorVehiculoManagedBean implements Serializable  {
 
     public ColorVehiculo getColorNulo() {
 	colorNulo = new ColorVehiculo();
+	colorNulo.setId(0);
+	colorNulo.setNombre("Seleccione un color");
         return colorNulo;
     }
 

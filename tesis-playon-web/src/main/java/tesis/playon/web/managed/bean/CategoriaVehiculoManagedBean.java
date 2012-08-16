@@ -102,7 +102,9 @@ public class CategoriaVehiculoManagedBean implements Serializable{
     }
 
     public CategoriaVehiculo getCategoriaNula() {
-	categoriaNula = categoriaVehiculoList.get(0);
+	categoriaNula = new CategoriaVehiculo();
+	categoriaNula.setId(0);
+	categoriaNula.setNombre("Seleccione una Categoria");
         return categoriaNula;
     }
 

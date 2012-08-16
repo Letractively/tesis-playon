@@ -46,7 +46,6 @@ public class VehiculoManagedBean implements Serializable {
 
     private ColorVehiculo colorVehiculo;
 
-    @SuppressWarnings("unused")
     private ColorVehiculo colorVehiculoNulo;
 
     private boolean habilitado;
