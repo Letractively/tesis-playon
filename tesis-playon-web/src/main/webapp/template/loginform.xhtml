@@ -4,11 +4,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+
 	<h:form id="loginFormId" prependId="false">
 		<h:panelGroup rendered="#{!loginMB.logueado}">
-			<h:link outcome="/login.xhtml">
+			<h:outputLink id="loginLink" value="javascript:void(0)"
+				onclick="dlg.show()" title="login">
 				<f:verbatim>Iniciar sesi&#243;n</f:verbatim>
-			</h:link> |
+			</h:outputLink>
+			 |
 			<h:link outcome="/solicitudclienteadd.xhtml">
 				<f:verbatim>Registrarse</f:verbatim>
 			</h:link>
@@ -19,5 +22,49 @@
 			<td><h:commandLink action="#{loginMB.logout}">Cerrar sesi&#243;n</h:commandLink></td>
 		</h:panelGroup>
 	</h:form>
+
+	<p:growl id="growl" showDetail="true" life="3000" />
+
+	<p:dialog id="dialog" header="Login" widgetVar="dlg" modal="true">
+		<h:form>
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="usuario" value="Usuario:" />
+				<p:inputText value="#{loginMB.usuario}" id="usuario" required="true"
+					label="Usuario" />
+
+				<h:outputLabel for="password" value="Contraseña:" />
+				<h:inputSecret value="#{loginMB.password}" id="password"
+					required="true" label="Contraseña" />
+
+				<h:selectBooleanCheckbox id="recordar" value="#{loginMB.recordar}"
+					label="Recordar" />
+				<h:outputLabel for="recordar" value="Recordar Usuario" />
+
+				<f:facet name="footer">
+					<p:commandButton id="btnLoginId" value="Login" update=":growl"
+						action="#{loginMB.login}" redirect="true"
+						oncomplete="handleLoginRequest(xhr, status, args)" />
+				</f:facet>
+			</h:panelGrid>
+
+		</h:form>
+	</p:dialog>
+
+	<script type="text/javascript">
+		function handleLoginRequest(xhr, status, args) {
+			if(args.validationFailed || !args.logueado) {
+				jQuery('#dialog').effect("shake", {
+					times : 3
+				}, 100);
+			} else {
+				dlg.hide();
+				//jQuery('#loginLink').fadeOut();
+				//jQuery('#loginLinklogueado').fadeOut();
+				//window.location.href = args.redirect;
+				//location.reload();
+			}
+		}
+	</script>
 
 </ui:composition>

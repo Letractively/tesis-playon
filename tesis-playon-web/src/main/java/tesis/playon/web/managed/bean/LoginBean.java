@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.primefaces.context.RequestContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -63,6 +64,7 @@ public class LoginBean {
 
     public String login() {
 	Authentication result = null;
+	RequestContext context = RequestContext.getCurrentInstance();
 	try {
 	    if ("TRUE".equalsIgnoreCase(this.getRecordar())) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(getUsuario());
@@ -80,6 +82,7 @@ public class LoginBean {
 	    }
 	    SecurityContextHolder.getContext().setAuthentication(result);
 	    setLogueado(true);
+	    context.addCallbackParam("logueado", logueado);
 	    setRol(result.getAuthorities().toString());
 	    if (ROLE_ADMIN.equals(result.getAuthorities().toString())) {
 		return "SecuredAdmin";
@@ -102,9 +105,9 @@ public class LoginBean {
 	    e.printStackTrace();
 	    FacesMessage fm = new FacesMessage("Usuario o contraseña incorrecto");
 	    FacesContext.getCurrentInstance().addMessage("Usuario o contraseña incorrecto", fm);
+	    context.addCallbackParam("logueado", logueado);
 	    return "UnSecured";
 	}
-
     }
 
     public String logout() {

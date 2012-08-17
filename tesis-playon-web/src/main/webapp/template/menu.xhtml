@@ -16,20 +16,22 @@
 							outcome="solicitudplayaadd" /></li>
 				</ul></li>
 
-			<ui:fragment rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}">
-				<li><span class="opener">Menu Clientes<b></b></span>
-					<ul>
-						<li><h:link value="Admin Playa" outcome="about" /></li>
-						<li><h:link value="Admin Playa" outcome="about" /></li>
-					</ul></li>
-			</ui:fragment>
+			<ui:fragment rendered="#{loginMB.logueado}">
+				<ui:fragment rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}">
+					<li><span class="opener">Menu Clientes<b></b></span>
+						<ul>
+							<li><h:link value="Admin Playa" outcome="about" /></li>
+							<li><h:link value="Admin Playa" outcome="about" /></li>
+						</ul></li>
+				</ui:fragment>
 
-			<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_GERENTE]'}">
-				<li><span class="opener">Menu Playas<b></b></span>
-					<ul>
-						<li><h:link value="Admin Playa" outcome="about" /></li>
-						<li><h:link value="Admin Playa" outcome="about" /></li>
-					</ul></li>
+				<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_GERENTE]'}">
+					<li><span class="opener">Menu Playas<b></b></span>
+						<ul>
+							<li><h:link value="Admin Playa" outcome="about" /></li>
+							<li><h:link value="Admin Playa" outcome="about" /></li>
+						</ul></li>
+				</ui:fragment>
 			</ui:fragment>
 
 			<li><h:link value="Acerca de" outcome="about" /></li>
