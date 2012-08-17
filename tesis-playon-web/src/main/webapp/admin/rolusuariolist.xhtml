@@ -11,8 +11,7 @@
 		<h:form>
 			<p:dataTable id="rolesUsuario" var="rolUsuario"
 				paginator="true" rows="5" paginatorPosition="bottom"
-				value="#{rolUsuarioMB.rolUsuarioList}"
-				style="width: 10%">
+				value="#{rolUsuarioMB.rolUsuarioList}">
 
 				<f:facet name="header">
 				Roles de usuario
@@ -52,8 +51,7 @@
 				</p:column>
 				
 				<p:column>
-					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
-						style="height:20px; width:22px;">
+					<h:commandButton id="editar" class="ui-icon ui-icon-pencil column-options-button">
 					</h:commandButton>
 					<p:tooltip for="editar" value="Editar Rol" />
 				</p:column>
@@ -68,9 +66,10 @@
 				</p:column>
 
 			</p:dataTable>
+			 
 			
 			<p>
-				<h:panelGroup layout="block" style="text-align: right; width: 40%;">
+				<h:panelGroup layout="block" style="text-align: right;">
 					<p:commandButton id="addUsuario" value="Nuevo Rol"
 						action="/admin/rolusuarioadd.html?faces-redirect=true" ajax="false" />
 				</h:panelGroup>

@@ -12,7 +12,7 @@
 
 			<p:growl id="messages" />
 
-			<p:dataTable id="clientes" var="cliente" style="width: 90%"
+			<p:dataTable id="clientes" var="cliente"
 				paginator="true" rows="5" value="#{clienteMB.clienteList}"
 				emptyMessage="No existen clientes" paginatorPosition="bottom">
 
@@ -124,7 +124,7 @@
 			</p:confirmDialog>
 
 			<p>
-				<h:panelGroup layout="block" style="text-align: right; width: 90%;">
+				<h:panelGroup layout="block" style="text-align: right;">
 					<p:commandButton id="addCliente" value="Nuevo Cliente"
 						action="/admin/clienteadd.html?faces-redirect=true" ajax="false" />
 				</h:panelGroup>
