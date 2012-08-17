@@ -49,23 +49,26 @@
 
 .column-options {
 	font-size: 10pt;
-	width: 100px;
+	text-align: center;
+	width: 70px;
 }
 
-.column-options ul {
-	list-style-type: none;
-	display: inline;
-	margin: 0;
-	padding: 0;
+.ui-icon {
+	display:inline;
 }
 
-.column-options li {
-	width: 25px;
+.column-options-button-first {
+	height: 20px;
+	width: 22px;
+	display:inline;
+	margin-left: 0px;
 }
 
 .column-options-button {
 	height: 20px;
 	width: 22px;
+	display:inline;
+	margin-left: 5px;
 }
 
 .input-font {
