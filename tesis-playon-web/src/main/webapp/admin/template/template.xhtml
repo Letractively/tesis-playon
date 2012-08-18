@@ -28,7 +28,17 @@
 			</div>
 
 			<div class="ui-corner-all ui-shadow admin-menubar">
-				<ui:include src="menubar.xhtml" />
+
+				<ui:fragment rendered="#{loginMB.logueado}">
+					<ui:fragment rendered="#{loginMB.rol eq '[ROLE_ADMIN]'}">
+						<ui:include src="menubar.xhtml" />
+					</ui:fragment>
+					<ui:fragment rendered="#{loginMB.rol eq '[ROLE_AUDITOR]'}">
+						<ui:include src="menubarAudit.xhtml" />
+					</ui:fragment>
+				</ui:fragment>
+
+
 			</div>
 
 			<div class="admin-container-nomenu">

@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- Iconos del menu:
+			http://jquery-ui.googlecode.com/svn/tags/1.6rc5/tests/static/icons.html
+	 -->
+
+	<h:form>
+
+		<p:menubar>
+			<p:menuitem value="Home" url="#{request.contextPath}/../admin"
+				icon="ui-icon-home" />
+
+			<p:submenu label="Auditoría" icon="ui-icon-help">
+				<p:menuitem value="Playas Pendientes"
+					url="#{request.contextPath}/../admin/playaspendienteslist.html" />
+				<p:menuitem value="Playas Rechazadas"
+					url="#{request.contextPath}/../admin/playaspendienteslist.html" />
+			</p:submenu>
+
+			<p:submenu label="Usuario" icon="ui-icon-help">
+				<p:menuitem value="Cambiar Contraseña"
+					url="#{request.contextPath}/../admin/" />
+				<p:menuitem value="Cerrar sesión" icon="ui-icon-circle-close"
+					action="#{loginMB.logout}" />
+			</p:submenu>
+
+		</p:menubar>
+
+	</h:form>
+</ui:composition>
