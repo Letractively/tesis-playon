@@ -184,6 +184,12 @@
 			<version>1.0.6</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>dot-luv</artifactId>
+			<version>1.0.7</version>
+		</dependency>
+
 		<!-- JSON -->
 
 		<dependency>
@@ -198,7 +204,8 @@
 		<finalName>tesis-playon-web</finalName>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>

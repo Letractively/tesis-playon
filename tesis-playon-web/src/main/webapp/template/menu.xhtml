@@ -18,18 +18,18 @@
 
 			<ui:fragment rendered="#{loginMB.logueado}">
 				<ui:fragment rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}">
-					<li><span class="opener">Menu Clientes<b></b></span>
+					<li><span class="opener">Menu Cliente<b></b></span>
 						<ul>
-							<li><h:link value="Admin Playa" outcome="about" /></li>
-							<li><h:link value="Admin Playa" outcome="about" /></li>
+							<li><h:link value="Perfil" outcome="about" /></li>
+							<li><h:link value="Cuenta" outcome="about" /></li>
 						</ul></li>
 				</ui:fragment>
 
 				<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_GERENTE]'}">
-					<li><span class="opener">Menu Playas<b></b></span>
+					<li><span class="opener">Menu Playa<b></b></span>
 						<ul>
-							<li><h:link value="Admin Playa" outcome="about" /></li>
-							<li><h:link value="Admin Playa" outcome="about" /></li>
+							<li><h:link value="Perfil" outcome="about" /></li>
+							<li><h:link value="Empleados" outcome="about" /></li>
 						</ul></li>
 				</ui:fragment>
 			</ui:fragment>
