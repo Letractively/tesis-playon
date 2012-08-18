@@ -24,6 +24,16 @@
     </navigation-rule>
     
     <navigation-rule>
+    	<display-name>auditoria/**</display-name>
+    	<from-view-id>/auditoria/**</from-view-id>
+    	<navigation-case>
+    		<from-action>#{loginMB.logout}</from-action>
+    		<from-outcome>LoggedOut</from-outcome>
+    		<to-view-id>/login.xhtml</to-view-id>
+    	</navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
     	<display-name>cliente/**</display-name>
     	<from-view-id>/cliente/**</from-view-id>
     	<navigation-case>

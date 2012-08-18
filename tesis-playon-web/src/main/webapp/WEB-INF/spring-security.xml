@@ -9,6 +9,8 @@
 	<!-- resource security -->
 	<http auto-config="true" use-expressions="true">
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/auditoria/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/auditoria/**" access="hasRole('ROLE_AUDITOR')" />
 		<intercept-url pattern="/cliente/**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/cliente/**" access="hasRole('ROLE_CLIENT')" />
 		<intercept-url pattern="/playa/**" access="hasRole('ROLE_ADMIN')" />
