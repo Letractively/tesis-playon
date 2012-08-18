@@ -139,6 +139,14 @@ public class PlayaManagedBean implements Serializable {
     // para modificar una playa
     private static Playa playaSelected;
 
+    public void preRenderView() {
+	if (null != getPlayaResultadoBusqueda() && null == getDireccionBusqueda()) {
+	    playaResultadoBusqueda.clear();
+	} else if (null != getPlayaResultadoBusqueda() && getDireccionBusqueda().trim().isEmpty()) {
+	    playaResultadoBusqueda.clear();
+	}
+    }
+
     public String addPlayaAdmin() {
 	try {
 	    EstadoPlaya estado = new EstadoPlaya();
@@ -383,28 +391,31 @@ public class PlayaManagedBean implements Serializable {
     }
 
     public void buscarPlaya() {
-	try {
 
-	    latLonUtil = new LatitudlongitudUtil();
-	    // GeoposicionDePlaya
-	    respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda() + ", Cordoba, Argentina");
-	    coordenadas = respuesta.toString();
+	if (null != getDireccionBusqueda() && !getDireccionBusqueda().trim().isEmpty()) {
+	    try {
 
-	    playaResultadoBusqueda = new ArrayList<Playa>();
-	    for (Playa playaAux : getPlayaList()) {
-		Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
-		if (comparacion < getDistancia() && playaAux.getEstado().getId()==2) {
-		    playaResultadoBusqueda.add(playaAux);
-		    LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
-		    advancedModel.addOverlay(new Marker(coord1, playaAux.toString2(), null,
-			    "http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
+		latLonUtil = new LatitudlongitudUtil();
+		// GeoposicionDePlaya
+		respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda().trim() + ", Cordoba, Argentina");
+		coordenadas = respuesta.toString();
+
+		playaResultadoBusqueda = new ArrayList<Playa>();
+		for (Playa playaAux : getPlayaList()) {
+		    Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
+		    if (comparacion < getDistancia() && playaAux.getEstado().getId() == 2) {
+			playaResultadoBusqueda.add(playaAux);
+			LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
+			advancedModel.addOverlay(new Marker(coord1, playaAux.toString2(), null,
+				"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
+		    }
+		    LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
+		    advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
+			    "http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
 		}
-		LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
-		advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
-			"http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
+	    } catch (Exception e) {
+		e.printStackTrace();
 	    }
-	} catch (Exception e) {
-	    e.printStackTrace();
 	}
     }
 
@@ -744,4 +755,5 @@ public class PlayaManagedBean implements Serializable {
     public Marker getMarker() {
 	return marker;
     }
+
 }

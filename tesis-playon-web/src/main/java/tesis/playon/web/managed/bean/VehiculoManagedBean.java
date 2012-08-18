@@ -80,8 +80,8 @@ public class VehiculoManagedBean implements Serializable {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se agregó correctamente el vehiculo con patente: " + vehiculo.getPatente(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return "perfilcliente"; //Hay q modificar el path xq llevara otro  template
-	    
+	    return "perfilcliente"; // Hay q modificar el path xq llevara otro template
+
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo agregar el vehículo con patente: " + vehiculo.getPatente(),
@@ -89,7 +89,7 @@ public class VehiculoManagedBean implements Serializable {
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}
-	return "../transaccionerror"; //Hay q modificar el path xq llevara otro  template
+	return "../transaccionerror"; // Hay q modificar el path xq llevara otro template
     }
 
     public IVehiculoService getVehiculoService() {
@@ -173,10 +173,11 @@ public class VehiculoManagedBean implements Serializable {
     }
 
     public ColorVehiculo getColorVehiculoNulo() {
-	return null;
+	return colorVehiculoNulo;
     }
 
     public void setColorVehiculoNulo(ColorVehiculo colorVehiculoNulo) {
 	this.colorVehiculoNulo = colorVehiculoNulo;
     }
+
 }

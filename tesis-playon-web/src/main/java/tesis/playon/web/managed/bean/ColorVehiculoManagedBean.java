@@ -34,7 +34,7 @@ public class ColorVehiculoManagedBean implements Serializable {
 
     private String nombre;
 
-    // //para modificar un Color
+    // para modificar un Color
     // private static ColorVehiculo colorSelected;
 
     public void deleteColorVehiculo(ColorVehiculo color) {

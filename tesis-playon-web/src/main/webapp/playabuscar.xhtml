@@ -5,6 +5,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<h:form>
+		<f:event type="preRenderView" listener="#{playaMB.preRenderView}" />
 		<p:growl id="messages" />
 		<table style="margin-left: 100px;">
 			<tr>
@@ -29,8 +30,9 @@
 				<td></td>
 			</tr>
 			<tr style="text-align: right;">
-				<td colspan="3"><p:commandButton id="btnBuscarId" update="playas"
-						value="Buscar" action="#{playaMB.buscarPlaya}" ajax="false" /></td>
+				<td colspan="3"><p:commandButton id="btnBuscarId"
+						update="playas" value="Buscar" action="#{playaMB.buscarPlaya}"
+						ajax="false" /></td>
 			</tr>
 		</table>
 		<p></p>
@@ -46,54 +48,54 @@
             	</f:facet>
 
 			<p:column headerText="Nombre Comercial" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.nombreComercial}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{playa.nombreComercial}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{playa.nombreComercial}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{playa.nombreComercial}"
+							styleClass="input-font" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
 
-				<p:column headerText="Barrio" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.barrio.nombre}" />
-						</f:facet>
-						<f:facet name="input">
-							<h:selectOneMenu value="#{playa.barrio}">
-								<f:selectItems value="#{barrioMB.barrioList}" var="barrio"
-									itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
-								<f:converter converterId="barrioConverter" />
-							</h:selectOneMenu>
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				
-				<p:column headerText="Domicilio" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.domicilio}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{playa.domicilio}" styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+			<p:column headerText="Barrio" styleClass="column-font">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{playa.barrio.nombre}" />
+					</f:facet>
+					<f:facet name="input">
+						<h:selectOneMenu value="#{playa.barrio}">
+							<f:selectItems value="#{barrioMB.barrioList}" var="barrio"
+								itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
+							<f:converter converterId="barrioConverter" />
+						</h:selectOneMenu>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
 
-				<p:column headerText="Disponibilidad" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.disponibilidad}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{playa.disponibilidad}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+			<p:column headerText="Domicilio" styleClass="column-font">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{playa.domicilio}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{playa.domicilio}" styleClass="input-font" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Disponibilidad" styleClass="column-font">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{playa.disponibilidad}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{playa.disponibilidad}"
+							styleClass="input-font" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
 
 			<p:column>
 				<h:commandButton id="verTarifa" class="ui-icon ui-icon-tag"
@@ -106,7 +108,7 @@
 		</p:dataTable>
 		<p></p>
 		<p></p>
-		<h:body  style="width: 100%">
+		<h:body style="width: 100%">
 			<f:view contentType="text/html">
 				<h1>Playas encontradas:</h1>
 				<script src="http://maps.google.com/maps/api/js?sensor=false"

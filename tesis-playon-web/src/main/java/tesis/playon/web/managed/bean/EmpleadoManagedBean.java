@@ -79,7 +79,7 @@ public class EmpleadoManagedBean implements Serializable {
 
     private String telefono;
 
-    private Integer nroCuenta;
+    // private Integer nroCuenta;
 
     private Date fechaCreacion;
 
@@ -95,7 +95,7 @@ public class EmpleadoManagedBean implements Serializable {
 	try {
 	    Empleado empleado = new Empleado();
 	    Usuario usuario = addUsuario();
-	    CargoEmpleado cargo = addCargoEmpleado();
+	    // CargoEmpleado cargo = addCargoEmpleado();
 
 	    empleado.setCargoEmpleado(cargoEmpleado);
 	    empleado.setLegajo(getLegajo());

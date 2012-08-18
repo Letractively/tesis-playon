@@ -12,7 +12,7 @@
     		org.springframework.web.jsf.el.SpringBeanFacesELResolver
     	</el-resolver>
   	</application>
-   
+  	
    	<navigation-rule>
     	<display-name>admin/**</display-name>
     	<from-view-id>/admin/**</from-view-id>
