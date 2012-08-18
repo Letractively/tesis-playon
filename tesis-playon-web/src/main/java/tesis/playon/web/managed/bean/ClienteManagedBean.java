@@ -177,6 +177,7 @@ public class ClienteManagedBean implements Serializable {
 	    usuario.setPassword(getPassword());
 	    usuario.setNombreUser(getNombreUser());
 	    usuario.setTipoDoc(getTipoDoc());
+	    usuario.setEnable(new Boolean(true));
 	    getUsuarioService().save(usuario);
 	    return usuario;
 	} catch (DataAccessException e) {
