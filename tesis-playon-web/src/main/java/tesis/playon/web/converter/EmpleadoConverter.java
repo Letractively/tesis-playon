@@ -14,7 +14,7 @@ import tesis.playon.web.model.Empleado;
  * @author Pablo
  *
  */
-@FacesConverter(value = "playaConverter")
+@FacesConverter(value = "empleadoConverter")
 public class EmpleadoConverter implements Converter{
     
     @Override

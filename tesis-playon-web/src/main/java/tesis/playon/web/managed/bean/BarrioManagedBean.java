@@ -17,13 +17,13 @@ import tesis.playon.web.service.IBarrioService;
 /**
  * 
  * @author alejandro
- *
+ * 
  */
 
 @ManagedBean(name = "barrioMB")
 @RequestScoped
-public class BarrioManagedBean implements Serializable{
-    
+public class BarrioManagedBean implements Serializable {
+
     private static final long serialVersionUID = 6773490680356877684L;
 
     private static final String LISTA_BARRIO = "barriolist";
@@ -34,7 +34,7 @@ public class BarrioManagedBean implements Serializable{
     IBarrioService barrioService;
 
     List<Barrio> barrioList;
-    
+
     private String nombre;
 
     private Localidad localidad;
@@ -65,38 +65,37 @@ public class BarrioManagedBean implements Serializable{
     }
 
     public IBarrioService getBarrioService() {
-        return barrioService;
+	return barrioService;
     }
 
     public void setBarrioService(IBarrioService barrioService) {
-        this.barrioService = barrioService;
+	this.barrioService = barrioService;
     }
 
     public List<Barrio> getBarrioList() {
-	barrioList = new  ArrayList<Barrio>();
+	barrioList = new ArrayList<Barrio>();
 	barrioList.addAll(getBarrioService().findAll());
-        return barrioList;
+	return barrioList;
     }
 
     public void setBarrioList(List<Barrio> barrioList) {
-        this.barrioList = barrioList;
+	this.barrioList = barrioList;
     }
 
     public String getNombre() {
-        return nombre;
+	return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+	this.nombre = nombre;
     }
 
     public Localidad getLocalidad() {
-        return localidad;
+	return localidad;
     }
 
     public void setLocalidad(Localidad localidad) {
-        this.localidad = localidad;
+	this.localidad = localidad;
     }
 
-   
 }
