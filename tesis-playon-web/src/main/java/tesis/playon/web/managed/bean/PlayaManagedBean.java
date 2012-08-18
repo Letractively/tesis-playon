@@ -7,7 +7,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
@@ -39,7 +39,7 @@ import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
  * 
  */
 @ManagedBean(name = "playaMB")
-@RequestScoped
+@SessionScoped
 public class PlayaManagedBean implements Serializable {
 
     private static final long serialVersionUID = -1085389423375986168L;

@@ -11,7 +11,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.springframework.dao.DataAccessException;
@@ -29,7 +29,7 @@ import tesis.playon.web.service.ITarifaService;
  * 
  */
 @ManagedBean(name = "tarifaMB")
-@RequestScoped
+@SessionScoped
 public class TarifaManagedBean implements Serializable {
 
     private static final long serialVersionUID = -1085389423375986168L;
