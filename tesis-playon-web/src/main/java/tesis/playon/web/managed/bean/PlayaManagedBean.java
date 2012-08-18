@@ -400,6 +400,7 @@ public class PlayaManagedBean implements Serializable {
 		respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda().trim() + ", Cordoba, Argentina");
 		coordenadas = respuesta.toString();
 
+
 		playaResultadoBusqueda = new ArrayList<Playa>();
 		for (Playa playaAux : getPlayaList()) {
 		    Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
@@ -412,6 +413,7 @@ public class PlayaManagedBean implements Serializable {
 		    LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
 		    advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
 			    "http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
+
 		}
 	    } catch (Exception e) {
 		e.printStackTrace();
@@ -755,5 +757,4 @@ public class PlayaManagedBean implements Serializable {
     public Marker getMarker() {
 	return marker;
     }
-
 }
