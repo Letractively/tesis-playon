@@ -25,25 +25,31 @@
 
 	<p:growl id="growl" showDetail="true" life="3000" />
 
-	<p:dialog id="dialog" header="Login" widgetVar="dlg" modal="true">
+	<p:dialog id="dialog" header="Login" widgetVar="dlg" modal="true"
+		resizable="false">
 		<h:form>
 
 			<h:panelGrid columns="2" cellpadding="5">
 				<h:outputLabel for="usuario" value="Usuario:" />
-				<p:inputText value="#{loginMB.usuario}" id="usuario" required="true"
-					label="Usuario" />
+				<p:inputText value="#{loginMB.usuario}" id="usuario"
+					style="width: 200px;" required="true" label="Usuario" />
 
 				<h:outputLabel for="password" value="Contraseña:" />
 				<h:inputSecret value="#{loginMB.password}" id="password"
-					required="true" label="Contraseña" />
+					class="ui-inputfield ui-corner-all ui-widget-content"
+					style="width: 200px;" required="true" label="Contraseña" />
+								
+				<h:panelGroup></h:panelGroup>
+				<h:panelGroup>
+					<h:selectBooleanCheckbox id="recordar" value="#{loginMB.recordar}"
+						label="Recordar" />
+					<h:outputLabel for="recordar" value="Recordar Usuario" />
+				</h:panelGroup>
 
-				<h:selectBooleanCheckbox id="recordar" value="#{loginMB.recordar}"
-					label="Recordar" />
-				<h:outputLabel for="recordar" value="Recordar Usuario" />
 
-				<f:facet name="footer">
+				<f:facet name="footer" style="text-align: right;">
 					<p:commandButton id="btnLoginId" value="Login" update=":growl"
-						action="#{loginMB.login}" redirect="true"
+						action="#{loginMB.login}" redirect="true" align="right"
 						oncomplete="handleLoginRequest(xhr, status, args)" />
 				</f:facet>
 			</h:panelGrid>
@@ -53,7 +59,7 @@
 
 	<script type="text/javascript">
 		function handleLoginRequest(xhr, status, args) {
-			if(args.validationFailed || !args.logueado) {
+			if (args.validationFailed || !args.logueado) {
 				jQuery('#dialog').effect("shake", {
 					times : 3
 				}, 100);
