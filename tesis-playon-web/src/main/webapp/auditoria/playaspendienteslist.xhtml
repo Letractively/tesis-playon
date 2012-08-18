@@ -1,0 +1,144 @@
+<ui:composition template="../admin/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="panelTitle"
+		value="Auditoría de Playas de Estacinamiento" />
+
+	<ui:define name="panelContent" class="admin-font">
+		<p:growl id="messages" />
+
+		<p:dataTable id="playas" var="playa" style="width: 100%"
+			value="#{auditoriaMB.playaspendientesList}"
+			paginatorPosition="bottom" paginator="true" rows="8"
+			emptyMessage="No existen playas para auditar"
+			filteredValue="#{auditoriaMB.filteredPlayas}" widgetVar="playasTable">
+
+			<f:facet name="header">
+				Listado de playas pendientes de auditoría
+				</f:facet>
+
+			<p:column headerText="Razón Social" styleClass="column-font"
+				filterBy="#{playa.razonSocial}" filterMatchMode="contains">
+				<h:outputText value="#{playa.razonSocial}" />
+			</p:column>
+
+			<p:column headerText="C.U.I.T." styleClass="column-font"
+				filterBy="#{playa.cuit}" filterMatchMode="contains">
+				<h:outputText value="#{playa.cuit}" />
+			</p:column>
+
+			<p:column headerText="Domicilio" styleClass="column-font"
+				filterBy="#{playa.domicilio}" filterMatchMode="contains">
+				<h:outputText value="#{playa.domicilio}" />
+			</p:column>
+
+			<p:column headerText="Barrio" styleClass="column-font"
+				filterBy="#{playa.barrio}"
+				filterOptions="#{auditoriaMB.barriosOptions}"
+				filterMatchMode="exact">
+				<h:outputText value="#{playa.barrio.nombre}" />
+			</p:column>
+
+			<p:column headerText="Teléfono" styleClass="column-font"
+				filterBy="#{playa.telefono}" filterMatchMode="contains">
+				<h:outputText value="#{playa.telefono}" />
+			</p:column>
+
+			<p:column headerText="Capacidad" styleClass="column-font"
+				filterBy="#{playa.disponibilidad}" filterMatchMode="startsWith">
+				<h:outputText value="#{playa.disponibilidad}" />
+			</p:column>
+
+			<p:column headerText="Estado" styleClass="column-font"
+				filterBy="#{playa.estado}"
+				filterOptions="#{auditoriaMB.estadosOptions}"
+				filterMatchMode="exact">
+				<h:outputText value="#{playa.estado.nombre}" />
+			</p:column>
+
+			<p:column headerText="Opciones" styleClass="column-font"
+				style="text-align: center">
+
+				<p:commandLink id="editLink" onclick="dlgEdit.show()" title="Editar"
+					update=":mainForm:displayEdit">
+					<p:graphicImage value="/resources/images/icons/pencil.png" />
+					<f:setPropertyActionListener value="#{playa}"
+						target="#{auditoriaMB.playaSeleccionada}" />
+				</p:commandLink>
+
+				<p:commandLink id="viewLink" title="Ver Datos"
+					oncomplete="dlgView.show()" update=":mainForm:displayView">
+					<p:graphicImage value="/resources/images/icons/search.png" />
+					<f:setPropertyActionListener value="#{playa}"
+						target="#{auditoriaMB.playaSeleccionada}" />
+				</p:commandLink>
+
+			</p:column>
+			
+			<p:column>
+				
+					<p:commandLink id="selectButton" update=":mainForm:display"
+						oncomplete="carDialog.show()" title="View" styleClass="column-options-button"
+						style="display:inline;">
+						<f:setPropertyActionListener value="#{playa}"
+							target="#{auditoriaMB.playaSeleccionada}" />
+						<p:graphicImage value="/resources/images/icons/add.png"
+							style="border:0;" />
+					</p:commandLink>
+
+			</p:column>
+
+		</p:dataTable>
+
+
+		<p>
+			<h:panelGroup layout="block" style="text-align: right; width: 100%;">
+				<p:commandButton id="addPlayaNueva" value="Quitar Filtro"
+					action="/auditoria/playaspendienteslist.html?faces-redirect=true"
+					ajax="false" />
+			</h:panelGroup>
+		</p>
+
+
+		<p:dialog id="dialogEditarPlaya" header="Editar playa"
+			widgetVar="dlgEdit" modal="true" resizable="false" draggable="false">
+			<h:panelGrid id="displayEdit" columns="2" cellpadding="4"
+				style="margin:0 auto;">
+				<h:outputLabel for="razonSocial" value="Razon Social: " />
+				<p:inputText id="razonSocial"
+					value="#{auditoriaMB.playaSeleccionada.razonSocial}"
+					required="true" requiredMessage="Campo obligatorio">
+					<f:validateLength minimum="3" />
+					<p:ajax event="blur" update="razonSocialMsg" />
+				</p:inputText>
+				<p:message id="razonSocialMsg" for="razonSocial" display="icon" />
+			</h:panelGrid>
+		</p:dialog>
+
+		<p:dialog id="dialogVerDatosPlaya" header="Datos de la playa"
+			widgetVar="dlgView" modal="true" resizable="false">
+			<h:panelGrid id="displayView" columns="2" cellpadding="4"
+				style="margin:0 auto;">
+			</h:panelGrid>
+		</p:dialog>
+		
+		<p:dialog header="Car Detail" widgetVar="carDialog" resizable="false"
+			id="carDlg" showEffect="fade" hideEffect="explode" modal="true">
+
+			<h:panelGrid id="display" columns="2" cellpadding="4"
+				style="margin:0 auto;">
+
+				<h:outputText value="Model:" />
+				<h:outputText value="#{auditoriaMB.playaSeleccionada.nombreComercial}"
+					style="font-weight:bold" />
+
+			</h:panelGrid>
+
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
