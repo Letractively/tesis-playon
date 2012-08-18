@@ -82,7 +82,9 @@ public class LoginBean {
 	    }
 	    SecurityContextHolder.getContext().setAuthentication(result);
 	    setLogueado(true);
-	    context.addCallbackParam("logueado", logueado);
+	    if(context != null){
+		context.addCallbackParam("logueado", logueado);
+	    }
 	    setRol(result.getAuthorities().toString());
 	    if (ROLE_ADMIN.equals(result.getAuthorities().toString())) {
 		return "SecuredAdmin";
@@ -105,7 +107,9 @@ public class LoginBean {
 	    e.printStackTrace();
 	    FacesMessage fm = new FacesMessage("Usuario o contraseña incorrecto");
 	    FacesContext.getCurrentInstance().addMessage("Usuario o contraseña incorrecto", fm);
-	    context.addCallbackParam("logueado", logueado);
+	    if(context != null){
+		context.addCallbackParam("logueado", logueado);
+	    }
 	    return "UnSecured";
 	}
     }
