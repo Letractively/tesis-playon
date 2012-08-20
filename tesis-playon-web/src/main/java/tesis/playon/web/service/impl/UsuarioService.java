@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IUsuarioDao;
+import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IUsuarioService;
 
@@ -52,6 +53,16 @@ public class UsuarioService implements IUsuarioService {
 
     public void setUsuarioDao(IUsuarioDao usuarioDao) {
 	this.usuarioDao = usuarioDao;
+    }
+
+    @Override
+    public List<Usuario> findByPlaya(Playa playa) {
+	return getUsuarioDao().findByPlaya(playa);
+    }
+
+    @Override
+    public Usuario findGerenteByPlaya(Playa playa) {
+	return getUsuarioDao().findGerenteByPlaya(playa);
     }
 
 }

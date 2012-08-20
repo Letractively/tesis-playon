@@ -215,6 +215,7 @@ public class PlayaManagedBean implements Serializable {
 	    usuario.setPassword(getPassword());
 	    usuario.setNombreUser(getNombreUser());
 	    usuario.setTipoDoc(getTipoDoc());
+	    usuario.setEnable(new Boolean(false));
 	    return usuario;
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
@@ -288,6 +289,19 @@ public class PlayaManagedBean implements Serializable {
 
 	    playa.setEstado(estado);
 
+	    List<Usuario> userList = getUsuarioService().findByPlaya(playa);
+
+	    for (Usuario usuario : userList) {
+
+		RolesPorUsuario rolUsuario = getRolesPorUsuarioService().findByNombreUsuario(usuario.getNombreUser());
+
+		if (rolUsuario.getRol().equals("ROLE_PLAYA_GERENTE")) {
+		    usuario.setEnable(new Boolean(true));
+		    getUsuarioService().update(usuario);
+
+		}
+	    }
+
 	    getPlayaService().update(playa);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se aprobó la playa: "
 		    + playa.getNombreComercial(), "");
@@ -295,7 +309,7 @@ public class PlayaManagedBean implements Serializable {
 	    return LISTA_PLAYAS_PENDIENTES;
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo aprobar la playa: "
-		    + playa.getNombreComercial(), "Por favos, intentelo mas tarde.");
+		    + playa.getNombreComercial(), "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	return ERROR;

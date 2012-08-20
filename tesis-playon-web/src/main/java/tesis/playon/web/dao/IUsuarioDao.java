@@ -2,6 +2,7 @@ package tesis.playon.web.dao;
 
 import java.util.List;
 
+import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Usuario;
 
 public interface IUsuarioDao {
@@ -14,6 +15,10 @@ public interface IUsuarioDao {
 
     Usuario findByNombreUsuario(String usuario);
 
+    List<Usuario> findByPlaya(Playa playa);
+    
+    Usuario findGerenteByPlaya(Playa playa);
+    
     List<Usuario> findAll();
 
 }
