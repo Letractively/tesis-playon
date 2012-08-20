@@ -1,0 +1,37 @@
+<ui:composition template="../template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+		Solicitud de registro de vehículo
+    </ui:define>
+
+	<ui:define name="content">
+		<h1>Bienvenido a Playon</h1>
+		<p></p>
+
+		<h:form>
+			<f:event type="preRenderView" listener="#{ingresoEgresoMB.preRenderView}" />
+			<p:growl id="messages" />
+			<table class="admin-input-text" style="margin-left: 25px">
+				<tr>
+					<td colspan="3"><h:outputLabel styleClass="admin-subtitle"
+							for="vehiculo" value="Datos de su vehículo: " /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel for="patente" value="Patente: " /></td>
+					<td><p:inputText id="patente" style="width:197px"
+							value="#{ingresoEgresoMB.usuario.apellido}" required="true"
+							requiredMessage="Campo obligatorio">
+							<f:validateLength minimum="6" />
+							<p:ajax event="blur" update="patenteMsg" />
+						</p:inputText></td>
+					<td><p:message id="patenteMsg" for="patente" display="icon" /></td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>

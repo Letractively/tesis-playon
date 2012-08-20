@@ -3,6 +3,7 @@ package tesis.playon.web.service;
 import java.util.List;
 
 import tesis.playon.web.model.Empleado;
+import tesis.playon.web.model.Usuario;
 
 /**
  * 
@@ -22,5 +23,7 @@ public interface IEmpleadoService {
     List<Empleado> findAll(Integer cargoEmpleado);
 
     Empleado findByLegajoEmpleado(Integer legajoEmpleado);
+
+    Empleado findByUsuario(Usuario usuario);
 
 }

@@ -3,6 +3,7 @@ package tesis.playon.web.dao;
 import java.util.List;
 
 import tesis.playon.web.model.Empleado;
+import tesis.playon.web.model.Usuario;
 
 /**
  * @author garribere
@@ -21,5 +22,7 @@ public interface IEmpleadoDao {
     List<Empleado> findAll(Integer idCargoEmpleado);
 
     Empleado findByLegajo(Integer legajo);
+    
+    Empleado findByIdUsuario(Usuario usuario);
 
 }

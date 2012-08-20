@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IEmpleadoDao;
 import tesis.playon.web.model.Empleado;
+import tesis.playon.web.model.Usuario;
 
 /**
  * @author garribere
@@ -66,4 +67,11 @@ public class EmpleadoDao implements IEmpleadoDao {
 		.setParameter(0, id).list();
 	return (Empleado) list.get(0);
     }
+
+    public Empleado findByIdUsuario(Usuario usuario) {
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Empleado where usuario=?")
+		.setParameter(0, usuario).list();
+	return (Empleado) list.get(0);
+    }
+    
 }

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IEmpleadoDao;
 import tesis.playon.web.model.Empleado;
+import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IEmpleadoService;
 
 /**
@@ -49,6 +50,11 @@ public class EmpleadoService implements IEmpleadoService {
     @Override
     public Empleado findByLegajoEmpleado(Integer legajoEmpleado) {
 	return getEmpleadoDao().findByLegajo(legajoEmpleado);
+    }
+    
+    @Override
+    public Empleado findByUsuario(Usuario usuario) {
+	return getEmpleadoDao().findByIdUsuario(usuario);
     }
 
     public IEmpleadoDao getEmpleadoDao() {
