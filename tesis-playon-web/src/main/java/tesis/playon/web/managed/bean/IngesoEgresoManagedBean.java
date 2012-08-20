@@ -48,8 +48,9 @@ public class IngesoEgresoManagedBean implements Serializable {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	setNombreUsuario(facesContext.getExternalContext().getRemoteUser());
 	setUsuario(getUsuarioService().findByNombreUsuario(this.nombreUsuario));
-	setPlaya(getPlayaService().findByNombreComercial(this.usuario.getPlaya().getNombreComercial()));
 	setEmpleado(getEmpleadoService().findByUsuario(this.usuario));
+	setPlaya(this.usuario.getPlaya());
+	setCargoEmpleado(this.empleado.getCargoEmpleado());
     }
 
     public IEmpleadoService getEmpleadoService() {

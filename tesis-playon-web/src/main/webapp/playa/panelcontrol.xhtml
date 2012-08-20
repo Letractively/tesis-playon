@@ -14,24 +14,38 @@
 		<p></p>
 
 		<h:form>
-			<f:event type="preRenderView" listener="#{ingresoEgresoMB.preRenderView}" />
+			<f:event type="preRenderView"
+				listener="#{ingresoEgresoMB.preRenderView}" />
 			<p:growl id="messages" />
-			<table class="admin-input-text" style="margin-left: 25px">
-				<tr>
-					<td colspan="3"><h:outputLabel styleClass="admin-subtitle"
-							for="vehiculo" value="Datos de su vehículo: " /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel for="patente" value="Patente: " /></td>
-					<td><p:inputText id="patente" style="width:197px"
-							value="#{ingresoEgresoMB.usuario.apellido}" required="true"
-							requiredMessage="Campo obligatorio">
-							<f:validateLength minimum="6" />
-							<p:ajax event="blur" update="patenteMsg" />
-						</p:inputText></td>
-					<td><p:message id="patenteMsg" for="patente" display="icon" /></td>
-				</tr>
-			</table>
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputText value="Playa: " />
+				<h:outputText id="txt_playa"
+					value="#{ingresoEgresoMB.playa.nombreComercial}" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputText value="Cargo: " />
+				<h:outputText id="txt_cargo"
+					value="#{ingresoEgresoMB.cargoEmpleado.nombre}" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputText value="Apellido: " />
+				<h:outputText id="txt_apellido"
+					value="#{ingresoEgresoMB.usuario.apellido}" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputText value="Nombre: " />
+				<h:outputText id="txt_nombre"
+					value="#{ingresoEgresoMB.usuario.nombre}" />
+			</h:panelGrid>
+
+			<h:link outcome="/playa/ingresoegresovehiculo.xhtml">
+				<f:verbatim>Ingreso/Egreso de Cliente</f:verbatim>
+			</h:link>
+
 		</h:form>
 	</ui:define>
 </ui:composition>

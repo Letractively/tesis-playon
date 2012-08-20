@@ -65,11 +65,11 @@ public class Empleado implements Serializable {
 	this.legajo = legajo;
     }
 
-    public CargoEmpleado getCadgoEmpleado() {
+    public CargoEmpleado getCargoEmpleado() {
 	return cargoEmpleado;
     }
 
-    public void setCadgoEmpleado(CargoEmpleado cadgoEmpleado) {
+    public void setCargoEmpleado(CargoEmpleado cadgoEmpleado) {
 	this.cargoEmpleado = cadgoEmpleado;
     }
 
@@ -83,14 +83,6 @@ public class Empleado implements Serializable {
 
     public Integer getId() {
 	return id;
-    }
-
-    public CargoEmpleado getCargoEmpleado() {
-	return cargoEmpleado;
-    }
-
-    public void setCargoEmpleado(CargoEmpleado cargoEmpleado) {
-	this.cargoEmpleado = cargoEmpleado;
     }
 
     public void setId(Integer id) {
