@@ -5,14 +5,14 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<h:form>
-		<f:event type="preRenderView" listener="#{playaMB.preRenderView}" />
+		<f:event type="preRenderView" listener="#{busquedaplayaMB.preRenderView}" />
 		<p:growl id="messages" />
 		<table style="margin-left: 100px;">
 			<tr>
 				<td><h:outputLabel for="direccionBusqueda"
 						value="Dirección de búsqueda: " /></td>
 				<td><p:inputText id="direccionBusqueda"
-						value="#{playaMB.direccionBusqueda}" required="true"
+						value="#{busquedaplayaMB.direccionBusqueda}" required="true"
 						requiredMessage="Debe colocar una dirección">
 						<p:ajax event="blur" update="direccionBusquedaMsg" />
 					</p:inputText></td>
@@ -24,14 +24,14 @@
 						value="Ingrese la cantidad de cuadras: " />
 					<p /></td>
 				<td><h:panelGrid columns="1" style="margin-bottom:10px">
-						<p:inputText id="distancia" value="#{playaMB.distancia}" />
+						<p:inputText id="distancia" value="#{busquedaplayaMB.distancia}" />
 						<p:slider for="distancia" minValue="1" maxValue="50" />
 					</h:panelGrid></td>
 				<td></td>
 			</tr>
 			<tr style="text-align: right;">
 				<td colspan="3"><p:commandButton id="btnBuscarId"
-						update="playas" value="Buscar" action="#{playaMB.buscarPlaya}"
+						update="playas" value="Buscar" action="#{busquedaplayaMB.buscarPlaya}"
 						ajax="false" /></td>
 			</tr>
 		</table>
@@ -41,7 +41,7 @@
 		<p:dataTable id="playas" var="playa" paginator="true"
 			paginatorPosition="bottom" rows="5"
 			emptyMessage="¡No existen playas!" style="width: 100%"
-			value="#{playaMB.playaResultadoBusqueda}">
+			value="#{busquedaplayaMB.playaResultadoBusqueda}">
 
 			<f:facet name="header">
 				Playas encontradas
@@ -114,17 +114,17 @@
 				<script src="http://maps.google.com/maps/api/js?sensor=false"
 					type="text/javascript"></script>
 
-				<p:gmap center="#{playaMB.coordenadas}" zoom="15" type="ROADMAP"
-					model="#{playaMB.advancedModel}" style="width:100%;height:400px">
+				<p:gmap center="#{busquedaplayaMB.coordenadas}" zoom="15" type="ROADMAP"
+					model="#{busquedaplayaMB.advancedModel}" style="width:100%;height:400px">
 
-					<p:ajax event="overlaySelect" listener="#{playaMB.onMarkerSelect}" />
+					<p:ajax event="overlaySelect" listener="#{busquedaplayaMB.onMarkerSelect}" />
 
 					<p:gmapInfoWindow height="10">
 						<p:outputPanel>
 							<!-- 								<p:graphicImage -->
 							<!-- 									value="http://montehermoso.porinternet.com.ar/complejo/moriscos/cochera1.jpg" -->
 							<!-- 									height="150" /> -->
-							<h:outputText value="#{playaMB.marker.title}" height="4" />
+							<h:outputText value="#{busquedaplayaMB.marker.title}" height="4" />
 
 						</p:outputPanel>
 
