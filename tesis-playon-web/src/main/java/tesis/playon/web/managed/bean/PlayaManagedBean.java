@@ -12,7 +12,6 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
-import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 import org.springframework.dao.DataAccessException;
@@ -30,7 +29,6 @@ import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IRolUsuarioService;
 import tesis.playon.web.service.IRolesPorUsuarioService;
 import tesis.playon.web.service.IUsuarioService;
-import tesis.playon.web.util.LatitudlongitudUtil;
 import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
 
 /**
@@ -77,11 +75,6 @@ public class PlayaManagedBean implements Serializable {
 
     List<Playa> playaspendientesList;
 
-    private static List<Playa> playaResultadoBusqueda;
-
-    LatitudlongitudUtil latLonUtil;
-
-    // Atributos de las playas.
     private String cuit;
 
     private Integer disponibilidad;
@@ -129,14 +122,6 @@ public class PlayaManagedBean implements Serializable {
 
     // para modificar una playa
     private static Playa playaSelected;
-
-    public void preRenderView() {
-	if (null != getPlayaResultadoBusqueda() && null == getDireccionBusqueda()) {
-	    playaResultadoBusqueda.clear();
-	} else if (null != getPlayaResultadoBusqueda() && getDireccionBusqueda().trim().isEmpty()) {
-	    playaResultadoBusqueda.clear();
-	}
-    }
 
     public String addPlayaAdmin() {
 	try {
@@ -381,37 +366,6 @@ public class PlayaManagedBean implements Serializable {
 	this.setPlaya(null);
     }
 
-    public void buscarPlaya() {
-
-	if (null != getDireccionBusqueda() && !getDireccionBusqueda().trim().isEmpty()) {
-	    try {
-
-		latLonUtil = new LatitudlongitudUtil();
-		// GeoposicionDePlaya
-		respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda().trim() + ", Cordoba, Argentina");
-		coordenadas = respuesta.toString();
-
-
-		playaResultadoBusqueda = new ArrayList<Playa>();
-		for (Playa playaAux : getPlayaList()) {
-		    Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
-		    if (comparacion < getDistancia() && playaAux.getEstado().getId() == 2) {
-			playaResultadoBusqueda.add(playaAux);
-			LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
-			advancedModel.addOverlay(new Marker(coord1, playaAux.toString2(), null,
-				"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
-		    }
-		    LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
-		    advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
-			    "http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
-
-		}
-	    } catch (Exception e) {
-		e.printStackTrace();
-	    }
-	}
-    }
-
     public IUsuarioService getUsuarioService() {
 	return usuarioService;
     }
@@ -485,14 +439,6 @@ public class PlayaManagedBean implements Serializable {
     public void setPlayaspendientesList(List<Playa> playaspendientesList) {
 
 	this.playaspendientesList = playaspendientesList;
-    }
-
-    public List<Playa> getPlayaResultadoBusqueda() {
-	return playaResultadoBusqueda;
-    }
-
-    public void setPlayaResultadoBusqueda(List<Playa> playaResultadoBusqueda) {
-	PlayaManagedBean.playaResultadoBusqueda = playaResultadoBusqueda;
     }
 
     public String getCuit() {
@@ -621,14 +567,6 @@ public class PlayaManagedBean implements Serializable {
 
     public void setTipoDoc(TipoDoc tipoDoc) {
 	this.tipoDoc = tipoDoc;
-    }
-
-    public LatitudlongitudUtil getLatLonUtil() {
-	return latLonUtil;
-    }
-
-    public void setLatLonUtil(LatitudlongitudUtil latLonUtil) {
-	this.latLonUtil = latLonUtil;
     }
 
     public Integer getDistancia() {
