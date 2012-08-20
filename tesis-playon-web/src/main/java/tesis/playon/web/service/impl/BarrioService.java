@@ -23,33 +23,28 @@ public class BarrioService implements IBarrioService {
     @Transactional(readOnly = false)
     @Override
     public void save(Barrio barrio) {
-	// TODO Auto-generated method stub
 	getBarrioDao().save(barrio);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void update(Barrio barrio) {
-	// TODO Auto-generated method stub
 	getBarrioDao().update(barrio);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(Barrio barrio) {
-	// TODO Auto-generated method stub
 	getBarrioDao().delete(barrio);
     }
 
     @Override
     public Barrio findByNombreBarrio(String nombreBarrio) {
-	// TODO Auto-generated method stub
 	return getBarrioDao().findByNombreBarrio(nombreBarrio);
     }
 
     @Override
     public List<Barrio> findAll() {
-	// TODO Auto-generated method stub
 	return getBarrioDao().findAll();
     }
 

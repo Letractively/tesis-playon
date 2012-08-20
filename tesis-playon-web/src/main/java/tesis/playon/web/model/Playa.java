@@ -152,6 +152,13 @@ public class Playa implements Serializable {
 	    this.latitud = respuesta.getLatitud();
 	    this.longitud = respuesta.getLongitud();
 	} catch (Exception e) {
+//	    public Set<Provincia> getProvincias() {
+//		return provincias;
+//	    }
+	//
+//	    public void setProvincias(Set<Provincia> provincias) {
+//		this.provincias = provincias;
+//	    }
 	    e.printStackTrace();
 	}
 
@@ -241,7 +248,7 @@ public class Playa implements Serializable {
 
     public String toString2() {
 
-	return "\nNombre: " + nombreComercial + "\nDomicilio: " + domicilio + "\nLugares disponibles: "
+	return "Nombre: " + nombreComercial + "\nDomicilio: " + domicilio + "\nLugares disponibles: "
 		+ disponibilidad;
 
     }

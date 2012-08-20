@@ -32,21 +32,12 @@ public class Pais implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
-//    @OneToMany//(mappedBy = "pais")
-//    @JoinTable(name = "provincia", joinColumns = { @JoinColumn(name = "paisID") })
-//    private Set<Provincia> provincias = new HashSet<Provincia>(0);
-
     public Pais() {
     }
 
     public Pais(String nombre) {
 	this.nombre = nombre;
     }
-
-//    public Pais(String nombre, Set<Provincia> provincias) {
-//	this.nombre = nombre;
-//	this.provincias = provincias;
-//    }
 
     public Integer getId() {
 	return id;
@@ -63,14 +54,6 @@ public class Pais implements Serializable {
     public void setNombre(String nombre) {
 	this.nombre = nombre;
     }
-
-//    public Set<Provincia> getProvincias() {
-//	return provincias;
-//    }
-//
-//    public void setProvincias(Set<Provincia> provincias) {
-//	this.provincias = provincias;
-//    }
 
     public boolean equals(Object object) {
 	if (object == this)

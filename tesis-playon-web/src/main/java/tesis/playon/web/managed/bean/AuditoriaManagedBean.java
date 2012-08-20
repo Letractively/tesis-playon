@@ -7,13 +7,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
+import org.springframework.dao.DataAccessException;
 
 import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.EstadoPlaya;
@@ -31,6 +34,10 @@ import tesis.playon.web.service.IPlayaService;
 public class AuditoriaManagedBean implements Serializable {
 
     private static final long serialVersionUID = -1085389423375986168L;
+    
+    private static final String LISTA_PLAYAS_PENDIENTES = "playaspendienteslist";
+
+    private static final String ERROR = "error";
 
     @ManagedProperty(value = "#{PlayaService}")
     IPlayaService playaService;
@@ -61,7 +68,9 @@ public class AuditoriaManagedBean implements Serializable {
 
     private String emailPlaya;
 
-    List<Playa> playaspendientesList;
+    List<Playa> playasPendientesList;
+    
+    List<Playa> playasRechazadasList;
     
     private List<Playa> filteredPlayas;
 
@@ -76,6 +85,22 @@ public class AuditoriaManagedBean implements Serializable {
 	System.out.println(playaSeleccionada.toString());
 	System.out.println("\n\n\n\n\n\n");
 	RequestContext.getCurrentInstance().addCallbackParam("currentPlaya", playaSeleccionada);
+    }
+    
+    public String updatePlayaAdmin() {
+	try {
+	    getPlayaService().update(playaSeleccionada);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, playaSeleccionada.getNombreComercial()
+		    + " se modificó correctamente", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_PLAYAS_PENDIENTES;
+	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, "
+		    + playaSeleccionada.getNombreComercial() + " no se pudo modificar", "Por favos, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
+	}
+	return ERROR;
     }
 
     public IPlayaService getPlayaService() {
@@ -101,21 +126,32 @@ public class AuditoriaManagedBean implements Serializable {
     public void setBarrioService(IBarrioService barrioService) {
         this.barrioService = barrioService;
     }
-
-    public List<Playa> getPlayaspendientesList() {
-	playaspendientesList = new ArrayList<Playa>();
+    
+    public List<Playa> getPlayasPendientesList() {
+	playasPendientesList = new ArrayList<Playa>();
 	EstadoPlaya estado = new EstadoPlaya();
 	estado = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
-	playaspendientesList.addAll(getPlayaService().findByEstado(estado));
-	playaspendientesList.addAll(getPlayaService().findAll());
-	return playaspendientesList;
+	playasPendientesList.addAll(getPlayaService().findByEstado(estado));
+	return playasPendientesList;
     }
 
-    public void setPlayaspendientesList(List<Playa> playaspendientesList) {
-
-	this.playaspendientesList = playaspendientesList;
+    public void setPlayasPendientesList(List<Playa> playasPendientesList) {
+        this.playasPendientesList = playasPendientesList;
     }
-    
+
+    public List<Playa> getPlayasRechazadasList() {
+	playasRechazadasList = new ArrayList<Playa>();
+	EstadoPlaya estado = new EstadoPlaya();
+	estado = getEstadoPlayaService().findByNombreEstadoPlaya("Rechazada");
+	playasRechazadasList.addAll(getPlayaService().findByEstado(estado));
+	playasRechazadasList.addAll(getPlayaService().findAll());
+        return playasRechazadasList;
+    }
+
+    public void setPlayasRechazadasList(List<Playa> playasRechazadasList) {
+        this.playasRechazadasList = playasRechazadasList;
+    }
+
     public List<Playa> getFilteredPlayas() {
 	return filteredPlayas;
     }

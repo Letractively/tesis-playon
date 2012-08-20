@@ -3,17 +3,13 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -43,9 +39,6 @@ public class Provincia implements Serializable {
     @JoinColumn(name = "paisID")
     private Pais pais;
 
-    @OneToMany//(mappedBy = "provincia")
-    @JoinTable(name = "localidad", joinColumns = { @JoinColumn(name = "provinciaID") })
-    private Set<Localidad> localidades = new HashSet<Localidad>(0);
 
     public Provincia() {
     }
@@ -53,12 +46,6 @@ public class Provincia implements Serializable {
     public Provincia(String nombre, Pais pais) {
 	this.nombre = nombre;
 	this.pais = pais;
-    }
-
-    public Provincia(String nombre, Pais pais, Set<Localidad> localidades) {
-	this.nombre = nombre;
-	this.pais = pais;
-	this.localidades = localidades;
     }
 
     public Integer getId() {
@@ -83,14 +70,6 @@ public class Provincia implements Serializable {
 
     public void setPais(Pais pais) {
 	this.pais = pais;
-    }
-
-    public Set<Localidad> getLocalidades() {
-	return localidades;
-    }
-
-    public void setLocalidades(Set<Localidad> localidades) {
-	this.localidades = localidades;
     }
     
     public boolean equals(Object object) {

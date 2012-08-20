@@ -32,7 +32,7 @@ import tesis.playon.web.service.IUsuarioService;
  * @author pablo
  * 
  */
-@ManagedBean(name = "clienteMB")
+@ManagedBean(name = "empleadoMB")
 @RequestScoped
 public class EmpleadoManagedBean implements Serializable {
 
