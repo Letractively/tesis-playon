@@ -41,7 +41,7 @@ public class AuditoriaManagedBean implements Serializable {
     @ManagedProperty(value = "#{BarrioService}")
     IBarrioService barrioService;
 
-    private Playa playaSeleccionada;
+    static Playa playaSeleccionada;
 
     private String cuit;
 
@@ -104,9 +104,9 @@ public class AuditoriaManagedBean implements Serializable {
 
     public List<Playa> getPlayaspendientesList() {
 	playaspendientesList = new ArrayList<Playa>();
-//	EstadoPlaya estado = new EstadoPlaya();
-//	estado = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
-	//playaspendientesList.addAll(getPlayaService().findPlayasPendientes(estado));
+	EstadoPlaya estado = new EstadoPlaya();
+	estado = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
+	playaspendientesList.addAll(getPlayaService().findByEstado(estado));
 	playaspendientesList.addAll(getPlayaService().findAll());
 	return playaspendientesList;
     }
@@ -130,7 +130,7 @@ public class AuditoriaManagedBean implements Serializable {
     }
 
     public void setPlayaSeleccionada(Playa playaSeleccionada) {
-	this.playaSeleccionada = playaSeleccionada;
+	AuditoriaManagedBean.playaSeleccionada = playaSeleccionada;
     }
 
     public String getCuit() {

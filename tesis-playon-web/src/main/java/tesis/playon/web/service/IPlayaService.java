@@ -28,6 +28,6 @@ void save(Playa playa);
 
     List <Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia );
     
-    List<Playa> findPlayasPendientes(EstadoPlaya estado);
+    List<Playa> findByEstado(EstadoPlaya estado);
     
 }

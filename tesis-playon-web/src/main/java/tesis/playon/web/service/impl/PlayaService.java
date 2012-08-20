@@ -72,9 +72,9 @@ public class PlayaService implements IPlayaService {
     }
 
     @Override
-    public List<Playa> findPlayasPendientes(EstadoPlaya estado) {
+    public List<Playa> findByEstado(EstadoPlaya estado) {
 	// TODO Auto-generated method stub
-	return getPlayaDao().findPlayasPendientes(estado);
+	return getPlayaDao().findByEstado(estado);
     }
 
 }

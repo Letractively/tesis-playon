@@ -9,7 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
@@ -80,8 +79,6 @@ public class PlayaManagedBean implements Serializable {
 
     private static List<Playa> playaResultadoBusqueda;
 
-    private List<Playa> filteredPlayas;
-
     LatitudlongitudUtil latLonUtil;
 
     // Atributos de las playas.
@@ -103,13 +100,7 @@ public class PlayaManagedBean implements Serializable {
 
     private String emailPlaya;
 
-    @SuppressWarnings("unused")
-    private SelectItem[] barriosOptions;
-
     private EstadoPlaya estado;
-
-    @SuppressWarnings("unused")
-    private SelectItem[] estadosOptions;
 
     private Estadia estadia;
 
@@ -487,7 +478,7 @@ public class PlayaManagedBean implements Serializable {
 	playaspendientesList = new ArrayList<Playa>();
 	EstadoPlaya estado = new EstadoPlaya();
 	estado = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
-	playaspendientesList.addAll(getPlayaService().findPlayasPendientes(estado));
+	playaspendientesList.addAll(getPlayaService().findByEstado(estado));
 	return playaspendientesList;
     }
 
@@ -672,14 +663,6 @@ public class PlayaManagedBean implements Serializable {
 	this.emailPlaya = emailPlaya;
     }
 
-    public List<Playa> getFilteredPlayas() {
-	return filteredPlayas;
-    }
-
-    public void setFilteredPlayas(List<Playa> filteredPlayas) {
-	this.filteredPlayas = filteredPlayas;
-    }
-
     public GeoposicionDePlaya getRespuesta() {
 	return respuesta;
     }
@@ -698,40 +681,6 @@ public class PlayaManagedBean implements Serializable {
 
     public void setSimpleModel(MapModel simpleModel) {
 	this.simpleModel = simpleModel;
-    }
-
-    public SelectItem[] getBarriosOptions() {
-	List<Barrio> barrios = new ArrayList<Barrio>();
-	barrios.addAll(getBarrioService().findAll());
-	barriosOptions = new SelectItem[barrios.size() + 1];
-	SelectItem[] options = new SelectItem[barrios.size() + 1];
-	options[0] = new SelectItem("", "Todos");
-
-	for (int i = 0; i < barrios.size(); i++) {
-	    options[i + 1] = new SelectItem(barrios.get(i), barrios.get(i).getNombre());
-	}
-	return options;
-    }
-
-    public void setBarriosOptions(SelectItem[] barriosOptions) {
-	this.barriosOptions = barriosOptions;
-    }
-
-    public SelectItem[] getEstadosOptions() {
-	List<EstadoPlaya> estados = new ArrayList<EstadoPlaya>();
-	estados.addAll(getEstadoPlayaService().findAll());
-	estadosOptions = new SelectItem[estados.size() + 1];
-	SelectItem[] options = new SelectItem[estados.size() + 1];
-	options[0] = new SelectItem("", "Todos");
-
-	for (int i = 0; i < estados.size(); i++) {
-	    options[i + 1] = new SelectItem(estados.get(i), estados.get(i).getNombre());
-	}
-	return options;
-    }
-
-    public void setEstadosOptions(SelectItem[] estadosOptions) {
-	this.estadosOptions = estadosOptions;
     }
 
     public MapModel getSimpleModel() {
