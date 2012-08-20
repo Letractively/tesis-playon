@@ -38,7 +38,7 @@
 				<h:inputSecret value="#{loginMB.password}" id="password"
 					class="ui-inputfield ui-corner-all ui-widget-content"
 					style="width: 200px;" required="true" label="Contraseña" />
-								
+
 				<h:panelGroup></h:panelGroup>
 				<h:panelGroup>
 					<h:selectBooleanCheckbox id="recordar" value="#{loginMB.recordar}"
@@ -48,9 +48,15 @@
 
 
 				<f:facet name="footer" style="text-align: right;">
-					<p:commandButton id="btnLoginId" value="Login" update=":growl"
-						action="#{loginMB.login}" redirect="true" align="right"
-						oncomplete="handleLoginRequest(xhr, status, args)" />
+					<div align="right">
+						<p:commandButton id="btnLoginId" value="Login" update=":growl"
+							action="#{loginMB.login}" redirect="true"
+							oncomplete="handleLoginRequest(xhr, status, args)" />
+						<p:commandButton id="btnCancelar" value="Cancelar"
+							oncomplete="handleLoginRequest(xhr, status, args)"
+							onclick="dlg.hide()" />
+					</div>
+
 				</f:facet>
 			</h:panelGrid>
 
