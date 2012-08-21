@@ -33,14 +33,14 @@
 				<tr>
 					<td><h:outputText for="marcaVehiculo" value="Marca: " /></td>
 					<td><p:selectOneMenu id="marcas" style="width:200px"
-							value="#{marcaVehiculoMB.marca}" effect="fade">
+							value="#{modeloVehiculoMB.marca}" effect="fade">
 							<f:selectItem itemLabel="Seleccione una marca"
-								itemValue="#{marcaVehiculoMB.marcaNula}" />
-							<f:selectItems value="#{marcaVehiculoMB.marcasList}" var="marca"
+								itemValue="#{modeloVehiculoMB.marcaNula}" />
+							<f:selectItems value="#{modeloVehiculoMB.marcasList}" var="marca"
 								itemValue="#{marca}" itemLabel="#{marca.nombre}" />
 							<f:converter converterId="marcaVehiculoConverter" />
 							<p:ajax event="change" update="modelos" process="@this"
-								listener="#{marcaVehiculoMB.handleMarcaChange}" />
+								listener="#{modeloVehiculoMB.handleMarcaChange}" />
 						</p:selectOneMenu></td>
 					<td></td>
 				</tr>
