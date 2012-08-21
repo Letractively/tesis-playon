@@ -43,8 +43,6 @@ public class PlayaManagedBean implements Serializable {
 
     private static final String LISTA_PLAYAS = "playalist";
 
-    private static final String LISTA_PLAYAS_PENDIENTES = "playaspendienteslist";
-
     private static final String SOLICITUD_PLAYA_END = "solicitudplayaend";
 
     private static final String ERROR = "error";
@@ -72,8 +70,6 @@ public class PlayaManagedBean implements Serializable {
     IRolesPorUsuarioService rolesPorUsuarioService;
 
     List<Playa> playaList;
-
-    List<Playa> playaspendientesList;
 
     private String cuit;
 
@@ -125,18 +121,14 @@ public class PlayaManagedBean implements Serializable {
 
     public String addPlayaAdmin() {
 	try {
-	    EstadoPlaya estado = new EstadoPlaya();
-	    estado = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
-
-	    Usuario usuario = addUsuario();
-
+	    
 	    Playa playa = new Playa();
 	    playa.setBarrio(getBarrio());
 	    playa.setCuit(getCuit());
 	    playa.setDisponibilidad(getDisponibilidad());
 	    playa.setDomicilio(getDomicilio());
 	    playa.setEstadia(getEstadia());
-	    playa.setEstado(estado);
+	    playa.setEstado(getEstado());
 	    playa.setNombreComercial(getNombreComercial());
 	    playa.setRazonSocial(getRazonSocial());
 	    playa.setTelefono(getTelefono());
@@ -144,21 +136,16 @@ public class PlayaManagedBean implements Serializable {
 
 	    getPlayaService().save(playa);
 
-	    usuario.setPlaya(playa);
-	    getUsuarioService().save(usuario);
-
-	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_PLAYA_GERENTE");
-	    getRolesPorUsuarioService().save(rp);
-
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente : "
 		    + playa.getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-
+	    reset();
 	    return LISTA_PLAYAS;
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo agregar: "
-		    + playa.getNombreComercial(), "Por favos, intentelo mas tarde.");
+		    + playa.getNombreComercial(), "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    reset();
 	    e.printStackTrace();
 	}
 	return ERROR;
@@ -194,12 +181,15 @@ public class PlayaManagedBean implements Serializable {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente : "
 		    + playa.getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-
+	    
+	    reset();
+	    
 	    return SOLICITUD_PLAYA_END;
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo agregar: "
-		    + playa.getNombreComercial(), "Por favos, intentelo mas tarde.");
+		    + playa.getNombreComercial(), "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    reset();
 	    e.printStackTrace();
 	}
 	return ERROR;
@@ -223,72 +213,12 @@ public class PlayaManagedBean implements Serializable {
 	return null;
     }
 
-    public String deletePlayaAdmin(Playa playa) {
+    public void deletePlayaAdmin(Playa playa) {
 	try {
 	    EstadoPlaya estado = getEstadoPlayaService().findByNombreEstadoPlaya("De Baja");
 
 	    playa.setEstado(estado);
-
-	    getPlayaService().update(playa);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se dió de baja la playa: "
-		    + playa.getNombreComercial(), "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return LISTA_PLAYAS;
-	} catch (Exception e) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo dar de baja la playa: " + playa.getNombreComercial(),
-		    "Por favos, intentelo mas tarde.");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-	return ERROR;
-    }
-
-    public String deletePlayaAuditoria(Playa playa) {
-	try {
-	    EstadoPlaya estado = getEstadoPlayaService().findByNombreEstadoPlaya("De Baja");
-
-	    playa.setEstado(estado);
-
-	    getPlayaService().update(playa);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se dió de baja la playa: "
-		    + playa.getNombreComercial(), "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return LISTA_PLAYAS_PENDIENTES;
-	} catch (Exception e) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo dar de baja la playa: " + playa.getNombreComercial(),
-		    "Por favos, intentelo mas tarde.");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-	return ERROR;
-    }
-
-    public String rejectPlayaAuditoria(Playa playa) {
-	try {
-	    EstadoPlaya estado = getEstadoPlayaService().findByNombreEstadoPlaya("Rechazada");
-
-	    playa.setEstado(estado);
-
-	    getPlayaService().update(playa);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se rechazó la playa: "
-		    + playa.getNombreComercial(), "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return LISTA_PLAYAS_PENDIENTES;
-	} catch (Exception e) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo rechazar la playa: " + playa.getNombreComercial(),
-		    "Por favos, intentelo mas tarde.");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-	return ERROR;
-    }
-
-    public String approvePlayaAuditoria(Playa playa) {
-	try {
-	    EstadoPlaya estado = getEstadoPlayaService().findByNombreEstadoPlaya("Aprobada");
-
-	    playa.setEstado(estado);
-
+	    
 	    List<Usuario> userList = getUsuarioService().findByPlaya(playa);
 
 	    for (Usuario usuario : userList) {
@@ -298,30 +228,49 @@ public class PlayaManagedBean implements Serializable {
 		if (rolUsuario.getRol().equals("ROLE_PLAYA_GERENTE")) {
 		    usuario.setEnable(new Boolean(true));
 		    getUsuarioService().update(usuario);
-
 		}
 	    }
 
 	    getPlayaService().update(playa);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se aprobó la playa: "
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se dió de baja la playa: "
 		    + playa.getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return LISTA_PLAYAS_PENDIENTES;
 	} catch (Exception e) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo aprobar la playa: "
-		    + playa.getNombreComercial(), "Por favor, intentelo mas tarde.");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo dar de baja la playa: " + playa.getNombreComercial(),
+		    "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
-	return ERROR;
     }
 
-    public String updatePlayaAdmin(Playa playa) {
-	playaSelected = playa;
-	return "playaeditadmin";
+    //NO USAR. HAY Q CORREGIRLE ALGUNAS COSAS ---> TOMAR COMO REFERENCIA LA DE ARRIBA
+    public void deletePlayaAuditoria(Playa playa) {
+	try {
+	    EstadoPlaya estado = getEstadoPlayaService().findByNombreEstadoPlaya("De Baja");
+
+	    playa.setEstado(estado);
+
+	    getPlayaService().update(playa);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se dió de baja la playa: "
+		    + playa.getNombreComercial(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo dar de baja la playa: " + playa.getNombreComercial(),
+		    "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
     }
 
     public String updatePlayaAdmin() {
 	try {
+	    if(playaSelected.getEstado().getNombre().equals("De Baja")){
+		List<Usuario> userList= getUsuarioService().findByPlaya(playaSelected);
+		for (Usuario usuario : userList) {
+		    usuario.setEnable(new Boolean(false));
+		    getUsuarioService().update(usuario);
+		}
+	    }
 	    getPlayaService().update(playaSelected);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, playaSelected.getNombreComercial()
 		    + " se modificó correctamente", "");
@@ -329,33 +278,14 @@ public class PlayaManagedBean implements Serializable {
 	    return LISTA_PLAYAS;
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, "
-		    + playaSelected.getNombreComercial() + " no se pudo modificar", "Por favos, intentelo mas tarde.");
+		    + playaSelected.getNombreComercial() + " no se pudo modificar", "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
 	return ERROR;
     }
 
-    public String modificarPlayaAdmin(Playa playon) {
-	playaSelected = playon;
-	return "playaeditadmin";
-    }
-
     public void reset() {
-	this.setBarrio(null);
-	this.setCuit("");
-	this.setDisponibilidad(0);
-	this.setDomicilio("");
-	this.setEstadia(null);
-	this.setEstado(null);
-	this.setNombreComercial("");
-	this.setRazonSocial("");
-	this.setTelefono(null);
-	this.setEmailPlaya(null);
-	PlayaManagedBean.playaSelected = null;
-    }
-
-    public void solicitudReset() {
 	// Atributos de la playa
 	this.setCuit("");
 	this.setDisponibilidad(0);
@@ -440,19 +370,6 @@ public class PlayaManagedBean implements Serializable {
 
     public void setPlayaList(List<Playa> playaList) {
 	this.playaList = playaList;
-    }
-
-    public List<Playa> getPlayaspendientesList() {
-	playaspendientesList = new ArrayList<Playa>();
-	EstadoPlaya estado = new EstadoPlaya();
-	estado = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
-	playaspendientesList.addAll(getPlayaService().findByEstado(estado));
-	return playaspendientesList;
-    }
-
-    public void setPlayaspendientesList(List<Playa> playaspendientesList) {
-
-	this.playaspendientesList = playaspendientesList;
     }
 
     public String getCuit() {

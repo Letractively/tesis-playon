@@ -40,7 +40,7 @@ public class EstadoPlayaDao implements IEstadoPlayaDao {
 
     public List<EstadoPlaya> findAll() {
 	List<EstadoPlaya> estadoPlaya = new ArrayList<EstadoPlaya>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoPlaya").list();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoPlaya order by nombre").list();
 	for (Object object : list) {
 	    estadoPlaya.add((EstadoPlaya) object);
 	}

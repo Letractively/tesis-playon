@@ -90,6 +90,13 @@ public class AuditoriaManagedBean implements Serializable {
 
     public String updatePlayaAuditor() {
 	try {
+	    if(playaSeleccionada.getEstado().getNombre().equals("De Baja")){
+		List<Usuario> userList= getUsuarioService().findByPlaya(playaSeleccionada);
+		for (Usuario usuario : userList) {
+		    usuario.setEnable(new Boolean(false));
+		    getUsuarioService().update(usuario);
+		}
+	    }
 	    getPlayaService().update(playaSeleccionada);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, playaSeleccionada.getNombreComercial()
 		    + " se modificó correctamente", "");
@@ -99,7 +106,7 @@ public class AuditoriaManagedBean implements Serializable {
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, "
 		    + playaSeleccionada.getNombreComercial() + " no se pudo modificar",
-		    "Por favor, intentelo mas tarde.");
+		    "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -118,7 +125,7 @@ public class AuditoriaManagedBean implements Serializable {
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo rechazar la playa: " + playa.getNombreComercial(),
-		    "Por favor, intentelo mas tarde.");
+		    "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
     }
@@ -146,7 +153,7 @@ public class AuditoriaManagedBean implements Serializable {
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo aprobar la playa: "
-		    + playa.getNombreComercial(), "Por favor, intentelo mas tarde.");
+		    + playa.getNombreComercial(), "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
     }
@@ -212,7 +219,6 @@ public class AuditoriaManagedBean implements Serializable {
 	EstadoPlaya estado = new EstadoPlaya();
 	estado = getEstadoPlayaService().findByNombreEstadoPlaya("Rechazada");
 	playasRechazadasList.addAll(getPlayaService().findByEstado(estado));
-	playasRechazadasList.addAll(getPlayaService().findAll());
 	return playasRechazadasList;
     }
 

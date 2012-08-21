@@ -46,7 +46,7 @@ public class PaisDao implements IPaisDao {
 
     public List<Pais> findAll() {
 	List<Pais> paises = new ArrayList<Pais>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Pais").list();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Pais order by nombre").list();
 	for (Object object : list) {
 	    paises.add((Pais) object);
 	}

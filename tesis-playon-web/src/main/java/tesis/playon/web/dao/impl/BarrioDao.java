@@ -45,7 +45,7 @@ public class BarrioDao implements IBarrioDao {
 
     public List<Barrio> findAll() {
 	List<Barrio> barrios = new ArrayList<Barrio>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Barrio").list();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Barrio order by nombre").list();
 	for (Object object : list) {
 	    barrios.add((Barrio) object);
 	}

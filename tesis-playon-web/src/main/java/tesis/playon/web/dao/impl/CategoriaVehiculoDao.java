@@ -44,7 +44,8 @@ public class CategoriaVehiculoDao implements ICategoriaVehiculoDao {
 
     public List<CategoriaVehiculo> findAll() {
 	List<CategoriaVehiculo> categorias = new ArrayList<CategoriaVehiculo>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CategoriaVehiculo").list();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CategoriaVehiculo order by nombre")
+		.list();
 	for (Object object : list) {
 	    categorias.add((CategoriaVehiculo) object);
 	}

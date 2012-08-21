@@ -39,7 +39,7 @@ public class RolUsuarioDao implements IRolUsuarioDao {
 
     public List<RolUsuario> findAll() {
 	List<RolUsuario> listaRolUsuario = new ArrayList<RolUsuario>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from RolUsuario").list();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from RolUsuario order by nombre").list();
 	for (Object obj : list) {
 	    listaRolUsuario.add((RolUsuario) obj);
 	}

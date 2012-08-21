@@ -46,7 +46,7 @@ public class ProvinciaDao implements IProvinciaDao {
 
     public List<Provincia> findAll() {
 	List<Provincia> provincias = new ArrayList<Provincia>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Provincia").list();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Provincia order by nombre").list();
 	for (Object object : list) {
 	    provincias.add((Provincia) object);
 	}

@@ -9,142 +9,179 @@
 		value="Listado de Playas de Estacionamiento" />
 
 	<ui:define name="panelContent" class="admin-font">
-		<h:form>
-			<p:growl id="messages" />
-			<p:dataTable id="playas" var="playa" paginator="true"
-				rows="5" paginatorPosition="bottom" value="#{playaMB.playaList}"
-				emptyMessage="No existen clientes" style="width: 100%">
 
-				<f:facet name="header">
-				Playas de estacionamiento
-            	</f:facet>
+		<p:growl id="messages" />
 
-				<p:column headerText="Razón Social" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.razonSocial}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{playa.razonSocial}" styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+		<p:dataTable id="playas" var="playa" value="#{playaMB.playaList}"
+			filteredValue="#{auditoriaMB.filteredPlayas}" widgetVar="playasTable"
+			paginatorPosition="bottom" paginator="true" rows="5"
+			emptyMessage="No existen playas para auditar">
 
-				<p:column headerText="Nombre Comercial" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.nombreComercial}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{playa.nombreComercial}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+			<p:column headerText="Nombre Comercial" styleClass="column-font"
+				filterBy="#{playa.razonSocial}" filterMatchMode="contains">
+				<h:outputText value="#{playa.nombreComercial}" />
+			</p:column>
 
-				<p:column headerText="Barrio" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.barrio.nombre}" />
-						</f:facet>
-						<f:facet name="input">
-							<h:selectOneMenu value="#{playa.barrio}">
-								<f:selectItems value="#{barrioMB.barrioList}" var="barrio"
-									itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
-								<f:converter converterId="barrioConverter" />
-							</h:selectOneMenu>
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				
-				<p:column headerText="Domicilio" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.domicilio}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{playa.domicilio}" styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				
-				<p:column headerText="Teléfono" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.telefono}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{playa.telefono}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				
-				<p:column headerText="E-mail" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.email}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{playa.email}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+			<p:column headerText="Domicilio" styleClass="column-font"
+				filterBy="#{playa.domicilio}" filterMatchMode="contains">
+				<h:outputText value="#{playa.domicilio}" />
+			</p:column>
 
-				<p:column headerText="Disponibilidad" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.disponibilidad}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{playa.disponibilidad}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				
-				<p:column headerText="Estado" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{playa.estado.nombre}" />
-						</f:facet>
-						<f:facet name="input">
-							<h:selectOneMenu value="#{playa.estado}" >  
-	                        	<f:selectItems value="#{estadoPlayaMB.estadoPlayaList}"  
-		                            var="estadoPlaya"
-		                            itemValue="#{estadoPlaya}"
-		                            itemLabel="#{estadoPlaya.nombre}" />
-		                        <f:converter converterId="estadoPlayaConverter" />
-                    		</h:selectOneMenu> 
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				
-				<p:column>
-					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
-						action="#{playaMB.modificarPlayaAdmin(playa)}"
-						style="height:20px; width:22px;">
-					</h:commandButton>
-					<p:tooltip for="editar" value="Editar Playa" />
-				</p:column>
+			<p:column headerText="Barrio" styleClass="column-font"
+				filterBy="#{playa.barrio}"
+				filterOptions="#{auditoriaMB.barriosOptions}"
+				filterMatchMode="exact">
+				<h:outputText value="#{playa.barrio.nombre}" />
+			</p:column>
 
-				<p:column>
-					<h:commandButton id="delete" class="ui-icon ui-icon-trash"
-						style="height:20px; width:22px;"
-						action="#{playaMB.deletePlayaAdmin(playa)}"
-						onclick="if(!confirm('¿Está seguro que desea dar de baja la playa?')) return false;">
-					</h:commandButton>
-					<p:tooltip for="delete" value="Dar de baja Playa" />
-				</p:column>
+			<p:column headerText="Teléfono" styleClass="column-font"
+				filterBy="#{playa.telefono}" filterMatchMode="contains">
+				<h:outputText value="#{playa.telefono}" />
+			</p:column>
 
-			</p:dataTable>
-			<p>
-				<h:panelGroup layout="block" style="text-align: right; width: 100%;">
-					<p:commandButton id="addPlayaNueva" value="Nueva Playa"
-						action="/admin/playaadd.html?faces-redirect=true" ajax="false" />
+			<p:column headerText="E-mail" styleClass="column-font"
+				filterBy="#{playa.email}" filterMatchMode="contains">
+				<h:outputText value="#{playa.email}" />
+			</p:column>
+
+			<p:column headerText="Estado" styleClass="column-font"
+				filterBy="#{playa.estado}"
+				filterOptions="#{auditoriaMB.estadosOptions}"
+				filterMatchMode="exact">
+				<h:outputText value="#{playa.estado.nombre}" />
+			</p:column>
+
+			<p:column headerText="Opciones" styleClass="column-font"
+				style="text-align:center; width:75px;">
+
+				<p:commandLink id="view" update=":mainForm:displayView"
+					oncomplete="carDialog.show()" title="Ver Datos">
+					<f:setPropertyActionListener value="#{playa}"
+						target="#{playaMB.playaSelected}" />
+					<h:graphicImage library="images/icons" name="search.png" />
+				</p:commandLink>
+
+				<p:commandLink id="edit" title="Editar Datos"
+					action="/admin/playaeditadmin.html?faces-redirect=true"
+					ajax="false">
+					<f:setPropertyActionListener value="#{playa}"
+						target="#{playaMB.playaSelected}" />
+					<h:graphicImage library="images/icons" name="pencil.png" />
+				</p:commandLink>
+
+				<p:commandLink id="darBaja" title="Dar de baja"
+					action="#{playaMB.deletePlayaAdmin(playa)}" ajax="false">
+					<h:graphicImage library="images/icons" name="trash.png" />
+				</p:commandLink>
+			</p:column>
+			
+			<f:facet name="footer">
+				<h:panelGroup id="removeFilter"  layout="block"
+					style="text-align: right;">
+					<p:commandLink id="addPlayaNueva" value="Quitar Filtro"
+						action="/admin/playalist.html?faces-redirect=true"
+						ajax="false" />
 				</h:panelGroup>
-			</p>
-		</h:form>
+			</f:facet>
+		</p:dataTable>
+
+		<p>
+			<h:panelGroup layout="block" style="text-align: right;">
+				<p:commandButton id="addPlaya" value="Nueva Playa"
+					action="/admin/playaadd.html?faces-redirect=true" ajax="false" />
+			</h:panelGroup>
+		</p>
+		<!-- DIALOG PARA VER LOS DATOS DE LA PLAYA SELECCIONADA -->
+		<p:dialog header="Datos de la Playa" widgetVar="carDialog"
+			resizable="false" id="carDlg" showEffect="fade" modal="true"
+			draggable="false">
+
+			<h:panelGrid id="displayView" columns="2" cellpadding="8"
+				style="margin:0 auto;">
+
+				<p:column>
+					<h:outputText value="Razon Social: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.razonSocial}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Nombre Comercial: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.nombreComercial}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="C.U.I.T.: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.cuit}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Barrio: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.barrio.nombre}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Domicilio: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.domicilio}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Teléfono: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.telefono}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="E-mail: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.email}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Disponibilidad: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.disponibilidad}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Estado: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.estado.nombre}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+				</p:column>
+
+				<p:column style="text-align:right">
+					<div align="right">
+						<h:commandButton id="btnAceptar" value="Aceptar"
+							oncomplete="carDialog.hide()" />
+					</div>
+				</p:column>
+
+			</h:panelGrid>
+		</p:dialog>
 	</ui:define>
 </ui:composition>

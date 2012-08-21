@@ -40,14 +40,14 @@ public class ModeloVehiculoDao implements IModeloVehiculoDao {
 
     public ModeloVehiculo findByNombreModeloVehiculo(String nombreModelo) {
 	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from ModeloVehiculo where nombre=? ORDER BY nombre ASC").setParameter(0, nombreModelo).list();
+		.createQuery("from ModeloVehiculo where nombre=? ORDER BY nombre").setParameter(0, nombreModelo).list();
 	return (ModeloVehiculo) list.get(0);
     }
 
     public List<ModeloVehiculo> findByMarca(MarcaVehiculo marca) {
 	List<ModeloVehiculo> modelos = new ArrayList<ModeloVehiculo>();
 	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from ModeloVehiculo where marcaVehiculo=? ORDER BY nombre ASC").setParameter(0, marca).list();
+		.createQuery("from ModeloVehiculo where marcaVehiculo=? ORDER BY nombre").setParameter(0, marca).list();
 	for (Object object : list) {
 	    modelos.add((ModeloVehiculo) object);
 	}
@@ -56,7 +56,7 @@ public class ModeloVehiculoDao implements IModeloVehiculoDao {
 
     public List<ModeloVehiculo> findAll() {
 	List<ModeloVehiculo> modelos = new ArrayList<ModeloVehiculo>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from ModeloVehiculo ORDER BY nombre ASC")
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from ModeloVehiculo ORDER BY nombre")
 		.list();
 	for (Object object : list) {
 	    modelos.add((ModeloVehiculo) object);

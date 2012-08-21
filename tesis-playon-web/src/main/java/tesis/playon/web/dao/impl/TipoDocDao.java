@@ -45,7 +45,7 @@ public class TipoDocDao implements ITipoDocDao {
 
     public List<TipoDoc> findAll() {
 	List<TipoDoc> documentos = new ArrayList<TipoDoc>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoDoc").list();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoDoc order by nombre").list();
 	for (Object object : list) {
 	    documentos.add((TipoDoc) object);
 	}

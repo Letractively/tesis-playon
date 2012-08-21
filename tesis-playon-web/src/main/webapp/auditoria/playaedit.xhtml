@@ -12,7 +12,8 @@
 		<div align="center">
 
 			<h:panelGrid id="displayView" columns="3" cellpadding="8"
-				styleClass="admin-input-text" style="margin:0 auto;">
+				styleClass="admin-input-text">
+				
 				<p:column>
 					<h:outputLabel for="razonSocial" value="Razon Social: " />
 				</p:column>
@@ -63,7 +64,7 @@
 					<h:outputText for="barrio" value="Barrio: " />
 				</p:column>
 				<p:column>
-					<p:selectOneMenu style="width: 243px"
+					<p:selectOneMenu style="width: 293px"
 						value="#{auditoriaMB.playaSeleccionada.barrio}" effect="fade">
 						<f:selectItems value="#{barrioMB.barrioList}" var="barrio"
 							itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
@@ -131,7 +132,7 @@
 					<h:outputText for="estado" value="Estado: " />
 				</p:column>
 				<p:column>
-					<p:selectOneMenu style="width: 243px"
+					<p:selectOneMenu style="width: 293px"
 						value="#{auditoriaMB.playaSeleccionada.estado}" effect="fade">
 						<f:selectItems value="#{estadoPlayaMB.estadoPlayaList}"
 							var="estado" itemValue="#{estado}" itemLabel="#{estado.nombre}" />
@@ -141,7 +142,7 @@
 				<p:column></p:column>
 
 				<p:column></p:column>
-				<p:column colspan="2">
+				<p:column>
 					<div align="right">
 						<p:commandButton id="reset" value="Cancelar"
 							action="#{auditoriaMB.returnPage}" ajax="false"

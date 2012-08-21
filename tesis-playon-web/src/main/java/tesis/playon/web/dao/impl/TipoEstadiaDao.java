@@ -45,7 +45,7 @@ public class TipoEstadiaDao implements ITipoEstadiaDao {
 
     public List<TipoEstadia> findAll() {
 	List<TipoEstadia> tipos = new ArrayList<TipoEstadia>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoEstadia").list();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoEstadia order by nombre").list();
 	for (Object object : list) {
 	    tipos.add((TipoEstadia) object);
 	}

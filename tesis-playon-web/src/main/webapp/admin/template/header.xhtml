@@ -1,31 +1,28 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">		
-    			
-					<table>
-						<tr>
-							<td><div id="logo">
-									<img
-										src="http://code.google.com/p/tesis-playon/logo?cct=1341892556"
-										alt="Logo" />
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-								</div></td>
-							<td style="width: 400px; text-align: left; vertical-align: center;">
-								<h3>Panel de administración</h3>
-							</td>
-							<td style="width: 100%; text-align: right; 
-									vertical-align: bottom; padding-right: 10px;">
-								<h:form>
-									<h:commandLink id="logout"
-										action="#{loginMB.logout}"
-										value="Cerrar sesión">
-									</h:commandLink>
-								</h:form>
-							</td>
-						</tr>
-					</table>
-					
+	<h:panelGrid columns="3">
+		<p:graphicImage
+			value="http://code.google.com/p/tesis-playon/logo?cct=1341892556" />
+
+		<div>
+			<h3>Panel de administración</h3>
+		</div>
+
+		<h:panelGrid column="1" style="width:350px; vertical-align:text-bottom; text-align:right;" layout="block">
+		<h:form id="Logout">
+			<h:commandLink id="logout" action="#{loginMB.logout}" title="Cerrar Sesión"
+				style="margin:0px 0px 0px 0px;">
+				<h:graphicImage library="images/icons" name="exit.png"
+					style="width:50px; heigh:50px; vertical-align:bottom; margin:0px 0px 0px 0px;" />
+			</h:commandLink>
+		</h:form>
+			
+		</h:panelGrid>
+
+	</h:panelGrid>
+
 </ui:composition>

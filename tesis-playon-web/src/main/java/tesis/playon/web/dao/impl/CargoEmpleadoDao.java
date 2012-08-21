@@ -44,7 +44,7 @@ public class CargoEmpleadoDao implements ICargoEmpleadoDao {
 
     public List<CargoEmpleado> findAll() {
 	List<CargoEmpleado> cargos = new ArrayList<CargoEmpleado>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CargoEmpleado").list();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CargoEmpleado order by nombre").list();
 	for (Object object : list) {
 	    cargos.add((CargoEmpleado) object);
 	}

@@ -48,7 +48,7 @@ public class LocalidadDao implements ILocalidadDao {
 
     public List<Localidad> findAll() {
 	List<Localidad> localidades = new ArrayList<Localidad>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Localidad").list();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Localidad order by nombre").list();
 	for (Object object : list) {
 	    localidades.add((Localidad) object);
 	}
