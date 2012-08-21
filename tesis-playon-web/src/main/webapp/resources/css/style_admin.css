@@ -54,20 +54,20 @@
 }
 
 .ui-icon {
-	display:inline;
+	display: inline;
 }
 
 .column-options-button-first {
 	height: 20px;
 	width: 22px;
-	display:inline;
+	display: inline;
 	margin-left: 0px;
 }
 
 .column-options-button {
 	height: 20px;
 	width: 22px;
-	display:inline;
+	display: inline;
 	margin-left: 5px;
 }
 
@@ -168,6 +168,10 @@
 
 .admin-input-text input {
 	width: 250px;
+}
+
+.admin-input-text td {
+	margin: 15px;
 }
 
 /* ********************************************** */

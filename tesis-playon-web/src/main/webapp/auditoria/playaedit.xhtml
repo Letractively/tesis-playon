@@ -1,0 +1,157 @@
+<ui:composition template="../admin/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="panelTitle" value="Editar playa" />
+
+	<ui:define name="panelContent" class="admin-font">
+		<p:growl id="messages" />
+		<div align="center">
+
+			<h:panelGrid id="displayView" columns="3" cellpadding="8"
+				styleClass="admin-input-text" style="margin:0 auto;">
+				<p:column>
+					<h:outputLabel for="razonSocial" value="Razon Social: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="razonSocial"
+						value="#{auditoriaMB.playaSeleccionada.razonSocial}"
+						required="true" requiredMessage="Campo obligatorio">
+						<f:validateLength minimum="4" />
+						<p:ajax event="blur" update="razonSocialMsg" />
+					</p:inputText>
+				</p:column>
+				<p:column>
+					<p:message id="razonSocialMsg" for="razonSocial" display="icon" />
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="nombreComercial" value="Nombre Comercial: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="nombreComercial"
+						value="#{auditoriaMB.playaSeleccionada.nombreComercial}"
+						required="true" requiredMessage="Campo obligatorio">
+						<f:validateLength minimum="2" />
+						<p:ajax event="blur" update="nombreComercialMsg" />
+					</p:inputText>
+				</p:column>
+				<p:column>
+					<p:message id="nombreComercialMsg" for="nombreComercial"
+						display="icon" />
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="cuit" value="C.U.I.T.: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="cuit"
+						value="#{auditoriaMB.playaSeleccionada.cuit}" required="true"
+						requiredMessage="Campo obligatorio">
+						<f:validateLength minimum="5" />
+						<p:ajax event="blur" update="cuitMsg" />
+					</p:inputText>
+				</p:column>
+				<p:column>
+					<p:message id="cuitMsg" for="cuit" display="icon" />
+				</p:column>
+
+				<p:column>
+					<h:outputText for="barrio" value="Barrio: " />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu style="width: 243px"
+						value="#{auditoriaMB.playaSeleccionada.barrio}" effect="fade">
+						<f:selectItems value="#{barrioMB.barrioList}" var="barrio"
+							itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
+						<f:converter converterId="barrioConverter" />
+					</p:selectOneMenu>
+				</p:column>
+				<p:column></p:column>
+
+				<p:column>
+					<h:outputText for="domicilio" value="Domicilio: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="domicilio"
+						value="#{auditoriaMB.playaSeleccionada.domicilio}" required="true"
+						requiredMessage="Campo obligatorio">
+						<f:validateLength minimum="5" />
+						<p:ajax event="blur" update="domicilioMsg" />
+					</p:inputText>
+				</p:column>
+				<p:column>
+					<p:message id="domicilioMsg" for="domicilio" display="icon" />
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="telefono" value="Teléfono: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="telefono"
+						value="#{auditoriaMB.playaSeleccionada.telefono}">
+						<p:ajax event="blur" update="telefonoMsg" />
+					</p:inputText>
+				</p:column>
+				<p:column>
+					<p:message id="telefonoMsg" for="telefono" display="icon" />
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="emailPlaya" value="E-mail: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="emailPlaya"
+						value="#{auditoriaMB.playaSeleccionada.email}">
+						<p:ajax event="blur" update="emailPlayaMsg" />
+					</p:inputText>
+				</p:column>
+				<p:column>
+					<p:message id="emailPlayaMsg" for="emailPlaya" display="icon" />
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="disponibilidad" value="Disponibilidad: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="disponibilidad"
+						value="#{auditoriaMB.playaSeleccionada.disponibilidad}">
+						<p:ajax event="blur" update="disponibilidadMsg" />
+					</p:inputText>
+				</p:column>
+				<p:column>
+					<p:message id="disponibilidadMsg" for="disponibilidad"
+						display="icon" />
+				</p:column>
+
+				<p:column>
+					<h:outputText for="estado" value="Estado: " />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu style="width: 243px"
+						value="#{auditoriaMB.playaSeleccionada.estado}" effect="fade">
+						<f:selectItems value="#{estadoPlayaMB.estadoPlayaList}"
+							var="estado" itemValue="#{estado}" itemLabel="#{estado.nombre}" />
+						<f:converter converterId="estadoPlayaConverter" />
+					</p:selectOneMenu>
+				</p:column>
+				<p:column></p:column>
+
+				<p:column></p:column>
+				<p:column colspan="2">
+					<div align="right">
+						<p:commandButton id="reset" value="Cancelar"
+							action="#{auditoriaMB.returnPage}" ajax="false"
+							style="margin-right:15px" />
+						<p:commandButton id="addCliente" value="Modificar"
+							action="#{auditoriaMB.updatePlayaAuditor}" ajax="false" />
+					</div>
+				</p:column>
+				<p:column></p:column>
+			</h:panelGrid>
+		</div>
+	</ui:define>
+</ui:composition>
