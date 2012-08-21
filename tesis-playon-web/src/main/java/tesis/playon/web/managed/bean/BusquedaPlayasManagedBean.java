@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
@@ -264,10 +266,15 @@ public class BusquedaPlayasManagedBean implements Serializable {
     private static Playa playaSelected;
 
     public void preRenderView() {
-	if (null != getPlayaResultadoBusqueda() && null == getDireccionBusqueda()) {
-	    playaResultadoBusqueda.clear();
-	} else if (null != getPlayaResultadoBusqueda() && getDireccionBusqueda().trim().isEmpty()) {
-	    playaResultadoBusqueda.clear();
+	if (!FacesContext.getCurrentInstance().isPostback()) {
+	    // if (getDireccionBusqueda() == null) {
+	    // if (getDireccionBusqueda().trim().isEmpty()) {
+	    if (getPlayaResultadoBusqueda() != null) {
+		playaResultadoBusqueda.clear();
+		playaResultadoBusqueda = null;
+	    }
+	    // }
+	    // }
 	}
     }
 
