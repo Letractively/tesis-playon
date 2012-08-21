@@ -23,7 +23,7 @@
 
 /* Comentar la siguiente linea para NO borrar el usuario
    en caso de que fuera necesario. */
-/* DROP USER 'playonAdmin'@'localhost'; */
+DROP USER 'playonAdmin'@'localhost';
 
 CREATE DATABASE  IF NOT EXISTS `tesis_playon` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `tesis_playon`;
@@ -1407,7 +1407,8 @@ VALUES ('Moreno','pablo_la31@hotmail.com','Pablo','123456',NULL,'pablo_la31',1,1
     ('Admin','admin@playon.com.ar','Admin','123456',NULL,'admin',7,1,'66666666',NULL),
     ('Pérez','jperez@playon.com.ar','Juan','123456',NULL,'jperez',8,1,'31234234',NULL),
     ('Rico','jrico@playon.com.ar','Jorge','123456',NULL,'jrico',9,1,'13450450',5),
-    ('García','jgarcia@playon.com.ar','Javier','123456',NULL,'jgarcia',10,1,'20567653',5);
+    ('García','jgarcia@playon.com.ar','Javier','123456',NULL,'jgarcia',10,1,'20567653',5),
+    ('Justo','hjusto@playon.com.ar','Horacio','123456',NULL,'hjusto',11,1,'15630004',NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1427,7 +1428,8 @@ VALUES (1,'pablo_la31', 'ROLE_ADMIN'),   	/* pablo_la31   --> ROLE_ADMIN */
     (7,'admin', 'ROLE_ADMIN'),           	/* admin        --> ROLE_ADMIN */
     (8,'jperez', 'ROLE_CLIENT'),         	/* jperez  	    --> ROLE_CLIENT */
     (9,'jrico', 'ROLE_PLAYA_GERENTE'),   	/* jrico        --> ROLE_PLAYA_GERENTE */
-    (10,'jgarcia', 'ROLE_PLAYA_EMPLEADO');	/* jgarcia      --> ROLE_PLAYA_EMPLEADO */    
+    (10,'jgarcia', 'ROLE_PLAYA_EMPLEADO'),	/* jgarcia      --> ROLE_PLAYA_EMPLEADO */
+    (11,'hjusto', 'ROLE_AUDITOR');			/* hjusto       --> ROLE_AUDITOR */    
 /*!40000 ALTER TABLE `roles_por_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
