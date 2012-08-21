@@ -23,7 +23,7 @@
 
 /* Comentar la siguiente linea para NO borrar el usuario
    en caso de que fuera necesario. */
-DROP USER 'playonAdmin'@'localhost';
+DROP USER  'playonAdmin'@'localhost';
 
 CREATE DATABASE  IF NOT EXISTS `tesis_playon` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `tesis_playon`;
@@ -255,6 +255,10 @@ CREATE TABLE `cuenta_cliente` (
 
 LOCK TABLES `cuenta_cliente` WRITE;
 /*!40000 ALTER TABLE `cuenta_cliente` DISABLE KEYS */;
+INSERT INTO `cuenta_cliente` (`fechaCreacion`, `nroCuenta`, `saldo`, `cuentaClienteID`, `clienteID`) 
+VALUES ('2012-08-21 20:29:37','1001','150.00','1', '7'),
+	('2012-08-21 20:29:37','1002','50.00','2', '8'),
+	('2012-08-21 20:29:37','1003','500.00','3', '9');
 /*!40000 ALTER TABLE `cuenta_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1403,12 +1407,13 @@ VALUES ('Moreno','pablo_la31@hotmail.com','Pablo','123456',NULL,'pablo_la31',1,1
     ('Arribere','gonzaloarribere@gmail.com','Gonzalo','123456',NULL,'gonzalo',3,1,'22222222',NULL),
     ('Morales Batovski','morales.batovski@gmail.com','Raúl Gustavo','123456',NULL,'gmorales',4,1,'29966905',NULL),
     ('Perez Villar','ericperezvillar@gmail.com','Eric','123456',NULL,'eric',5,1,'44444444',NULL),
-    ('Guest','guest@playon.com.ar','Guest','123456',NULL,'guest',6,1,'55555555',NULL),
-    ('Admin','admin@playon.com.ar','Admin','123456',NULL,'admin',7,1,'66666666',NULL),
-    ('Pérez','jperez@playon.com.ar','Juan','123456',NULL,'jperez',8,1,'31234234',NULL),
-    ('Rico','jrico@playon.com.ar','Jorge','123456',NULL,'jrico',9,1,'13450450',5),
-    ('García','jgarcia@playon.com.ar','Javier','123456',NULL,'jgarcia',10,1,'20567653',5),
-    ('Justo','hjusto@playon.com.ar','Horacio','123456',NULL,'hjusto',11,1,'15630004',NULL);
+    ('Admin','admin@playon.com.ar','Super','123456',NULL,'admin',6,1,'66666666',NULL),
+    ('Gomez','sgomez@playon.com.ar','Silvina','123456',NULL,'sgomez',7,1,'10456654',NULL),
+    ('Lopez','jjlopez@playon.com.ar','Juana Josefa','123456',NULL,'jjlopez',8,1,'27600710',NULL),
+    ('Pérez','jperez@playon.com.ar','Juan','123456',NULL,'jperez',9,1,'31234234',NULL),
+    ('Rico','jrico@playon.com.ar','Jorge','123456',NULL,'jrico',10,1,'13450450',5),
+    ('García','jgarcia@playon.com.ar','Javier','123456',NULL,'jgarcia',11,1,'20567653',5),
+    ('Justo','hjusto@playon.com.ar','Horacio','123456',NULL,'hjusto',12,1,'15630004',NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1424,12 +1429,13 @@ VALUES (1,'pablo_la31', 'ROLE_ADMIN'),   	/* pablo_la31   --> ROLE_ADMIN */
     (3,'gonzalo', 'ROLE_ADMIN'),         	/* gonzalo      --> ROLE_ADMIN */
     (4,'gmorales', 'ROLE_ADMIN'),        	/* gmorales     --> ROLE_ADMIN */
     (5,'eric', 'ROLE_ADMIN'),            	/* eric         --> ROLE_ADMIN */
-    (6,'guest', 'ROLE_CLIENT'),          	/* guest        --> ROLE_CLIENT */
-    (7,'admin', 'ROLE_ADMIN'),           	/* admin        --> ROLE_ADMIN */
-    (8,'jperez', 'ROLE_CLIENT'),         	/* jperez  	    --> ROLE_CLIENT */
-    (9,'jrico', 'ROLE_PLAYA_GERENTE'),   	/* jrico        --> ROLE_PLAYA_GERENTE */
-    (10,'jgarcia', 'ROLE_PLAYA_EMPLEADO'),	/* jgarcia      --> ROLE_PLAYA_EMPLEADO */
-    (11,'hjusto', 'ROLE_AUDITOR');			/* hjusto       --> ROLE_AUDITOR */    
+    (6,'admin', 'ROLE_ADMIN'),           	/* admin        --> ROLE_ADMIN */
+    (7,'sgomez', 'ROLE_CLIENT'),          	/* sgarcia      --> ROLE_CLIENT */
+    (8,'jjlopez', 'ROLE_CLIENT'),          	/* jjlopez      --> ROLE_CLIENT */
+    (9,'jperez', 'ROLE_CLIENT'),         	/* jperez  	    --> ROLE_CLIENT */
+    (10,'jrico', 'ROLE_PLAYA_GERENTE'),   	/* jrico        --> ROLE_PLAYA_GERENTE */
+    (11,'jgarcia', 'ROLE_PLAYA_EMPLEADO'),	/* jgarcia      --> ROLE_PLAYA_EMPLEADO */
+    (12,'hjusto', 'ROLE_AUDITOR');			/* hjusto       --> ROLE_AUDITOR */    
 /*!40000 ALTER TABLE `roles_por_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
