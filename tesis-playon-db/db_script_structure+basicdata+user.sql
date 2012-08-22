@@ -5,7 +5,7 @@
  *
  *  Proyecto: Playon
  *  Autor: Alejandro Bostico
- *  Ultima modificacion: 30/07/2012
+ *  Ultima modificacion: 22/08/2012
  */
 
 /*  Usuario y password para la base de datos tesis_playon:
@@ -64,16 +64,6 @@ CREATE TABLE `cuenta_playa` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cuenta_playa`
---
--- ORDER BY:  `cuentaPlayaID`
-
-LOCK TABLES `cuenta_playa` WRITE;
-/*!40000 ALTER TABLE `cuenta_playa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cuenta_playa` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `denuncia_vehiculo`
 --
 
@@ -95,16 +85,6 @@ CREATE TABLE `denuncia_vehiculo` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `denuncia_vehiculo`
---
--- ORDER BY:  `denunciaVehiculoID`
-
-LOCK TABLES `denuncia_vehiculo` WRITE;
-/*!40000 ALTER TABLE `denuncia_vehiculo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `denuncia_vehiculo` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `provincia`
 --
 
@@ -122,16 +102,6 @@ CREATE TABLE `provincia` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `provincia`
---
--- ORDER BY:  `provinciaID`
-
-LOCK TABLES `provincia` WRITE;
-/*!40000 ALTER TABLE `provincia` DISABLE KEYS */;
-/*!40000 ALTER TABLE `provincia` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `estado_publicidad`
 --
 
@@ -145,21 +115,6 @@ CREATE TABLE `estado_publicidad` (
   PRIMARY KEY (`estadoPublicidadID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ESTADOS:   *Vigente   *Vencida   *Cancelada   *Pendiente   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `estado_publicidad`
---
--- ORDER BY:  `estadoPublicidadID`
-
-LOCK TABLES `estado_publicidad` WRITE;
-/*!40000 ALTER TABLE `estado_publicidad` DISABLE KEYS */;
-INSERT INTO `estado_publicidad` (`descripcion`, `nombre`, `estadoPublicidadID`) 
-VALUES ('Pendiente de Aprobación','Pendiente',1),
-	('Aprobada y pendiente de publicación','Aprobada',2),
-	('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),
-	('Perí­odo de publicación vencido','Vencida',5);
-/*!40000 ALTER TABLE `estado_publicidad` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `promocion`
@@ -191,16 +146,6 @@ CREATE TABLE `promocion` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `promocion`
---
--- ORDER BY:  `promocionID`
-
-LOCK TABLES `promocion` WRITE;
-/*!40000 ALTER TABLE `promocion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `promocion` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `color_vehiculo`
 --
 
@@ -214,20 +159,6 @@ CREATE TABLE `color_vehiculo` (
   PRIMARY KEY (`colorVehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `color_vehiculo`
---
--- ORDER BY:  `colorVehiculoID`
-
-LOCK TABLES `color_vehiculo` WRITE;
-/*!40000 ALTER TABLE `color_vehiculo` DISABLE KEYS */;
-INSERT INTO `color_vehiculo` (`nombre`, `valorHexadecimal`, `colorVehiculoID`) 
-VALUES ('Blanco','FFFFFF',1),('Negro','000000',2),('Rojo','FF0000',3),('Amarillo','FFFF00',4),
-	('Verde Claro','32CD32',5),('Azul','0000FF',6),('Celeste','1E90FF',7),('Gris Claro','C0C0C0',8),
-	('Gris Oscuro','696969',9),('Naranja','FF4500',10),('Verde Oscuro','006400',11),('Bordó','65212C',12);
-/*!40000 ALTER TABLE `color_vehiculo` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `cuenta_cliente`
@@ -249,20 +180,6 @@ CREATE TABLE `cuenta_cliente` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cuenta_cliente`
---
--- ORDER BY:  `cuentaClienteID`
-
-LOCK TABLES `cuenta_cliente` WRITE;
-/*!40000 ALTER TABLE `cuenta_cliente` DISABLE KEYS */;
-INSERT INTO `cuenta_cliente` (`fechaCreacion`, `nroCuenta`, `saldo`, `cuentaClienteID`, `clienteID`) 
-VALUES ('2012-08-21 20:29:37','1001','150.00','1', '7'),
-	('2012-08-21 20:29:37','1002','50.00','2', '8'),
-	('2012-08-21 20:29:37','1003','500.00','3', '9');
-/*!40000 ALTER TABLE `cuenta_cliente` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `estado_denuncia`
 --
 
@@ -276,21 +193,6 @@ CREATE TABLE `estado_denuncia` (
   PRIMARY KEY (`estadoDenunciaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `estado_denuncia`
---
--- ORDER BY:  `estadoDenunciaID`
-
-LOCK TABLES `estado_denuncia` WRITE;
-/*!40000 ALTER TABLE `estado_denuncia` DISABLE KEYS */;
-INSERT INTO `estado_denuncia` (`descripcion`, `nombre`, `estadoDenunciaID`) 
-VALUES ('Pendiente de auditorí­a','Pendiente',1),
-	('En proceso de investigación','En Proceso',2),
-	('Acepatada','Aceptada',3),('Rechazada','Rechazada',4),
-	('Anulada','Anulada',5),('Dada de Baja / Cancelada','De Baja',6);
-/*!40000 ALTER TABLE `estado_denuncia` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `denuncia_playa`
@@ -314,16 +216,6 @@ CREATE TABLE `denuncia_playa` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `denuncia_playa`
---
--- ORDER BY:  `denunciaPlayaID`
-
-LOCK TABLES `denuncia_playa` WRITE;
-/*!40000 ALTER TABLE `denuncia_playa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `denuncia_playa` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `playa`
 --
 
@@ -343,26 +235,13 @@ CREATE TABLE `playa` (
   `longitud` DOUBLE DEFAULT NULL,
   `razonSocial` varchar(50) DEFAULT NULL,
   `playaID` int(11) NOT NULL auto_increment,
-  `estadiaID` int(11) DEFAULT NULL,
   PRIMARY KEY (`playaID`),
   KEY `barrioID` (`barrioID`),
   KEY `estadoPlayaID` (`estadoPlayaID`),
-  KEY `estadiaID` (`estadiaID`),
-  CONSTRAINT `FK_playa_estadia` FOREIGN KEY (`estadiaID`) REFERENCES `estadia` (`estadiaID`),
   CONSTRAINT `FK_playa_barrio` FOREIGN KEY (`barrioID`) REFERENCES `barrio` (`barrioID`),
   CONSTRAINT `FK_playa_estado_playa` FOREIGN KEY (`estadoPlayaID`) REFERENCES `estado_playa` (`estadoPlayaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cada instancia representa los datos administrativos de una playa.   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `playa`
---
--- ORDER BY:  `playaID`
-
-LOCK TABLES `playa` WRITE;
-/*!40000 ALTER TABLE `playa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `playa` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liquidacion`
@@ -385,16 +264,6 @@ CREATE TABLE `liquidacion` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `liquidacion`
---
--- ORDER BY:  `liquidacionID`
-
-LOCK TABLES `liquidacion` WRITE;
-/*!40000 ALTER TABLE `liquidacion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liquidacion` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `categoria_vehiculo`
 --
 
@@ -410,18 +279,6 @@ CREATE TABLE `categoria_vehiculo` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `categoria_vehiculo`
---
--- ORDER BY:  `categoriaVehiculoID`
-
-LOCK TABLES `categoria_vehiculo` WRITE;
-/*!40000 ALTER TABLE `categoria_vehiculo` DISABLE KEYS */;
-INSERT INTO `categoria_vehiculo` (`descripcion`, `nombre`, `categoriaVehiculoID`) 
-VALUES ('','Auto',1),('','Moto',2),('','Utilitario',3),('','PickUp / 4X4',4);
-/*!40000 ALTER TABLE `categoria_vehiculo` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `estado_playa`
 --
 
@@ -435,21 +292,6 @@ CREATE TABLE `estado_playa` (
   PRIMARY KEY (`estadoPlayaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `estado_playa`
---
--- ORDER BY:  `estadoPlayaID`
-
-LOCK TABLES `estado_playa` WRITE;
-/*!40000 ALTER TABLE `estado_playa` DISABLE KEYS */;
-INSERT INTO `estado_playa` (`descripcion`, `nombre`, `estadoPlayaID`) 
-VALUES ('Pendiente de Auditorí­a','Pendiente',1),
-	('Aprobada luego de auditoría','Aprobada',2),
-	('Rechazada luego de auditorí­a','Rechazada',3),
-	('Dada de baja','De Baja',4);
-/*!40000 ALTER TABLE `estado_playa` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `transaccion_cliente`
@@ -473,16 +315,6 @@ CREATE TABLE `transaccion_cliente` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `transaccion_cliente`
---
--- ORDER BY:  `transaccionClienteID`
-
-LOCK TABLES `transaccion_cliente` WRITE;
-/*!40000 ALTER TABLE `transaccion_cliente` DISABLE KEYS */;
-/*!40000 ALTER TABLE `transaccion_cliente` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `tipo_estadia`
 --
 
@@ -496,19 +328,6 @@ CREATE TABLE `tipo_estadia` (
   PRIMARY KEY (`tipoEstadiaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='TIPOS DE ESTADIA:   * Por hora   * Por día   * Por noche   * Por mes   * Por semana   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tipo_estadia`
---
--- ORDER BY:  `tipoEstadiaID`
-
-LOCK TABLES `tipo_estadia` WRITE;
-/*!40000 ALTER TABLE `tipo_estadia` DISABLE KEYS */;
-INSERT INTO `tipo_estadia` (`descripcion`, `nombre`, `tipoEstadiaID`) 
-VALUES ('','Por Hora',1),('','Por Mes',2),('','Por Noche',3),
-	('','Por Dí­a',4),('','Por Semana',5);
-/*!40000 ALTER TABLE `tipo_estadia` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `historial_de_cambio`
@@ -535,16 +354,6 @@ CREATE TABLE `historial_de_cambio` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `historial_de_cambio`
---
--- ORDER BY:  `historialDeCambioID`
-
-LOCK TABLES `historial_de_cambio` WRITE;
-/*!40000 ALTER TABLE `historial_de_cambio` DISABLE KEYS */;
-/*!40000 ALTER TABLE `historial_de_cambio` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `foto`
 --
 
@@ -561,16 +370,6 @@ CREATE TABLE `foto` (
   CONSTRAINT `FK_foto_perfil_playa` FOREIGN KEY (`perfilPlayaID`) REFERENCES `perfil_playa` (`perfilPlayaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `foto`
---
--- ORDER BY:  `fotoID`
-
-LOCK TABLES `foto` WRITE;
-/*!40000 ALTER TABLE `foto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `foto` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `vehiculo`
@@ -602,16 +401,6 @@ CREATE TABLE `vehiculo` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `vehiculo`
---
--- ORDER BY:  `vehiculoID`
-
-LOCK TABLES `vehiculo` WRITE;
-/*!40000 ALTER TABLE `vehiculo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `vehiculo` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `empleado`
 --
 
@@ -632,16 +421,6 @@ CREATE TABLE `empleado` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `empleado`
---
--- ORDER BY:  `empleadoID`
-
-LOCK TABLES `empleado` WRITE;
-/*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
-/*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `cargo_empleado`
 --
 
@@ -657,18 +436,6 @@ CREATE TABLE `cargo_empleado` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cargo_empleado`
---
--- ORDER BY:  `cargoEmpleadoID`
-
-LOCK TABLES `cargo_empleado` WRITE;
-/*!40000 ALTER TABLE `cargo_empleado` DISABLE KEYS */;
-INSERT INTO `cargo_empleado` (`descripcion`, `nombre`, `cargoEmpleadoID`) 
-VALUES ('','Gerente General',1),('','Encargado',2),('','Playero',3);
-/*!40000 ALTER TABLE `cargo_empleado` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `perfil_playa`
 --
 
@@ -680,21 +447,12 @@ CREATE TABLE `perfil_playa` (
   `nombreComercial` varchar(50) NOT NULL,
   `perfilPlayaID` int(11) NOT NULL auto_increment,
   `playaID` int(11) NOT NULL,
+  `fotoPerfil` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`perfilPlayaID`),
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_perfil_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Esta clase va a contener todos los datos del perfil de la playa que se muestra en el sitio: fotos, nombre para mostrar, descripción, etc.    ';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `perfil_playa`
---
--- ORDER BY:  `perfilPlayaID`
-
-LOCK TABLES `perfil_playa` WRITE;
-/*!40000 ALTER TABLE `perfil_playa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `perfil_playa` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `abono`
@@ -721,16 +479,6 @@ CREATE TABLE `abono` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `abono`
---
--- ORDER BY:  `abonoID`
-
-LOCK TABLES `abono` WRITE;
-/*!40000 ALTER TABLE `abono` DISABLE KEYS */;
-/*!40000 ALTER TABLE `abono` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `pais`
 --
 
@@ -743,16 +491,6 @@ CREATE TABLE `pais` (
   PRIMARY KEY (`paisID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pais`
---
--- ORDER BY:  `paisID`
-
-LOCK TABLES `pais` WRITE;
-/*!40000 ALTER TABLE `pais` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pais` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `tarifa`
@@ -780,16 +518,6 @@ CREATE TABLE `tarifa` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tarifa`
---
--- ORDER BY:  `tarifaID`
-
-LOCK TABLES `tarifa` WRITE;
-/*!40000 ALTER TABLE `tarifa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tarifa` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `barrio`
 --
 
@@ -805,16 +533,6 @@ CREATE TABLE `barrio` (
   CONSTRAINT `FK_barrio_localidad` FOREIGN KEY (`localidadID`) REFERENCES `localidad` (`localidadID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `barrio`
---
--- ORDER BY:  `barrioID`
-
-LOCK TABLES `barrio` WRITE;
-/*!40000 ALTER TABLE `barrio` DISABLE KEYS */;
-/*!40000 ALTER TABLE `barrio` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `favorito`
@@ -833,16 +551,6 @@ CREATE TABLE `favorito` (
   CONSTRAINT `FK_favorito_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `favorito`
---
--- ORDER BY:  `clienteID`,`playaID`
-
-LOCK TABLES `favorito` WRITE;
-/*!40000 ALTER TABLE `favorito` DISABLE KEYS */;
-/*!40000 ALTER TABLE `favorito` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `usuario`
@@ -871,16 +579,6 @@ CREATE TABLE `usuario` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuario`
---
--- ORDER BY:  `usuarioID`
-
-LOCK TABLES `usuario` WRITE;
-/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `tipo_pago`
 --
 
@@ -894,22 +592,6 @@ CREATE TABLE `tipo_pago` (
   PRIMARY KEY (`tipoPagoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tipo_pago`
---
--- ORDER BY:  `tipoPagoID`
-
-LOCK TABLES `tipo_pago` WRITE;
-/*!40000 ALTER TABLE `tipo_pago` DISABLE KEYS */;
-INSERT INTO `tipo_pago` (`descripcion`, `nombre`, `tipoPagoID`) 
-VALUES ('Contado Efectivo','Contado',1),
-	('Tarjeta de débito','Tarjeta Débito',2),
-	('Tarjeta de crédito','Tarjeta Crédito',3),
-	('DineroMail','DineroMail',4),('Cheque','Cheque',5),
-	('Pago con saldo de la cuenta del cliente','Cuenta',6);
-/*!40000 ALTER TABLE `tipo_pago` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `transaccion_playa`
@@ -939,16 +621,6 @@ CREATE TABLE `transaccion_playa` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `transaccion_playa`
---
--- ORDER BY:  `transaccionPlayaID`
-
-LOCK TABLES `transaccion_playa` WRITE;
-/*!40000 ALTER TABLE `transaccion_playa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `transaccion_playa` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `marca_vehiculo`
 --
 
@@ -962,16 +634,6 @@ CREATE TABLE `marca_vehiculo` (
   PRIMARY KEY (`marcaVehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `marca_vehiculo`
---
--- ORDER BY:  `marcaVehiculoID`
-
-LOCK TABLES `marca_vehiculo` WRITE;
-/*!40000 ALTER TABLE `marca_vehiculo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `marca_vehiculo` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `estadia`
@@ -988,24 +650,6 @@ CREATE TABLE `estadia` (
   CONSTRAINT `FK_estadia_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cada instancia de esta clase representa un conjunto de ingreso y egreso de los autos en cada playa.   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `estadia`
---
--- ORDER BY:  `estadiaID`
-
-LOCK TABLES `estadia` WRITE;
-/*!40000 ALTER TABLE `estadia` DISABLE KEYS */;
-INSERT INTO `estadia` (`estadiaID`, `playaID`) 
-VALUES ('3','3'),
-	('4','4'),
-	('5','5'),
-	('6','6'),
-	('7','7'),
-	('8','8'),
-	('9','9');
-/*!40000 ALTER TABLE `estadia` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `modelo_vehiculo`
@@ -1026,16 +670,6 @@ CREATE TABLE `modelo_vehiculo` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `modelo_vehiculo`
---
--- ORDER BY:  `modeloVehiculoID`
-
-LOCK TABLES `modelo_vehiculo` WRITE;
-/*!40000 ALTER TABLE `modelo_vehiculo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `modelo_vehiculo` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `localidad`
 --
 
@@ -1053,16 +687,6 @@ CREATE TABLE `localidad` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `localidad`
---
--- ORDER BY:  `localidadID`
-
-LOCK TABLES `localidad` WRITE;
-/*!40000 ALTER TABLE `localidad` DISABLE KEYS */;
-/*!40000 ALTER TABLE `localidad` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `cliente`
 --
 
@@ -1077,6 +701,7 @@ CREATE TABLE `cliente` (
   `telefono` text DEFAULT NULL,
   `clienteID` int(11) NOT NULL auto_increment,
   `usuarioID` int(11) NOT NULL,
+  `fotoPerfil` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`clienteID`),
   KEY `barrioID` (`barrioID`),
   KEY `usuarioID` (`usuarioID`),
@@ -1084,16 +709,6 @@ CREATE TABLE `cliente` (
   CONSTRAINT `FK_cliente_barrio` FOREIGN KEY (`barrioID`) REFERENCES `barrio` (`barrioID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `cliente`
---
--- ORDER BY:  `clienteID`
-
-LOCK TABLES `cliente` WRITE;
-/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `tipo_doc`
@@ -1108,18 +723,6 @@ CREATE TABLE `tipo_doc` (
   PRIMARY KEY (`tipoDocID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tipo_doc`
---
--- ORDER BY:  `tipoDocID`
-
-LOCK TABLES `tipo_doc` WRITE;
-/*!40000 ALTER TABLE `tipo_doc` DISABLE KEYS */;
-INSERT INTO `tipo_doc` (`nombre`, `tipoDocID`) 
-VALUES ('D.N.I.',1),('L.C.',2),('L.E.',3),('C.I.',4);
-/*!40000 ALTER TABLE `tipo_doc` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `publicidad`
@@ -1143,16 +746,6 @@ CREATE TABLE `publicidad` (
   CONSTRAINT `FK_publicidad_posicion` FOREIGN KEY (`posicionID`) REFERENCES `posicion` (`posicionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `publicidad`
---
--- ORDER BY:  `publicidadID`
-
-LOCK TABLES `publicidad` WRITE;
-/*!40000 ALTER TABLE `publicidad` DISABLE KEYS */;
-/*!40000 ALTER TABLE `publicidad` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `detalle_estadia`
@@ -1189,16 +782,6 @@ CREATE TABLE `detalle_estadia` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `detalle_estadia`
---
--- ORDER BY:  `detalleEstadiaID`
-
-LOCK TABLES `detalle_estadia` WRITE;
-/*!40000 ALTER TABLE `detalle_estadia` DISABLE KEYS */;
-/*!40000 ALTER TABLE `detalle_estadia` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `sesion`
 --
 
@@ -1218,16 +801,6 @@ CREATE TABLE `sesion` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `sesion`
---
--- ORDER BY:  `sesionID`
-
-LOCK TABLES `sesion` WRITE;
-/*!40000 ALTER TABLE `sesion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sesion` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `posicion`
 --
 
@@ -1245,16 +818,6 @@ CREATE TABLE `posicion` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `posicion`
---
--- ORDER BY:  `posicionID`
-
-LOCK TABLES `posicion` WRITE;
-/*!40000 ALTER TABLE `posicion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `posicion` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `estado_promocion`
 --
 
@@ -1268,22 +831,6 @@ CREATE TABLE `estado_promocion` (
   PRIMARY KEY (`estadoPromocionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ESTADOS:   *Vigente   *Vencida   *Cancelada   *Pendiente   ';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `estado_promocion`
---
--- ORDER BY:  `estadoPromocionID`
-
-LOCK TABLES `estado_promocion` WRITE;
-/*!40000 ALTER TABLE `estado_promocion` DISABLE KEYS */;
-INSERT INTO `estado_promocion` (`descripcion`, `nombre`, `estadoPromocionID`) 
-VALUES ('Pendiente de Aprobación','Pendiente',1),
-	('Aprobada y pendiente de publicación','Aprobada',2),
-	('No Aprobada','Rechazada',3),
-	('Aprobada y publicandose','Vigente',4),
-	('Período de publicación vencido','Vencida',5);
-/*!40000 ALTER TABLE `estado_promocion` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `comentario`
@@ -1309,16 +856,6 @@ CREATE TABLE `comentario` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `comentario`
---
--- ORDER BY:  `comentarioID`
-
-LOCK TABLES `comentario` WRITE;
-/*!40000 ALTER TABLE `comentario` DISABLE KEYS */;
-/*!40000 ALTER TABLE `comentario` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `roles_por_usuario`
 --
 
@@ -1338,16 +875,6 @@ CREATE TABLE `roles_por_usuario` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `roles_por_usuario`
---
--- ORDER BY:  `rolesPorUsuarioID`
-
-LOCK TABLES `roles_por_usuario` WRITE;
-/*!40000 ALTER TABLE `roles_por_usuario` DISABLE KEYS */;
-/*!40000 ALTER TABLE `roles_por_usuario` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `rol_usuario`
 --
 
@@ -1361,6 +888,170 @@ CREATE TABLE `rol_usuario` (
   PRIMARY KEY (`rolUsuarioID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+-- =================================================================== --
+/**
+ * Crear el usuario 'playonAdmin' con password por defecto 'playon'.
+ */
+
+/* Descomentar la siguiente linea si el usuario existe */
+-- DROP USER 'playonAdmin';
+CREATE USER 'playonAdmin'@'localhost' 
+        IDENTIFIED BY PASSWORD '*AEBE50B9926D86DA86D2B880AA0DF19F0EEDDEF0';
+
+/**
+ * Asignamos todos los permisos al usuario 'playonAdmin' para la BD `tesis_playon`.
+ */
+GRANT ALL PRIVILEGES ON TABLE `tesis_playon`.* TO 'playonAdmin'@'localhost';
+
+-- =================================================================== --
+
+
+
+-- =================================================================== --
+/**
+ * Carga de datos básicos
+ */
+
+--
+-- Dumping data for table `estado_publicidad`
+--
+-- ORDER BY:  `estadoPublicidadID`
+
+LOCK TABLES `estado_publicidad` WRITE;
+/*!40000 ALTER TABLE `estado_publicidad` DISABLE KEYS */;
+INSERT INTO `estado_publicidad` (`descripcion`, `nombre`, `estadoPublicidadID`) 
+VALUES ('Pendiente de Aprobación','Pendiente',1),
+	('Aprobada y pendiente de publicación','Aprobada',2),
+	('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),
+	('Perí­odo de publicación vencido','Vencida',5);
+/*!40000 ALTER TABLE `estado_publicidad` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `color_vehiculo`
+--
+-- ORDER BY:  `colorVehiculoID`
+
+LOCK TABLES `color_vehiculo` WRITE;
+/*!40000 ALTER TABLE `color_vehiculo` DISABLE KEYS */;
+INSERT INTO `color_vehiculo` (`nombre`, `valorHexadecimal`, `colorVehiculoID`) 
+VALUES ('Blanco','FFFFFF',1),('Negro','000000',2),('Rojo','FF0000',3),('Amarillo','FFFF00',4),
+	('Verde Claro','32CD32',5),('Azul','0000FF',6),('Celeste','1E90FF',7),('Gris Claro','C0C0C0',8),
+	('Gris Oscuro','696969',9),('Naranja','FF4500',10),('Verde Oscuro','006400',11),('Bordó','65212C',12);
+/*!40000 ALTER TABLE `color_vehiculo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `estado_denuncia`
+--
+-- ORDER BY:  `estadoDenunciaID`
+
+LOCK TABLES `estado_denuncia` WRITE;
+/*!40000 ALTER TABLE `estado_denuncia` DISABLE KEYS */;
+INSERT INTO `estado_denuncia` (`descripcion`, `nombre`, `estadoDenunciaID`) 
+VALUES ('Pendiente de auditorí­a','Pendiente',1),
+	('En proceso de investigación','En Proceso',2),
+	('Acepatada','Aceptada',3),('Rechazada','Rechazada',4),
+	('Anulada','Anulada',5),('Dada de Baja / Cancelada','De Baja',6);
+/*!40000 ALTER TABLE `estado_denuncia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `categoria_vehiculo`
+--
+-- ORDER BY:  `categoriaVehiculoID`
+
+LOCK TABLES `categoria_vehiculo` WRITE;
+/*!40000 ALTER TABLE `categoria_vehiculo` DISABLE KEYS */;
+INSERT INTO `categoria_vehiculo` (`descripcion`, `nombre`, `categoriaVehiculoID`) 
+VALUES ('','Auto',1),('','Moto',2),('','Utilitario',3),('','PickUp / 4X4',4);
+/*!40000 ALTER TABLE `categoria_vehiculo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `estado_playa`
+--
+-- ORDER BY:  `estadoPlayaID`
+
+LOCK TABLES `estado_playa` WRITE;
+/*!40000 ALTER TABLE `estado_playa` DISABLE KEYS */;
+INSERT INTO `estado_playa` (`descripcion`, `nombre`, `estadoPlayaID`) 
+VALUES ('Pendiente de Auditorí­a','Pendiente',1),
+	('Aprobada luego de auditoría','Aprobada',2),
+	('Rechazada luego de auditorí­a','Rechazada',3),
+	('Dada de baja','De Baja',4);
+/*!40000 ALTER TABLE `estado_playa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `tipo_estadia`
+--
+-- ORDER BY:  `tipoEstadiaID`
+
+LOCK TABLES `tipo_estadia` WRITE;
+/*!40000 ALTER TABLE `tipo_estadia` DISABLE KEYS */;
+INSERT INTO `tipo_estadia` (`descripcion`, `nombre`, `tipoEstadiaID`) 
+VALUES ('','Por Hora',1),('','Por Mes',2),('','Por Noche',3),
+	('','Por Dí­a',4),('','Por Semana',5);
+/*!40000 ALTER TABLE `tipo_estadia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `cargo_empleado`
+--
+-- ORDER BY:  `cargoEmpleadoID`
+
+LOCK TABLES `cargo_empleado` WRITE;
+/*!40000 ALTER TABLE `cargo_empleado` DISABLE KEYS */;
+INSERT INTO `cargo_empleado` (`descripcion`, `nombre`, `cargoEmpleadoID`) 
+VALUES ('','Gerente General',1),('','Encargado',2),('','Playero',3);
+/*!40000 ALTER TABLE `cargo_empleado` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `tipo_pago`
+--
+-- ORDER BY:  `tipoPagoID`
+
+LOCK TABLES `tipo_pago` WRITE;
+/*!40000 ALTER TABLE `tipo_pago` DISABLE KEYS */;
+INSERT INTO `tipo_pago` (`descripcion`, `nombre`, `tipoPagoID`) 
+VALUES ('Contado Efectivo','Contado',1),
+	('Tarjeta de débito','Tarjeta Débito',2),
+	('Tarjeta de crédito','Tarjeta Crédito',3),
+	('DineroMail','DineroMail',4),('Cheque','Cheque',5),
+	('Pago con saldo de la cuenta del cliente','Cuenta',6);
+/*!40000 ALTER TABLE `tipo_pago` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `tipo_doc`
+--
+-- ORDER BY:  `tipoDocID`
+
+LOCK TABLES `tipo_doc` WRITE;
+/*!40000 ALTER TABLE `tipo_doc` DISABLE KEYS */;
+INSERT INTO `tipo_doc` (`nombre`, `tipoDocID`) 
+VALUES ('D.N.I.',1),('L.C.',2),('L.E.',3),('C.I.',4);
+/*!40000 ALTER TABLE `tipo_doc` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `estado_promocion`
+--
+-- ORDER BY:  `estadoPromocionID`
+
+LOCK TABLES `estado_promocion` WRITE;
+/*!40000 ALTER TABLE `estado_promocion` DISABLE KEYS */;
+INSERT INTO `estado_promocion` (`descripcion`, `nombre`, `estadoPromocionID`) 
+VALUES ('Pendiente de Aprobación','Pendiente',1),
+	('Aprobada y pendiente de publicación','Aprobada',2),
+	('No Aprobada','Rechazada',3),
+	('Aprobada y publicandose','Vigente',4),
+	('Período de publicación vencido','Vencida',5);
+/*!40000 ALTER TABLE `estado_promocion` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `rol_usuario`
@@ -1381,21 +1072,7 @@ VALUES ('Administrador del sistema','ROLE_ADMIN',1),
 UNLOCK TABLES;
 
 -- =================================================================== --
-/**
- * Crear el usuario 'playonAdmin' con password por defecto 'playon'.
- */
 
-/* Descomentar la siguiente linea si el usuario existe */
--- DROP USER 'playonAdmin';
-CREATE USER 'playonAdmin'@'localhost' 
-        IDENTIFIED BY PASSWORD '*AEBE50B9926D86DA86D2B880AA0DF19F0EEDDEF0';
-
-/**
- * Asignamos todos los permisos al usuario 'playonAdmin' para la BD `tesis_playon`.
- */
-GRANT ALL PRIVILEGES ON TABLE `tesis_playon`.* TO 'playonAdmin'@'localhost';
-
--- =================================================================== --
 
 -- =================================================================== --
 /**
@@ -1408,20 +1085,16 @@ GRANT ALL PRIVILEGES ON TABLE `tesis_playon`.* TO 'playonAdmin'@'localhost';
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` (`apellido`, `email`, `nombre`, `password`, `sesion`, `usuario`, 
-    `usuarioID`, `tipoDocID`, `nroDoc`, `playaID`) 
-VALUES ('Moreno','pablo_la31@hotmail.com','Pablo','123456',NULL,'pablo_la31',1,1,'32987654',NULL),
-    ('Bostico','alebostico@hotmail.com','Alejandro','123456',NULL,'alejandro',2,1,'11111111',NULL),
-    ('Arribere','gonzaloarribere@gmail.com','Gonzalo','123456',NULL,'gonzalo',3,1,'22222222',NULL),
-    ('Morales Batovski','morales.batovski@gmail.com','Raúl Gustavo','123456',NULL,'gmorales',4,1,'29966905',NULL),
-    ('Perez Villar','ericperezvillar@gmail.com','Eric','123456',NULL,'eric',5,1,'44444444',NULL),
-    ('Admin','admin@playon.com.ar','Super','123456',NULL,'admin',6,1,'66666666',NULL),
-    ('Gomez','sgomez@playon.com.ar','Silvina','123456',NULL,'sgomez',7,1,'10456654',NULL),
-    ('Lopez','jjlopez@playon.com.ar','Juana Josefa','123456',NULL,'jjlopez',8,1,'27600710',NULL),
-    ('Pérez','jperez@playon.com.ar','Juan','123456',NULL,'jperez',9,1,'31234234',NULL),
-    ('Rico','jrico@playon.com.ar','Jorge','123456',NULL,'jrico',10,1,'13450450',5),
-    ('García','jgarcia@playon.com.ar','Javier','123456',NULL,'jgarcia',11,1,'20567653',5),
-    ('Justo','hjusto@playon.com.ar','Horacio','123456',NULL,'hjusto',12,1,'15630004',NULL);
+INSERT INTO `tesis_playon`.`usuario` (`apellido`,`email`,`nombre`,`password`,`sesion`,`usuario`,`usuarioID`,`tipoDocID`,`nroDoc`,`enable`,`playaID`) 
+VALUES ('Moreno','pablo_la31@hotmail.com','Pablo','123456',NULL,'pablo_la31',1,1,'32987654',1,NULL),
+ ('Bostico','alebostico@hotmail.com','Alejandro','123456',NULL,'alejandro',2,1,'11111111',1,NULL),
+ ('Arribere','gonzaloarribere@gmail.com','Gonzalo','123456',NULL,'gonzalo',3,1,'22222222',1,NULL),
+ ('Morales Batovski','morales.batovski@gmail.com','Raúl Gustavo','123456',NULL,'gmorales',4,1,'29966905',1,NULL),
+ ('Perez Villar','ericperezvillar@gmail.com','Eric','123456',NULL,'eric',5,1,'44444444',1,NULL),
+ ('Admin','admin@playon.com.ar','Super','123456',NULL,'admin',6,1,'66666666',1,NULL),
+ ('Gomez','sgomez@playon.com.ar','Silvina','123456',NULL,'sgomez',7,1,'10456654',1,NULL),
+ ('Lopez','jjlopez@playon.com.ar','Juana Josefa','123456',NULL,'jjlopez',8,1,'27600710',1,NULL),
+ ('Pérez','jperez@playon.com.ar','Juan','123456',NULL,'jperez',9,1,'31234234',1,NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1431,19 +1104,16 @@ UNLOCK TABLES;
 
 LOCK TABLES `roles_por_usuario` WRITE;
 /*!40000 ALTER TABLE `roles_por_usuario` DISABLE KEYS */;
-INSERT INTO `roles_por_usuario` (`rolesPorUsuarioID`, `usuario`, `rolUsuario`) 
-VALUES (1,'pablo_la31', 'ROLE_ADMIN'),   	/* pablo_la31   --> ROLE_ADMIN */
-    (2,'alejandro', 'ROLE_ADMIN'),       	/* alejandro    --> ROLE_ADMIN */
-    (3,'gonzalo', 'ROLE_ADMIN'),         	/* gonzalo      --> ROLE_ADMIN */
-    (4,'gmorales', 'ROLE_ADMIN'),        	/* gmorales     --> ROLE_ADMIN */
-    (5,'eric', 'ROLE_ADMIN'),            	/* eric         --> ROLE_ADMIN */
-    (6,'admin', 'ROLE_ADMIN'),           	/* admin        --> ROLE_ADMIN */
-    (7,'sgomez', 'ROLE_CLIENT'),          	/* sgarcia      --> ROLE_CLIENT */
-    (8,'jjlopez', 'ROLE_CLIENT'),          	/* jjlopez      --> ROLE_CLIENT */
-    (9,'jperez', 'ROLE_CLIENT'),         	/* jperez  	    --> ROLE_CLIENT */
-    (10,'jrico', 'ROLE_PLAYA_GERENTE'),   	/* jrico        --> ROLE_PLAYA_GERENTE */
-    (11,'jgarcia', 'ROLE_PLAYA_EMPLEADO'),	/* jgarcia      --> ROLE_PLAYA_EMPLEADO */
-    (12,'hjusto', 'ROLE_AUDITOR');			/* hjusto       --> ROLE_AUDITOR */    
+INSERT INTO `tesis_playon`.`roles_por_usuario` (`rolesPorUsuarioID`,`usuario`,`rolUsuario`) 
+VALUES (1,'pablo_la31','ROLE_PLAYA_GERENTE'),
+ (2,'alejandro','ROLE_AUDITOR'),
+ (3,'gonzalo','ROLE_CLIENT'),
+ (4,'gmorales','ROLE_ADMIN'),
+ (5,'eric','ROLE_PLAYA_EMPLEADO'),
+ (6,'admin','ROLE_ADMIN'),
+ (7,'sgomez','ROLE_CLIENT'),
+ (8,'jjlopez','ROLE_CLIENT'),
+ (9,'jperez','ROLE_CLIENT');  
 /*!40000 ALTER TABLE `roles_por_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1540,16 +1210,282 @@ UNLOCK TABLES;
 
 LOCK TABLES `playa` WRITE;
 /*!40000 ALTER TABLE `playa` DISABLE KEYS */;
-INSERT INTO `playa` (`barrioID`, `cuit`, `disponibilidad`, `domicilio`, `estadoPlayaID`, `nombreComercial`, `latitud`, `longitud`, `razonSocial`, `playaID`, `estadiaID`) 
-VALUES (2,'30-11111111-1',55,'Buenos Aires 548',2,'Estacionamiento Europa',-31.422895,-64.185659,'Estacionamiento Europa',3,NULL),
-	(2,'30-11111111-1',100,'Independencia 770',2,'Estacionamiento Independencia',-31.425024,-64.188105,'Estacionamiento Independencia',4,NULL),
-	(2,'30-11111111-1',100,'Obispo Trejo 758',2,'Parkingcity',-31.424615,-64.189357,'Parkingcity',5,NULL),
-	(1,'30-11111111-1',100,'Bv. Ilia 156',2,'Estacionamiento Mercado Sur',-31.421251,-64.184234,'Estacionamiento Mercado Sur',6,NULL),
-	(1,'30-11111111-1',100,'Santa Rosa 631',2,'Parking One',-31.409921,-64.191527,'Parking One',7,NULL),
-	(1,'30-11111111-1',100,'Bv. Chacabuco 728',2,'Playa Sur',-31.425904,-64.183791,'Playa Sur',8,NULL),
-	(1,'30-11111111-1',100,'Bv. Illia 70',2,'Parquin Verde',-31.420956,-64.18535,'Parquin Verde',9,NULL);
+INSERT INTO `playa` (`barrioID`, `cuit`, `disponibilidad`, `domicilio`, `estadoPlayaID`, `nombreComercial`, `latitud`, `longitud`, `razonSocial`, `playaID`) 
+VALUES (2,'30-11111111-1',55,'Buenos Aires 548',2,'Estacionamiento Europa',-31.422895,-64.185659,'Estacionamiento Europa',3),
+	(2,'30-11111111-1',100,'Independencia 770',2,'Estacionamiento Independencia',-31.425024,-64.188105,'Estacionamiento Independencia',4),
+	(2,'30-11111111-1',100,'Obispo Trejo 758',2,'Parkingcity',-31.424615,-64.189357,'Parkingcity',5),
+	(1,'30-11111111-1',100,'Bv. Ilia 156',2,'Estacionamiento Mercado Sur',-31.421251,-64.184234,'Estacionamiento Mercado Sur',6),
+	(1,'30-11111111-1',100,'Santa Rosa 631',2,'Parking One',-31.409921,-64.191527,'Parking One',7),
+	(1,'30-11111111-1',100,'Bv. Chacabuco 728',2,'Playa Sur',-31.425904,-64.183791,'Playa Sur',8),
+	(1,'30-11111111-1',100,'Bv. Illia 70',2,'Parquin Verde',-31.420956,-64.18535,'Parquin Verde',9);
 /*!40000 ALTER TABLE `playa` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping data for table `perfil_playa`
+--
+-- ORDER BY:  `perfilPlayaID`
+
+LOCK TABLES `perfil_playa` WRITE;
+/*!40000 ALTER TABLE `perfil_playa` DISABLE KEYS */;
+INSERT INTO `tesis_playon`.`perfil_playa` (`descripcion`, `nombreComercial`, `perfilPlayaID`, `playaID`, `fotoPerfil`)
+VALUES ('Playa "Estacionamiento Europa"', 'Estacionamiento Europa', 3, 3, NULL),
+('Playa "Estacionamiento Independencia"', 'Estacionamiento Independencia', 4, 4, NULL),
+('Playa "Parkingcity', 'Parkingcity"', 5, 5, NULL),
+('Playa "Estacionamiento Mercado Sur"', 'Estacionamiento Mercado Sur', 6, 6, NULL),
+('Playa "Parking One"', 'Parking One', 7, 7, NULL),
+('Playa "Playa Sur"', 'Playa Sur', 8, 8, NULL),
+('Playa "Parquin Verde"', 'Parquin Verde', 9, 9, NULL);
+/*!40000 ALTER TABLE `perfil_playa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- Dumping data for table `tesis_playon`.`abono`
+--
+
+LOCK TABLES `abono` WRITE;
+/*!40000 ALTER TABLE `abono` DISABLE KEYS */;
+INSERT INTO `tesis_playon`.`abono` (`fechaVigenciaDesde`,`fechaVigenciaHasta`,`tarifaID`,`abonoID`,`clienteID`,`playaID`) VALUES 
+ ('2012-08-01 00:00:00','2013-12-31 00:00:00',3,1,3,3);
+/*!40000 ALTER TABLE `abono` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- Dumping data for table `tesis_playon`.`cliente`
+--
+
+LOCK TABLES `cliente` WRITE;
+/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+INSERT INTO `tesis_playon`.`cliente` (`barrioID`,`cuentaClienteID`,`domicilio`,`nroCliente`,`telefono`,`clienteID`,`usuarioID`,`fotoPerfil`) VALUES 
+ (1,4,'Chile 160',1,'156123456',1,3,NULL),
+ (2,1,'Colon 566',2,'152123456',2,7,NULL),
+ (1,2,'Buenos Aires 75',3,'153123456',3,8,NULL),
+ (3,3,'Av. Valparaiso 3125',4,NULL,4,9,NULL);
+/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `tesis_playon`.`cuenta_cliente`
+--
+
+LOCK TABLES `cuenta_cliente` WRITE;
+/*!40000 ALTER TABLE `cuenta_cliente` DISABLE KEYS */;
+INSERT INTO `tesis_playon`.`cuenta_cliente` (`fechaCreacion`,`nroCuenta`,`saldo`,`cuentaClienteID`,`clienteID`) VALUES 
+ ('2012-08-21 20:29:37',1001,150,1,1),
+ ('2012-08-21 20:29:37',1002,50,2,2),
+ ('2012-08-21 20:29:37',1003,500,3,3),
+ ('2012-08-21 20:29:37',1004,100,4,4);
+/*!40000 ALTER TABLE `cuenta_cliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `tesis_playon`.`cuenta_playa`
+--
+
+LOCK TABLES `cuenta_playa` WRITE;
+/*!40000 ALTER TABLE `cuenta_playa` DISABLE KEYS */;
+INSERT INTO `tesis_playon`.`cuenta_playa` (`fechaCreacion`,`nroCuenta`,`saldo`,`cuentaPlayaID`,`playaID`) VALUES 
+ ('2012-08-22 00:00:00',1,1001,1,3);
+/*!40000 ALTER TABLE `cuenta_playa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `tesis_playon`.`detalle_estadia`
+--
+
+LOCK TABLES `detalle_estadia` WRITE;
+/*!40000 ALTER TABLE `detalle_estadia` DISABLE KEYS */;
+INSERT INTO `tesis_playon`.`detalle_estadia` (`transaccionClienteID`,`empleadoID`,`fechaHoraEgreso`,`fechaHoraIngreso`,`importeTotal`,`promocionID`,`tarifaID`,`vehiculoID`,`detalleEstadiaID`,`estadiaID`) VALUES 
+ (2,1002,'2012-08-04 17:48:45','2012-08-04 19:25:23',20,NULL,1,1,1,3),
+ (2,1002,'2012-08-11 17:50:35','2012-08-11 18:45:21',10,NULL,1,1,2,3),
+ (2,1002,'2012-08-18 17:51:18','2012-08-18 18:32:49',10,NULL,1,1,3,3);
+/*!40000 ALTER TABLE `detalle_estadia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `tesis_playon`.`estadia`
+--
+
+LOCK TABLES `estadia` WRITE;
+/*!40000 ALTER TABLE `estadia` DISABLE KEYS */;
+INSERT INTO `tesis_playon`.`estadia` (`estadiaID`,`playaID`) VALUES 
+ (3,3), (4,4), (5,5), (6,6), (7,7), (8,8), (9,9);
+/*!40000 ALTER TABLE `estadia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `tesis_playon`.`tarifa`
+--
+
+LOCK TABLES `tarifa` WRITE;
+/*!40000 ALTER TABLE `tarifa` DISABLE KEYS */;
+INSERT INTO `tesis_playon`.`tarifa` (`fechaAlta`,`fechaBaja`,`importe`,`vigente`,`tarifaID`,`playaID`,`tipoEstadiaID`,`categoriaVehiculoID`) VALUES 
+ (NULL,NULL,10,1,1,3,1,1),
+ (NULL,NULL,12,1,2,3,1,3),
+ (NULL,NULL,500,1,3,3,2,1),
+ (NULL,NULL,550,1,4,3,2,3);
+/*!40000 ALTER TABLE `tarifa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- Dumping data for table `tesis_playon`.`transaccion_cliente`
+--
+
+LOCK TABLES `transaccion_cliente` WRITE;
+/*!40000 ALTER TABLE `transaccion_cliente` DISABLE KEYS */;
+INSERT INTO `tesis_playon`.`transaccion_cliente` (`fecha`,`importe`,`tipoPagoID`,
+	`transaccionClienteID`,`cuentaClienteID`) VALUES 
+ ('2012-08-03 13:23:45',100,4,1,1),
+ ('2012-08-04 19:25:23',-20,4,2,1),
+ ('2012-08-11 18:45:21',-10,4,3,1),
+ ('2012-08-18 18:32:49',-10,4,4,1);
+/*!40000 ALTER TABLE `transaccion_cliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `tesis_playon`.`transaccion_playa`
+--
+
+/*!40000 ALTER TABLE `transaccion_playa` DISABLE KEYS */;
+LOCK TABLES `transaccion_playa` WRITE;
+INSERT INTO `tesis_playon`.`transaccion_playa` (`fecha`,`importe`,`tipoPagoID`,`transaccionPlayaID`,
+	`cuentaPlayaID`,`liquidacionID`,`detalleEstadiaID`) VALUES 
+ ('2012-08-04 19:25:23',20,4,1,1,NULL,NULL),
+ ('2012-08-11 18:45:21',10,4,2,1,NULL,NULL),
+ ('2012-08-18 18:32:49',10,4,3,1,NULL,NULL);
+/*!40000 ALTER TABLE `transaccion_playa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `tesis_playon`.`vehiculo`
+--
+
+/*!40000 ALTER TABLE `vehiculo` DISABLE KEYS */;
+LOCK TABLES `vehiculo` WRITE;
+INSERT INTO `tesis_playon`.`vehiculo` (`anio`,`categoriaID`,`codigoBarra`,`colorVehiculoID`,`habilitado`,`modeloVehiculoID`,`patente`,`vehiculoID`,`clienteID`) 
+VALUES (2010,1,NULL,2,1,1,'ABC123',1,1), 
+ (2011,4,NULL,9,1,6,'DEF456',2,2),
+ (2009,1,NULL,12,1,15,'GHI789',3,3),
+ (2009,1,NULL,3,1,10,'JKL159',4,4);
+/*!40000 ALTER TABLE `vehiculo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `denuncia_vehiculo`
+--
+-- ORDER BY:  `denunciaVehiculoID`
+
+LOCK TABLES `denuncia_vehiculo` WRITE;
+/*!40000 ALTER TABLE `denuncia_vehiculo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `denuncia_vehiculo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+--
+-- Dumping data for table `promocion`
+--
+-- ORDER BY:  `promocionID`
+
+LOCK TABLES `promocion` WRITE;
+/*!40000 ALTER TABLE `promocion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `promocion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `denuncia_playa`
+--
+-- ORDER BY:  `denunciaPlayaID`
+
+LOCK TABLES `denuncia_playa` WRITE;
+/*!40000 ALTER TABLE `denuncia_playa` DISABLE KEYS */;
+/*!40000 ALTER TABLE `denuncia_playa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- Dumping data for table `liquidacion`
+--
+-- ORDER BY:  `liquidacionID`
+
+LOCK TABLES `liquidacion` WRITE;
+/*!40000 ALTER TABLE `liquidacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `liquidacion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `historial_de_cambio`
+--
+-- ORDER BY:  `historialDeCambioID`
+
+LOCK TABLES `historial_de_cambio` WRITE;
+/*!40000 ALTER TABLE `historial_de_cambio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `historial_de_cambio` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `foto`
+--
+-- ORDER BY:  `fotoID`
+
+LOCK TABLES `foto` WRITE;
+/*!40000 ALTER TABLE `foto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `foto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `favorito`
+--
+-- ORDER BY:  `clienteID`,`playaID`
+
+LOCK TABLES `favorito` WRITE;
+/*!40000 ALTER TABLE `favorito` DISABLE KEYS */;
+/*!40000 ALTER TABLE `favorito` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `publicidad`
+--
+-- ORDER BY:  `publicidadID`
+
+LOCK TABLES `publicidad` WRITE;
+/*!40000 ALTER TABLE `publicidad` DISABLE KEYS */;
+/*!40000 ALTER TABLE `publicidad` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `sesion`
+--
+-- ORDER BY:  `sesionID`
+
+LOCK TABLES `sesion` WRITE;
+/*!40000 ALTER TABLE `sesion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sesion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `posicion`
+--
+-- ORDER BY:  `posicionID`
+
+LOCK TABLES `posicion` WRITE;
+/*!40000 ALTER TABLE `posicion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `posicion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `comentario`
+--
+-- ORDER BY:  `comentarioID`
+
+LOCK TABLES `comentario` WRITE;
+/*!40000 ALTER TABLE `comentario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comentario` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 
 -- -- =================================================================== --
