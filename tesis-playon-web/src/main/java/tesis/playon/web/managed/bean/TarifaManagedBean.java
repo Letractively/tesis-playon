@@ -14,12 +14,14 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.component.inputtext.InputText;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Playa;
+import tesis.playon.web.model.Sesion;
 import tesis.playon.web.model.Tarifa;
 import tesis.playon.web.model.TipoEstadia;
 import tesis.playon.web.service.ITarifaService;
@@ -70,8 +72,10 @@ public class TarifaManagedBean implements Serializable {
     public String addTarifaAdmin() {
 	try {
 	    Tarifa tarifa = new Tarifa();
+	    
 	    tarifa.setImporte(getImporte());
 	    tarifa.setVigente(getVigente());
+	        
 	    tarifa.setPlaya(getPlaya());
 	    tarifa.setTipoEstadia(getTipoEstadia());
 	    tarifa.setCategoriaVehiculo(getCategoriaVehiculo());
@@ -81,13 +85,13 @@ public class TarifaManagedBean implements Serializable {
 	    return LISTA_TARIFAS;
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo agregar la tarifa"
-		    + tarifaSelected.getPlaya().getNombreComercial(), "Por favos, intentelo mas tarde.");
+		    + tarifaSelected.getPlaya().getNombreComercial(), "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
 	return ERROR;
     }
-
+    
     public String deleteTarifaAdmin(Tarifa tarifa) {
 	try {
 	    tarifa.setFechaBaja(new Date());
@@ -100,7 +104,7 @@ public class TarifaManagedBean implements Serializable {
 	    FacesMessage message = new FacesMessage(
 		    FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo borrar la tarifa de la playa: " + tarifaSelected.getPlaya().getNombreComercial(),
-		    "Por favos, intentelo mas tarde.");
+		    "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	return ERROR;
@@ -124,7 +128,7 @@ public class TarifaManagedBean implements Serializable {
 	    return LISTA_TARIFAS;
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error,la tarifa no se pudo modificar", "Por favos, intentelo mas tarde.");
+		    "Error, la tarifa no se pudo modificar", "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -196,11 +200,21 @@ public class TarifaManagedBean implements Serializable {
     public Float getImporte() {
 	return importe;
     }
-
+    
     public void setImporte(Float importe) {
 	this.importe = importe;
     }
+    
+    public Float getImporteAutoPorHora() {
+    	return importe;
+    }
+    
+    
+    public void setImporteAutoPorHora(Float importe) {
+	this.importe = importe;
+    }
 
+    
     public Boolean getVigente() {
 	return vigente;
     }
