@@ -996,6 +996,14 @@ CREATE TABLE `estadia` (
 
 LOCK TABLES `estadia` WRITE;
 /*!40000 ALTER TABLE `estadia` DISABLE KEYS */;
+INSERT INTO `estadia` (`estadiaID`, `playaID`) 
+VALUES ('3','3'),
+	('4','4'),
+	('5','5'),
+	('6','6'),
+	('7','7'),
+	('8','8'),
+	('9','9');
 /*!40000 ALTER TABLE `estadia` ENABLE KEYS */;
 UNLOCK TABLES;
 
