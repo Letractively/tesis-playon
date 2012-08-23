@@ -19,17 +19,19 @@ import org.springframework.dao.DataAccessException;
 import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.EstadoPlaya;
+import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.RolesPorUsuario;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IBarrioService;
+import tesis.playon.web.service.IEstadiaService;
 import tesis.playon.web.service.IEstadoPlayaService;
+import tesis.playon.web.service.IPerfilPlayaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IRolUsuarioService;
 import tesis.playon.web.service.IRolesPorUsuarioService;
 import tesis.playon.web.service.IUsuarioService;
-import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
 
 /**
  * @author pablo
@@ -68,6 +70,12 @@ public class PlayaManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{RolesPorUsuarioService}")
     IRolesPorUsuarioService rolesPorUsuarioService;
+    
+    @ManagedProperty(value = "#{EstadiaService}")
+    IEstadiaService estadiaService;
+    
+    @ManagedProperty(value = "#{PerfilPlayaService}")
+    IPerfilPlayaService perfilPlayaService;
 
     List<Playa> playaList;
 
@@ -91,8 +99,6 @@ public class PlayaManagedBean implements Serializable {
 
     private EstadoPlaya estado;
 
-    private Estadia estadia;
-
     // Atributos del encargado
     private String apellido;
 
@@ -110,12 +116,6 @@ public class PlayaManagedBean implements Serializable {
 
     private Playa playa;
 
-    private Integer distancia = 25;
-
-    private GeoposicionDePlaya respuesta;
-
-    private String coordenadas;
-
     // para modificar una playa
     private static Playa playaSelected;
 
@@ -127,7 +127,6 @@ public class PlayaManagedBean implements Serializable {
 	    playa.setCuit(getCuit());
 	    playa.setDisponibilidad(getDisponibilidad());
 	    playa.setDomicilio(getDomicilio());
-	    playa.setEstadia(getEstadia());
 	    playa.setEstado(getEstado());
 	    playa.setNombreComercial(getNombreComercial());
 	    playa.setRazonSocial(getRazonSocial());
@@ -135,7 +134,17 @@ public class PlayaManagedBean implements Serializable {
 	    playa.setEmail(getEmailPlaya());
 
 	    getPlayaService().save(playa);
-
+	    
+	    PerfilPlaya perfil = new PerfilPlaya();
+	    perfil.setNombre(playa.getNombreComercial());
+	    perfil.setPlaya(playa);
+	    perfil.setFotoPerfil("/resources/images/sinfoto.jpg");
+	    
+	    getPerfilPlayaService().save(perfil);
+	    
+	    Estadia estadia = new Estadia(playa);
+	    getEstadiaService().save(estadia);
+	    
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente : "
 		    + playa.getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
@@ -163,7 +172,6 @@ public class PlayaManagedBean implements Serializable {
 	    playa.setCuit(getCuit());
 	    playa.setDisponibilidad(getDisponibilidad());
 	    playa.setDomicilio(getDomicilio());
-	    playa.setEstadia(getEstadia());
 	    playa.setEstado(estado);
 	    playa.setNombreComercial(getNombreComercial());
 	    playa.setRazonSocial(getRazonSocial());
@@ -171,7 +179,16 @@ public class PlayaManagedBean implements Serializable {
 	    playa.setEmail(getEmailPlaya());
 
 	    getPlayaService().save(playa);
-
+	    
+	    PerfilPlaya perfil = new PerfilPlaya();
+	    perfil.setNombre(playa.getNombreComercial());
+	    perfil.setPlaya(playa);
+	    
+	    getPerfilPlayaService().save(perfil);
+	    
+	    Estadia estadia = new Estadia(playa);
+	    getEstadiaService().save(estadia);
+	    
 	    usuario.setPlaya(playa);
 	    getUsuarioService().save(usuario);
 
@@ -295,7 +312,6 @@ public class PlayaManagedBean implements Serializable {
 	this.setRazonSocial("");
 	this.setBarrio(null);
 	this.setEstado(null);
-	this.setEstadia(null);
 	this.setTelefono(null);
 	this.setEmailPlaya(null);
 
@@ -362,6 +378,22 @@ public class PlayaManagedBean implements Serializable {
 	this.rolesPorUsuarioService = rolesPorUsuarioService;
     }
 
+    public IEstadiaService getEstadiaService() {
+        return estadiaService;
+    }
+
+    public void setEstadiaService(IEstadiaService estadiaService) {
+        this.estadiaService = estadiaService;
+    }
+
+    public IPerfilPlayaService getPerfilPlayaService() {
+        return perfilPlayaService;
+    }
+
+    public void setPerfilPlayaService(IPerfilPlayaService perfilPlayaService) {
+        this.perfilPlayaService = perfilPlayaService;
+    }
+
     public List<Playa> getPlayaList() {
 	playaList = new ArrayList<Playa>();
 	playaList.addAll(getPlayaService().findAll());
@@ -418,14 +450,6 @@ public class PlayaManagedBean implements Serializable {
 
     public void setEstado(EstadoPlaya estado) {
 	this.estado = estado;
-    }
-
-    public Estadia getEstadia() {
-	return estadia;
-    }
-
-    public void setEstadia(Estadia estadia) {
-	this.estadia = estadia;
     }
 
     public String getRazonSocial() {
@@ -500,14 +524,6 @@ public class PlayaManagedBean implements Serializable {
 	this.tipoDoc = tipoDoc;
     }
 
-    public Integer getDistancia() {
-	return distancia;
-    }
-
-    public void setDistancia(Integer distancia) {
-	this.distancia = distancia;
-    }
-
     public Playa getPlaya() {
 	return playa;
     }
@@ -530,22 +546,6 @@ public class PlayaManagedBean implements Serializable {
 
     public void setEmailPlaya(String emailPlaya) {
 	this.emailPlaya = emailPlaya;
-    }
-
-    public GeoposicionDePlaya getRespuesta() {
-	return respuesta;
-    }
-
-    public void setRespuesta(GeoposicionDePlaya respuesta) {
-	this.respuesta = respuesta;
-    }
-
-    public String getCoordenadas() {
-	return coordenadas;
-    }
-
-    public void setCoordenadas(String coordenadas) {
-	this.coordenadas = coordenadas;
     }
 
     public void setSimpleModel(MapModel simpleModel) {

@@ -1,11 +1,11 @@
-<ui:composition template="../template/templatePlaya.xhtml"
+<ui:composition template="../template/template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-		<ui:param name="loadmenuperfil" value="true" />
+	<ui:param name="dontloadsidebar" value="true" />
 
 	<ui:define name="title">
 		Título de la página
@@ -13,6 +13,46 @@
 
 	<ui:define name="content">
 		<h1>Perfil</h1>
-		<p>¡Bienvenido al sistema Playón!</p>
+		<p:layout id="layoutPerfil" style="min-width:400px;min-height:400px;">
+			<div>
+				<p:layoutUnit position="west"
+					style="width:151px;height:151px;">
+					<h:graphicImage library="images" name="sinfoto.jpg"
+						style="width:151px; height:151px" />
+				</p:layoutUnit>
+				<p:layoutUnit position="center" style="min-height:200px;">
+					<h2>#{perfilPlayaMB.perfil.playa.nombreComercial}</h2>
+				</p:layoutUnit>
+			</div>
+			<div>
+				<p:layoutUnit position="south" size="100"
+					style="min-width:100px;min-height:100px;">
+					<p:row><p:column>
+						<h:outputText value="Domicilio: " />
+					</p:column><p:column>#{perfilPlayaMB.perfil.playa.domicilio}, Córdoba</p:column></p:row>
+					
+					<p:row><p:column>
+						<h:outputText value="Barrio: " />
+					</p:column><p:column>#{perfilPlayaMB.perfil.playa.barrio.nombre}</p:column></p:row>
+					
+					<p:row><p:column>
+						<h:outputText value="Teléfono: " />
+					</p:column>
+					<p:column>#{perfilPlayaMB.perfil.playa.telefono}</p:column></p:row>
+					
+					<p:row></p:row>
+					
+					<p:column>
+						<h:outputText value="E-mail: " />
+					</p:column>
+					<p:column>#{perfilPlayaMB.perfil.playa.email}</p:column>
+
+					<p:column>
+						<h:outputText value="Disponibilidad: " />
+					</p:column>
+					<p:column>#{perfilPlayaMB.perfil.playa.disponibilidad}</p:column>
+				</p:layoutUnit>
+			</div>
+		</p:layout>
 	</ui:define>
 </ui:composition>

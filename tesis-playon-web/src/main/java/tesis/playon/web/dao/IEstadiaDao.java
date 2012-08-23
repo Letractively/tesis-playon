@@ -13,4 +13,5 @@ public interface IEstadiaDao {
     void delete(Estadia estadia);
     
     List<Estadia> findAll();
+    
 }

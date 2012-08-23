@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IPerfilPlayaDao;
 import tesis.playon.web.model.PerfilPlaya;
+import tesis.playon.web.model.Playa;
 
 /**
  * 
@@ -18,11 +19,11 @@ public class PerfilPlayaDao implements IPerfilPlayaDao {
     private SessionFactory sessionFactory;
 
     public SessionFactory getSessionFactory() {
-	return sessionFactory;
+        return sessionFactory;
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
-	this.sessionFactory = sessionFactory;
+        this.sessionFactory = sessionFactory;
     }
 
     public void save(PerfilPlaya perfilPlaya) {
@@ -52,4 +53,9 @@ public class PerfilPlayaDao implements IPerfilPlayaDao {
 	return perfiles;
     }
 
+    public PerfilPlaya findByPlaya(Playa playa){
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from PerfilPlaya where playa=?")
+		.setParameter(0, playa).list();
+	return (PerfilPlaya) list.get(0);
+    }
 }

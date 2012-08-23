@@ -38,6 +38,9 @@ public class PerfilPlaya implements Serializable {
     @ManyToOne
     @JoinColumn(name = "playaID")
     private Playa playa;
+    
+    @Column(name = "fotoPerfil")
+    private String fotoPerfil;
 
     public PerfilPlaya() {
     }
@@ -78,6 +81,14 @@ public class PerfilPlaya implements Serializable {
 
     public void setPlaya(Playa playa) {
 	this.playa = playa;
+    }
+
+    public String getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
 
     @Override

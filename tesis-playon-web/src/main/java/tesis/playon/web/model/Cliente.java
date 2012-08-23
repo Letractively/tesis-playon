@@ -54,6 +54,9 @@ public class Cliente implements Serializable {
     @OneToOne
     @JoinColumn(name = "usuarioID")
     private Usuario usuario;
+    
+    @Column(name = "fotoPerfil")
+    private String fotoPerfil;
 
     public Cliente() {
 	this.nroCliente= (int) (Math.random() * 1000) + 1;
@@ -126,6 +129,18 @@ public class Cliente implements Serializable {
 
     public void setUsuario(Usuario usuario) {
 	this.usuario = usuario;
+    }
+
+    public String getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public boolean equals(Object object) {

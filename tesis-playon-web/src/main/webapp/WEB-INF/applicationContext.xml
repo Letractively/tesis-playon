@@ -35,26 +35,28 @@
         <bean id="DetalleEstadia" class="tesis.playon.web.model.DetalleEstadia" />
         <bean id="Empleado" class="tesis.playon.web.model.Empleado" />
         <bean id="Estadia" class="tesis.playon.web.model.Estadia" />
-        <!-- <bean id="EstadoDenuncia" class="tesis.playon.web.model.EstadoDenuncia" /> -->
         <bean id="EstadoPlaya" class="tesis.playon.web.model.EstadoPlaya" />
-        <!-- <bean id="EstadoPromocion" class="tesis.playon.web.model.EstadoPromocion" /> -->
-        <!-- <bean id="EstadoPublicidad" class="tesis.playon.web.model.EstadoPublicidad" /> -->
-        <!-- <bean id="Localidad" class="tesis.playon.web.model.Localidad" /> -->
+        <bean id="Localidad" class="tesis.playon.web.model.Localidad" />
         <bean id="MarcaVehiculo" class="tesis.playon.web.model.MarcaVehiculo" />
         <bean id="ModeloVehiculo" class="tesis.playon.web.model.ModeloVehiculo" />
         <bean id="Pais" class="tesis.playon.web.model.Pais" />
+        <bean id="PerfilPlaya" class="tesis.playon.web.model.PerfilPlaya" />
         <bean id="Playa" class="tesis.playon.web.model.Playa" />
-        <!-- <bean id="Posicion" class="tesis.playon.web.model.Posicion" /> -->
         <bean id="Provincia" class="tesis.playon.web.model.Provincia" />
         <bean id="RolesPorUsuario" class="tesis.playon.web.model.RolesPorUsuario" />
         <bean id="RolUsuario" class="tesis.playon.web.model.RolUsuario" />
         <bean id="Tarifa" class="tesis.playon.web.model.Tarifa" />
         <bean id="TipoDoc" class="tesis.playon.web.model.TipoDoc" />
         <bean id="TipoEstadia" class="tesis.playon.web.model.TipoEstadia" />
-        <!-- <bean id="TipoPago" class="tesis.playon.web.model.TipoPago" /> -->
         <bean id="TransaccionCliente" class="tesis.playon.web.model.TransaccionCliente" />
         <bean id="Usuario" class="tesis.playon.web.model.Usuario" />
         <bean id="Vehiculo" class="tesis.playon.web.model.Vehiculo" />
+        
+        <!-- <bean id="EstadoDenuncia" class="tesis.playon.web.model.EstadoDenuncia" /> -->
+        <!-- <bean id="EstadoPromocion" class="tesis.playon.web.model.EstadoPromocion" /> -->
+        <!-- <bean id="EstadoPublicidad" class="tesis.playon.web.model.EstadoPublicidad" /> -->
+        <!-- <bean id="Posicion" class="tesis.playon.web.model.Posicion" /> -->       
+        <!-- <bean id="TipoPago" class="tesis.playon.web.model.TipoPago" /> -->
         
         <!-- User Service Declaration -->
         <bean id="BarrioService" class="tesis.playon.web.service.impl.BarrioService">
@@ -75,15 +77,22 @@
         <bean id="CuentaClienteService" class="tesis.playon.web.service.impl.CuentaClienteService">
                 <property name="cuentaClienteDao" ref="CuentaClienteDao" />
         </bean>
+        
         <bean id="EstadiaService" class="tesis.playon.web.service.impl.EstadiaService">
                 <property name="estadiaDao" ref="EstadiaDao" />
         </bean>
+        
         <bean id="EstadoPlayaService" class="tesis.playon.web.service.impl.EstadoPlayaService">
                 <property name="estadoPlayaDao" ref="EstadoPlayaDao" />
         </bean>
         <bean id="EmpleadoService" class="tesis.playon.web.service.impl.EmpleadoService">
                 <property name="empleadoDao" ref="EmpleadoDao" />
         </bean>
+        
+        <bean id="LocalidadService" class="tesis.playon.web.service.impl.LocalidadService">
+                <property name="localidadDao" ref="LocalidadDao" />
+        </bean>        
+        
         <bean id="MarcaVehiculoService" class="tesis.playon.web.service.impl.MarcaVehiculoService">
                 <property name="marcaVehiculoDao" ref="MarcaVehiculoDao" />
         </bean>
@@ -93,6 +102,11 @@
         <bean id="PaisService" class="tesis.playon.web.service.impl.PaisService">
                 <property name="paisDao" ref="PaisDao" />
         </bean>
+        
+        <bean id="PerfilPlayaService" class="tesis.playon.web.service.impl.PerfilPlayaService">
+                <property name="perfilPlayaDao" ref="PerfilPlayaDao" />
+        </bean>
+        
         <bean id="PlayaService" class="tesis.playon.web.service.impl.PlayaService">
                 <property name="playaDao" ref="PlayaDao" />
         </bean>
@@ -121,6 +135,8 @@
                 <property name="vehiculoDao" ref="VehiculoDao" />
         </bean>
 
+
+
         <!-- User DAO Declaration -->
         <bean id="BarrioDao" class="tesis.playon.web.dao.impl.BarrioDao">
                 <property name="sessionFactory" ref="SessionFactory" />
@@ -137,24 +153,33 @@
         <bean id="ColorVehiculoDao" class="tesis.playon.web.dao.impl.ColorVehiculoDao">
                 <property name="sessionFactory" ref="SessionFactory" />
         </bean>
-        <bean id="DetalleEstadiaDao" class="tesis.playon.web.dao.impl.DetalleEstadiaDao">
-                <property name="sessionFactory" ref="SessionFactory" />
-        </bean>
-        <bean id="EstadiaDao" class="tesis.playon.web.dao.impl.EstadiaDao">
-                <property name="sessionFactory" ref="SessionFactory" />
-        </bean>
+        
         <bean id="CuentaClienteDao" class="tesis.playon.web.dao.impl.CuentaClienteDao">
                 <property name="sessionFactory" ref="SessionFactory" />
         </bean>
         <bean id="CuentaPlayaDao" class="tesis.playon.web.dao.impl.CuentaPlayaDao">
                 <property name="sessionFactory" ref="SessionFactory" />
         </bean>
+        
+        <bean id="DetalleEstadiaDao" class="tesis.playon.web.dao.impl.DetalleEstadiaDao">
+                <property name="sessionFactory" ref="SessionFactory" />
+        </bean>
+        
+        <bean id="EstadiaDao" class="tesis.playon.web.dao.impl.EstadiaDao">
+                <property name="sessionFactory" ref="SessionFactory" />
+        </bean>
+        
         <bean id="EstadoPlayaDao" class="tesis.playon.web.dao.impl.EstadoPlayaDao">
                 <property name="sessionFactory" ref="SessionFactory" />
         </bean>
         <bean id="EmpleadoDao" class="tesis.playon.web.dao.impl.EmpleadoDao">
                 <property name="sessionFactory" ref="SessionFactory" />
         </bean>
+        
+        <bean id="LocalidadDao" class="tesis.playon.web.dao.impl.LocalidadDao">
+                <property name="sessionFactory" ref="SessionFactory" />
+        </bean>
+        
         <bean id="MarcaVehiculoDao" class="tesis.playon.web.dao.impl.MarcaVehiculoDao">
                 <property name="sessionFactory" ref="SessionFactory" />
         </bean>
@@ -164,6 +189,11 @@
       	<bean id="PaisDao" class="tesis.playon.web.dao.impl.PaisDao">
                 <property name="sessionFactory" ref="SessionFactory" />
         </bean>
+        
+        <bean id="PerfilPlayaDao" class="tesis.playon.web.dao.impl.PerfilPlayaDao">
+                <property name="sessionFactory" ref="SessionFactory" />
+        </bean>
+        
         <bean id="PlayaDao" class="tesis.playon.web.dao.impl.PlayaDao">
                 <property name="sessionFactory" ref="SessionFactory" />
         </bean>
@@ -268,6 +298,7 @@
                                 <value>tesis.playon.web.model.ModeloVehiculo</value>
                                 <value>tesis.playon.web.model.Pais</value>
                                 <value>tesis.playon.web.model.Playa</value>
+                                <value>tesis.playon.web.model.PerfilPlaya</value>
                                 <value>tesis.playon.web.model.Posicion</value>
                                 <value>tesis.playon.web.model.Provincia</value>
                                 <value>tesis.playon.web.model.RolUsuario</value>

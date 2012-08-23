@@ -1,12 +1,19 @@
-package tesis.playon.web.dao;
+/**
+ * 
+ */
+package tesis.playon.web.service;
 
 import java.util.List;
 
 import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.model.Playa;
 
-public interface IPerfilPlayaDao {
-
+/**
+ * @author pablo
+ *
+ */
+public interface IPerfilPlayaService {
+    
     void save(PerfilPlaya perfilPlaya);
 
     void update(PerfilPlaya perfilPlaya);

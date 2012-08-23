@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NamedNativeQueries;
@@ -74,17 +73,13 @@ public class Playa implements Serializable {
     @JoinColumn(name = "estadoPlayaID")
     private EstadoPlaya estado;
 
-    @OneToOne(mappedBy = "playa")
-    @JoinColumn(name = "estadiaID")
-    private Estadia estadia;
-
     public Playa() {
 	super();
 
     }
 
     public Playa(String cuit, Integer disponibilidad, String domicilio, String nombreComercial,
-	    String razonSocial, Barrio barrio, EstadoPlaya estado, Estadia estadia/*, String telefono*/) {
+	    String razonSocial, Barrio barrio, EstadoPlaya estado, String telefono, String email) {
 	this.cuit = cuit;
 	this.disponibilidad = disponibilidad;
 	this.domicilio = domicilio;
@@ -92,8 +87,8 @@ public class Playa implements Serializable {
 	this.razonSocial = razonSocial;
 	this.barrio = barrio;
 	this.estado = estado;
-	this.estadia = estadia;
-//	this.telefono = telefono;
+	this.telefono = telefono;
+	this.email= email;
     }
 
     public Playa(String nombreComercial, EstadoPlaya estado) {
@@ -196,10 +191,6 @@ public class Playa implements Serializable {
 	this.estado = estado;
     }
 
-    public Estadia getEstadia() {
-	return estadia;
-    }
-
     public String getTelefono() {
 	return telefono;
     }
@@ -215,11 +206,7 @@ public class Playa implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public void setEstadia(Estadia estadia) {
-	this.estadia = estadia;
-    }
-
+    
     public Integer getId() {
 	return id;
     }
