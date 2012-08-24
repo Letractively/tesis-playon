@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IClienteDao;
 import tesis.playon.web.model.Cliente;
-import tesis.playon.web.model.Empleado;
 import tesis.playon.web.model.Usuario;
 
 /**
