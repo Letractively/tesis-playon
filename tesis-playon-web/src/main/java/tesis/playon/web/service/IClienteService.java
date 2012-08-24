@@ -6,6 +6,8 @@ package tesis.playon.web.service;
 import java.util.List;
 
 import tesis.playon.web.model.Cliente;
+import tesis.playon.web.model.Empleado;
+import tesis.playon.web.model.Usuario;
 
 /**
  * @author pablo
@@ -24,4 +26,6 @@ public interface IClienteService {
     List<Cliente> findAll();
     
     Cliente findByNombreUsuario(String nombreUser);
+    
+    Cliente findByUsuario(Usuario usuario);
 }

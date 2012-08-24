@@ -42,18 +42,20 @@ public class ClienteManagedBean implements Serializable {
 
     private static final String ERROR = "error";
 
+    private int importe;
+
     @ManagedProperty(value = "#{ClienteService}")
     IClienteService clienteService;
 
     @ManagedProperty(value = "#{UsuarioService}")
     IUsuarioService usuarioService;
-    
+
     @ManagedProperty(value = "#{RolUsuarioService}")
     IRolUsuarioService rolUsuarioService;
 
     @ManagedProperty(value = "#{CuentaClienteService}")
     ICuentaClienteService cuentaClienteService;
-    
+
     @ManagedProperty(value = "#{RolesPorUsuarioService}")
     IRolesPorUsuarioService rolesPorUsuarioService;
 
@@ -93,7 +95,19 @@ public class ClienteManagedBean implements Serializable {
 
     private Usuario usuario;
 
+    private String nombreUsuario;
+
     private static Cliente clienteSelected;
+
+    public void preRenderView() {
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	setNombreUser(facesContext.getExternalContext().getRemoteUser());
+	setUsuario(getUsuarioService().findByNombreUsuario(this.nombreUser));
+	setCliente(getClienteService().findByUsuario(this.usuario));
+	//preguntar que onda
+//	cuentaCliente = getCuentaClienteService().findByNroCuentaCliente(cliente.getCuentaCliente().getNroCuenta());
+//	setCuentaCliente(this.cliente.getCuentaCliente());
+    }
 
     public String addClienteAdmin() {
 	try {
@@ -112,13 +126,12 @@ public class ClienteManagedBean implements Serializable {
 	    cliente = getClienteService().findByNumeroCliente(cliente.getNroCliente());
 	    cuenta.setCliente(cliente);
 	    getCuentaClienteService().update(cuenta);
-	    
-	    RolesPorUsuario rp= new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
+
+	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
 	    getRolesPorUsuarioService().save(rp);
-	    
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
-		    "Se agregó correctamente el cliente: "+ cliente.getUsuario().getApellido() + " "
-			    + cliente.getUsuario().getNombre(), "");
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el cliente: "
+		    + cliente.getUsuario().getApellido() + " " + cliente.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_CLIENTES;
 	} catch (DataAccessException e) {
@@ -130,7 +143,21 @@ public class ClienteManagedBean implements Serializable {
 	}
 	return ERROR;
     }
-    
+
+    public void cargarSaldo()
+
+    {
+	try {
+	    this.cuentaCliente.setSaldo(saldo);
+
+	}
+
+	catch (DataAccessException e) {
+	    e.printStackTrace();
+	}
+
+    }
+
     public String addSolicitudCliente() {
 	try {
 	    Cliente cliente = new Cliente();
@@ -148,13 +175,12 @@ public class ClienteManagedBean implements Serializable {
 	    cliente = getClienteService().findByNumeroCliente(cliente.getNroCliente());
 	    cuenta.setCliente(cliente);
 	    getCuentaClienteService().update(cuenta);
-	    
-	    RolesPorUsuario rp= new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
+
+	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
 	    getRolesPorUsuarioService().save(rp);
-	    
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
-		    "Se agregó correctamente el cliente: "+ cliente.getUsuario().getApellido() + " "
-			    + cliente.getUsuario().getNombre(), "");
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el cliente: "
+		    + cliente.getUsuario().getApellido() + " " + cliente.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return "solicitudclienteend";
 	} catch (DataAccessException e) {
@@ -200,6 +226,8 @@ public class ClienteManagedBean implements Serializable {
 	}
 	return null;
     }
+    
+    
 
     public String deleteClienteAdmin(Cliente clienteSelected) {
 	try {
@@ -208,9 +236,8 @@ public class ClienteManagedBean implements Serializable {
 	    Usuario usuario = clienteSelected.getUsuario();
 	    getClienteService().delete(clienteSelected);
 	    getUsuarioService().delete(usuario);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
-		    "Se borró el cliente: " + clienteSelected.getUsuario().getApellido() + " "
-	    + clienteSelected.getUsuario().getNombre(), "");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se borró el cliente: "
+		    + clienteSelected.getUsuario().getApellido() + " " + clienteSelected.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_CLIENTES;
 	} catch (Exception e) {
@@ -221,25 +248,24 @@ public class ClienteManagedBean implements Serializable {
 	}
 	return ERROR;
     }
-    
-    public String updateClienteAdmin(Cliente cliente){
-	clienteSelected= cliente;
+
+    public String updateClienteAdmin(Cliente cliente) {
+	clienteSelected = cliente;
 	return "clienteeditadmin";
     }
-    
-    public String updateClienteAdmin(){
+
+    public String updateClienteAdmin() {
 	try {
 	    Usuario usuario = clienteSelected.getUsuario();
 	    getUsuarioService().update(usuario);
 	    getClienteService().update(clienteSelected);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "La cliente se modificó correctamente", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_CLIENTES;
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error,el cliente no se pudo modificar"
-		    , "Por favos, intentelo mas tarde.");
+		    "Error,el cliente no se pudo modificar", "Por favos, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -263,7 +289,7 @@ public class ClienteManagedBean implements Serializable {
 	this.setNroDoc(0);
 	this.setPassword("");
 	this.setNombreUser("");
-	ClienteManagedBean.clienteSelected=null;
+	ClienteManagedBean.clienteSelected = null;
     }
 
     public IUsuarioService getUsuarioService() {
@@ -291,19 +317,19 @@ public class ClienteManagedBean implements Serializable {
     }
 
     public IRolesPorUsuarioService getRolesPorUsuarioService() {
-        return rolesPorUsuarioService;
+	return rolesPorUsuarioService;
     }
 
     public void setRolesPorUsuarioService(IRolesPorUsuarioService rolesPorUsuarioService) {
-        this.rolesPorUsuarioService = rolesPorUsuarioService;
+	this.rolesPorUsuarioService = rolesPorUsuarioService;
     }
 
     public IRolUsuarioService getRolUsuarioService() {
-        return rolUsuarioService;
+	return rolUsuarioService;
     }
 
     public void setRolUsuarioService(IRolUsuarioService rolUsuarioService) {
-        this.rolUsuarioService = rolUsuarioService;
+	this.rolUsuarioService = rolUsuarioService;
     }
 
     public List<Cliente> getClienteList() {
@@ -416,6 +442,14 @@ public class ClienteManagedBean implements Serializable {
 	return usuario;
     }
 
+    public String getNombreUsuario() {
+	return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+	this.nombreUsuario = nombreUsuario;
+    }
+
     public void setUsuario(Usuario usuario) {
 	this.usuario = usuario;
     }
@@ -444,6 +478,14 @@ public class ClienteManagedBean implements Serializable {
 	this.fechaCreacion = fechaCreacion;
     }
 
+    public int getImporte() {
+	return importe;
+    }
+
+    public void setImporte(int importe) {
+	this.importe = importe;
+    }
+
     public Cliente getCliente() {
 	return cliente;
     }
@@ -459,8 +501,9 @@ public class ClienteManagedBean implements Serializable {
     public void setClienteSelected(Cliente clienteSelected) {
 	ClienteManagedBean.clienteSelected = clienteSelected;
     }
-    public String modificarClienteAdmin(Cliente cliente){
-	clienteSelected= cliente;
+
+    public String modificarClienteAdmin(Cliente cliente) {
+	clienteSelected = cliente;
 	return "clienteeditadmin";
     }
 }

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IClienteDao;
 import tesis.playon.web.model.Cliente;
+import tesis.playon.web.model.Empleado;
 import tesis.playon.web.model.Usuario;
 
 /**
@@ -42,11 +43,11 @@ public class ClienteDao implements IClienteDao {
 		.setParameter(0, numeroCliente).list();
 	return (Cliente) list.get(0);
     }
-    
-    public Cliente findByNombreUsuario(String nombreUser){
+
+    public Cliente findByNombreUsuario(String nombreUser) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario where nombreUser=?")
 		.setParameter(0, nombreUser).list();
-	Usuario usuario= (Usuario) list.get(0);
+	Usuario usuario = (Usuario) list.get(0);
 	List<?> usuarioList = getSessionFactory().getCurrentSession().createQuery("from Cliente where usuario=?")
 		.setParameter(0, usuario).list();
 	return (Cliente) usuarioList.get(0);
@@ -60,4 +61,11 @@ public class ClienteDao implements IClienteDao {
 	}
 	return clientes;
     }
+
+    public Cliente findByIdUsuario(Usuario usuario) {
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Cliente where usuario=?")
+		.setParameter(0, usuario).list();
+	return (Cliente) list.get(0);
+    }
+
 }

@@ -14,14 +14,12 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.component.inputtext.InputText;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Playa;
-import tesis.playon.web.model.Sesion;
 import tesis.playon.web.model.Tarifa;
 import tesis.playon.web.model.TipoEstadia;
 import tesis.playon.web.service.ITarifaService;

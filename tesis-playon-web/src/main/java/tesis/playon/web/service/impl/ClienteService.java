@@ -9,14 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IClienteDao;
 import tesis.playon.web.model.Cliente;
+import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IClienteService;
 
 /**
  * @author pablo
- *
+ * 
  */
 @Transactional(readOnly = true)
-public class ClienteService implements IClienteService{
+public class ClienteService implements IClienteService {
 
     IClienteDao clienteDao;
 
@@ -47,9 +48,14 @@ public class ClienteService implements IClienteService{
     public Cliente findByNumeroCliente(Integer numeroCliente) {
 	return getClienteDao().findByNumeroCliente(numeroCliente);
     }
-    
+
     @Override
-    public Cliente findByNombreUsuario(String nombreUser){
+    public Cliente findByUsuario(Usuario usuario) {
+	return getClienteDao().findByIdUsuario(usuario);
+    }
+
+    @Override
+    public Cliente findByNombreUsuario(String nombreUser) {
 	return getClienteDao().findByNombreUsuario(nombreUser);
     }
 
