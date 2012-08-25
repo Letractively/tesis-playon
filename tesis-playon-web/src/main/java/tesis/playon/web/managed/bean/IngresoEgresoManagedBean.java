@@ -8,13 +8,20 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import tesis.playon.web.model.CargoEmpleado;
+import tesis.playon.web.model.CategoriaVehiculo;
+import tesis.playon.web.model.Cliente;
+import tesis.playon.web.model.CuentaCliente;
 import tesis.playon.web.model.Empleado;
+import tesis.playon.web.model.ModeloVehiculo;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Usuario;
+import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.ICargoEmpleadoService;
+import tesis.playon.web.service.ICuentaClienteService;
 import tesis.playon.web.service.IEmpleadoService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IUsuarioService;
+import tesis.playon.web.service.IVehiculoService;
 
 @ManagedBean(name = "ingresoEgresoMB")
 @SessionScoped
@@ -31,8 +38,14 @@ public class IngresoEgresoManagedBean implements Serializable {
     @ManagedProperty(value = "#{CargoEmpleadoService}")
     ICargoEmpleadoService cargoEmpleadoService;
 
+    @ManagedProperty(value = "#{CuentaClienteService}")
+    ICuentaClienteService cuentaClienteService;
+
     @ManagedProperty(value = "#{PlayaService}")
     IPlayaService playaService;
+
+    @ManagedProperty(value = "#{VehiculoService}")
+    IVehiculoService vehiculoService;
 
     private Usuario usuario;
 
@@ -42,7 +55,19 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     private Playa playa;
 
+    private Cliente cliente;
+
+    private CuentaCliente cuentaCliente;
+
+    private Vehiculo vehiculo;
+
+    private CategoriaVehiculo categoriaVehiculo;
+
+    private ModeloVehiculo modeloVehiculo;
+
     private String nombreUsuario;
+
+    private String patente;
 
     public void preRenderView() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -51,6 +76,23 @@ public class IngresoEgresoManagedBean implements Serializable {
 	setEmpleado(getEmpleadoService().findByUsuario(this.usuario));
 	setPlaya(this.usuario.getPlaya());
 	setCargoEmpleado(this.empleado.getCargoEmpleado());
+    }
+
+    public void searchVehiculo() {
+	setVehiculo(getVehiculoService().findByPatenteVehiculo(patente));
+	setCategoriaVehiculo(vehiculo.getCategoriaVehiculo());
+	setModeloVehiculo(vehiculo.getModeloVehiculo());
+	setCliente(vehiculo.getCliente());
+	setCuentaCliente(getCuentaClienteService().findByNroCuentaCliente(cliente.getCuentaCliente().getNroCuenta()));
+
+	if (vehiculo != null)
+	    System.out.println("\n\n\nDATOS -- Vehiculo: " + vehiculo.toString() + "\n\n\n");
+
+	if (cliente != null)
+	    System.out.println("\n\n\nDATOS -- Cliente: " + cliente.toString() + "\n\n\n");
+
+	if (cuentaCliente != null)
+	    System.out.println("\n\n\nDATOS -- Cuenta Cliente: " + cuentaCliente.toString() + "\n\n\n");
     }
 
     public IEmpleadoService getEmpleadoService() {
@@ -77,12 +119,28 @@ public class IngresoEgresoManagedBean implements Serializable {
 	this.cargoEmpleadoService = cargoEmpleadoService;
     }
 
+    public ICuentaClienteService getCuentaClienteService() {
+	return cuentaClienteService;
+    }
+
+    public void setCuentaClienteService(ICuentaClienteService cuentaClienteService) {
+	this.cuentaClienteService = cuentaClienteService;
+    }
+
     public IPlayaService getPlayaService() {
 	return playaService;
     }
 
     public void setPlayaService(IPlayaService playaService) {
 	this.playaService = playaService;
+    }
+
+    public IVehiculoService getVehiculoService() {
+	return vehiculoService;
+    }
+
+    public void setVehiculoService(IVehiculoService vehiculoService) {
+	this.vehiculoService = vehiculoService;
     }
 
     public Usuario getUsuario() {
@@ -117,12 +175,60 @@ public class IngresoEgresoManagedBean implements Serializable {
 	this.playa = playa;
     }
 
+    public Cliente getCliente() {
+	return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+	this.cliente = cliente;
+    }
+
+    public CuentaCliente getCuentaCliente() {
+	return cuentaCliente;
+    }
+
+    public void setCuentaCliente(CuentaCliente cuentaCliente) {
+	this.cuentaCliente = cuentaCliente;
+    }
+
+    public Vehiculo getVehiculo() {
+	return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+	this.vehiculo = vehiculo;
+    }
+
+    public CategoriaVehiculo getCategoriaVehiculo() {
+	return categoriaVehiculo;
+    }
+
+    public void setCategoriaVehiculo(CategoriaVehiculo categoriaVehiculo) {
+	this.categoriaVehiculo = categoriaVehiculo;
+    }
+
+    public ModeloVehiculo getModeloVehiculo() {
+	return modeloVehiculo;
+    }
+
+    public void setModeloVehiculo(ModeloVehiculo modeloVehiculo) {
+	this.modeloVehiculo = modeloVehiculo;
+    }
+
     public String getNombreUsuario() {
 	return nombreUsuario;
     }
 
     public void setNombreUsuario(String nombreUsuario) {
 	this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getPatente() {
+	return patente;
+    }
+
+    public void setPatente(String patente) {
+	this.patente = patente;
     }
 
 }
