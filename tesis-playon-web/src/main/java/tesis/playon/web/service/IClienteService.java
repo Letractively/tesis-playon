@@ -6,7 +6,6 @@ package tesis.playon.web.service;
 import java.util.List;
 
 import tesis.playon.web.model.Cliente;
-import tesis.playon.web.model.Empleado;
 import tesis.playon.web.model.Usuario;
 
 /**

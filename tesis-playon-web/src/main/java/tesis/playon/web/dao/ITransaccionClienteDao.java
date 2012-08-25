@@ -17,7 +17,8 @@ public interface ITransaccionClienteDao {
 
     void delete(TransaccionCliente transaccionCliente);
 
-    //TransaccionCliente findByCuentaCliente(String cuentaClienteID);
+    TransaccionCliente findByCuentaCliente(String cuentaClienteID);
 
     List<TransaccionCliente> findAll();
+    
 }

@@ -3,7 +3,6 @@ package tesis.playon.web.dao;
 import java.util.List;
 
 import tesis.playon.web.model.Cliente;
-import tesis.playon.web.model.Empleado;
 import tesis.playon.web.model.Usuario;
 
 /**

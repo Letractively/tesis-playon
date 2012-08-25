@@ -50,4 +50,5 @@ public class TransaccionClienteDao implements ITransaccionClienteDao {
 	}
 	return transaccionesCliente;
     }
+
 }
