@@ -1,0 +1,23 @@
+#perfil-playa h1{
+	border: 0px solid black;
+	font-size:40px;
+	color:#192129;
+}
+#perfil-playa img{
+	margin: 0px 20px 10px 0px;
+}
+#perfil-playa td{
+	padding: 0px 20px 15px 0px;
+}
+#perfil-playa table{
+	margin: 0px 0px 0px 50px;
+}
+#perfil-playa tr{
+	padding: 20px 0px 20px 0px;
+}
+.fuente-perfil {
+	font-style:italic;
+	font-style:bolder;
+	font-size:large;
+	color:black;
+}

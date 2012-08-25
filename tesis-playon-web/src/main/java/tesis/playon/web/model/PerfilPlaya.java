@@ -41,6 +41,12 @@ public class PerfilPlaya implements Serializable {
     
     @Column(name = "fotoPerfil")
     private String fotoPerfil;
+    
+    @Column(name = "cantidadVotantes")
+    private Integer cantidadVotantes;
+    
+    @Column(name = "totalCalificaciones")
+    private Integer totalCalificaciones;
 
     public PerfilPlaya() {
     }
@@ -89,6 +95,22 @@ public class PerfilPlaya implements Serializable {
 
     public void setFotoPerfil(String fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
+    }
+
+    public Integer getCantidadVotantes() {
+        return cantidadVotantes;
+    }
+
+    public void setCantidadVotantes(Integer cantidadVotantes) {
+        this.cantidadVotantes = cantidadVotantes;
+    }
+
+    public Integer getTotalCalificaciones() {
+        return totalCalificaciones;
+    }
+
+    public void setTotalCalificaciones(Integer totalCalificaciones) {
+        this.totalCalificaciones = totalCalificaciones;
     }
 
     @Override

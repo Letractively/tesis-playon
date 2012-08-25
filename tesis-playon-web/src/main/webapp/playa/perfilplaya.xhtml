@@ -8,37 +8,47 @@
 	<ui:param name="dontloadsidebar" value="true" />
 
 	<ui:define name="title">
-		Título de la página
+		Perfil de playa
     </ui:define>
 
 	<ui:define name="content">
 		<h1>Perfil</h1>
-		<div>
+		<div id="perfil-playa">
 			<h:panelGrid columns="2">
 				<h:graphicImage library="images" name="sinfoto.jpg"
 					style="width:151px; height:151px" />
 				<h1 style="width: 400px">#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
 			</h:panelGrid>
 		</div>
-		<div>
-			<h:panelGrid columns="2">
+		<div id="perfil-playa" style="margin-left: 70px">
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<h:outputText value="Clasificación:" />
+				<p:rating value="3" readonly="true" />
+
 				<h:outputText value="Domicilio: " />
-			#{perfilPlayaMB.perfil.playa.domicilio}, Córdoba
-			
-			<h:outputText value="Barrio: " />
-			#{perfilPlayaMB.perfil.playa.barrio.nombre}
-			
-			<h:outputText value="Teléfono: " />
-			#{perfilPlayaMB.perfil.playa.telefono}
-			
-			<h:outputText value="E-mail: " />
-			#{perfilPlayaMB.perfil.playa.email}
-			
-			<h:outputText value="Disponibilidad: " />
-			#{perfilPlayaMB.perfil.playa.disponibilidad}
-		</h:panelGrid>
+				<h:outputText
+					value="#{perfilPlayaMB.perfil.playa.domicilio}, Córdoba "
+					styleClass="fuente-perfil" />
+
+				<h:outputText value="Barrio: " />
+				<h:outputText value="#{perfilPlayaMB.perfil.playa.barrio.nombre}"
+					styleClass="fuente-perfil" />
+
+				<h:outputText value="Teléfono: " />
+				<h:outputText value="#{perfilPlayaMB.perfil.playa.telefono}"
+					styleClass="fuente-perfil" />
+
+				<h:outputText value="E-mail: " />
+				<h:outputText value="#{perfilPlayaMB.perfil.playa.email}"
+					styleClass="fuente-perfil" />
+
+				<h:outputText value="Disponibilidad: " />
+				<h:outputText value="#{perfilPlayaMB.perfil.playa.disponibilidad}"
+					styleClass="fuente-perfil" />
+			</h:panelGrid>
 		</div>
-		<div>
+		<div id="perfil-playa">
 			<h:panelGrid columns="2">
 				<p:galleria value="\resources\images\sinfoto.jpg" var="image"
 					effect="slide" effectSpeed="1000" panelWidth="500"
