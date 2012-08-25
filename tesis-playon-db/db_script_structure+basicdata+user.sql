@@ -448,6 +448,8 @@ CREATE TABLE `perfil_playa` (
   `perfilPlayaID` int(11) NOT NULL auto_increment,
   `playaID` int(11) NOT NULL,
   `fotoPerfil` varchar(50) DEFAULT NULL,
+  `cantidadVotantes` int(11) DEFAULT NULL,
+  `totalCalificaciones` int(11) DEFAULT NULL,
   PRIMARY KEY (`perfilPlayaID`),
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_perfil_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
