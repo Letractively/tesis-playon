@@ -32,7 +32,7 @@ public class CuentaPlaya implements Serializable {
     @Column(name = "cuentaPlayaID")
     private Integer id;
 
-    @Column(name = "numero")
+    @Column(name = "nroCuenta")
     private Integer nroCuenta;
 
     @Column(name = "fechaCreacion")
@@ -87,7 +87,7 @@ public class CuentaPlaya implements Serializable {
     public Integer getId() {
 	return id;
     }
-    
+
     public boolean equals(Object object) {
 	if (object == this)
 	    return true;
@@ -102,8 +102,6 @@ public class CuentaPlaya implements Serializable {
 
 	return true;
     }
-
-
 
     @Override
     public String toString() {

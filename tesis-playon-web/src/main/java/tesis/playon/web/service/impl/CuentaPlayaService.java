@@ -20,20 +20,20 @@ public class CuentaPlayaService implements ICuentaPlayaService {
 
     @Transactional(readOnly = false)
     @Override
-    public void save(CuentaPlaya CuentaPlaya) {
-	getCuentaPlayaDao().save(CuentaPlaya);
+    public void save(CuentaPlaya cuentaPlaya) {
+	getCuentaPlayaDao().save(cuentaPlaya);
     }
 
     @Transactional(readOnly = false)
     @Override
-    public void update(CuentaPlaya CuentaPlaya) {
-	getCuentaPlayaDao().update(CuentaPlaya);
+    public void update(CuentaPlaya cuentaPlaya) {
+	getCuentaPlayaDao().update(cuentaPlaya);
     }
 
     @Transactional(readOnly = false)
     @Override
-    public void delete(CuentaPlaya CuentaPlaya) {
-	getCuentaPlayaDao().delete(CuentaPlaya);
+    public void delete(CuentaPlaya cuentaPlaya) {
+	getCuentaPlayaDao().delete(cuentaPlaya);
     }
 
     @Override
@@ -47,11 +47,11 @@ public class CuentaPlayaService implements ICuentaPlayaService {
     }
 
     public ICuentaPlayaDao getCuentaPlayaDao() {
-	return cuentaPlayaDao;
+        return cuentaPlayaDao;
     }
 
-    public void setCuentaClienteDao(ICuentaPlayaDao cuentaPlayaDao) {
-	this.cuentaPlayaDao = cuentaPlayaDao;
+    public void setCuentaPlayaDao(ICuentaPlayaDao cuentaPlayaDao) {
+        this.cuentaPlayaDao = cuentaPlayaDao;
     }
 
 }

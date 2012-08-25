@@ -18,7 +18,7 @@ import tesis.playon.web.service.IUsuarioService;
 
 @ManagedBean(name = "ingresoEgresoMB")
 @SessionScoped
-public class IngesoEgresoManagedBean implements Serializable {
+public class IngresoEgresoManagedBean implements Serializable {
 
     private static final long serialVersionUID = 2624234897160641014L;
 
