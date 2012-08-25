@@ -104,14 +104,16 @@ public class ClienteManagedBean implements Serializable {
 	setNombreUser(facesContext.getExternalContext().getRemoteUser());
 	setUsuario(getUsuarioService().findByNombreUsuario(this.nombreUser));
 	setCliente(getClienteService().findByUsuario(this.usuario));
-	//preguntar que onda
+	setCuentaCliente(cliente.getCuentaCliente());
+	cuentaCliente.setCliente(cliente);
+//preguntar que onda
 //	cuentaCliente = getCuentaClienteService().findByNroCuentaCliente(cliente.getCuentaCliente().getNroCuenta());
 //	setCuentaCliente(this.cliente.getCuentaCliente());
     }
 
     public String addClienteAdmin() {
 	try {
-	    Cliente cliente = new Cliente();
+	    Cliente cliente = new Cliente();	
 	    Usuario usuario = addUsuario();
 	    CuentaCliente cuenta = addCuentaCliente();
 
@@ -467,7 +469,7 @@ public class ClienteManagedBean implements Serializable {
     }
 
     public void setSaldo(float saldo) {
-	this.saldo = saldo;
+	this.saldo = cliente.getCuentaCliente().getSaldo();
     }
 
     public Date getFechaCreacion() {
