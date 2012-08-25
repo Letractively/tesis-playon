@@ -1235,7 +1235,7 @@ UNLOCK TABLES;
 LOCK TABLES `empleado` WRITE;
 /*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
 INSERT INTO `empleado` (`cargoEmpleadoID`, `legajo`, `empleadoID`, `usuarioID`) 
-VALUES (1,1001,1001,9),(3,1002,1002,10);
+VALUES (1,1001,1001,1),(3,1002,1002,5);
 /*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
 UNLOCK TABLES;
 
