@@ -1080,55 +1080,6 @@ UNLOCK TABLES;
  */
 
 --
--- Dumping data for table `usuario`
---
-
-LOCK TABLES `usuario` WRITE;
-/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `tesis_playon`.`usuario` (`apellido`,`email`,`nombre`,`password`,`sesion`,`usuario`,`usuarioID`,`tipoDocID`,`nroDoc`,`enable`,`playaID`) 
-VALUES ('Moreno','pablo_la31@hotmail.com','Pablo','123456',NULL,'pablo_la31',1,1,'32987654',1,NULL),
- ('Bostico','alebostico@hotmail.com','Alejandro','123456',NULL,'alejandro',2,1,'11111111',1,NULL),
- ('Arribere','gonzaloarribere@gmail.com','Gonzalo','123456',NULL,'gonzalo',3,1,'22222222',1,NULL),
- ('Morales Batovski','morales.batovski@gmail.com','Raúl Gustavo','123456',NULL,'gmorales',4,1,'29966905',1,NULL),
- ('Perez Villar','ericperezvillar@gmail.com','Eric','123456',NULL,'eric',5,1,'44444444',1,NULL),
- ('Admin','admin@playon.com.ar','Super','123456',NULL,'admin',6,1,'66666666',1,NULL),
- ('Gomez','sgomez@playon.com.ar','Silvina','123456',NULL,'sgomez',7,1,'10456654',1,NULL),
- ('Lopez','jjlopez@playon.com.ar','Juana Josefa','123456',NULL,'jjlopez',8,1,'27600710',1,NULL),
- ('Pérez','jperez@playon.com.ar','Juan','123456',NULL,'jperez',9,1,'31234234',1,NULL);
-/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `usuario_sistema`
---
-
-LOCK TABLES `roles_por_usuario` WRITE;
-/*!40000 ALTER TABLE `roles_por_usuario` DISABLE KEYS */;
-INSERT INTO `tesis_playon`.`roles_por_usuario` (`rolesPorUsuarioID`,`usuario`,`rolUsuario`) 
-VALUES (1,'pablo_la31','ROLE_PLAYA_GERENTE'),
- (2,'alejandro','ROLE_AUDITOR'),
- (3,'gonzalo','ROLE_CLIENT'),
- (4,'gmorales','ROLE_ADMIN'),
- (5,'eric','ROLE_PLAYA_EMPLEADO'),
- (6,'admin','ROLE_ADMIN'),
- (7,'sgomez','ROLE_CLIENT'),
- (8,'jjlopez','ROLE_CLIENT'),
- (9,'jperez','ROLE_CLIENT');  
-/*!40000 ALTER TABLE `roles_por_usuario` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `empleado`
---
-
-LOCK TABLES `empleado` WRITE;
-/*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
-INSERT INTO `empleado` (`cargoEmpleadoID`, `legajo`, `empleadoID`, `usuarioID`) 
-VALUES (1,1001,1001,9),(3,1002,1002,10);
-/*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `marca_vehiculo`
 --
 
@@ -1239,6 +1190,54 @@ VALUES ('Playa "Estacionamiento Europa"', 'Estacionamiento Europa', 3, 3, NULL),
 /*!40000 ALTER TABLE `perfil_playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Dumping data for table `usuario`
+--
+
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `tesis_playon`.`usuario` (`apellido`,`email`,`nombre`,`password`,`sesion`,`usuario`,`usuarioID`,`tipoDocID`,`nroDoc`,`enable`,`playaID`) 
+VALUES ('Moreno','pablo_la31@hotmail.com','Pablo','123456',NULL,'pablo_la31',1,1,'32987654',1,3),
+ ('Bostico','alebostico@hotmail.com','Alejandro','123456',NULL,'alejandro',2,1,'11111111',1,NULL),
+ ('Arribere','gonzaloarribere@gmail.com','Gonzalo','123456',NULL,'gonzalo',3,1,'22222222',1,NULL),
+ ('Morales Batovski','morales.batovski@gmail.com','Raúl Gustavo','123456',NULL,'gmorales',4,1,'29966905',1,NULL),
+ ('Perez Villar','ericperezvillar@gmail.com','Eric','123456',NULL,'eric',5,1,'44444444',1,3),
+ ('Admin','admin@playon.com.ar','Super','123456',NULL,'admin',6,1,'66666666',1,NULL),
+ ('Gomez','sgomez@playon.com.ar','Silvina','123456',NULL,'sgomez',7,1,'10456654',1,NULL),
+ ('Lopez','jjlopez@playon.com.ar','Juana Josefa','123456',NULL,'jjlopez',8,1,'27600710',1,NULL),
+ ('Pérez','jperez@playon.com.ar','Juan','123456',NULL,'jperez',9,1,'31234234',1,NULL);
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `roles_por_usuario`
+--
+
+LOCK TABLES `roles_por_usuario` WRITE;
+/*!40000 ALTER TABLE `roles_por_usuario` DISABLE KEYS */;
+INSERT INTO `tesis_playon`.`roles_por_usuario` (`rolesPorUsuarioID`,`usuario`,`rolUsuario`) 
+VALUES (1,'pablo_la31','ROLE_PLAYA_GERENTE'),
+ (2,'alejandro','ROLE_AUDITOR'),
+ (3,'gonzalo','ROLE_CLIENT'),
+ (4,'gmorales','ROLE_ADMIN'),
+ (5,'eric','ROLE_PLAYA_EMPLEADO'),
+ (6,'admin','ROLE_ADMIN'),
+ (7,'sgomez','ROLE_CLIENT'),
+ (8,'jjlopez','ROLE_CLIENT'),
+ (9,'jperez','ROLE_CLIENT');  
+/*!40000 ALTER TABLE `roles_por_usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `empleado`
+--
+
+LOCK TABLES `empleado` WRITE;
+/*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
+INSERT INTO `empleado` (`cargoEmpleadoID`, `legajo`, `empleadoID`, `usuarioID`) 
+VALUES (1,1001,1001,9),(3,1002,1002,10);
+/*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `tesis_playon`.`abono`
