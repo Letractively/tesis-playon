@@ -35,6 +35,9 @@ public class Foto implements Serializable {
 
     @Column(name = "link")
     private String link;
+    
+    @Column(name = "title")
+    private String title;
 
     @ManyToOne
     @JoinColumn(name = "perfilPlayaID")
@@ -75,6 +78,18 @@ public class Foto implements Serializable {
 
     public int getId() {
 	return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean equals(Object object) {

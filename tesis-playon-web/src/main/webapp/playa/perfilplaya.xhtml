@@ -1,11 +1,12 @@
-<ui:composition template="../template/template.xhtml"
+<ui:composition template="../template/templatePlaya.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:param name="dontloadsidebar" value="true" />
+	<ui:param name="loadmenuperfil" value="true" />
+
 
 	<ui:define name="title">
 		Perfil de playa
@@ -16,49 +17,56 @@
 		<div id="perfil-playa">
 			<h:panelGrid columns="2">
 				<h:graphicImage library="images" name="sinfoto.jpg"
-					style="width:151px; height:151px" />
+					style="width:151px; height:151px;" />
 				<h1 style="width: 400px">#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
 			</h:panelGrid>
 		</div>
-		<div id="perfil-playa" style="margin-left: 70px">
+		<div id="perfil-playa">
 			<h:panelGrid columns="2" cellpadding="5">
 
-				<h:outputText value="Clasificación:" />
-				<p:rating value="3" readonly="true" />
+				<h:outputText value="Calificación:" styleClass="fuente-outputtext" />
+				<p:rating value="#{perfilPlayaMB.calificacion}" disabled="true"
+					stars="10" />
 
-				<h:outputText value="Domicilio: " />
+				<h:outputText value="Domicilio: " styleClass="fuente-outputtext" />
 				<h:outputText
 					value="#{perfilPlayaMB.perfil.playa.domicilio}, Córdoba "
 					styleClass="fuente-perfil" />
 
-				<h:outputText value="Barrio: " />
+				<h:outputText value="Barrio: " styleClass="fuente-outputtext" />
 				<h:outputText value="#{perfilPlayaMB.perfil.playa.barrio.nombre}"
 					styleClass="fuente-perfil" />
 
-				<h:outputText value="Teléfono: " />
+				<h:outputText value="Teléfono: " styleClass="fuente-outputtext" />
 				<h:outputText value="#{perfilPlayaMB.perfil.playa.telefono}"
 					styleClass="fuente-perfil" />
 
-				<h:outputText value="E-mail: " />
+				<h:outputText value="E-mail: " styleClass="fuente-outputtext" />
 				<h:outputText value="#{perfilPlayaMB.perfil.playa.email}"
 					styleClass="fuente-perfil" />
 
-				<h:outputText value="Disponibilidad: " />
+				<h:outputText value="Disponibilidad: "
+					styleClass="fuente-outputtext" />
 				<h:outputText value="#{perfilPlayaMB.perfil.playa.disponibilidad}"
 					styleClass="fuente-perfil" />
 			</h:panelGrid>
 		</div>
-		<div id="perfil-playa">
-			<h:panelGrid columns="2">
-				<p:galleria value="\resources\images\sinfoto.jpg" var="image"
-					effect="slide" effectSpeed="1000" panelWidth="500"
-					panelHeight="250" showOverlays="true">
-					<p:graphicImage library="images" name="sinfoto.jpg" />
-					<p:galleriaOverlay title="#{image}">  
-        				Description for #{image} goes here  
-    				</p:galleriaOverlay>
-				</p:galleria>
-			</h:panelGrid>
+
+		<div align="center" style="margin: 20px 0px 0px 50px; width: 100%;">
+			<f:view id="vistaGMap" contentType="text/html">
+				<script src="http://maps.google.com/maps/api/js?sensor=false"
+					type="text/javascript"></script>
+
+				<p:gmap center="#{perfilPlayaMB.coordenadas}" zoom="15"
+					type="ROADMAP" model="#{perfilPlayaMB.advancedModel}"
+					style="width: 400px;height:300px" draggable="false"
+					navigationControl="false" mapTypeControl="false" align="center">
+
+					<p:ajax event="overlaySelect"
+						listener="#{perfilPlayaMB.onMarkerSelect}" />
+
+				</p:gmap>
+			</f:view>
 		</div>
 	</ui:define>
 </ui:composition>

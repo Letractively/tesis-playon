@@ -3,23 +3,33 @@
  */
 package tesis.playon.web.managed.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 
 import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IPerfilPlayaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IUsuarioService;
+import tesis.playon.web.util.LatitudlongitudUtil;
+import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
 
 /**
  * @author pablo
  *
  */
 @ManagedBean(name = "perfilPlayaMB")
-@SessionScoped
+@RequestScoped
 public class PerfilPlayaManagedBean {
     
     @ManagedProperty(value = "#{UsuarioService}")
@@ -32,6 +42,10 @@ public class PerfilPlayaManagedBean {
     IPerfilPlayaService perfilPlayaService;
     
     private PerfilPlaya perfil;
+    
+    private Integer calificacion;
+    
+    private List<String> fotosList;
 
     public PerfilPlaya getPerfil() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -69,4 +83,84 @@ public class PerfilPlayaManagedBean {
         this.playaService = playaService;
     }
 
+    public Integer getCalificacion() {
+	calificacion= Math.round(perfil.getTotalCalificaciones() / perfil.getCantidadVotantes());
+        return calificacion;
+    }
+
+    public void setCalificacion(Integer calificacion) {
+        this.calificacion = calificacion;
+    }
+
+    public List<String> getFotosList() {
+	fotosList= new ArrayList<String>();
+	fotosList.add("sinfoto.jpg");
+	fotosList.add("logo_playon_admin.png");
+        return fotosList;
+    }
+
+    public void setFotosList(List<String> fotosList) {
+        this.fotosList = fotosList;
+    }
+    
+    //datos para mostrar en el mapa
+    
+    LatitudlongitudUtil latLonUtil;
+    
+    private GeoposicionDePlaya respuesta;
+    
+    private String coordenadas;
+    
+    private final MapModel advancedModel = new DefaultMapModel();
+    
+    private Marker marker;
+
+    public String getCoordenadas() {
+	try{
+	latLonUtil = new LatitudlongitudUtil();
+	// GeoposicionDePlaya
+	respuesta = latLonUtil.getLocationFromAddress(perfil.getPlaya().getDomicilio() + ", Cordoba, CBA, Argentina");
+	coordenadas = respuesta.toString();
+	LatLng coord1 = new LatLng(perfil.getPlaya().getLatitud(), perfil.getPlaya().getLongitud());
+	advancedModel.addOverlay(new Marker(coord1, perfil.getPlaya().toString2(), null,
+		"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
+        return coordenadas;
+        
+	}catch(Exception e){
+	    e.getStackTrace();
+	}
+	return "";
+    }
+
+    public void setCoordenadas(String coordenadas) {
+        this.coordenadas = coordenadas;
+    }
+
+    public GeoposicionDePlaya getRespuesta() {
+        return respuesta;
+    }
+
+    public void setRespuesta(GeoposicionDePlaya respuesta) {
+        this.respuesta = respuesta;
+    }
+
+    public LatitudlongitudUtil getLatLonUtil() {
+        return latLonUtil;
+    }
+
+    public void setLatLonUtil(LatitudlongitudUtil latLonUtil) {
+        this.latLonUtil = latLonUtil;
+    }
+
+    public MapModel getAdvancedModel() {
+        return advancedModel;
+    }
+
+    public Marker getMarker() {
+        return marker;
+    }
+
+    public void setMarker(Marker marker) {
+        this.marker = marker;
+    }   
 }
