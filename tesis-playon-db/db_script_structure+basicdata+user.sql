@@ -363,6 +363,7 @@ DROP TABLE IF EXISTS `foto`;
 CREATE TABLE `foto` (
   `descripcion` text DEFAULT NULL,
   `link` varchar(50) NOT NULL,
+  `title` varchar(50) DEFAULT NULL,
   `fotoID` int(11) NOT NULL auto_increment,
   `perfilPlayaID` int(11) NOT NULL,
   PRIMARY KEY (`fotoID`),
