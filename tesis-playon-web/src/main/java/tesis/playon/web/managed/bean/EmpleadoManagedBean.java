@@ -17,7 +17,6 @@ import javax.faces.context.FacesContext;
 import org.springframework.dao.DataAccessException;
 
 import tesis.playon.web.model.CargoEmpleado;
-import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.Empleado;
 import tesis.playon.web.model.RolesPorUsuario;
 import tesis.playon.web.model.TipoDoc;
@@ -120,27 +119,38 @@ public class EmpleadoManagedBean implements Serializable {
 	return ERROR;
     }
 
-    public String addSolicitudCliente() {
+    public String addEmpleado() {
+	Empleado empleado = new Empleado();
+	Usuario usuario = addUsuario();
 	try {
-	    Empleado empleado = new Empleado();
-	    Usuario usuario = addUsuario();
+	    empleado.setCargoEmpleado(getCargoEmpleado());
+	    empleado.setLegajo(getLegajo());
 	    empleado.setUsuario(usuario);
+
+	    getUsuarioService().save(usuario);
 	    getEmpleadoService().save(empleado);
 
-	    empleado = getEmpleadoService().findByLegajoEmpleado(empleado.getLegajo());
-
-	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
+	    RolesPorUsuario rp;
+	    if ((empleado.getCargoEmpleado()).getNombre().equals("Playero"))
+		rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_PLAYA_EMPLEADO");
+	    else {
+		if ((empleado.getCargoEmpleado()).getNombre().equals("Gerente General"))
+		    rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_PLAYA_GERENTE");
+		else {
+		    rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_PLAYA_EMPLEADO");
+		}
+	    }
 	    getRolesPorUsuarioService().save(rp);
 
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se agregó correctamente el empleado: " + empleado.getUsuario().getApellido() + " "
-			    + empleado.getUsuario().getNombre(), "");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el empleado: "
+		    + empleado.getUsuario().getApellido() + " " + empleado.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return "solicitudclienteend";
+
+	    return "empleadoend";
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo agregar el cliente: " + empleado.getUsuario().getApellido() + " "
-			    + empleado.getUsuario().getNombre(), "Por favos, intentelo mas tarde.");
+		    "Error, no se pudo agregar el empleado: " + empleado.getUsuario().getApellido() + " "
+			    + empleado.getUsuario().getNombre(), "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -157,7 +167,13 @@ public class EmpleadoManagedBean implements Serializable {
 	    usuario.setPassword(getPassword());
 	    usuario.setNombreUser(getNombreUser());
 	    usuario.setTipoDoc(getTipoDoc());
-	    getUsuarioService().save(usuario);
+
+	    FacesContext facesContext = FacesContext.getCurrentInstance();
+	    String userName = facesContext.getExternalContext().getRemoteUser();
+	    Usuario user = getUsuarioService().findByNombreUsuario(userName);
+
+	    usuario.setPlaya(user.getPlaya());
+
 	    return usuario;
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
@@ -185,11 +201,6 @@ public class EmpleadoManagedBean implements Serializable {
 	return ERROR;
     }
 
-    public String updateEmpleadoAdmin(Empleado empleado) {
-	empleadoSelected = empleado;
-	return "empleadoeditadmin";
-    }
-
     public String updateEmpleadoAdmin() {
 	try {
 	    Usuario usuario = empleadoSelected.getUsuario();
@@ -211,11 +222,10 @@ public class EmpleadoManagedBean implements Serializable {
     public void reset() {
 	this.setCargoEmpleado(null);
 	this.setUsuario(null);
-	this.legajo = 0;
 	this.setNombre("");
 	this.setApellido("");
 	this.setEmail("");
-	this.setNroDoc(0);
+	this.setNroDoc(null);
 	this.setPassword("");
 	this.setNombreUser("");
 	EmpleadoManagedBean.empleadoSelected = null;
@@ -229,6 +239,10 @@ public class EmpleadoManagedBean implements Serializable {
 	this.usuarioService = usuarioService;
     }
 
+    public IEmpleadoService getEmpleadoService() {
+	return empleadoService;
+    }
+    
     public void setEmpleadoService(IEmpleadoService empleadoService) {
 	this.empleadoService = empleadoService;
     }
@@ -259,12 +273,28 @@ public class EmpleadoManagedBean implements Serializable {
 
     public List<Empleado> getEmpleadoList() {
 	empleadoList = new ArrayList<Empleado>();
-	empleadoList.addAll(getEmpleadoService().findAll());
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	String userName = facesContext.getExternalContext().getRemoteUser();
+	Usuario user = getUsuarioService().findByNombreUsuario(userName);
+	
+	List<Usuario> users = new ArrayList<Usuario>();
+	users.addAll(getUsuarioService().findByPlaya(user.getPlaya()));
+	for (Usuario usuario : users) {
+	    empleadoList.add(getEmpleadoService().findByUsuario(usuario));
+	}
 	return empleadoList;
     }
 
     public void setEmpleadoList(List<Empleado> empleadoList) {
 	this.empleadoList = empleadoList;
+    }
+
+    public CargoEmpleado getCargoEmpleado() {
+        return cargoEmpleado;
+    }
+
+    public void setCargoEmpleado(CargoEmpleado cargoEmpleado) {
+        this.cargoEmpleado = cargoEmpleado;
     }
 
     public String getApellido() {
@@ -323,6 +353,18 @@ public class EmpleadoManagedBean implements Serializable {
 	this.tipoDoc = tipoDoc;
     }
 
+    public Integer getLegajo() {
+        return legajo;
+    }
+
+    public void setLegajo(Integer legajo) {
+        this.legajo = legajo;
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
     public String getDomicilio() {
 	return domicilio;
     }
@@ -339,10 +381,6 @@ public class EmpleadoManagedBean implements Serializable {
 	this.telefono = telefono;
     }
 
-    public CargoEmpleado getCargoEmpleado() {
-	return cargoEmpleado;
-    }
-
     public Usuario getUsuario() {
 	return usuario;
     }
@@ -357,10 +395,6 @@ public class EmpleadoManagedBean implements Serializable {
 
     public void setFechaCreacion(Date fechaCreacion) {
 	this.fechaCreacion = fechaCreacion;
-    }
-
-    private void setCargoEmpleado(CargoEmpleado cargo) {
-	this.cargoEmpleado = cargo;
     }
 
     public void setEmpleado(Empleado empleado) {
@@ -383,20 +417,7 @@ public class EmpleadoManagedBean implements Serializable {
 	return empleadoSelected;
     }
 
-    public IEmpleadoService getEmpleadoService() {
-	return empleadoService;
-    }
-
-    private Integer getLegajo() {
-	return legajo;
-    }
-
     public void setEmpleadoSelected(Empleado empleadoSelected) {
 	EmpleadoManagedBean.empleadoSelected = empleadoSelected;
-    }
-
-    public String modificarClienteAdmin(Cliente cliente) {
-	empleadoSelected = empleado;
-	return "empleadoeditadmin";
     }
 }

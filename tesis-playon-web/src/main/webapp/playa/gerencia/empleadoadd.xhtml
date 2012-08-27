@@ -1,0 +1,180 @@
+<ui:composition template="../../template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+		Nuevo empleado
+    </ui:define>
+
+	<ui:define name="content">
+		<h1>Nuevo empleado</h1>
+
+		<p:growl id="messages" />
+		<h:form>
+			<div align="center">
+
+				<h:panelGrid id="displayView" columns="3" cellpadding="8">
+
+					<p:column>Datos de Usuario:</p:column>
+					<p:column></p:column>
+					<p:column></p:column>
+
+					<p:column>
+						<h:outputLabel for="nombreUser" value="Nombre usuario: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="nombreUser" value="#{empleadoMB.nombreUser}">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="nombreUserMsg" />
+						</p:inputText>
+					</p:column>
+					<p:column>
+						<p:message id="nombreUserMsg" for="nombreUser" display="icon" />
+					</p:column>
+
+					<p:column>
+						<h:outputLabel for="password" value="Contraseña: " />
+					</p:column>
+					<p:column>
+						<p:password id="password" value="#{empleadoMB.password}"
+							match="passwordRepeat" required="true"
+							requiredMessage="Campo obligatorio">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="passwordMsg" />
+						</p:password>
+					</p:column>
+					<p:column></p:column>
+
+					<p:column>
+						<h:outputLabel for="passwordRepeat" value="Repita Contraseña: " />
+					</p:column>
+					<p:column>
+						<p:password id="passwordRepeat" value="#{empleadoMB.password}"
+							required="true" requiredMessage="Campo obligatorio">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="passwordMsg" />
+						</p:password>
+					</p:column>
+					<p:column>
+						<p:message id="passwordMsg" for="password" display="icon" />
+					</p:column>
+
+					<p:column>
+						<br />
+					</p:column>
+					<p:column></p:column>
+					<p:column></p:column>
+
+					<p:column>Datos del Empleado:</p:column>
+					<p:column></p:column>
+					<p:column></p:column>
+
+					<p:column>
+						<h:outputLabel for="apellido" value="Apellido " />
+					</p:column>
+					<p:column>
+						<p:inputText id="apellido" value="#{empleadoMB.apellido}">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="apellidoMsg" />
+						</p:inputText>
+					</p:column>
+					<p:column>
+						<p:message id="apellidoMsg" for="apellido" display="icon" />
+					</p:column>
+
+					<p:column>
+						<h:outputLabel for="nombre" value="Nombre: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="nombre" value="#{empleadoMB.nombre}">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="nombreMsg" />
+						</p:inputText>
+					</p:column>
+					<p:column>
+						<p:message id="nombreMsg" for="nombre" display="icon" />
+					</p:column>
+
+					<p:column>
+						<h:outputLabel for="email" value="E-mail: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="email" value="#{empleadoMB.email}">
+							<f:validateLength minimum="5" />
+							<p:ajax event="blur" update="emailMsg" />
+						</p:inputText>
+					</p:column>
+					<p:column>
+						<p:message id="emailMsg" for="email" display="icon" />
+					</p:column>
+
+					<p:column>
+						<h:outputText for="tipoDoc" value="Tipo Documento: " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu value="#{empleadoMB.tipoDoc}" effect="fade">
+							<f:selectItems value="#{tipoDocMB.tipoDocList}" var="tipoDoc"
+								itemValue="#{tipoDoc}" itemLabel="#{tipoDoc.nombre}" />
+							<f:converter converterId="tipoDocConverter" />
+						</p:selectOneMenu>
+					</p:column>
+					<p:column></p:column>
+
+					<p:column>
+						<h:outputLabel for="nroDoc" value="Nro. Documento: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="nroDoc" value="#{empleadoMB.nroDoc}">
+							<f:validateLength minimum="8" />
+							<p:ajax event="blur" update="nroDocMsg" />
+						</p:inputText>
+					</p:column>
+					<p:column>
+						<p:message id="nroDocMsg" for="nroDoc" display="icon" />
+					</p:column>
+
+					<p:column>
+						<h:outputLabel for="legajo" value="Legajo: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="legajo" value="#{empleadoMB.legajo}">
+							<f:validateLength minimum="4" />
+							<p:ajax event="blur" update="legajoMsg" />
+						</p:inputText>
+					</p:column>
+					<p:column>
+						<p:message id="legajoMsg" for="legajo" display="icon" />
+					</p:column>
+
+					<p:column>
+						<h:outputLabel for="cargoEmpleado" value="Cargo: " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu value="#{empleadoMB.cargoEmpleado}" effect="fade">
+							<f:selectItems value="#{cargoEmpleadoMB.cargoEmpleadoList}"
+								var="cargo" itemValue="#{cargo}" itemLabel="#{cargo.nombre}" />
+							<f:converter converterId="cargoEmpleadoConverter" />
+						</p:selectOneMenu>
+					</p:column>
+					<p:column></p:column>
+
+					<p:column></p:column>
+					<p:column>
+						<br />
+						<div align="right">
+							<h:commandButton id="cancelar" value="Cancelar"
+								action="/panelcontrol.html?faces-redirect=true" ajax="false"
+								style="margin-right:15px" type="submit" />
+							<h:commandButton id="addEmploy" value="Registrar"
+								action="#{empleadoMB.addEmpleado}" ajax="false" />
+						</div>
+					</p:column>
+					<p:column></p:column>
+				</h:panelGrid>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

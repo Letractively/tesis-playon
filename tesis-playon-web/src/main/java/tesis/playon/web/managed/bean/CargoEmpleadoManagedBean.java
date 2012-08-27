@@ -4,6 +4,7 @@
 package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -63,6 +64,8 @@ public class CargoEmpleadoManagedBean implements Serializable{
     }
 
     public List<CargoEmpleado> getCargoEmpleadoList() {
+	cargoEmpleadoList = new ArrayList<CargoEmpleado>();
+	cargoEmpleadoList.addAll(getCargoEmpleadoService().findAll());
         return cargoEmpleadoList;
     }
 
