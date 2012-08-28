@@ -7,7 +7,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -40,7 +39,7 @@ public class CuentaCliente implements Serializable{
     @Column(name="fechaCreacion")
     private Date fechaCreacion;
     
-    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name="clienteID")
     private Cliente cliente;
 

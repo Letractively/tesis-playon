@@ -9,14 +9,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-//import javax.persistence.ManyToOne;
 
 /**
  * @author Alejandro
@@ -47,7 +45,7 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "barrioID", nullable = true)
     private Barrio barrio;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "cuentaClienteID")
     private CuentaCliente cuentaCliente;
 

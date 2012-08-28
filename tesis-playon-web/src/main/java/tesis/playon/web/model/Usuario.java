@@ -58,7 +58,7 @@ public class Usuario implements Serializable {
 
     @Column(name = "usuario", unique = true)
     private String nombreUser;
-    
+
     @Column(name = "enable", columnDefinition = "TINYINT")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean enable;
@@ -67,8 +67,8 @@ public class Usuario implements Serializable {
 	super();
     }
 
-    public Usuario(String nombre, String apellido, String nombreUser, String password,
-	    String email, TipoDoc tipoDoc, int nroDoc, Playa playa) {
+    public Usuario(String nombre, String apellido, String nombreUser, String password, String email, TipoDoc tipoDoc,
+	    int nroDoc, Playa playa) {
 	super();
 	this.apellido = apellido;
 	this.nombre = nombre;
@@ -144,21 +144,21 @@ public class Usuario implements Serializable {
     public Integer getId() {
 	return id;
     }
-    
+
     public Playa getPlaya() {
-        return playa;
+	return playa;
     }
 
     public void setPlaya(Playa playa) {
-        this.playa = playa;
+	this.playa = playa;
     }
 
     public Boolean getEnable() {
-        return enable;
+	return enable;
     }
 
     public void setEnable(Boolean enable) {
-        this.enable = enable;
+	this.enable = enable;
     }
 
     public boolean equals(Object object) {

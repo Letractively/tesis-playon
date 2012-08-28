@@ -93,27 +93,17 @@ public class ClienteManagedBean implements Serializable {
 
     private CuentaCliente cuentaCliente;
 
+    private CuentaCliente cuentaClienteSelected;
+
     private Usuario usuario;
 
     private String nombreUsuario;
 
     private static Cliente clienteSelected;
 
-    public void preRenderView() {
-	FacesContext facesContext = FacesContext.getCurrentInstance();
-	setNombreUser(facesContext.getExternalContext().getRemoteUser());
-	setUsuario(getUsuarioService().findByNombreUsuario(this.nombreUser));
-	setCliente(getClienteService().findByUsuario(this.usuario));
-	setCuentaCliente(cliente.getCuentaCliente());
-	cuentaCliente.setCliente(cliente);
-//preguntar que onda
-//	cuentaCliente = getCuentaClienteService().findByNroCuentaCliente(cliente.getCuentaCliente().getNroCuenta());
-//	setCuentaCliente(this.cliente.getCuentaCliente());
-    }
-
     public String addClienteAdmin() {
 	try {
-	    Cliente cliente = new Cliente();	
+	    Cliente cliente = new Cliente();
 	    Usuario usuario = addUsuario();
 	    CuentaCliente cuenta = addCuentaCliente();
 
@@ -228,8 +218,6 @@ public class ClienteManagedBean implements Serializable {
 	}
 	return null;
     }
-    
-    
 
     public String deleteClienteAdmin(Cliente clienteSelected) {
 	try {
@@ -497,6 +485,10 @@ public class ClienteManagedBean implements Serializable {
     }
 
     public Cliente getClienteSelected() {
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	String userName = facesContext.getExternalContext().getRemoteUser();
+	Usuario usuario = getUsuarioService().findByNombreUsuario(userName);
+	clienteSelected = getClienteService().findByUsuario(usuario);
 	return clienteSelected;
     }
 
@@ -508,4 +500,18 @@ public class ClienteManagedBean implements Serializable {
 	clienteSelected = cliente;
 	return "clienteeditadmin";
     }
+
+    public CuentaCliente getCuentaClienteSelected() {
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	String userName = facesContext.getExternalContext().getRemoteUser();
+	Usuario usuario = getUsuarioService().findByNombreUsuario(userName);
+	Cliente cliente = getClienteService().findByUsuario(usuario);
+	cuentaClienteSelected = cliente.getCuentaCliente();
+	return cuentaClienteSelected;
+    }
+
+    public void setCuentaClienteSelected(CuentaCliente cuentaClienteSelected) {
+	this.cuentaClienteSelected = cuentaClienteSelected;
+    }
+
 }

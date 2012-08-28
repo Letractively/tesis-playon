@@ -39,7 +39,7 @@ public class UsuarioDao implements IUsuarioDao {
     }
 
     public Usuario findByNombreUsuario(String usuario) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario where usuario=?")
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario where nombreUser=?")
 		.setParameter(0, usuario).list();
 	return (Usuario) list.get(0);
     }

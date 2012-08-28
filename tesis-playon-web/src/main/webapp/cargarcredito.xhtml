@@ -13,26 +13,26 @@
 		<h1>Cargue saldo en su cuenta:</h1>
 		<p>Ingrese el monto y disfrute de los beneficios de Playon!</p>
 		<h:form>
-			<f:event type="preRenderView" listener="#{clienteMB.preRenderView}" />
 			<p:growl id="messages" />
 
 			<!-- Esto es una prueba para ver como carga al cliente actual -->
 			<h:panelGrid columns="2" cellpadding="5">
 				<h:outputText value="Cliente " />
-				<h:outputText id="txt_cliente" value="#{clienteMB.usuario.nombre}" />
+				<h:outputText id="txt_cliente"
+					value="#{clienteMB.clienteSelected.usuario.nombre}" />
 			</h:panelGrid>
 
 			<h:panelGrid columns="2" cellpadding="5">
 				<h:outputText value="Apellido " />
 				<h:outputText id="txt_apellido"
-					value="#{clienteMB.usuario.apellido}" />
+					value="#{clienteMB.clienteSelected.usuario.apellido}" />
 			</h:panelGrid>
 
 
 			<h:panelGrid columns="2" cellpadding="5">
 				<h:outputText value="Cuenta NuM: " />
 				<h:outputText id="txt_cuenta"
-					value="#{clienteMB.cuentaCliente.nroCuenta}" />
+					value="#{clienteMB.clienteSelected.cuentaCliente.nroCuenta}" />
 			</h:panelGrid>
 
 
