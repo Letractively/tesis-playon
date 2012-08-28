@@ -55,7 +55,7 @@
 				style="text-align:center; width:75px;">
 
 				<p:commandLink id="view" update=":mainForm:displayView"
-					oncomplete="carDialog.show()" title="Ver Datos">
+					oncomplete="carDialog.show();" title="Ver Datos">
 					<f:setPropertyActionListener value="#{playa}"
 						target="#{playaMB.playaSelected}" />
 					<h:graphicImage library="images/icons" name="search.png" />
@@ -177,7 +177,7 @@
 				<p:column style="text-align:right">
 					<div align="right">
 						<h:commandButton id="btnAceptar" value="Aceptar"
-							oncomplete="carDialog.hide()" />
+							onclick="carDialog.hide()" type="button" />
 					</div>
 				</p:column>
 

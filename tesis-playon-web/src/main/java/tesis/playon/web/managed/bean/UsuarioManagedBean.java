@@ -2,6 +2,7 @@ package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -82,7 +83,7 @@ public class UsuarioManagedBean implements Serializable {
 		} catch (Exception e) {
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 			    "Error, no se pudo dar de baja al usuario: " + usuario.getNombreUser(),
-			    "Por favos, intentelo mas tarde.");
+			    "Por favor, intentelo mas tarde.");
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 		return ERROR;
@@ -120,9 +121,22 @@ public class UsuarioManagedBean implements Serializable {
 
 	public List<Usuario> getUsuarioList() {
 		usuarioList = new ArrayList<Usuario>();
-		usuarioList.addAll(getUsuarioService().findAll());
+		usuarioList.addAll(getUsuarioService().findAll());	
 		return usuarioList;
-	}
+		
+//		int sizepuede= usuarioList.size();
+//
+//		for (int i = 0; i < sizepuede; i++) {
+//			if(usuarioList.get(i).getEnable().equals(false)){
+//				usuarioList.remove(usuarioList.get(i));
+//				i--;
+//				sizepuede--;
+//			}
+//		}
+//				
+//		return usuarioList;
+    }
+	
 
 	public void setUsuarioList(List<Usuario> usuarioList) {
 		this.usuarioList = usuarioList;
@@ -192,7 +206,12 @@ public class UsuarioManagedBean implements Serializable {
 	    this.playa = playa;
 	}
 
-	public static Usuario getUsuarioSelected() {
-	    return usuarioSelected;
+
+	public Usuario getUsuarioSelected() {
+		return usuarioSelected;
+	}
+
+	public void setUsuarioSelected(Usuario usuarioSelected) {
+		UsuarioManagedBean.usuarioSelected = usuarioSelected;
 	}
 }

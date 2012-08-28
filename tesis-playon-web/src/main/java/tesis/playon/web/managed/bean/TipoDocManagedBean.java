@@ -7,9 +7,11 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.model.SelectItem;
 
 import org.springframework.dao.DataAccessException;
 
+import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.service.ITipoDocService;
 
@@ -27,6 +29,10 @@ public class TipoDocManagedBean implements Serializable {
     ITipoDocService tipoDocService;
 
     List<TipoDoc> tipoDocList;
+    
+    @SuppressWarnings("unused")
+    private SelectItem[] tipoDocOption;
+
 
     private String nombre;
 
@@ -79,5 +85,22 @@ public class TipoDocManagedBean implements Serializable {
     public void setNombre(String nombre) {
 	this.nombre = nombre;
     }
+    
+    public SelectItem[] getTipoDocOption() {
+    	List<TipoDoc> tipoDoc = new ArrayList<TipoDoc>();
+    	tipoDoc.addAll(getTipoDocService().findAll());
+    	tipoDocOption = new SelectItem[tipoDoc.size() + 1];
+    	SelectItem[] options = new SelectItem[tipoDoc.size() + 1];
+    	options[0] = new SelectItem("", "Todos");
+
+    	for (int i = 0; i < tipoDoc.size(); i++) {
+    	    options[i + 1] = new SelectItem(tipoDoc.get(i), tipoDoc.get(i).getNombre());
+    	}
+    	return options;
+        }
+
+        public void setTipoDocOption(SelectItem[] tipoDocOption) {
+    	this.tipoDocOption = tipoDocOption;
+        }
 
 }

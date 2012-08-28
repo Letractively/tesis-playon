@@ -8,8 +8,9 @@
 	<ui:param name="panelTitle" value="Listado de Usuarios" />
 
 	<ui:define name="panelContent" class="admin-font">
-		<h:form>
-			<p:growl id="messages" />
+		
+		<p:growl id="messages" />
+
 			<p:dataTable id="usuarios" var="usuario"
 				paginator="true" rows="8" paginatorPosition="bottom"
 				value="#{usuarioMB.usuarioList}"
@@ -19,116 +20,164 @@
 				<f:facet name="header">
 				Usuarios
             	</f:facet>
-            	
-            	<p:column headerText="Apellido" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{usuario.apellido}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{usuario.apellido}" styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
 
-				<p:column headerText="Nombre" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{usuario.nombre}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{usuario.nombre}" styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
+				<p:column headerText="Usuario" styleClass="column-font"
+					filterBy="#{usuario.nombreUser}" filterMatchMode="contains">
+					<h:outputText value="#{usuario.nombreUser}" />
 				</p:column>
-
-				<p:column headerText="Email" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{usuario.email}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{usuario.email}" styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
+				
+				<p:column headerText="Apellido" styleClass="column-font"
+					filterBy="#{usuario.apellido}" filterMatchMode="contains">
+					<h:outputText value="#{usuario.apellido}" />
 				</p:column>
-
-				<p:column headerText="Tipo Doc.:" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{usuario.tipoDoc.nombre}" />
-						</f:facet>
-						<f:facet name="input">
-							<h:selectOneMenu value="#{usuario.tipoDoc}" >  
-                        	<f:selectItems value="#{tipoDocMB.tipoDocList}"  
-	                            var="tipoDoc"
-	                            itemValue="#{tipoDoc}"
-	                            itemLabel="#{tipoDoc.nombre}" />
-	                        <f:converter converterId="tipoDocConverter" />
-                    		</h:selectOneMenu> 
-						</f:facet>
-					</p:cellEditor>
+				
+				<p:column headerText="Nombre" styleClass="column-font"
+					filterBy="#{usuario.nombre}" filterMatchMode="contains">
+					<h:outputText value="#{usuario.nombre}" />
 				</p:column>
-
-				<p:column headerText="Nro. Documento" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{usuario.nroDoc}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{usuario.nroDoc}" styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
+					
+				<p:column headerText="E-mail" styleClass="column-font"
+					filterBy="#{usuario.email}" filterMatchMode="contains">
+					<h:outputText value="#{usuario.email}" />
 				</p:column>
+				
 
-				<p:column headerText="Password" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{usuario.password}" type="password" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{usuario.password}" styleClass="input-font"
-								type="password" />
-						</f:facet>
-					</p:cellEditor>
+				<p:column headerText="Tipo Doc." styleClass="column-font"
+					filterBy="#{usuario.tipoDoc}"
+					filterOptions="#{tipoDocMB.tipoDocOption}"
+					filterMatchMode="exact">
+					<h:outputText value="#{usuario.tipoDoc.nombre}" />
 				</p:column>
+				
+				<p:column headerText="Nro. Documento" styleClass="column-font"
+					filterBy="#{usuario.nroDoc}" filterMatchMode="contains">
+					<h:outputText value="#{usuario.nroDoc}" />
+				</p:column>
+			
+				<p:column>
+					<p:commandLink id="view" update=":mainForm:displayView"
+						oncomplete="popupUsuarioDatos.show();" title="Datos Usuario">
+						<f:setPropertyActionListener value="#{usuario}"
+							target="#{usuarioMB.usuarioSelected}" />
+						<h:graphicImage library="images/icons" name="search.png" />
+					</p:commandLink>
+	
+					<p:commandLink id="edit" title="Editar Datos"
+						action="/admin/usuarioadd.html?faces-redirect=true"
+						ajax="false">
+						<f:setPropertyActionListener value="#{usuario}"
+							target="#{usuarioMB.usuarioSelected}" />
+						<h:graphicImage library="images/icons" name="pencil.png" />
+					</p:commandLink>
+ 
+					<p:commandLink id="darBaja" title="Dar de baja"
+						action="#{usuarioMB.deleteUsuarioAdmin(usuario)}" ajax="false">
+						<h:graphicImage library="images/icons" name="trash.png" />
+					</p:commandLink>
 
-				<p:column headerText="Usuario" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{usuario.nombreUser}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{usuario.nombreUser}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
+				<!-- <h:commandButton id="delete" class="ui-icon ui-icon-trash"
+					style="height:20px; width:22px;"
+					action="#{usuarioMB.deleteUsuarioAdmin(usuario)}"
+					onclick="if(!confirm('¿Está seguro que desea eliminar el usuario?')) return false;">
+				</h:commandButton>
+
+ -->
+
+			</p:column>
+			
+				<f:facet name="footer">
+					<h:panelGroup id="removeFilter"  layout="block"
+						style="text-align: right;">
+						<p:commandLink id="addUsuario" value="Quitar Filtro"
+							action="/admin/usuariolist.html?faces-redirect=true"
+							ajax="false" />
+					</h:panelGroup>
+				</f:facet>
+				
+				</p:dataTable>
+				<p>
+					<h:panelGroup layout="block" style="text-align: right; width: 100%;">
+						<p:commandButton id="addUsuario" value="Nuevo Usuario"
+							action="/admin/usuarioadd.html?faces-redirect=true" ajax="false" />
+					</h:panelGroup>
+				</p>
+			
+			
+			<!-- DIALOG PARA VER LOS DATOS DEL USUARIO SELECCIONADO -->
+		<p:dialog header="Datos del Usuario" widgetVar="popupUsuarioDatos"
+			resizable="false" id="carDlg" showEffect="fade" modal="true"
+			draggable="false">
+
+			<h:panelGrid id="displayView" columns="2" cellpadding="8"
+				style="margin:0 auto;">
+				
+				<p:column>
+					<h:outputText value="Usuario: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{usuarioMB.usuarioSelected.nombreUser}"
+						style="font-weight:bold" />
 				</p:column>
 				
 				<p:column>
-					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
-						action="#{usuarioMB.modificarUsuarioAdmin(usuario)}"
-						style="height:20px; width:22px;">
-					</h:commandButton>
-					<p:tooltip for="editar" value="Editar Usuario" />
+					<h:outputText value="Password: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{usuarioMB.usuarioSelected.password}"
+						style="font-weight:bold" />
+				</p:column>
+				
+				<p:column>
+					<h:outputText value="Nombre: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{usuarioMB.usuarioSelected.nombre}"
+						style="font-weight:bold" />
+				</p:column>
+				
+				<p:column>
+					<h:outputText value="Apellido: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{usuarioMB.usuarioSelected.apellido}"
+						style="font-weight:bold" />
 				</p:column>
 
 				<p:column>
-					<h:commandButton id="delete" class="ui-icon ui-icon-trash"
-						style="height:20px; width:22px;"
-						action="#{usuarioMB.deleteUsuarioAdmin(usuario)}"
-						onclick="if(!confirm('¿Está seguro que desea eliminar el usuario?')) return false;">
-					</h:commandButton>
-					<p:tooltip for="delete" value="Eliminar Usuario" />
+					<h:outputText value="E-mail: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{usuarioMB.usuarioSelected.email}"
+						style="font-weight:bold" />
 				</p:column>
 
-			</p:dataTable>
-			<p>
-				<h:panelGroup layout="block" style="text-align: right; width: 100%;">
-					<p:commandButton id="addUsuario" value="Nuevo Usuario"
-						action="/admin/usuarioadd.html?faces-redirect=true" ajax="false" />
-				</h:panelGroup>
-			</p>
-		</h:form>
+				<p:column>
+					<h:outputText value="Tipo Doc.: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{usuarioMB.usuarioSelected.tipoDoc.nombre}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Nro. Documento: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{usuarioMB.usuarioSelected.nroDoc}"
+						style="font-weight:bold" />
+				</p:column>
+				
+				<p:column>
+				</p:column>
+				<p:column style="text-align:right">
+					<div align="right">
+						<h:commandButton id="btnAceptar" value="Aceptar"
+							onclick="popupUsuarioDatos.hide();" type="button" />
+					</div>
+				</p:column>
+
+			</h:panelGrid>
+		</p:dialog>
+		
 	</ui:define>
 </ui:composition>
