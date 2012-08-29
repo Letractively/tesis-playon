@@ -83,7 +83,7 @@ public class ClienteManagedBean implements Serializable {
 
     private Integer nroCuenta;
 
-    private float saldo;
+    private  float saldo=0;;
 
     private Date fechaCreacion;
 
