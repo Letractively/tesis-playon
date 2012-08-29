@@ -45,14 +45,38 @@
 				type='hidden' name='TipoMoneda' value='1' /><input type='hidden'
 				name='PrecioItem' value='22.00' /><input type='hidden'
 				name='E_Comercio' value='2329650' /><input type='hidden'
-				name='NroItem' value='-' /><input type='hidden' name='image_url'
-				value='http://' /><input type='hidden' name='DireccionExito'
+				name='NroItem' value='-' /><input type='hidden' name='MediosPago'
+				value='2' /><input type='hidden' name='image_url' value='http://' /><input
+				type='hidden' name='DireccionExito'
 				value='http://localhost:8080/tesis-playon-web/cliente/operacionexitosa.jsf' /><input
-				type='hidden' name='DireccionFracaso' value='http://' /><input
-				type='hidden' name='DireccionEnvio' value='1' /><input
-				type='hidden' name='Mensaje' value='1' /><input type='image'
+				type='hidden' name='DireccionFracaso'
+				value='http://localhost:8080/tesis-playon-web/transactionerror.xhtml' /><input
+				type='hidden' name='DireccionEnvio' value='0' /><input
+				type='hidden' name='Mensaje' value='0' /><input type='image'
 				src='https://argentina.dineromail.com/imagenes/botones/pagar-medios_c.gif'
 				name='submit' alt='Pagar con DineroMail' />
+		</form>
+
+		<form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
+			method="post">
+			<input type="image"
+				src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" />
+			<input type="hidden" name="shipping" value="0" /> <input
+				type="hidden" name="cbt"
+				value="http://localhost:8080/tesis-playon-web/index.jsf" /> <input
+				type="hidden" name="cmd" value="_xclick" /> <input type="hidden"
+				name="rm" value="2" /> <input type="hidden" name="bn"
+				value="PLAYON  - RED DE PLAYAS" /> <input type="hidden"
+				name="business" value="playon_1346219039_biz@gmail.com" /> <input
+				type="hidden" name="item_number" value="Nombre del comprador" /> <input
+				type="hidden" name="amount" value="2" /> <input type="hidden"
+				name="currency_code" value="USD" /> <input type="hidden"
+				name="image_url" value="" /> <input type="hidden" name="return"
+				value="http://localhost:8080/tesis-playon-web/cliente/operacionexitosa.jsf" />
+			<input type="hidden" name="cancel_return"
+				value="http://localhost:8080/tesis-playon-web/transactionerror.jsf" />
+			<input type="hidden" name="no_shipping" value="1" /><input
+				type="hidden" name="no_note" value="1" />
 		</form>
 	</ui:define>
 </ui:composition>
