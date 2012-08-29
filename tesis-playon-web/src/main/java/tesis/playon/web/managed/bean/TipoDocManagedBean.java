@@ -11,7 +11,6 @@ import javax.faces.model.SelectItem;
 
 import org.springframework.dao.DataAccessException;
 
-import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.service.ITipoDocService;
 

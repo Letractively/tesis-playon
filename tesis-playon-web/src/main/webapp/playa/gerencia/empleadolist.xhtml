@@ -1,0 +1,192 @@
+<ui:composition template="../../template/templateGerencia.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+		Nuevo empleado
+    </ui:define>
+
+	<ui:define name="content">
+		<p:growl id="messages" />
+		<h1>Empleados de la playa</h1>
+		<h:form id="form">
+			<p:dataTable id="empleados" var="empleado" paginator="true" rows="5"
+				value="#{empleadoMB.empleadoList}"
+				filteredValue="#{empleadoMB.filteredEmploy}"
+				emptyMessage="No existen empleados en su playa"
+				paginatorPosition="bottom">
+
+				<f:facet name="header">
+						Listado de empleados de la playa
+					</f:facet>
+
+				<p:column headerText="Legajo" filterBy="#{empleado.legajo}"
+					filterMatchMode="contains">
+					<h:outputText value="#{empleado.legajo}" />
+				</p:column>
+
+				<p:column headerText="Apellido"
+					filterBy="#{empleado.usuario.apellido}" filterMatchMode="contains">
+					<h:outputText value="#{empleado.usuario.apellido}" />
+				</p:column>
+
+				<p:column headerText="Nombre" filterBy="#{empleado.usuario.nombre}"
+					filterMatchMode="contains">
+					<h:outputText value="#{empleado.usuario.nombre}" />
+				</p:column>
+
+				<p:column headerText="Usuario"
+					filterBy="#{empleado.usuario.nombreUser}"
+					filterMatchMode="contains">
+					<h:outputText value="#{empleado.usuario.nombreUser}" />
+				</p:column>
+
+				<p:column headerText="Cargo"
+					filterBy="#{empleado.cargoEmpleado.nombre}" filterMatchMode="exact"
+					filterOptions="#{empleadoMB.cargosOptions}">
+					<h:outputText value="#{empleado.cargoEmpleado.nombre}" />
+				</p:column>
+
+				<p:column headerText="Habilitado" style="text-align:center;">
+					<h:selectBooleanCheckbox value="#{empleado.usuario.enable}" />
+				</p:column>
+
+				<p:column headerText="Opciones"
+					style="text-align:center; width:75px;">
+
+					<p:commandLink id="view" title="Ver Empleado"
+						oncomplete="viewDialog.show();" update=":form:displayView">
+						<f:setPropertyActionListener value="#{empleado}"
+							target="#{empleadoMB.empleadoSelected}" />
+						<h:graphicImage library="images/icons" name="search.png" />
+					</p:commandLink>
+
+					<p:commandLink id="edit" title="Editar Empleado" ajax="false">
+						<f:setPropertyActionListener value="#{empleado}"
+							target="#{empleadoMB.empleadoSelected}" />
+						<h:graphicImage library="images/icons" name="pencil.png"
+							style="width:25px; height:25px;" />
+					</p:commandLink>
+
+					<p:commandLink id="darBaja" title="Dar de baja"
+						action="#{empleadoMB.deleteEmpleado}" ajax="false">
+						<f:setPropertyActionListener value="#{empleado}"
+							target="#{empleadoMB.empleadoSelected}" />
+						<h:graphicImage library="images/icons" name="trash.png"
+							style="width:25px; height:25px;" />
+					</p:commandLink>
+				</p:column>
+				<f:facet name="footer">
+					<h:panelGroup id="quitarfiltro" layout="block"
+						style="text-align: right;">
+						<p:commandLink id="removeFilter" value="Quitar Filtro"
+							action="/playa/gerencia/empleadolist.html?faces-redirect=true"
+							ajax="false" />
+					</h:panelGroup>
+				</f:facet>
+			</p:dataTable>
+
+			<!-- DIALOG PARA VER LOS DATOS DEL USUARIO SELECCIONADO -->
+			<p:dialog header="Datos del Empleado" widgetVar="viewDialog"
+				resizable="false" id="viewDlg" showEffect="fade" modal="true"
+				draggable="false">
+
+				<h:panelGrid id="displayView" columns="2" cellpadding="4"
+					cellspacing="15">
+
+					<p:column>
+						<h:outputText value="Legajo: " />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{empleadoMB.empleadoSelected.legajo}"
+							style="font-weight:bold; font-style:italic;" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="Apellido: " />
+					</p:column>
+					<p:column>
+						<h:outputText
+							value="#{empleadoMB.empleadoSelected.usuario.apellido}"
+							style="font-weight:bold; font-style:italic;" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="Nombre: " />
+					</p:column>
+					<p:column>
+						<h:outputText
+							value="#{empleadoMB.empleadoSelected.usuario.nombre}"
+							style="font-weight:bold; font-style:italic;" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="Usuario: " />
+					</p:column>
+					<p:column>
+						<h:outputText
+							value="#{empleadoMB.empleadoSelected.usuario.nombreUser}"
+							style="font-weight:bold; font-style:italic;" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="Cargo: " />
+					</p:column>
+					<p:column>
+						<h:outputText
+							value="#{empleadoMB.empleadoSelected.cargoEmpleado.nombre}"
+							style="font-weight:bold; font-style:italic;" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="E-mail: " />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{empleadoMB.empleadoSelected.usuario.email}"
+							style="font-weight:bold; font-style:italic;" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="Tipo Doc.: " />
+					</p:column>
+					<p:column>
+						<h:outputText
+							value="#{empleadoMB.empleadoSelected.usuario.tipoDoc.nombre}"
+							style="font-weight:bold; font-style:italic;" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="Nro. Documento: " />
+					</p:column>
+					<p:column>
+						<h:outputText
+							value="#{empleadoMB.empleadoSelected.usuario.nroDoc}"
+							style="font-weight:bold; font-style:italic;" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="Habilitado: " />
+					</p:column>
+					<p:column style="align-text:center;">
+						<h:selectBooleanCheckbox
+							value="#{empleadoMB.empleadoSelected.usuario.enable}"
+							style="font-weight:bold" disabled="true" />
+					</p:column>
+
+					<p:column>
+					</p:column>
+					<p:column style="text-align:right">
+						<div align="right">
+							<h:commandButton id="btnAceptar" value="Aceptar"
+								style="padding:4px" onclick="viewDialog.hide();" type="button" />
+						</div>
+					</p:column>
+
+				</h:panelGrid>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

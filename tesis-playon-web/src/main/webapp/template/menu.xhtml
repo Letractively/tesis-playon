@@ -20,16 +20,29 @@
 				<ui:fragment rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}">
 					<li><span class="opener">Menu Cliente<b></b></span>
 						<ul>
-							<li><h:link value="Perfil" outcome="about" /></li>
-							<li><h:link value="Cuenta" outcome="about" /></li>
+							<li><h:link value="Perfil" outcome="/cliente/perfilcliente" /></li>
+							<li><h:link value="Cuenta" outcome="/cliente/cuentacliente" /></li>
+							<li><h:link value="Cargar Crédito" outcome="/cliente/cargarcredito" /></li>
 						</ul></li>
 				</ui:fragment>
 
 				<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_GERENTE]'}">
 					<li><span class="opener">Menu Playa<b></b></span>
 						<ul>
-							<li><h:link value="Perfil" outcome="about" /></li>
-							<li><h:link value="Empleados" outcome="about" /></li>
+							<li><h:link value="Administracion" outcome="/playa/gerencia/administracion" /></li>
+							<li><h:link value="Perfil" outcome="/playa/perfilplaya" /></li>
+							<li><h:link value="Ingreso / Egreso" outcome="about" /></li>
+							<li><h:link value="Informes" outcome="about" /></li>
+							<li><h:link value="Usuario" outcome="about" /></li>
+						</ul></li>
+				</ui:fragment>
+				
+				<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_EMPLEADO]'}">
+					<li><span class="opener">Menu Playa<b></b></span>
+						<ul>
+							<li><h:link value="Ingreso / Egreso" outcome="about" /></li>
+							<li><h:link value="Perfil" outcome="playa/perfilplaya" /></li>
+							<li><h:link value="Usuario" outcome="about" /></li>
 						</ul></li>
 				</ui:fragment>
 			</ui:fragment>

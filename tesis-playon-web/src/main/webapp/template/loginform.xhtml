@@ -51,7 +51,8 @@
 					<div align="right">
 						<p:commandButton id="btnLoginId" value="Login" update=":growl"
 							action="#{loginMB.login}" redirect="true"
-							oncomplete="handleLoginRequest(xhr, status, args)" />
+							oncomplete="handleLoginRequest(xhr, status, args)">
+							</p:commandButton>
 						<p:commandButton id="btnCancelar" value="Cancelar"
 							oncomplete="handleLoginRequest(xhr, status, args)"
 							onclick="dlg.hide()" />

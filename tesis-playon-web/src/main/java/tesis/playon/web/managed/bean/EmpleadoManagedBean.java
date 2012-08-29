@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
 import org.springframework.dao.DataAccessException;
 
@@ -56,7 +57,9 @@ public class EmpleadoManagedBean implements Serializable {
     @ManagedProperty(value = "#{RolesPorUsuarioService}")
     IRolesPorUsuarioService rolesPorUsuarioService;
 
-    List<Empleado> empleadoList;
+    private List<Empleado> empleadoList;
+    
+    private List<Empleado> filteredEmploy;
 
     private String apellido;
 
@@ -89,35 +92,9 @@ public class EmpleadoManagedBean implements Serializable {
     private Usuario usuario;
 
     private static Empleado empleadoSelected;
-
-    public String addEmpleadoAdmin() {
-	try {
-	    Empleado empleado = new Empleado();
-	    Usuario usuario = addUsuario();
-	    // CargoEmpleado cargo = addCargoEmpleado();
-
-	    empleado.setCargoEmpleado(cargoEmpleado);
-	    empleado.setLegajo(getLegajo());
-	    empleado.setUsuario(usuario);
-	    getEmpleadoService().save(empleado);
-	    empleado = getEmpleadoService().findByLegajoEmpleado(empleado.getLegajo());
-
-	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
-	    getRolesPorUsuarioService().save(rp);
-
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el cliente: "
-		    + empleado.getUsuario().getApellido() + " " + empleado.getUsuario().getNombre(), "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return LISTA_EMPLEADOS;
-	} catch (DataAccessException e) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo agregar el empleado: " + empleado.getUsuario().getApellido() + " "
-			    + empleado.getUsuario().getNombre(), "Por favos, intentelo mas tarde.");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    e.printStackTrace();
-	}
-	return ERROR;
-    }
+    
+    @SuppressWarnings("unused")
+    private SelectItem[] cargosOptions;
 
     public String addEmpleado() {
 	Empleado empleado = new Empleado();
@@ -171,7 +148,7 @@ public class EmpleadoManagedBean implements Serializable {
 	    FacesContext facesContext = FacesContext.getCurrentInstance();
 	    String userName = facesContext.getExternalContext().getRemoteUser();
 	    Usuario user = getUsuarioService().findByNombreUsuario(userName);
-
+		    
 	    usuario.setPlaya(user.getPlaya());
 
 	    return usuario;
@@ -181,22 +158,23 @@ public class EmpleadoManagedBean implements Serializable {
 	return null;
     }
 
-    public String deleteEmpleadoAdmin(Empleado empleadoSelected) {
+    public String deleteEmpleado() {
 	try {
-	    CargoEmpleado cargo = empleadoSelected.getCargoEmpleado();
-	    getCargoEmpleadoService().delete(cargo);
-	    Usuario usuario = empleadoSelected.getUsuario();
-	    getEmpleadoService().delete(empleadoSelected);
-	    getUsuarioService().delete(usuario);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se borró el empleado: "
+	    empleadoSelected.getUsuario().setEnable(new Boolean(false));
+	    
+	    getUsuarioService().update(empleadoSelected.getUsuario());
+	    
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se dió de baja el empleado: "
 		    + empleadoSelected.getUsuario().getApellido() + " " + empleadoSelected.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return LISTA_EMPLEADOS;
+	    reset();
+	    return "/playa/gerencia/empleadolist";
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo borrar el empleado: " + empleadoSelected.getUsuario().getApellido() + " "
-			    + empleadoSelected.getUsuario().getNombre(), "Por favos, intentelo mas tarde.");
+		    "Error, no se pudo dar de baja el empleado: " + empleadoSelected.getUsuario().getApellido() + " "
+			    + empleadoSelected.getUsuario().getNombre(), "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    reset();
 	}
 	return ERROR;
     }
@@ -389,6 +367,23 @@ public class EmpleadoManagedBean implements Serializable {
 	this.usuario = usuario;
     }
 
+    public SelectItem[] getCargosOptions() {
+	List<CargoEmpleado> cargos = new ArrayList<CargoEmpleado>();
+	cargos.addAll(getCargoEmpleadoService().findAll());
+	cargosOptions = new SelectItem[cargos.size() + 1];
+	SelectItem[] options = new SelectItem[cargos.size() + 1];
+	options[0] = new SelectItem("", "Todos");
+
+	for (int i = 0; i < cargos.size(); i++) {
+	    options[i + 1] = new SelectItem(cargos.get(i), cargos.get(i).getNombre());
+	}
+	return options;
+    }
+
+    public void setCargosOptions(SelectItem[] cargosOptions) {
+        this.cargosOptions = cargosOptions;
+    }
+
     public Date getFechaCreacion() {
 	return fechaCreacion;
     }
@@ -399,6 +394,14 @@ public class EmpleadoManagedBean implements Serializable {
 
     public void setEmpleado(Empleado empleado) {
 	this.empleado = empleado;
+    }
+
+    public List<Empleado> getFilteredEmploy() {
+        return filteredEmploy;
+    }
+
+    public void setFilteredEmploy(List<Empleado> filteredEmploy) {
+        this.filteredEmploy = filteredEmploy;
     }
 
     public CargoEmpleado addCargoEmpleado() {
@@ -414,10 +417,11 @@ public class EmpleadoManagedBean implements Serializable {
     }
 
     public Empleado getEmpleadoSelected() {
-	return empleadoSelected;
+        return empleadoSelected;
     }
 
     public void setEmpleadoSelected(Empleado empleadoSelected) {
-	EmpleadoManagedBean.empleadoSelected = empleadoSelected;
+        EmpleadoManagedBean.empleadoSelected = empleadoSelected;
     }
+
 }

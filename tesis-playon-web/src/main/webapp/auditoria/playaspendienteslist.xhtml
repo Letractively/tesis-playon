@@ -18,7 +18,7 @@
 
 			<f:facet name="header">
 				Listado de playas pendientes
-				</f:facet>
+			</f:facet>
 
 			<p:column headerText="Razón Social" styleClass="column-font"
 				filterBy="#{playa.razonSocial}" filterMatchMode="contains">
@@ -58,7 +58,7 @@
 			<p:column headerText="Opciones" styleClass="column-font"
 				style="text-align:center; width:96px;">
 				<p:commandLink id="view" update=":mainForm:displayView"
-					oncomplete="carDialog.show()" title="Ver Datos">
+					oncomplete="carDialog.show();" title="Ver Datos">
 					<f:setPropertyActionListener value="#{playa}"
 						target="#{auditoriaMB.playaSeleccionada}" />
 					<h:graphicImage library="images/icons" name="search.png" />
@@ -83,6 +83,14 @@
 					<h:graphicImage library="images/icons" name="rejected.png" />
 				</p:commandLink>
 			</p:column>
+			<f:facet name="footer">
+				<h:panelGroup id="removeFilter"  layout="block"
+					style="text-align: right;">
+					<p:commandLink id="removeFilter" value="Quitar Filtro"
+						action="/auditoria/playaspendienteslist.html?faces-redirect=true"
+						ajax="false" />
+				</h:panelGroup>
+			</f:facet>
 		</p:dataTable>
 
 		<p>
