@@ -63,12 +63,13 @@
 					</p:commandLink>
 	
 					<p:commandLink id="edit" title="Editar Datos"
-						action="/admin/usuarioadd.html?faces-redirect=true"
+						action="/admin/usuarioedit.html?faces-redirect=true"
 						ajax="false">
 						<f:setPropertyActionListener value="#{usuario}"
 							target="#{usuarioMB.usuarioSelected}" />
 						<h:graphicImage library="images/icons" name="pencil.png" />
 					</p:commandLink>
+			
  
 					<p:commandLink id="darBaja" title="Dar de baja"
 						action="#{usuarioMB.deleteUsuarioAdmin(usuario)}" ajax="false">
@@ -159,6 +160,14 @@
 						style="font-weight:bold" />
 				</p:column>
 				
+				<p:column>
+					<h:outputText value="Habilitado: " />
+				</p:column>
+				<p:column >
+					<p:selectBooleanCheckbox value="#{usuarioMB.usuarioSelected.enable}"
+						style="font-weight:bold" disabled="false"/>
+				</p:column>
+							
 				<p:column>
 				</p:column>
 				<p:column style="text-align:right">
