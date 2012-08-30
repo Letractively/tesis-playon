@@ -12,7 +12,7 @@
 	<ui:define name="content">
 		<p:growl id="messages" />
 		<h1>Empleados de la playa</h1>
-		<h:form id="form">
+		
 			<p:dataTable id="empleados" var="empleado" paginator="true" rows="5"
 				value="#{empleadoMB.empleadoList}"
 				filteredValue="#{empleadoMB.filteredEmploy}"
@@ -187,6 +187,5 @@
 
 				</h:panelGrid>
 			</p:dialog>
-		</h:form>
 	</ui:define>
 </ui:composition>

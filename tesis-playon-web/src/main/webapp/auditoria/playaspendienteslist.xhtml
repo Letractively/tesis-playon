@@ -84,7 +84,7 @@
 				</p:commandLink>
 			</p:column>
 			<f:facet name="footer">
-				<h:panelGroup id="removeFilter"  layout="block"
+				<h:panelGroup id="quitarFiltro"  layout="block"
 					style="text-align: right;">
 					<p:commandLink id="removeFilter" value="Quitar Filtro"
 						action="/auditoria/playaspendienteslist.html?faces-redirect=true"
@@ -92,15 +92,6 @@
 				</h:panelGroup>
 			</f:facet>
 		</p:dataTable>
-
-		<p>
-			<h:panelGroup id="removeFilter" layout="block"
-				style="text-align: right; width: 100%;">
-				<p:commandButton id="addPlayaNueva" value="Quitar Filtro"
-					action="/auditoria/playaspendienteslist.html?faces-redirect=true"
-					ajax="false" />
-			</h:panelGroup>
-		</p>
 
 		<!-- DIALOG PARA VER LOS DATOS DE LA PLAYA SELECCIONADA -->
 		<p:dialog header="Datos de la Playa" widgetVar="carDialog"
@@ -192,7 +183,7 @@
 				<p:column style="text-align:right">
 					<div align="right">
 						<h:commandButton id="btnAceptar" value="Aceptar"
-							oncomplete="carDialog.hide()" />
+							oncomplete="carDialog.hide();" />
 					</div>
 				</p:column>
 

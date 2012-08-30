@@ -82,7 +82,7 @@ public class UsuarioManagedBean implements Serializable {
 		} catch (Exception e) {
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 			    "Error, no se pudo dar de baja al usuario: " + usuario.getNombreUser(),
-			    "Por favor, intentelo mas tarde.");
+			    "Por favor, inténtelo más tarde.");
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 		return ERROR;
@@ -94,11 +94,6 @@ public class UsuarioManagedBean implements Serializable {
 
 	public void updateUsuario(Usuario usuario) {
 		getUsuarioService().update(usuario);
-	}
-	
-	public String modificarUsuarioAdmin(Usuario usuario){
-	    usuarioSelected= usuario;
-	    return "usuarioeditadmin";
 	}
 
 	public void reset() {
@@ -122,18 +117,6 @@ public class UsuarioManagedBean implements Serializable {
 		usuarioList = new ArrayList<Usuario>();
 		usuarioList.addAll(getUsuarioService().findAll());	
 		return usuarioList;
-		
-//		int sizepuede= usuarioList.size();
-//
-//		for (int i = 0; i < sizepuede; i++) {
-//			if(usuarioList.get(i).getEnable().equals(false)){
-//				usuarioList.remove(usuarioList.get(i));
-//				i--;
-//				sizepuede--;
-//			}
-//		}
-//				
-//		return usuarioList;
     }
 	
 
@@ -205,12 +188,11 @@ public class UsuarioManagedBean implements Serializable {
 	    this.playa = playa;
 	}
 
-
 	public Usuario getUsuarioSelected() {
-		return usuarioSelected;
+	    return usuarioSelected;
 	}
 
 	public void setUsuarioSelected(Usuario usuarioSelected) {
-		UsuarioManagedBean.usuarioSelected = usuarioSelected;
+	    UsuarioManagedBean.usuarioSelected = usuarioSelected;
 	}
 }

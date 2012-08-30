@@ -7,7 +7,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.map.OverlaySelectEvent;
@@ -38,7 +38,7 @@ import tesis.playon.web.service.IUsuarioService;
  * 
  */
 @ManagedBean(name = "playaMB")
-@SessionScoped
+@ViewScoped
 public class PlayaManagedBean implements Serializable {
 
     private static final long serialVersionUID = -1085389423375986168L;
