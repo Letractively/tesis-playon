@@ -10,6 +10,11 @@
 	<ui:define name="content">
 
 		<p>Felicitaciones por utilizar los servicios de Playon!</p>
+		
+		<h:form>
+			<f:event type="preRenderView" listener="#{cuentaClienteMB.cargarSaldo}" />
+			<p:messages id="messages" />
+		</h:form>
 
 	</ui:define>
 

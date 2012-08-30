@@ -31,6 +31,23 @@
 					</ul>
 				</div>
 			</ui:fragment>
+
+			<ui:fragment rendered="#{!empty loadmenuadmin}">
+				<div class="box">
+					<h3>Menú de Administración</h3>
+					<ul class="list">
+						<li class="first"><h:link value="Empleado" outcome="#" /></li>
+						<li><h:link value="Nuevo empleado" outcome="/playa/gerencia/empleadoadd"
+								style="margin: 0 0 0 10px;" /></li>
+						<li><a href="#">Ver empleados</a></li>
+
+						<li><a href="#">Editar Perfil</a></li>
+						<li><a href="#">Fotos</a></li>
+						<li><a href="#">Comentarios</a></li>
+						<li class="last"><a href="#">Denuncias</a></li>
+					</ul>
+				</div>
+			</ui:fragment>
 		</ui:fragment>
 		<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_EMPLEADO]'}">
 			<h3>Menú Empleado Playa</h3>

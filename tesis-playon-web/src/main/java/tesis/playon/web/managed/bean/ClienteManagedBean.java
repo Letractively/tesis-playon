@@ -83,7 +83,7 @@ public class ClienteManagedBean implements Serializable {
 
     private Integer nroCuenta;
 
-    private  float saldo=0;;
+    private float saldo = 0;;
 
     private Date fechaCreacion;
 
@@ -136,18 +136,18 @@ public class ClienteManagedBean implements Serializable {
 	return ERROR;
     }
 
-    public void cargarSaldo()
-
-    {
+    public void cargarSaldo() {
 	try {
-	    this.cuentaCliente.setSaldo(saldo);
+	    float saldoCliente = cliente.getCuentaCliente().getSaldo();
+	    cliente.getCuentaCliente().setSaldo(saldoCliente + saldo);
+	    getCuentaClienteService().update(cliente.getCuentaCliente());
 
-	}
-
-	catch (DataAccessException e) {
+	    FacesContext.getCurrentInstance().addMessage(null,
+		    new FacesMessage(FacesMessage.SEVERITY_INFO, "Transacción exitosa", "Se agregó a su cuenta $" + getSaldo() + " argentinos. ¡Muchas Gracias!"));
+	    
+	} catch (DataAccessException e) {
 	    e.printStackTrace();
 	}
-
     }
 
     public String addSolicitudCliente() {
@@ -249,8 +249,8 @@ public class ClienteManagedBean implements Serializable {
 	    Usuario usuario = clienteSelected.getUsuario();
 	    getUsuarioService().update(usuario);
 	    getClienteService().update(clienteSelected);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "La cliente se modificó correctamente", "");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La cliente se modificó correctamente",
+		    "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_CLIENTES;
 	} catch (DataAccessException e) {
@@ -457,7 +457,7 @@ public class ClienteManagedBean implements Serializable {
     }
 
     public void setSaldo(float saldo) {
-	this.saldo = cliente.getCuentaCliente().getSaldo();
+	this.saldo = saldo;
     }
 
     public Date getFechaCreacion() {

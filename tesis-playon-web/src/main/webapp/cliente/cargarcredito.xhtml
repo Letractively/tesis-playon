@@ -1,4 +1,4 @@
-<ui:composition template="template/template.xhtml"
+<ui:composition template="../template/template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -10,82 +10,103 @@
     </ui:define>
 
 	<ui:define name="content">
-		<h1>Cargue saldo en su cuenta:</h1>
-		<p>Ingrese el monto y disfrute de los beneficios de Playon!</p>
-		<h:form>
-			<table class="admin-input-text" style="margin-left: 25px">
-				<p:growl id="messages" />
+		<h1>Cargar saldo fácil en su cuenta</h1>
 
-				<!-- Esto es una prueba para ver como carga al cliente actual -->
-				<tr>
-					<h:panelGrid columns="2" cellpadding="5">
-						<h:outputText id="txt_cliente"
-							value="Bienvenido #{clienteMB.clienteSelected.usuario.nombre} 
-							 #{clienteMB.clienteSelected.usuario.apellido}" />
-					</h:panelGrid>
-				</tr>
+		<p>¡Ingrese el monto deseado y disfrute de los beneficios de
+			Playón!</p>
 
-				<tr>
-					<h:panelGrid columns="2" cellpadding="5">
-						<h:outputText value="Su saldo actual es de: " />
-						<h:outputText id="txt_cuenta"
-							value="#{clienteMB.clienteSelected.cuentaCliente.saldo} pesos Argentinos." />
-					</h:panelGrid>
-				</tr>
+		<h:form id="contenido">
+			<p:growl id="messages" />
 
-				<tr>
-					<td><h:outputLabel for="saldo" value="Ingrese el monto que desea cargar en su cuenta: " /></td>
-					<td><p:inputText id="saldo" value="#{clienteMB.saldo}">
-							<p:ajax event="blur" update="saldoMsg" />
-						</p:inputText></td>
-					<td><p:message id="saldoMsg" for="saldo" display="icon" /></td>
-				</tr>
+			<h:panelGrid columns="3" cellpadding="5">
+				<p:column>
+					<h:outputText id="txt_cliente"
+						value="Bienvenido #{cuentaClienteMB.cliente.usuario.nombre} 
+							 #{cuentaClienteMB.cliente.usuario.apellido}" />
+				</p:column>
+				<p:column></p:column>
+				<p:column></p:column>
 
-			</table>
+				<p:column>
+					<h:outputText value="Su saldo actual es de: " />
+					<h:outputText id="txt_cuenta"
+						value="$ #{cuentaClienteMB.cliente.cuentaCliente.saldo} argentinos." />
+				</p:column>
+				<p:column>
+
+				</p:column>
+				<p:column></p:column>
+
+				<p:column>
+					<h:outputLabel for="saldo"
+						value="Ingrese el monto que desea cargar en su cuenta: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="saldo" value="#{cuentaClienteMB.saldo}"
+						inmediate="true">
+						<p:ajax event="blur" update="saldoMsg" />
+					</p:inputText>
+				</p:column>
+				<p:column>
+					<p:message id="saldoMsg" for="saldo" display="icon" />
+				</p:column>
+				<br />
+
+			</h:panelGrid>
 		</h:form>
+		<table>
+			<tr>
+				<td><div align="center" style="width: 265px;">
+						<h:outputText value="DineroMail" />
+						<form id='dineromail'
+							action='https://argentina.dineromail.com/Shop/Shop_Ingreso.asp'
+							method="get">
+							<input type='hidden' name='NombreItem' value='Promocion' /> <input
+								type='hidden' name='TipoMoneda' value='1' /> <input
+								type='hidden' name='PrecioItem' value='#{cuentaClienteMB.saldo}' />
+							<input type='hidden' name='E_Comercio' value='2329650' /> <input
+								type='hidden' name='NroItem' value='-' /> <input type='hidden'
+								name='MediosPago' value='2' /> <input type='hidden'
+								name='image_url' value='http://' /> <input type='hidden'
+								name='DireccionExito'
+								value='http://localhost:8080/tesis-playon-web/cliente/operacionexitosa.jsf' />
+							<input type='hidden' name='DireccionFracaso'
+								value='http://localhost:8080/tesis-playon-web/transactionerror.xhtml' />
+							<input type='hidden' name='DireccionEnvio' value='0' /> <input
+								type='hidden' name='Mensaje' value='0' /> <input type='image'
+								src='https://argentina.dineromail.com/imagenes/botones/pagar-medios_c.gif'
+								name='submit' alt='Pagar con DineroMail' />
 
-
-
-		<form action='https://argentina.dineromail.com/Shop/Shop_Ingreso.asp'
-			method='post'>
-			<input type='hidden' name='NombreItem' value='Promocion' /> <input
-				type='hidden' name='TipoMoneda' value='1' /> <input type='hidden'
-				name='PrecioItem' value='22.00' /> <input type='hidden'
-				name='E_Comercio' value='2329650' /> <input type='hidden'
-				name='NroItem' value='-' /> <input type='hidden' name='MediosPago'
-				value='2' /> <input type='hidden' name='image_url' value='http://' />
-			<input type='hidden' name='DireccionExito'
-				value='http://localhost:8080/tesis-playon-web/cliente/operacionexitosa.jsf' />
-			<input type='hidden' name='DireccionFracaso'
-				value='http://localhost:8080/tesis-playon-web/transactionerror.xhtml' />
-			<input type='hidden' name='DireccionEnvio' value='0' /> <input
-				type='hidden' name='Mensaje' value='0' /> <input type='image'
-				src='https://argentina.dineromail.com/imagenes/botones/pagar-medios_c.gif'
-				name='submit' alt='Pagar con DineroMail' />
-
-		</form>
-
-		<form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
-			method="post">
-			<input type="image"
-				src="https://www.paypalobjects.com/es_ES/ES/i/btn/btn_buynowCC_LG.gif" />
-			<input type="hidden" name="shipping" value="0" /> <input
-				type="hidden" name="cbt"
-				value="http://localhost:8080/tesis-playon-web/index.jsf" /> <input
-				type="hidden" name="cmd" value="_xclick" /> <input type="hidden"
-				name="rm" value="2" /> <input type="hidden" name="bn"
-				value="PLAYON  - RED DE PLAYAS" /> <input type="hidden"
-				name="business" value="playon_1346219039_biz@gmail.com" /> <input
-				type="hidden" name="item_number" value="Nombre del comprador" /> <input
-				type="hidden" name="amount" value="2" /> <input type="hidden"
-				name="currency_code" value="USD" /> <input type="hidden"
-				name="image_url" value="" /> <input type="hidden" name="return"
-				value="http://localhost:8080/tesis-playon-web/cliente/operacionexitosa.jsf" />
-			<input type="hidden" name="cancel_return"
-				value="http://localhost:8080/tesis-playon-web/transactionerror.jsf" />
-			<input type="hidden" name="no_shipping" value="1" /><input
-				type="hidden" name="no_note" value="1" />
-		</form>
-
+						</form>
+					</div></td>
+				<td><div align="center" style="width: 160px;">
+						<h:outputText value="PayPal" />
+						<form id="paypal"
+							action="https://www.sandbox.paypal.com/cgi-bin/webscr"
+							method="post">
+							<input type="image"
+								src="https://www.paypalobjects.com/es_ES/ES/i/btn/btn_buynowCC_LG.gif" />
+							<input type="hidden" name="shipping" value="0" /> <input
+								type="hidden" name="cbt"
+								value="http://localhost:8080/tesis-playon-web/index.jsf" /> <input
+								type="hidden" name="cmd" value="_xclick" /> <input
+								type="hidden" name="rm" value="2" /> <input type="hidden"
+								name="bn" value="PLAYON  - RED DE PLAYAS" /> <input
+								type="hidden" name="business"
+								value="playon_1346219039_biz@gmail.com" /> <input type="hidden"
+								name="item_number" value="Nombre del comprador" /> <input
+								type="hidden" name="amount" value="#{cuentaClienteMB.saldo}" />
+							<input type="hidden" name="currency_code" value="USD" /> <input
+								type="hidden" name="image_url" value="" /> <input type="hidden"
+								name="return"
+								value="http://localhost:8080/tesis-playon-web/cliente/operacionexitosa.jsf" />
+							<input type="hidden" name="cancel_return"
+								value="http://localhost:8080/tesis-playon-web/transactionerror.jsf" />
+							<input type="hidden" name="no_shipping" value="1" /><input
+								type="hidden" name="no_note" value="1" />
+						</form>
+					</div></td>
+			</tr>
+		</table>
 	</ui:define>
 </ui:composition>
