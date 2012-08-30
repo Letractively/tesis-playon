@@ -20,7 +20,7 @@
 				<p:column>
 					<p:inputText id="nombreUser"
 						value="#{usuarioMB.usuarioSelected.nombreUser}" required="true"
-						requiredMessage="Campo obligatorio">
+						requiredMessage="Campo obligatorio" readonly="true">
 						<f:validateLength minimum="4" />
 						<p:ajax event="blur" update="nombreUserMsg" />
 					</p:inputText>
@@ -36,7 +36,7 @@
 					<p:inputText id="password"
 						value="#{usuarioMB.usuarioSelected.password}" required="true"
 						requiredMessage="Campo obligatorio">
-						<f:validateLength minimum="3" />
+						<f:validateLength minimum="4" />
 						<p:ajax event="blur" update="passwordMsg" />
 					</p:inputText>
 				</p:column>
@@ -107,7 +107,7 @@
 				<p:column>
 					<p:inputText id="nroDoc" value="#{usuarioMB.usuarioSelected.nroDoc}"
 						required="true" requiredMessage="Campo obligatorio">
-						<f:validateLength minimum="5" />
+						<f:validateLength minimum="6" />
 						<p:ajax event="blur" update="nroDocMsg" />
 					</p:inputText>
 				</p:column>
@@ -116,22 +116,22 @@
 				</p:column>
 				
 				<p:column>
-					<h:outputLabel for="enable" value="Nro. Documento: " />
+					<h:outputLabel for="enable" value="Habilitado: " />
 				</p:column>
 				<p:column>
-					<p:inputText id="enable" value="#{usuarioMB.usuarioSelected.enable}"
-						required="true" requiredMessage="Campo obligatorio">
-						<p:ajax event="blur" update="enableMsg" />
-					</p:inputText>
+					<p:selectBooleanCheckbox id="enable" value="#{usuarioMB.usuarioSelected.enable}">
+					</p:selectBooleanCheckbox>
 				</p:column>
-				<p:column>
-					<p:message id="enableMsg" for="enable" display="icon" />
+			 	<p:column>
+				
 				</p:column>
 				
 				<p:column></p:column>
 				<p:column>
 					<div align="right">
-						<p:commandButton id="reset" value="Cancelar"
+						<p:commandButton id="updateUser" value="Modificar Usuario"
+								action="#{usuarioMB.updateUsuarioAdmin}" ajax="false" />
+						<p:commandButton id="reset" value="Cancelar" immediate="true"
 							action="/admin/usuariolist.html?faces-redirect=true" ajax="false"
 							style="margin-right:15px" />
 					</div>

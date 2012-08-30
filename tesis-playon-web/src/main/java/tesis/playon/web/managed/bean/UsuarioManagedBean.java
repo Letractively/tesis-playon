@@ -95,6 +95,27 @@ public class UsuarioManagedBean implements Serializable {
 	public void updateUsuario(Usuario usuario) {
 		getUsuarioService().update(usuario);
 	}
+	
+	public String updateUsuarioAdmin() {
+	try {
+		    getUsuarioService().update(usuarioSelected);
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, usuarioSelected.getNombreUser()
+			    + " se modificó correctamente", "");
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+		    return LISTA_USUARIOS;
+		} catch (DataAccessException e) {
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, "
+			    + usuarioSelected.getNombreUser() + " no se pudo modificar", "Por favor, inténtelo más tarde.");
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+		    e.printStackTrace();
+		}
+		return ERROR;
+	}
+	
+	public String modificarUsuarioAdmin(Usuario usuario){
+	    usuarioSelected= usuario;
+	    return "usuarioeditadmin";
+	}
 
 	public void reset() {
 		this.setNombre("");
