@@ -19,95 +19,115 @@
 
 		<p:dialog id="modalDialog" header="Administrar Tarifas"
 			widgetVar="popupTarifas" modal="true" height="300" width="640">
-			<table width="600" height="244" border="1">
-				<tr>
-					<th width="120" scope="col"></th>
-					<th width="120" class="letraColumnaTipoTarifa" scope="col">Auto</th>
-					<th width="120" class="letraColumnaTipoTarifa" scope="col">Utilitario</th>
-					<th width="120" class="letraColumnaTipoTarifa" scope="col">Pickup</th>
-					<th width="120" class="letraColumnaTipoTarifa" scope="col">Moto</th>
-				</tr>
-				<tr>
-					<th width="120" class="letraColumnaTipoTarifa" scope="col">Hora</th>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="autoPorHora" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="utilitarioPorHora" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="pickupPorHora" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="motoPorHora" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-				</tr>
-				<tr>
-					<th width="120" class="letraColumnaTipoTarifa" scope="col">Día</th>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="autoPorDia" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="utilitarioPorDia" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="pickupPorDia" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="motoPorDia" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-				</tr>
-				<tr>
-					<th width="120" class="letraColumnaTipoTarifa" scope="col">Semana</th>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="autoPorSemana" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="utilitarioPorSemana" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="pickupPorSemana" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="motoPorSemana" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-				</tr>
-				<tr>
-					<th width="120" class="letraColumnaTipoTarifa" scope="col">Mes</th>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="autoPorMes" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="utilitarioPorMes" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="pickupPorMes" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-					<td width="120" class="letraTabla" scope="col"><p:inputText
-							id="motoPorMes" style="width:100px">
-							<f:validateLength maximun="6" />
-						</p:inputText></td>
-				</tr>
-			</table>
-			<br></br>
-			<p:commandButton id="tarifasAceptar" value="Aceptar" type="button" />
-			<p:commandButton id="tarifasCancelar" value="Cancelar"
-				onclick="popupTarifas.hide();" type="button" />
+			<h:form>
+				<table width="600" height="244" border="1"
+					style="text-align: center;">
+					<tr>
+						<th width="120" scope="col"></th>
+						<th width="120" class="letraColumnaTipoTarifa" scope="col">Auto</th>
+						<th width="120" class="letraColumnaTipoTarifa" scope="col">Utilitario</th>
+						<th width="120" class="letraColumnaTipoTarifa" scope="col">Pickup</th>
+						<th width="120" class="letraColumnaTipoTarifa" scope="col">Moto</th>
+					</tr>
+					<tr>
+						<th width="120" class="letraColumnaTipoTarifa" scope="col">Hora</th>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="autoPorHora" value="#{tarifaMB.autoPorHora}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="utilitarioPorHora" value="#{tarifaMB.utilitarioPorHora}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="pickupPorHora" value="#{tarifaMB.pickupPorHora}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="motoPorHora" value="#{tarifaMB.motoPorHora}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+					</tr>
+					<tr>
+						<th width="120" class="letraColumnaTipoTarifa" scope="col">Día</th>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="autoPorDia" value="#{tarifaMB.autoPorDia}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="utilitarioPorDia" value="#{tarifaMB.utilitarioPorDia}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="pickupPorDia" value="#{tarifaMB.pickupPorDia}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="motoPorDia" value="#{tarifaMB.motoPorDia}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+					</tr>
+					<tr>
+						<th width="120" class="letraColumnaTipoTarifa" scope="col">Semana</th>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="autoPorSemana" value="#{tarifaMB.autoPorSemana}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="utilitarioPorSemana" value="#{tarifaMB.utilitarioPorSemana}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="pickupPorSemana" value="#{tarifaMB.pickupPorSemana}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="motoPorSemana" value="#{tarifaMB.motoPorSemana}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+					</tr>
+					<tr>
+						<th width="120" class="letraColumnaTipoTarifa" scope="col">Mes</th>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="autoPorMes" value="#{tarifaMB.autoPorMes}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="utilitarioPorMes" value="#{tarifaMB.utilitarioPorMes}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="pickupPorMes" value="#{tarifaMB.pickupPorMes}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+						<td width="120" class="letraTabla" scope="col"><p:inputText
+								id="motoPorMes" value="#{tarifaMB.motoPorMes}"
+								style="width:100px">
+<!-- 								<f:validateLength maximun="6" /> -->
+							</p:inputText></td>
+					</tr>
+				</table>
+				<br></br>
+				<p:commandButton id="tarifasAceptar" value="Aceptar"
+					action="#{tarifaMB.addTarifas}" ajax="false" />
+				<p:commandButton id="tarifasCancelar" value="Cancelar"
+					onclick="popupTarifas.hide();" />
+			</h:form>
 		</p:dialog>
 
 	</ui:define>

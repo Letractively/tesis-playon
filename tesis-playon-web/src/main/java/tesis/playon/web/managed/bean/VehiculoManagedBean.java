@@ -61,7 +61,7 @@ public class VehiculoManagedBean implements Serializable {
 	Vehiculo vehiculo = new Vehiculo();
 
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	String nameUser = auth.getName(); // get logged in username
+	String nameUser = auth.getName(); // get logged in username from LoginBean.java
 
 	Cliente cliente = getClienteService().findByNombreUsuario(nameUser);
 
