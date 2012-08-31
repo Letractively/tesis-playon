@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.model.UploadedFile;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -46,6 +47,34 @@ public class PerfilPlayaManagedBean {
     private Integer calificacion;
     
     private List<String> fotosList;
+    
+    private UploadedFile fotoPerfilFile;
+    
+    private String telefono;
+    
+    private String email;
+    
+    private Integer disponibilidad;
+    
+    private String fotoPerfil;
+    
+    public String updatePerfil(){
+	try{
+	    if(fotoPerfilFile != null) {
+		
+	    }
+	    perfil.getPlaya().setDisponibilidad(getDisponibilidad());
+	    perfil.getPlaya().setEmail(getEmail());
+	    perfil.getPlaya().setTelefono(getTelefono());
+	    
+	    getPlayaService().update(perfil.getPlaya());
+	    getPerfilPlayaService().update(perfil);
+	    return "/playa/perfilplaya";
+	}catch(Exception ex){
+	    
+	}
+	return "/playa/gerencia/perfilplayaedit";
+    }
 
     public PerfilPlaya getPerfil() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -102,9 +131,51 @@ public class PerfilPlayaManagedBean {
     public void setFotosList(List<String> fotosList) {
         this.fotosList = fotosList;
     }
-    
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Integer getDisponibilidad() {
+        return disponibilidad;
+    }
+
+    public void setDisponibilidad(Integer disponibilidad) {
+        this.disponibilidad = disponibilidad;
+    }
+
     //datos para mostrar en el mapa
     
+    public UploadedFile getFotoPerfilFile() {
+        return fotoPerfilFile;
+    }
+
+    public void setFotoPerfilFile(UploadedFile fotoPerfilFile) {
+        this.fotoPerfilFile = fotoPerfilFile;
+    }
+
+    public String getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
+    }
+
+
+
     LatitudlongitudUtil latLonUtil;
     
     private GeoposicionDePlaya respuesta;
