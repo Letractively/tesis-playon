@@ -23,15 +23,15 @@
 				filterBy="#{usuario.nombreUser}" filterMatchMode="contains">
 				<h:outputText value="#{usuario.nombreUser}" />
 			</p:column>
+			
+			<p:column headerText="Nombre" styleClass="column-font"
+				filterBy="#{usuario.nombre}" filterMatchMode="contains">
+				<h:outputText value="#{usuario.nombre}" />
+			</p:column>
 
 			<p:column headerText="Apellido" styleClass="column-font"
 				filterBy="#{usuario.apellido}" filterMatchMode="contains">
 				<h:outputText value="#{usuario.apellido}" />
-			</p:column>
-
-			<p:column headerText="Nombre" styleClass="column-font"
-				filterBy="#{usuario.nombre}" filterMatchMode="contains">
-				<h:outputText value="#{usuario.nombre}" />
 			</p:column>
 
 			<p:column headerText="E-mail" styleClass="column-font"
@@ -39,16 +39,9 @@
 				<h:outputText value="#{usuario.email}" />
 			</p:column>
 
-
-			<p:column headerText="Tipo Doc." styleClass="column-font"
-				filterBy="#{usuario.tipoDoc}"
-				filterOptions="#{tipoDocMB.tipoDocOption}" filterMatchMode="exact">
-				<h:outputText value="#{usuario.tipoDoc.nombre}" />
-			</p:column>
-
-			<p:column headerText="Nro. Documento" styleClass="column-font"
-				filterBy="#{usuario.nroDoc}" filterMatchMode="contains">
-				<h:outputText value="#{usuario.nroDoc}" />
+			<p:column headerText="Habilitado" styleClass="column-font"
+				filterBy="#{usuario.enable}" filterMatchMode="contains">
+				<h:outputText value="#{usuario.enable ? 'Si' : 'No'}"/>
 			</p:column>
 
 			<p:column headerText="Opciones"
@@ -109,18 +102,18 @@
 				</p:column>
 				
 				<p:column>
-					<h:outputText value="Apellido: " />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{usuarioMB.usuarioSelected.apellido}"
-						style="font-weight:bold" />
-				</p:column>
-
-				<p:column>
 					<h:outputText value="Nombre: " />
 				</p:column>
 				<p:column>
 					<h:outputText value="#{usuarioMB.usuarioSelected.nombre}"
+						style="font-weight:bold" />
+				</p:column>
+				
+				<p:column>
+					<h:outputText value="Apellido: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{usuarioMB.usuarioSelected.apellido}"
 						style="font-weight:bold" />
 				</p:column>
 
@@ -152,9 +145,9 @@
 					<h:outputText value="Habilitado: " />
 				</p:column>
 				<p:column>
-					<h:selectBooleanCheckbox
-						value="#{usuarioMB.usuarioSelected.enable}"
-						style="font-weight:bold" disabled="true" />
+					<h:outputText
+						value="#{usuarioMB.usuarioSelected.enable ? 'Si' : 'No'}"
+						style="font-weight:bold" />
 				</p:column>
 
 				<p:column>
