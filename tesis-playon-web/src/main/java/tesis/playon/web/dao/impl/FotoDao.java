@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IFotoDao;
 import tesis.playon.web.model.Foto;
+import tesis.playon.web.model.PerfilPlaya;
 
 /**
  * @author Pablo
@@ -59,5 +60,15 @@ public class FotoDao implements IFotoDao {
 	else
 	     ultimoID = ((Integer) list.get(0)) + 1;
 	return ultimoID;
+    }
+    
+    public List<Foto> findByPlaya(PerfilPlaya perfil){
+	List<Foto> fotos = new ArrayList<Foto>();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Foto where perfilPlaya=?")
+		.setParameter(0, perfil).list();
+	for (Object object : list) {
+	    fotos.add((Foto) object);
+	}
+	return fotos;
     }
 }

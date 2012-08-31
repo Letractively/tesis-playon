@@ -6,6 +6,7 @@ package tesis.playon.web.service;
 import java.util.List;
 
 import tesis.playon.web.model.Foto;
+import tesis.playon.web.model.PerfilPlaya;
 
 /**
  * @author pablo
@@ -25,4 +26,5 @@ public interface IFotoService {
     
     Integer obtenerUltimoID();
 
+    List<Foto> findByPlaya(PerfilPlaya perfil);
 }

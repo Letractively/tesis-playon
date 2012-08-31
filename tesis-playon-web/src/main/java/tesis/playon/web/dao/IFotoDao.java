@@ -3,6 +3,7 @@ package tesis.playon.web.dao;
 import java.util.List;
 
 import tesis.playon.web.model.Foto;
+import tesis.playon.web.model.PerfilPlaya;
 
 /**
  * @author Pablo
@@ -21,4 +22,6 @@ public interface IFotoDao {
     List<Foto> findAll();
     
     Integer obtenerUltimoID();
+    
+    List<Foto> findByPlaya(PerfilPlaya perfil);
 }

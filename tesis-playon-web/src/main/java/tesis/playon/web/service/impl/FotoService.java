@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IFotoDao;
 import tesis.playon.web.model.Foto;
+import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.service.IFotoService;
 /**
  * 
@@ -54,6 +55,11 @@ public class FotoService implements IFotoService {
     public Integer obtenerUltimoID() {
 	// TODO Auto-generated method stub
 	return getFotoDao().obtenerUltimoID();
+    }
+    
+    @Override
+    public List<Foto> findByPlaya(PerfilPlaya perfil){
+	return getFotoDao().findByPlaya(perfil);
     }
 
     public IFotoDao getFotoDao() {
