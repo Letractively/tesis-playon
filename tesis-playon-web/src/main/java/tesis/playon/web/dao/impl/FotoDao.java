@@ -50,4 +50,14 @@ public class FotoDao implements IFotoDao {
 	}
 	return fotos;
     }
+
+    public Integer obtenerUltimoID() {
+	List<?> list = getSessionFactory().getCurrentSession().createSQLQuery("SELECT MAX(fotoID) FROM foto").list();
+	Integer ultimoID;
+	if(list.get(0) == null)
+	    ultimoID = 1;
+	else
+	     ultimoID = ((Integer) list.get(0)) + 1;
+	return ultimoID;
+    }
 }

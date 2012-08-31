@@ -3,6 +3,8 @@
  */
 package tesis.playon.web.managed.bean;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +63,8 @@ public class PerfilPlayaManagedBean {
     public String updatePerfil(){
 	try{
 	    if(fotoPerfilFile != null) {
-		
+		BufferedImage image = new BufferedImage(151, 151, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = image.createGraphics();
 	    }
 	    perfil.getPlaya().setDisponibilidad(getDisponibilidad());
 	    perfil.getPlaya().setEmail(getEmail());

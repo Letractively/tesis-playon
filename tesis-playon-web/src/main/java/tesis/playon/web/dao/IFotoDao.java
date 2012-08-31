@@ -19,4 +19,6 @@ public interface IFotoDao {
     Foto findByLinkFoto(String link);
     
     List<Foto> findAll();
+    
+    Integer obtenerUltimoID();
 }
