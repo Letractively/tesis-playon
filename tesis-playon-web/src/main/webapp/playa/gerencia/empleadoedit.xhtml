@@ -6,11 +6,11 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="title">
-		Nuevo empleado
+		Editar empleado
     </ui:define>
 
 	<ui:define name="content">
-		<h1>Nuevo empleado</h1>
+		<h1>Editar empleado</h1>
 
 		<p:growl id="messages" />
 		<h:form>
@@ -18,65 +18,12 @@
 
 				<h:panelGrid id="displayView" columns="3" cellpadding="8">
 
-					<p:column>Datos de Usuario:</p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-
-					<p:column>
-						<h:outputLabel for="nombreUser" value="Nombre usuario: " />
-					</p:column>
-					<p:column>
-						<p:inputText id="nombreUser" value="#{empleadoMB.nombreUser}">
-							<f:validateLength minimum="5" />
-							<p:ajax event="blur" update="nombreUserMsg" />
-						</p:inputText>
-					</p:column>
-					<p:column>
-						<p:message id="nombreUserMsg" for="nombreUser" display="icon" />
-					</p:column>
-
-					<p:column>
-						<h:outputLabel for="password" value="Contraseña: " />
-					</p:column>
-					<p:column>
-						<p:password id="password" value="#{empleadoMB.password}"
-							match="passwordRepeat" required="true"
-							requiredMessage="Campo obligatorio">
-							<f:validateLength minimum="5" />
-							<p:ajax event="blur" update="passwordMsg" />
-						</p:password>
-					</p:column>
-					<p:column></p:column>
-
-					<p:column>
-						<h:outputLabel for="passwordRepeat" value="Repita Contraseña: " />
-					</p:column>
-					<p:column>
-						<p:password id="passwordRepeat" value="#{empleadoMB.password}"
-							required="true" requiredMessage="Campo obligatorio">
-							<f:validateLength minimum="5" />
-							<p:ajax event="blur" update="passwordMsg" />
-						</p:password>
-					</p:column>
-					<p:column>
-						<p:message id="passwordMsg" for="password" display="icon" />
-					</p:column>
-
-					<p:column>
-						<br />
-					</p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-
-					<p:column>Datos del Empleado:</p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-
 					<p:column>
 						<h:outputLabel for="apellido" value="Apellido " />
 					</p:column>
 					<p:column>
-						<p:inputText id="apellido" value="#{empleadoMB.apellido}">
+						<p:inputText id="apellido"
+							value="#{empleadoMB.empleadoSelected.usuario.apellido}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="apellidoMsg" />
 						</p:inputText>
@@ -89,7 +36,8 @@
 						<h:outputLabel for="nombre" value="Nombre: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="nombre" value="#{empleadoMB.nombre}">
+						<p:inputText id="nombre"
+							value="#{empleadoMB.empleadoSelected.usuario.nombre}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="nombreMsg" />
 						</p:inputText>
@@ -102,7 +50,8 @@
 						<h:outputLabel for="email" value="E-mail: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="email" value="#{empleadoMB.email}">
+						<p:inputText id="email"
+							value="#{empleadoMB.empleadoSelected.usuario.email}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="emailMsg" />
 						</p:inputText>
@@ -115,8 +64,9 @@
 						<h:outputText for="tipoDoc" value="Tipo Documento: " />
 					</p:column>
 					<p:column>
-						<p:selectOneMenu value="#{empleadoMB.tipoDoc}" effect="fade"
-							style="width:159px;">
+						<p:selectOneMenu
+							value="#{empleadoMB.empleadoSelected.usuario.tipoDoc}"
+							effect="fade" style="width:159px;">
 							<f:selectItems value="#{tipoDocMB.tipoDocList}" var="tipoDoc"
 								itemValue="#{tipoDoc}" itemLabel="#{tipoDoc.nombre}" />
 							<f:converter converterId="tipoDocConverter" />
@@ -128,7 +78,8 @@
 						<h:outputLabel for="nroDoc" value="Nro. Documento: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="nroDoc" value="#{empleadoMB.nroDoc}">
+						<p:inputText id="nroDoc"
+							value="#{empleadoMB.empleadoSelected.usuario.nroDoc}">
 							<f:validateLength minimum="8" />
 							<p:ajax event="blur" update="nroDocMsg" />
 						</p:inputText>
@@ -141,7 +92,8 @@
 						<h:outputLabel for="legajo" value="Legajo: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="legajo" value="#{empleadoMB.legajo}">
+						<p:inputText id="legajo"
+							value="#{empleadoMB.empleadoSelected.legajo}">
 							<f:validateLength minimum="4" />
 							<p:ajax event="blur" update="legajoMsg" />
 						</p:inputText>
@@ -154,12 +106,23 @@
 						<h:outputLabel for="cargoEmpleado" value="Cargo: " />
 					</p:column>
 					<p:column>
-						<p:selectOneMenu value="#{empleadoMB.cargoEmpleado}" effect="fade"
-							style="width:159px;">
+						<p:selectOneMenu
+							value="#{empleadoMB.empleadoSelected.cargoEmpleado}"
+							effect="fade" style="width:159px;">
 							<f:selectItems value="#{cargoEmpleadoMB.cargoEmpleadoList}"
 								var="cargo" itemValue="#{cargo}" itemLabel="#{cargo.nombre}" />
 							<f:converter converterId="cargoEmpleadoConverter" />
 						</p:selectOneMenu>
+					</p:column>
+					<p:column></p:column>
+
+					<p:column>
+						<h:outputLabel for="enable" value="Habilitado: " />
+					</p:column>
+					<p:column>
+						<p:selectBooleanCheckbox id="enable"
+							value="#{empleadoMB.empleadoSelected.usuario.enable}">
+						</p:selectBooleanCheckbox>
 					</p:column>
 					<p:column></p:column>
 
@@ -168,11 +131,11 @@
 						<br />
 						<div align="right">
 							<h:commandButton id="cancelar" immediate="true" value="Cancelar"
-								action="/playa/gerencia/administracion.html?faces-redirect=true" ajax="false"
-								style="margin-right:15px;" type="submit" />
-								
-							<h:commandButton id="addEmploy" value="Registrar"
-								action="#{empleadoMB.addEmpleado}" ajax="false" />
+								action="/playa/gerencia/empleadolist.html?faces-redirect=true"
+								ajax="false" style="margin-right:15px;" type="submit" />
+
+							<h:commandButton id="editEmploy" value="Modificar"
+								action="#{empleadoMB.updateEmpleado}" ajax="false" />
 						</div>
 					</p:column>
 					<p:column></p:column>

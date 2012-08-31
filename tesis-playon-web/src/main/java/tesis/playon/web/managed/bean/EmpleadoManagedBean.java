@@ -190,9 +190,28 @@ public class EmpleadoManagedBean implements Serializable {
 	    return LISTA_EMPLEADOS;
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error,el cliente no se pudo modificar", "Por favos, intentelo mas tarde.");
+		    "Error,el cliente no se pudo modificar", "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
+	}
+	return ERROR;
+    }
+    
+    public String updateEmpleado() {
+	Usuario usuario = empleadoSelected.getUsuario();
+	try {
+	    getUsuarioService().update(usuario);
+	    getEmpleadoService().update(empleadoSelected);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "El empleado se modificó correctamente", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    reset();
+	    return "/playa/gerencia/empleadolist";
+	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error,el cliente no se pudo modificar", "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    reset();
 	}
 	return ERROR;
     }
