@@ -14,6 +14,7 @@
 
 	<ui:define name="content">
 		<h1>Editar perfil</h1>
+
 		<h:form>
 			<div id="perfil-playa">
 				<h:panelGrid columns="2">
@@ -21,10 +22,14 @@
 						style="width:151px; height:151px;" />
 					<h1 style="width: 400px">#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
 				</h:panelGrid>
-				<h:panelGrid>
-					<p:fileUpload value="#" mode="simple" uploadLabel="Cambiar foto" />
-				</h:panelGrid>
 
+				<h:panelGrid>
+					<h:form enctype="multipart/form-data">
+						<p:fileUpload id="cargarFoto"
+							value="#{perfilPlayaMB.fotoPerfilFile}" mode="simple"
+							allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+					</h:form>
+				</h:panelGrid>
 			</div>
 			<br />
 			<div id="perfil-playa">
@@ -43,34 +48,37 @@
 					<h:outputText value="#{perfilPlayaMB.perfil.playa.barrio.nombre}"
 						styleClass="fuente-perfil" />
 
-					<h:outputText value="Teléfono: " styleClass="fuente-outputtext" />
-					<p:inputText value="#{perfilPlayaMB.telefono}"
-						 style="width:200px;" />
-
-					<h:outputText value="E-mail: " styleClass="fuente-outputtext" />
-					<p:inputText value="#{perfilPlayaMB.email}"
-						 style="width:200px;" />
-
-					<h:outputText value="Disponibilidad: "
+					<h:outputText for="telefono" value="Teléfono: "
 						styleClass="fuente-outputtext" />
-					<p:inputText value="#{perfilPlayaMB.disponibilidad}"
-						 style="width:200px;" />
-					
-					<h:outputText value="Descripción: "
+					<h:inputText id="telefono"
+						value="#{perfilPlayaMB.playaSelected.telefono}"
+						style="width:200px;" />
+
+					<h:outputText for="email" value="E-mail: "
 						styleClass="fuente-outputtext" />
-					<p:inputTextarea rows="6" value="#{perfilPlayaMB.perfil.descripcion}"
-						 style="width:200px;" />
-					
+					<h:inputText id="email"
+						value="#{perfilPlayaMB.playaSelected.email}" style="width:200px;" />
+
+					<h:outputText value="Disponibilidad: " for="disponibilidad"
+						styleClass="fuente-outputtext" />
+					<h:inputText id="disponibilidad"
+						value="#{perfilPlayaMB.playaSelected.disponibilidad}"
+						style="width:200px;" />
+
+					<h:outputText value="Descripción: " styleClass="fuente-outputtext" />
+					<p:inputTextarea rows="6"
+						value="#{perfilPlayaMB.perfil.descripcion}" style="width:200px;" />
+
 					<p:column>
 					</p:column>
 					<p:column>
 						<div align="right">
 							<br />
-							<h:commandButton id="cancelar" immediate="true" value="Cancelar"
+							<p:commandButton id="cancelar" immediate="true" value="Cancelar"
 								action="/playa/perfilplaya.html?faces-redirect=true"
 								ajax="false" style="margin-right:15px;" type="submit" />
 
-							<h:commandButton id="editEmploy" value="Modificar"
+							<p:commandButton id="editEmploy" value="Modificar"
 								action="#{perfilPlayaMB.updatePerfil}" ajax="false" />
 						</div>
 					</p:column>

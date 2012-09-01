@@ -21,6 +21,7 @@ import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
 import tesis.playon.web.model.PerfilPlaya;
+import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IFotoService;
 import tesis.playon.web.service.IPerfilPlayaService;
@@ -50,6 +51,8 @@ public class PerfilPlayaManagedBean {
     IFotoService fotoService;
 
     private PerfilPlaya perfil;
+    
+    private static String nombreComercial;
 
     private Integer calificacion;
 
@@ -64,6 +67,8 @@ public class PerfilPlayaManagedBean {
     private Integer disponibilidad;
 
     private String fotoPerfil;
+    
+    private Playa playaSelected;
 
     public String updatePerfil() {
 	try {
@@ -75,17 +80,15 @@ public class PerfilPlayaManagedBean {
 		ImageIO.write((BufferedImage) fotoPerfilFile, tipoImagen, file);
 		perfil.setFotoPerfil("fotoPerfil-" + perfil.getId() + "." + tipoImagen);
 	    }
-	    perfil.getPlaya().setDisponibilidad(getDisponibilidad());
-	    perfil.getPlaya().setEmail(getEmail());
-	    perfil.getPlaya().setTelefono(getTelefono());
-
-	    getPlayaService().update(perfil.getPlaya());
+	    
 	    getPerfilPlayaService().update(perfil);
+	    getPlayaService().update(playaSelected);
+	    
 	    return "/playa/perfilplaya";
 	} catch (Exception ex) {
-
+	    ex.printStackTrace();
 	}
-	return "/playa/gerencia/perfilplayaedit";
+	return "error";
     }
 
     public PerfilPlaya getPerfil() {
@@ -93,6 +96,7 @@ public class PerfilPlayaManagedBean {
 	String userName = facesContext.getExternalContext().getRemoteUser();
 	Usuario user = getUsuarioService().findByNombreUsuario(userName);
 	perfil = getPerfilPlayaService().findByPlaya(user.getPlaya());
+	nombreComercial = perfil.getPlaya().getNombreComercial();
 	return perfil;
     }
 
@@ -176,7 +180,14 @@ public class PerfilPlayaManagedBean {
 	this.disponibilidad = disponibilidad;
     }
 
-    // datos para mostrar en el mapa
+    public Playa getPlayaSelected() {
+	playaSelected = getPlayaService().findByNombreComercial(nombreComercial);
+        return playaSelected;
+    }
+
+    public void setPlayaSelected(Playa playaSelected) {
+        this.playaSelected = playaSelected;
+    }
 
     public UploadedFile getFotoPerfilFile() {
 	return fotoPerfilFile;
@@ -194,6 +205,7 @@ public class PerfilPlayaManagedBean {
 	this.fotoPerfil = fotoPerfil;
     }
 
+    // datos para mostrar en el mapa
     LatitudlongitudUtil latLonUtil;
 
     private GeoposicionDePlaya respuesta;
