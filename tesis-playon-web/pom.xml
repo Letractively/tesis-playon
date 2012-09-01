@@ -15,7 +15,15 @@
 			<url>http://repository.primefaces.org</url>
 			<layout>default</layout>
 		</repository>
+
+
+		<repository>
+			<id>Java.Net</id>
+			<url>http://download.java.net/maven/2/</url>
+		</repository>
 	</repositories>
+
+
 
 	<properties>
 		<spring.version>3.1.1.RELEASE</spring.version>
@@ -105,6 +113,18 @@
 			<artifactId>jsf-impl</artifactId>
 			<version>2.1.6</version>
 		</dependency>
+
+
+
+
+		<!-- Java Mail API -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.3</version>
+		</dependency>
+
+
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
