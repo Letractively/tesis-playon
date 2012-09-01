@@ -30,7 +30,7 @@
 				</p:column>
 				
 				<p:column>
-					<h:outputLabel for="password" value="Password: " />
+					<h:outputLabel for="password" value="Contraseña: " />
 				</p:column>
 				<p:column>
 					<p:inputText id="password"
@@ -50,7 +50,7 @@
 				<p:column>
 					<p:inputText id="nombre"
 						value="#{usuarioMB.usuarioSelected.nombre}" required="true"
-						requiredMessage="Campo obligatorio">
+						requiredMessage="Campo obligatorio" maxlength="40">
 						<f:validateLength minimum="3" />
 						<p:ajax event="blur" update="nombreMsg" />
 					</p:inputText>
@@ -65,7 +65,7 @@
 				<p:column>
 					<p:inputText id="apellido"
 						value="#{usuarioMB.usuarioSelected.apellido}" required="true"
-						requiredMessage="Campo obligatorio">
+						requiredMessage="Campo obligatorio" maxlength="40">
 						<f:validateLength minimum="4" />
 						<p:ajax event="blur" update="apellidoMsg" />
 					</p:inputText>
@@ -79,7 +79,7 @@
 				</p:column>
 				<p:column>
 					<p:inputText id="email" value="#{usuarioMB.usuarioSelected.email}"
-						required="true" requiredMessage="Campo obligatorio" type="email">
+						required="true" requiredMessage="Campo obligatorio" type="email" maxlength="100">
 						<f:validateLength minimum="5" />
 						<p:ajax event="blur" update="emailMsg" />
 					</p:inputText>
@@ -106,7 +106,7 @@
 				</p:column>
 				<p:column>
 					<p:inputText id="nroDoc" value="#{usuarioMB.usuarioSelected.nroDoc}"
-						required="true" requiredMessage="Campo obligatorio">
+						required="true" requiredMessage="Campo obligatorio" maxlength="10" type="numeric">
 						<f:validateLength minimum="6" />
 						<p:ajax event="blur" update="nroDocMsg" />
 					</p:inputText>

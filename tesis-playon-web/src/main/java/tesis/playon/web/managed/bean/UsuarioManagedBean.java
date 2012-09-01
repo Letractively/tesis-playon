@@ -1,5 +1,6 @@
 package tesis.playon.web.managed.bean;
 
+import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,199 +22,212 @@ import tesis.playon.web.service.IUsuarioService;
 @RequestScoped
 public class UsuarioManagedBean implements Serializable {
 
-	private static final long serialVersionUID = -1085389423375986168L;
+    private static final long serialVersionUID = -1085389423375986168L;
 
-	private static final String LISTA_USUARIOS = "usuariolist";
+    private static final String LISTA_USUARIOS = "usuariolist";
 
-	private static final String ERROR = "error";
+    private static final String ERROR = "error";
 
-	@ManagedProperty(value = "#{UsuarioService}")
-	IUsuarioService usuarioService;
+    @ManagedProperty(value = "#{UsuarioService}")
+    IUsuarioService usuarioService;
 
-	List<Usuario> usuarioList;
+    List<Usuario> usuarioList;
 
-	private String apellido;
+    private String apellido;
 
-	private String nombre;
+    private String nombre;
 
-	private String email;
+    private String email;
 
-	private Integer nroDoc;
+    private Integer nroDoc;
 
-	private String password;
+    private String password;
 
-	private String nombreUser;
+    private String nombreUser;
 
-	private TipoDoc tipoDoc;
-	
-	private Playa playa;
-	
-	private static Usuario usuarioSelected;
+    private TipoDoc tipoDoc;
 
-	public String addUsuarioAdmin() {
-		try {
-			Usuario usuario = new Usuario();
-			usuario.setNombre(getNombre());
-			usuario.setApellido(getApellido());
-			usuario.setEmail(getEmail());
-			usuario.setNroDoc(getNroDoc());
-			usuario.setPassword(getPassword());
-			usuario.setNombreUser(getNombreUser());
-			usuario.setTipoDoc(getTipoDoc());
-			usuario.setPlaya(getPlaya());
-			getUsuarioService().save(usuario);
-			return LISTA_USUARIOS;
-		} catch (DataAccessException e) {
-			e.printStackTrace();
-		}
-		return ERROR;
-	}
-	
-	public String deleteUsuarioAdmin(Usuario usuario){
-	    try {
-		    usuario.setEnable(false);
+    private Playa playa;
 
-		    getUsuarioService().update(usuario);
-		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, 
-			    "Se dió de baja al usuario: "
-			    + usuario.getNombreUser(), "");
-		    FacesContext.getCurrentInstance().addMessage(null, message);
-		    return LISTA_USUARIOS;
-		} catch (Exception e) {
-		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-			    "Error, no se pudo dar de baja al usuario: " + usuario.getNombreUser(),
-			    "Por favor, inténtelo más tarde.");
-		    FacesContext.getCurrentInstance().addMessage(null, message);
-		}
-		return ERROR;
-	}
+    private static Usuario usuarioSelected;
 
-	public void deleteUsuario(Usuario usuario) {
-		getUsuarioService().delete(usuario);
-	}
-
-	public void updateUsuario(Usuario usuario) {
-		getUsuarioService().update(usuario);
-	}
-	
-	public String updateUsuarioAdmin() {
+    public String addUsuarioAdmin() {
+	Usuario usuario = new Usuario();
 	try {
-		    getUsuarioService().update(usuarioSelected);
-		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, usuarioSelected.getNombreUser()
-			    + " se modificó correctamente", "");
-		    FacesContext.getCurrentInstance().addMessage(null, message);
-		    return LISTA_USUARIOS;
-		} catch (DataAccessException e) {
-		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, "
-			    + usuarioSelected.getNombreUser() + " no se pudo modificar", "Por favor, inténtelo más tarde.");
-		    FacesContext.getCurrentInstance().addMessage(null, message);
-		    e.printStackTrace();
-		}
-		return ERROR;
-	}
-	
-	public String modificarUsuarioAdmin(Usuario usuario){
-	    usuarioSelected= usuario;
-	    return "usuarioeditadmin";
-	}
 
-	public void reset() {
-		this.setNombre("");
-		this.setApellido("");
-		this.setEmail("");
-		this.setNroDoc(0);
-		this.setPassword("");
-		this.setNombreUser("");
-	}
+	    usuario.setNombre(getNombre());
+	    usuario.setApellido(getApellido());
+	    usuario.setEmail(getEmail());
+	    usuario.setNroDoc(getNroDoc());
+	    usuario.setPassword(getPassword());
+	    usuario.setNombreUser(getNombreUser());
+	    usuario.setTipoDoc(getTipoDoc());
+	    usuario.setPlaya(getPlaya());
+	    usuario.setEnable(new Boolean("true"));
+	    getUsuarioService().save(usuario);
+	    
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el usuario: "
+		    + usuario.getNombreUser() + " " + usuario.getNombre(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_USUARIOS;
 
-	public IUsuarioService getUsuarioService() {
-		return usuarioService;
+	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo agregar el usuario: " + usuario.getNombreUser() + " " + usuario.getNombreUser(),
+		    "Por favor, intentelo mas tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
 	}
-
-	public void setUsuarioService(IUsuarioService usuarioService) {
-		this.usuarioService = usuarioService;
-	}
-
-	public List<Usuario> getUsuarioList() {
-		usuarioList = new ArrayList<Usuario>();
-		usuarioList.addAll(getUsuarioService().findAll());	
-		return usuarioList;
+	return ERROR;
     }
+
+    public String deleteUsuarioAdmin() {
 	
+	Usuario usuario = usuarioSelected;	
+	try {
+	    
+	    usuario.setEnable(new Boolean("false"));
 
-	public void setUsuarioList(List<Usuario> usuarioList) {
-		this.usuarioList = usuarioList;
+	    getUsuarioService().update(usuario);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se dió de baja al usuario: "
+		    + usuario.getNombreUser(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_USUARIOS;
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo dar de baja al usuario: " + usuario.getNombreUser(),
+		    "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
+	return ERROR;
+    }
 
-	public String getApellido() {
-		return apellido;
-	}
+    public void deleteUsuario(Usuario usuario) {
+	getUsuarioService().delete(usuario);
+    }
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
+    public void updateUsuario(Usuario usuario) {
+	getUsuarioService().update(usuario);
+    }
 
-	public String getNombre() {
-		return nombre;
+    public String updateUsuarioAdmin() {
+	try {
+	    getUsuarioService().update(usuarioSelected);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, usuarioSelected.getNombreUser()
+		    + " se modificó correctamente", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_USUARIOS;
+	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, "
+		    + usuarioSelected.getNombreUser() + " no se pudo modificar", "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
 	}
+	return ERROR;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String modificarUsuarioAdmin(Usuario usuario) {
+	usuarioSelected = usuario;
+	return "usuarioeditadmin";
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void reset() {
+	this.setNombre("");
+	this.setApellido("");
+	this.setEmail("");
+	this.setNroDoc(0);
+	this.setPassword("");
+	this.setNombreUser("");
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public IUsuarioService getUsuarioService() {
+	return usuarioService;
+    }
 
-	public Integer getNroDoc() {
-		return nroDoc;
-	}
+    public void setUsuarioService(IUsuarioService usuarioService) {
+	this.usuarioService = usuarioService;
+    }
 
-	public void setNroDoc(Integer nroDoc) {
-		this.nroDoc = nroDoc;
-	}
+    public List<Usuario> getUsuarioList() {
+	usuarioList = new ArrayList<Usuario>();
+	usuarioList.addAll(getUsuarioService().findAll());
+	return usuarioList;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setUsuarioList(List<Usuario> usuarioList) {
+	this.usuarioList = usuarioList;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getApellido() {
+	return apellido;
+    }
 
-	public String getNombreUser() {
-		return nombreUser;
-	}
+    public void setApellido(String apellido) {
+	this.apellido = apellido;
+    }
 
-	public void setNombreUser(String nombreUser) {
-		this.nombreUser = nombreUser;
-	}
+    public String getNombre() {
+	return nombre;
+    }
 
-	public TipoDoc getTipoDoc() {
-		return tipoDoc;
-	}
+    public void setNombre(String nombre) {
+	this.nombre = nombre;
+    }
 
-	public void setTipoDoc(TipoDoc tipoDoc) {
-		this.tipoDoc = tipoDoc;
-	}
+    public String getEmail() {
+	return email;
+    }
 
-	public Playa getPlaya() {
-	    return playa;
-	}
+    public void setEmail(String email) {
+	this.email = email;
+    }
 
-	public void setPlaya(Playa playa) {
-	    this.playa = playa;
-	}
+    public Integer getNroDoc() {
+	return nroDoc;
+    }
 
-	public Usuario getUsuarioSelected() {
-	    return usuarioSelected;
-	}
+    public void setNroDoc(Integer nroDoc) {
+	this.nroDoc = nroDoc;
+    }
 
-	public void setUsuarioSelected(Usuario usuarioSelected) {
-	    UsuarioManagedBean.usuarioSelected = usuarioSelected;
-	}
+    public String getPassword() {
+	return password;
+    }
+
+    public void setPassword(String password) {
+	this.password = password;
+    }
+
+    public String getNombreUser() {
+	return nombreUser;
+    }
+
+    public void setNombreUser(String nombreUser) {
+	this.nombreUser = nombreUser;
+    }
+
+    public TipoDoc getTipoDoc() {
+	return tipoDoc;
+    }
+
+    public void setTipoDoc(TipoDoc tipoDoc) {
+	this.tipoDoc = tipoDoc;
+    }
+
+    public Playa getPlaya() {
+	return playa;
+    }
+
+    public void setPlaya(Playa playa) {
+	this.playa = playa;
+    }
+
+    public Usuario getUsuarioSelected() {
+	return usuarioSelected;
+    }
+
+    public void setUsuarioSelected(Usuario usuarioSelected) {
+	UsuarioManagedBean.usuarioSelected = usuarioSelected;
+    }
+      
 }

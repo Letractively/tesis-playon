@@ -23,7 +23,7 @@
 				filterBy="#{usuario.nombreUser}" filterMatchMode="contains">
 				<h:outputText value="#{usuario.nombreUser}" />
 			</p:column>
-			
+
 			<p:column headerText="Nombre" styleClass="column-font"
 				filterBy="#{usuario.nombre}" filterMatchMode="contains">
 				<h:outputText value="#{usuario.nombre}" />
@@ -39,14 +39,13 @@
 				<h:outputText value="#{usuario.email}" />
 			</p:column>
 
-			<p:column headerText="Habilitado" styleClass="column-font"
-				filterBy="#{usuario.enable}" filterMatchMode="contains">
-				<h:outputText value="#{usuario.enable ? 'Si' : 'No'}"/>
+			<p:column headerText="Habilitado" styleClass="column-font">
+				<h:outputText value="#{usuario.enable ? 'Si' : 'No'}" />
 			</p:column>
 
 			<p:column headerText="Opciones"
-					style="text-align:center; width:75px;">
-					
+				style="text-align:center; width:75px;">
+
 				<p:commandLink id="view" update=":mainForm:displayView"
 					oncomplete="popupUsuarioDatos.show();" title="Datos Usuario">
 					<f:setPropertyActionListener value="#{usuario}"
@@ -61,12 +60,22 @@
 					<h:graphicImage library="images/icons" name="pencil.png" />
 				</p:commandLink>
 
-
 				<p:commandLink id="darBaja" title="Dar de baja"
-					action="#{usuarioMB.deleteUsuarioAdmin(usuario)}" ajax="false">
+					onclick="confirmation.show();" type="button">
+					<f:setPropertyActionListener value="#{usuario}"
+							target="#{usuarioMB.usuarioSelected}" />
 					<h:graphicImage library="images/icons" name="trash.png" />
 				</p:commandLink>
-
+				<p:confirmDialog id="confirmDialog"
+					message="Seguro que desea dar de baja este usuario"
+					header="Dar de baja usuario" severity="alert" widgetVar="confirmation">
+					<p:commandButton id="confirm" value="Aceptar" update="messages"
+						oncomplete="confirmation.hide();"
+						action="#{usuarioMB.deleteUsuarioAdmin}" ajax="false">
+							</p:commandButton>
+						<p:commandButton id="decline" value="Cancelar"
+							onclick="confirmation.hide();" type="button" />
+				</p:confirmDialog>
 			</p:column>
 
 			<f:facet name="footer">
@@ -100,7 +109,7 @@
 					<h:outputText value="#{usuarioMB.usuarioSelected.nombreUser}"
 						style="font-weight:bold" />
 				</p:column>
-				
+
 				<p:column>
 					<h:outputText value="Nombre: " />
 				</p:column>
@@ -108,7 +117,7 @@
 					<h:outputText value="#{usuarioMB.usuarioSelected.nombre}"
 						style="font-weight:bold" />
 				</p:column>
-				
+
 				<p:column>
 					<h:outputText value="Apellido: " />
 				</p:column>

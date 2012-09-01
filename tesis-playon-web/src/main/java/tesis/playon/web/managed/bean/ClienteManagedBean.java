@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
 import org.springframework.dao.DataAccessException;
 
@@ -27,6 +28,7 @@ import tesis.playon.web.service.IClienteService;
 import tesis.playon.web.service.ICuentaClienteService;
 import tesis.playon.web.service.IRolUsuarioService;
 import tesis.playon.web.service.IRolesPorUsuarioService;
+import tesis.playon.web.service.ITipoDocService;
 import tesis.playon.web.service.IUsuarioService;
 
 /**
@@ -59,6 +61,12 @@ public class ClienteManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{RolesPorUsuarioService}")
     IRolesPorUsuarioService rolesPorUsuarioService;
+    
+    @SuppressWarnings("unused")
+    private SelectItem[] tipoDocOptions;
+    
+    @ManagedProperty(value = "#{TipoDocService}")
+    ITipoDocService tipoDocService;
 
     List<Cliente> clienteList;
     
@@ -97,10 +105,12 @@ public class ClienteManagedBean implements Serializable {
     private CuentaCliente cuentaCliente;
 
     private CuentaCliente cuentaClienteSelected;
-
+    
     private Usuario usuario;
 
     private String nombreUsuario;
+    
+    private List<Cliente> filteredClientes;
 
     private static Cliente clienteSelected;
 
@@ -185,7 +195,7 @@ public class ClienteManagedBean implements Serializable {
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo agregar el cliente: " + cliente.getUsuario().getApellido() + " "
-			    + cliente.getUsuario().getNombre(), "Por favos, intentelo mas tarde.");
+			    + cliente.getUsuario().getNombre(), "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -226,13 +236,13 @@ public class ClienteManagedBean implements Serializable {
 	return null;
     }
 
-    public String deleteClienteAdmin(Cliente clienteSelected) {
+    public String deleteClienteAdmin() {
 	try {
-	    CuentaCliente cuenta = clienteSelected.getCuentaCliente();
-	    getCuentaClienteService().delete(cuenta);
+	    
 	    Usuario usuario = clienteSelected.getUsuario();
-	    getClienteService().delete(clienteSelected);
-	    getUsuarioService().delete(usuario);
+	    usuario.setEnable(new Boolean(false));
+	    
+	    getUsuarioService().update(usuario);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se borró el cliente: "
 		    + clienteSelected.getUsuario().getApellido() + " " + clienteSelected.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
@@ -240,7 +250,7 @@ public class ClienteManagedBean implements Serializable {
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo borrar el cliente: " + clienteSelected.getUsuario().getApellido() + " "
-			    + clienteSelected.getUsuario().getNombre(), "Por favos, intentelo mas tarde.");
+			    + clienteSelected.getUsuario().getNombre(), "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	return ERROR;
@@ -262,7 +272,7 @@ public class ClienteManagedBean implements Serializable {
 	    return LISTA_CLIENTES;
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error,el cliente no se pudo modificar", "Por favos, intentelo mas tarde.");
+		    "Error,el cliente no se pudo modificar", "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -492,10 +502,6 @@ public class ClienteManagedBean implements Serializable {
     }
 
     public Cliente getClienteSelected() {
-	FacesContext facesContext = FacesContext.getCurrentInstance();
-	String userName = facesContext.getExternalContext().getRemoteUser();
-	Usuario usuario = getUsuarioService().findByNombreUsuario(userName);
-	clienteSelected = getClienteService().findByUsuario(usuario);
 	return clienteSelected;
     }
 
@@ -520,5 +526,39 @@ public class ClienteManagedBean implements Serializable {
     public void setCuentaClienteSelected(CuentaCliente cuentaClienteSelected) {
 	this.cuentaClienteSelected = cuentaClienteSelected;
     }
+    
+    public SelectItem[] getTipoDocOptions() {
+   	List<TipoDoc> tipoDoc = new ArrayList<TipoDoc>();
+   	tipoDoc.addAll(getTipoDocService().findAll());
+   	tipoDocOptions = new SelectItem[tipoDoc.size() + 1];
+   	SelectItem[] options = new SelectItem[tipoDoc.size() + 1];
+   	options[0] = new SelectItem("", "Todos");
+
+   	for (int i = 0; i < tipoDoc.size(); i++) {
+   	    options[i + 1] = new SelectItem(tipoDoc.get(i), tipoDoc.get(i).getNombre());
+   	}
+   	return options;
+    }
+
+    public void setTipoDocOptions(SelectItem[] tipoDocOptions) {
+   	this.tipoDocOptions = tipoDocOptions;
+    }
+    
+    public ITipoDocService getTipoDocService() {
+	return tipoDocService;
+    }
+    
+    public void setTipoDocService(ITipoDocService tipoDocService) {
+   	this.tipoDocService = tipoDocService;
+    }
+    
+    public List<Cliente> getFilteredClientes() {
+ 	return filteredClientes;
+     }
+
+     public void setFilteredClientes(List<Cliente> filteredClientes) {
+ 	this.filteredClientes = filteredClientes;
+     }
+     
 
 }

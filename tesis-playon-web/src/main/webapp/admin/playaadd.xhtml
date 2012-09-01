@@ -55,7 +55,7 @@
 					</p:column>
 					<p:column>
 						<p:inputText id="cuit" value="#{playaMB.cuit}"
-							required="true" requiredMessage="Campo obligatorio">
+							required="true" requiredMessage="Campo obligatorio" maxlength="20">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="cuitMsg" />
 						</p:inputText>
@@ -148,11 +148,11 @@
 					<p:column></p:column>
 					<p:column>
 						<div align="right">
-							<p:commandButton id="reset" value="Cancelar"
+							<p:commandButton id="addPlaya" value="Registrar Playa"
+								action="#{playaMB.addPlayaAdmin}" ajax="false" />
+							<p:commandButton id="reset" value="Cancelar" immediate="true"
 								action="/admin/playalist.html?faces-redirect=true" ajax="false"
 								style="margin-right:15px" />
-							<p:commandButton id="addCliente" value="Registrar Playa"
-								action="#{playaMB.addPlayaAdmin}" ajax="false" />
 						</div>
 					</p:column>
 					<p:column></p:column>

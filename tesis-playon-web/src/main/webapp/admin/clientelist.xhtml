@@ -8,127 +8,192 @@
 	<ui:param name="panelTitle" value="Listado de Clientes" />
 
 	<ui:define name="panelContent" class="admin-font">
-		<h:form id="form">
+		<p:growl id="messages" />
 
-			<p:growl id="messages" />
-
-			<p:dataTable id="clientes" var="cliente"
-				paginator="true" rows="5" value="#{clienteMB.clienteList}"
-				emptyMessage="No existen clientes" paginatorPosition="bottom">
+		<p:dataTable id="clientes" var="cliente" paginator="true" rows="8"
+			paginatorPosition="bottom" value="#{clienteMB.clienteList}"
+			filteredValue="#{clienteMB.filteredClientes}"
+			emptyMessage="No existen clientes" style="width: 100%">
 
 				<f:facet name="header">
 				Clientes
             	</f:facet>
 
-				<p:column headerText="Usuario" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{cliente.usuario.nombreUser}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{cliente.usuario.nombreUser}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+			<p:column headerText="Usuario" styleClass="column-font"
+				filterBy="#{cliente.usuario.nombreUser}" filterMatchMode="contains">
+				<h:outputText value="#{cliente.usuario.nombreUser}" />
+			</p:column>
+				
+			<p:column headerText="Nombre" styleClass="column-font"
+				filterBy="#{cliente.usuario.nombre}" filterMatchMode="contains">
+				<h:outputText value="#{cliente.usuario.nombre}" />
+			</p:column>
+			
+			<p:column headerText="Apellido" styleClass="column-font"
+				filterBy="#{cliente.usuario.apellido}" filterMatchMode="contains">
+				<h:outputText value="#{cliente.usuario.apellido}" />
+			</p:column>
+			
+			<p:column headerText="E-mail" styleClass="column-font"
+				filterBy="#{cliente.usuario.email}" filterMatchMode="contains">
+				<h:outputText value="#{cliente.usuario.email}" />
+			</p:column>
+			
+			<p:column headerText="Habilitado" styleClass="column-font">
+				<h:outputText value="#{cliente.usuario.enable ? 'Si' : 'No'}"/>
+			</p:column>
 
-				<p:column headerText="Nro. Cliente" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{cliente.nroCliente}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{cliente.nroCliente}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+			<p:column headerText="Opciones"
+					style="text-align:center; width:75px;">
+					
+				<p:commandLink id="view" update=":mainForm:displayView"
+					oncomplete="popupClienteDatos.show();" title="Datos Cliente">
+					<f:setPropertyActionListener value="#{cliente}"
+						target="#{clienteMB.clienteSelected}" />
+					<h:graphicImage library="images/icons" name="search.png" />
+				</p:commandLink>
 
-				<p:column headerText="Apellido" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{cliente.usuario.apellido}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{cliente.usuario.apellido}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				<p:column headerText="Nombre" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{cliente.usuario.nombre}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{cliente.usuario.nombre}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+				<p:commandLink id="edit" title="Editar Datos"
+					action="/admin/clienteeditadmin.html?faces-redirect=true" ajax="false">
+					<f:setPropertyActionListener value="#{cliente}"
+						target="#{clienteMB.clienteSelected}" />
+					<h:graphicImage library="images/icons" name="pencil.png" />
+				</p:commandLink>
 
-				<p:column headerText="Tipo Doc." styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{cliente.usuario.tipoDoc.nombre}" />
-						</f:facet>
-						<f:facet name="input">
-							<h:selectOneMenu value="#{cliente.usuario.tipoDoc}">
-								<f:selectItems value="#{tipoDocMB.tipoDocList}" var="tipoDoc"
-									itemValue="#{tipoDoc}" itemLabel="#{tipoDoc.nombre}" />
-								<f:converter converterId="tipoDocConverter" />
-							</h:selectOneMenu>
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
 
-				<p:column headerText="Nro. Documento" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{cliente.usuario.nroDoc}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{cliente.usuario.nroDoc}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+				
+				<p:commandLink id="darBaja" title="Dar de baja"
+					onclick="confirmation.show();" type="button">
+					<f:setPropertyActionListener value="#{cliente}"
+							target="#{clienteMB.clienteSelected}" />
+					<h:graphicImage library="images/icons" name="trash.png" />
+				</p:commandLink>
+				<p:confirmDialog id="confirmDialog"
+					message="Seguro que desea dar de baja este cliente"
+					header="Dar de baja cliente" severity="alert" widgetVar="confirmation">
+					<p:commandButton id="confirm" value="Aceptar" update="messages"
+						oncomplete="confirmation.hide();"
+						action="#{clienteMB.deleteClienteAdmin}" ajax="false">
+							</p:commandButton>
+						<p:commandButton id="decline" value="Cancelar"
+							onclick="confirmation.hide();" type="button" />
+				</p:confirmDialog>
 
-				<p:column>
-					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
-						action="#{clienteMB.modificarClienteAdmin(cliente)}"
-						style="height:20px; width:22px;">
-					</h:commandButton>
-					<p:tooltip for="editar" value="Editar Cliente" />
-				</p:column>
-
-				<p:column>
-					<h:commandButton id="delete" class="ui-icon ui-icon-trash"
-						style="height:20px; width:22px;"
-						action="#{clienteMB.deleteClienteAdmin(cliente)}"
-						onclick="if(!confirm('¿Está seguro que desea eliminar el cliente?')) return false;">
-					</h:commandButton>
-					<p:tooltip for="delete" value="Dar de baja Cliente" />
-				</p:column>
+			</p:column>
+			
+			<f:facet name="footer">
+				<h:panelGroup id="removeFilter" layout="block"
+					style="text-align: right;">
+					<p:commandLink id="quitarFiltro" value="Quitar Filtro"
+						action="/admin/clientelist.html?faces-redirect=true" ajax="false" />
+				</h:panelGroup>
+			</f:facet>
+			
 			</p:dataTable>
-
-			<p:confirmDialog id="confirmDialog"
-				message="¿Está seguro que desea eliminar el cliente #{cliente.nroCliente}?"
-				header="Eliminar cliente" severity="alert" widgetVar="confirmDelete">
-				<h:panelGroup layout="block" style="text-align: right">
-					<h:commandButton id="confirm" value="Si, estoy seguro"
-						update="clientes" oncomplete="confirmDelete.hide()" type="button" />
-					<h:commandButton id="decline" value="No"
-						onclick="confirmDelete.hide()" type="button" />
-				</h:panelGroup>
-			</p:confirmDialog>
-
+			
 			<p>
-				<h:panelGroup layout="block" style="text-align: right;">
-					<p:commandButton id="addCliente" value="Nuevo Cliente"
-						action="/admin/clienteadd.html?faces-redirect=true" ajax="false" />
-				</h:panelGroup>
+			<h:panelGroup layout="block" style="text-align: right; width: 100%;">
+				<p:commandButton id="addUCliente" value="Nuevo Cliente"
+					action="/admin/clienteadd.html?faces-redirect=true" ajax="false" />
+			</h:panelGroup>
 			</p>
-		</h:form>
+
+			<!-- DIALOG PARA VER LOS DATOS DEL CLIENTE SELECCIONADO -->
+			
+			<p:dialog header="Datos del Cliente" widgetVar="popupClienteDatos"
+			resizable="false" id="carDlg" showEffect="fade" modal="true"
+			draggable="false">
+
+			<h:panelGrid id="displayView" columns="2" cellpadding="8"
+				style="margin:0 auto;">
+				
+				<p:column>
+					<h:outputText value="Usuario: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{clienteMB.clienteSelected.usuario.nombreUser}"
+						style="font-weight:bold" />
+				</p:column>
+				
+					<p:column>
+					<h:outputText value="Nombre: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{clienteMB.clienteSelected.usuario.nombre}"
+						style="font-weight:bold" />
+				</p:column>
+				
+				<p:column>
+					<h:outputText value="Apellido: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{clienteMB.clienteSelected.usuario.apellido}"
+						style="font-weight:bold" />
+				</p:column>
+				
+				<p:column>
+					<h:outputText value="Tipo Doc.: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{clienteMB.clienteSelected.usuario.tipoDoc.nombre}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Nro. Documento: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{clienteMB.clienteSelected.usuario.nroDoc}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="E-mail: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{clienteMB.clienteSelected.usuario.email}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Domicilio: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{clienteMB.clienteSelected.domicilio}"
+						style="font-weight:bold" />
+				</p:column>
+				
+				<p:column>
+					<h:outputText value="Barrio: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{clienteMB.clienteSelected.barrio.nombre}"
+						style="font-weight:bold" />
+				</p:column>
+				
+				<p:column>
+					<h:outputText value="Telefono: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{clienteMB.clienteSelected.telefono}"
+						style="font-weight:bold" />
+				</p:column>
+				
+				<p:column>
+					<h:outputText value="Habilitado: " />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{clienteMB.clienteSelected.usuario.enable ? 'Si' : 'No'}"
+						style="font-weight:bold" />
+				</p:column>
+			
+
+
+			</h:panelGrid>
+		</p:dialog>
+			
+
+
 	</ui:define>
 </ui:composition>
