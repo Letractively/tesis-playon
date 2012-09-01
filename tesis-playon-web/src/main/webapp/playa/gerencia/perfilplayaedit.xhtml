@@ -24,10 +24,14 @@
 				</h:panelGrid>
 
 				<h:panelGrid>
-					<h:form enctype="multipart/form-data">
+					<h:form id="uploadForm" enctype="multipart/form-data"
+						prependId="false">
 						<p:fileUpload id="cargarFoto"
 							value="#{perfilPlayaMB.fotoPerfilFile}" mode="simple"
-							allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+							allowTypes="*.jpg;*.png;*.gif;" />
+						<p:commandButton value="Subir" ajax="false"
+							actionListener="#{perfilPlayaMB.upload}" />
+						<h:messages showDetail="true" infoStyle="color: green;" errorStyle="color: red;" /> 
 					</h:form>
 				</h:panelGrid>
 			</div>

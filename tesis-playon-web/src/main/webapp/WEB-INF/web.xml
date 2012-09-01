@@ -28,12 +28,12 @@
 		<error-code>403</error-code>
 		<location>/accessdenied.html</location>
 	</error-page>
-	
+
 	<error-page>
 		<error-code>500</error-code>
 		<location>/transactionerror.html</location>
 	</error-page>
-	
+
 	<error-page>
 		<error-code>503</error-code>
 		<location>/serviceunavailable.html</location>
@@ -100,5 +100,30 @@
 	</filter-mapping>
 
 	<!-- ===================== END: CHARSET FILTER RELATED ====================== -->
+
+	<!-- ======================= STATE SAVING METHOD ======================== -->
+
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>
+	</context-param>
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+		<init-param>
+			<param-name>thresholdSize</param-name>
+			<param-value>51200</param-value>
+		</init-param>
+		<init-param>
+			<param-name>uploadDirectory</param-name>
+			<param-value>/tmp/fileUpload</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+
+	<!-- ===================== END: STATE SAVING METHOD ====================== -->
 
 </web-app>

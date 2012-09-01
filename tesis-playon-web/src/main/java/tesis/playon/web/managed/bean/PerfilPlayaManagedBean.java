@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -89,6 +90,13 @@ public class PerfilPlayaManagedBean {
 	    ex.printStackTrace();
 	}
 	return "error";
+    }
+    
+    public void upload() {  
+        if(fotoPerfilFile != null) {  
+            FacesMessage msg = new FacesMessage("Succesful", fotoPerfilFile.getFileName() + " is uploaded.");  
+            FacesContext.getCurrentInstance().addMessage(null, msg);  
+        }  
     }
 
     public PerfilPlaya getPerfil() {
