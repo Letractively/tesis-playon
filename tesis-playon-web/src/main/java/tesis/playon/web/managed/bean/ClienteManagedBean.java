@@ -19,6 +19,7 @@ import org.springframework.dao.DataAccessException;
 import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.CuentaCliente;
+import tesis.playon.web.model.Mail;
 import tesis.playon.web.model.RolesPorUsuario;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
@@ -60,6 +61,8 @@ public class ClienteManagedBean implements Serializable {
     IRolesPorUsuarioService rolesPorUsuarioService;
 
     List<Cliente> clienteList;
+    
+    private Mail mail;
 
     private String apellido;
 
@@ -170,7 +173,11 @@ public class ClienteManagedBean implements Serializable {
 
 	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
 	    getRolesPorUsuarioService().save(rp);
-
+	    
+//	    mail.set
+//	    
+//	    MailManagedBean.enviar(mail);
+	    
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el cliente: "
 		    + cliente.getUsuario().getApellido() + " " + cliente.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
