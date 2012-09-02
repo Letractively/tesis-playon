@@ -1,5 +1,6 @@
 package tesis.playon.web.managed.bean;
 
+import java.io.Serializable;
 import java.util.Properties;
 
 import javax.faces.bean.ManagedBean;
@@ -16,7 +17,7 @@ import tesis.playon.web.model.Mail;
 
 @ManagedBean(name = "mailMB")
 @RequestScoped
-public class MailManagedBean {
+public class MailManagedBean  implements Serializable{
 
     private Mail mail;
 

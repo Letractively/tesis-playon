@@ -9,7 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.Blob;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,8 +44,10 @@ import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
  */
 @ManagedBean(name = "perfilPlayaMB")
 @RequestScoped
-public class PerfilPlayaManagedBean {
+public class PerfilPlayaManagedBean  implements Serializable{
 
+    private static final long serialVersionUID = -1085389423375986168L;
+    
     @ManagedProperty(value = "#{UsuarioService}")
     IUsuarioService usuarioService;
 
@@ -170,7 +172,7 @@ public class PerfilPlayaManagedBean {
 	    PerfilPlaya perfilPlaya = new PerfilPlaya();
 	    perfilPlaya = getPerfil();
 
-	    perfilPlaya.setFotoPerfil(fotoPerfil);
+//	    perfilPlaya.setFotoPerfil(fotoPerfil);
 	    getPerfilPlayaService().update(perfilPlaya);
 	    
 	    // Show succes message.

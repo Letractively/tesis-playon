@@ -138,7 +138,7 @@ public class PlayaManagedBean implements Serializable {
 	    PerfilPlaya perfil = new PerfilPlaya();
 	    perfil.setNombre(playa.getNombreComercial());
 	    perfil.setPlaya(playa);
-	    perfil.setFotoPerfil("/resources/images/sinfoto.jpg");
+	    //perfil.setFotoPerfil("/resources/images/sinfoto.jpg");
 	    
 	    getPerfilPlayaService().save(perfil);
 	    
@@ -183,6 +183,7 @@ public class PlayaManagedBean implements Serializable {
 	    PerfilPlaya perfil = new PerfilPlaya();
 	    perfil.setNombre(playa.getNombreComercial());
 	    perfil.setPlaya(playa);
+//	    perfil.setFotoPerfil(fotoPerfil);
 	    
 	    getPerfilPlayaService().save(perfil);
 	    

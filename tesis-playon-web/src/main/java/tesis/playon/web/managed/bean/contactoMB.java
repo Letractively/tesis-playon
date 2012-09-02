@@ -1,14 +1,18 @@
 package tesis.playon.web.managed.bean;
 
+import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import tesis.playon.web.model.Mail;
 
-@ManagedBean(name = "mailMB")
+@ManagedBean(name = "contactoMB")
 @RequestScoped
-public class contactoMB {
+public class contactoMB implements Serializable{
 
+    private static final long serialVersionUID = -1085389423375986168L;
+    
     private Mail mail;
     private MailManagedBean mailMB;
 
