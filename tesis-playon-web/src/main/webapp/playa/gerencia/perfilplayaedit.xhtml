@@ -15,33 +15,34 @@
 	<ui:define name="content">
 		<h1>Editar perfil</h1>
 
-		<h:form>
-			<div id="perfil-playa">
-				<h:panelGrid columns="2">
-					<h:graphicImage library="images" name="sinfoto.jpg"
-						style="width:151px; height:151px;" />
-					<h1 style="width: 400px">#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
-				</h:panelGrid>
+		<div id="perfil-playa">
+			<h:panelGrid columns="2">
+				<h:graphicImage library="fotos/playas/fotoPerfil" name="#{perfilPlayaMB.perfil.fotoPerfil}"
+					style="width:151px; height:151px;" />
+				<h1 style="width: 400px">#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
+			</h:panelGrid>
 
-				<h:panelGrid>
-					<h:form id="uploadForm" enctype="multipart/form-data"
-						prependId="false">
-						<p:fileUpload id="cargarFoto"
-							value="#{perfilPlayaMB.fotoPerfilFile}" mode="simple"
-							allowTypes="*.jpg;*.png;*.gif;" />
-						<p:commandButton value="Subir" ajax="false"
-							actionListener="#{perfilPlayaMB.upload}" />
-						<h:messages showDetail="true" infoStyle="color: green;" errorStyle="color: red;" /> 
-					</h:form>
-				</h:panelGrid>
-			</div>
-			<br />
+			<h:panelGrid>
+				<h:form id="uploadForm" enctype="multipart/form-data"
+					prependId="false">
+					<p:fileUpload id="fotoPerfil"
+						value="#{perfilPlayaMB.fotoPerfilFile}" mode="simple"
+						allowTypes="*.jpg;" />
+					<h:commandButton value="Subir foto" ajax="false"
+						actionListener="#{perfilPlayaMB.upload}" style="margin:0 10px 0 0; padding: 0 0 0 0" />
+				</h:form>
+			</h:panelGrid>
+		</div>
+		<br />
+		<h:form>
 			<div id="perfil-playa">
 				<h:panelGrid columns="2" cellpadding="5">
 
 					<h:outputText value="Calificación:" styleClass="fuente-outputtext" />
-					<p:rating value="#{perfilPlayaMB.calificacion}" disabled="true"
-						stars="10" />
+					<p:column>
+						<p:rating value="#{perfilPlayaMB.calificacion}" disabled="true"
+							stars="10" />
+					</p:column>
 
 					<h:outputText value="Domicilio: " styleClass="fuente-outputtext" />
 					<h:outputText
@@ -54,19 +55,19 @@
 
 					<h:outputText for="telefono" value="Teléfono: "
 						styleClass="fuente-outputtext" />
-					<h:inputText id="telefono"
-						value="#{perfilPlayaMB.playaSelected.telefono}"
+					<p:inputText id="telefono"
+						value="#{perfilPlayaMB.telefono}"
 						style="width:200px;" />
 
 					<h:outputText for="email" value="E-mail: "
 						styleClass="fuente-outputtext" />
-					<h:inputText id="email"
-						value="#{perfilPlayaMB.playaSelected.email}" style="width:200px;" />
+					<p:inputText id="email"
+						value="#{perfilPlayaMB.email}" style="width:200px;" />
 
 					<h:outputText value="Disponibilidad: " for="disponibilidad"
 						styleClass="fuente-outputtext" />
-					<h:inputText id="disponibilidad"
-						value="#{perfilPlayaMB.playaSelected.disponibilidad}"
+					<p:inputText id="disponibilidad"
+						value="#{perfilPlayaMB.disponibilidad}"
 						style="width:200px;" />
 
 					<h:outputText value="Descripción: " styleClass="fuente-outputtext" />

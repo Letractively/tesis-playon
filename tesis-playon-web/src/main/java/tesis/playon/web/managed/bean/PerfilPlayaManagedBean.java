@@ -3,18 +3,25 @@
  */
 package tesis.playon.web.managed.bean;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.imageio.ImageIO;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.primefaces.model.UploadedFile;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
@@ -52,7 +59,7 @@ public class PerfilPlayaManagedBean {
     IFotoService fotoService;
 
     private PerfilPlaya perfil;
-    
+
     private static String nombreComercial;
 
     private Integer calificacion;
@@ -68,35 +75,120 @@ public class PerfilPlayaManagedBean {
     private Integer disponibilidad;
 
     private String fotoPerfil;
-    
+
     private Playa playaSelected;
 
+    @PostConstruct
+    public void init() {
+	this.telefono = getPerfil().getPlaya().getTelefono();
+	this.email = getPerfil().getPlaya().getEmail();
+	this.disponibilidad = getPerfil().getPlaya().getDisponibilidad();
+    }
+
     public String updatePerfil() {
+	Playa playa = new Playa();
 	try {
-	    if (fotoPerfilFile != null) {
-		String tipoImagen = fotoPerfilFile.getClass().toString();
-		File file = new File("/resources/fotos/playas/fotoPerfil-" + perfil.getId() + "." + tipoImagen);
-//		BufferedImage image = new BufferedImage(151, 151, BufferedImage.TYPE_INT_RGB);
-		
-		ImageIO.write((BufferedImage) fotoPerfilFile, tipoImagen, file);
-		perfil.setFotoPerfil("fotoPerfil-" + perfil.getId() + "." + tipoImagen);
-	    }
-	    
+	    playa = getPerfil().getPlaya();
+	    playa.setTelefono(getTelefono());
+	    playa.setEmail(getEmail());
+	    playa.setDisponibilidad(getDisponibilidad());
 	    getPerfilPlayaService().update(perfil);
-	    getPlayaService().update(playaSelected);
+	    getPlayaService().update(playa);
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "Se modificó correctamente el perfil de la playa", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    
 	    return "/playa/perfilplaya";
 	} catch (Exception ex) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "No se pudo modificar el perfil de la playa", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}
 	return "error";
     }
-    
-    public void upload() {  
-        if(fotoPerfilFile != null) {  
-            FacesMessage msg = new FacesMessage("Succesful", fotoPerfilFile.getFileName() + " is uploaded.");  
-            FacesContext.getCurrentInstance().addMessage(null, msg);  
-        }  
+
+    public void upload() {
+	// Just to demonstrate what information you can get from the uploaded file.
+	System.out.println("File type: " + fotoPerfilFile.getContentType());
+	System.out.println("File name: " + fotoPerfilFile.getFileName());
+	System.out.println("File size: " + fotoPerfilFile.getSize() + " bytes");
+
+	// Prepare filename prefix and suffix for an unique filename in upload folder.
+	String prefix = FilenameUtils.getBaseName(fotoPerfilFile.getFileName());
+	String suffix = FilenameUtils.getExtension(fotoPerfilFile.getFileName());
+
+	String pathFile = "/home/pablo/workspace/tesis-playon-web/" + "src" + File.separator + "main"
+		+ File.separator + "webapp" + File.separator + "resources" + File.separator + "fotos" + File.separator
+		+ "playas" + File.separator + "fotoPerfil";
+
+	File file = null;
+	OutputStream output = null;
+	try {
+
+	    // Create file with unique name in upload folder and write to it.
+	    file = File.createTempFile(prefix + "_", "." + suffix, new File(File.separator + "tmp" + File.separator
+		    + "fileUpload"));
+	    System.out.println(file.getAbsolutePath());
+	    output = new FileOutputStream(file);
+	    IOUtils.copy(fotoPerfilFile.getInputstream(), output);
+
+	    File dest = new File(File.separator + "tmp" + File.separator + "fileUpload" + File.separator
+		    + "fotoPerfil_" + getPerfil().getPlaya().getId() + "." + suffix);
+
+	    // Cambio el nombre del archivo a fotoPerfil_PlayaID
+	    boolean cambioNombre = file.renameTo(dest);
+
+	    if (cambioNombre) {
+
+		dest = new File(File.separator + "tmp" + File.separator + "fileUpload" + File.separator + "fotoPerfil_"
+			+ getPerfil().getPlaya().getId() + "." + suffix);
+
+		File copia = new File(pathFile + File.separator + "fotoPerfil_"
+			+ getPerfil().getPlaya().getId() + "." + suffix);
+
+		InputStream inStream = new FileInputStream(dest);
+		OutputStream outStream = new FileOutputStream(copia);
+
+		byte[] buffer = new byte[6144];
+
+		int length;
+		// copy the file content in bytes
+		while ((length = inStream.read(buffer)) > 0) {
+
+		    outStream.write(buffer, 0, length);
+
+		}
+
+		inStream.close();
+		outStream.close();
+	    }
+
+	    fotoPerfil = "fotoPerfil_" + getPerfil().getPlaya().getId() + "." + suffix;
+
+	    PerfilPlaya perfilPlaya = new PerfilPlaya();
+	    perfilPlaya = getPerfil();
+
+	    perfilPlaya.setFotoPerfil(fotoPerfil);
+	    getPerfilPlayaService().update(perfilPlaya);
+	    
+	    // Show succes message.
+	    FacesContext.getCurrentInstance().addMessage("uploadForm",
+		    new FacesMessage(FacesMessage.SEVERITY_INFO, "File upload succeed!", null));
+	} catch (IOException e) {
+	    // Cleanup.
+	    if (file != null)
+		file.delete();
+	    // Show error message.
+	    // Always log stacktraces (with a real logger).
+	    e.printStackTrace();
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo grabar la foto",
+		    "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	} finally {
+	    IOUtils.closeQuietly(output);
+	}
     }
 
     public PerfilPlaya getPerfil() {
@@ -155,8 +247,6 @@ public class PerfilPlayaManagedBean {
 
     public List<String> getFotosList() {
 	fotosList = new ArrayList<String>();
-	fotosList.add("sinfoto.jpg");
-	fotosList.add("logo_playon_admin.png");
 	return fotosList;
     }
 
@@ -190,11 +280,11 @@ public class PerfilPlayaManagedBean {
 
     public Playa getPlayaSelected() {
 	playaSelected = getPlayaService().findByNombreComercial(nombreComercial);
-        return playaSelected;
+	return playaSelected;
     }
 
     public void setPlayaSelected(Playa playaSelected) {
-        this.playaSelected = playaSelected;
+	this.playaSelected = playaSelected;
     }
 
     public UploadedFile getFotoPerfilFile() {
