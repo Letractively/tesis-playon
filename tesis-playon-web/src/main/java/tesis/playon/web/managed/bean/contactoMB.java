@@ -30,7 +30,7 @@ public class contactoMB implements Serializable {
 	mensaje = "\nDatos de contacto: " + "\nNombre: " + getNombre() + "\nE-Mail: " + getMailContacto()
 		+ "\nAsunto: " + getAsuntoContacto() + "\n\n\nMENSAJE: " + getMensaje();
 	notificador = new NotificadorUtil();
-	mail.setDestinatario("tesisplayon@gmail.com");
+	mail.setDestinatario("tesisplayon@gmail.c");
 	mail.setMensaje(getMensaje());
 	mail.setAsunto(getAsuntoContacto());
 

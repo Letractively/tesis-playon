@@ -18,6 +18,7 @@ import org.springframework.dao.DataAccessException;
 
 import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.EstadoPlaya;
+import tesis.playon.web.model.Mail;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.RolesPorUsuario;
 import tesis.playon.web.model.Usuario;
@@ -26,6 +27,7 @@ import tesis.playon.web.service.IEstadoPlayaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IRolesPorUsuarioService;
 import tesis.playon.web.service.IUsuarioService;
+import tesis.playon.web.util.NotificadorUtil;
 
 /**
  * @author pablo
@@ -38,6 +40,14 @@ public class AuditoriaManagedBean implements Serializable {
     private static final long serialVersionUID = -1085389423375986168L;
 
     private static final String ERROR = "error";
+
+    private NotificadorUtil notificador;
+
+    private Mail mail;
+
+    private String asunto;
+
+    private String mensaje;
 
     @ManagedProperty(value = "#{PlayaService}")
     IPlayaService playaService;
@@ -79,7 +89,7 @@ public class AuditoriaManagedBean implements Serializable {
     List<Playa> playasRechazadasList;
 
     private List<Playa> filteredPlayas;
-    
+
     private static String previusPage;
 
     @SuppressWarnings("unused")
@@ -90,8 +100,8 @@ public class AuditoriaManagedBean implements Serializable {
 
     public String updatePlayaAuditor() {
 	try {
-	    if(playaSeleccionada.getEstado().getNombre().equals("De Baja")){
-		List<Usuario> userList= getUsuarioService().findByPlaya(playaSeleccionada);
+	    if (playaSeleccionada.getEstado().getNombre().equals("De Baja")) {
+		List<Usuario> userList = getUsuarioService().findByPlaya(playaSeleccionada);
 		for (Usuario usuario : userList) {
 		    usuario.setEnable(new Boolean(false));
 		    getUsuarioService().update(usuario);
@@ -102,7 +112,7 @@ public class AuditoriaManagedBean implements Serializable {
 		    + " se modificó correctamente", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return previusPage;
-	    
+
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, "
 		    + playaSeleccionada.getNombreComercial() + " no se pudo modificar",
@@ -121,6 +131,17 @@ public class AuditoriaManagedBean implements Serializable {
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se rechazó la playa: "
 		    + playa.getNombreComercial(), "");
+	    notificador = new NotificadorUtil();
+	    mail = new Mail();
+	    mail.setDestinatario(getEmailPlaya());
+	    asunto = "Su solicitud ha sido rechazada";
+	    mail.setAsunto(asunto);
+	    mensaje = "Los datos de su solicitud de playa no son correctos o verdaderos, por lo tanto hemos rechazado su solicitud,"
+		    + " comuniquese con el equipo de Playon mediante el siguiente link http://localhost:8080/tesis-playon-web/contact.html";
+	    mail.setMensaje(mensaje);
+	    
+	    notificador.enviar(mail);
+	    
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -132,6 +153,9 @@ public class AuditoriaManagedBean implements Serializable {
 
     public void approvePlayaAuditoria(Playa playa) {
 	try {
+	    
+
+	    		  
 	    EstadoPlaya estado = getEstadoPlayaService().findByNombreEstadoPlaya("Aprobada");
 
 	    playa.setEstado(estado);
@@ -148,6 +172,15 @@ public class AuditoriaManagedBean implements Serializable {
 		}
 	    }
 	    getPlayaService().update(playa);
+	    mail=new Mail();
+	    notificador=new NotificadorUtil();
+	    asunto="Felicitaciones, su playa ya es parte de PLAYON!";
+	    mensaje="Mediante este mensaje, le confirmamos que la playa de estacionamiento" + getNombreComercial() + " ha sido aprobada" + 
+	    "para formar parte de la Red de Playas Playon";
+	    mail.setAsunto(asunto);
+	    mail.setMensaje(mensaje);
+	    mail.setDestinatario(getEmailPlaya());
+	    notificador.enviar(mail);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se aprobó la playa: "
 		    + playa.getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
@@ -157,8 +190,8 @@ public class AuditoriaManagedBean implements Serializable {
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
     }
-    
-    public String returnPage(){
+
+    public String returnPage() {
 	return previusPage;
     }
 
@@ -350,10 +383,10 @@ public class AuditoriaManagedBean implements Serializable {
     }
 
     public String getPreviusPage() {
-        return previusPage;
+	return previusPage;
     }
 
     public void setPreviusPage(String previusPage) {
-        AuditoriaManagedBean.previusPage = previusPage;
+	AuditoriaManagedBean.previusPage = previusPage;
     }
 }

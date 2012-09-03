@@ -19,6 +19,7 @@ import org.springframework.dao.DataAccessException;
 import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.EstadoPlaya;
+import tesis.playon.web.model.Mail;
 import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.RolesPorUsuario;
@@ -32,6 +33,7 @@ import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IRolUsuarioService;
 import tesis.playon.web.service.IRolesPorUsuarioService;
 import tesis.playon.web.service.IUsuarioService;
+import tesis.playon.web.util.NotificadorUtil;
 
 /**
  * @author pablo
@@ -52,6 +54,8 @@ public class PlayaManagedBean implements Serializable {
     private MapModel simpleModel;
     private final MapModel advancedModel = new DefaultMapModel();
     private Marker marker;
+    private Mail mail;
+    private NotificadorUtil notificador;
 
     @ManagedProperty(value = "#{PlayaService}")
     IPlayaService playaService;
@@ -70,10 +74,10 @@ public class PlayaManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{RolesPorUsuarioService}")
     IRolesPorUsuarioService rolesPorUsuarioService;
-    
+
     @ManagedProperty(value = "#{EstadiaService}")
     IEstadiaService estadiaService;
-    
+
     @ManagedProperty(value = "#{PerfilPlayaService}")
     IPerfilPlayaService perfilPlayaService;
 
@@ -121,7 +125,7 @@ public class PlayaManagedBean implements Serializable {
 
     public String addPlayaAdmin() {
 	try {
-	    
+
 	    Playa playa = new Playa();
 	    playa.setBarrio(getBarrio());
 	    playa.setCuit(getCuit());
@@ -134,17 +138,17 @@ public class PlayaManagedBean implements Serializable {
 	    playa.setEmail(getEmailPlaya());
 
 	    getPlayaService().save(playa);
-	    
+
 	    PerfilPlaya perfil = new PerfilPlaya();
 	    perfil.setNombre(playa.getNombreComercial());
 	    perfil.setPlaya(playa);
-	    //perfil.setFotoPerfil("/resources/images/sinfoto.jpg");
-	    
+	    // perfil.setFotoPerfil("/resources/images/sinfoto.jpg");
+
 	    getPerfilPlayaService().save(perfil);
-	    
+
 	    Estadia estadia = new Estadia(playa);
 	    getEstadiaService().save(estadia);
-	    
+
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agreg√≥ correctamente : "
 		    + playa.getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
@@ -179,29 +183,36 @@ public class PlayaManagedBean implements Serializable {
 	    playa.setEmail(getEmailPlaya());
 
 	    getPlayaService().save(playa);
-	    
+
 	    PerfilPlaya perfil = new PerfilPlaya();
 	    perfil.setNombre(playa.getNombreComercial());
 	    perfil.setPlaya(playa);
-//	    perfil.setFotoPerfil(fotoPerfil);
-	    
+	    // perfil.setFotoPerfil(fotoPerfil);
+
 	    getPerfilPlayaService().save(perfil);
-	    
+
 	    Estadia estadia = new Estadia(playa);
 	    getEstadiaService().save(estadia);
-	    
+
 	    usuario.setPlaya(playa);
 	    getUsuarioService().save(usuario);
 
 	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_PLAYA_GERENTE");
 	    getRolesPorUsuarioService().save(rp);
 
+	    String asunto = "NotoficaciÛn equipo de Playon";
+	    String mensaje = "Su solicitud esta en el ·rea de auditoria, en breve nos comunicaremos con usted,\n\n muchas gracias";
+	    mail.setAsunto(asunto);
+	    mail.setMensaje(mensaje);
+	    mail.setDestinatario(getEmail());
+	    notificador.enviar(mail);
+
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agreg√≥ correctamente : "
 		    + playa.getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    
+
 	    reset();
-	    
+
 	    return SOLICITUD_PLAYA_END;
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo agregar: "
@@ -236,7 +247,7 @@ public class PlayaManagedBean implements Serializable {
 	    EstadoPlaya estado = getEstadoPlayaService().findByNombreEstadoPlaya("De Baja");
 
 	    playa.setEstado(estado);
-	    
+
 	    List<Usuario> userList = getUsuarioService().findByPlaya(playa);
 
 	    for (Usuario usuario : userList) {
@@ -261,7 +272,7 @@ public class PlayaManagedBean implements Serializable {
 	}
     }
 
-    //NO USAR. HAY Q CORREGIRLE ALGUNAS COSAS ---> TOMAR COMO REFERENCIA LA DE ARRIBA
+    // NO USAR. HAY Q CORREGIRLE ALGUNAS COSAS ---> TOMAR COMO REFERENCIA LA DE ARRIBA
     public void deletePlayaAuditoria(Playa playa) {
 	try {
 	    EstadoPlaya estado = getEstadoPlayaService().findByNombreEstadoPlaya("De Baja");
@@ -282,8 +293,8 @@ public class PlayaManagedBean implements Serializable {
 
     public String updatePlayaAdmin() {
 	try {
-	    if(playaSelected.getEstado().getNombre().equals("De Baja")){
-		List<Usuario> userList= getUsuarioService().findByPlaya(playaSelected);
+	    if (playaSelected.getEstado().getNombre().equals("De Baja")) {
+		List<Usuario> userList = getUsuarioService().findByPlaya(playaSelected);
 		for (Usuario usuario : userList) {
 		    usuario.setEnable(new Boolean(false));
 		    getUsuarioService().update(usuario);
@@ -380,19 +391,19 @@ public class PlayaManagedBean implements Serializable {
     }
 
     public IEstadiaService getEstadiaService() {
-        return estadiaService;
+	return estadiaService;
     }
 
     public void setEstadiaService(IEstadiaService estadiaService) {
-        this.estadiaService = estadiaService;
+	this.estadiaService = estadiaService;
     }
 
     public IPerfilPlayaService getPerfilPlayaService() {
-        return perfilPlayaService;
+	return perfilPlayaService;
     }
 
     public void setPerfilPlayaService(IPerfilPlayaService perfilPlayaService) {
-        this.perfilPlayaService = perfilPlayaService;
+	this.perfilPlayaService = perfilPlayaService;
     }
 
     public List<Playa> getPlayaList() {
