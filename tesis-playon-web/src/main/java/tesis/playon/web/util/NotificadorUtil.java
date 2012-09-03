@@ -1,10 +1,8 @@
-package tesis.playon.web.managed.bean;
+package tesis.playon.web.util;
 
 import java.io.Serializable;
 import java.util.Properties;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -15,9 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 import tesis.playon.web.model.Mail;
 
-@ManagedBean(name = "mailMB")
-@RequestScoped
-public class MailManagedBean  implements Serializable{
+public class NotificadorUtil implements Serializable {
 
     private Mail mail;
 
@@ -27,7 +23,7 @@ public class MailManagedBean  implements Serializable{
     static final String password = "tesisplayon2012";
     private static Properties props = new Properties();
 
-    public MailManagedBean() {
+    public NotificadorUtil() {
 
     }
 
@@ -48,7 +44,7 @@ public class MailManagedBean  implements Serializable{
 	    Message message = new MimeMessage(session);
 	    message.setFrom(new InternetAddress(username));
 	    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mail.getDestinatario()));
-	    message.setSubject(mail.getAsuntoContacto());
+	    message.setSubject(mail.getAsunto());
 	    message.setText(mail.getMensaje());
 
 	    Transport.send(message);

@@ -30,6 +30,7 @@ import tesis.playon.web.service.IRolUsuarioService;
 import tesis.playon.web.service.IRolesPorUsuarioService;
 import tesis.playon.web.service.ITipoDocService;
 import tesis.playon.web.service.IUsuarioService;
+import tesis.playon.web.util.NotificadorUtil;
 
 /**
  * @author pablo
@@ -61,15 +62,15 @@ public class ClienteManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{RolesPorUsuarioService}")
     IRolesPorUsuarioService rolesPorUsuarioService;
-    
+
     @SuppressWarnings("unused")
     private SelectItem[] tipoDocOptions;
-    
+
     @ManagedProperty(value = "#{TipoDocService}")
     ITipoDocService tipoDocService;
 
     List<Cliente> clienteList;
-    
+
     private Mail mail;
 
     private String apellido;
@@ -105,14 +106,16 @@ public class ClienteManagedBean implements Serializable {
     private CuentaCliente cuentaCliente;
 
     private CuentaCliente cuentaClienteSelected;
-    
+
     private Usuario usuario;
 
     private String nombreUsuario;
-    
+
     private List<Cliente> filteredClientes;
 
     private static Cliente clienteSelected;
+
+    private NotificadorUtil notificador;
 
     public String addClienteAdmin() {
 	try {
@@ -132,6 +135,14 @@ public class ClienteManagedBean implements Serializable {
 	    cuenta.setCliente(cliente);
 	    getCuentaClienteService().update(cuenta);
 
+	    mail = new Mail();
+	    mail.setAsunto("Felicitaciones " + getNombreUser() + "ya sos usuario de PLAYON!");
+	    mail.setDestinatario(getEmail());
+	    mail.setMensaje("Estimado "
+		    + getNombre()
+		    + " usted ya es usuario de PLAYON RED DE PLAYAS.\n\n Acceda desde aqu� y busque su playa de estacionamiento!\n\n http://localhost:8080/tesis-playon-web/");
+	    notificador = new NotificadorUtil();
+	    notificador.enviar(mail);
 	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
 	    getRolesPorUsuarioService().save(rp);
 
@@ -155,9 +166,11 @@ public class ClienteManagedBean implements Serializable {
 	    cliente.getCuentaCliente().setSaldo(saldoCliente + saldo);
 	    getCuentaClienteService().update(cliente.getCuentaCliente());
 
-	    FacesContext.getCurrentInstance().addMessage(null,
-		    new FacesMessage(FacesMessage.SEVERITY_INFO, "Transacción exitosa", "Se agregó a su cuenta $" + getSaldo() + " argentinos. ¡Muchas Gracias!"));
-	    
+	    FacesContext.getCurrentInstance().addMessage(
+		    null,
+		    new FacesMessage(FacesMessage.SEVERITY_INFO, "Transacción exitosa", "Se agregó a su cuenta $"
+			    + getSaldo() + " argentinos. ¡Muchas Gracias!"));
+
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
 	}
@@ -183,11 +196,11 @@ public class ClienteManagedBean implements Serializable {
 
 	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
 	    getRolesPorUsuarioService().save(rp);
-	    
-//	    mail.set
-//	    
-//	    MailManagedBean.enviar(mail);
-	    
+
+	    // mail.set
+	    //
+	    // MailManagedBean.enviar(mail);
+
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el cliente: "
 		    + cliente.getUsuario().getApellido() + " " + cliente.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
@@ -238,10 +251,10 @@ public class ClienteManagedBean implements Serializable {
 
     public String deleteClienteAdmin() {
 	try {
-	    
+
 	    Usuario usuario = clienteSelected.getUsuario();
 	    usuario.setEnable(new Boolean(false));
-	    
+
 	    getUsuarioService().update(usuario);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se borró el cliente: "
 		    + clienteSelected.getUsuario().getApellido() + " " + clienteSelected.getUsuario().getNombre(), "");
@@ -266,8 +279,8 @@ public class ClienteManagedBean implements Serializable {
 	    Usuario usuario = clienteSelected.getUsuario();
 	    getUsuarioService().update(usuario);
 	    getClienteService().update(clienteSelected);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La cliente se modificó correctamente",
-		    "");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "La cliente se modificó correctamente", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_CLIENTES;
 	} catch (DataAccessException e) {
@@ -526,39 +539,38 @@ public class ClienteManagedBean implements Serializable {
     public void setCuentaClienteSelected(CuentaCliente cuentaClienteSelected) {
 	this.cuentaClienteSelected = cuentaClienteSelected;
     }
-    
-    public SelectItem[] getTipoDocOptions() {
-   	List<TipoDoc> tipoDoc = new ArrayList<TipoDoc>();
-   	tipoDoc.addAll(getTipoDocService().findAll());
-   	tipoDocOptions = new SelectItem[tipoDoc.size() + 1];
-   	SelectItem[] options = new SelectItem[tipoDoc.size() + 1];
-   	options[0] = new SelectItem("", "Todos");
 
-   	for (int i = 0; i < tipoDoc.size(); i++) {
-   	    options[i + 1] = new SelectItem(tipoDoc.get(i), tipoDoc.get(i).getNombre());
-   	}
-   	return options;
+    public SelectItem[] getTipoDocOptions() {
+	List<TipoDoc> tipoDoc = new ArrayList<TipoDoc>();
+	tipoDoc.addAll(getTipoDocService().findAll());
+	tipoDocOptions = new SelectItem[tipoDoc.size() + 1];
+	SelectItem[] options = new SelectItem[tipoDoc.size() + 1];
+	options[0] = new SelectItem("", "Todos");
+
+	for (int i = 0; i < tipoDoc.size(); i++) {
+	    options[i + 1] = new SelectItem(tipoDoc.get(i), tipoDoc.get(i).getNombre());
+	}
+	return options;
     }
 
     public void setTipoDocOptions(SelectItem[] tipoDocOptions) {
-   	this.tipoDocOptions = tipoDocOptions;
+	this.tipoDocOptions = tipoDocOptions;
     }
-    
+
     public ITipoDocService getTipoDocService() {
 	return tipoDocService;
     }
-    
-    public void setTipoDocService(ITipoDocService tipoDocService) {
-   	this.tipoDocService = tipoDocService;
-    }
-    
-    public List<Cliente> getFilteredClientes() {
- 	return filteredClientes;
-     }
 
-     public void setFilteredClientes(List<Cliente> filteredClientes) {
- 	this.filteredClientes = filteredClientes;
-     }
-     
+    public void setTipoDocService(ITipoDocService tipoDocService) {
+	this.tipoDocService = tipoDocService;
+    }
+
+    public List<Cliente> getFilteredClientes() {
+	return filteredClientes;
+    }
+
+    public void setFilteredClientes(List<Cliente> filteredClientes) {
+	this.filteredClientes = filteredClientes;
+    }
 
 }

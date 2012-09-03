@@ -4,11 +4,11 @@ public class Mail {
 
     private String nombre;
     private String apellido;
-    private String asuntoContacto;
+    private String asunto;
+
     private String mensaje;
+
     private String destinatario;
-    private String asuntoNuevoUsuario;
-    private String datosContacto;
 
     public Mail() {
 
@@ -18,18 +18,10 @@ public class Mail {
 
     {
 
-	this.asuntoContacto = asunto;
+	this.asunto = asunto;
 	this.mensaje = mensaje;
 	this.destinatario = destinatario;
 
-    }
-
-    public String getAsuntoContacto() {
-	return datosContacto + asuntoContacto;
-    }
-
-    public void setAsuntoContacto(String asunto) {
-	this.asuntoContacto = asunto;
     }
 
     public String getMensaje() {
@@ -64,20 +56,13 @@ public class Mail {
 	this.apellido = apellido;
     }
 
-    public void setDatosContacto()
-
-    {
-	datosContacto = "La persona " + nombre + " " + apellido + " " + destinatario
-		+ " realizo la siguiente consulta: ";
-
+    public String getAsunto() {
+	return asunto;
     }
 
-    public String getAsuntoNuevoUsuario() {
-	return "Felicitaciones, ahora es cliente de PLAYON - RED DE PLAYAS DE ESTACIONAMIENTO";
-    }
+    public void setAsunto(String asunto) {
+	this.asunto = asunto;
 
-    public void setAsuntoNuevoUsuario(String asuntoNuevoUsuario) {
-	this.asuntoNuevoUsuario = asuntoNuevoUsuario;
     }
 
 }
