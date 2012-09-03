@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -39,8 +40,12 @@ public class PerfilPlaya implements Serializable {
     @JoinColumn(name = "playaID")
     private Playa playa;
     
-    @Column(name = "fotoPerfil")
-    private String fotoPerfil;
+    @Lob
+    @Column(name = "fotoPerfil", columnDefinition="mediumblob")
+    private byte[] fotoPerfil;
+    
+    @Column(name = "nombreFoto")
+    private String nombreFoto;
     
     @Column(name = "cantidadVotantes")
     private Integer cantidadVotantes;
@@ -55,6 +60,10 @@ public class PerfilPlaya implements Serializable {
 	this.nombre = nombre;
 	this.descripcion = descripcion;
 	this.playa = playa;
+    }
+    
+    public PerfilPlaya(byte[] fotoPerfil) {
+	this.fotoPerfil = fotoPerfil;
     }
 
     public Integer getId() {
@@ -89,11 +98,11 @@ public class PerfilPlaya implements Serializable {
 	this.playa = playa;
     }
 
-    public String getFotoPerfil() {
+    public byte[] getFotoPerfil() {
         return fotoPerfil;
     }
 
-    public void setFotoPerfil(String fotoPerfil) {
+    public void setFotoPerfil(byte[] fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
     }
 
@@ -111,6 +120,14 @@ public class PerfilPlaya implements Serializable {
 
     public void setTotalCalificaciones(Integer totalCalificaciones) {
         this.totalCalificaciones = totalCalificaciones;
+    }
+
+    public String getNombreFoto() {
+        return nombreFoto;
+    }
+
+    public void setNombreFoto(String nombreFoto) {
+        this.nombreFoto = nombreFoto;
     }
 
     @Override

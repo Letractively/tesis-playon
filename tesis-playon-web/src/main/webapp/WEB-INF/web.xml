@@ -116,7 +116,7 @@
 		</init-param>
 		<init-param>
 			<param-name>uploadDirectory</param-name>
-			<param-value>/tmp/fileUpload</param-value>
+			<param-value>/tmp</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

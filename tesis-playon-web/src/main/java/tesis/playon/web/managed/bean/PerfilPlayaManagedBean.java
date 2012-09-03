@@ -4,11 +4,6 @@
 package tesis.playon.web.managed.bean;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +15,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.primefaces.model.UploadedFile;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
@@ -35,6 +28,7 @@ import tesis.playon.web.service.IFotoService;
 import tesis.playon.web.service.IPerfilPlayaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IUsuarioService;
+import tesis.playon.web.util.ConvertImageToArrayBytes;
 import tesis.playon.web.util.LatitudlongitudUtil;
 import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
 
@@ -44,10 +38,10 @@ import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
  */
 @ManagedBean(name = "perfilPlayaMB")
 @RequestScoped
-public class PerfilPlayaManagedBean  implements Serializable{
+public class PerfilPlayaManagedBean implements Serializable {
 
     private static final long serialVersionUID = -1085389423375986168L;
-    
+
     @ManagedProperty(value = "#{UsuarioService}")
     IUsuarioService usuarioService;
 
@@ -62,13 +56,11 @@ public class PerfilPlayaManagedBean  implements Serializable{
 
     private PerfilPlaya perfil;
 
-    private static String nombreComercial;
-
     private Integer calificacion;
 
     private List<String> fotosList;
 
-    private UploadedFile fotoPerfilFile;
+    private static UploadedFile fotoPerfilFile;
 
     private String telefono;
 
@@ -76,15 +68,22 @@ public class PerfilPlayaManagedBean  implements Serializable{
 
     private Integer disponibilidad;
 
-    private String fotoPerfil;
-
-    private Playa playaSelected;
+    private File fotoPerfil;
 
     @PostConstruct
     public void init() {
-	this.telefono = getPerfil().getPlaya().getTelefono();
-	this.email = getPerfil().getPlaya().getEmail();
-	this.disponibilidad = getPerfil().getPlaya().getDisponibilidad();
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	String userName = facesContext.getExternalContext().getRemoteUser();
+	Usuario user = getUsuarioService().findByNombreUsuario(userName);
+	this.perfil = getPerfilPlayaService().findByPlaya(user.getPlaya());
+	this.telefono = perfil.getPlaya().getTelefono();
+	this.email = perfil.getPlaya().getEmail();
+	this.disponibilidad = perfil.getPlaya().getDisponibilidad();
+	if(perfil.getTotalCalificaciones() != null && perfil.getCantidadVotantes() != null)
+	    calificacion = Math.round(perfil.getTotalCalificaciones() / perfil.getCantidadVotantes());
+	else
+	   calificacion = 0; 
+	ConvertImageToArrayBytes.getFotoPerfil(perfil);
     }
 
     public String updatePerfil() {
@@ -100,7 +99,7 @@ public class PerfilPlayaManagedBean  implements Serializable{
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se modificó correctamente el perfil de la playa", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    
+
 	    return "/playa/perfilplaya";
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -112,93 +111,16 @@ public class PerfilPlayaManagedBean  implements Serializable{
     }
 
     public void upload() {
-	// Just to demonstrate what information you can get from the uploaded file.
-	System.out.println("File type: " + fotoPerfilFile.getContentType());
-	System.out.println("File name: " + fotoPerfilFile.getFileName());
-	System.out.println("File size: " + fotoPerfilFile.getSize() + " bytes");
+	
+	byte[] bFile;
+	bFile = ConvertImageToArrayBytes.getArrayByteFotoPerfil(fotoPerfilFile, this.perfil);
 
-	// Prepare filename prefix and suffix for an unique filename in upload folder.
-	String prefix = FilenameUtils.getBaseName(fotoPerfilFile.getFileName());
-	String suffix = FilenameUtils.getExtension(fotoPerfilFile.getFileName());
-
-	String pathFile = "/home/pablo/workspace/tesis-playon-web/" + "src" + File.separator + "main"
-		+ File.separator + "webapp" + File.separator + "resources" + File.separator + "fotos" + File.separator
-		+ "playas" + File.separator + "fotoPerfil";
-
-	File file = null;
-	OutputStream output = null;
-	try {
-
-	    // Create file with unique name in upload folder and write to it.
-	    file = File.createTempFile(prefix + "_", "." + suffix, new File(File.separator + "tmp" + File.separator
-		    + "fileUpload"));
-	    System.out.println(file.getAbsolutePath());
-	    output = new FileOutputStream(file);
-	    IOUtils.copy(fotoPerfilFile.getInputstream(), output);
-
-	    File dest = new File(File.separator + "tmp" + File.separator + "fileUpload" + File.separator
-		    + "fotoPerfil_" + getPerfil().getPlaya().getId() + "." + suffix);
-
-	    // Cambio el nombre del archivo a fotoPerfil_PlayaID
-	    boolean cambioNombre = file.renameTo(dest);
-
-	    if (cambioNombre) {
-
-		dest = new File(File.separator + "tmp" + File.separator + "fileUpload" + File.separator + "fotoPerfil_"
-			+ getPerfil().getPlaya().getId() + "." + suffix);
-
-		File copia = new File(pathFile + File.separator + "fotoPerfil_"
-			+ getPerfil().getPlaya().getId() + "." + suffix);
-
-		InputStream inStream = new FileInputStream(dest);
-		OutputStream outStream = new FileOutputStream(copia);
-
-		byte[] buffer = new byte[6144];
-
-		int length;
-		// copy the file content in bytes
-		while ((length = inStream.read(buffer)) > 0) {
-
-		    outStream.write(buffer, 0, length);
-
-		}
-
-		inStream.close();
-		outStream.close();
-	    }
-
-	    fotoPerfil = "fotoPerfil_" + getPerfil().getPlaya().getId() + "." + suffix;
-
-	    PerfilPlaya perfilPlaya = new PerfilPlaya();
-	    perfilPlaya = getPerfil();
-
-//	    perfilPlaya.setFotoPerfil(fotoPerfil);
-	    getPerfilPlayaService().update(perfilPlaya);
-	    
-	    // Show succes message.
-	    FacesContext.getCurrentInstance().addMessage("uploadForm",
-		    new FacesMessage(FacesMessage.SEVERITY_INFO, "File upload succeed!", null));
-	} catch (IOException e) {
-	    // Cleanup.
-	    if (file != null)
-		file.delete();
-	    // Show error message.
-	    // Always log stacktraces (with a real logger).
-	    e.printStackTrace();
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo grabar la foto",
-		    "Por favor, inténtelo más tarde.");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	} finally {
-	    IOUtils.closeQuietly(output);
-	}
+	this.perfil.setFotoPerfil(bFile);
+	this.perfil.setNombreFoto(fotoPerfilFile.getFileName());
+	getPerfilPlayaService().update(this.perfil);
     }
 
     public PerfilPlaya getPerfil() {
-	FacesContext facesContext = FacesContext.getCurrentInstance();
-	String userName = facesContext.getExternalContext().getRemoteUser();
-	Usuario user = getUsuarioService().findByNombreUsuario(userName);
-	perfil = getPerfilPlayaService().findByPlaya(user.getPlaya());
-	nombreComercial = perfil.getPlaya().getNombreComercial();
 	return perfil;
     }
 
@@ -239,7 +161,6 @@ public class PerfilPlayaManagedBean  implements Serializable{
     }
 
     public Integer getCalificacion() {
-	calificacion = Math.round(perfil.getTotalCalificaciones() / perfil.getCantidadVotantes());
 	return calificacion;
     }
 
@@ -280,28 +201,19 @@ public class PerfilPlayaManagedBean  implements Serializable{
 	this.disponibilidad = disponibilidad;
     }
 
-    public Playa getPlayaSelected() {
-	playaSelected = getPlayaService().findByNombreComercial(nombreComercial);
-	return playaSelected;
-    }
-
-    public void setPlayaSelected(Playa playaSelected) {
-	this.playaSelected = playaSelected;
-    }
-
     public UploadedFile getFotoPerfilFile() {
 	return fotoPerfilFile;
     }
 
     public void setFotoPerfilFile(UploadedFile fotoPerfilFile) {
-	this.fotoPerfilFile = fotoPerfilFile;
+	PerfilPlayaManagedBean.fotoPerfilFile = fotoPerfilFile;
     }
 
-    public String getFotoPerfil() {
+    public File getFotoPerfil() {
 	return fotoPerfil;
     }
 
-    public void setFotoPerfil(String fotoPerfil) {
+    public void setFotoPerfil(File fotoPerfil) {
 	this.fotoPerfil = fotoPerfil;
     }
 

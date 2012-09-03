@@ -65,4 +65,9 @@ public class Mail {
 
     }
 
+    public String getAsuntoContacto() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
 }
