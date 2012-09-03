@@ -448,7 +448,8 @@ CREATE TABLE `perfil_playa` (
   `nombreComercial` varchar(50) NOT NULL,
   `perfilPlayaID` int(11) NOT NULL auto_increment,
   `playaID` int(11) NOT NULL,
-  `fotoPerfil` varchar(50) DEFAULT NULL,
+  `fotoPerfil` MEDIUMBLOB DEFAULT NULL,
+  `nombreFoto` varchar(50) DEFAULT NULL,
   `cantidadVotantes` int(11) DEFAULT NULL,
   `totalCalificaciones` int(11) DEFAULT NULL,
   PRIMARY KEY (`perfilPlayaID`),
@@ -1183,7 +1184,7 @@ UNLOCK TABLES;
 LOCK TABLES `perfil_playa` WRITE;
 /*!40000 ALTER TABLE `perfil_playa` DISABLE KEYS */;
 INSERT INTO `tesis_playon`.`perfil_playa` (`descripcion`, `nombreComercial`, `perfilPlayaID`, `playaID`, `fotoPerfil`)
-VALUES ('Playa "Estacionamiento Europa"', 'Estacionamiento Europa', 3, 3, NULL),
+VALUES ('Playa "Estacionamiento Europa"', '¡Los esperamos en Estacionamiento Europa, les ofrecemos una excelente atención con muy buenos precios!', 3, 3, NULL),
 ('Playa "Estacionamiento Independencia"', 'Estacionamiento Independencia', 4, 4, NULL),
 ('Playa "Parkingcity', 'Parkingcity"', 5, 5, NULL),
 ('Playa "Estacionamiento Mercado Sur"', 'Estacionamiento Mercado Sur', 6, 6, NULL),
