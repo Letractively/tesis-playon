@@ -26,19 +26,56 @@
 						</p:inputText></td>
 					<td><p:message id="patenteMsg" for="patente" display="icon" /></td>
 				</tr>
-		
+
 				<tr>
 					<td colspan="3"><br /></td>
 				</tr>
 				<tr style="text-align: right;">
-					<td colspan="2"><p:commandButton id="cancelar" value="Cancelar"
-							action="/panelcontrol.html?faces-redirect=true" ajax="false"
-							style="margin-right:15px" /> <p:commandButton id="buscarVehiculo"
-							value="Buscar vehículo" action="#{ingresoEgresoMB.searchVehiculo}"
-							ajax="false" /></td>
+					<td colspan="2"><p:commandButton id="cancelar"
+							value="Cancelar" action="/panelcontrol.html?faces-redirect=true"
+							ajax="false" style="margin-right:15px" /> <p:commandButton
+							id="buscarVehiculo" value="Buscar vehículo"
+							action="#{ingresoEgresoMB.searchVehiculo}" ajax="false" /></td>
 					<td></td>
 				</tr>
 			</table>
+
+
+			<h:panelGrid rendered="#{ingresoEgresoMB.existeVehiculo}" columns="1"
+				cellpadding="5">
+
+				<h:panelGroup>
+					<h:outputText value="Nombre: " />
+					<h:outputText id="txt_nombre"
+						value="#{ingresoEgresoMB.usuarioCliente.nombre}" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<h:outputText value="Apellido: " />
+					<h:outputText id="txt_apellido"
+						value="#{ingresoEgresoMB.usuarioCliente.apellido}" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<h:outputText value="Patente: " />
+					<h:outputText id="txt_patente"
+						value="#{ingresoEgresoMB.vehiculo.patente}" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<h:outputText value="Nº Cuenta: " />
+					<h:outputText id="txt_cuenta"
+						value="#{ingresoEgresoMB.cuentaCliente.nroCuenta}" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<h:outputText value="Saldo: $" />
+					<h:outputText id="txt_saldo"
+						value="#{ingresoEgresoMB.cuentaCliente.saldo}" />
+				</h:panelGroup>
+
+			</h:panelGrid>
+
 		</h:form>
 	</ui:define>
 </ui:composition>

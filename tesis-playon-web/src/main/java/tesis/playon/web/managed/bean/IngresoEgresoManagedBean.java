@@ -49,6 +49,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     private Usuario usuario;
 
+    private Usuario usuarioCliente;
+
     private Empleado empleado;
 
     private CargoEmpleado cargoEmpleado;
@@ -69,6 +71,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     private String patente;
 
+    private Boolean existeVehiculo = false;
+
     public void preRenderView() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	setNombreUsuario(facesContext.getExternalContext().getRemoteUser());
@@ -79,20 +83,15 @@ public class IngresoEgresoManagedBean implements Serializable {
     }
 
     public void searchVehiculo() {
-	setVehiculo(getVehiculoService().findByPatenteVehiculo(patente));
+	setVehiculo(getVehiculoService().findByPatenteVehiculo(patente.toUpperCase()));
 	setCategoriaVehiculo(vehiculo.getCategoriaVehiculo());
 	setModeloVehiculo(vehiculo.getModeloVehiculo());
 	setCliente(vehiculo.getCliente());
+	setUsuarioCliente(cliente.getUsuario());
 	setCuentaCliente(getCuentaClienteService().findByNroCuentaCliente(cliente.getCuentaCliente().getNroCuenta()));
 
-	if (vehiculo != null)
-	    System.out.println("\n\n\nDATOS -- Vehiculo: " + vehiculo.toString() + "\n\n\n");
-
-	if (cliente != null)
-	    System.out.println("\n\n\nDATOS -- Cliente: " + cliente.toString() + "\n\n\n");
-
-	if (cuentaCliente != null)
-	    System.out.println("\n\n\nDATOS -- Cuenta Cliente: " + cuentaCliente.toString() + "\n\n\n");
+	if (cliente != null && null != vehiculo && null != cuentaCliente)
+	    setExisteVehiculo(true);
     }
 
     public IEmpleadoService getEmpleadoService() {
@@ -149,6 +148,14 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void setUsuario(Usuario usuario) {
 	this.usuario = usuario;
+    }
+
+    public Usuario getUsuarioCliente() {
+	return usuarioCliente;
+    }
+
+    public void setUsuarioCliente(Usuario usuarioCliente) {
+	this.usuarioCliente = usuarioCliente;
     }
 
     public Empleado getEmpleado() {
@@ -229,6 +236,14 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void setPatente(String patente) {
 	this.patente = patente;
+    }
+
+    public Boolean getExisteVehiculo() {
+	return existeVehiculo;
+    }
+
+    public void setExisteVehiculo(Boolean existeVehiculo) {
+	this.existeVehiculo = existeVehiculo;
     }
 
 }
