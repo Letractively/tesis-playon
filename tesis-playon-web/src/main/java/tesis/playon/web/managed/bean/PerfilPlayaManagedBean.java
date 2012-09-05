@@ -3,8 +3,8 @@
  */
 package tesis.playon.web.managed.bean;
 
+import java.io.File;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,14 +12,17 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
+import tesis.playon.web.model.Foto;
 import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Usuario;
@@ -27,9 +30,9 @@ import tesis.playon.web.service.IFotoService;
 import tesis.playon.web.service.IPerfilPlayaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IUsuarioService;
-import tesis.playon.web.util.ConvertImageToArrayBytes;
 import tesis.playon.web.util.LatitudlongitudUtil;
 import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
+import tesis.playon.web.util.WriteImage;
 
 /**
  * @author pablo
@@ -57,7 +60,7 @@ public class PerfilPlayaManagedBean implements Serializable {
 
     private Integer calificacion;
 
-    private List<String> fotosList;
+    private List<Foto> fotosList;
 
     private static UploadedFile fotoPerfilFile;
 
@@ -66,6 +69,13 @@ public class PerfilPlayaManagedBean implements Serializable {
     private String email;
 
     private Integer disponibilidad;
+
+    // DATOS DE LA FOTO
+    private static String title;
+
+    private static String descripcion;
+
+    private Foto fotoSelected;
 
     @PostConstruct
     public void init() {
@@ -80,7 +90,7 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    calificacion = Math.round(perfil.getTotalCalificaciones() / perfil.getCantidadVotantes());
 	else
 	    calificacion = 0;
-	ConvertImageToArrayBytes.getFotoPerfil(perfil);
+	WriteImage.getFotoPerfil(perfil);
     }
 
     public String updatePerfil() {
@@ -108,7 +118,7 @@ public class PerfilPlayaManagedBean implements Serializable {
     }
 
     public String upload() {
-	try{
+	try {
 	    this.perfil.setFotoPerfil(fotoPerfilFile.getContents());
 	    this.perfil.setNombreFoto(fotoPerfilFile.getFileName());
 	    getPerfilPlayaService().update(this.perfil);
@@ -116,10 +126,70 @@ public class PerfilPlayaManagedBean implements Serializable {
 		    "Se modificó exitosamente su foto de perfil", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return "perfilplayaedit";
-	}catch(Exception ex){
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "No se pudo cargar su foto de perfil", "");
+	} catch (Exception ex) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se pudo cargar su foto de perfil",
+		    "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    ex.printStackTrace();
+	}
+	return "/error";
+    }
+
+    public void handleFileUpload(FileUploadEvent event) {
+	UploadedFile file = null;
+	byte[] bytes = null;
+	try {
+	    file = event.getFile();
+	    bytes = file.getContents();
+	    Foto foto = new Foto();
+	    foto.setDescripcion(getDescripcion());
+	    foto.setTitle(getTitle());
+	    foto.setImage(bytes);
+	    foto.setNombre(file.getFileName());
+	    foto.setPerfilPlaya(perfil);
+
+	    getFotoService().save(foto);
+
+	    fotosList = getFotoService().findByPlaya(perfil);
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se guardó exitosamente la foto "
+		    + file.getFileName(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+
+	} catch (Exception ex) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se pudo cargar su foto de perfil",
+		    "");
+	    FacesContext.getCurrentInstance().addMessage("Error", message);
+	    ex.printStackTrace();
+	}
+    }
+
+    public String deleteFoto() {
+	ExternalContext extContext = null;
+	try {
+	    getFotoService().delete(fotoSelected);
+
+	    String sep = File.separator;
+	    extContext = FacesContext.getCurrentInstance().getExternalContext();
+
+	    String path = extContext.getRealPath("resources" + sep + "fotos_playas") + sep;
+
+	    File file = new File(path + fotoSelected.getNombre());
+
+	    file.delete();
+
+	    fotosList = getFotoService().findByPlaya(perfil);
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se eliminó la foto "
+		    + fotoSelected.getNombre(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+
+	    return "fotoadd";
+
+	} catch (Exception ex) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se pudo borrar la foto de perfil",
+		    "");
+	    FacesContext.getCurrentInstance().addMessage("Error", message);
 	    ex.printStackTrace();
 	}
 	return "/error";
@@ -173,12 +243,13 @@ public class PerfilPlayaManagedBean implements Serializable {
 	this.calificacion = calificacion;
     }
 
-    public List<String> getFotosList() {
-	fotosList = new ArrayList<String>();
+    public List<Foto> getFotosList() {
+	fotosList = getFotoService().findByPlaya(perfil);
+	WriteImage.writeFotos(fotosList);
 	return fotosList;
     }
 
-    public void setFotosList(List<String> fotosList) {
+    public void setFotosList(List<Foto> fotosList) {
 	this.fotosList = fotosList;
     }
 
@@ -212,6 +283,30 @@ public class PerfilPlayaManagedBean implements Serializable {
 
     public void setFotoPerfilFile(UploadedFile fotoPerfilFile) {
 	PerfilPlayaManagedBean.fotoPerfilFile = fotoPerfilFile;
+    }
+
+    public String getTitle() {
+	return title;
+    }
+
+    public void setTitle(String title) {
+	PerfilPlayaManagedBean.title = title;
+    }
+
+    public String getDescripcion() {
+	return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+	PerfilPlayaManagedBean.descripcion = descripcion;
+    }
+
+    public Foto getFotoSelected() {
+	return fotoSelected;
+    }
+
+    public void setFotoSelected(Foto fotoSelected) {
+	this.fotoSelected = fotoSelected;
     }
 
     // datos para mostrar en el mapa

@@ -38,7 +38,7 @@ public class FotoDao implements IFotoDao {
     }
 
     public Foto findByLinkFoto(String link) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Foto where link=?")
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Foto where nombre=?")
 		.setParameter(0, link).list();
 	return (Foto) list.get(0);
     }

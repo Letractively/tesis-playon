@@ -27,3 +27,9 @@
 	font-size:large;
 	color:black;
 }
+.fuente-subtitle{
+	font-size:20px;
+	font-style:italic;
+	color:#192129;
+	line-height:120%;
+}
