@@ -23,7 +23,8 @@ Released   : 20120624
 
 	<h:outputStylesheet library="css" name="style.css" />
 	<h:outputStylesheet library="css" name="style_custom.css" />
-	<h:outputStylesheet library="css" name="contentslide.css" />
+	<h:outputStylesheet library="css"
+		name="#{(empty loadmenuadmin and empty loadmenuempleados and empty loadmenuperfil) ? 'content100.css' : 'contentslide.css'}" />
 	<h:outputStylesheet library="css" name="style_playa.css" />
 
 	<h:outputScript library="primefaces" name="jquery/jquery.js"

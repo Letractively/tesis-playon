@@ -4,7 +4,7 @@
 	padding: 0;
 }
 
-#content img {
+.content-image {
 	width: 860px;
 	margin: 0px 0 40px 0;
 	border: 1px solid lightgrey;
