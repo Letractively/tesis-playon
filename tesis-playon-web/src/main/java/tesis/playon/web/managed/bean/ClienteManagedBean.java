@@ -140,7 +140,7 @@ public class ClienteManagedBean implements Serializable {
 	    mail.setDestinatario(getEmail());
 	    mail.setMensaje("Estimado "
 		    + getNombre()
-		    + " usted ya es usuario de PLAYON RED DE PLAYAS.\n\n Acceda desde aquí y busque su playa de estacionamiento!\n\n http://localhost:8080/tesis-playon-web/");
+		    + " usted ya es usuario de PLAYON RED DE PLAYAS.\n\n Acceda desde aquï¿½ y busque su playa de estacionamiento!\n\n http://localhost:8080/tesis-playon-web/");
 	    notificador = new NotificadorUtil();
 	    notificador.enviar(mail);
 	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
@@ -153,9 +153,15 @@ public class ClienteManagedBean implements Serializable {
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo agregar el cliente: " + cliente.getUsuario().getApellido() + " "
-			    + cliente.getUsuario().getNombre(), "Por favos, intentelo mas tarde.");
+			    + cliente.getUsuario().getNombre(), "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
+	}
+	catch (Exception e) {
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+			    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados",
+			    "Usuario duplicado");
+		   FacesContext.getCurrentInstance().addMessage(null, message);	    
 	}
 	return ERROR;
     }

@@ -9,30 +9,61 @@
 
 	<ui:define name="panelContent">
 		<h:form>
-			<table>
-				<tr>
-					<td><h:outputLabel for="nombre" value="Nombre: " /></td>
-					<td><p:inputText id="nombre" value="#{rolUsuarioMB.nombre}">
+			<p:growl id="messages" />
+			
+			<div align="center">
+				<h:panelGrid id="displayView" columns="3" cellpadding="8"
+					styleClass="admin-input-text">
+
+					<f:facet name="header" styleClass="admin-subtitle">
+						<div align="left">Rol</div>
+					</f:facet>
+					
+					
+					<p:column>
+					<h:outputLabel for="nombre" value="Nombre: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="nombre"
+							value="#{rolUsuarioMB.nombre}" required="true"
+							requiredMessage="Campo obligatorio" maxlength="40">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="nombreMsg" />
-						</p:inputText> <p:message id="nombreMsg" for="nombre" display="icon" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel for="descripcion" value="Descripcion: " /></td>
-					<td><p:inputText id="descripcion"
-							value="#{rolUsuarioMB.descripcion}">
-							<f:validateLength minimum="10" />
+						</p:inputText>
+					</p:column>
+					<p:column>
+						<p:message id="nombreMsg" for="nombre" display="icon" />
+					</p:column>
+	
+					<p:column>
+						<h:outputLabel for="descripcion" value="Descripcion " />
+					</p:column>
+					<p:column>
+						<p:inputText id="descripcion"
+							value="#{rolUsuarioMB.descripcion}" required="true"
+							requiredMessage="Campo obligatorio" maxlength="40">
+							<f:validateLength minimum="4" />
 							<p:ajax event="blur" update="descripcionMsg" />
-						</p:inputText> <p:message id="descripcionMsg" for="descripcion" display="icon" />
-					</td>
-				</tr>
-				<tr>
-					<td><p:commandButton id="addUser" value="Agregar"
-							action="#{rolUsuarioMB.addRolUsuario}" ajax="false" /></td>
-					<td><p:commandButton id="reset" value="Limpiar"
-							action="#{rolUsuarioMB.reset}" ajax="false" /></td>
-				</tr>
-			</table>
+						</p:inputText>
+					</p:column>
+					<p:column>
+						<p:message id="descripcionMsg" for="descripcion" display="icon" />
+					</p:column>
+					
+					<p:column></p:column>
+					<p:column>
+						<div align="right">
+							<p:commandButton id="addUser" value="Registrar Usuario"
+								action="#{rolUsuarioMB.addRolUsuario}" ajax="false" />
+							<p:commandButton id="reset" value="Cancelar" immediate="true"
+								action="/admin/rolusuariolist.html?faces-redirect=true" ajax="false"
+								style="margin-right:15px" />
+						</div>
+					</p:column>
+					<p:column></p:column>
+				</h:panelGrid>
+			</div>
+			
 		</h:form>
 	</ui:define>
 </ui:composition>

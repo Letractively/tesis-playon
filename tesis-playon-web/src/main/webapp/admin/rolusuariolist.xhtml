@@ -7,75 +7,112 @@
 
 	<ui:param name="panelTitle" value="Listado de Roles de Usuarios" />
 
-	<ui:define name="panelContent">
-		<h:form>
-			<p:dataTable id="rolesUsuario" var="rolUsuario" paginator="true"
-				rows="5" paginatorPosition="bottom"
-				value="#{rolUsuarioMB.rolUsuarioList}">
+	<ui:define name="panelContent" class="admin-font">
+		
+		<p:growl id="messages" />
 
-				<f:facet name="header">
+		<p:dataTable id="rolesUsuario" var="rolUsuario" paginator="true" rows="8"
+			paginatorPosition="bottom" value="#{rolUsuarioMB.rolUsuarioList}"
+			emptyMessage="No existen usuarios en el sistema" style="width: 100%">
+
+			<f:facet name="header">
 				Roles de usuario
             </f:facet>
 
-				<p:column headerText="ID" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{rolUsuario.id}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{rolUsuario.id}" styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+			<p:column headerText="ID" styleClass="column-font"
+				filterBy="#{rolUsuario.id}" filterMatchMode="contains">
+				<h:outputText value="#{rolUsuario.id}" />
+			</p:column>
 
-				<p:column headerText="Nombre" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{rolUsuario.nombre}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{rolUsuario.nombre}" styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+			<p:column headerText="Nombre" styleClass="column-font"
+				filterBy="#{rolUsuario.nombre}" filterMatchMode="contains">
+				<h:outputText value="#{rolUsuario.nombre}" />
+			</p:column>
 
-				<p:column headerText="Descripcion" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{rolUsuario.descripcion}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{rolUsuario.descripcion}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+			<p:column headerText="Descripcion" styleClass="column-font"
+				filterBy="#{rolUsuario.descripcion}" filterMatchMode="contains">
+				<h:outputText value="#{rolUsuario.descripcion}" />
+			</p:column>
 
-				<p:column headerText="Opciones" styleClass="column-options">
-					<h:commandButton id="editar"
-						class="ui-icon ui-icon-pencil column-options-button-first"
-						style="display:inline;">
-					</h:commandButton>
-					<p:tooltip for="editar" value="Editar Rol" />
+			<p:column headerText="Opciones"
+				style="text-align:center; width:75px;">
 
-					<h:commandButton id="delete" class="ui-icon ui-icon-trash column-options-button"
-						style="display:inline;" 
-						action="#{rolUsuarioMB.deleteRolUsuario(rolUsuario)}"
-						onclick="if(!confirm('¿Está seguro que desea eliminar el rol de usuario?')) return false;">
-					</h:commandButton>
-					<p:tooltip for="delete" value="Eliminar Rol" />
-				</p:column>
+				<p:commandLink id="view" update=":mainForm:displayView"
+					oncomplete="popupUsuarioDatos.show();" title="Datos Rol">
+					<f:setPropertyActionListener value="#{rolUsuario}"
+						target="#{rolUsuarioMB.rolUsuarioSelected}" />
+					<h:graphicImage library="images/icons" name="search.png" />
+				</p:commandLink>
 
-			</p:dataTable>
+				<p:commandLink id="darBaja" title="Dar de baja"
+					onclick="confirmation.show();" type="button">
+					<f:setPropertyActionListener value="#{rolUsuario}"
+							target="#{rolUsuarioMB.rolUsuarioSelected}" />
+					<h:graphicImage library="images/icons" name="trash.png" />
+				</p:commandLink>
+				<p:confirmDialog id="confirmDialog"
+					message="¿Seguro que desea dar de baja este rol?"
+					header="Dar de baja rol" severity="alert" widgetVar="confirmation">
+					<p:commandButton id="confirm" value="Aceptar" update="messages"
+						oncomplete="confirmation.hide();"
+						action="#{rolUsuarioMB.deleteRolUsuarioAdmin}" ajax="false">
+							</p:commandButton>
+						<p:commandButton id="decline" value="Cancelar"
+							onclick="confirmation.hide();" type="button" />
+				</p:confirmDialog>
+			</p:column>
 
-
-			<p>
-				<h:panelGroup layout="block" style="text-align: right;">
-					<p:commandButton id="addUsuario" value="Nuevo Rol"
-						action="/admin/rolusuarioadd.html?faces-redirect=true"
-						ajax="false" />
+			<f:facet name="footer">
+				<h:panelGroup id="removeFilter" layout="block"
+					style="text-align: right;">
+					<p:commandLink id="quitarFiltro" value="Quitar Filtro"
+						action="/admin/rolusuariolist.html?faces-redirect=true" ajax="false" />
 				</h:panelGroup>
-			</p>
-		</h:form>
+			</f:facet>
+
+		</p:dataTable>
+		<p>
+			<h:panelGroup layout="block" style="text-align: right; width: 100%;">
+				<p:commandButton id="addRolUsuario" value="Nuevo Rol"
+					action="/admin/rolusuarioadd.html?faces-redirect=true" ajax="false" />
+			</h:panelGroup>
+		</p>
+
+		<!-- DIALOG PARA VER LOS DATOS DEL USUARIO SELECCIONADO -->
+		<p:dialog header="Datos del Rol" widgetVar="popupUsuarioDatos"
+			resizable="false" id="carDlg" showEffect="fade" modal="true"
+			draggable="false">
+
+			<h:panelGrid id="displayView" columns="2" cellpadding="8"
+				style="margin:0 auto;">
+
+				<p:column>
+					<h:outputText value="Nombre: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{rolUsuarioMB.rolUsuarioSelected.nombre}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Descripcion: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{rolUsuarioMB.rolUsuarioSelected.descripcion}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+				</p:column>
+				<p:column style="text-align:right">
+					<div align="right">
+						<h:commandButton id="btnAceptar" value="Aceptar"
+							onclick="popupUsuarioDatos.hide();" type="button" />
+					</div>
+				</p:column>
+
+			</h:panelGrid>
+		</p:dialog>
+
 	</ui:define>
 </ui:composition>

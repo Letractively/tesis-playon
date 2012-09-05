@@ -70,18 +70,25 @@ public class UsuarioManagedBean implements Serializable {
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_USUARIOS;
 
-	} catch (DataAccessException e) {
+	}
+	catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo agregar el usuario: " + usuario.getNombreUser() + " " + usuario.getNombreUser(),
+		    "Error, no se pudo agregar el usuario: " + usuario.getNombreUser(),
 		    "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
+    catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo agregar el usuario. Nombre de usuario o mail Duplicados",
+		    "Usuario duplicado");
+	   FacesContext.getCurrentInstance().addMessage(null, message);	    
+	}
+	
 	return ERROR;
     }
 
     public String deleteUsuarioAdmin() {
-	
 	Usuario usuario = usuarioSelected;	
 	try {
 	    
@@ -126,7 +133,7 @@ public class UsuarioManagedBean implements Serializable {
     }
 
     public String modificarUsuarioAdmin(Usuario usuario) {
-	usuarioSelected = usuario;
+    	usuarioSelected = usuario;
 	return "usuarioeditadmin";
     }
 
