@@ -362,8 +362,9 @@ DROP TABLE IF EXISTS `foto`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `foto` (
   `descripcion` text DEFAULT NULL,
-  `link` varchar(50) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
   `title` varchar(50) DEFAULT NULL,
+  `image` MEDIUMBLOB DEFAULT NULL,
   `fotoID` int(11) NOT NULL auto_increment,
   `perfilPlayaID` int(11) NOT NULL,
   PRIMARY KEY (`fotoID`),
@@ -705,7 +706,7 @@ CREATE TABLE `cliente` (
   `telefono` text DEFAULT NULL,
   `clienteID` int(11) NOT NULL auto_increment,
   `usuarioID` int(11) NOT NULL,
-  `fotoPerfil` varchar(50) DEFAULT NULL,
+  `fotoPerfil` MEDIUMBLOB DEFAULT NULL,
   PRIMARY KEY (`clienteID`),
   KEY `barrioID` (`barrioID`),
   KEY `usuarioID` (`usuarioID`),
