@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -33,8 +34,8 @@ public class Foto implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(name = "link")
-    private String link;
+    @Column(name = "nombre")
+    private String nombre;
     
     @Column(name = "title")
     private String title;
@@ -42,10 +43,14 @@ public class Foto implements Serializable {
     @ManyToOne
     @JoinColumn(name = "perfilPlayaID")
     private PerfilPlaya perfilPlaya;
+    
+    @Lob
+    @Column(name = "image", columnDefinition="mediumblob")
+    private byte[] image;
 
     public Foto(String descripcion, String link, PerfilPlaya perfilPlaya) {
 	this.descripcion = descripcion;
-	this.link = link;
+	this.nombre = link;
 	this.perfilPlaya = perfilPlaya;
     }
 
@@ -60,12 +65,12 @@ public class Foto implements Serializable {
 	this.descripcion = descripcion;
     }
 
-    public String getLink() {
-	return link;
+    public String getNombre() {
+	return nombre;
     }
 
-    public void setLink(String link) {
-	this.link = link;
+    public void setNombre(String nombre) {
+	this.nombre = nombre;
     }
 
     public PerfilPlaya getPerfilPlaya() {
@@ -92,6 +97,14 @@ public class Foto implements Serializable {
         this.id = id;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     public boolean equals(Object object) {
 	if (object == this)
 	    return true;
@@ -107,7 +120,7 @@ public class Foto implements Serializable {
 
     @Override
     public String toString() {
-	return "Foto:\t [fotoID= " + id + ", descripcion= " + descripcion + ", link= " + link + ", perfilPlayaID= "
+	return "Foto:\t [fotoID= " + id + ", descripcion= " + descripcion + ", link= " + nombre + ", perfilPlayaID= "
 		+ perfilPlaya.getId() + "]";
     }
 }

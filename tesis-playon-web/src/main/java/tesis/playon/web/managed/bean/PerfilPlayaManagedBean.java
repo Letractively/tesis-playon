@@ -19,8 +19,6 @@ import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 
 import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.model.Playa;
@@ -68,9 +66,6 @@ public class PerfilPlayaManagedBean implements Serializable {
     private String email;
 
     private Integer disponibilidad;
-
-    private ResourceLoader resourceLoader;
-    private Resource resource;
 
     @PostConstruct
     public void init() {
@@ -217,22 +212,6 @@ public class PerfilPlayaManagedBean implements Serializable {
 
     public void setFotoPerfilFile(UploadedFile fotoPerfilFile) {
 	PerfilPlayaManagedBean.fotoPerfilFile = fotoPerfilFile;
-    }
-
-    public ResourceLoader getResourceLoader() {
-	return resourceLoader;
-    }
-
-    public void setResourceLoader(ResourceLoader resourceLoader) {
-	this.resourceLoader = resourceLoader;
-    }
-
-    public Resource getResource() {
-	return resource;
-    }
-
-    public void setResource(Resource resource) {
-	this.resource = resource;
     }
 
     // datos para mostrar en el mapa

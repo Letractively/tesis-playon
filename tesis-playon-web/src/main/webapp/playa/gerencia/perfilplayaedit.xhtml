@@ -17,8 +17,13 @@
 
 		<div id="perfil-playa">
 			<h:panelGrid columns="2">
-				<h:graphicImage library="fotos_perfil_playas" name="#{perfilPlayaMB.perfil.nombreFoto}"
-					style="width:151px; height:151px; border: 2px solid black" />
+				<h:graphicImage library="fotos_perfil_playas"
+					name="#{perfilPlayaMB.perfil.nombreFoto}"
+					style="width:151px; height:151px; border: 2px solid black"
+					rendered="#{perfilPlayaMB.perfil.nombreFoto != null}" />
+				<h:graphicImage library="fotos_perfil_playas" name="sinfoto.jpg"
+					style="width:151px; height:151px; border: 2px solid black"
+					rendered="#{perfilPlayaMB.perfil.nombreFoto == null}" />
 				<h1 style="width: 400px">#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
 			</h:panelGrid>
 
@@ -28,7 +33,8 @@
 						value="#{perfilPlayaMB.fotoPerfilFile}" mode="simple"
 						allowTypes="*.jpg;" />
 					<h:commandButton value="Subir foto" ajax="false"
-						actionListener="#{perfilPlayaMB.upload}" style="margin:0 10px 0 0; padding: 0 5px 0 5px" />
+						actionListener="#{perfilPlayaMB.upload}"
+						style="margin:0 10px 0 0; padding: 0 5px 0 5px" />
 				</h:form>
 			</h:panelGrid>
 		</div>
@@ -54,20 +60,18 @@
 
 					<h:outputText for="telefono" value="Teléfono: "
 						styleClass="fuente-outputtext" />
-					<p:inputText id="telefono"
-						value="#{perfilPlayaMB.telefono}"
+					<p:inputText id="telefono" value="#{perfilPlayaMB.telefono}"
 						style="width:200px;" />
 
 					<h:outputText for="email" value="E-mail: "
 						styleClass="fuente-outputtext" />
-					<p:inputText id="email"
-						value="#{perfilPlayaMB.email}" style="width:200px;" />
+					<p:inputText id="email" value="#{perfilPlayaMB.email}"
+						style="width:200px;" />
 
 					<h:outputText value="Disponibilidad: " for="disponibilidad"
 						styleClass="fuente-outputtext" />
 					<p:inputText id="disponibilidad"
-						value="#{perfilPlayaMB.disponibilidad}"
-						style="width:200px;" />
+						value="#{perfilPlayaMB.disponibilidad}" style="width:200px;" />
 
 					<h:outputText value="Descripción: " styleClass="fuente-outputtext" />
 					<p:inputTextarea rows="6"

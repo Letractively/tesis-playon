@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -53,8 +54,9 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "usuarioID")
     private Usuario usuario;
     
-    @Column(name = "fotoPerfil")
-    private String fotoPerfil;
+    @Lob
+    @Column(name = "fotoPerfil", columnDefinition="mediumblob")
+    private byte[] fotoPerfil;
 
     public Cliente() {
 	this.nroCliente= (int) (Math.random() * 1000) + 1;
@@ -129,11 +131,11 @@ public class Cliente implements Serializable {
 	this.usuario = usuario;
     }
 
-    public String getFotoPerfil() {
+    public byte[] getFotoPerfil() {
         return fotoPerfil;
     }
 
-    public void setFotoPerfil(String fotoPerfil) {
+    public void setFotoPerfil(byte[] fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
     }
 

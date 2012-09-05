@@ -16,8 +16,14 @@
 		<h1>Perfil</h1>
 		<div id="perfil-playa">
 			<h:panelGrid columns="2">
-				<h:graphicImage library="fotos_perfil_playas" name="#{perfilPlayaMB.perfil.nombreFoto}"
-					style="width:151px; height:151px; border: 2px solid black" />
+				<h:graphicImage library="fotos_perfil_playas"
+					name="#{perfilPlayaMB.perfil.nombreFoto}"
+					style="width:151px; height:151px; border: 2px solid black"
+					rendered="#{perfilPlayaMB.perfil.nombreFoto != null}" />
+				<h:graphicImage library="fotos_perfil_playas"
+					name="sinfoto.jpg"
+					style="width:151px; height:151px; border: 2px solid black"
+					rendered="#{perfilPlayaMB.perfil.nombreFoto == null}" />
 				<h1 style="width: 400px">#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
 			</h:panelGrid>
 		</div>
@@ -52,7 +58,7 @@
 					styleClass="fuente-perfil" />
 			</h:panelGrid>
 			<div align="center" style="margin: 0 50px 0 50px;">
-				<h:outputText value='"#{perfilPlayaMB.perfil.descripcion}"' />
+				<h:outputText value="#{perfilPlayaMB.perfil.descripcion}" />
 			</div>
 		</div>
 		<div style="margin: 20px 0px 0px 50px; width: 100%;">
