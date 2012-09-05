@@ -3,7 +3,6 @@
  */
 package tesis.playon.web.managed.bean;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +19,8 @@ import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 
 import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.model.Playa;
@@ -68,7 +69,8 @@ public class PerfilPlayaManagedBean implements Serializable {
 
     private Integer disponibilidad;
 
-    private File fotoPerfil;
+    private ResourceLoader resourceLoader;
+    private Resource resource;
 
     @PostConstruct
     public void init() {
@@ -79,10 +81,10 @@ public class PerfilPlayaManagedBean implements Serializable {
 	this.telefono = perfil.getPlaya().getTelefono();
 	this.email = perfil.getPlaya().getEmail();
 	this.disponibilidad = perfil.getPlaya().getDisponibilidad();
-	if(perfil.getTotalCalificaciones() != null && perfil.getCantidadVotantes() != null)
+	if (perfil.getTotalCalificaciones() != null && perfil.getCantidadVotantes() != null)
 	    calificacion = Math.round(perfil.getTotalCalificaciones() / perfil.getCantidadVotantes());
 	else
-	   calificacion = 0; 
+	    calificacion = 0;
 	ConvertImageToArrayBytes.getFotoPerfil(perfil);
     }
 
@@ -110,14 +112,22 @@ public class PerfilPlayaManagedBean implements Serializable {
 	return "error";
     }
 
-    public void upload() {
-	
-	byte[] bFile;
-	bFile = ConvertImageToArrayBytes.getArrayByteFotoPerfil(fotoPerfilFile, this.perfil);
-
-	this.perfil.setFotoPerfil(bFile);
-	this.perfil.setNombreFoto(fotoPerfilFile.getFileName());
-	getPerfilPlayaService().update(this.perfil);
+    public String upload() {
+	try{
+	    this.perfil.setFotoPerfil(fotoPerfilFile.getContents());
+	    this.perfil.setNombreFoto(fotoPerfilFile.getFileName());
+	    getPerfilPlayaService().update(this.perfil);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "Se modificó exitosamente su foto de perfil", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return "perfilplayaedit";
+	}catch(Exception ex){
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "No se pudo cargar su foto de perfil", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    ex.printStackTrace();
+	}
+	return "/error";
     }
 
     public PerfilPlaya getPerfil() {
@@ -209,12 +219,20 @@ public class PerfilPlayaManagedBean implements Serializable {
 	PerfilPlayaManagedBean.fotoPerfilFile = fotoPerfilFile;
     }
 
-    public File getFotoPerfil() {
-	return fotoPerfil;
+    public ResourceLoader getResourceLoader() {
+	return resourceLoader;
     }
 
-    public void setFotoPerfil(File fotoPerfil) {
-	this.fotoPerfil = fotoPerfil;
+    public void setResourceLoader(ResourceLoader resourceLoader) {
+	this.resourceLoader = resourceLoader;
+    }
+
+    public Resource getResource() {
+	return resource;
+    }
+
+    public void setResource(Resource resource) {
+	this.resource = resource;
     }
 
     // datos para mostrar en el mapa
