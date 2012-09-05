@@ -36,22 +36,17 @@
 							ajax="false" style="margin-right:15px" /> <p:commandButton
 							id="buscarVehiculo" value="Buscar vehículo"
 							action="#{ingresoEgresoMB.searchVehiculo}" ajax="false" /></td>
-					<td></td>
 				</tr>
 			</table>
-
 
 			<h:panelGrid rendered="#{ingresoEgresoMB.existeVehiculo}" columns="1"
 				cellpadding="5">
 
 				<h:panelGroup>
-					<h:outputText value="Nombre: " />
+					<h:outputText value="Cliente: " />
 					<h:outputText id="txt_nombre"
 						value="#{ingresoEgresoMB.usuarioCliente.nombre}" />
-				</h:panelGroup>
-
-				<h:panelGroup>
-					<h:outputText value="Apellido: " />
+					<h:outputText value="&#160;" />
 					<h:outputText id="txt_apellido"
 						value="#{ingresoEgresoMB.usuarioCliente.apellido}" />
 				</h:panelGroup>
@@ -63,15 +58,34 @@
 				</h:panelGroup>
 
 				<h:panelGroup>
-					<h:outputText value="Nº Cuenta: " />
-					<h:outputText id="txt_cuenta"
-						value="#{ingresoEgresoMB.cuentaCliente.nroCuenta}" />
+					<h:outputText value="Vehiculo: " />
+					<h:outputText id="txt_mod_vehiculo"
+						value="#{ingresoEgresoMB.modeloVehiculo.nombre}" />
+					<h:outputText value="&#160;" />
+					<h:outputText id="txt_marca_vehiculo"
+						value="#{ingresoEgresoMB.marcaVehiculo.nombre}" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<h:outputText value="Tipo: " />
+					<h:outputText id="txt_cat_vehiculo"
+						value="#{ingresoEgresoMB.categoriaVehiculo.nombre}" />
 				</h:panelGroup>
 
 				<h:panelGroup>
 					<h:outputText value="Saldo: $" />
 					<h:outputText id="txt_saldo"
 						value="#{ingresoEgresoMB.cuentaCliente.saldo}" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:commandButton id="ingreso" value="Registrar ingreso"
+						action="#{ingresoEgresoMB.registrarIngresoVehiculo}" ajax="false" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:commandButton id="egreso" value="Registrar egreso"
+						action="#{ingresoEgresoMB.registrarEgresoVehiculo}" ajax="false" />
 				</h:panelGroup>
 
 			</h:panelGrid>

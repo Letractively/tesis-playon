@@ -5,7 +5,6 @@ package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +23,6 @@ import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Tarifa;
 import tesis.playon.web.model.TipoEstadia;
 import tesis.playon.web.model.Usuario;
-import tesis.playon.web.service.ICargoEmpleadoService;
 import tesis.playon.web.service.ICategoriaVehiculoService;
 import tesis.playon.web.service.ITarifaService;
 import tesis.playon.web.service.ITipoEstadiaService;

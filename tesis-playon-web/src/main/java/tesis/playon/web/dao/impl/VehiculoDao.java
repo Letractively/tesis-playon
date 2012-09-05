@@ -39,7 +39,11 @@ public class VehiculoDao implements IVehiculoDao {
     public Vehiculo findByPatenteVehiculo(String patenteVehiculo) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Vehiculo where patente=?")
 		.setParameter(0, patenteVehiculo).list();
-	return (Vehiculo) list.get(0);
+	if (!list.isEmpty()) {
+	    return (Vehiculo) list.get(0);
+	} else {
+	    return null;
+	}
     }
 
     public List<Vehiculo> findAll() {

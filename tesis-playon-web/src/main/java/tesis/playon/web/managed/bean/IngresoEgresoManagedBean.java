@@ -12,6 +12,7 @@ import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.CuentaCliente;
 import tesis.playon.web.model.Empleado;
+import tesis.playon.web.model.MarcaVehiculo;
 import tesis.playon.web.model.ModeloVehiculo;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Usuario;
@@ -19,6 +20,7 @@ import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.ICargoEmpleadoService;
 import tesis.playon.web.service.ICuentaClienteService;
 import tesis.playon.web.service.IEmpleadoService;
+import tesis.playon.web.service.IMarcaVehiculoService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.service.IVehiculoService;
@@ -47,6 +49,9 @@ public class IngresoEgresoManagedBean implements Serializable {
     @ManagedProperty(value = "#{VehiculoService}")
     IVehiculoService vehiculoService;
 
+    @ManagedProperty(value = "#{MarcaVehiculoService}")
+    IMarcaVehiculoService marcaVehiculoService;
+
     private Usuario usuario;
 
     private Usuario usuarioCliente;
@@ -67,6 +72,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     private ModeloVehiculo modeloVehiculo;
 
+    private MarcaVehiculo marcaVehiculo;
+
     private String nombreUsuario;
 
     private String patente;
@@ -83,15 +90,42 @@ public class IngresoEgresoManagedBean implements Serializable {
     }
 
     public void searchVehiculo() {
+	limpiar();
 	setVehiculo(getVehiculoService().findByPatenteVehiculo(patente.toUpperCase()));
-	setCategoriaVehiculo(vehiculo.getCategoriaVehiculo());
-	setModeloVehiculo(vehiculo.getModeloVehiculo());
-	setCliente(vehiculo.getCliente());
-	setUsuarioCliente(cliente.getUsuario());
-	setCuentaCliente(getCuentaClienteService().findByNroCuentaCliente(cliente.getCuentaCliente().getNroCuenta()));
+	if (null != vehiculo) {
+	    setCategoriaVehiculo(vehiculo.getCategoriaVehiculo());
+	    setModeloVehiculo(vehiculo.getModeloVehiculo());
+	    setMarcaVehiculo(modeloVehiculo.getMarcaVehiculo());
+	    setCliente(vehiculo.getCliente());
+
+	}
+	if (null != cliente) {
+	    setUsuarioCliente(cliente.getUsuario());
+	    setCuentaCliente(getCuentaClienteService()
+		    .findByNroCuentaCliente(cliente.getCuentaCliente().getNroCuenta()));
+	}
 
 	if (cliente != null && null != vehiculo && null != cuentaCliente)
 	    setExisteVehiculo(true);
+    }
+
+    public void registrarIngresoVehiculo() {
+
+    }
+
+    public void registrarEgresoVehiculo() {
+
+    }
+
+    public void limpiar() {
+	this.vehiculo = null;
+	this.categoriaVehiculo = null;
+	this.modeloVehiculo = null;
+	this.marcaVehiculo = null;
+	this.cliente = null;
+	this.usuarioCliente = null;
+	this.cuentaCliente = null;
+	this.existeVehiculo = false;
     }
 
     public IEmpleadoService getEmpleadoService() {
@@ -140,6 +174,14 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void setVehiculoService(IVehiculoService vehiculoService) {
 	this.vehiculoService = vehiculoService;
+    }
+
+    public IMarcaVehiculoService getMarcaVehiculoService() {
+	return marcaVehiculoService;
+    }
+
+    public void setMarcaVehiculoService(IMarcaVehiculoService marcaVehiculoService) {
+	this.marcaVehiculoService = marcaVehiculoService;
     }
 
     public Usuario getUsuario() {
@@ -220,6 +262,14 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void setModeloVehiculo(ModeloVehiculo modeloVehiculo) {
 	this.modeloVehiculo = modeloVehiculo;
+    }
+
+    public MarcaVehiculo getMarcaVehiculo() {
+	return marcaVehiculo;
+    }
+
+    public void setMarcaVehiculo(MarcaVehiculo marcaVehiculo) {
+	this.marcaVehiculo = marcaVehiculo;
     }
 
     public String getNombreUsuario() {

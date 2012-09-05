@@ -1,6 +1,5 @@
 package tesis.playon.web.managed.bean;
 
-import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

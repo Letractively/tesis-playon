@@ -10,7 +10,7 @@ import tesis.playon.web.util.NotificadorUtil;
 
 @ManagedBean(name = "contactoMB")
 @RequestScoped
-public class contactoMB implements Serializable {
+public class ContactoMB implements Serializable {
 
     private static final long serialVersionUID = -1085389423375986168L;
 
