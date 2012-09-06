@@ -41,16 +41,21 @@ public class UsuarioDao implements IUsuarioDao {
     public Usuario findByNombreUsuario(String usuario) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario where nombreUser=?")
 		.setParameter(0, usuario).list();
-	return (Usuario) list.get(0);
+	if (!list.isEmpty())
+	    return (Usuario) list.get(0);
+	return null;
     }
 
     public List<Usuario> findAll() {
 	List<Usuario> usuarios = new ArrayList<Usuario>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario").list();
-	for (Object object : list) {
-	    usuarios.add((Usuario) object);
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario ORDER BY nombreUser").list();
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		usuarios.add((Usuario) object);
+	    }
+	    return usuarios;
 	}
-	return usuarios;
+	return null;
     }
 
     @Override
@@ -58,10 +63,13 @@ public class UsuarioDao implements IUsuarioDao {
 	List<Usuario> usuarios = new ArrayList<Usuario>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario where playa=?")
 		.setParameter(0, playa).list();
-	for (Object object : list) {
-	    usuarios.add((Usuario) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		usuarios.add((Usuario) object);
+	    }
+	    return usuarios;
 	}
-	return usuarios;
+	return null;
     }
 
     @Override
@@ -69,10 +77,10 @@ public class UsuarioDao implements IUsuarioDao {
 	List<?> list = getSessionFactory()
 		.getCurrentSession()
 		.createQuery(
-			"SELECT u from Usuario as u "
-				+ "INNER JOIN RolesPorUsuario as rpu "
-				+ "where (u.playa=? and rpu.rol = 'ROLE_PLAYA_GERENTE')")
-				.setParameter(0, playa).list();
-	return (Usuario) list.get(0);
+			"SELECT u from Usuario as u " + "INNER JOIN RolesPorUsuario as rpu "
+				+ "where (u.playa=? and rpu.rol = 'ROLE_PLAYA_GERENTE')").setParameter(0, playa).list();
+	if (!list.isEmpty())
+	    return (Usuario) list.get(0);
+	return null;
     }
 }

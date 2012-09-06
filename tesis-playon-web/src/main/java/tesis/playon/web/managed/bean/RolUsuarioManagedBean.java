@@ -13,7 +13,6 @@ import javax.faces.context.FacesContext;
 import org.springframework.dao.DataAccessException;
 
 import tesis.playon.web.model.RolUsuario;
-import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IRolUsuarioService;
 
 @ManagedBean(name = "rolUsuarioMB")

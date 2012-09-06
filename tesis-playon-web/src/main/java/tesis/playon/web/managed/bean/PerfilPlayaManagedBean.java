@@ -76,21 +76,34 @@ public class PerfilPlayaManagedBean implements Serializable {
     private static String descripcion;
 
     private Foto fotoSelected;
+    
+ // ATRIBUTOS DE LA PLAYA SELECCIONADA
+    private static Playa playaSelected;
+
+    private static PerfilPlaya perfilSelected;
+
+    private Integer calificacionSelected;
+    
+    private List<Foto> fotosListSelected;
 
     @PostConstruct
+    // METODO PARA INICIALIZAR TODOS LOS ATRIBUTOS
     public void init() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	String userName = facesContext.getExternalContext().getRemoteUser();
 	Usuario user = getUsuarioService().findByNombreUsuario(userName);
-	this.perfil = getPerfilPlayaService().findByPlaya(user.getPlaya());
-	this.telefono = perfil.getPlaya().getTelefono();
-	this.email = perfil.getPlaya().getEmail();
-	this.disponibilidad = perfil.getPlaya().getDisponibilidad();
-	if (perfil.getTotalCalificaciones() != null && perfil.getCantidadVotantes() != null)
-	    calificacion = Math.round(perfil.getTotalCalificaciones() / perfil.getCantidadVotantes());
-	else
-	    calificacion = 0;
-	WriteImage.getFotoPerfil(perfil);
+	if (user != null && user.getPlaya() != null) {
+	    this.perfil = getPerfilPlayaService().findByPlaya(user.getPlaya());
+	    this.telefono = perfil.getPlaya().getTelefono();
+	    this.email = perfil.getPlaya().getEmail();
+	    this.disponibilidad = perfil.getPlaya().getDisponibilidad();
+	    if (perfil.getTotalCalificaciones() != null && perfil.getCantidadVotantes() != null)
+		calificacion = Math.round(perfil.getTotalCalificaciones() / perfil.getCantidadVotantes());
+	    else
+		calificacion = 0;
+	    WriteImage.getFotoPerfil(perfil);
+	    this.coordenadas = initCoordenadas(perfil);
+	}
     }
 
     public String updatePerfil() {
@@ -193,6 +206,23 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    ex.printStackTrace();
 	}
 	return "/error";
+    }
+
+    private String initCoordenadas(PerfilPlaya perfil) {
+	try {
+	    latLonUtil = new LatitudlongitudUtil();
+	    // GeoposicionDePlaya
+	    respuesta = latLonUtil.getLocationFromAddress(perfil.getPlaya().getDomicilio()
+		    + ", Cordoba, CBA, Argentina");
+	    coordenadas = respuesta.toString();
+	    LatLng coord1 = new LatLng(perfil.getPlaya().getLatitud(), perfil.getPlaya().getLongitud());
+	    advancedModel.addOverlay(new Marker(coord1, perfil.getPlaya().toString2(), null,
+		    "http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
+	    return coordenadas;
+	} catch (Exception e) {
+	    e.getStackTrace();
+	}
+	return null;
     }
 
     public PerfilPlaya getPerfil() {
@@ -308,6 +338,49 @@ public class PerfilPlayaManagedBean implements Serializable {
     public void setFotoSelected(Foto fotoSelected) {
 	this.fotoSelected = fotoSelected;
     }
+    
+    public Playa getPlayaSelected() {
+	if (playaSelected != null) {
+	    PerfilPlayaManagedBean.perfilSelected = getPerfilPlayaService().findByPlaya(playaSelected);
+	    coordenadas = initCoordenadas(perfilSelected);
+	    if (perfilSelected.getTotalCalificaciones() != null && perfilSelected.getCantidadVotantes() != null)
+		calificacionSelected = Math.round(perfilSelected.getTotalCalificaciones()
+			/ perfilSelected.getCantidadVotantes());
+	    else
+		calificacionSelected = 0;
+	    fotosListSelected = getFotoService().findByPlaya(perfilSelected);
+	    WriteImage.writeFotos(fotosListSelected);
+	}
+	return playaSelected;
+    }
+
+    public void setPlayaSelected(Playa playaSelected) {
+	PerfilPlayaManagedBean.playaSelected = playaSelected;
+    }
+
+    public PerfilPlaya getPerfilSelected() {
+        return perfilSelected;
+    }
+
+    public void setPerfilSelected(PerfilPlaya perfilSelected) {
+        PerfilPlayaManagedBean.perfilSelected = perfilSelected;
+    }
+
+    public Integer getCalificacionSelected() {
+        return calificacionSelected;
+    }
+
+    public void setCalificacionSelected(Integer calificacionSelected) {
+        this.calificacionSelected = calificacionSelected;
+    }
+
+    public List<Foto> getFotosListSelected() {
+        return fotosListSelected;
+    }
+
+    public void setFotosListSelected(List<Foto> fotosListSelected) {
+        this.fotosListSelected = fotosListSelected;
+    }
 
     // datos para mostrar en el mapa
     LatitudlongitudUtil latLonUtil;
@@ -316,30 +389,26 @@ public class PerfilPlayaManagedBean implements Serializable {
 
     private String coordenadas;
 
+    private String coordenadasSelected;
+
     private final MapModel advancedModel = new DefaultMapModel();
 
     private Marker marker;
 
     public String getCoordenadas() {
-	try {
-	    latLonUtil = new LatitudlongitudUtil();
-	    // GeoposicionDePlaya
-	    respuesta = latLonUtil.getLocationFromAddress(perfil.getPlaya().getDomicilio()
-		    + ", Cordoba, CBA, Argentina");
-	    coordenadas = respuesta.toString();
-	    LatLng coord1 = new LatLng(perfil.getPlaya().getLatitud(), perfil.getPlaya().getLongitud());
-	    advancedModel.addOverlay(new Marker(coord1, perfil.getPlaya().toString2(), null,
-		    "http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
-	    return coordenadas;
-
-	} catch (Exception e) {
-	    e.getStackTrace();
-	}
-	return "";
+	return coordenadas;
     }
 
     public void setCoordenadas(String coordenadas) {
 	this.coordenadas = coordenadas;
+    }
+
+    public String getCoordenadasSelected() {
+	return coordenadasSelected;
+    }
+
+    public void setCoordenadasSelected(String coordenadasSelected) {
+	this.coordenadasSelected = coordenadasSelected;
     }
 
     public GeoposicionDePlaya getRespuesta() {

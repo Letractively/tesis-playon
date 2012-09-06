@@ -14,7 +14,7 @@ import tesis.playon.web.model.Barrio;
  * 
  */
 public class BarrioDao implements IBarrioDao {
-    
+
     private SessionFactory sessionFactory;
 
     public SessionFactory getSessionFactory() {
@@ -40,16 +40,21 @@ public class BarrioDao implements IBarrioDao {
     public Barrio findByNombreBarrio(String nombreBarrio) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Barrio where nombre=?")
 		.setParameter(0, nombreBarrio).list();
-	return (Barrio) list.get(0);
+	if (!list.isEmpty())
+	    return (Barrio) list.get(0);
+	return null;
     }
 
     public List<Barrio> findAll() {
 	List<Barrio> barrios = new ArrayList<Barrio>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Barrio order by nombre").list();
-	for (Object object : list) {
-	    barrios.add((Barrio) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		barrios.add((Barrio) object);
+	    }
+	    return barrios;
 	}
-	return barrios;
+	return null;
     }
 
 }

@@ -40,10 +40,13 @@ public class AbonoDao implements IAbonoDao {
     public List<Abono> findAll() {
 	List<Abono> abonos = new ArrayList<Abono>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Abono").list();
-	for (Object obj : list) {
-	    abonos.add((Abono) obj);
+	if(!list.isEmpty()){
+	    for (Object obj : list) {
+		    abonos.add((Abono) obj);
+		}
+		return abonos;
 	}
-	return abonos;
+	return null;
     }
 
 }

@@ -45,7 +45,9 @@ public class PlayaDao implements IPlayaDao {
 	List<?> list = getSessionFactory().getCurrentSession()
 		.createQuery("from Playa where razonSocial=?  order by razonSocial").setParameter(0, razonSocial)
 		.list();
-	return (Playa) list.get(0);
+	if (!list.isEmpty())
+	    return (Playa) list.get(0);
+	return null;
     }
 
     public List<Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia) {
@@ -58,29 +60,37 @@ public class PlayaDao implements IPlayaDao {
 		.setParameter("pdistancia", distancia);
 	List<?> list = query.list();
 	List<Playa> playas = new ArrayList<Playa>();
-
-	for (Object object : list) {
-	    playas.add((Playa) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		playas.add((Playa) object);
+	    }
+	    return playas;
 	}
-	return playas;
+	return null;
     }
 
     public List<Playa> findAll() {
 	List<Playa> playa = new ArrayList<Playa>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Playa order by razonSocial").list();
-	for (Object object : list) {
-	    playa.add((Playa) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		playa.add((Playa) object);
+	    }
+	    return playa;
 	}
-	return playa;
+	return null;
     }
 
     public List<Playa> findByEstado(EstadoPlaya estado) {
 	List<Playa> playa = new ArrayList<Playa>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Playa where estado=?")
 		.setParameter(0, estado).list();
-	for (Object object : list) {
-	    playa.add((Playa) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		playa.add((Playa) object);
+	    }
+	    return playa;
 	}
-	return playa;
+	return null;
     }
 }
