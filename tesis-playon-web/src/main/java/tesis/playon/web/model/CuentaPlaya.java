@@ -3,7 +3,8 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +37,7 @@ public class CuentaPlaya implements Serializable {
     private Integer nroCuenta;
 
     @Column(name = "fechaCreacion")
-    private Date fechaCreacion;
+    private Timestamp fechaCreacion;
 
     @Column(name = "saldo")
     private float saldo;
@@ -46,10 +47,16 @@ public class CuentaPlaya implements Serializable {
     private Playa playa;
 
     public CuentaPlaya() {
+	super();
+	this.nroCuenta = (int) (Math.random() * 10000) + 1;
+	this.fechaCreacion = new Timestamp(Calendar.getInstance().getTimeInMillis());
     }
 
-    public CuentaPlaya(int nroCuenta) {
-	this.nroCuenta = nroCuenta;
+    public CuentaPlaya(Playa playa) {
+	super();
+	this.nroCuenta = (int) (Math.random() * 10000) + 1;
+	this.fechaCreacion = new Timestamp(Calendar.getInstance().getTimeInMillis());
+	this.playa = playa;
     }
 
     public int getNroCuenta() {
@@ -60,11 +67,11 @@ public class CuentaPlaya implements Serializable {
 	this.nroCuenta = nroCuenta;
     }
 
-    public Date getFechaCreacion() {
+    public Timestamp getFechaCreacion() {
 	return fechaCreacion;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(Timestamp fechaCreacion) {
 	this.fechaCreacion = fechaCreacion;
     }
 

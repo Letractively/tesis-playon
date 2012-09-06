@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.ICuentaPlayaDao;
 import tesis.playon.web.model.CuentaPlaya;
+import tesis.playon.web.model.Playa;
 
 /**
  * 
@@ -37,12 +38,6 @@ public class CuentaPlayaDao implements ICuentaPlayaDao {
 	getSessionFactory().getCurrentSession().delete(cuentaPlaya);
     }
 
-    public CuentaPlaya findByNroCuenta(Integer nroCuenta) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaPlaya where nroCuenta=?")
-		.setParameter(0, nroCuenta).list();
-	return (CuentaPlaya) list.get(0);
-    }
-
     public List<CuentaPlaya> findAll() {
 	List<CuentaPlaya> cuentas = new ArrayList<CuentaPlaya>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaPlaya").list();
@@ -50,5 +45,23 @@ public class CuentaPlayaDao implements ICuentaPlayaDao {
 	    cuentas.add((CuentaPlaya) object);
 	}
 	return cuentas;
+    }
+
+    public CuentaPlaya findByNroCuenta(Integer nroCuenta) {
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaPlaya where nroCuenta=?")
+		.setParameter(0, nroCuenta).list();
+	if (!list.isEmpty()) {
+	    return (CuentaPlaya) list.get(0);
+	}
+	return null;
+    }
+
+    public CuentaPlaya findByPlaya(Playa playa) {
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaPlaya where playa=?")
+		.setParameter(0, playa).list();
+	if (!list.isEmpty()) {
+	    return (CuentaPlaya) list.get(0);
+	}
+	return null;
     }
 }

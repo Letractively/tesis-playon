@@ -3,11 +3,12 @@ package tesis.playon.web.service;
 import java.util.List;
 
 import tesis.playon.web.model.CuentaPlaya;
+import tesis.playon.web.model.Playa;
 
 /**
  * 
  * @author gmorales
- *
+ * 
  */
 public interface ICuentaPlayaService {
 
@@ -20,5 +21,7 @@ public interface ICuentaPlayaService {
     List<CuentaPlaya> findAll();
 
     CuentaPlaya findByNroCuentaPlaya(Integer nroCuentaPlaya);
+
+    CuentaPlaya findByPlaya(Playa playa);
 
 }

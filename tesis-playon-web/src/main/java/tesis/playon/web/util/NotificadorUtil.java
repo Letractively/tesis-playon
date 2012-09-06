@@ -15,17 +15,15 @@ import tesis.playon.web.model.Mail;
 
 public class NotificadorUtil implements Serializable {
 
-    private Mail mail;
-
     private static final long serialVersionUID = -1085389423375986168L;
 
+    private Mail mail;
+
     static final String username = "tesisplayon@gmail.com";
+
     static final String password = "tesisplayon2012";
+
     private static Properties props = new Properties();
-
-    public NotificadorUtil() {
-
-    }
 
     public void enviar(Mail mail) {
 	props.put("mail.smtp.auth", "true");
@@ -40,7 +38,6 @@ public class NotificadorUtil implements Serializable {
 	});
 
 	try {
-
 	    Message message = new MimeMessage(session);
 	    message.setFrom(new InternetAddress(username));
 	    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mail.getDestinatario()));
@@ -48,22 +45,16 @@ public class NotificadorUtil implements Serializable {
 	    message.setText(mail.getMensaje());
 
 	    Transport.send(message);
-
 	} catch (MessagingException e) {
 	    throw new RuntimeException(e);
 	}
     }
 
     public void setMail(Mail mail) {
-
 	this.mail = mail;
     }
 
-    public Mail getMail()
-
-    {
+    public Mail getMail() {
 	return mail;
-
     }
-
 }

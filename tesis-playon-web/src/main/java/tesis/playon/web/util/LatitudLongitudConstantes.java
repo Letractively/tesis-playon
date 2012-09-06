@@ -1,5 +1,10 @@
 package tesis.playon.web.util;
 
+/**
+ * 
+ * @author gmorales
+ *
+ */
 public class LatitudLongitudConstantes {
     public static final String FEED_CLASS = "feedClass";
     public static final String OUTPUT_TYPE = "output";

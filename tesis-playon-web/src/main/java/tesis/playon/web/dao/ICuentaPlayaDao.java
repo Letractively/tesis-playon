@@ -3,6 +3,7 @@ package tesis.playon.web.dao;
 import java.util.List;
 
 import tesis.playon.web.model.CuentaPlaya;
+import tesis.playon.web.model.Playa;
 
 public interface ICuentaPlayaDao {
 
@@ -12,8 +13,10 @@ public interface ICuentaPlayaDao {
 
     void delete(CuentaPlaya cuentaPlaya);
 
-    CuentaPlaya findByNroCuenta(Integer nroCuenta);
-    
     List<CuentaPlaya> findAll();
+
+    CuentaPlaya findByNroCuenta(Integer nroCuenta);
+
+    CuentaPlaya findByPlaya(Playa playa);
 
 }

@@ -9,6 +9,11 @@ import java.net.URLEncoder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * 
+ * @author gmorales
+ *
+ */
 public class LatitudlongitudUtil {
 
     public GeoposicionDePlaya getLocationFromAddress(String address) throws Exception {

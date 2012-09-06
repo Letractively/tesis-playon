@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.ICuentaPlayaDao;
 import tesis.playon.web.model.CuentaPlaya;
+import tesis.playon.web.model.Playa;
 import tesis.playon.web.service.ICuentaPlayaService;
 
 /**
@@ -46,12 +47,17 @@ public class CuentaPlayaService implements ICuentaPlayaService {
 	return getCuentaPlayaDao().findByNroCuenta(nroCuentaPlaya);
     }
 
+    @Override
+    public CuentaPlaya findByPlaya(Playa playa) {
+	return getCuentaPlayaDao().findByPlaya(playa);
+    }
+
     public ICuentaPlayaDao getCuentaPlayaDao() {
-        return cuentaPlayaDao;
+	return cuentaPlayaDao;
     }
 
     public void setCuentaPlayaDao(ICuentaPlayaDao cuentaPlayaDao) {
-        this.cuentaPlayaDao = cuentaPlayaDao;
+	this.cuentaPlayaDao = cuentaPlayaDao;
     }
 
 }
