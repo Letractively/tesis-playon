@@ -17,19 +17,38 @@
 #perfil-playa tr{
 	padding: 20px 0px 20px 0px;
 }
+#perfil-playa-frente p{
+	font-size:15px;
+	font-style:italic;
+	color:#707070;
+	margin: 5px 10px 5px 10px;
+}
+
 .fuente-perfil {
 	font-style:italic;
 	font-style:bolder;
 	font-size:large;
-	color:black;
+	color:#192129;
 }
 .fuente-outputtext{
 	font-size:large;
 	color:black;
+	margin-right:10px;
 }
 .fuente-subtitle{
 	font-size:20px;
 	font-style:italic;
 	color:#192129;
 	line-height:120%;
+}
+.fuente-comentario-frente{
+	font-family:Lucida Console;
+	font-size:18px;
+	font-style:italic;
+	color:#5E6971;
+	margin: 5px 10px 5px 10px;
+}
+.imagen-fondo-comment {
+	background: url("#{resource['images:comment.png']}") no-repeat;
+	margin: 5px 5px 5px 5px;
 }

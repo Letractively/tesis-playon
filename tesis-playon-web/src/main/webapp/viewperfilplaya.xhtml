@@ -31,7 +31,8 @@
 				<p:rating value="#{perfilPlayaMB.calificacionSelected}"
 					readonly="true" stars="10" />
 				<div align="center" style="margin: 0 50px 0 50px;">
-					<h:outputText value="#{perfilPlayaMB.perfilSelected.descripcion}" />
+					<h:outputText value="#{perfilPlayaMB.perfilSelected.descripcion}"
+						styleClass="fuente-comentario-frente" />
 				</div>
 			</h:panelGrid>
 		</div>
@@ -39,7 +40,7 @@
 		<div style="margin: 0 0 0 50px;">
 			<p:accordionPanel multiple="true" dynamic="true">
 				<p:tab title="Información">
-					<div align="center">
+					<div style="margin: 0 0 0 10px;">
 						<h:panelGrid columns="2" cellpadding="8">
 							<h:outputText value="Domicilio: " styleClass="fuente-outputtext" />
 							<h:outputText
@@ -68,8 +69,30 @@
 					</div>
 				</p:tab>
 				<p:tab title="Tarifas">
-					<h:panelGrid columns="2" cellpadding="10">
+					<p:dataTable id="tarifas" value="#{tarifaMB.tarifaListSelected}"
+						var="tarifa"
+						emptyMessage="No existen tarifas en esta playa de estacionamiento">
 
+						<p:column headerText="Tipo Estadía">
+							<h:outputText value="#{tarifa.tipoEstadia.nombre}" />
+						</p:column>
+
+						<p:column headerText="Categoría">
+							<h:outputText value="#{tarifa.categoriaVehiculo.nombre}" />
+						</p:column>
+
+						<p:column headerText="Importe">
+							<h:outputText value="#{tarifa.importe}" />
+						</p:column>
+					</p:dataTable>
+
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:column>
+
+						</p:column>
+						<p:column>
+
+						</p:column>
 					</h:panelGrid>
 				</p:tab>
 				<p:tab title="Promociones">
@@ -78,49 +101,66 @@
 					</h:panelGrid>
 				</p:tab>
 				<p:tab title="Comentarios">
-					<h:panelGrid columns="2" cellpadding="10">
-						<h:graphicImage library="images" name="comment.png" />
+					<h:panelGrid columns="2">
+						<p:column>
+							<div>
+								<h:graphicImage library="fotos_perfil_playas"
+									name="#{perfilPlayaMB.perfilSelected.nombreFoto}"
+									style="width:75px; height:75px; border: 2px solid black"
+									rendered="#{perfilPlayaMB.perfilSelected.nombreFoto != null}" />
+								<h:graphicImage library="fotos_perfil_playas" name="sinfoto.jpg"
+									style="width:75px; height:75px; border: 2px solid black"
+									rendered="#{perfilPlayaMB.perfilSelected.nombreFoto == null}" />
+							</div>
+						</p:column>
+						<p:column>
+							<div id="perfil-playa-frente">
+								<p>aqui iran los comentarios que tenga las playas</p>
+							</div>
+						</p:column>
 					</h:panelGrid>
 				</p:tab>
 			</p:accordionPanel>
 		</div>
+
 		<div style="margin: 20px 0px 0px 50px; width: 100%;">
 			Ubicación
 			<p:separator id="separatorMapa" />
-		</div>
-		<div align="center" style="margin: 20px 0px 0px 50px; width: 100%;">
-			<f:view id="vistaGMap" contentType="text/html">
-				<script src="http://maps.google.com/maps/api/js?sensor=false"
-					type="text/javascript"></script>
+			<div align="center" style="margin-top: 10px;">
+				<f:view id="vistaGMap" contentType="text/html">
+					<script src="http://maps.google.com/maps/api/js?sensor=false"
+						type="text/javascript"></script>
 
-				<p:gmap center="#{perfilPlayaMB.coordenadas}" zoom="15"
-					streetView="true" type="ROADMAP"
-					model="#{perfilPlayaMB.advancedModel}"
-					style="width: 500px;height:250px" draggable="false"
-					navigationControl="false" mapTypeControl="false">
+					<p:gmap center="#{perfilPlayaMB.coordenadas}" zoom="15"
+						streetView="true" type="ROADMAP"
+						model="#{perfilPlayaMB.advancedModel}"
+						style="width: 500px;height:250px" draggable="false"
+						navigationControl="false" mapTypeControl="false">
 
-					<p:ajax event="overlaySelect"
-						listener="#{perfilPlayaMB.onMarkerSelect}" />
-				</p:gmap>
-			</f:view>
+						<p:ajax event="overlaySelect"
+							listener="#{perfilPlayaMB.onMarkerSelect}" />
+					</p:gmap>
+				</f:view>
+			</div>
 		</div>
+
 		<div style="margin: 20px 0px 0px 50px; width: 100%;">
 			Fotos
 			<p:separator id="separatorFoto" />
-		</div>
-		<div align="center" style="margin: 20px 0px 0px 50px; width: 100%;">
-			<p:galleria value="#{perfilPlayaMB.fotosListSelected}" var="image"
-				effect="slide" effectSpeed="1000" showOverlays="false"
-				panelWidth="500" panelHeight="350">
-				<h:graphicImage library="fotos_playas" name="#{image.nombre}"
-					style="width:490px; height:290px" />
-				<p:galleriaOverlay>
-					<div align="right">
-						<h:outputText value="#{image.nombre}" />
-						<br />
-					</div>
-				</p:galleriaOverlay>
-			</p:galleria>
+			<div align="center" style="margin-top: 10px;">
+				<p:galleria value="#{perfilPlayaMB.fotosListSelected}" var="image"
+					effect="slide" effectSpeed="1000" showOverlays="false"
+					panelWidth="500" panelHeight="350">
+					<h:graphicImage library="fotos_playas" name="#{image.nombre}"
+						style="width:490px; height:290px" />
+					<p:galleriaOverlay>
+						<div align="right">
+							<h:outputText value="#{image.nombre}" />
+							<br />
+						</div>
+					</p:galleriaOverlay>
+				</p:galleria>
+			</div>
 		</div>
 	</ui:define>
 </ui:composition>

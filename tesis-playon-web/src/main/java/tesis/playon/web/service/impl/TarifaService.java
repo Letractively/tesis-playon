@@ -46,6 +46,11 @@ public class TarifaService implements ITarifaService {
     public List<Tarifa> findByPlaya(Playa playa){
 	return getTarifaDao().findByPlaya(playa);
     }
+    
+    @Override
+    public List<Tarifa> findTarifaVigenteByPlaya(Playa playa){
+	return  getTarifaDao().findTarifaVigenteByPlaya(playa);
+    }
 
     public ITarifaDao getTarifaDao() {
 	return tarifaDao;

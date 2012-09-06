@@ -4,14 +4,16 @@
 package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.springframework.dao.DataAccessException;
@@ -33,7 +35,7 @@ import tesis.playon.web.service.IUsuarioService;
  * 
  */
 @ManagedBean(name = "tarifaMB")
-@SessionScoped
+@RequestScoped
 public class TarifaManagedBean implements Serializable {
 
     private static final long serialVersionUID = -1085389423375986168L;
@@ -58,9 +60,9 @@ public class TarifaManagedBean implements Serializable {
 
     List<Tarifa> tarifaList;
 
-    private static List<Tarifa> tarifaPlayaList;
+    private List<Tarifa> tarifaPlayaList;
 
-    private static List<Tarifa> promocionesPlayaList;
+    private List<Tarifa> promocionesPlayaList;
 
     private Integer id;
 
@@ -101,6 +103,10 @@ public class TarifaManagedBean implements Serializable {
     private String utilitarioPorMes;
     private String pickupPorMes;
     private String motoPorMes;
+    
+    //ATRIBUTO PARA EL FRONTEND
+    
+    private List<Tarifa> tarifaListSelected;
 
     public String addTarifaAdmin() {
 	try {
@@ -118,7 +124,7 @@ public class TarifaManagedBean implements Serializable {
 	    return LISTA_TARIFAS;
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo agregar la tarifa"
-		    + tarifaSelected.getPlaya().getNombreComercial(), "Por favor, intentelo mas tarde.");
+		    + tarifaSelected.getPlaya().getNombreComercial(), "Por favor, intételo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -137,7 +143,7 @@ public class TarifaManagedBean implements Serializable {
 	    FacesMessage message = new FacesMessage(
 		    FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo borrar la tarifa de la playa: " + tarifaSelected.getPlaya().getNombreComercial(),
-		    "Por favor, intentelo mas tarde.");
+		    "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	return ERROR;
@@ -146,7 +152,7 @@ public class TarifaManagedBean implements Serializable {
     public String addTarifas(){
 	this.setPlayaByLoggedUser();
 	this.setVigente(new Boolean(true));
-	this.setFechaAlta(new Date());
+	this.setFechaAlta(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 	
 	if (autoPorHora != null && !autoPorHora.toString().trim().isEmpty()){
 	    this.setTipoEstadia(getTipoEstadiaService().
@@ -299,7 +305,7 @@ public class TarifaManagedBean implements Serializable {
 	    /*
 	     * + "con categoría: " + tarifa.getCategoriaVehiculo().getNombre() + " y del tipo: " +
 	     * tarifa.getTipoEstadia().getNombre()
-	     */, "Por favor, intentelo mas tarde.");
+	     */, "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	    return false;
@@ -415,7 +421,7 @@ public class TarifaManagedBean implements Serializable {
     }
 
     public void setTarifaPlayaList(List<Tarifa> tarifaPlayaList) {
-	TarifaManagedBean.tarifaPlayaList = tarifaPlayaList;
+	this.tarifaPlayaList = tarifaPlayaList;
     }
 
     public Float getImporte() {
@@ -490,7 +496,7 @@ public class TarifaManagedBean implements Serializable {
 	return tarifaSelected;
     }
 
-    public static Playa getPlayaSelected() {
+    public Playa getPlayaSelected() {
 	return playaSelected;
     }
 
@@ -635,4 +641,23 @@ public class TarifaManagedBean implements Serializable {
 	this.motoPorMes = motoPorMes;
     }
 
+    public List<Tarifa> getTarifaListSelected() {
+	if(playaSelected != null){
+	    tarifaListSelected = getTarifaService().findTarifaVigenteByPlaya(playaSelected);
+	}
+	return tarifaListSelected;
+    }
+
+    public void setTarifaListSelected(List<Tarifa> tarifaListSelected) {
+        this.tarifaListSelected = tarifaListSelected;
+    }
+
+    public static void setTarifaSelected(Tarifa tarifaSelected) {
+        TarifaManagedBean.tarifaSelected = tarifaSelected;
+    }
+
+    public void setPlayaSelected(Playa playaSelected) {
+        TarifaManagedBean.playaSelected = playaSelected;
+    }
+    
 }

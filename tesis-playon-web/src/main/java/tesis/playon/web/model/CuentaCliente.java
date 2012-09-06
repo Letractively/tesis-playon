@@ -3,6 +3,8 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -37,7 +39,7 @@ public class CuentaCliente implements Serializable{
     private float saldo;
     
     @Column(name="fechaCreacion")
-    private Date fechaCreacion;
+    private Timestamp fechaCreacion;
     
     @OneToOne
     @JoinColumn(name="clienteID")
@@ -46,14 +48,14 @@ public class CuentaCliente implements Serializable{
     public CuentaCliente() {
 	super();
 	this.nroCuenta = (int) (Math.random() * 1000) + 1;
-	this.fechaCreacion = new Date();
+	this.fechaCreacion = new Timestamp(Calendar.getInstance().getTimeInMillis());
     }
 
     public CuentaCliente(float saldo, Date fechaCreacion, Cliente cliente) {
 	super();
 	this.nroCuenta = (int) (Math.random() * 1000) + 1;
 	this.saldo = saldo;
-	this.fechaCreacion = new Date();
+	this.fechaCreacion = new Timestamp(Calendar.getInstance().getTimeInMillis());
 	this.cliente = cliente;
     }
 
@@ -73,11 +75,11 @@ public class CuentaCliente implements Serializable{
         this.saldo = saldo;
     }
 
-    public Date getFechaCreacion() {
+    public Timestamp getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(Timestamp fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 

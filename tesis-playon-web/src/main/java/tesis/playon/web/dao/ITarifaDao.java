@@ -16,4 +16,6 @@ public interface ITarifaDao {
     List<Tarifa> findByPlaya(Playa playa);
 
     List<Tarifa> findAll();
+    
+    List<Tarifa> findTarifaVigenteByPlaya(Playa playa);
 }

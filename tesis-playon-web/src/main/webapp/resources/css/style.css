@@ -15,7 +15,8 @@ Released   : 20120624
 
 a {
 	text-decoration: underline;
-	color: #0F8C8C;
+	/*color: #0F8C8C;*/
+	color: #1045B4;
 }
 
 a:hover {

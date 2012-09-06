@@ -100,18 +100,21 @@
 				</p:cellEditor>
 			</p:column>
 
-			<p:column headerText="Opciones" style="text-align:center; width:50px;">
+			<p:column headerText="Opciones"
+				style="text-align:center; width:50px;">
 				<p:commandLink id="verTarifa" title="Ver tarifas"
 					action="tarifaplayalist.html?faces-redirect=true" ajax="false">
 					<f:setPropertyActionListener value="#{playa}"
 						target="#{tarifaMB.playaSelected}" />
 					<h:graphicImage library="images/icons" name="tag.png" />
 				</p:commandLink>
-				
+
 				<p:commandLink id="verPerfil" title="Ver perfil"
 					action="viewperfilplaya.html?faces-redirect=true" ajax="false">
 					<f:setPropertyActionListener value="#{playa}"
 						target="#{perfilPlayaMB.playaSelected}" />
+					<f:setPropertyActionListener value="#{playa}"
+						target="#{tarifaMB.playaSelected}" />
 					<h:graphicImage library="images/icons" name="go.png" />
 				</p:commandLink>
 			</p:column>

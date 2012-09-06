@@ -40,20 +40,39 @@ public class TarifaDao implements ITarifaDao {
 
     public List<Tarifa> findByPlaya(Playa playa) {
 	List<Tarifa> tarifas = new ArrayList<Tarifa>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa where playa=? and vigente = 1")
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa where playa=?")
 		.setParameter(0, playa).list();
-	for (Object object : list) {
-	    tarifas.add((Tarifa) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		tarifas.add((Tarifa) object);
+	    }
+	    return tarifas;
 	}
-	return tarifas;
+	return null;
     }
 
     public List<Tarifa> findAll() {
 	List<Tarifa> tarifas = new ArrayList<Tarifa>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa").list();
-	for (Object object : list) {
-	    tarifas.add((Tarifa) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		tarifas.add((Tarifa) object);
+	    }
+	    return tarifas;
 	}
-	return tarifas;
+	return null;
+    }
+    
+    public List<Tarifa> findTarifaVigenteByPlaya(Playa playa){
+	List<Tarifa> tarifas = new ArrayList<Tarifa>();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa where playa=? and vigente = 1")
+		.setParameter(0, playa).list();
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		tarifas.add((Tarifa) object);
+	    }
+	    return tarifas;
+	}
+	return null;
     }
 }
