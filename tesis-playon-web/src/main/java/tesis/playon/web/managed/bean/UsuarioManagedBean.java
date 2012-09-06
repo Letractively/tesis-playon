@@ -12,10 +12,12 @@ import javax.faces.context.FacesContext;
 
 import org.springframework.dao.DataAccessException;
 
+import tesis.playon.web.model.Mail;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IUsuarioService;
+import tesis.playon.web.util.NotificadorUtil;
 
 @ManagedBean(name = "usuarioMB")
 @RequestScoped
@@ -64,34 +66,31 @@ public class UsuarioManagedBean implements Serializable {
 	    usuario.setPlaya(getPlaya());
 	    usuario.setEnable(new Boolean("true"));
 	    getUsuarioService().save(usuario);
-	    
+
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agreg√≥ correctamente el usuario: "
 		    + usuario.getNombreUser() + " " + usuario.getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_USUARIOS;
 
-	}
-	catch (DataAccessException e) {
+	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo agregar el usuario: " + usuario.getNombreUser(),
 		    "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
-	}
-    catch (Exception e) {
+	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo agregar el usuario. Nombre de usuario o mail Duplicados",
-		    "Usuario duplicado");
-	   FacesContext.getCurrentInstance().addMessage(null, message);	    
+		    "Error, no se pudo agregar el usuario. Nombre de usuario o mail Duplicados", "Usuario duplicado");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
-	
+
 	return ERROR;
     }
 
     public String deleteUsuarioAdmin() {
-	Usuario usuario = usuarioSelected;	
+	Usuario usuario = usuarioSelected;
 	try {
-	    
+
 	    usuario.setEnable(new Boolean("false"));
 
 	    getUsuarioService().update(usuario);
@@ -132,8 +131,34 @@ public class UsuarioManagedBean implements Serializable {
 	return ERROR;
     }
 
+    public void recuperarPass()
+
+    {
+
+	try {
+	    Usuario usu = new Usuario();
+	    usu = getUsuarioService().findByNombreUsuario(getNombreUser());
+	    Mail mail = new Mail();
+	    NotificadorUtil notificador = new NotificadorUtil();
+	    mail.setAsunto("ContraseÒa de Playon - Red de plaayas");
+	    mail.setDestinatario(usu.getEmail());
+	    mail.setMensaje("Estimado: " + usu.getNombre()
+		    + " su contraseÒa de Playon - Red de playas es la siguiente: " + usu.getPassword());
+	    notificador.enviar(mail);
+	}
+
+	catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error el usuario no existe, Por favor, int√©ntelo m√°s tarde.", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
+
+	}
+
+    }
+
     public String modificarUsuarioAdmin(Usuario usuario) {
-    	usuarioSelected = usuario;
+	usuarioSelected = usuario;
 	return "usuarioeditadmin";
     }
 
@@ -235,5 +260,5 @@ public class UsuarioManagedBean implements Serializable {
     public void setUsuarioSelected(Usuario usuarioSelected) {
 	UsuarioManagedBean.usuarioSelected = usuarioSelected;
     }
-      
+
 }
