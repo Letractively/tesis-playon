@@ -1,0 +1,72 @@
+<ui:composition template="../template/templatePlaya.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="loadmenuperfil" value="true" />
+
+
+	<ui:define name="title">
+		Perfil de playa
+    </ui:define>
+
+	<ui:define name="content">
+		<h1>Comentarios a mi playa</h1>
+		<div>
+			<p:dataTable id="comentarios" value="#{comentarioMB.comentariosList}"
+				var="comentario"
+				emptyMessage="No existen comentarios en esta playa de estacionamiento">
+
+				<p:column headerText="Cliente" style="width:80px;">
+					<div align="center">
+						<h:graphicImage library="fotos_perfil_clientes"
+							name="#{comentario.cliente.nroCliente}.jpg"
+							style="width:75px; height:75px; border: 2px solid black"
+							rendered="#{comentario.cliente.fotoPerfil != null}" />
+						<h:graphicImage library="fotos_perfil_clientes" name="sinfoto.jpg"
+							style="width:75px; height:75px; border: 2px solid black"
+							rendered="#{comentario.cliente.fotoPerfil == null}" />
+						<h:outputText value="#{comentario.fecha}" />
+					</div>
+				</p:column>
+
+				<p:column headerText="Comentario">
+					<div id="perfil-playa-frente">
+						<p>#{comentario.comentario}</p>
+					</div>
+				</p:column>
+			</p:dataTable>
+			<h:form>
+				<p:panelGrid columns="2">
+					<p:column style="width:80px;">
+						<div align="center" style="width: 80px;">
+							<h:graphicImage library="fotos_perfil_clientes"
+								name="sinfoto.jpg"
+								style="width:75px; height:75px; border: 2px solid black" />
+							<h:outputText value="#{comentario.fecha}" />
+						</div>
+					</p:column>
+
+					<p:column>
+						<div id="perfil-playa-frente" style="width: 542px;">
+							<p:inputTextarea id="comentario" value="#{comentarioMB.comentario}"
+								style="width:530px;" styleClass="contenido-textarea" />
+						</div>
+						<div align="right">
+							<h:commandButton id="enviarComentario" value="Enviar comentario"
+								action="#{comentarioMB.addComentario}"
+								style="margin:5px 0 0 5px" />
+						</div>
+					</p:column>
+				</p:panelGrid>
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" /> 
+			</h:form>
+		</div>
+		<div align="center">
+		<br />
+			<p>Todos los comentarios han pasado por una auditoría previa.</p>
+		</div>
+	</ui:define>
+</ui:composition>

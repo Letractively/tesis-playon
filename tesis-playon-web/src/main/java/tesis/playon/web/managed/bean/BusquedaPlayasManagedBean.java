@@ -18,14 +18,17 @@ import org.primefaces.model.map.Marker;
 import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.EstadoPlaya;
+import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.service.IBarrioService;
 import tesis.playon.web.service.IEstadoPlayaService;
+import tesis.playon.web.service.IPerfilPlayaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IRolUsuarioService;
 import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.util.LatitudlongitudUtil;
 import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
+import tesis.playon.web.util.WriteImage;
 
 @ManagedBean(name = "busquedaplayaMB")
 @RequestScoped
@@ -38,11 +41,14 @@ public class BusquedaPlayasManagedBean implements Serializable {
     private static final String ERROR = "error";
 
     private MapModel simpleModel;
-    private final MapModel advancedModel = new DefaultMapModel();
+    private static final MapModel advancedModel = new DefaultMapModel();
     private Marker marker;
 
     @ManagedProperty(value = "#{PlayaService}")
     IPlayaService playaService;
+    
+    @ManagedProperty(value = "#{PerfilPlayaService}")
+    IPerfilPlayaService perfilPlayaService;
 
     @ManagedProperty(value = "#{EstadoPlayaService}")
     IEstadoPlayaService estadoPlayaService;
@@ -115,6 +121,14 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     public void setRolUsuarioService(IRolUsuarioService rolUsuarioService) {
 	this.rolUsuarioService = rolUsuarioService;
+    }
+
+    public IPerfilPlayaService getPerfilPlayaService() {
+        return perfilPlayaService;
+    }
+
+    public void setPerfilPlayaService(IPerfilPlayaService perfilPlayaService) {
+        this.perfilPlayaService = perfilPlayaService;
     }
 
     public LatitudlongitudUtil getLatLonUtil() {
@@ -293,10 +307,14 @@ public class BusquedaPlayasManagedBean implements Serializable {
 		    if (comparacion < getDistancia() && playaAux.getEstado().getId() == 2) {
 			playaResultadoBusqueda.add(playaAux);
 			LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
-			advancedModel.addOverlay(new Marker(coord1, playaAux.toString2(), null,
+			PerfilPlaya perfil = new PerfilPlaya();
+			perfil = getPerfilPlayaService().findByPlaya(playaAux);
+			WriteImage.getFotoPerfil(perfil);
+			advancedModel.addOverlay(new Marker(coord1, playaAux.toString2(), perfil.getNombreFoto(),
 				"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
 		    }
 		    LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
+		    
 		    advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
 			    "http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
 

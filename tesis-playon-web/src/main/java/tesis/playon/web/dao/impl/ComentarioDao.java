@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IComentarioDao;
 import tesis.playon.web.model.Comentario;
+import tesis.playon.web.model.Playa;
 
 /**
  * 
@@ -37,13 +38,29 @@ public class ComentarioDao implements IComentarioDao {
 	getSessionFactory().getCurrentSession().delete(comentario);
     }
 
+    public List<Comentario> findByPlaya(Playa playa) {
+	List<Comentario> comentarios = new ArrayList<Comentario>();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Comentario where playa=? and habilitado=1")
+		.setParameter(0, playa).list();
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		comentarios.add((Comentario) object);
+	    }
+	    return comentarios;
+	}
+	return null;
+    }
+
     public List<Comentario> findAll() {
 	List<Comentario> comentarios = new ArrayList<Comentario>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Comentario").list();
-	for (Object object : list) {
-	    comentarios.add((Comentario) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		comentarios.add((Comentario) object);
+	    }
+	    return comentarios;
 	}
-	return comentarios;
+	return null;
     }
 
 }

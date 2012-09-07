@@ -52,3 +52,10 @@
 	background: url("#{resource['images:comment.png']}") no-repeat;
 	margin: 5px 5px 5px 5px;
 }
+
+.contenido-textarea{
+	font-size:15px;
+	font-style:italic;
+	color:#707070;
+	margin: 5px 10px 5px 10px;
+}

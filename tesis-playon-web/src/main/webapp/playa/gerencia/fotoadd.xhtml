@@ -25,7 +25,7 @@
 						<div align="right">
 							<h:outputText value="#{image.nombre}" />
 							<br />
-							<p:commandLink value="eliminar" action="#{perfilPlayaMB.deleteFoto}"
+							<p:commandLink value="Eliminar foto" action="#{perfilPlayaMB.deleteFoto}"
 								ajax="false">
 								<f:setPropertyActionListener value="#{image}"
 									target="#{perfilPlayaMB.fotoSelected}" />
@@ -47,16 +47,7 @@
 				</p:fileUpload>
 				<p:growl id="messages" showDetail="true" />
 				<br />
-				<h:panelGrid columns="4">
-					<h:outputText value="titulo: " />
-					<p:inputText id="título" value="#{perfilPlayaMB.title}"
-						style="margin-right: 25px" />
-
-					<h:outputText value="descripción:  " />
-					<p:inputText id="descripcion" value="#{perfilPlayaMB.descripcion}" />
-				</h:panelGrid>
 			</h:form>
 		</div>
-
 	</ui:define>
 </ui:composition>

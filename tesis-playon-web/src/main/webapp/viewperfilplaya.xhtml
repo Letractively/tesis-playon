@@ -101,21 +101,33 @@
 					</h:panelGrid>
 				</p:tab>
 				<p:tab title="Comentarios">
+					<p:dataTable id="comentarios" value="#{perfilPlayaMB.comentariosListSelected}" var="comentario" 
+						emptyMessage="No existen comentarios en esta playa de estacionamiento">
+						
+						<p:column headerText="Cliente">
+							<div>
+								<h:graphicImage library="fotos_perfil_clientes"
+									name="#{comentario.cliente.nroCliente}.jpg"
+									style="width:75px; height:75px; border: 2px solid black"
+									rendered="#{comentario.cliente.fotoPerfil != null}" />
+								<h:graphicImage library="fotos_perfil_clientes" name="sinfoto.jpg"
+									style="width:75px; height:75px; border: 2px solid black"
+									rendered="#{comentario.cliente.fotoPerfil == null}" />
+							</div>
+						</p:column>
+
+						<p:column headerText="Comentario">
+							<div id="perfil-playa-frente">
+								<p>#{comentario.comentario}</p>
+							</div>
+						</p:column>
+					</p:dataTable>
 					<h:panelGrid columns="2">
 						<p:column>
-							<div>
-								<h:graphicImage library="fotos_perfil_playas"
-									name="#{perfilPlayaMB.perfilSelected.nombreFoto}"
-									style="width:75px; height:75px; border: 2px solid black"
-									rendered="#{perfilPlayaMB.perfilSelected.nombreFoto != null}" />
-								<h:graphicImage library="fotos_perfil_playas" name="sinfoto.jpg"
-									style="width:75px; height:75px; border: 2px solid black"
-									rendered="#{perfilPlayaMB.perfilSelected.nombreFoto == null}" />
-							</div>
+							
 						</p:column>
 						<p:column>
 							<div id="perfil-playa-frente">
-								<p>aqui iran los comentarios que tenga las playas</p>
 							</div>
 						</p:column>
 					</h:panelGrid>

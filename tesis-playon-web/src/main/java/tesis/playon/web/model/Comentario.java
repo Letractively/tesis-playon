@@ -3,7 +3,8 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,10 +34,10 @@ public class Comentario implements Serializable {
     private Integer id;
 
     @Column(name = "fecha")
-    private Date fecha;
+    private Timestamp fecha;
 
     @Column(name = "calificacion")
-    private int calificacion;
+    private Integer calificacion;
 
     @Column(name = "comentario")
     private String comentario;
@@ -53,20 +54,17 @@ public class Comentario implements Serializable {
     @JoinColumn(name = "clienteID")
     private Cliente cliente;
 
-    @Column(name = "patente")
-    private String patente;
-
-    public Comentario(Cliente cliente, String comentario, Playa playa, boolean habilitado, int calificacion, Date fecha) {
-	this.fecha = fecha;
+    public Comentario(Cliente cliente, String comentario, Playa playa, boolean habilitado, Integer calificacion) {
 	this.cliente = cliente;
 	this.comentario = comentario;
 	this.playa = playa;
 	this.habilitado = habilitado;
-	this.fecha = fecha;
+	this.fecha = new Timestamp(Calendar.getInstance().getTimeInMillis());
     }
 
     public Comentario() {
 	// TODO Auto-generated constructor stub
+	this.fecha = new Timestamp(Calendar.getInstance().getTimeInMillis());
     }
 
     public Integer getId() {
@@ -77,11 +75,11 @@ public class Comentario implements Serializable {
 	this.id = id;
     }
 
-    public Date getFecha() {
+    public Timestamp getFecha() {
 	return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Timestamp fecha) {
 	this.fecha = fecha;
     }
 
@@ -117,20 +115,12 @@ public class Comentario implements Serializable {
 	this.habilitado = habilitado;
     }
 
-    public int getCalificacion() {
+    public Integer getCalificacion() {
 	return calificacion;
     }
 
-    public void setCalificacion(int calificacion) {
+    public void setCalificacion(Integer calificacion) {
 	this.calificacion = calificacion;
-    }
-
-    public String getPatente() {
-	return patente;
-    }
-
-    public void setPatente(String patente) {
-	this.patente = patente;
     }
 
     public boolean equals(Object object) {

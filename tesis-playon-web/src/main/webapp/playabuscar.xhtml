@@ -10,44 +10,58 @@
 			listener="#{busquedaplayaMB.preRenderView}" />
 
 		<p:growl id="messages" />
-		<table style="margin-left: 100px;">
-			<tr>
-				<td><h:outputLabel for="direccionBusqueda"
-						value="Dirección de búsqueda: " /></td>
-				<td><p:inputText id="direccionBusqueda"
+		<div align="center">
+			<h:panelGrid columns="3" cellspacing="10">
+				<p:column>
+					<h:outputLabel for="direccionBusqueda"
+						value="Dirección de búsqueda: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="direccionBusqueda"
 						value="#{busquedaplayaMB.direccionBusqueda}" required="true"
 						requiredMessage="Debe colocar una dirección">
 						<p:ajax event="blur" update="direccionBusquedaMsg" />
-					</p:inputText></td>
-				<td><p:message id="direccionBusquedaMsg"
-						for="direccionBusqueda" display="icon" /></td>
-			</tr>
-			<tr>
-				<td><h:outputLabel for="distancia"
+					</p:inputText>
+				</p:column>
+				<p:column>
+					<p:message id="direccionBusquedaMsg" for="direccionBusqueda"
+						display="icon" />
+				</p:column>
+
+				<p:column style="vertical-align: center;">
+					<h:outputLabel for="distancia"
 						value="Ingrese la cantidad de cuadras: " />
-					<p /></td>
-				<td><h:panelGrid columns="1" style="margin-bottom:10px">
-						<p:inputText id="distancia" value="#{busquedaplayaMB.distancia}" />
-						<p:slider for="distancia" minValue="1" maxValue="50" />
-					</h:panelGrid></td>
-				<td></td>
-			</tr>
-			<tr style="text-align: right;">
-				<td colspan="3"><p:commandButton id="btnBuscarId"
-						update="playas" value="Buscar"
-						action="#{busquedaplayaMB.buscarPlaya}" ajax="false" /></td>
-			</tr>
-		</table>
-		<p></p>
+				</p:column>
+				<p:column>
+					<p:inputText id="distancia" value="#{busquedaplayaMB.distancia}" />
+				</p:column>
+				<p:column></p:column>
+
+				<p:column></p:column>
+				<p:column>
+					<p:slider for="distancia" minValue="1" maxValue="50" />
+				</p:column>
+				<p:column></p:column>
+
+				<p:column></p:column>
+				<p:column>
+					<div align="right">
+						<p:commandButton id="btnBuscarId" update="playas" value="Buscar"
+							action="#{busquedaplayaMB.buscarPlaya}" ajax="false" />
+					</div>
+				</p:column>
+				<p:column></p:column>
+			</h:panelGrid>
+		</div>
 		<p></p>
 
 		<p:dataTable id="playas" var="playa" paginator="true"
 			paginatorPosition="bottom" rows="5"
-			emptyMessage="¡No existen playas!" style="width: 100%"
+			emptyMessage="¡No existen playas!"
 			value="#{busquedaplayaMB.playaResultadoBusqueda}">
 
 			<f:facet name="header">
-				Playas encontradas
+				Playas de estacionamiento encontradas
             	</f:facet>
 
 			<p:column headerText="Nombre Comercial" styleClass="column-font">
@@ -63,41 +77,15 @@
 			</p:column>
 
 			<p:column headerText="Barrio" styleClass="column-font">
-				<p:cellEditor>
-					<f:facet name="output">
-						<h:outputText value="#{playa.barrio.nombre}" />
-					</f:facet>
-					<f:facet name="input">
-						<h:selectOneMenu value="#{playa.barrio}">
-							<f:selectItems value="#{barrioMB.barrioList}" var="barrio"
-								itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
-							<f:converter converterId="barrioConverter" />
-						</h:selectOneMenu>
-					</f:facet>
-				</p:cellEditor>
+				<h:outputText value="#{playa.barrio.nombre}" />
 			</p:column>
 
 			<p:column headerText="Domicilio" styleClass="column-font">
-				<p:cellEditor>
-					<f:facet name="output">
-						<h:outputText value="#{playa.domicilio}" />
-					</f:facet>
-					<f:facet name="input">
-						<p:inputText value="#{playa.domicilio}" styleClass="input-font" />
-					</f:facet>
-				</p:cellEditor>
+				<h:outputText value="#{playa.domicilio}" />
 			</p:column>
 
 			<p:column headerText="Disponibilidad" styleClass="column-font">
-				<p:cellEditor>
-					<f:facet name="output">
-						<h:outputText value="#{playa.disponibilidad}" />
-					</f:facet>
-					<f:facet name="input">
-						<p:inputText value="#{playa.disponibilidad}"
-							styleClass="input-font" />
-					</f:facet>
-				</p:cellEditor>
+				<h:outputText value="#{playa.disponibilidad}" />
 			</p:column>
 
 			<p:column headerText="Opciones"
@@ -115,6 +103,8 @@
 						target="#{perfilPlayaMB.playaSelected}" />
 					<f:setPropertyActionListener value="#{playa}"
 						target="#{tarifaMB.playaSelected}" />
+					<f:setPropertyActionListener value="#{playa}"
+						target="#{comentarioMB.playaSelected}" />
 					<h:graphicImage library="images/icons" name="go.png" />
 				</p:commandLink>
 			</p:column>
@@ -122,7 +112,7 @@
 		</p:dataTable>
 		<p></p>
 		<p></p>
-		<h:body style="width: 100%">
+		<div>
 			<f:view contentType="text/html">
 				<h1>Playas encontradas:</h1>
 				<script src="http://maps.google.com/maps/api/js?sensor=false"
@@ -135,25 +125,27 @@
 					<p:ajax event="overlaySelect"
 						listener="#{busquedaplayaMB.onMarkerSelect}" />
 
-					<p:gmapInfoWindow height="10">
-						<p:outputPanel>
-							<!-- 								<p:graphicImage -->
-							<!-- 									value="http://montehermoso.porinternet.com.ar/complejo/moriscos/cochera1.jpg" -->
-							<!-- 									height="150" /> -->
-							<h:outputText value="#{busquedaplayaMB.marker.title}" height="4" />
+					<p:gmapInfoWindow>
+						<p:outputPanel
+							style="text-align:center;display:block;margin:auto; width:220px">
+							<h:graphicImage library="fotos_perfil_playas"
+								name="#{busquedaplayaMB.marker.data}"
+								style="height:150px; width:150px"
+								rendered="#{busquedaplayaMB.marker.data != null}" />
+								<h:graphicImage library="fotos_perfil_playas"
+								name="sinfoto.jpg"
+								style="height:150px; width:150px"
+								rendered="#{busquedaplayaMB.marker.data == null}" />
+							<br />
+							<h:outputText value="#{busquedaplayaMB.marker.title}" />
 
 						</p:outputPanel>
 
 					</p:gmapInfoWindow>
 				</p:gmap>
-
-				<!-- 					<p:gmap center="#{busquedaplayaMB.coordenadas}" zoom="15" type="ROADMAP" -->
-				<!-- 						style="width:600px;height:400px" model="#{busquedaplayaMB.simpleModel}" /> -->
 			</f:view>
-		</h:body>
+		</div>
 	</h:form>
-
-
 </ui:composition>
 
 
