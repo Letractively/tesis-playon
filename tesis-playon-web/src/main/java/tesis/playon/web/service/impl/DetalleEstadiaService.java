@@ -17,7 +17,7 @@ import tesis.playon.web.service.IDetalleEstadiaService;
 public class DetalleEstadiaService implements IDetalleEstadiaService {
 
     IDetalleEstadiaDao detalleEstadiaDao;
-    
+
     @Transactional(readOnly = false)
     @Override
     public void save(DetalleEstadia detalleEstadia) {
@@ -40,17 +40,13 @@ public class DetalleEstadiaService implements IDetalleEstadiaService {
     public List<DetalleEstadia> findAll() {
 	return getDetalleEstadiaDao().findAll();
     }
-    
+
     public IDetalleEstadiaDao getDetalleEstadiaDao() {
-        return detalleEstadiaDao;
+	return detalleEstadiaDao;
     }
 
     public void setDetalleEstadiaDao(IDetalleEstadiaDao detalleEstadiaDao) {
-        this.detalleEstadiaDao = detalleEstadiaDao;
+	this.detalleEstadiaDao = detalleEstadiaDao;
     }
-
-    
-
-    
 
 }

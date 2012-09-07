@@ -26,7 +26,9 @@ import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.ICargoEmpleadoService;
 import tesis.playon.web.service.ICuentaClienteService;
 import tesis.playon.web.service.ICuentaPlayaService;
+import tesis.playon.web.service.IDetalleEstadiaService;
 import tesis.playon.web.service.IEmpleadoService;
+import tesis.playon.web.service.IEstadiaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.service.IVehiculoService;
@@ -58,8 +60,11 @@ public class IngresoEgresoManagedBean implements Serializable {
     @ManagedProperty(value = "#{VehiculoService}")
     IVehiculoService vehiculoService;
 
-    // @ManagedProperty(value = "#{MarcaVehiculoService}")
-    // IMarcaVehiculoService marcaVehiculoService;
+    @ManagedProperty(value = "#{EstadiaService}")
+    IEstadiaService estadiaService;
+
+    @ManagedProperty(value = "#{DetalleEstadiaService}")
+    IDetalleEstadiaService detalleEstadiaService;
 
     private Usuario usuario;
 
@@ -109,14 +114,19 @@ public class IngresoEgresoManagedBean implements Serializable {
 	}
 	if (null != playa) {
 	    setCuentaPlaya(getCuentaPlayaService().findByPlaya(playa));
-	    if (null != cuentaPlaya)
-		System.out.println("\n\n\nCuenta de playa: " + cuentaPlaya.toString() + "\n\n\n");
+	    setEstadia(getEstadiaService().findByPlaya(playa));
 	}
 	if (null == cuentaPlaya) {
 	    // la cuenta aun no existe y debe ser creada
 	    cuentaPlaya = new CuentaPlaya(playa);
 	    if (null != cuentaPlaya)
 		getCuentaPlayaService().save(cuentaPlaya);
+	}
+	if (null == estadia) {
+	    // la estadia aun no existe y debe ser creada
+	    estadia = new Estadia(playa);
+	    if (null != cuentaPlaya)
+		getEstadiaService().save(estadia);
 	}
 	setCargoEmpleado(empleado.getCargoEmpleado());
     }
@@ -140,9 +150,9 @@ public class IngresoEgresoManagedBean implements Serializable {
     }
 
     public void registrarIngresoVehiculo() {
-	long timeNow = Calendar.getInstance().getTimeInMillis();
-	Timestamp ts = new Timestamp(timeNow);
-	System.out.println("\n\n\nHora de entrada: " + ts + "\n\n\n");
+	Timestamp fechaHoraIngreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
+	detalleEstadia = new DetalleEstadia(estadia, vehiculo, empleado, fechaHoraIngreso);
+	getDetalleEstadiaService().save(detalleEstadia);
     }
 
     public void registrarEgresoVehiculo() {
@@ -216,13 +226,21 @@ public class IngresoEgresoManagedBean implements Serializable {
 	this.vehiculoService = vehiculoService;
     }
 
-    // public IMarcaVehiculoService getMarcaVehiculoService() {
-    // return marcaVehiculoService;
-    // }
-    //
-    // public void setMarcaVehiculoService(IMarcaVehiculoService marcaVehiculoService) {
-    // this.marcaVehiculoService = marcaVehiculoService;
-    // }
+    public IEstadiaService getEstadiaService() {
+	return estadiaService;
+    }
+
+    public void setEstadiaService(IEstadiaService estadiaService) {
+	this.estadiaService = estadiaService;
+    }
+
+    public IDetalleEstadiaService getDetalleEstadiaService() {
+	return detalleEstadiaService;
+    }
+
+    public void setDetalleEstadiaService(IDetalleEstadiaService detalleEstadiaService) {
+	this.detalleEstadiaService = detalleEstadiaService;
+    }
 
     public Usuario getUsuario() {
 	return usuario;

@@ -3,11 +3,12 @@ package tesis.playon.web.service;
 import java.util.List;
 
 import tesis.playon.web.model.Estadia;
+import tesis.playon.web.model.Playa;
 
 /**
  * 
  * @author gmorales
- *
+ * 
  */
 public interface IEstadiaService {
 
@@ -18,5 +19,7 @@ public interface IEstadiaService {
     void delete(Estadia estadia);
 
     List<Estadia> findAll();
+
+    Estadia findByPlaya(Playa playa);
 
 }

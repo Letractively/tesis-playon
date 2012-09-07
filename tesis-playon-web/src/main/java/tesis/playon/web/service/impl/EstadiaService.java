@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IEstadiaDao;
 import tesis.playon.web.model.Estadia;
+import tesis.playon.web.model.Playa;
 import tesis.playon.web.service.IEstadiaService;
 
 /**
@@ -17,7 +18,7 @@ import tesis.playon.web.service.IEstadiaService;
 public class EstadiaService implements IEstadiaService {
 
     IEstadiaDao estadiaDao;
-    
+
     @Transactional(readOnly = false)
     @Override
     public void save(Estadia estadia) {
@@ -41,12 +42,17 @@ public class EstadiaService implements IEstadiaService {
 	return getEstadiaDao().findAll();
     }
 
+    @Override
+    public Estadia findByPlaya(Playa playa) {
+	return getEstadiaDao().findByPlaya(playa);
+    }
+
     public IEstadiaDao getEstadiaDao() {
-        return estadiaDao;
+	return estadiaDao;
     }
 
     public void setEstadiaDao(IEstadiaDao estadiaDao) {
-        this.estadiaDao = estadiaDao;
+	this.estadiaDao = estadiaDao;
     }
 
 }

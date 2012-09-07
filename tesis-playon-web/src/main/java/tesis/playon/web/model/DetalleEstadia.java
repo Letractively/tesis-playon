@@ -3,7 +3,7 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,10 +30,10 @@ public class DetalleEstadia implements Serializable {
     private Integer id;
 
     @Column(name = "fechaHoraEgreso")
-    private Date fechaHoraEgreso;
+    private Timestamp fechaHoraEgreso;
 
     @Column(name = "fechaHoraIngreso")
-    private Date fechaHoraIngreso;
+    private Timestamp fechaHoraIngreso;
 
     @Column(name = "importeTotal")
     private float importeTotal;
@@ -67,34 +67,27 @@ public class DetalleEstadia implements Serializable {
 	super();
     }
 
-    public DetalleEstadia(Date fechaHoraEgreso, Date fechaHoraIngreso, float importeTotal,
-	    TransaccionCliente transaccionCliente, Empleado empleado, Vehiculo vehiculo, Estadia estadia,
-	    Tarifa tarifa, Promocion promocion) {
+    public DetalleEstadia(Estadia estadia, Vehiculo vehiculo, Empleado empleado, Timestamp fechaHoraIngreso) {
 	super();
-	this.fechaHoraEgreso = fechaHoraEgreso;
-	this.fechaHoraIngreso = fechaHoraIngreso;
-	this.importeTotal = importeTotal;
-	this.transaccionCliente = transaccionCliente;
-	this.empleado = empleado;
-	this.vehiculo = vehiculo;
 	this.estadia = estadia;
-	this.tarifa = tarifa;
-	this.promocion = promocion;
+	this.vehiculo = vehiculo;
+	this.empleado = empleado;
+	this.fechaHoraIngreso = fechaHoraIngreso;
     }
 
-    public Date getFechaHoraEgreso() {
+    public Timestamp getFechaHoraEgreso() {
 	return fechaHoraEgreso;
     }
 
-    public void setFechaHoraEgreso(Date fechaHoraEgreso) {
+    public void setFechaHoraEgreso(Timestamp fechaHoraEgreso) {
 	this.fechaHoraEgreso = fechaHoraEgreso;
     }
 
-    public Date getFechaHoraIngreso() {
+    public Timestamp getFechaHoraIngreso() {
 	return fechaHoraIngreso;
     }
 
-    public void setFechaHoraIngreso(Date fechaHoraIngreso) {
+    public void setFechaHoraIngreso(Timestamp fechaHoraIngreso) {
 	this.fechaHoraIngreso = fechaHoraIngreso;
     }
 
