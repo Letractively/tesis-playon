@@ -761,12 +761,12 @@ DROP TABLE IF EXISTS `detalle_estadia`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `detalle_estadia` (
   `transaccionClienteID` int(11) DEFAULT NULL,
-  `empleadoID` int(11) DEFAULT NULL,
+  `empleadoID` int(11) NOT NULL,
   `fechaHoraEgreso` datetime DEFAULT NULL,
   `fechaHoraIngreso` datetime DEFAULT NULL,
   `importeTotal` float DEFAULT NULL,
   `promocionID` int(11) DEFAULT NULL,
-  `tarifaID` int(11) NOT NULL,
+  `tarifaID` int(11) DEFAULT NULL,
   `vehiculoID` int(11) NOT NULL,
   `detalleEstadiaID` int(11) NOT NULL auto_increment,
   `estadiaID` int(11) NOT NULL,
