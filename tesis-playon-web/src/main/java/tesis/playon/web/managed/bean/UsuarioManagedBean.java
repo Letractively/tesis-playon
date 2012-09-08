@@ -131,12 +131,12 @@ public class UsuarioManagedBean implements Serializable {
 	return ERROR;
     }
 
-    public void recuperarPass()
+    public String recuperarPass()
 
     {
-
+	 Usuario usu = new Usuario();
 	try {
-	    Usuario usu = new Usuario();
+	   
 	    usu = getUsuarioService().findByNombreUsuario(getNombreUser());
 	    Mail mail = new Mail();
 	    NotificadorUtil notificador = new NotificadorUtil();
@@ -145,6 +145,11 @@ public class UsuarioManagedBean implements Serializable {
 	    mail.setMensaje("Estimado: " + usu.getNombre()
 		    + " su contraseña de Playon - Red de playas es la siguiente: " + usu.getPassword());
 	    notificador.enviar(mail);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se envio correctamente su contraseña: "
+		    + usu.getApellido() + " " + usu.getNombre(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    
+	    return "recuperarpasswordend";
 	}
 
 	catch (DataAccessException e) {
@@ -152,8 +157,9 @@ public class UsuarioManagedBean implements Serializable {
 		    "Error el usuario no existe, Por favor, intÃ©ntelo mÃ¡s tarde.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
-
+	    
 	}
+	return "ERROR";
 
     }
 
