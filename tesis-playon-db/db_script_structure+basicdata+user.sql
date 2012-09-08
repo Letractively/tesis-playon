@@ -230,7 +230,7 @@ CREATE TABLE `playa` (
   `telefono` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `estadoPlayaID` int(11) NOT NULL,
-  `nombreComercial` varchar(50) NOT NULL,
+  `nombreComercial` varchar(100) NOT NULL,
   `latitud` DOUBLE DEFAULT NULL,
   `longitud` DOUBLE DEFAULT NULL,
   `razonSocial` varchar(50) DEFAULT NULL,
@@ -446,17 +446,34 @@ DROP TABLE IF EXISTS `perfil_playa`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `perfil_playa` (
   `descripcion` text DEFAULT NULL,
-  `nombreComercial` varchar(50) NOT NULL,
   `perfilPlayaID` int(11) NOT NULL auto_increment,
   `playaID` int(11) NOT NULL,
   `fotoPerfil` MEDIUMBLOB DEFAULT NULL,
   `nombreFoto` varchar(50) DEFAULT NULL,
-  `cantidadVotantes` int(11) DEFAULT NULL,
-  `totalCalificaciones` int(11) DEFAULT NULL,
   PRIMARY KEY (`perfilPlayaID`),
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_perfil_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Esta clase va a contener todos los datos del perfil de la playa que se muestra en el sitio: fotos, nombre para mostrar, descripción, etc.    ';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `calificacion`
+--
+
+DROP TABLE IF EXISTS `calificacion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `calificacion` (
+  `calificacionID` int(11) NOT NULL auto_increment,
+  `playaID` int(11) NOT NULL,
+  `clienteID` int(11) NOT NULL,
+  `calificacion` int(2) NOT NULL,
+  PRIMARY KEY (`calificacionID`),
+  KEY `playaID` (`playaID`),
+  KEY `clienteID` (`clienteID`),
+  CONSTRAINT `FK_calificacion_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
+  CONSTRAINT `FK_calificacion_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -576,6 +593,7 @@ CREATE TABLE `usuario` (
   `nroDoc` varchar(50) DEFAULT NULL,
   `enable` tinyint(1) DEFAULT 1,
   `playaID` int(11) DEFAULT NULL,
+  `fotoPerfil` MEDIUMBLOB DEFAULT NULL,
   PRIMARY KEY (`usuarioID`),
   KEY `tipoDocID` (`tipoDocID`),
   CONSTRAINT `FK_usuario_tipo_doc` FOREIGN KEY (`tipoDocID`) REFERENCES `tipo_doc` (`tipoDocID`),
@@ -706,7 +724,6 @@ CREATE TABLE `cliente` (
   `telefono` text DEFAULT NULL,
   `clienteID` int(11) NOT NULL auto_increment,
   `usuarioID` int(11) NOT NULL,
-  `fotoPerfil` MEDIUMBLOB DEFAULT NULL,
   PRIMARY KEY (`clienteID`),
   KEY `barrioID` (`barrioID`),
   KEY `usuarioID` (`usuarioID`),
@@ -846,7 +863,6 @@ DROP TABLE IF EXISTS `comentario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `comentario` (
-  `calificacion` int(11) DEFAULT NULL,
   `comentario` text NOT NULL,
   `fecha` datetime NOT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
@@ -1185,14 +1201,14 @@ UNLOCK TABLES;
 
 LOCK TABLES `perfil_playa` WRITE;
 /*!40000 ALTER TABLE `perfil_playa` DISABLE KEYS */;
-INSERT INTO `tesis_playon`.`perfil_playa` (`descripcion`, `nombreComercial`, `perfilPlayaID`, `playaID`, `fotoPerfil`)
-VALUES ('Playa "Estacionamiento Europa"', '¡Los esperamos en Estacionamiento Europa, les ofrecemos una excelente atención con muy buenos precios!', 3, 3, NULL),
-('Playa "Estacionamiento Independencia"', 'Estacionamiento Independencia', 4, 4, NULL),
-('Playa "Parkingcity', 'Parkingcity"', 5, 5, NULL),
-('Playa "Estacionamiento Mercado Sur"', 'Estacionamiento Mercado Sur', 6, 6, NULL),
-('Playa "Parking One"', 'Parking One', 7, 7, NULL),
-('Playa "Playa Sur"', 'Playa Sur', 8, 8, NULL),
-('Playa "Parquin Verde"', 'Parquin Verde', 9, 9, NULL);
+INSERT INTO `tesis_playon`.`perfil_playa` (`descripcion`, `perfilPlayaID`, `playaID`, `fotoPerfil`)
+VALUES ('¡Los esperamos en Estacionamiento Europa, les ofrecemos una excelente atención con muy buenos precios!', 3, 3, NULL),
+('Playa "Estacionamiento Independencia"', 4, 4, NULL),
+('Playa "Parkingcity', 5, 5, NULL),
+('Playa "Estacionamiento Mercado Sur"', 6, 6, NULL),
+('Playa "Parking One"', 7, 7, NULL),
+('Playa "Playa Sur"', 8, 8, NULL),
+('Playa "Parquin Verde"', 9, 9, NULL);
 /*!40000 ALTER TABLE `perfil_playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1263,11 +1279,11 @@ UNLOCK TABLES;
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `tesis_playon`.`cliente` (`barrioID`,`cuentaClienteID`,`domicilio`,`nroCliente`,`telefono`,`clienteID`,`usuarioID`,`fotoPerfil`) VALUES 
- (1,4,'Chile 160',1,'156123456',1,3,NULL),
- (2,1,'Colon 566',2,'152123456',2,7,NULL),
- (1,2,'Buenos Aires 75',3,'153123456',3,8,NULL),
- (3,3,'Av. Valparaiso 3125',4,NULL,4,9,NULL);
+INSERT INTO `tesis_playon`.`cliente` (`barrioID`,`cuentaClienteID`,`domicilio`,`nroCliente`,`telefono`,`clienteID`,`usuarioID`) VALUES 
+ (1,4,'Chile 160',1,'156123456',1,3),
+ (2,1,'Colon 566',2,'152123456',2,7),
+ (1,2,'Buenos Aires 75',3,'153123456',3,8),
+ (3,3,'Av. Valparaiso 3125',4,NULL,4,9);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
