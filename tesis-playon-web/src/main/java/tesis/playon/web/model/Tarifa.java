@@ -134,6 +134,19 @@ public class Tarifa implements Serializable {
 	this.categoriaVehiculo = categoriaVehiculo;
     }
 
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Tarifa otraTarifa = (Tarifa) object;
+	if (id != otraTarifa.id)
+	    return false;
+
+	return true;
+    }
+
     @Override
     public String toString() {
 	return "Tarifa:\t [tarifaID=" + id + ", importe=" + importe + ", " + playa + ", " + categoriaVehiculo + ", "

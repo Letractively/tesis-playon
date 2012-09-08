@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 /**
  * Clase de negocio que contiene los diferentes tipos de estadia.
@@ -19,10 +18,10 @@ import javax.persistence.UniqueConstraint;
  * 
  */
 @Entity
-@Table(name = "tipo_estadia", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
+@Table(name = "tipo_estadia", catalog = "tesis_playon")
 public class TipoEstadia implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 6556199133101963829L;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -35,13 +34,12 @@ public class TipoEstadia implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
 
-    
     public TipoEstadia() {
     }
 
     public TipoEstadia(String nombre, String descripcion) {
 	this.nombre = nombre;
-	this.descripcion=descripcion;
+	this.descripcion = descripcion;
     }
 
     public Integer getId() {
@@ -61,13 +59,13 @@ public class TipoEstadia implements Serializable {
     }
 
     public String getDescripcion() {
-        return descripcion;
+	return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+	this.descripcion = descripcion;
     }
-    
+
     public boolean equals(Object object) {
 	if (object == this)
 	    return true;
@@ -83,10 +81,9 @@ public class TipoEstadia implements Serializable {
 	return true;
     }
 
-    
     @Override
     public String toString() {
-	return "TipoEstadia:\t [TipoEstadiaID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
+	return "TipoEstadia:\t [tipoEstadiaID=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
     }
 
 }

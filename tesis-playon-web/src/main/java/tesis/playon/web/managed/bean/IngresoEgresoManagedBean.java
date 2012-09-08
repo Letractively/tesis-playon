@@ -91,6 +91,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     private DetalleEstadia detalleEstadia;
 
+    private Tarifa tarifa;
+
     private Cliente cliente;
 
     private CuentaCliente cuentaCliente;
@@ -177,22 +179,28 @@ public class IngresoEgresoManagedBean implements Serializable {
 	Timestamp fechaHoraIngreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
 	detalleEstadia = new DetalleEstadia(estadia, vehiculo, empleado, fechaHoraIngreso, cobrado);
 	getDetalleEstadiaService().save(detalleEstadia);
+	limpiar();
     }
 
     public void registrarEgresoVehiculo() {
 	for (Tarifa tarifa : getTarifaPlayaList())
 	    System.out.println("\n\n\nLista de tarifas por categoria de vehiculo: " + tarifa.toString() + "\n\n\n");
+	limpiar();
     }
 
     public void limpiar() {
+	usuarioCliente = null;
+	cliente = null;
+	cuentaCliente = null;
 	vehiculo = null;
 	categoriaVehiculo = null;
 	modeloVehiculo = null;
 	marcaVehiculo = null;
-	cliente = null;
-	usuarioCliente = null;
-	cuentaCliente = null;
+	detalleEstadia = null;
+	tarifa = null;
+	tarifaPlayaList = null;
 	existeVehiculo = false;
+	saldoPositvo = false;
 	cobrado = true;
     }
 
@@ -349,6 +357,14 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void setDetalleEstadia(DetalleEstadia detalleEstadia) {
 	this.detalleEstadia = detalleEstadia;
+    }
+
+    public Tarifa getTarifa() {
+	return tarifa;
+    }
+
+    public void setTarifa(Tarifa tarifa) {
+	this.tarifa = tarifa;
     }
 
     public Cliente getCliente() {

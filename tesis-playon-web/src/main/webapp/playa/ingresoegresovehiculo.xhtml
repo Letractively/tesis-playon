@@ -83,12 +83,31 @@
 						action="#{ingresoEgresoMB.registrarIngresoVehiculo}" ajax="false" />
 				</h:panelGroup>
 
-				<h:panelGroup rendered="#{!ingresoEgresoMB.cobrado}">
+			</h:panelGrid>
+
+			<h:panelGrid rendered="#{!ingresoEgresoMB.cobrado}">
+
+				<p:column>
+					<h:outputText for="tarifa" value="Tarifa: " />
+				</p:column>
+
+				<p:column>
+					<p:selectOneMenu style="width: 293px"
+						value="#{ingresoEgresoMB.tarifa}" effect="fade">
+						<f:selectItems value="#{ingresoEgresoMB.tarifaPlayaList}"
+							var="tarifa" itemValue="#{tarifa}"
+							itemLabel="#{tarifa.tipoEstadia.nombre} $#{tarifa.importe}" />
+							<f:converter converterId="tarifaConverter" />
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column>
 					<p:commandButton id="egreso" value="Registrar egreso"
 						action="#{ingresoEgresoMB.registrarEgresoVehiculo}" ajax="false" />
-				</h:panelGroup>
+				</p:column>
 
 			</h:panelGrid>
+
 
 		</h:form>
 	</ui:define>

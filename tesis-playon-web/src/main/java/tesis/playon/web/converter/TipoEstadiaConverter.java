@@ -1,6 +1,3 @@
-/**
- * 
- */
 package tesis.playon.web.converter;
 
 import javax.faces.component.UIComponent;
@@ -11,11 +8,12 @@ import javax.faces.convert.FacesConverter;
 import tesis.playon.web.model.TipoEstadia;
 
 /**
+ * 
  * @author Pablo
- *
+ * 
  */
 @FacesConverter(value = "tipoEstadiaConverter")
-public class TipoEstadiaConvert implements Converter{
+public class TipoEstadiaConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
