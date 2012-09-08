@@ -36,9 +36,6 @@ public class Comentario implements Serializable {
     @Column(name = "fecha")
     private Timestamp fecha;
 
-    @Column(name = "calificacion")
-    private Integer calificacion;
-
     @Column(name = "comentario")
     private String comentario;
 
@@ -54,7 +51,7 @@ public class Comentario implements Serializable {
     @JoinColumn(name = "clienteID")
     private Cliente cliente;
 
-    public Comentario(Cliente cliente, String comentario, Playa playa, boolean habilitado, Integer calificacion) {
+    public Comentario(Cliente cliente, String comentario, Playa playa, boolean habilitado) {
 	this.cliente = cliente;
 	this.comentario = comentario;
 	this.playa = playa;
@@ -113,14 +110,6 @@ public class Comentario implements Serializable {
 
     public void setHabilitado(boolean habilitado) {
 	this.habilitado = habilitado;
-    }
-
-    public Integer getCalificacion() {
-	return calificacion;
-    }
-
-    public void setCalificacion(Integer calificacion) {
-	this.calificacion = calificacion;
     }
 
     public boolean equals(Object object) {

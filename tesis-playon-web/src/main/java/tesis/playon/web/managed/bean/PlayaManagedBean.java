@@ -140,9 +140,7 @@ public class PlayaManagedBean implements Serializable {
 	    getPlayaService().save(playa);
 
 	    PerfilPlaya perfil = new PerfilPlaya();
-	    perfil.setNombre(playa.getNombreComercial());
 	    perfil.setPlaya(playa);
-	    // perfil.setFotoPerfil("/resources/images/sinfoto.jpg");
 
 	    getPerfilPlayaService().save(perfil);
 
@@ -185,7 +183,6 @@ public class PlayaManagedBean implements Serializable {
 	    getPlayaService().save(playa);
 
 	    PerfilPlaya perfil = new PerfilPlaya();
-	    perfil.setNombre(playa.getNombreComercial());
 	    perfil.setPlaya(playa);
 	    // perfil.setFotoPerfil(fotoPerfil);
 
@@ -200,8 +197,8 @@ public class PlayaManagedBean implements Serializable {
 	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_PLAYA_GERENTE");
 	    getRolesPorUsuarioService().save(rp);
 
-	    String asunto = "Notoficación equipo de Playon";
-	    String mensaje = "Su solicitud esta en el área de auditoria, en breve nos comunicaremos con usted,\n\n muchas gracias";
+	    String asunto = "Notoficaciï¿½n equipo de Playon";
+	    String mensaje = "Su solicitud esta en el ï¿½rea de auditoria, en breve nos comunicaremos con usted,\n\n muchas gracias";
 	    mail.setAsunto(asunto);
 	    mail.setMensaje(mensaje);
 	    mail.setDestinatario(getEmail());

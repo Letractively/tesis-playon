@@ -134,6 +134,25 @@
 				</p:tab>
 			</p:accordionPanel>
 		</div>
+		
+		<div style="margin: 20px 0px 0px 50px; width: 100%;">
+			Fotos
+			<p:separator id="separatorFoto" />
+			<div align="center" style="margin-top: 10px;">
+				<p:galleria value="#{perfilPlayaMB.fotosListSelected}" var="image"
+					effect="slide" effectSpeed="1000" showOverlays="false"
+					panelWidth="500" panelHeight="350">
+					<h:graphicImage library="fotos_playas" name="#{image.nombre}"
+						style="width:490px; height:290px" />
+					<p:galleriaOverlay>
+						<div align="right">
+							<h:outputText value="#{image.nombre}" />
+							<br />
+						</div>
+					</p:galleriaOverlay>
+				</p:galleria>
+			</div>
+		</div>
 
 		<div style="margin: 20px 0px 0px 50px; width: 100%;">
 			Ubicación
@@ -153,25 +172,6 @@
 							listener="#{perfilPlayaMB.onMarkerSelect}" />
 					</p:gmap>
 				</f:view>
-			</div>
-		</div>
-
-		<div style="margin: 20px 0px 0px 50px; width: 100%;">
-			Fotos
-			<p:separator id="separatorFoto" />
-			<div align="center" style="margin-top: 10px;">
-				<p:galleria value="#{perfilPlayaMB.fotosListSelected}" var="image"
-					effect="slide" effectSpeed="1000" showOverlays="false"
-					panelWidth="500" panelHeight="350">
-					<h:graphicImage library="fotos_playas" name="#{image.nombre}"
-						style="width:490px; height:290px" />
-					<p:galleriaOverlay>
-						<div align="right">
-							<h:outputText value="#{image.nombre}" />
-							<br />
-						</div>
-					</p:galleriaOverlay>
-				</p:galleria>
 			</div>
 		</div>
 	</ui:define>

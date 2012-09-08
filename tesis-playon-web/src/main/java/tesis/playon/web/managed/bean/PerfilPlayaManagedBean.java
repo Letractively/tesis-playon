@@ -97,10 +97,10 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    this.telefono = perfil.getPlaya().getTelefono();
 	    this.email = perfil.getPlaya().getEmail();
 	    this.disponibilidad = perfil.getPlaya().getDisponibilidad();
-	    if (perfil.getTotalCalificaciones() != null && perfil.getCantidadVotantes() != null)
-		calificacion = Math.round(perfil.getTotalCalificaciones() / perfil.getCantidadVotantes());
-	    else
-		calificacion = 0;
+//	    if (perfil.getTotalCalificaciones() != null && perfil.getCantidadVotantes() != null)
+//		calificacion = Math.round(perfil.getTotalCalificaciones() / perfil.getCantidadVotantes());
+//	    else
+//		calificacion = 0;
 	    WriteImage.getFotoPerfil(perfil);
 	    this.coordenadas = initCoordenadas(perfil);
 	}
@@ -343,11 +343,11 @@ public class PerfilPlayaManagedBean implements Serializable {
 	if (playaSelected != null) {
 	    PerfilPlayaManagedBean.perfilSelected = getPerfilPlayaService().findByPlaya(playaSelected);
 	    coordenadas = initCoordenadas(perfilSelected);
-	    if (perfilSelected.getTotalCalificaciones() != null && perfilSelected.getCantidadVotantes() != null)
-		calificacionSelected = Math.round(perfilSelected.getTotalCalificaciones()
-			/ perfilSelected.getCantidadVotantes());
-	    else
-		calificacionSelected = 0;
+//	    if (perfilSelected.getTotalCalificaciones() != null && perfilSelected.getCantidadVotantes() != null)
+//		calificacionSelected = Math.round(perfilSelected.getTotalCalificaciones()
+//			/ perfilSelected.getCantidadVotantes());
+//	    else
+//		calificacionSelected = 0;
 	    fotosListSelected = getFotoService().findByPlaya(perfilSelected);
 	    WriteImage.writeFotos(fotosListSelected);
 	}

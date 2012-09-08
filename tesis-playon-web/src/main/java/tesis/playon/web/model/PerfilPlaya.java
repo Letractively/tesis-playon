@@ -30,9 +30,6 @@ public class PerfilPlaya implements Serializable {
     @Column(name = "perfilPlayaID")
     private Integer id;
 
-    @Column(name = "nombreComercial")
-    private String nombre;
-
     @Column(name = "descripcion")
     private String descripcion;
 
@@ -46,18 +43,11 @@ public class PerfilPlaya implements Serializable {
     
     @Column(name = "nombreFoto")
     private String nombreFoto;
-    
-    @Column(name = "cantidadVotantes")
-    private Integer cantidadVotantes;
-    
-    @Column(name = "totalCalificaciones")
-    private Integer totalCalificaciones;
 
     public PerfilPlaya() {
     }
 
-    public PerfilPlaya(String nombre, String descripcion, Playa playa) {
-	this.nombre = nombre;
+    public PerfilPlaya( String descripcion, Playa playa) {
 	this.descripcion = descripcion;
 	this.playa = playa;
     }
@@ -72,14 +62,6 @@ public class PerfilPlaya implements Serializable {
 
     public void setId(Integer id) {
 	this.id = id;
-    }
-
-    public String getNombre() {
-	return nombre;
-    }
-
-    public void setNombre(String nombre) {
-	this.nombre = nombre;
     }
 
     public String getDescripcion() {
@@ -106,22 +88,6 @@ public class PerfilPlaya implements Serializable {
         this.fotoPerfil = fotoPerfil;
     }
 
-    public Integer getCantidadVotantes() {
-        return cantidadVotantes;
-    }
-
-    public void setCantidadVotantes(Integer cantidadVotantes) {
-        this.cantidadVotantes = cantidadVotantes;
-    }
-
-    public Integer getTotalCalificaciones() {
-        return totalCalificaciones;
-    }
-
-    public void setTotalCalificaciones(Integer totalCalificaciones) {
-        this.totalCalificaciones = totalCalificaciones;
-    }
-
     public String getNombreFoto() {
         return nombreFoto;
     }
@@ -132,7 +98,7 @@ public class PerfilPlaya implements Serializable {
 
     @Override
     public String toString() {
-	return "PerfilPlaya:\t [perfilPlayaID=" + id + ", nombreComercial=" + nombre + ", descripcion=" + descripcion
+	return "PerfilPlaya:\t [perfilPlayaID=" + id + ", descripcion=" + descripcion
 		+ "]";
     }
 

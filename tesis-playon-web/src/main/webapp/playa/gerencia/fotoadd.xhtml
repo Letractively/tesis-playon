@@ -43,7 +43,8 @@
 					fileUploadListener="#{perfilPlayaMB.handleFileUpload}"
 					mode="advanced" multiple="true" sizeLimit="4194304"
 					allowTypes="/(\.|\/)(jpe?g)$/" label="Seleccionar fotos"
-					uploadLabel="Guardar todos" cancelLabel="Cancelar">
+					uploadLabel="Guardar todos" cancelLabel="Cancelar"
+					oncomplete="document.location.reload(true)">
 				</p:fileUpload>
 				<p:growl id="messages" showDetail="true" />
 				<br />

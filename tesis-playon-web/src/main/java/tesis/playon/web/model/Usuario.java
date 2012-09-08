@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -62,6 +63,10 @@ public class Usuario implements Serializable {
     @Column(name = "enable", columnDefinition = "TINYINT")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean enable;
+    
+    @Lob
+    @Column(name = "fotoPerfil", columnDefinition="mediumblob")
+    private byte[] fotoPerfil;
 
     public Usuario() {
 	super();
@@ -159,6 +164,18 @@ public class Usuario implements Serializable {
 
     public void setEnable(Boolean enable) {
 	this.enable = enable;
+    }
+
+    public byte[] getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(byte[] fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public boolean equals(Object object) {
