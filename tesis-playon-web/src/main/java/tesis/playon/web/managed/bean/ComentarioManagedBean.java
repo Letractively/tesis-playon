@@ -1,6 +1,3 @@
-/**
- * 
- */
 package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
@@ -62,14 +59,14 @@ public class ComentarioManagedBean implements Serializable {
     }
 
     public String addComentario() {
-	Comentario comentario = null;
+	// Comentario comentario = null;
 	try {
-	    comentario = new Comentario();
+	    // comentario = new Comentario();
 	    FacesContext facesContext = FacesContext.getCurrentInstance();
 	    String userName = facesContext.getExternalContext().getRemoteUser();
 	    Usuario user = getUsuarioService().findByNombreUsuario(userName);
 	    if (user != null && user.getPlaya() != null) {
-		
+
 		FacesContext.getCurrentInstance().addMessage(
 			null,
 			new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró exitosamente su comentario, ",
@@ -80,9 +77,7 @@ public class ComentarioManagedBean implements Serializable {
 			new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudó registrar su comentario",
 				"¡Debe iniciar sesión para llevar a cabo esta acción!"));
 	    }
-	    
 	    return "comentariolist";
-	    
 	} catch (Exception e) {
 
 	}

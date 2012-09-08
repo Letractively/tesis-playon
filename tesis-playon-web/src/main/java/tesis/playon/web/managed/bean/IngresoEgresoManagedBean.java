@@ -2,7 +2,9 @@ package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -20,6 +22,7 @@ import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.MarcaVehiculo;
 import tesis.playon.web.model.ModeloVehiculo;
 import tesis.playon.web.model.Playa;
+import tesis.playon.web.model.Tarifa;
 import tesis.playon.web.model.TransaccionCliente;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.model.Vehiculo;
@@ -30,6 +33,7 @@ import tesis.playon.web.service.IDetalleEstadiaService;
 import tesis.playon.web.service.IEmpleadoService;
 import tesis.playon.web.service.IEstadiaService;
 import tesis.playon.web.service.IPlayaService;
+import tesis.playon.web.service.ITarifaService;
 import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.service.IVehiculoService;
 
@@ -65,6 +69,11 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{DetalleEstadiaService}")
     IDetalleEstadiaService detalleEstadiaService;
+
+    @ManagedProperty(value = "#{TarifaService}")
+    ITarifaService tarifaService;
+
+    private List<Tarifa> tarifaPlayaList;
 
     private Usuario usuario;
 
@@ -240,6 +249,24 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void setDetalleEstadiaService(IDetalleEstadiaService detalleEstadiaService) {
 	this.detalleEstadiaService = detalleEstadiaService;
+    }
+
+    public ITarifaService getTarifaService() {
+	return tarifaService;
+    }
+
+    public void setTarifaService(ITarifaService tarifaService) {
+	this.tarifaService = tarifaService;
+    }
+
+    public List<Tarifa> getTarifaPlayaList() {
+	tarifaPlayaList = new ArrayList<Tarifa>();
+	tarifaPlayaList.addAll(getTarifaService().findByPlaya(playa));
+	return tarifaPlayaList;
+    }
+
+    public void setTarifaPlayaList(List<Tarifa> tarifaPlayaList) {
+	this.tarifaPlayaList = tarifaPlayaList;
     }
 
     public Usuario getUsuario() {

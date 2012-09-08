@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.ITarifaDao;
+import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Tarifa;
 import tesis.playon.web.service.ITarifaService;
@@ -50,6 +51,11 @@ public class TarifaService implements ITarifaService {
     @Override
     public List<Tarifa> findTarifaVigenteByPlaya(Playa playa){
 	return  getTarifaDao().findTarifaVigenteByPlaya(playa);
+    }
+    
+    @Override
+    public List<Tarifa> findTarifaVigenteByPlayaAndCategoriaVehiculo(Playa playa, CategoriaVehiculo categoriaVehiculo) {
+	return getTarifaDao().findTarifaVigenteByPlayaAndCategoriaVehiculo(playa, categoriaVehiculo);
     }
 
     public ITarifaDao getTarifaDao() {

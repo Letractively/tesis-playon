@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.ITarifaDao;
+import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Tarifa;
 
@@ -62,10 +63,25 @@ public class TarifaDao implements ITarifaDao {
 	}
 	return null;
     }
-    
-    public List<Tarifa> findTarifaVigenteByPlaya(Playa playa){
+
+    public List<Tarifa> findTarifaVigenteByPlaya(Playa playa) {
 	List<Tarifa> tarifas = new ArrayList<Tarifa>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa where playa=? and vigente = 1")
+		.setParameter(0, playa).list();
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		tarifas.add((Tarifa) object);
+	    }
+	    return tarifas;
+	}
+	return null;
+    }
+
+    @Override
+    public List<Tarifa> findTarifaVigenteByPlayaAndCategoriaVehiculo(Playa playa, CategoriaVehiculo categoriaVehiculo) {
+	List<Tarifa> tarifas = new ArrayList<Tarifa>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Tarifa where playa=? and categoriaVehiculo=? and vigente = 1")
 		.setParameter(0, playa).list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
