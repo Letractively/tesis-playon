@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 /**
  * 
  * @author alejandro
@@ -37,6 +39,10 @@ public class DetalleEstadia implements Serializable {
 
     @Column(name = "importeTotal")
     private float importeTotal;
+
+    @Column(name = "cobrado", columnDefinition = "TINYINT")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private Boolean cobrado;
 
     @ManyToOne
     @JoinColumn(name = "transaccionClienteID")
@@ -67,12 +73,13 @@ public class DetalleEstadia implements Serializable {
 	super();
     }
 
-    public DetalleEstadia(Estadia estadia, Vehiculo vehiculo, Empleado empleado, Timestamp fechaHoraIngreso) {
+    public DetalleEstadia(Estadia estadia, Vehiculo vehiculo, Empleado empleado, Timestamp fechaHoraIngreso, Boolean cobrado) {
 	super();
 	this.estadia = estadia;
 	this.vehiculo = vehiculo;
 	this.empleado = empleado;
 	this.fechaHoraIngreso = fechaHoraIngreso;
+	this.cobrado = cobrado;
     }
 
     public Timestamp getFechaHoraEgreso() {
@@ -97,6 +104,14 @@ public class DetalleEstadia implements Serializable {
 
     public void setImporteTotal(float importeTotal) {
 	this.importeTotal = importeTotal;
+    }
+
+    public Boolean getCobrado() {
+	return cobrado;
+    }
+
+    public void setCobrado(Boolean cobrado) {
+	this.cobrado = cobrado;
     }
 
     public TransaccionCliente getTransaccionCliente() {
@@ -169,4 +184,5 @@ public class DetalleEstadia implements Serializable {
 	return "DetalleEstadia:\t [id= " + id + ", fechaHoraIngreso= " + fechaHoraIngreso.toString()
 		+ ", fechaHoraEgreso " + fechaHoraEgreso.toString() + ", importeTotal" + importeTotal + "]";
     }
+
 }

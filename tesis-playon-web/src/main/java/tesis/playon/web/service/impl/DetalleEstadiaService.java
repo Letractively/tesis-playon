@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IDetalleEstadiaDao;
 import tesis.playon.web.model.DetalleEstadia;
+import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.IDetalleEstadiaService;
 
 /**
@@ -39,6 +40,11 @@ public class DetalleEstadiaService implements IDetalleEstadiaService {
     @Override
     public List<DetalleEstadia> findAll() {
 	return getDetalleEstadiaDao().findAll();
+    }
+
+    @Override
+    public DetalleEstadia findByVehiculoDetalleEstadia(Vehiculo vehiculo) {
+	return getDetalleEstadiaDao().findByVehiculoDetalleEstadia(vehiculo);
     }
 
     public IDetalleEstadiaDao getDetalleEstadiaDao() {

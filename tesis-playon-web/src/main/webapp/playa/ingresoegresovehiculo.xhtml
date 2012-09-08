@@ -78,12 +78,12 @@
 						value="#{ingresoEgresoMB.cuentaCliente.saldo}" />
 				</h:panelGroup>
 
-				<h:panelGroup>
+				<h:panelGroup rendered="#{ingresoEgresoMB.cobrado}">
 					<p:commandButton id="ingreso" value="Registrar ingreso"
 						action="#{ingresoEgresoMB.registrarIngresoVehiculo}" ajax="false" />
 				</h:panelGroup>
 
-				<h:panelGroup>
+				<h:panelGroup rendered="#{!ingresoEgresoMB.cobrado}">
 					<p:commandButton id="egreso" value="Registrar egreso"
 						action="#{ingresoEgresoMB.registrarEgresoVehiculo}" ajax="false" />
 				</h:panelGroup>

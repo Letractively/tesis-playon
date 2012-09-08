@@ -39,20 +39,7 @@ public class TarifaDao implements ITarifaDao {
 	getSessionFactory().getCurrentSession().delete(tarifa);
     }
 
-    public List<Tarifa> findByPlaya(Playa playa) {
-	List<Tarifa> tarifas = new ArrayList<Tarifa>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa where playa=?")
-		.setParameter(0, playa).list();
-	if (!list.isEmpty()) {
-	    for (Object object : list) {
-		tarifas.add((Tarifa) object);
-	    }
-	    return tarifas;
-	}
-	return null;
-    }
-
-    public List<Tarifa> findAll() {
+        public List<Tarifa> findAll() {
 	List<Tarifa> tarifas = new ArrayList<Tarifa>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa").list();
 	if (!list.isEmpty()) {
@@ -82,13 +69,19 @@ public class TarifaDao implements ITarifaDao {
 	List<Tarifa> tarifas = new ArrayList<Tarifa>();
 	List<?> list = getSessionFactory().getCurrentSession()
 		.createQuery("from Tarifa where playa=? and categoriaVehiculo=? and vigente = 1")
-		.setParameter(0, playa).list();
+		.setParameter(0, playa).setParameter(1, categoriaVehiculo).list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
 		tarifas.add((Tarifa) object);
 	    }
 	    return tarifas;
 	}
+	return null;
+    }
+
+    @Override
+    public List<Tarifa> findByPlaya(Playa playa) {
+	// TODO Auto-generated method stub
 	return null;
     }
 }

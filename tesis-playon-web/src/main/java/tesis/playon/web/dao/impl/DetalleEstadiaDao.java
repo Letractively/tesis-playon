@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import tesis.playon.web.dao.IDetalleEstadiaDao;
 import tesis.playon.web.model.DetalleEstadia;
+import tesis.playon.web.model.Vehiculo;
 
 @Repository("detalleEstadiaDao")
 public class DetalleEstadiaDao implements IDetalleEstadiaDao {
@@ -42,4 +43,15 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
 	}
 	return detalleEstadia;
     }
+
+    @Override
+    public DetalleEstadia findByVehiculoDetalleEstadia(Vehiculo vehiculo) {
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DetalleEstadia where vehiculo=? and cobrado=0")
+		.setParameter(0, vehiculo).list();
+	if (!list.isEmpty()) {
+	    return (DetalleEstadia) list.get(0);
+	}
+	return null;
+    }
+
 }

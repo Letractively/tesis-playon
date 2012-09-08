@@ -111,6 +111,10 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     private Boolean existeVehiculo = false;
 
+    private Boolean saldoPositvo = false;
+
+    private Boolean cobrado = true;
+
     public void preRenderView() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	setNombreUsuario(facesContext.getExternalContext().getRemoteUser());
@@ -148,11 +152,22 @@ public class IngresoEgresoManagedBean implements Serializable {
 	    setModeloVehiculo(vehiculo.getModeloVehiculo());
 	    setMarcaVehiculo(modeloVehiculo.getMarcaVehiculo());
 	    setCliente(vehiculo.getCliente());
+	    setDetalleEstadia(getDetalleEstadiaService().findByVehiculoDetalleEstadia(vehiculo));
 	}
 	if (null != cliente) {
 	    setUsuarioCliente(cliente.getUsuario());
 	    setCuentaCliente(getCuentaClienteService()
 		    .findByNroCuentaCliente(cliente.getCuentaCliente().getNroCuenta()));
+	}
+	if (null != cuentaCliente) {
+	    if (cuentaCliente.getSaldo() > 0) {
+		saldoPositvo = true;
+	    } else {
+		saldoPositvo = false;
+	    }
+	}
+	if (null != detalleEstadia && !detalleEstadia.getCobrado()) {
+	    cobrado = false;
 	}
 	if (cliente != null && null != vehiculo && null != cuentaCliente)
 	    setExisteVehiculo(true);
@@ -160,23 +175,25 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void registrarIngresoVehiculo() {
 	Timestamp fechaHoraIngreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
-	detalleEstadia = new DetalleEstadia(estadia, vehiculo, empleado, fechaHoraIngreso);
+	detalleEstadia = new DetalleEstadia(estadia, vehiculo, empleado, fechaHoraIngreso, cobrado);
 	getDetalleEstadiaService().save(detalleEstadia);
     }
 
     public void registrarEgresoVehiculo() {
-
+	for (Tarifa tarifa : getTarifaPlayaList())
+	    System.out.println("\n\n\nLista de tarifas por categoria de vehiculo: " + tarifa.toString() + "\n\n\n");
     }
 
     public void limpiar() {
-	this.vehiculo = null;
-	this.categoriaVehiculo = null;
-	this.modeloVehiculo = null;
-	this.marcaVehiculo = null;
-	this.cliente = null;
-	this.usuarioCliente = null;
-	this.cuentaCliente = null;
-	this.existeVehiculo = false;
+	vehiculo = null;
+	categoriaVehiculo = null;
+	modeloVehiculo = null;
+	marcaVehiculo = null;
+	cliente = null;
+	usuarioCliente = null;
+	cuentaCliente = null;
+	existeVehiculo = false;
+	cobrado = true;
     }
 
     public IEmpleadoService getEmpleadoService() {
@@ -261,7 +278,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public List<Tarifa> getTarifaPlayaList() {
 	tarifaPlayaList = new ArrayList<Tarifa>();
-	tarifaPlayaList.addAll(getTarifaService().findByPlaya(playa));
+	tarifaPlayaList.addAll(getTarifaService()
+		.findTarifaVigenteByPlayaAndCategoriaVehiculo(playa, categoriaVehiculo));
 	return tarifaPlayaList;
     }
 
@@ -411,6 +429,22 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void setExisteVehiculo(Boolean existeVehiculo) {
 	this.existeVehiculo = existeVehiculo;
+    }
+
+    public Boolean getSaldoPositvo() {
+	return saldoPositvo;
+    }
+
+    public void setSaldoPositvo(Boolean saldoPositvo) {
+	this.saldoPositvo = saldoPositvo;
+    }
+
+    public Boolean getCobrado() {
+	return cobrado;
+    }
+
+    public void setCobrado(Boolean cobrado) {
+	this.cobrado = cobrado;
     }
 
 }
