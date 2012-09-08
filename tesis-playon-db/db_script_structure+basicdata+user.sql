@@ -765,6 +765,7 @@ CREATE TABLE `detalle_estadia` (
   `fechaHoraEgreso` datetime DEFAULT NULL,
   `fechaHoraIngreso` datetime DEFAULT NULL,
   `importeTotal` float DEFAULT NULL,
+  `cobrado` tinyint(1) NOT NULL,
   `promocionID` int(11) DEFAULT NULL,
   `tarifaID` int(11) DEFAULT NULL,
   `vehiculoID` int(11) NOT NULL,
@@ -1301,10 +1302,10 @@ UNLOCK TABLES;
 
 LOCK TABLES `detalle_estadia` WRITE;
 /*!40000 ALTER TABLE `detalle_estadia` DISABLE KEYS */;
-INSERT INTO `tesis_playon`.`detalle_estadia` (`transaccionClienteID`,`empleadoID`,`fechaHoraEgreso`,`fechaHoraIngreso`,`importeTotal`,`promocionID`,`tarifaID`,`vehiculoID`,`detalleEstadiaID`,`estadiaID`) VALUES 
- (2,1002,'2012-08-04 17:48:45','2012-08-04 19:25:23',20,NULL,1,1,1,3),
- (2,1002,'2012-08-11 17:50:35','2012-08-11 18:45:21',10,NULL,1,1,2,3),
- (2,1002,'2012-08-18 17:51:18','2012-08-18 18:32:49',10,NULL,1,1,3,3);
+INSERT INTO `tesis_playon`.`detalle_estadia` (`transaccionClienteID`,`empleadoID`,`fechaHoraEgreso`,`fechaHoraIngreso`,`importeTotal`,`cobrado`,`promocionID`,`tarifaID`,`vehiculoID`,`detalleEstadiaID`,`estadiaID`) VALUES 
+ (2,1002,'2012-08-04 17:48:45','2012-08-04 19:25:23',20,1,NULL,1,1,1,3),
+ (2,1002,'2012-08-11 17:50:35','2012-08-11 18:45:21',10,1,NULL,1,1,2,3),
+ (2,1002,'2012-08-18 17:51:18','2012-08-18 18:32:49',10,1,NULL,1,1,3,3);
 /*!40000 ALTER TABLE `detalle_estadia` ENABLE KEYS */;
 UNLOCK TABLES;
 
