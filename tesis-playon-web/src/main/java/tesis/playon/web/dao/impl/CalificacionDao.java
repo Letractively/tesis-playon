@@ -1,5 +1,6 @@
 package tesis.playon.web.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -23,30 +24,45 @@ public class CalificacionDao implements ICalificacionDao {
     @Override
     public void save(Calificacion calificacion) {
 	// TODO Auto-generated method stub
-	
+	getSessionFactory().getCurrentSession().save(calificacion);
     }
 
     @Override
     public void update(Calificacion calificacion) {
 	// TODO Auto-generated method stub
-
+	getSessionFactory().getCurrentSession().update(calificacion);
     }
 
     @Override
     public void delete(Calificacion calificacion) {
 	// TODO Auto-generated method stub
-
+	getSessionFactory().getCurrentSession().delete(calificacion);
     }
 
     @Override
     public List<Calificacion> findByPlaya(Playa playa) {
-	// TODO Auto-generated method stub
+	List<Calificacion> calificaciones = new ArrayList<Calificacion>();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Calificacion where playa=?")
+		.setParameter(0, playa).list();
+	if(!list.isEmpty()){
+	    for (Object obj : list) {
+		    calificaciones.add((Calificacion) obj);
+		}
+		return calificaciones;
+	}
 	return null;
     }
 
     @Override
     public List<Calificacion> findAll() {
-	// TODO Auto-generated method stub
+	List<Calificacion> calificaciones = new ArrayList<Calificacion>();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Calificacion").list();
+	if(!list.isEmpty()){
+	    for (Object obj : list) {
+		    calificaciones.add((Calificacion) obj);
+		}
+		return calificaciones;
+	}
 	return null;
     }
 

@@ -44,11 +44,12 @@ public class ComentarioManagedBean implements Serializable {
 
     private List<Comentario> comentariosList;
 
+    private List<Comentario> comentariosListPerfil;
+
     // ATRIBUTOS PARA LA CREACION DE UN COMENTARIO
     private String comentario;
 
     @PostConstruct
-    // METODO PARA INICIALIZAR TODOS LOS ATRIBUTOS
     public void init() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	String userName = facesContext.getExternalContext().getRemoteUser();
@@ -58,15 +59,21 @@ public class ComentarioManagedBean implements Serializable {
 	}
     }
 
-    public String addComentario() {
-	// Comentario comentario = null;
+    public void addComentario() {
+	Comentario comentario = null;
 	try {
-	    // comentario = new Comentario();
 	    FacesContext facesContext = FacesContext.getCurrentInstance();
 	    String userName = facesContext.getExternalContext().getRemoteUser();
 	    Usuario user = getUsuarioService().findByNombreUsuario(userName);
-	    if (user != null && user.getPlaya() != null) {
-
+	    if (user != null) {
+		if (user.getPlaya() == null) {
+		    comentario = new Comentario(user, getComentario(), playaSelected, new Boolean(false));
+		} else {
+		    comentario = new Comentario(user, getComentario(), user.getPlaya(), new Boolean(false));
+		}
+		
+		getComentarioService().save(comentario);
+		
 		FacesContext.getCurrentInstance().addMessage(
 			null,
 			new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró exitosamente su comentario, ",
@@ -74,14 +81,15 @@ public class ComentarioManagedBean implements Serializable {
 	    } else {
 		FacesContext.getCurrentInstance().addMessage(
 			null,
-			new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudó registrar su comentario",
+			new FacesMessage(FacesMessage.SEVERITY_WARN, "No se pudó registrar su comentario",
 				"¡Debe iniciar sesión para llevar a cabo esta acción!"));
 	    }
-	    return "comentariolist";
 	} catch (Exception e) {
-
+	    FacesContext.getCurrentInstance().addMessage(
+		    null,
+		    new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudó registrar su comentario",
+			    "Disculpe las molestias ocacionadas"));
 	}
-	return "/error";
     }
 
     public IPlayaService getPlayaService() {
@@ -117,6 +125,9 @@ public class ComentarioManagedBean implements Serializable {
     }
 
     public Playa getPlayaSelected() {
+	if (playaSelected != null) {
+	    comentariosListPerfil = getComentarioService().findByPlaya(playaSelected);
+	}
 	return playaSelected;
     }
 
@@ -130,6 +141,14 @@ public class ComentarioManagedBean implements Serializable {
 
     public void setComentariosList(List<Comentario> comentariosList) {
 	this.comentariosList = comentariosList;
+    }
+
+    public List<Comentario> getComentariosListPerfil() {
+	return comentariosListPerfil;
+    }
+
+    public void setComentariosListPerfil(List<Comentario> comentariosListPerfil) {
+	this.comentariosListPerfil = comentariosListPerfil;
     }
 
     public String getComentario() {

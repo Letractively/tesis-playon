@@ -19,15 +19,15 @@
 				var="comentario"
 				emptyMessage="No existen comentarios en esta playa de estacionamiento">
 
-				<p:column headerText="Cliente" style="width:80px;">
+				<p:column headerText="Usuario" style="width:90px;">
 					<div align="center">
 						<h:graphicImage library="fotos_perfil_clientes"
 							name="#{comentario.cliente.nroCliente}.jpg"
 							style="width:75px; height:75px; border: 2px solid black"
-							rendered="#{comentario.cliente.fotoPerfil != null}" />
+							rendered="#{comentario.usuario.fotoPerfil != null}" />
 						<h:graphicImage library="fotos_perfil_clientes" name="sinfoto.jpg"
 							style="width:75px; height:75px; border: 2px solid black"
-							rendered="#{comentario.cliente.fotoPerfil == null}" />
+							rendered="#{comentario.usuario.fotoPerfil == null}" />
 						<h:outputText value="#{comentario.fecha}" />
 					</div>
 				</p:column>
@@ -37,35 +37,38 @@
 						<p>#{comentario.comentario}</p>
 					</div>
 				</p:column>
-			</p:dataTable>
-			<h:form>
-				<p:panelGrid columns="2">
-					<p:column style="width:80px;">
-						<div align="center" style="width: 80px;">
-							<h:graphicImage library="fotos_perfil_clientes"
-								name="sinfoto.jpg"
-								style="width:75px; height:75px; border: 2px solid black" />
-							<h:outputText value="#{comentario.fecha}" />
-						</div>
-					</p:column>
+				<f:facet name="footer">
+					<h:form>
+						<h:panelGrid columns="2">
+							<p:column>
+								<div align="left" style="width: 80px;">
+									<h:graphicImage library="fotos_perfil_clientes"
+										name="sinfoto.jpg" style="width:75px; height:75px;" />
+									<h:outputText value="#{comentario.fecha}" />
+								</div>
+							</p:column>
 
-					<p:column>
-						<div id="perfil-playa-frente" style="width: 542px;">
-							<p:inputTextarea id="comentario" value="#{comentarioMB.comentario}"
-								style="width:530px;" styleClass="contenido-textarea" />
-						</div>
-						<div align="right">
-							<h:commandButton id="enviarComentario" value="Enviar comentario"
-								action="#{comentarioMB.addComentario}"
-								style="margin:5px 0 0 5px" />
-						</div>
-					</p:column>
-				</p:panelGrid>
-				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" /> 
-			</h:form>
+							<p:column>
+								<p:inputTextarea id="comentario" cols="68" rows="3"
+									value="#{comentarioMB.comentario}" required="true"
+									requiredMessage="El campo comentario no puede estar vacio"
+									styleClass="contenido-textarea" />
+								<div align="right">
+									<h:commandButton id="enviarComentario"
+										value="Enviar comentario"
+										action="#{comentarioMB.addComentario}"
+										style="margin:5px 0 0 5px" />
+								</div>
+							</p:column>
+						</h:panelGrid>
+					</h:form>
+				</f:facet>
+			</p:dataTable>
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
 		</div>
 		<div align="center">
-		<br />
+			<br />
 			<p>Todos los comentarios han pasado por una auditoría previa.</p>
 		</div>
 	</ui:define>

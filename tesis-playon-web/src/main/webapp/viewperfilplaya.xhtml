@@ -101,18 +101,20 @@
 					</h:panelGrid>
 				</p:tab>
 				<p:tab title="Comentarios">
-					<p:dataTable id="comentarios" value="#{perfilPlayaMB.comentariosListSelected}" var="comentario" 
+					<p:dataTable id="comentarios"
+						value="#{comentarioMB.comentariosListPerfil}" var="comentario"
 						emptyMessage="No existen comentarios en esta playa de estacionamiento">
-						
-						<p:column headerText="Cliente">
+
+						<p:column headerText="Usuario" style="width:90px;">
 							<div>
 								<h:graphicImage library="fotos_perfil_clientes"
 									name="#{comentario.cliente.nroCliente}.jpg"
 									style="width:75px; height:75px; border: 2px solid black"
-									rendered="#{comentario.cliente.fotoPerfil != null}" />
-								<h:graphicImage library="fotos_perfil_clientes" name="sinfoto.jpg"
+									rendered="#{comentario.usuario.fotoPerfil != null}" />
+								<h:graphicImage library="fotos_perfil_clientes"
+									name="sinfoto.jpg"
 									style="width:75px; height:75px; border: 2px solid black"
-									rendered="#{comentario.cliente.fotoPerfil == null}" />
+									rendered="#{comentario.usuario.fotoPerfil == null}" />
 							</div>
 						</p:column>
 
@@ -121,20 +123,42 @@
 								<p>#{comentario.comentario}</p>
 							</div>
 						</p:column>
+						<f:facet name="footer">
+							<h:form>
+								<h:panelGrid columns="2">
+									<p:column style="width:80px;">
+										<div align="center" style="width: 80px;">
+											<h:graphicImage library="fotos_perfil_clientes"
+												name="sinfoto.jpg"
+												style="width:75px; height:75px; border: 2px solid black" />
+											<h:outputText value="#{comentario.fecha}" />
+										</div>
+									</p:column>
+
+									<p:column>
+										<div id="perfil-playa-frente">
+											<p:inputTextarea id="comentario" cols="42" rows="2"
+												value="#{comentarioMB.comentario}"
+												styleClass="contenido-textarea" required="true"
+												requiredMessage="El campo comentario no puede estar vacio" />
+										</div>
+										<div align="right">
+											<h:commandButton id="enviarComentario"
+												value="Enviar comentario"
+												action="#{comentarioMB.addComentario}"
+												style="margin:5px 0 0 5px" />
+										</div>
+									</p:column>
+								</h:panelGrid>
+							</h:form>
+						</f:facet>
 					</p:dataTable>
-					<h:panelGrid columns="2">
-						<p:column>
-							
-						</p:column>
-						<p:column>
-							<div id="perfil-playa-frente">
-							</div>
-						</p:column>
-					</h:panelGrid>
+					<p:messages id="messages" showDetail="true" autoUpdate="true"
+						closable="true" />
 				</p:tab>
 			</p:accordionPanel>
 		</div>
-		
+
 		<div style="margin: 20px 0px 0px 50px; width: 100%;">
 			Fotos
 			<p:separator id="separatorFoto" />

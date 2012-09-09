@@ -41,18 +41,18 @@ public class Comentario implements Serializable {
 
     @Column(name = "habilitado")
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private boolean habilitado;
+    private Boolean habilitado;
 
     @ManyToOne
     @JoinColumn(name = "playaID")
     private Playa playa;
 
     @ManyToOne
-    @JoinColumn(name = "clienteID")
-    private Cliente cliente;
+    @JoinColumn(name = "usuarioID")
+    private Usuario usuario;
 
-    public Comentario(Cliente cliente, String comentario, Playa playa, boolean habilitado) {
-	this.cliente = cliente;
+    public Comentario(Usuario usuario, String comentario, Playa playa, Boolean habilitado) {
+	this.usuario = usuario;
 	this.comentario = comentario;
 	this.playa = playa;
 	this.habilitado = habilitado;
@@ -80,12 +80,12 @@ public class Comentario implements Serializable {
 	this.fecha = fecha;
     }
 
-    public Cliente getCliente() {
-	return cliente;
+    public Usuario getUsuario() {
+	return usuario;
     }
 
-    public void setCliente(Cliente cliente) {
-	this.cliente = cliente;
+    public void setUsuario(Usuario usuario) {
+	this.usuario = usuario;
     }
 
     public String getComentario() {
@@ -104,11 +104,11 @@ public class Comentario implements Serializable {
 	this.playa = playa;
     }
 
-    public boolean isHabilitado() {
+    public Boolean isHabilitado() {
 	return habilitado;
     }
 
-    public void setHabilitado(boolean habilitado) {
+    public void setHabilitado(Boolean habilitado) {
 	this.habilitado = habilitado;
     }
 
