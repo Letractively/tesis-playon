@@ -868,11 +868,11 @@ CREATE TABLE `comentario` (
   `habilitado` tinyint(1) DEFAULT NULL,
   `playaID` int(11) NOT NULL,
   `comentarioID` int(11) NOT NULL auto_increment,
-  `clienteID` int(11) NOT NULL,
+  `usuarioID` int(11) NOT NULL,
   PRIMARY KEY (`comentarioID`),
   KEY `playaID` (`playaID`),
-  KEY `clienteID` (`clienteID`),
-  CONSTRAINT `FK_comentario_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
+  KEY `clienteID` (`usuarioID`),
+  CONSTRAINT `FK_comentario_usuario` FOREIGN KEY (`usuarioID`) REFERENCES `usuario` (`usuarioID`),
   CONSTRAINT `FK_comentario_perfil_playa` FOREIGN KEY (`playaID`) REFERENCES `perfil_playa` (`perfilPlayaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
