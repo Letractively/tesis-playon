@@ -14,7 +14,9 @@
 		<p></p>
 
 		<h:form>
-			<p:growl id="messages" />
+			<p:growl id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
 			<table class="admin-input-text" style="margin-left: 25px">
 				<tr>
 					<td><h:outputLabel for="patente" value="Ingrese la patente: " /></td>
@@ -85,7 +87,8 @@
 
 			</h:panelGrid>
 
-			<h:panelGrid rendered="#{!ingresoEgresoMB.cobrado}">
+			<h:panelGrid rendered="#{!ingresoEgresoMB.cobrado}" columns="3"
+				cellpadding="5">
 
 				<p:column>
 					<h:outputText for="tarifa" value="Tarifa: " />
@@ -97,7 +100,7 @@
 						<f:selectItems value="#{ingresoEgresoMB.tarifaPlayaList}"
 							var="tarifa" itemValue="#{tarifa}"
 							itemLabel="#{tarifa.tipoEstadia.nombre} $#{tarifa.importe}" />
-							<f:converter converterId="tarifaConverter" />
+						<f:converter converterId="tarifaConverter" />
 					</p:selectOneMenu>
 				</p:column>
 
@@ -105,9 +108,7 @@
 					<p:commandButton id="egreso" value="Registrar egreso"
 						action="#{ingresoEgresoMB.registrarEgresoVehiculo}" ajax="false" />
 				</p:column>
-
 			</h:panelGrid>
-
 
 		</h:form>
 	</ui:define>

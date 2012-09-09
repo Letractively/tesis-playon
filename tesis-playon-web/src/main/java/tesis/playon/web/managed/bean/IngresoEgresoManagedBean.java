@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.model.CategoriaVehiculo;
@@ -113,6 +115,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     private Boolean existeVehiculo = false;
 
+    private Boolean existeTarifa = true;
+
     private Boolean saldoPositvo = false;
 
     private Boolean cobrado = true;
@@ -171,13 +175,20 @@ public class IngresoEgresoManagedBean implements Serializable {
 	if (null != detalleEstadia && !detalleEstadia.getCobrado()) {
 	    cobrado = false;
 	}
-	if (cliente != null && null != vehiculo && null != cuentaCliente)
+	if (getTarifaPlayaList().isEmpty()) {
+	    setExisteTarifa(false);
+	    FacesContext.getCurrentInstance().addMessage(
+		    null,
+		    new FacesMessage(FacesMessage.SEVERITY_WARN, "Tarifas no encontradas", "Cargue tarifas para "
+			    + categoriaVehiculo.getNombre()));
+	} else if (cliente != null && null != vehiculo && null != cuentaCliente) {
 	    setExisteVehiculo(true);
+	}
     }
 
     public void registrarIngresoVehiculo() {
 	Timestamp fechaHoraIngreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
-	detalleEstadia = new DetalleEstadia(estadia, vehiculo, empleado, fechaHoraIngreso, cobrado);
+	detalleEstadia = new DetalleEstadia(estadia, vehiculo, empleado, fechaHoraIngreso, false);
 	getDetalleEstadiaService().save(detalleEstadia);
 	limpiar();
     }
@@ -186,6 +197,10 @@ public class IngresoEgresoManagedBean implements Serializable {
 	for (Tarifa tarifa : getTarifaPlayaList())
 	    System.out.println("\n\n\nLista de tarifas por categoria de vehiculo: " + tarifa.toString() + "\n\n\n");
 	limpiar();
+    }
+
+    public void addFaltaTarifa(ActionEvent actionEvent) {
+
     }
 
     public void limpiar() {
@@ -200,6 +215,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	tarifa = null;
 	tarifaPlayaList = null;
 	existeVehiculo = false;
+	existeTarifa = true;
 	saldoPositvo = false;
 	cobrado = true;
     }
@@ -286,8 +302,10 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public List<Tarifa> getTarifaPlayaList() {
 	tarifaPlayaList = new ArrayList<Tarifa>();
-	tarifaPlayaList.addAll(getTarifaService()
-		.findTarifaVigenteByPlayaAndCategoriaVehiculo(playa, categoriaVehiculo));
+	if (null != getTarifaService().findTarifaVigenteByPlayaAndCategoriaVehiculo(playa, categoriaVehiculo)) {
+	    tarifaPlayaList.addAll(getTarifaService().findTarifaVigenteByPlayaAndCategoriaVehiculo(playa,
+		    categoriaVehiculo));
+	}
 	return tarifaPlayaList;
     }
 
@@ -445,6 +463,14 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void setExisteVehiculo(Boolean existeVehiculo) {
 	this.existeVehiculo = existeVehiculo;
+    }
+
+    public Boolean getExisteTarifa() {
+	return existeTarifa;
+    }
+
+    public void setExisteTarifa(Boolean existeTarifa) {
+	this.existeTarifa = existeTarifa;
     }
 
     public Boolean getSaldoPositvo() {
