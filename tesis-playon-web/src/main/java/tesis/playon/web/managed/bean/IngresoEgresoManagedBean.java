@@ -457,6 +457,10 @@ public class IngresoEgresoManagedBean implements Serializable {
 	this.patente = patente;
     }
 
+    public Timestamp getHoraActual() {
+	return new Timestamp(Calendar.getInstance().getTimeInMillis());
+    }
+
     public Boolean getExisteVehiculo() {
 	return existeVehiculo;
     }
