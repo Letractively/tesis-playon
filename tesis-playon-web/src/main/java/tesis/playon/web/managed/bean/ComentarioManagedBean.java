@@ -144,6 +144,9 @@ public class ComentarioManagedBean implements Serializable {
     }
 
     public List<Comentario> getComentariosListPerfil() {
+	if (playaSelected != null) {
+	    comentariosListPerfil = getComentarioService().findByPlaya(playaSelected);
+	}
 	return comentariosListPerfil;
     }
 

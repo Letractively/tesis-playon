@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="title">
-		Título de la página
+		Perfil de playa
     </ui:define>
 
 	<ui:define name="content">
@@ -22,19 +22,32 @@
 					style="width:151px; height:151px; border: 2px solid black"
 					rendered="#{perfilPlayaMB.perfilSelected.nombreFoto == null}" />
 				<h1 style="width: 400px">#{perfilPlayaMB.playaSelected.nombreComercial}</h1>
+				<p:column>
+					<h:form>
+						<h:commandLink actionListener="#" id="favorito">
+							<h:graphicImage library="images/icons" name="favorite_add.png"
+								style="margin: 0 0 0 0" />
+							<h:outputText value="Agregar a favoritos" />
+						</h:commandLink>
+					</h:form>
+				</p:column>
 			</h:panelGrid>
 		</div>
 
 		<div id="perfil-playa">
-			<h:panelGrid columns="2" cellpadding="5">
-				<h:outputText value="Calificación:" styleClass="fuente-outputtext" />
-				<p:rating value="#{perfilPlayaMB.calificacionSelected}"
-					readonly="true" stars="10" />
-				<div align="center" style="margin: 0 50px 0 50px;">
-					<h:outputText value="#{perfilPlayaMB.perfilSelected.descripcion}"
-						styleClass="fuente-comentario-frente" />
-				</div>
+			<h:panelGrid columns="3" cellpadding="5">
+				<p:column>
+					<h:outputText value="Calificación:" styleClass="fuente-outputtext" />
+				</p:column>
+				<p:column>
+					<p:rating value="#{perfilPlayaMB.calificacionSelected}"
+						readonly="true" stars="10" />
+				</p:column>
 			</h:panelGrid>
+			<div align="center" style="margin: 10px 50px 10px 50px;">
+				<h:outputText value="#{perfilPlayaMB.perfilSelected.descripcion}"
+					styleClass="fuente-comentario-frente" />
+			</div>
 		</div>
 
 		<div style="margin: 0 0 0 50px;">
@@ -126,21 +139,21 @@
 						<f:facet name="footer">
 							<h:form>
 								<h:panelGrid columns="2">
-									<p:column style="width:80px;">
-										<div align="center" style="width: 80px;">
+									<p:column>
+										<div align="left" style="width: 75px;">
 											<h:graphicImage library="fotos_perfil_clientes"
-												name="sinfoto.jpg"
-												style="width:75px; height:75px; border: 2px solid black" />
+												name="sinfoto.jpg" style="width:75px; height:75px;" />
 											<h:outputText value="#{comentario.fecha}" />
 										</div>
 									</p:column>
 
 									<p:column>
 										<div id="perfil-playa-frente">
-											<p:inputTextarea id="comentario" cols="42" rows="2"
+											<p:inputTextarea id="comentario" cols="43" rows="2"
 												value="#{comentarioMB.comentario}"
 												styleClass="contenido-textarea" required="true"
-												requiredMessage="El campo comentario no puede estar vacio" />
+												requiredMessage="El campo comentario no puede estar vacio"
+												style="margin: 0 5px 0 5px" />
 										</div>
 										<div align="right">
 											<h:commandButton id="enviarComentario"
