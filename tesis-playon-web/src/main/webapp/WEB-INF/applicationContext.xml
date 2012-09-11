@@ -54,7 +54,7 @@
 	<bean id="Tarifa" class="tesis.playon.web.model.Tarifa" />
 	<bean id="TipoDoc" class="tesis.playon.web.model.TipoDoc" />
 	<bean id="TipoEstadia" class="tesis.playon.web.model.TipoEstadia" />
-	<!-- <bean id="TipoPago" class="tesis.playon.web.model.TipoPago" /> -->
+	<bean id="TipoPago" class="tesis.playon.web.model.TipoPago" />
 	<bean id="TransaccionCliente" class="tesis.playon.web.model.TransaccionCliente" />
 	<bean id="Usuario" class="tesis.playon.web.model.Usuario" />
 	<bean id="Vehiculo" class="tesis.playon.web.model.Vehiculo" />
@@ -76,11 +76,9 @@
 	<bean id="ColorVehiculoService" class="tesis.playon.web.service.impl.ColorVehiculoService">
 		<property name="colorVehiculoDao" ref="ColorVehiculoDao" />
 	</bean>
-	
 	<bean id="ComentarioService" class="tesis.playon.web.service.impl.ComentarioService">
 		<property name="comentarioDao" ref="ComentarioDao" />
 	</bean>
-	
 	<bean id="CuentaClienteService" class="tesis.playon.web.service.impl.CuentaClienteService">
 		<property name="cuentaClienteDao" ref="CuentaClienteDao" />
 	</bean>
@@ -138,6 +136,9 @@
 	<bean id="TipoEstadiaService" class="tesis.playon.web.service.impl.TipoEstadiaService">
 		<property name="tipoEstadiaDao" ref="TipoEstadiaDao" />
 	</bean>
+	<bean id="TipoPagoService" class="tesis.playon.web.service.impl.TipoPagoService">
+		<property name="tipoPagoDao" ref="TipoPagoDao" />
+	</bean>
 	<bean id="TransaccionClienteService" class="tesis.playon.web.service.impl.TransaccionClienteService">
 		<property name="transaccionClienteDao" ref="TransaccionClienteDao" />
 	</bean>
@@ -164,11 +165,9 @@
 	<bean id="ColorVehiculoDao" class="tesis.playon.web.dao.impl.ColorVehiculoDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
-	
 	<bean id="ComentarioDao" class="tesis.playon.web.dao.impl.ComentarioDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
-	
 	<bean id="CuentaClienteDao" class="tesis.playon.web.dao.impl.CuentaClienteDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
@@ -224,6 +223,9 @@
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
 	<bean id="TipoEstadiaDao" class="tesis.playon.web.dao.impl.TipoEstadiaDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
+	<bean id="TipoPagoDao" class="tesis.playon.web.dao.impl.TipoPagoDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
 	<bean id="TransaccionClienteDao" class="tesis.playon.web.dao.impl.TransaccionClienteDao">

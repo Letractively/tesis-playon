@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 /**
  * Tipos de pago para las transacciones de los clientes y de las playas.
@@ -18,7 +17,7 @@ import javax.persistence.UniqueConstraint;
  * @date 07/07/2012
  */
 @Entity
-@Table(name = "tipo_pago", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
+@Table(name = "tipo_pago", catalog = "tesis_playon")
 public class TipoPago implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,25 +33,22 @@ public class TipoPago implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
 
-    /**
-     * Constructor por defecto.
-     */
     public TipoPago() {
 	super();
     }
 
-    /**
-     * Constructor con parámetros.
-     * 
-     * @param nombre
-     *            El nombre del Tipo de Pago.
-     * @param descripcion
-     *            La descripción del Tipo de Pago.
-     */
     public TipoPago(String nombre, String descripcion) {
 	super();
 	this.nombre = nombre;
 	this.descripcion = descripcion;
+    }
+
+    public void setId(Integer id) {
+	this.id = id;
+    }
+
+    public Integer getId() {
+	return id;
     }
 
     public String getNombre() {
@@ -69,11 +65,6 @@ public class TipoPago implements Serializable {
 
     public void setDescripcion(String descripcion) {
 	this.descripcion = descripcion;
-    }
-
-    public Integer getId() {
-	return id;
-
     }
 
     public boolean equals(Object object) {
@@ -95,8 +86,4 @@ public class TipoPago implements Serializable {
 	return "TipoPago:\t [TipoPagoID= " + id + ", nombre= " + nombre + ", descripcion=" + descripcion + "]";
     }
 
-    public void setId(Integer id) {
-	this.id = id;
-
-    }
 }

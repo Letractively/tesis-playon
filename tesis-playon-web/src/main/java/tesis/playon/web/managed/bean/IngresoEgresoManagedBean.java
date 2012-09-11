@@ -11,7 +11,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.model.CategoriaVehiculo;
@@ -25,6 +24,7 @@ import tesis.playon.web.model.MarcaVehiculo;
 import tesis.playon.web.model.ModeloVehiculo;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Tarifa;
+import tesis.playon.web.model.TipoPago;
 import tesis.playon.web.model.TransaccionCliente;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.model.Vehiculo;
@@ -36,6 +36,7 @@ import tesis.playon.web.service.IEmpleadoService;
 import tesis.playon.web.service.IEstadiaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.ITarifaService;
+import tesis.playon.web.service.ITipoPagoService;
 import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.service.IVehiculoService;
 
@@ -75,6 +76,9 @@ public class IngresoEgresoManagedBean implements Serializable {
     @ManagedProperty(value = "#{TarifaService}")
     ITarifaService tarifaService;
 
+    @ManagedProperty(value = "#{TipoPagoService}")
+    ITipoPagoService tipoPagoService;
+
     private List<Tarifa> tarifaPlayaList;
 
     private Usuario usuario;
@@ -100,6 +104,8 @@ public class IngresoEgresoManagedBean implements Serializable {
     private CuentaCliente cuentaCliente;
 
     private TransaccionCliente transaccionCliente;
+
+    private TipoPago tipoPago;
 
     private Vehiculo vehiculo;
 
@@ -175,7 +181,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	if (null != detalleEstadia && !detalleEstadia.getCobrado()) {
 	    cobrado = false;
 	}
-	if (getTarifaPlayaList().isEmpty()) {
+	if (null != vehiculo && getTarifaPlayaList().isEmpty()) {
 	    setExisteTarifa(false);
 	    FacesContext.getCurrentInstance().addMessage(
 		    null,
@@ -194,13 +200,25 @@ public class IngresoEgresoManagedBean implements Serializable {
     }
 
     public void registrarEgresoVehiculo() {
-	for (Tarifa tarifa : getTarifaPlayaList())
-	    System.out.println("\n\n\nLista de tarifas por categoria de vehiculo: " + tarifa.toString() + "\n\n\n");
+	// getDetalleEstadiaService().save(detalleEstadia);
 	limpiar();
     }
 
-    public void addFaltaTarifa(ActionEvent actionEvent) {
-
+    public void calcularImporte() {
+	Timestamp fechaHoraEgreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
+	detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+	// calculo de horas a cobrar
+	long diff = detalleEstadia.getFechaHoraEgreso().getTime() - detalleEstadia.getFechaHoraIngreso().getTime();
+	double diferenciaEnHoras = diff / ((double) 1000 * 60 * 60);
+	int horasACobrar = (int) diferenciaEnHoras;
+	int minutos = (int) ((diferenciaEnHoras - horasACobrar) * 60);
+	if (minutos > 10 || horasACobrar == 0)
+	    horasACobrar++;
+	// calculo de importe a pagar
+	float importeTotal = tarifa.getImporte() * horasACobrar;
+	detalleEstadia.setImporteTotal(importeTotal);
+	detalleEstadia.setTarifa(tarifa);
+	detalleEstadia.setCobrado(true);
     }
 
     public void limpiar() {
@@ -298,6 +316,14 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void setTarifaService(ITarifaService tarifaService) {
 	this.tarifaService = tarifaService;
+    }
+
+    public ITipoPagoService getTipoPagoService() {
+	return tipoPagoService;
+    }
+
+    public void setTipoPagoService(ITipoPagoService tipoPagoService) {
+	this.tipoPagoService = tipoPagoService;
     }
 
     public List<Tarifa> getTarifaPlayaList() {
@@ -407,6 +433,14 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void setTransaccionCliente(TransaccionCliente transaccionCliente) {
 	this.transaccionCliente = transaccionCliente;
+    }
+
+    public TipoPago getTipoPago() {
+	return tipoPago;
+    }
+
+    public void setTipoPago(TipoPago tipoPago) {
+	this.tipoPago = tipoPago;
     }
 
     public Vehiculo getVehiculo() {
