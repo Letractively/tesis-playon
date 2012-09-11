@@ -2,8 +2,12 @@ package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+
+import org.springframework.dao.DataAccessException;
 
 import tesis.playon.web.model.Mail;
 import tesis.playon.web.util.NotificadorUtil;
@@ -24,31 +28,44 @@ public class ContactoMB implements Serializable {
     // private MailManagedBean mailMB=new MailManagedBean();
     private NotificadorUtil notificador;
 
-    public void enviarMailContacto()
+    public String enviarMailContacto()
 
     {
-	mensaje = "\nDatos de contacto: " + "\nNombre: " + getNombre() + "\nE-Mail: " + getMailContacto()
-		+ "\nAsunto: " + getAsuntoContacto() + "\n\n\nMENSAJE: " + getMensaje();
-	notificador = new NotificadorUtil();
-	mail.setDestinatario("tesisplayon@gmail.c");
-	mail.setMensaje(getMensaje());
-	mail.setAsunto(getAsuntoContacto());
+	try {
+	    mensaje = "\nDatos de contacto: " + "\nNombre: " + getNombre() + "\nE-Mail: " + getMailContacto()
+		    + "\nAsunto: " + getAsuntoContacto() + "\n\n\nMENSAJE: " + getMensaje();
+	    notificador = new NotificadorUtil();
+	    mail.setDestinatario("tesisplayon@gmail.com");
+	    mail.setMensaje(getMensaje());
+	    mail.setAsunto(getAsuntoContacto());
 
-	notificador.enviar(getMail());
-	reset();
+	    notificador.enviar(getMail());
+	    reset();
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje enviado correctamente " + " ",
+		    "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    reset();
+	    return "contactoend";
+	} catch (DataAccessException e) {
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Problemas al enviar su mensaje "
+		    + "Vuelva  a intentarlo ", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
+	    return "ERROR";
+	}
 
     }
 
-    public void reset()
-    {
-	
-	this.mensaje="";
-	this.nombre="";
-	this.asuntoContacto="";
-	this.mailContacto="";
-	
+    public void reset() {
+
+	this.mensaje = "";
+	this.nombre = "";
+	this.asuntoContacto = "";
+	this.mailContacto = "";
+
     }
-    
+
     public Mail getMail() {
 	return mail;
     }

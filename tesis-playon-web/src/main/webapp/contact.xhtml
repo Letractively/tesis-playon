@@ -29,12 +29,16 @@
 						</p:inputText> <p:message id="nombreMsg" for="nombre" display="icon" /></td>
 				</tr>
 				<tr>
+				</tr>
+
+				<tr>
 					<td><h:outputLabel for="email" value="Correo electrónico: " /></td>
 					<td><p:inputText id="email" value="#{contactoMB.mailContacto}">
 							<f:validateLength minimum="2" />
 							<p:ajax event="blur" update="emailMsg" />
 						</p:inputText> <p:message id="emailMsg" for="email" display="icon" /></td>
 				</tr>
+				<br />
 				<tr>
 					<td><h:outputLabel for="asunto" value="Asunto: " /></td>
 					<td><p:inputText id="asunto"
@@ -43,6 +47,7 @@
 							<p:ajax event="blur" update="asuntoMsg" />
 						</p:inputText> <p:message id="asuntoMsg" for="asunto" display="icon" /></td>
 				</tr>
+				<br />
 				<tr>
 					<td><h:outputText for="mensaje" value="Mensaje: " /></td>
 					<td><p:inputTextarea id="mensaje" rows="6" cols="33"
@@ -51,6 +56,7 @@
 							<p:ajax event="blur" update="mensajeMsg" />
 						</p:inputTextarea> <p:message id="mensajeMsg" for="mensaje" display="icon" /></td>
 				</tr>
+				<br />
 			</table>
 			<br />
 			<p>
