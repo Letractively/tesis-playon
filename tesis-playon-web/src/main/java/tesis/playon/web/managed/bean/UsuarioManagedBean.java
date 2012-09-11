@@ -34,6 +34,10 @@ public class UsuarioManagedBean implements Serializable {
 
     List<Usuario> usuarioList;
 
+    private String passViejo;
+
+    private String passActual;
+
     private String apellido;
 
     private String nombre;
@@ -134,9 +138,10 @@ public class UsuarioManagedBean implements Serializable {
     public String recuperarPass()
 
     {
-	 Usuario usu = new Usuario();
+	Usuario usu = new Usuario();
+
 	try {
-	   
+
 	    usu = getUsuarioService().findByNombreUsuario(getNombreUser());
 	    Mail mail = new Mail();
 	    NotificadorUtil notificador = new NotificadorUtil();
@@ -145,10 +150,10 @@ public class UsuarioManagedBean implements Serializable {
 	    mail.setMensaje("Estimado: " + usu.getNombre()
 		    + " su contraseña de Playon - Red de playas es la siguiente: " + usu.getPassword());
 	    notificador.enviar(mail);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se envio correctamente su contraseña: "
-		    + usu.getApellido() + " " + usu.getNombre(), "");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "Se envio correctamente su contraseña: " + usu.getApellido() + " " + usu.getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    
+
 	    return "recuperarpasswordend";
 	}
 
@@ -157,10 +162,37 @@ public class UsuarioManagedBean implements Serializable {
 		    "Error el usuario no existe, Por favor, intÃ©ntelo mÃ¡s tarde.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
-	    
+
 	}
 	return "ERROR";
 
+    }
+
+    public String modificarPassword() {
+
+	Usuario usu;
+	usu = getUsuario();
+	try {
+
+	    usu.setPassword(getPassword());
+
+	    getUsuarioService().update(usu);
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modifico contraseña: "
+		    + usu.getApellido() + " " + usu.getNombre(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+
+	    return "cambiarpasswordend";
+
+	}
+
+	catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "No se pudo modificar su contraseña, Por favor, intÃ©ntelo mÃ¡s tarde.", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
+	    return "ERROR";
+	}
     }
 
     public String modificarUsuarioAdmin(Usuario usuario) {
@@ -265,6 +297,31 @@ public class UsuarioManagedBean implements Serializable {
 
     public void setUsuarioSelected(Usuario usuarioSelected) {
 	UsuarioManagedBean.usuarioSelected = usuarioSelected;
+    }
+
+    public String getPassViejo() {
+	return passViejo;
+    }
+
+    public void setPassViejo(String passViejo) {
+	this.passViejo = passViejo;
+    }
+
+    public String getPassActual() {
+	passActual = usuarioSelected.getPassword();
+	return passActual;
+    }
+
+    public void setPassActual(String passActual) {
+	this.passActual = passActual;
+    }
+
+    public Usuario getUsuario() {
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	String userName = facesContext.getExternalContext().getRemoteUser();
+	Usuario usuario = getUsuarioService().findByNombreUsuario(userName);
+
+	return usuario;
     }
 
 }
