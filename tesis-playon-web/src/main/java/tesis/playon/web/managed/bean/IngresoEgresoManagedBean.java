@@ -37,6 +37,7 @@ import tesis.playon.web.service.IEstadiaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.ITarifaService;
 import tesis.playon.web.service.ITipoPagoService;
+import tesis.playon.web.service.ITransaccionClienteService;
 import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.service.IVehiculoService;
 
@@ -79,6 +80,9 @@ public class IngresoEgresoManagedBean implements Serializable {
     @ManagedProperty(value = "#{TipoPagoService}")
     ITipoPagoService tipoPagoService;
 
+    @ManagedProperty(value = "#{TransaccionClienteService}")
+    ITransaccionClienteService transaccionClienteService;
+
     private List<Tarifa> tarifaPlayaList;
 
     private Usuario usuario;
@@ -119,13 +123,15 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     private String patente;
 
-    private Boolean existeVehiculo = false;
+    private boolean existeVehiculo = false;
 
-    private Boolean existeTarifa = true;
+    private boolean existeTarifa = true;
 
-    private Boolean saldoPositvo = false;
+    private boolean saldoPositvo = false;
 
-    private Boolean cobrado = true;
+    private boolean cobrado = true;
+
+    private float importe;
 
     public void preRenderView() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -200,7 +206,27 @@ public class IngresoEgresoManagedBean implements Serializable {
     }
 
     public void registrarEgresoVehiculo() {
-	// getDetalleEstadiaService().save(detalleEstadia);
+	// actualizar saldo del cliente
+	if (cuentaCliente.getSaldo() < importe) {
+	    detalleEstadia.setImporteTotal(cuentaCliente.getSaldo());
+	    cuentaCliente.setSaldo(0);
+	} else {
+	    float saldoActualizado = cuentaCliente.getSaldo() - importe;
+	    cuentaCliente.setSaldo(saldoActualizado);
+	}
+	getCuentaClienteService().update(cuentaCliente);
+	// actualizar saldo de la playa
+	float saldoPlayaActualizado = cuentaPlaya.getSaldo() + detalleEstadia.getImporteTotal();
+	cuentaPlaya.setSaldo(saldoPlayaActualizado);
+	getCuentaPlayaService().update(cuentaPlaya);
+	// crear la transaccion del cliente
+	TipoPago tipoPago = getTipoPagoService().findByNombreTipoPago("Cuenta");
+	transaccionCliente = new TransaccionCliente(detalleEstadia.getFechaHoraEgreso(),
+		detalleEstadia.getImporteTotal(), tipoPago, cuentaCliente);
+	getTransaccionClienteService().save(transaccionCliente);
+	// actualizar y cerrar detalle estadia
+	detalleEstadia.setTransaccionCliente(transaccionCliente);
+	getDetalleEstadiaService().update(detalleEstadia);
 	limpiar();
     }
 
@@ -215,8 +241,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 	if (minutos > 10 || horasACobrar == 0)
 	    horasACobrar++;
 	// calculo de importe a pagar
-	float importeTotal = tarifa.getImporte() * horasACobrar;
-	detalleEstadia.setImporteTotal(importeTotal);
+	importe = tarifa.getImporte() * horasACobrar;
+	detalleEstadia.setImporteTotal(importe);
 	detalleEstadia.setTarifa(tarifa);
 	detalleEstadia.setCobrado(true);
     }
@@ -236,6 +262,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	existeTarifa = true;
 	saldoPositvo = false;
 	cobrado = true;
+	importe = 0;
     }
 
     public IEmpleadoService getEmpleadoService() {
@@ -324,6 +351,14 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void setTipoPagoService(ITipoPagoService tipoPagoService) {
 	this.tipoPagoService = tipoPagoService;
+    }
+
+    public ITransaccionClienteService getTransaccionClienteService() {
+	return transaccionClienteService;
+    }
+
+    public void setTransaccionClienteService(ITransaccionClienteService transaccionClienteService) {
+	this.transaccionClienteService = transaccionClienteService;
     }
 
     public List<Tarifa> getTarifaPlayaList() {
@@ -495,36 +530,44 @@ public class IngresoEgresoManagedBean implements Serializable {
 	return new Timestamp(Calendar.getInstance().getTimeInMillis());
     }
 
-    public Boolean getExisteVehiculo() {
+    public boolean getExisteVehiculo() {
 	return existeVehiculo;
     }
 
-    public void setExisteVehiculo(Boolean existeVehiculo) {
+    public void setExisteVehiculo(boolean existeVehiculo) {
 	this.existeVehiculo = existeVehiculo;
     }
 
-    public Boolean getExisteTarifa() {
+    public boolean getExisteTarifa() {
 	return existeTarifa;
     }
 
-    public void setExisteTarifa(Boolean existeTarifa) {
+    public void setExisteTarifa(boolean existeTarifa) {
 	this.existeTarifa = existeTarifa;
     }
 
-    public Boolean getSaldoPositvo() {
+    public boolean getSaldoPositvo() {
 	return saldoPositvo;
     }
 
-    public void setSaldoPositvo(Boolean saldoPositvo) {
+    public void setSaldoPositvo(boolean saldoPositvo) {
 	this.saldoPositvo = saldoPositvo;
     }
 
-    public Boolean getCobrado() {
+    public boolean getCobrado() {
 	return cobrado;
     }
 
-    public void setCobrado(Boolean cobrado) {
+    public void setCobrado(boolean cobrado) {
 	this.cobrado = cobrado;
+    }
+
+    public float getImporte() {
+	return importe;
+    }
+
+    public void setImporte(float importe) {
+	this.importe = importe;
     }
 
 }
