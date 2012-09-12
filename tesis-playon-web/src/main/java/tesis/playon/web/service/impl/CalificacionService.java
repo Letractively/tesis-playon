@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.ICalificacionDao;
 import tesis.playon.web.model.Calificacion;
+import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.service.ICalificacionService;
 
@@ -45,6 +46,11 @@ public class CalificacionService implements ICalificacionService {
     public List<Calificacion> findAll() {
 	// TODO Auto-generated method stub
 	return getCalificacionDao().findAll();
+    }
+    
+    @Override
+    public boolean isRate(Playa playa, Cliente cliente) {
+	return getCalificacionDao().isRate(playa, cliente);
     }
 
     public ICalificacionDao getCalificacionDao() {

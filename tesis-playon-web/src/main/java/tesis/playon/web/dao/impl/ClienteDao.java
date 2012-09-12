@@ -64,7 +64,9 @@ public class ClienteDao implements IClienteDao {
     public Cliente findByIdUsuario(Usuario usuario) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Cliente where usuario=?")
 		.setParameter(0, usuario).list();
-	return (Cliente) list.get(0);
+	if(!list.isEmpty())
+	    return (Cliente) list.get(0);
+	return null;
     }
 
 }

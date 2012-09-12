@@ -8,15 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.RateEvent;
+
 import tesis.playon.web.model.Calificacion;
+import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.ICalificacionService;
+import tesis.playon.web.service.IClienteService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IUsuarioService;
 
@@ -38,6 +43,9 @@ public class CalificacionManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{CalificacionService}")
     ICalificacionService calificacionService;
+    
+    @ManagedProperty(value = "#{ClienteService}")
+    IClienteService clienteService;
 
     private Integer calificacionPlaya;
     
@@ -66,6 +74,54 @@ public class CalificacionManagedBean implements Serializable {
 	    }
 	}
     }
+    
+    public void onrate(RateEvent rateEvent) {
+	Cliente cliente = null;
+	try{
+	    FacesContext facesContext = FacesContext.getCurrentInstance();
+	    String userName = facesContext.getExternalContext().getRemoteUser();
+	    Usuario user = getUsuarioService().findByNombreUsuario(userName);
+	    if (user != null){
+		cliente = getClienteService().findByUsuario(user);
+		if(cliente != null){
+		    boolean califico = getCalificacionService().isRate(playaSelected, cliente);
+		    if(!califico){
+			Calificacion calificacion = new Calificacion(((Integer) rateEvent.getRating()).intValue()
+				, playaSelected, cliente);
+			getCalificacionService().save(calificacion);
+			
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO
+				    , "Se registró la califación exitosamente, " 
+				    , "puntuación: " + ((Integer) rateEvent.getRating()).intValue());
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			
+		    }else{
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN
+				    , "Usted ya ha calificado esta playa, " 
+				    , "Sólo se permite calificar una vez la misma playa");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		    }
+		}
+		else{
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN
+			    , "¡Sólo pueden calificar clientes de las playas!" , "");
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+	    }
+	    else{
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN
+			    , "No se pudo registrar su calificación, "
+			    , "¡Debe iniciar sesión para poder calificar la playa!");
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	    }
+	    
+	}catch(Exception ex){
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR
+		    , "¡No se pudo registrar la calificación! "
+		    , "Disculpe las molestias ocacionadas");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+    }
 
     public IPlayaService getPlayaService() {
 	return playaService;
@@ -89,6 +145,14 @@ public class CalificacionManagedBean implements Serializable {
 
     public void setUsuarioService(IUsuarioService usuarioService) {
         this.usuarioService = usuarioService;
+    }
+
+    public IClienteService getClienteService() {
+        return clienteService;
+    }
+
+    public void setClienteService(IClienteService clienteService) {
+        this.clienteService = clienteService;
     }
 
     public Integer getCalificacionPlaya() {

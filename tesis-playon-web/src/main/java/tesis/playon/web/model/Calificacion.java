@@ -44,6 +44,13 @@ public class Calificacion implements Serializable{
     public Calificacion() {
     }
 
+    public Calificacion(Integer calificacion, Playa playa, Cliente cliente) {
+	super();
+	this.calificacion = calificacion;
+	this.playa = playa;
+	this.cliente = cliente;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -22,8 +22,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import tesis.playon.web.model.CategoriaVehiculo;
-import tesis.playon.web.model.EstadoPlaya;
-import tesis.playon.web.model.Mail;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Tarifa;
 import tesis.playon.web.model.TipoEstadia;
@@ -32,8 +30,6 @@ import tesis.playon.web.service.ICategoriaVehiculoService;
 import tesis.playon.web.service.ITarifaService;
 import tesis.playon.web.service.ITipoEstadiaService;
 import tesis.playon.web.service.IUsuarioService;
-import tesis.playon.web.util.NotificadorUtil;
-import tesis.playon.web.util.WriteImage;
 
 /**
  * @author Pablo

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.ICalificacionDao;
 import tesis.playon.web.model.Calificacion;
+import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.Playa;
 
 public class CalificacionDao implements ICalificacionDao {
@@ -20,7 +21,7 @@ public class CalificacionDao implements ICalificacionDao {
     public void setSessionFactory(SessionFactory sessionFactory) {
 	this.sessionFactory = sessionFactory;
     }
-    
+
     @Override
     public void save(Calificacion calificacion) {
 	// TODO Auto-generated method stub
@@ -44,11 +45,11 @@ public class CalificacionDao implements ICalificacionDao {
 	List<Calificacion> calificaciones = new ArrayList<Calificacion>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Calificacion where playa=?")
 		.setParameter(0, playa).list();
-	if(!list.isEmpty()){
+	if (!list.isEmpty()) {
 	    for (Object obj : list) {
-		    calificaciones.add((Calificacion) obj);
-		}
-		return calificaciones;
+		calificaciones.add((Calificacion) obj);
+	    }
+	    return calificaciones;
 	}
 	return null;
     }
@@ -57,13 +58,23 @@ public class CalificacionDao implements ICalificacionDao {
     public List<Calificacion> findAll() {
 	List<Calificacion> calificaciones = new ArrayList<Calificacion>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Calificacion").list();
-	if(!list.isEmpty()){
+	if (!list.isEmpty()) {
 	    for (Object obj : list) {
-		    calificaciones.add((Calificacion) obj);
-		}
-		return calificaciones;
+		calificaciones.add((Calificacion) obj);
+	    }
+	    return calificaciones;
 	}
 	return null;
     }
 
+    @Override
+    public boolean isRate(Playa playa, Cliente cliente) {
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Calificacion where playa=? and cliente=?").setParameter(0, playa)
+		.setParameter(1, cliente).list();
+	if (!list.isEmpty()) {
+	    return true;
+	}
+	return false;
+    }
 }
