@@ -154,7 +154,8 @@
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
-			<version>3.1.1</version>
+			<!--<version>3.1.1</version> -->
+			<version>3.4</version>
 		</dependency>
 
 		<!-- Hibernate library -->
@@ -206,8 +207,8 @@
 
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
-			<artifactId>dot-luv</artifactId>
-			<version>1.0.7</version>
+			<artifactId>redmond</artifactId>
+			<version>1.0.8</version>
 		</dependency>
 
 		<!-- Dependencias para grabar archivos -->

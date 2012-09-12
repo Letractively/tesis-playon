@@ -10,38 +10,45 @@
 
 	<h:form>
 
-		<p:menubar>
-			<p:menuitem value="Home" url="#{request.contextPath}/../admin"
-				icon="ui-icon-home" />
-			<p:submenu label="Usuarios" icon="ui-icon-person">
-				<p:menuitem value="Usuarios"
-					url="#{request.contextPath}/../admin/usuariolist.html" />
-				<p:menuitem value="Cliente"
-					url="#{request.contextPath}/../admin/clientelist.html" />
+		<p:menubar style="font-size: 0.8em;">
+			<p:menuitem value="Inicio" url="#{request.contextPath}/../admin" />
+			<p:submenu label="Usuarios">
+				<p:menuitem value="Usuarios" 
+					url="#{request.contextPath}/../admin/usuariolist.html"
+					icon="ui-icon-person" />
+				<p:menuitem value="Clientes"
+					url="#{request.contextPath}/../admin/clientelist.html"
+					icon="ui-icon-star" />
 				<p:menuitem value="Roles de Usuarios"
-					url="#{request.contextPath}/../admin/rolusuariolist.html" />
+					url="#{request.contextPath}/../admin/rolusuariolist.html"
+					icon="ui-icon-tag" />
 			</p:submenu>
 
-			<p:submenu label="Playas" icon="ui-icon-pencil">
+			<p:submenu label="Playas">
 				<p:menuitem value="Playas"
-					url="#{request.contextPath}/../admin/playalist.html" />
+					url="#{request.contextPath}/../admin/playalist.html"
+					icon="ui-icon-home" />
 				<p:menuitem value="Tarifas"
-					url="#{request.contextPath}/../admin/tarifalist.html" />
+					url="#{request.contextPath}/../admin/tarifalist.html"
+					icon="ui-icon-pencil" />
 				<p:menuitem value="Tipo Estadías"
-					url="#{request.contextPath}/../admin/tipoestadialist.html" />
+					url="#{request.contextPath}/../admin/tipoestadialist.html"
+					icon="ui-icon-bookmark" />
 			</p:submenu>
 
-			<p:submenu label="Auditoría" icon="ui-icon-help">
+			<p:submenu label="Auditoría">
 				<p:menuitem value="Playas Pendientes"
-					url="#{request.contextPath}/../auditoria/playaspendienteslist.html" />
+					url="#{request.contextPath}/../auditoria/playaspendienteslist.html"
+					icon="ui-icon-help" />
 				<p:menuitem value="Playas Rechazadas"
-					url="#{request.contextPath}/../auditoria/playasrechazadaslist.html" />
+					url="#{request.contextPath}/../auditoria/playasrechazadaslist.html"
+					icon="ui-icon-close" />
 			</p:submenu>
 
-			<p:submenu label="Usuario" icon="ui-icon-help">
+			<p:submenu label="Usuario">
 				<p:menuitem value="Cambiar Contraseña"
-					url="#{request.contextPath}/../admin/" />
-				<p:menuitem value="Cerrar sesión" icon="ui-icon-circle-close"
+					url="#{request.contextPath}/../admin/" icon="ui-icon-key" />
+				<p:menuitem value="Cerrar sesión" icon="ui-icon-power"
 					action="#{loginMB.logout}" />
 			</p:submenu>
 

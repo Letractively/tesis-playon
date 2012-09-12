@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -29,6 +30,7 @@ import tesis.playon.web.service.ICategoriaVehiculoService;
 import tesis.playon.web.service.ITarifaService;
 import tesis.playon.web.service.ITipoEstadiaService;
 import tesis.playon.web.service.IUsuarioService;
+import tesis.playon.web.util.WriteImage;
 
 /**
  * @author Pablo
@@ -61,6 +63,8 @@ public class TarifaManagedBean implements Serializable {
     List<Tarifa> tarifaList;
 
     private List<Tarifa> tarifaPlayaList;
+    
+    private List<Tarifa> tarifaPlayaLogged;
 
     private List<Tarifa> promocionesPlayaList;
 
@@ -83,6 +87,8 @@ public class TarifaManagedBean implements Serializable {
     private static Tarifa tarifaSelected;
 
     private static Playa playaSelected;
+    
+    private Playa playaLogged;
 
     private String autoPorHora;
     private String utilitarioPorHora;
@@ -107,6 +113,18 @@ public class TarifaManagedBean implements Serializable {
     //ATRIBUTO PARA EL FRONTEND
     
     private List<Tarifa> tarifaListSelected;
+
+    @PostConstruct
+    // METODO PARA INICIALIZAR TODOS LOS ATRIBUTOS
+    public void init() {
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	String userName = facesContext.getExternalContext().getRemoteUser();
+	Usuario user = getUsuarioService().findByNombreUsuario(userName);
+	if (user != null && user.getPlaya() != null) {
+	    this.setPlaya(user.getPlaya());
+	    this.setPlayaLogged(playa);
+	}
+    }
 
     public String addTarifaAdmin() {
 	try {
@@ -414,6 +432,12 @@ public class TarifaManagedBean implements Serializable {
 	this.tarifaList = tarifaList;
     }
 
+    public List<Tarifa> getTarifaPlayaLogged() {
+	tarifaPlayaLogged = new ArrayList<Tarifa>();
+	tarifaPlayaLogged.addAll(getTarifaService().findByPlaya(playaLogged));
+	return tarifaPlayaLogged;
+    }
+    
     public List<Tarifa> getTarifaPlayaList() {
 	tarifaPlayaList = new ArrayList<Tarifa>();
 	tarifaPlayaList.addAll(getTarifaService().findByPlaya(playaSelected));
@@ -652,12 +676,20 @@ public class TarifaManagedBean implements Serializable {
         this.tarifaListSelected = tarifaListSelected;
     }
 
-    public static void setTarifaSelected(Tarifa tarifaSelected) {
+    public void setTarifaSelected(Tarifa tarifaSelected) {
         TarifaManagedBean.tarifaSelected = tarifaSelected;
     }
 
     public void setPlayaSelected(Playa playaSelected) {
         TarifaManagedBean.playaSelected = playaSelected;
+    }
+
+    public Playa getPlayaLogged() {
+        return playaLogged;
+    }
+
+    public void setPlayaLogged(Playa playaLogged) {
+        this.playaLogged = playaLogged;
     }
     
 }

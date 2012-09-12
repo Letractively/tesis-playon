@@ -239,7 +239,7 @@ public class AuditoriaManagedBean implements Serializable {
 	playasPendientesList = new ArrayList<Playa>();
 	EstadoPlaya estado = new EstadoPlaya();
 	estado = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
-	playasPendientesList.addAll(getPlayaService().findByEstado(estado));
+	playasPendientesList = getPlayaService().findByEstado(estado);
 	return playasPendientesList;
     }
 
@@ -251,7 +251,7 @@ public class AuditoriaManagedBean implements Serializable {
 	playasRechazadasList = new ArrayList<Playa>();
 	EstadoPlaya estado = new EstadoPlaya();
 	estado = getEstadoPlayaService().findByNombreEstadoPlaya("Rechazada");
-	playasRechazadasList.addAll(getPlayaService().findByEstado(estado));
+	playasRechazadasList = getPlayaService().findByEstado(estado);
 	return playasRechazadasList;
     }
 

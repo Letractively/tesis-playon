@@ -52,7 +52,7 @@
   </filter-mapping>
   <context-param>
     <param-name>primefaces.THEME</param-name>
-    <param-value>afterwork</param-value>
+    <param-value>redmond</param-value>
   </context-param>
   <filter>
     <filter-name>CharsetFilter</filter-name>

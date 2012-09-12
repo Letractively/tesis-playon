@@ -3,6 +3,9 @@
 .ui-widget,.ui-widget .ui-widget { /* 	font-size: 8pt !important; */
 	
 }
+body {
+		background-color: lightgray;
+}
 
 /* ********************************************** */
 /*	General	*/
@@ -16,6 +19,7 @@
 	width: 980px;
 	/* 	width: 100%; */
 	/* 	overflow: hidden; */
+
 }
 
 #mainbody-login {
