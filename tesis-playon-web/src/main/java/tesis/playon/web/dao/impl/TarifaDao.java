@@ -39,7 +39,10 @@ public class TarifaDao implements ITarifaDao {
     }
 
     public void delete(Tarifa tarifa) {
-	getSessionFactory().getCurrentSession().delete(tarifa);
+	//getSessionFactory().getCurrentSession().delete(tarifa);
+	tarifa.setVigente(new Boolean(false));
+	tarifa.setFechaBaja(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+	getSessionFactory().getCurrentSession().update(tarifa);
     }
 
     public int deleteTarifasPlaya(Playa playa) {
@@ -53,7 +56,7 @@ public class TarifaDao implements ITarifaDao {
 
     public List<Tarifa> findAll() {
 	List<Tarifa> tarifas = new ArrayList<Tarifa>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa").list();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa where fechaBaja is null").list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
 		tarifas.add((Tarifa) object);

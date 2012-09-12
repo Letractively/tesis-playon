@@ -43,8 +43,7 @@
 				<h:outputText value="#{cliente.usuario.enable ? 'Si' : 'No'}"/>
 			</p:column>
 
-			<p:column headerText="Opciones"
-					style="text-align:center; width:75px;">
+			<p:column headerText="Opciones" styleClass="column-options">
 					
 				<p:commandLink id="view" update=":mainForm:displayView"
 					oncomplete="popupClienteDatos.show();" title="Datos Cliente">

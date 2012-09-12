@@ -19,6 +19,33 @@
 
 /* </PRIMEFACES> */
 
+/* <SIDE MENU> */
+#sidebar .ui-widget .ui-widget {
+	font-size: 14px;
+}
+
+.side-menu {
+	font-size: 14px;
+	width: 180px;
+	height: 100%;
+}
+
+.side-menu li {
+	font-size: 14px;
+	width: 180px;
+}
+
+.side-menu .ui-menu {
+	width: 180px;
+}
+
+#sidebar .box { /* 	background-color: red; */
+	margin-top: 0;
+	height: 100%;
+	psition: relative;
+}
+/* </SIDE MENU> */
+
 /* <TABLA DE ALTA TARIFAS> */
 #tabla-tarifas {
 	width: 600px;
@@ -37,17 +64,21 @@
 /* </TABLA DE ALTA TARIFAS> */
 #content {
 	text-align: justify;
+	/* 	margin-right: -5px; */
+	/* 	background-color: white; */
+	/* 	padding: 5px 5px 5px 5px; */
+	padding-right: 10px;
 }
 
 #content h1 {
 	padding: 0;
 	padding-bottom: 5px;
 	margin-bottom: 20px;
-	border-bottom: 1px solid lightgrey;
+	border-bottom: 1px solid rgb(166, 201, 226);
 }
 
-#content h2,h3,h4 {
-	border-bottom: 1px dotted lightgrey;
+#content h2, #content h3, #content h4 {
+	border-bottom: 1px dotted rgb(166, 201, 226);
 }
 
 #content ul {

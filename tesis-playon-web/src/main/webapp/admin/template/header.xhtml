@@ -7,20 +7,21 @@
 	<h:panelGrid columns="3">
 		<p:graphicImage
 			value="http://code.google.com/p/tesis-playon/logo?cct=1341892556" />
-
 		<div>
 			<h3>Panel de administración</h3>
 		</div>
 
-		<h:panelGrid column="1" style="width:350px; vertical-align:text-bottom; text-align:right;" layout="block">
-		<h:form id="Logout">
-			<h:commandLink id="logout" action="#{loginMB.logout}" title="Cerrar Sesión"
-				style="margin:0px 0px 0px 0px;">
-				<h:graphicImage library="images/icons" name="exit.png"
-					style="width:50px; heigh:50px; vertical-align:bottom; margin:0px 0px 0px 0px;" />
-			</h:commandLink>
-		</h:form>
-			
+		<h:panelGrid column="1"
+			style="width:350px; vertical-align:text-bottom; text-align:right;"
+			layout="block">
+			<h:form id="Logout">
+				<h:commandLink id="logout" action="#{loginMB.logout}"
+					title="Cerrar Sesión" style="margin:0px 0px 0px 0px;">
+					<h:graphicImage library="images/icons" name="exit.png"
+						style="width:50px; heigh:50px; vertical-align:bottom; margin:0px 0px 0px 0px;" />
+				</h:commandLink>
+			</h:form>
+
 		</h:panelGrid>
 
 	</h:panelGrid>

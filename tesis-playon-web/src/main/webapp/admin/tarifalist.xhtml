@@ -14,7 +14,7 @@
 
 			<p:dataTable id="tarifas" var="tarifa" paginator="true" rows="8"
 				paginatorPosition="bottom" value="#{tarifaMB.tarifaList}"
-				emptyMessage="No existen tarifas" style="width: 90%">
+				emptyMessage="No existen tarifas">
 
 				<f:facet name="header">
 				Tarifas
@@ -82,7 +82,7 @@
 				<p:column headerText="Vigente" styleClass="column-font">
 					<p:cellEditor>
 						<f:facet name="output">
-							<p:selectBooleanCheckbox value="#{tarifa.vigente}" />
+							<h:outputText value="#{tarifa.vigente == true ? 'Si' : 'No'}" />
 						</f:facet>
 						<f:facet name="input">
 							<p:selectBooleanCheckbox value="#{tarifa.vigente}"
@@ -91,21 +91,18 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column>
-					<h:commandButton id="editar" class="ui-icon ui-icon-pencil"
-						action="#{tarifaMB.updateTarifaAdmin(tarifa)}"
-						style="height:20px; width:22px;">
-					</h:commandButton>
-					<p:tooltip for="editar" value="Editar Tarifa" />
-				</p:column>
-
-				<p:column>
-					<h:commandButton id="delete" class="ui-icon ui-icon-trash"
-						style="height:20px; width:22px;"
-						action="#{tarifaMB.deleteTarifaAdmin(tarifa)}"
+				<p:column headerText="Opciones" styleClass="column-options">
+					<p:commandLink id="edit" title="Editar Datos"
+						action="#{tarifaMB.updateTarifaAdmin(tarifa)}" ajax="false">
+						<f:setPropertyActionListener value="#{playa}"
+							target="#{tarifaMB.tarifaSelected}" />
+						<h:graphicImage library="images/icons" name="pencil.png" />
+					</p:commandLink>
+					<p:commandLink id="delete" title="Dar de baja"
+						action="#{tarifaMB.deleteTarifaAdmin(tarifa)}" ajax="false"
 						onclick="if(!confirm('¿Está seguro que desea eliminar la tarifa?')) return false;">
-					</h:commandButton>
-					<p:tooltip for="delete" value="Dar de baja Tarifa" />
+						<h:graphicImage library="images/icons" name="trash.png" />
+					</p:commandLink>
 				</p:column>
 			</p:dataTable>
 

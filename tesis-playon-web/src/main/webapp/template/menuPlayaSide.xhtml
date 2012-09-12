@@ -9,14 +9,15 @@
 
 			<ui:fragment rendered="#{!empty loadmenuperfil}">
 				<div class="box">
-					<h3>Menú</h3>
-					<ul class="list">
-						<li class="first"><h:link value="Ver perfil" outcome="/playa/perfilplaya" /></li>
-						<li><h:link value="Editar perfil" outcome="/playa/gerencia/perfilplayaedit" /></li>
-						<li><h:link value="Fotos" outcome="/playa/gerencia/fotoadd" /></li>
-						<li><h:link value="Comentarios" outcome="/playa/comentariolist" /></li>
-						<li class="last"></li>
-					</ul>
+					<p:menu style="width: 95%;" styleClass="side-menu">
+						<p:submenu label="Menú">
+							<p:menuitem value="Ver perfil" outcome="/playa/perfilplaya" />
+							<p:menuitem value="Editar perfil"
+								outcome="/playa/gerencia/perfilplayaedit" />
+							<p:menuitem value="Fotos" outcome="/playa/gerencia/fotoadd" />
+							<p:menuitem value="Comentarios" outcome="/playa/comentariolist" />
+						</p:submenu>
+					</p:menu>
 				</div>
 			</ui:fragment>
 
@@ -34,25 +35,25 @@
 
 			<ui:fragment rendered="#{!empty loadmenuadmin}">
 				<div class="box">
-					<h3>Menú de Administración</h3>
-					<ul class="list">
-						<li class="first"><h:link value="Empleado" outcome="#" /></li>
-						<li><h:link value="Nuevo empleado" outcome="/playa/gerencia/empleadoadd"
-								style="margin: 0 0 0 15px;" /></li>
-						<li><h:link value="Ver empleados" outcome="/playa/gerencia/empleadolist"
-								style="margin: 0 0 0 15px;" /></li>
-								
-						<li class="first"><h:link value="Tarifa" outcome="#" /></li>
-						<li><h:link value="Ver tarifas" outcome="/playa/gerencia/tarifaplayalist"
-								style="margin: 0 0 0 15px;" /></li>
-								
-						<li class="first"><h:link value="Promociones" outcome="#" /></li>
-						<li><h:link value="Nueva promoción" outcome="/playa/gerencia/promocionadd"
-								style="margin: 0 0 0 15px;" /></li>
-						<li><h:link value="Ver promociones" outcome="/playa/gerencia/promocioneslist"
-								style="margin: 0 0 0 15px;" /></li>
-						<li class="last"></li>
-					</ul>
+
+					<p:menu style="width: 95%;" styleClass="side-menu">
+						<p:submenu label="Empleados">
+							<p:menuitem value="Nuevo empleado"
+								outcome="/playa/gerencia/empleadoadd" />
+							<p:menuitem value="Ver empleados"
+								outcome="/playa/gerencia/empleadolist" />
+						</p:submenu>
+						<p:submenu label="Tarifas">
+							<p:menuitem value="Ver tarifas"
+								outcome="/playa/gerencia/tarifaplayalist" />
+						</p:submenu>
+						<p:submenu label="Promociones">
+							<p:menuitem value="Nueva promoción"
+								outcome="/index" />
+							<p:menuitem value="Ver promociones"
+								outcome="/index" />
+						</p:submenu>
+					</p:menu>
 				</div>
 			</ui:fragment>
 		</ui:fragment>

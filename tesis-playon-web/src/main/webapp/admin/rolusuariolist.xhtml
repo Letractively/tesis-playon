@@ -34,8 +34,7 @@
 				<h:outputText value="#{rolUsuario.descripcion}" />
 			</p:column>
 
-			<p:column headerText="Opciones"
-				style="text-align:center; width:75px;">
+			<p:column headerText="Opciones" styleClass="column-options">
 
 				<p:commandLink id="view" update=":mainForm:displayView"
 					oncomplete="popupUsuarioDatos.show();" title="Datos Rol">
