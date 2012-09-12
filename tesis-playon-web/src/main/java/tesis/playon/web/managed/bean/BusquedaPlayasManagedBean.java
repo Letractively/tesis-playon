@@ -2,6 +2,8 @@ package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -41,12 +43,12 @@ public class BusquedaPlayasManagedBean implements Serializable {
     private static final String ERROR = "error";
 
     private MapModel simpleModel;
-    private static final MapModel advancedModel = new DefaultMapModel();
+    private final MapModel advancedModel = new DefaultMapModel();
     private Marker marker;
 
     @ManagedProperty(value = "#{PlayaService}")
     IPlayaService playaService;
-    
+
     @ManagedProperty(value = "#{PerfilPlayaService}")
     IPerfilPlayaService perfilPlayaService;
 
@@ -124,11 +126,11 @@ public class BusquedaPlayasManagedBean implements Serializable {
     }
 
     public IPerfilPlayaService getPerfilPlayaService() {
-        return perfilPlayaService;
+	return perfilPlayaService;
     }
 
     public void setPerfilPlayaService(IPerfilPlayaService perfilPlayaService) {
-        this.perfilPlayaService = perfilPlayaService;
+	this.perfilPlayaService = perfilPlayaService;
     }
 
     public LatitudlongitudUtil getLatLonUtil() {
@@ -314,11 +316,12 @@ public class BusquedaPlayasManagedBean implements Serializable {
 				"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
 		    }
 		    LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
-		    
+
 		    advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
 			    "http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
 
 		}
+		ordenar();
 	    } catch (Exception e) {
 		e.printStackTrace();
 	    }
@@ -385,6 +388,22 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     public Marker getMarker() {
 	return marker;
+    }
+
+    class Comparar implements Comparator<Playa> {
+	public int compare(Playa p1, Playa p2) {
+	    Double comparacion1 = p1.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
+	    Double comparacion2 = p2.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
+
+	    return comparacion1.compareTo(comparacion2);
+	}
+
+    }
+
+    public void ordenar() {
+	List<Playa> playas = playaResultadoBusqueda;
+	Collections.sort(playas, new Comparar());
+
     }
 
 }
