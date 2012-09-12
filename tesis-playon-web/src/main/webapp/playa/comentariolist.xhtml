@@ -14,42 +14,52 @@
 
 	<ui:define name="content">
 		<h1>Comentarios a mi playa</h1>
-		<div>
-			<p:dataTable id="comentarios" value="#{comentarioMB.comentariosList}"
-				var="comentario"
-				emptyMessage="No existen comentarios en esta playa de estacionamiento">
+		<h:form>
+			<div>
+				<p:dataTable id="comentarios"
+					value="#{comentarioMB.comentariosList}" var="comentario"
+					emptyMessage="No existen comentarios en esta playa de estacionamiento">
 
-				<p:column headerText="Usuario" style="width:90px;">
-					<div align="center">
-						<h:graphicImage library="fotos_perfil_clientes"
-							name="#{comentario.cliente.nroCliente}.jpg"
-							style="width:75px; height:75px; border: 2px solid black"
-							rendered="#{comentario.usuario.fotoPerfil != null}" />
-						<h:graphicImage library="fotos_perfil_clientes" name="sinfoto.jpg"
-							style="width:75px; height:75px; border: 2px solid black"
-							rendered="#{comentario.usuario.fotoPerfil == null}" />
-						<h:outputText value="#{comentario.fecha}" />
-					</div>
-				</p:column>
+					<p:column headerText="Usuario" style="width:90px;">
+						<div align="center">
+							<h:graphicImage library="fotos_perfil_clientes"
+								name="#{comentario.cliente.nroCliente}.jpg"
+								style="width:75px; height:75px; border: 2px solid black"
+								rendered="#{comentario.usuario.fotoPerfil != null}" />
+							<h:graphicImage library="fotos_perfil_clientes"
+								name="sinfoto.jpg"
+								style="width:75px; height:75px; border: 2px solid black"
+								rendered="#{comentario.usuario.fotoPerfil == null}" />
+						</div>
+					</p:column>
 
-				<p:column headerText="Comentario">
-					<div id="perfil-playa-frente">
-						<p>#{comentario.comentario}</p>
-					</div>
-				</p:column>
-				<f:facet name="footer">
-					<h:form>
+					<p:column headerText="Comentario">
+						<table style="border: 0px solid transparent">
+							<tr>
+								<td style="text-align: left;"><h:outputText
+										value="#{comentario.fecha}" /></td>
+								<td style="text-align: right;"><h:commandLink
+										id="denunciaComentario" value="Denunciar" action="#"
+										oncomplete="document.location.reload(true)"
+										styleClass="fuente-link-denuncia" /></td>
+							</tr>
+							<tr>
+								<td colspan="2" id="perfil-playa-frente"><p>#{comentario.comentario}</p></td>
+							</tr>
+						</table>
+					</p:column>
+					<f:facet name="footer">
 						<h:panelGrid columns="2">
 							<p:column>
 								<div align="left" style="width: 80px;">
 									<h:graphicImage library="fotos_perfil_clientes"
-										name="sinfoto.jpg" style="width:75px; height:75px;" />
-									<h:outputText value="#{comentario.fecha}" />
+										name="sinfoto.jpg"
+										style="width:75px; height:75px; margin-right: 19px" />
 								</div>
 							</p:column>
 
 							<p:column>
-								<p:inputTextarea id="comentario" cols="68" rows="3"
+								<p:inputTextarea id="comentario" cols="74" rows="2"
 									value="#{comentarioMB.comentario}" required="true"
 									requiredMessage="El campo comentario no puede estar vacio"
 									styleClass="contenido-textarea" />
@@ -57,19 +67,16 @@
 									<h:commandButton id="enviarComentario"
 										value="Enviar comentario"
 										action="#{comentarioMB.addComentario}"
-										style="margin:5px 0 0 5px" />
+										oncomplete="document.location.reload(true)"
+										style="margin:5px 6px 0 5px" />
 								</div>
 							</p:column>
 						</h:panelGrid>
-					</h:form>
-				</f:facet>
-			</p:dataTable>
-			<p:messages id="messages" showDetail="true" autoUpdate="true"
-				closable="true" />
-		</div>
-		<div align="center">
-			<br />
-			<p>Todos los comentarios han pasado por una auditoría previa.</p>
-		</div>
+					</f:facet>
+				</p:dataTable>
+				<p:messages id="messages" showDetail="true" autoUpdate="true"
+					closable="true" />
+			</div>
+		</h:form>
 	</ui:define>
 </ui:composition>

@@ -9,7 +9,7 @@
 	margin: 0px 20px 10px 0px;
 }
 #perfil-playa td{
-	padding: 0px 20px 15px 0px;
+	padding: 0px 20px 5px 0px;
 }
 #perfil-playa table{
 	margin: 0px 0px 0px 50px;
@@ -58,4 +58,9 @@
 	font-style:italic;
 	color:#707070;
 	margin: 5px 10px 5px 10px;
+}
+.fuente-link-denuncia{
+	font-size:12px;
+	font-style:italic;
+	color:#1045B4;
 }

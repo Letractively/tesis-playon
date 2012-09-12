@@ -99,6 +99,8 @@
 						target="#{tarifaMB.playaSelected}" />
 					<f:setPropertyActionListener value="#{playa}"
 						target="#{comentarioMB.playaSelected}" />
+					<f:setPropertyActionListener value="#{playa}"
+						target="#{calificacionMB.playaSelected}" />
 					<h:graphicImage library="images/icons" name="go.png" />
 				</p:commandLink>
 			</p:column>
@@ -126,8 +128,7 @@
 								name="#{busquedaplayaMB.marker.data}"
 								style="height:150px; width:150px"
 								rendered="#{busquedaplayaMB.marker.data != null}" />
-								<h:graphicImage library="fotos_perfil_playas"
-								name="sinfoto.jpg"
+							<h:graphicImage library="fotos_perfil_playas" name="sinfoto.jpg"
 								style="height:150px; width:150px"
 								rendered="#{busquedaplayaMB.marker.data == null}" />
 							<br />

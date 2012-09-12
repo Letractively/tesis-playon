@@ -343,13 +343,9 @@ public class PerfilPlayaManagedBean implements Serializable {
 	if (playaSelected != null) {
 	    PerfilPlayaManagedBean.perfilSelected = getPerfilPlayaService().findByPlaya(playaSelected);
 	    coordenadas = initCoordenadas(perfilSelected);
-//	    if (perfilSelected.getTotalCalificaciones() != null && perfilSelected.getCantidadVotantes() != null)
-//		calificacionSelected = Math.round(perfilSelected.getTotalCalificaciones()
-//			/ perfilSelected.getCantidadVotantes());
-//	    else
-//		calificacionSelected = 0;
 	    fotosListSelected = getFotoService().findByPlaya(perfilSelected);
 	    WriteImage.writeFotos(fotosListSelected);
+	    
 	}
 	return playaSelected;
     }

@@ -67,17 +67,21 @@ public class ComentarioManagedBean implements Serializable {
 	    Usuario user = getUsuarioService().findByNombreUsuario(userName);
 	    if (user != null) {
 		if (user.getPlaya() == null) {
-		    comentario = new Comentario(user, getComentario(), playaSelected, new Boolean(false));
+		    comentario = new Comentario(user, getComentario(), playaSelected, new Boolean(true));
+		    getComentarioService().save(comentario);
+		    comentariosListPerfil = getComentarioService().findByPlaya(playaSelected);
 		} else {
-		    comentario = new Comentario(user, getComentario(), user.getPlaya(), new Boolean(false));
+		    comentario = new Comentario(user, getComentario(), user.getPlaya(), new Boolean(true));
+		    getComentarioService().save(comentario);
+		    comentariosList = getComentarioService().findByPlaya(user.getPlaya());
 		}
 		
-		getComentarioService().save(comentario);
+		setComentario(null);
 		
 		FacesContext.getCurrentInstance().addMessage(
 			null,
-			new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró exitosamente su comentario, ",
-				"Debe debe aguardar su auditoría"));
+			new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró exitosamente su comentario",
+				""));
 	    } else {
 		FacesContext.getCurrentInstance().addMessage(
 			null,
@@ -125,9 +129,6 @@ public class ComentarioManagedBean implements Serializable {
     }
 
     public Playa getPlayaSelected() {
-	if (playaSelected != null) {
-	    comentariosListPerfil = getComentarioService().findByPlaya(playaSelected);
-	}
 	return playaSelected;
     }
 

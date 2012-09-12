@@ -28,6 +28,7 @@
 	<bean id="Barrio" class="tesis.playon.web.model.Barrio" />
 	<bean id="CategoriaVehiculo" class="tesis.playon.web.model.CategoriaVehiculo" />
 	<bean id="CargoEmpleado" class="tesis.playon.web.model.CargoEmpleado" />
+	<bean id="Calificacion" class="tesis.playon.web.model.Calificacion" />
 	<bean id="Cliente" class="tesis.playon.web.model.Cliente" />
 	<bean id="ColorVehiculo" class="tesis.playon.web.model.ColorVehiculo" />
 	<bean id="Comentario" class="tesis.playon.web.model.Comentario" />
@@ -63,6 +64,9 @@
 	<!-- User Service Declaration -->
 	<bean id="BarrioService" class="tesis.playon.web.service.impl.BarrioService">
 		<property name="barrioDao" ref="BarrioDao" />
+	</bean>
+	<bean id="CalificacionService" class="tesis.playon.web.service.impl.CalificacionService">
+		<property name="calificacionDao" ref="CalificacionDao" />
 	</bean>
 	<bean id="CargoEmpleadoService" class="tesis.playon.web.service.impl.CargoEmpleadoService">
 		<property name="cargoEmpleadoDao" ref="CargoEmpleadoDao" />
@@ -151,6 +155,9 @@
 
 	<!-- User DAO Declaration -->
 	<bean id="BarrioDao" class="tesis.playon.web.dao.impl.BarrioDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
+	<bean id="CalificacionDao" class="tesis.playon.web.dao.impl.CalificacionDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
 	<bean id="CategoriaVehiculoDao" class="tesis.playon.web.dao.impl.CategoriaVehiculoDao">
@@ -297,6 +304,7 @@
 			<list>
 				<value>tesis.playon.web.model.Abono</value>
 				<value>tesis.playon.web.model.Barrio</value>
+				<value>tesis.playon.web.model.Calificacion</value>
 				<value>tesis.playon.web.model.CargoEmpleado</value>
 				<value>tesis.playon.web.model.CategoriaVehiculo</value>
 				<value>tesis.playon.web.model.Cliente</value>

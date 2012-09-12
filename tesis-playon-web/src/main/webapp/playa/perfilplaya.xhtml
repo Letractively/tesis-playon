@@ -32,7 +32,7 @@
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<h:outputText value="Calificación:" styleClass="fuente-outputtext" />
-				<p:rating value="#{perfilPlayaMB.calificacion}" disabled="true"
+				<p:rating value="#{calificacionMB.calificacion}" readonly="true"
 					stars="10" />
 
 				<h:outputText value="Domicilio: " styleClass="fuente-outputtext" />
@@ -57,7 +57,7 @@
 				<h:outputText value="#{perfilPlayaMB.perfil.playa.disponibilidad}"
 					styleClass="fuente-perfil" />
 			</h:panelGrid>
-			<div align="center" style="margin: 0 50px 0 50px;">
+			<div align="center" style="margin: 10px 50px 10px 50px;">
 				<h:outputText value="#{perfilPlayaMB.perfil.descripcion}"
 					styleClass="fuente-comentario-frente" />
 			</div>

@@ -3,8 +3,7 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +33,7 @@ public class Comentario implements Serializable {
     private Integer id;
 
     @Column(name = "fecha")
-    private Timestamp fecha;
+    private Date fecha;
 
     @Column(name = "comentario")
     private String comentario;
@@ -56,12 +55,12 @@ public class Comentario implements Serializable {
 	this.comentario = comentario;
 	this.playa = playa;
 	this.habilitado = habilitado;
-	this.fecha = new Timestamp(Calendar.getInstance().getTimeInMillis());
+	this.fecha = new Date();
     }
 
     public Comentario() {
 	// TODO Auto-generated constructor stub
-	this.fecha = new Timestamp(Calendar.getInstance().getTimeInMillis());
+	this.fecha = new Date();
     }
 
     public Integer getId() {
@@ -72,11 +71,11 @@ public class Comentario implements Serializable {
 	this.id = id;
     }
 
-    public Timestamp getFecha() {
+    public Date getFecha() {
 	return fecha;
     }
 
-    public void setFecha(Timestamp fecha) {
+    public void setFecha(Date fecha) {
 	this.fecha = fecha;
     }
 
