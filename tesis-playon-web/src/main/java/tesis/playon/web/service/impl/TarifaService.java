@@ -38,6 +38,12 @@ public class TarifaService implements ITarifaService {
 	getTarifaDao().delete(tarifa);
     }
 
+    @Transactional(readOnly = false)
+    @Override
+    public int deleteTarifasPlaya(Playa playa) {
+	return getTarifaDao().deleteTarifasPlaya(playa);
+    }
+    
     @Override
     public List<Tarifa> findAll() {
 	return getTarifaDao().findAll();

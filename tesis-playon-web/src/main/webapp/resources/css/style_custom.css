@@ -9,9 +9,8 @@
 	font-size: 12px;
 }
 
-.ui-menu {
-/*     width: 200px; */
-    font-size: 10px;
+.ui-menu { /*     width: 200px; */
+	font-size: 10px;
 }
 
 .ui-menu-child {
@@ -20,6 +19,22 @@
 
 /* </PRIMEFACES> */
 
+/* <TABLA DE ALTA TARIFAS> */
+#tabla-tarifas {
+	width: 600px;
+	/* 	height: 244px; */
+	/* 	border: 1px solid grey; */
+	text-align: center;
+	/* 	padding: 2px; */
+	border-collapse: collapse;
+}
+
+#tabla-tarifas th,#tabla-tarifas td {
+	width: 120px;
+	/* 	border: 1px solid grey; */
+	padding: 5px;
+}
+/* </TABLA DE ALTA TARIFAS> */
 #content {
 	text-align: justify;
 }

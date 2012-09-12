@@ -19,6 +19,8 @@ public interface ITarifaService {
 
     void delete(Tarifa tarifa);
 
+    int deleteTarifasPlaya(Playa playa);
+
     List<Tarifa> findByPlaya(Playa playa);
 
     List<Tarifa> findAll();

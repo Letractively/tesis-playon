@@ -57,8 +57,21 @@
 					</p:cellEditor>
 				</p:column>
 
+				<p:column headerText="Vigente" styleClass="column-font">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{tarifa.vigente == true ? 'Si' : 'No'}" />
+
+						</f:facet>
+						<f:facet name="input">
+							<h:selectBooleanCheckbox value="#{tarifa.vigente}"
+								style="font-weight:bold" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
 				<p:column headerText="Opciones"
-					style="text-align:center; width:75px;">
+					style="text-align:center; width:100px;">
 
 					<p:commandLink id="view" title="Ver Tarifa"
 						oncomplete="viewDialog.show();" update=":displayView">
@@ -67,30 +80,27 @@
 						<h:graphicImage library="images/icons" name="search.png" />
 					</p:commandLink>
 
-					<p:commandLink id="edit" title="Editar Tarifa"
-						action="/playa/gerencia/tarifaedit.html?faces-redirect=true"
-						ajax="false">
-						<f:setPropertyActionListener value="#{tarifa}"
-							target="#{tarifaMB.tarifaSelected}" />
-						<h:graphicImage library="images/icons" name="pencil.png"
-							style="width:25px; height:25px;" />
+					<p:commandLink id="habilitar" title="Habilitar Tarifa"
+						action="#{tarifaMB.enableTarifa(tarifa)}" ajax="false">
+						<h:graphicImage library="images/icons" name="check.png" />
 					</p:commandLink>
 
-					<p:commandLink id="darBaja" title="Dar de baja"
-						action="#{empleadoMB.deleteEmpleado}" ajax="false">
-						<f:setPropertyActionListener value="#{empleado}"
-							target="#{empleadoMB.empleadoSelected}" />
-						<h:graphicImage library="images/icons" name="trash.png"
-							style="width:25px; height:25px;" />
+					<p:commandLink id="deshabilitar" title="Deshabilitar Tarifa"
+						action="#{tarifaMB.disableTarifa(tarifa)}" ajax="false">
+						<h:graphicImage library="images/icons" name="rejected.png" />
 					</p:commandLink>
+
 				</p:column>
 
 			</p:dataTable>
 		</h:form>
 
-
 		<div align="right">
 			<br />
+			<p:commandButton id="modalDialogButtonTarifa"
+				value="Administrar Tarifas" onclick="popupTarifas.show();"
+				type="button" />
+			<br /> <br />
 			<h:link value="volver a administración"
 				outcome="/playa/gerencia/administracion" />
 		</div>
@@ -132,8 +142,7 @@
 					<h:outputText value="Vigente: " />
 				</p:column>
 				<p:column style="align-text:center;">
-					<h:selectBooleanCheckbox
-						value="#{tarifaMB.tarifaSelected.vigente}"
+					<h:selectBooleanCheckbox value="#{tarifaMB.tarifaSelected.vigente}"
 						style="font-weight:bold" disabled="true" />
 				</p:column>
 
@@ -149,7 +158,103 @@
 			</h:panelGrid>
 		</p:dialog>
 
-
+		<p:dialog id="modalDialog" header="Administrar Tarifas"
+			widgetVar="popupTarifas" modal="true">
+			<h:form>
+				<div>
+					<table id="tabla-tarifas" class=".ui-datatable ui-widget">
+						<tr>
+							<th class="ui-widget-header ui-state-default" scope="col"></th>
+							<th class="ui-widget-header ui-state-default" scope="col">Auto</th>
+							<th class="ui-widget-header ui-state-default" scope="col">Utilitario</th>
+							<th class="ui-widget-header ui-state-default" scope="col">Pickup</th>
+							<th class="ui-widget-header ui-state-default" scope="col">Moto</th>
+						</tr>
+						<tr>
+							<th class="ui-widget-header ui-state-default" scope="col">Hora</th>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="autoPorHora" value="#{tarifaMB.autoPorHora}"
+									style="width:100px">
+								</p:inputText></td>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="utilitarioPorHora" value="#{tarifaMB.utilitarioPorHora}"
+									style="width:100px">
+								</p:inputText></td>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="pickupPorHora" value="#{tarifaMB.pickupPorHora}"
+									style="width:100px">
+								</p:inputText></td>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="motoPorHora" value="#{tarifaMB.motoPorHora}"
+									style="width:100px">
+								</p:inputText></td>
+						</tr>
+						<tr>
+							<th class="ui-widget-header ui-state-default" scope="col">Día</th>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="autoPorDia" value="#{tarifaMB.autoPorDia}"
+									style="width:100px">
+								</p:inputText></td>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="utilitarioPorDia" value="#{tarifaMB.utilitarioPorDia}"
+									style="width:100px">
+								</p:inputText></td>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="pickupPorDia" value="#{tarifaMB.pickupPorDia}"
+									style="width:100px">
+								</p:inputText></td>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="motoPorDia" value="#{tarifaMB.motoPorDia}"
+									style="width:100px">
+								</p:inputText></td>
+						</tr>
+						<tr>
+							<th class="ui-widget-header ui-state-default" scope="col">Semana</th>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="autoPorSemana" value="#{tarifaMB.autoPorSemana}"
+									style="width:100px">
+								</p:inputText></td>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="utilitarioPorSemana"
+									value="#{tarifaMB.utilitarioPorSemana}" style="width:100px">
+								</p:inputText></td>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="pickupPorSemana" value="#{tarifaMB.pickupPorSemana}"
+									style="width:100px">
+								</p:inputText></td>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="motoPorSemana" value="#{tarifaMB.motoPorSemana}"
+									style="width:100px">
+								</p:inputText></td>
+						</tr>
+						<tr>
+							<th class="ui-widget-header ui-state-default" scope="col">Mes</th>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="autoPorMes" value="#{tarifaMB.autoPorMes}"
+									style="width:100px">
+								</p:inputText></td>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="utilitarioPorMes" value="#{tarifaMB.utilitarioPorMes}"
+									style="width:100px">
+								</p:inputText></td>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="pickupPorMes" value="#{tarifaMB.pickupPorMes}"
+									style="width:100px">
+								</p:inputText></td>
+							<td class="ui-widget-content" scope="col"><p:inputText
+									id="motoPorMes" value="#{tarifaMB.motoPorMes}"
+									style="width:100px">
+								</p:inputText></td>
+						</tr>
+					</table>
+				</div>
+				<br></br>
+				<p:commandButton id="tarifasAceptar" value="Aceptar"
+					action="#{tarifaMB.addTarifas}" ajax="false" />
+				<p:commandButton id="tarifasCancelar" value="Cancelar"
+					onclick="popupTarifas.hide();" />
+			</h:form>
+		</p:dialog>
 
 	</ui:define>
 </ui:composition>

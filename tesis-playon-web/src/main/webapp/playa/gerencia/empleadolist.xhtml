@@ -51,11 +51,11 @@
 				</p:column>
 
 				<p:column headerText="Habilitado" style="text-align:center;">
-					<h:selectBooleanCheckbox value="#{empleado.usuario.enable}" />
+					<h:outputText value="#{empleado.usuario.enable == true ? 'Si' : 'No'}" />
 				</p:column>
 
 				<p:column headerText="Opciones"
-					style="text-align:center; width:75px;">
+					style="text-align:center; width:100px;">
 
 					<p:commandLink id="view" title="Ver Empleado"
 						oncomplete="viewDialog.show();" update=":displayView">
@@ -65,7 +65,8 @@
 					</p:commandLink>
 
 					<p:commandLink id="edit" title="Editar Empleado"
-						action="/playa/gerencia/empleadoedit.html?faces-redirect=true" ajax="false">
+						action="/playa/gerencia/empleadoedit.html?faces-redirect=true"
+						ajax="false">
 						<f:setPropertyActionListener value="#{empleado}"
 							target="#{empleadoMB.empleadoSelected}" />
 						<h:graphicImage library="images/icons" name="pencil.png"
@@ -91,8 +92,9 @@
 			</p:dataTable>
 		</h:form>
 		<div align="right">
-		<br />
-			<h:link value="volver a administración" outcome="/playa/gerencia/administracion" />
+			<br />
+			<h:link value="volver a administración"
+				outcome="/playa/gerencia/administracion" />
 		</div>
 
 		<!-- DIALOG PARA VER LOS DATOS DEL USUARIO SELECCIONADO -->

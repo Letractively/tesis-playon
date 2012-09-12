@@ -1,8 +1,11 @@
 package tesis.playon.web.dao.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.ITarifaDao;
@@ -39,7 +42,16 @@ public class TarifaDao implements ITarifaDao {
 	getSessionFactory().getCurrentSession().delete(tarifa);
     }
 
-        public List<Tarifa> findAll() {
+    public int deleteTarifasPlaya(Playa playa) {
+	Query query = getSessionFactory().getCurrentSession().createQuery(
+		"update Tarifa set fechaBaja = :fechaBaja, vigente = 0 " + " where playa = :playa");
+	query.setParameter("fechaBaja", new Timestamp(Calendar.getInstance().getTimeInMillis()));
+	query.setParameter("playa", playa);
+	int result = query.executeUpdate();
+	return result;
+    }
+
+    public List<Tarifa> findAll() {
 	List<Tarifa> tarifas = new ArrayList<Tarifa>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa").list();
 	if (!list.isEmpty()) {
@@ -53,8 +65,8 @@ public class TarifaDao implements ITarifaDao {
 
     public List<Tarifa> findTarifaVigenteByPlaya(Playa playa) {
 	List<Tarifa> tarifas = new ArrayList<Tarifa>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Tarifa where playa=? and vigente = 1")
-		.setParameter(0, playa).list();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Tarifa where playa=? and vigente = '1'").setParameter(0, playa).list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
 		tarifas.add((Tarifa) object);
@@ -81,7 +93,15 @@ public class TarifaDao implements ITarifaDao {
 
     @Override
     public List<Tarifa> findByPlaya(Playa playa) {
-	// TODO Auto-generated method stub
+	List<Tarifa> tarifas = new ArrayList<Tarifa>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Tarifa where playa=? and fechaBaja is null").setParameter(0, playa).list();
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		tarifas.add((Tarifa) object);
+	    }
+	    return tarifas;
+	}
 	return null;
     }
 }

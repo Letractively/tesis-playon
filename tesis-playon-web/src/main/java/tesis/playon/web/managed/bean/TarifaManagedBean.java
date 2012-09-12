@@ -22,6 +22,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import tesis.playon.web.model.CategoriaVehiculo;
+import tesis.playon.web.model.EstadoPlaya;
+import tesis.playon.web.model.Mail;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Tarifa;
 import tesis.playon.web.model.TipoEstadia;
@@ -30,6 +32,7 @@ import tesis.playon.web.service.ICategoriaVehiculoService;
 import tesis.playon.web.service.ITarifaService;
 import tesis.playon.web.service.ITipoEstadiaService;
 import tesis.playon.web.service.IUsuarioService;
+import tesis.playon.web.util.NotificadorUtil;
 import tesis.playon.web.util.WriteImage;
 
 /**
@@ -43,7 +46,7 @@ public class TarifaManagedBean implements Serializable {
     private static final long serialVersionUID = -1085389423375986168L;
 
     private static final String LISTA_TARIFAS = "tarifalist";
-    
+
     private static final String ADD_TARIFAS_SUCCESS = "tarifaend";
 
     private static final String ERROR = "error";
@@ -63,7 +66,7 @@ public class TarifaManagedBean implements Serializable {
     List<Tarifa> tarifaList;
 
     private List<Tarifa> tarifaPlayaList;
-    
+
     private List<Tarifa> tarifaPlayaLogged;
 
     private List<Tarifa> promocionesPlayaList;
@@ -87,7 +90,7 @@ public class TarifaManagedBean implements Serializable {
     private static Tarifa tarifaSelected;
 
     private static Playa playaSelected;
-    
+
     private Playa playaLogged;
 
     private String autoPorHora;
@@ -109,9 +112,9 @@ public class TarifaManagedBean implements Serializable {
     private String utilitarioPorMes;
     private String pickupPorMes;
     private String motoPorMes;
-    
-    //ATRIBUTO PARA EL FRONTEND
-    
+
+    // ATRIBUTO PARA EL FRONTEND
+
     private List<Tarifa> tarifaListSelected;
 
     @PostConstruct
@@ -166,140 +169,153 @@ public class TarifaManagedBean implements Serializable {
 	}
 	return ERROR;
     }
+    
+    public void enableTarifa(Tarifa tarifa) {
+	try {
+	    tarifa.setVigente(new Boolean(true));
+	    getTarifaService().update(tarifa);
 
-    public String addTarifas(){
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se habilito la tarifa: "
+		    + tarifa.getCategoriaVehiculo().getNombre() 
+		    + ", " + tarifa.getTipoEstadia().getNombre()
+		    + ", $" + tarifa.getImporte().toString(), "");
+	    
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo habilitar la tarifa: " 
+			    + tarifa.getCategoriaVehiculo().getNombre() 
+			    + ", " + tarifa.getTipoEstadia().getNombre()
+			    + ", $" + tarifa.getImporte().toString(),
+		    "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+    }
+    
+    public void disableTarifa(Tarifa tarifa) {
+	try {
+	    tarifa.setVigente(new Boolean(false));
+	    getTarifaService().update(tarifa);
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se deshabilito la tarifa: "
+		    + tarifa.getCategoriaVehiculo().getNombre() 
+		    + ", " + tarifa.getTipoEstadia().getNombre()
+		    + ", $" + tarifa.getImporte().toString(), "");
+	    
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo deshabilitar la tarifa: " 
+			    + tarifa.getCategoriaVehiculo().getNombre() 
+			    + ", " + tarifa.getTipoEstadia().getNombre()
+			    + ", $" + tarifa.getImporte().toString(),
+		    "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+    }
+
+    public String addTarifas() {
 	this.setPlayaByLoggedUser();
+	this.deleteTarifasPlayaLogged();
 	this.setVigente(new Boolean(true));
 	this.setFechaAlta(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-	
-	if (autoPorHora != null && !autoPorHora.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Hora"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("Auto"));
+
+	if (autoPorHora != null && !autoPorHora.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Hora"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Auto"));
 	    this.setImporte(Float.valueOf(autoPorHora));
 	    this.addTarifa();
 	}
-	if (utilitarioPorHora != null && !utilitarioPorHora.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Hora"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("Utilitario"));
+	if (utilitarioPorHora != null && !utilitarioPorHora.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Hora"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Utilitario"));
 	    this.setImporte(Float.valueOf(utilitarioPorHora));
 	    this.addTarifa();
 	}
-	if (pickupPorHora != null && !pickupPorHora.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Hora"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("PickUp / 4X4"));
+	if (pickupPorHora != null && !pickupPorHora.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Hora"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("PickUp / 4X4"));
 	    this.setImporte(Float.valueOf(pickupPorHora));
 	    this.addTarifa();
 	}
-	if (motoPorHora != null && !motoPorHora.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Hora"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("Moto"));
+	if (motoPorHora != null && !motoPorHora.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Hora"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Moto"));
 	    this.setImporte(Float.valueOf(motoPorHora));
 	    this.addTarifa();
 	}
-	
-	if (autoPorDia != null && !autoPorDia.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Dí­a"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("Auto"));
+
+	if (autoPorDia != null && !autoPorDia.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Dí­a"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Auto"));
 	    this.setImporte(Float.valueOf(autoPorDia));
 	    this.addTarifa();
 	}
-	if (utilitarioPorDia != null && !utilitarioPorDia.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Dí­a"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("Utilitario"));
+	if (utilitarioPorDia != null && !utilitarioPorDia.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Dí­a"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Utilitario"));
 	    this.setImporte(Float.valueOf(utilitarioPorDia));
 	    this.addTarifa();
 	}
-	if (pickupPorDia != null && !pickupPorDia.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Dí­a"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("PickUp / 4X4"));
+	if (pickupPorDia != null && !pickupPorDia.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Dí­a"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("PickUp / 4X4"));
 	    this.setImporte(Float.valueOf(pickupPorDia));
 	    this.addTarifa();
 	}
-	if (motoPorDia != null && !motoPorDia.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Dí­a"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("Moto"));
+	if (motoPorDia != null && !motoPorDia.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Dí­a"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Moto"));
 	    this.setImporte(Float.valueOf(motoPorDia));
 	    this.addTarifa();
 	}
 
-	if (autoPorSemana != null && !autoPorSemana.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Semana"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("Auto"));
+	if (autoPorSemana != null && !autoPorSemana.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Semana"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Auto"));
 	    this.setImporte(Float.valueOf(autoPorSemana));
 	    this.addTarifa();
 	}
-	if (utilitarioPorSemana != null && !utilitarioPorSemana.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Semana"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("Utilitario"));
+	if (utilitarioPorSemana != null && !utilitarioPorSemana.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Semana"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Utilitario"));
 	    this.setImporte(Float.valueOf(utilitarioPorSemana));
 	    this.addTarifa();
 	}
-	if (pickupPorSemana != null && !pickupPorSemana.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Semana"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("PickUp / 4X4"));
+	if (pickupPorSemana != null && !pickupPorSemana.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Semana"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("PickUp / 4X4"));
 	    this.setImporte(Float.valueOf(pickupPorSemana));
 	    this.addTarifa();
 	}
-	if (motoPorSemana != null && !motoPorSemana.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Semana"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("Moto"));
+	if (motoPorSemana != null && !motoPorSemana.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Semana"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Moto"));
 	    this.setImporte(Float.valueOf(motoPorSemana));
 	    this.addTarifa();
 	}
 
-	if (autoPorMes != null && !autoPorMes.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Mes"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("Auto"));
+	if (autoPorMes != null && !autoPorMes.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Mes"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Auto"));
 	    this.setImporte(Float.valueOf(autoPorMes));
 	    this.addTarifa();
 	}
-	if (utilitarioPorMes != null && !utilitarioPorMes.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Mes"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("Utilitario"));
+	if (utilitarioPorMes != null && !utilitarioPorMes.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Mes"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Utilitario"));
 	    this.setImporte(Float.valueOf(utilitarioPorMes));
 	    this.addTarifa();
 	}
-	if (pickupPorMes != null && !pickupPorMes.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService().
-		    findByNombreTipoEstadia("Por Mes"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService().
-		    findByNombreCategoriaVehiculo("PickUp / 4X4"));
+	if (pickupPorMes != null && !pickupPorMes.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Mes"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("PickUp / 4X4"));
 	    this.setImporte(Float.valueOf(pickupPorMes));
 	    this.addTarifa();
 	}
-	if (motoPorMes != null && !motoPorMes.toString().trim().isEmpty()){
-	    this.setTipoEstadia(getTipoEstadiaService()
-		    .findByNombreTipoEstadia("Por Mes"));
-	    this.setCategoriaVehiculo(getCategoriaVehiculoService()
-		    .findByNombreCategoriaVehiculo("Moto"));
+	if (motoPorMes != null && !motoPorMes.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Mes"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Moto"));
 	    this.setImporte(Float.valueOf(motoPorMes));
 	    this.addTarifa();
 	}
@@ -424,7 +440,7 @@ public class TarifaManagedBean implements Serializable {
 
     public List<Tarifa> getTarifaList() {
 	tarifaList = new ArrayList<Tarifa>();
-	tarifaList.addAll(getTarifaService().findAll());
+	tarifaList = getTarifaService().findAll();
 	return tarifaList;
     }
 
@@ -432,15 +448,79 @@ public class TarifaManagedBean implements Serializable {
 	this.tarifaList = tarifaList;
     }
 
-    public List<Tarifa> getTarifaPlayaLogged() {
-	tarifaPlayaLogged = new ArrayList<Tarifa>();
-	tarifaPlayaLogged.addAll(getTarifaService().findByPlaya(playaLogged));
-	return tarifaPlayaLogged;
+    private void deleteTarifasPlayaLogged() {
+	getTarifaService().deleteTarifasPlaya(playaLogged);
     }
     
+    private void cargarTarifasPlayaLogged() {
+	if (this.tarifaPlayaLogged == null) return;
+	for (Tarifa tarifa : this.tarifaPlayaLogged) {
+	    if (tarifa.getCategoriaVehiculo().getNombre().compareTo("Auto") == 0) {
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Hora") == 0) {
+		    this.autoPorHora = tarifa.getImporte().toString();
+		}
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Día") == 0) {
+		    this.autoPorDia = tarifa.getImporte().toString();
+		}
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Semana") == 0) {
+		    this.autoPorSemana = tarifa.getImporte().toString();
+		}
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Mes") == 0) {
+		    this.autoPorMes = tarifa.getImporte().toString();
+		}
+	    }else if (tarifa.getCategoriaVehiculo().getNombre().compareTo("Moto") == 0){
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Hora") == 0) {
+		    this.motoPorHora = tarifa.getImporte().toString();
+		}
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Día") == 0) {
+		    this.motoPorDia = tarifa.getImporte().toString();
+		}
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Semana") == 0) {
+		    this.motoPorSemana = tarifa.getImporte().toString();
+		}
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Mes") == 0) {
+		    this.motoPorMes = tarifa.getImporte().toString();
+		}
+	    }else if (tarifa.getCategoriaVehiculo().getNombre().compareTo("Utilitario") == 0){
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Hora") == 0) {
+		    this.utilitarioPorHora = tarifa.getImporte().toString();
+		}
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Día") == 0) {
+		    this.utilitarioPorDia = tarifa.getImporte().toString();
+		}
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Semana") == 0) {
+		    this.utilitarioPorSemana = tarifa.getImporte().toString();
+		}
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Mes") == 0) {
+		    this.utilitarioPorMes = tarifa.getImporte().toString();
+		}
+	    }else if (tarifa.getCategoriaVehiculo().getNombre().compareTo("PickUp / 4X4") == 0){
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Hora") == 0) {
+		    this.pickupPorHora = tarifa.getImporte().toString();
+		}
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Día") == 0) {
+		    this.pickupPorDia = tarifa.getImporte().toString();
+		}
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Semana") == 0) {
+		    this.pickupPorSemana = tarifa.getImporte().toString();
+		}
+		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Mes") == 0) {
+		    this.pickupPorMes = tarifa.getImporte().toString();
+		}
+	    }
+	}
+    }
+
+    public List<Tarifa> getTarifaPlayaLogged() {
+	tarifaPlayaLogged = new ArrayList<Tarifa>();
+	tarifaPlayaLogged = getTarifaService().findByPlaya(playaLogged);
+	this.cargarTarifasPlayaLogged();
+	return tarifaPlayaLogged;
+    }
+
     public List<Tarifa> getTarifaPlayaList() {
 	tarifaPlayaList = new ArrayList<Tarifa>();
-	tarifaPlayaList.addAll(getTarifaService().findByPlaya(playaSelected));
+	tarifaPlayaList = getTarifaService().findByPlaya(playaSelected);
 	return tarifaPlayaList;
     }
 
@@ -666,30 +746,30 @@ public class TarifaManagedBean implements Serializable {
     }
 
     public List<Tarifa> getTarifaListSelected() {
-	if(playaSelected != null){
+	if (playaSelected != null) {
 	    tarifaListSelected = getTarifaService().findTarifaVigenteByPlaya(playaSelected);
 	}
 	return tarifaListSelected;
     }
 
     public void setTarifaListSelected(List<Tarifa> tarifaListSelected) {
-        this.tarifaListSelected = tarifaListSelected;
+	this.tarifaListSelected = tarifaListSelected;
     }
 
     public void setTarifaSelected(Tarifa tarifaSelected) {
-        TarifaManagedBean.tarifaSelected = tarifaSelected;
+	TarifaManagedBean.tarifaSelected = tarifaSelected;
     }
 
     public void setPlayaSelected(Playa playaSelected) {
-        TarifaManagedBean.playaSelected = playaSelected;
+	TarifaManagedBean.playaSelected = playaSelected;
     }
 
     public Playa getPlayaLogged() {
-        return playaLogged;
+	return playaLogged;
     }
 
     public void setPlayaLogged(Playa playaLogged) {
-        this.playaLogged = playaLogged;
+	this.playaLogged = playaLogged;
     }
-    
+
 }
