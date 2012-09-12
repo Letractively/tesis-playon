@@ -5,6 +5,7 @@ package tesis.playon.web.managed.bean;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -17,6 +18,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
+import org.primefaces.model.chart.MeterGaugeChartModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -56,6 +58,8 @@ public class PerfilPlayaManagedBean implements Serializable {
     @ManagedProperty(value = "#{FotoService}")
     IFotoService fotoService;
 
+    private MeterGaugeChartModel velocimetro;
+
     private PerfilPlaya perfil;
 
     private Integer calificacion;
@@ -76,14 +80,14 @@ public class PerfilPlayaManagedBean implements Serializable {
     private static String descripcion;
 
     private Foto fotoSelected;
-    
- // ATRIBUTOS DE LA PLAYA SELECCIONADA
+
+    // ATRIBUTOS DE LA PLAYA SELECCIONADA
     private static Playa playaSelected;
 
     private static PerfilPlaya perfilSelected;
 
     private Integer calificacionSelected;
-    
+
     private List<Foto> fotosListSelected;
 
     @PostConstruct
@@ -97,10 +101,10 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    this.telefono = perfil.getPlaya().getTelefono();
 	    this.email = perfil.getPlaya().getEmail();
 	    this.disponibilidad = perfil.getPlaya().getDisponibilidad();
-//	    if (perfil.getTotalCalificaciones() != null && perfil.getCantidadVotantes() != null)
-//		calificacion = Math.round(perfil.getTotalCalificaciones() / perfil.getCantidadVotantes());
-//	    else
-//		calificacion = 0;
+	    // if (perfil.getTotalCalificaciones() != null && perfil.getCantidadVotantes() != null)
+	    // calificacion = Math.round(perfil.getTotalCalificaciones() / perfil.getCantidadVotantes());
+	    // else
+	    // calificacion = 0;
 	    WriteImage.getFotoPerfil(perfil);
 	    this.coordenadas = initCoordenadas(perfil);
 	}
@@ -338,14 +342,14 @@ public class PerfilPlayaManagedBean implements Serializable {
     public void setFotoSelected(Foto fotoSelected) {
 	this.fotoSelected = fotoSelected;
     }
-    
+
     public Playa getPlayaSelected() {
 	if (playaSelected != null) {
 	    PerfilPlayaManagedBean.perfilSelected = getPerfilPlayaService().findByPlaya(playaSelected);
 	    coordenadas = initCoordenadas(perfilSelected);
 	    fotosListSelected = getFotoService().findByPlaya(perfilSelected);
 	    WriteImage.writeFotos(fotosListSelected);
-	    
+
 	}
 	return playaSelected;
     }
@@ -355,27 +359,27 @@ public class PerfilPlayaManagedBean implements Serializable {
     }
 
     public PerfilPlaya getPerfilSelected() {
-        return perfilSelected;
+	return perfilSelected;
     }
 
     public void setPerfilSelected(PerfilPlaya perfilSelected) {
-        PerfilPlayaManagedBean.perfilSelected = perfilSelected;
+	PerfilPlayaManagedBean.perfilSelected = perfilSelected;
     }
 
     public Integer getCalificacionSelected() {
-        return calificacionSelected;
+	return calificacionSelected;
     }
 
     public void setCalificacionSelected(Integer calificacionSelected) {
-        this.calificacionSelected = calificacionSelected;
+	this.calificacionSelected = calificacionSelected;
     }
 
     public List<Foto> getFotosListSelected() {
-        return fotosListSelected;
+	return fotosListSelected;
     }
 
     public void setFotosListSelected(List<Foto> fotosListSelected) {
-        this.fotosListSelected = fotosListSelected;
+	this.fotosListSelected = fotosListSelected;
     }
 
     // datos para mostrar en el mapa
@@ -429,6 +433,28 @@ public class PerfilPlayaManagedBean implements Serializable {
 
     public Marker getMarker() {
 	return marker;
+    }
+
+    public MeterGaugeChartModel getMeterGaugeModel() {
+	List<Number> intervals = new ArrayList<Number>() {
+
+	    private static final long serialVersionUID = 1L;
+
+	    {
+		add(0);
+		add(50);
+		add(150);
+		add(200);
+	    }
+	};
+
+	velocimetro = new MeterGaugeChartModel(getDisponibilidad(), intervals);
+
+	return velocimetro;
+    }
+
+    public void setMeterGaugeModel(MeterGaugeChartModel meterGaugeModel) {
+	this.velocimetro = meterGaugeModel;
     }
 
     public void setMarker(Marker marker) {
