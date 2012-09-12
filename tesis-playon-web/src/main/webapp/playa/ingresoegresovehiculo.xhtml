@@ -34,8 +34,8 @@
 				</tr>
 				<tr style="text-align: right;">
 					<td colspan="2"><p:commandButton id="cancelar"
-							value="Cancelar" action="#{ingresoEgresoMB.limpiar}"
-							ajax="false" style="margin-right:15px" /> <p:commandButton
+							value="Cancelar" action="#{ingresoEgresoMB.limpiar}" ajax="false"
+							style="margin-right:15px" /> <p:commandButton
 							id="buscarVehiculo" value="Buscar vehículo"
 							action="#{ingresoEgresoMB.searchVehiculo}" ajax="false" /></td>
 				</tr>
@@ -120,9 +120,10 @@
 					<p:commandButton id="calcImporte" value="Calcular importe"
 						action="#{ingresoEgresoMB.calcularImporte}" ajax="false" />
 				</p:column>
-				
+
 				<p:column>
-					<p:commandButton id="egreso" value="Registrar egreso"
+					<p:commandButton rendered="#{ingresoEgresoMB.importeCalculado}"
+						id="egreso" value="Registrar egreso"
 						action="#{ingresoEgresoMB.registrarEgresoVehiculo}" ajax="false" />
 				</p:column>
 			</h:panelGrid>

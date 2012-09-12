@@ -131,6 +131,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     private boolean cobrado = true;
 
+    private boolean importeCalculado;
+
     private float importe;
 
     public void preRenderView() {
@@ -202,6 +204,9 @@ public class IngresoEgresoManagedBean implements Serializable {
 	Timestamp fechaHoraIngreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
 	detalleEstadia = new DetalleEstadia(estadia, vehiculo, empleado, fechaHoraIngreso, false);
 	getDetalleEstadiaService().save(detalleEstadia);
+	Integer disponibilidad = playa.getDisponibilidad() - 1;
+	playa.setDisponibilidad(disponibilidad);
+	getPlayaService().update(playa);
 	limpiar();
     }
 
@@ -227,6 +232,10 @@ public class IngresoEgresoManagedBean implements Serializable {
 	// actualizar y cerrar detalle estadia
 	detalleEstadia.setTransaccionCliente(transaccionCliente);
 	getDetalleEstadiaService().update(detalleEstadia);
+	// actualizar lugares en una playa
+	Integer disponibilidad = playa.getDisponibilidad() + 1;
+	playa.setDisponibilidad(disponibilidad);
+	getPlayaService().update(playa);
 	limpiar();
     }
 
@@ -245,6 +254,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	detalleEstadia.setImporteTotal(importe);
 	detalleEstadia.setTarifa(tarifa);
 	detalleEstadia.setCobrado(true);
+	importeCalculado = true;
     }
 
     public void limpiar() {
@@ -261,6 +271,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	existeVehiculo = false;
 	existeTarifa = true;
 	saldoPositvo = false;
+	importeCalculado = false;
 	cobrado = true;
 	importe = 0;
     }
@@ -560,6 +571,14 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void setCobrado(boolean cobrado) {
 	this.cobrado = cobrado;
+    }
+
+    public boolean getImporteCalculado() {
+	return importeCalculado;
+    }
+
+    public void setImporteCalculado(boolean importeCalculado) {
+	this.importeCalculado = importeCalculado;
     }
 
     public float getImporte() {
