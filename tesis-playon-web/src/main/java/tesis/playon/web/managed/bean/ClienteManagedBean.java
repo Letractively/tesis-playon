@@ -156,12 +156,10 @@ public class ClienteManagedBean implements Serializable {
 			    + cliente.getUsuario().getNombre(), "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
-	}
-	catch (Exception e) {
-		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-			    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados",
-			    "Usuario duplicado");
-		   FacesContext.getCurrentInstance().addMessage(null, message);	    
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados", "Usuario duplicado");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	return ERROR;
     }
@@ -203,10 +201,14 @@ public class ClienteManagedBean implements Serializable {
 	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
 	    getRolesPorUsuarioService().save(rp);
 
-	    // mail.set
-	    //
-	    // MailManagedBean.enviar(mail);
-
+	    mail = new Mail();
+	    mail.setAsunto("Felicitaciones " + getNombreUser() + "ya sos usuario de PLAYON!");
+	    mail.setDestinatario(getEmail());
+	    mail.setMensaje("Estimado "
+		    + getNombre()
+		    + " usted ya es usuario de PLAYON RED DE PLAYAS.\n\n Acceda desde aqu� y busque su playa de estacionamiento!\n\n http://localhost:8080/tesis-playon-web/");
+	    notificador = new NotificadorUtil();
+	    notificador.enviar(mail);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el cliente: "
 		    + cliente.getUsuario().getApellido() + " " + cliente.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);

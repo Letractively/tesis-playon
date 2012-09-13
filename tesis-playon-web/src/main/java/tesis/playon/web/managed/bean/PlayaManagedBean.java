@@ -199,9 +199,11 @@ public class PlayaManagedBean implements Serializable {
 
 	    String asunto = "Notoficaci�n equipo de Playon";
 	    String mensaje = "Su solicitud esta en el �rea de auditoria, en breve nos comunicaremos con usted,\n\n muchas gracias";
+	    mail = new Mail();
 	    mail.setAsunto(asunto);
 	    mail.setMensaje(mensaje);
 	    mail.setDestinatario(getEmail());
+	    notificador = new NotificadorUtil();
 	    notificador.enviar(mail);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente : "
