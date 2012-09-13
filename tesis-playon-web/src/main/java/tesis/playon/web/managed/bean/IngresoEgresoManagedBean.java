@@ -24,6 +24,7 @@ import tesis.playon.web.model.MarcaVehiculo;
 import tesis.playon.web.model.ModeloVehiculo;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Tarifa;
+import tesis.playon.web.model.TipoEstadia;
 import tesis.playon.web.model.TipoPago;
 import tesis.playon.web.model.TransaccionCliente;
 import tesis.playon.web.model.Usuario;
@@ -240,17 +241,52 @@ public class IngresoEgresoManagedBean implements Serializable {
     }
 
     public void calcularImporte() {
-	Timestamp fechaHoraEgreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
-	detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
-	// calculo de horas a cobrar
-	long diff = detalleEstadia.getFechaHoraEgreso().getTime() - detalleEstadia.getFechaHoraIngreso().getTime();
-	double diferenciaEnHoras = diff / ((double) 1000 * 60 * 60);
-	int horasACobrar = (int) diferenciaEnHoras;
-	int minutos = (int) ((diferenciaEnHoras - horasACobrar) * 60);
-	if (minutos > 10 || horasACobrar == 0)
-	    horasACobrar++;
+	TipoEstadia tipoEstadia = tarifa.getTipoEstadia();
+	Timestamp fechaHoraEgreso;
 	// calculo de importe a pagar
-	importe = tarifa.getImporte() * horasACobrar;
+	if ("Por Hora".equals(tipoEstadia.getNombre())) {
+	    fechaHoraEgreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
+	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+	    long diff = detalleEstadia.getFechaHoraEgreso().getTime() - detalleEstadia.getFechaHoraIngreso().getTime();
+	    double diferenciaEnHoras = diff / ((double) 1000 * 60 * 60);
+	    int horasACobrar = (int) diferenciaEnHoras;
+	    int minutos = (int) ((diferenciaEnHoras - horasACobrar) * 60);
+	    if (minutos > 10 || horasACobrar == 0)
+		horasACobrar++;
+	    importe = tarifa.getImporte() * horasACobrar;
+	} else if ("Por Mes".equals(tipoEstadia.getNombre())) {
+	    Calendar calendario = Calendar.getInstance();
+	    calendario.clear();
+	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
+	    calendario.add(Calendar.MONTH, 1);
+	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
+	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+	    importe = tarifa.getImporte();
+	} else if ("Por Noche".equals(tipoEstadia.getNombre())) {
+	    Calendar calendario = Calendar.getInstance();
+	    calendario.clear();
+	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
+	    calendario.add(Calendar.HOUR_OF_DAY, 8);
+	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
+	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+	    importe = tarifa.getImporte();
+	} else if ("Por Día".equals(tipoEstadia.getNombre())) {
+	    Calendar calendario = Calendar.getInstance();
+	    calendario.clear();
+	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
+	    calendario.add(Calendar.DAY_OF_MONTH, 1);
+	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
+	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+	    importe = tarifa.getImporte();
+	} else if ("Por Semana".equals(tipoEstadia.getNombre())) {
+	    Calendar calendario = Calendar.getInstance();
+	    calendario.clear();
+	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
+	    calendario.add(Calendar.DAY_OF_MONTH, 7);
+	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
+	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+	    importe = tarifa.getImporte();
+	}
 	detalleEstadia.setImporteTotal(importe);
 	detalleEstadia.setTarifa(tarifa);
 	detalleEstadia.setCobrado(true);
