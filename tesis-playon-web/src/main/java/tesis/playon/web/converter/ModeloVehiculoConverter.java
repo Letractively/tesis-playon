@@ -12,11 +12,14 @@ public class ModeloVehiculoConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-	String toObject[] = value.split(":");
-	ModeloVehiculo modelo = new ModeloVehiculo();
-	modelo.setId(Integer.parseInt(toObject[0]));
-	modelo.setNombre(toObject[1]);
-	return modelo;
+	if (!value.equals("-1")) {
+	    String toObject[] = value.split(":");
+	    ModeloVehiculo modelo = new ModeloVehiculo();
+	    modelo.setId(Integer.parseInt(toObject[0]));
+	    modelo.setNombre(toObject[1]);
+	    return modelo;
+	}
+	return null;
     }
 
     @Override

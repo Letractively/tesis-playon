@@ -15,7 +15,7 @@ import tesis.playon.web.service.IProvinciaService;
  * @author pablo
  *
  */
-@FacesConverter(value = "provinciaConverter")
+@FacesConverter(value = "localidadConverter")
 public class LocalidadConverter implements Converter{
 
     IProvinciaService provinciaService;

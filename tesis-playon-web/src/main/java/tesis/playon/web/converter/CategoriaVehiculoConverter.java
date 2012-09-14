@@ -12,18 +12,21 @@ import tesis.playon.web.model.CategoriaVehiculo;
 
 /**
  * @author Pablo
- *
+ * 
  */
 @FacesConverter(value = "categoriaVehiculoConverter")
-public class CategoriaVehiculoConverter implements Converter{
+public class CategoriaVehiculoConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-	String toObject[] = value.split(":");
-	CategoriaVehiculo categoriaVehiculo = new CategoriaVehiculo();
-	categoriaVehiculo.setId(Integer.parseInt(toObject[0]));
-	categoriaVehiculo.setNombre(toObject[1]);
-	return categoriaVehiculo;
+	if (!value.equals("-1")) {
+	    String toObject[] = value.split(":");
+	    CategoriaVehiculo categoriaVehiculo = new CategoriaVehiculo();
+	    categoriaVehiculo.setId(Integer.parseInt(toObject[0]));
+	    categoriaVehiculo.setNombre(toObject[1]);
+	    return categoriaVehiculo;
+	}
+	return null;
     }
 
     @Override
@@ -38,5 +41,5 @@ public class CategoriaVehiculoConverter implements Converter{
 	    return "No se pudo parsear el objeto.";
 	}
     }
-    
+
 }

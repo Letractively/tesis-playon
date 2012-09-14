@@ -27,7 +27,8 @@
 		</div>
 		<h:form style="margin: 0 0 0 50px;">
 			<p:growl id="messages" />
-			<h:commandLink actionListener="#" id="favorito">
+			<h:commandLink actionListener="#" id="favorito" 
+				rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}">
 				<h:graphicImage library="images/icons" name="favorite_add.png" />
 				<h:outputText value="Agregar a favoritos" />
 			</h:commandLink>
@@ -43,10 +44,11 @@
 							onRate="if(!confirm('¿Está seguro que desea calificar la playa con '
 								+ value +' puntos')) return false;">
 							<p:ajax event="rate" listener="#{calificacionMB.onrate}"
-								update="messages" oncomplete="document.location.reload(true)" />
+								oncomplete="document.location.reload(true)" />
 						</p:rating>
 					</p:column>
 				</h:panelGrid>
+
 				<div align="center" style="margin: 15px 50px 15px 50px;">
 					<h:outputText value="#{perfilPlayaMB.perfilSelected.descripcion}"
 						styleClass="fuente-comentario-frente" />
@@ -141,7 +143,6 @@
 												value="#{comentario.fecha}" /></td>
 										<td style="text-align: right;"><h:commandLink
 												id="denunciaComentario" value="Denunciar" action="#"
-												oncomplete="document.location.reload(true)"
 												styleClass="fuente-link-denuncia" /></td>
 									</tr>
 									<tr>
@@ -165,11 +166,10 @@
 												styleClass="contenido-textarea" required="true"
 												requiredMessage="El campo comentario no puede estar vacio" />
 											<div align="right">
-												<h:commandButton id="enviarComentario"
-													value="Enviar comentario"
-													action="#{comentarioMB.addComentario}"
-													style="margin:5px 5px 0 5px"
-													oncomplete="document.location.reload(true)" />
+												<p:commandButton id="enviarComentario"
+													value="Enviar comentario" ajax="false"
+													action="#{comentarioMB.addComentarioPerfil}"
+													style="margin:5px 5px 0 5px" update="messageComentario" />
 											</div>
 										</p:column>
 									</h:panelGrid>
@@ -178,8 +178,7 @@
 						</p:dataTable>
 					</p:tab>
 				</p:accordionPanel>
-				<p:messages id="messageComentario" showDetail="true"
-					autoUpdate="true" closable="true" />
+				<p:messages id="messageComentario" showDetail="true" closable="true" />
 			</div>
 
 			<br />

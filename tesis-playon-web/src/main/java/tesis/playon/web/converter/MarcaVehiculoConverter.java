@@ -12,11 +12,14 @@ public class MarcaVehiculoConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-	String toObject[] = value.split(":");
-	MarcaVehiculo marca = new MarcaVehiculo();
-	marca.setId(Integer.parseInt(toObject[0]));
-	marca.setNombre(toObject[1]);
-	return marca;
+	if (!value.equals("-1")) {
+	    String toObject[] = value.split(":");
+	    MarcaVehiculo marca = new MarcaVehiculo();
+	    marca.setId(Integer.parseInt(toObject[0]));
+	    marca.setNombre(toObject[1]);
+	    return marca;
+	}
+	return null;
     }
 
     @Override

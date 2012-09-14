@@ -4,22 +4,26 @@
 package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.ColorVehiculo;
+import tesis.playon.web.model.MarcaVehiculo;
 import tesis.playon.web.model.ModeloVehiculo;
 import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.IClienteService;
+import tesis.playon.web.service.IColorVehiculoService;
+import tesis.playon.web.service.IMarcaVehiculoService;
+import tesis.playon.web.service.IModeloVehiculoService;
 import tesis.playon.web.service.IVehiculoService;
 
 /**
@@ -38,6 +42,15 @@ public class VehiculoManagedBean implements Serializable {
     @ManagedProperty(value = "#{ClienteService}")
     IClienteService clienteService;
 
+    @ManagedProperty(value = "#{ModeloVehiculoService}")
+    IModeloVehiculoService modeloVehiculoService;
+
+    @ManagedProperty(value = "#{MarcaVehiculoService}")
+    IMarcaVehiculoService marcaVehiculoService;
+
+    @ManagedProperty(value = "#{ColorVehiculoService}")
+    IColorVehiculoService colorVehiculoService;
+    
     private int anio;
 
     private CategoriaVehiculo categoriaVehiculo;
@@ -45,8 +58,6 @@ public class VehiculoManagedBean implements Serializable {
     private String codigoBarra;
 
     private ColorVehiculo colorVehiculo;
-
-    private ColorVehiculo colorVehiculoNulo;
 
     private boolean habilitado;
 
@@ -56,40 +67,62 @@ public class VehiculoManagedBean implements Serializable {
 
     private Cliente cliente;
 
+    // ATRIBUTOS ADICIONALES DEL VEHICULO
+    private MarcaVehiculo marca;
+
+    private List<MarcaVehiculo> marcasList;
+
+    private List<ModeloVehiculo> modelosList;
+    
+    private List<ColorVehiculo> colorVehiculoList;
+    
+    @PostConstruct
+    private void init() {
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	String userName = facesContext.getExternalContext().getRemoteUser();
+	this.cliente = getClienteService().findByNombreUsuario(userName);
+	marcasList = getMarcaVehiculoService().findAll();
+	colorVehiculoList = getColorVehiculoService().findAll();
+    }
+
     public String addVehiculo() {
 
 	Vehiculo vehiculo = new Vehiculo();
-
-	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	String nameUser = auth.getName(); // get logged in username from LoginBean.java
-
-	Cliente cliente = getClienteService().findByNombreUsuario(nameUser);
-
 	try {
+	    if (cliente != null) {
+		vehiculo.setAnio(getAnio());
+		vehiculo.setCategoriaVehiculo(getCategoriaVehiculo());
+		vehiculo.setCliente(cliente);
+		vehiculo.setCodigoBarra(getCodigoBarra());
+		vehiculo.setColorVehiculo(getColorVehiculo());
+		vehiculo.setModeloVehiculo(getModeloVehiculo());
+		vehiculo.setPatente(getPatente());
 
-	    vehiculo.setAnio(getAnio());
-	    vehiculo.setCategoriaVehiculo(getCategoriaVehiculo());
-	    vehiculo.setCliente(cliente);
-	    vehiculo.setCodigoBarra(getCodigoBarra());
-	    vehiculo.setColorVehiculo(getColorVehiculo());
-	    vehiculo.setModeloVehiculo(getModeloVehiculo());
-	    vehiculo.setPatente(getPatente());
+		getVehiculoService().save(vehiculo);
 
-	    getVehiculoService().save(vehiculo);
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			"Se agregó correctamente el vehiculo con patente: " + vehiculo.getPatente(), "");
+		FacesContext.getCurrentInstance().addMessage(null, message);
 
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se agregó correctamente el vehiculo con patente: " + vehiculo.getPatente(), "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return "perfilcliente"; // Hay q modificar el path xq llevara otro template
+	    }
+
+	    return "vehiculoaddend";
 
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo agregar el vehículo con patente: " + vehiculo.getPatente(),
-		    "Por favos, intentelo mas tarde.");
+		    "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}
-	return "../transaccionerror"; // Hay q modificar el path xq llevara otro template
+	return "/error";
+    }
+
+    public void handleMarcaChange() {
+	if (marca != null && !marca.equals(""))
+	    modelosList = getModeloVehiculoService().findByMarca(marca);
+	else
+	    modelosList = new ArrayList<ModeloVehiculo>();
     }
 
     public IVehiculoService getVehiculoService() {
@@ -106,6 +139,54 @@ public class VehiculoManagedBean implements Serializable {
 
     public void setClienteService(IClienteService clienteService) {
 	this.clienteService = clienteService;
+    }
+
+    public IModeloVehiculoService getModeloVehiculoService() {
+	return modeloVehiculoService;
+    }
+
+    public void setModeloVehiculoService(IModeloVehiculoService modeloVehiculoService) {
+	this.modeloVehiculoService = modeloVehiculoService;
+    }
+
+    public IMarcaVehiculoService getMarcaVehiculoService() {
+	return marcaVehiculoService;
+    }
+
+    public void setMarcaVehiculoService(IMarcaVehiculoService marcaVehiculoService) {
+	this.marcaVehiculoService = marcaVehiculoService;
+    }
+
+    public IColorVehiculoService getColorVehiculoService() {
+        return colorVehiculoService;
+    }
+
+    public void setColorVehiculoService(IColorVehiculoService colorVehiculoService) {
+        this.colorVehiculoService = colorVehiculoService;
+    }
+
+    public List<MarcaVehiculo> getMarcasList() {
+	return marcasList;
+    }
+
+    public void setMarcasList(List<MarcaVehiculo> marcasList) {
+	this.marcasList = marcasList;
+    }
+
+    public List<ModeloVehiculo> getModelosList() {
+	return modelosList;
+    }
+
+    public void setModelosList(List<ModeloVehiculo> modelosList) {
+	this.modelosList = modelosList;
+    }
+
+    public List<ColorVehiculo> getColorVehiculoList() {
+        return colorVehiculoList;
+    }
+
+    public void setColorVehiculoList(List<ColorVehiculo> colorVehiculoList) {
+        this.colorVehiculoList = colorVehiculoList;
     }
 
     public int getAnio() {
@@ -172,12 +253,12 @@ public class VehiculoManagedBean implements Serializable {
 	this.cliente = cliente;
     }
 
-    public ColorVehiculo getColorVehiculoNulo() {
-	return colorVehiculoNulo;
+    public MarcaVehiculo getMarca() {
+	return marca;
     }
 
-    public void setColorVehiculoNulo(ColorVehiculo colorVehiculoNulo) {
-	this.colorVehiculoNulo = colorVehiculoNulo;
+    public void setMarca(MarcaVehiculo marca) {
+	this.marca = marca;
     }
 
 }

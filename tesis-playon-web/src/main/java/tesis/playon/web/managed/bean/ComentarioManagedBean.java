@@ -59,7 +59,7 @@ public class ComentarioManagedBean implements Serializable {
 	}
     }
 
-    public void addComentario() {
+    public String addComentario() {
 	Comentario comentario = null;
 	try {
 	    FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -88,12 +88,53 @@ public class ComentarioManagedBean implements Serializable {
 			new FacesMessage(FacesMessage.SEVERITY_WARN, "No se pudó registrar su comentario",
 				"¡Debe iniciar sesión para poder comentar la playa!"));
 	    }
+	    return "/playa/comentariolist";
 	} catch (Exception e) {
 	    FacesContext.getCurrentInstance().addMessage(
 		    "messageComentario",
 		    new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudó registrar su comentario",
 			    "Disculpe las molestias ocacionadas"));
 	}
+	return "/error";
+    }
+    
+    public String addComentarioPerfil() {
+	Comentario comentario = null;
+	try {
+	    FacesContext facesContext = FacesContext.getCurrentInstance();
+	    String userName = facesContext.getExternalContext().getRemoteUser();
+	    Usuario user = getUsuarioService().findByNombreUsuario(userName);
+	    if (user != null) {
+		if (user.getPlaya() == null) {
+		    comentario = new Comentario(user, getComentario(), playaSelected, new Boolean(true));
+		    getComentarioService().save(comentario);
+		    comentariosListPerfil = getComentarioService().findByPlaya(playaSelected);
+		} else {
+		    comentario = new Comentario(user, getComentario(), user.getPlaya(), new Boolean(true));
+		    getComentarioService().save(comentario);
+		    comentariosList = getComentarioService().findByPlaya(user.getPlaya());
+		}
+		
+		setComentario(null);
+		
+		FacesContext.getCurrentInstance().addMessage(
+			"messageComentario",
+			new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró exitosamente su comentario",
+				""));
+	    } else {
+		FacesContext.getCurrentInstance().addMessage(
+			"messageComentario",
+			new FacesMessage(FacesMessage.SEVERITY_WARN, "No se pudó registrar su comentario",
+				"¡Debe iniciar sesión para poder comentar la playa!"));
+	    }
+	    return "/viewperfilplaya";
+	} catch (Exception e) {
+	    FacesContext.getCurrentInstance().addMessage(
+		    "messageComentario",
+		    new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudó registrar su comentario",
+			    "Disculpe las molestias ocacionadas"));
+	}
+	return "/error";
     }
 
     public IPlayaService getPlayaService() {

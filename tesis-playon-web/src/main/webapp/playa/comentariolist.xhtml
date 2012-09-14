@@ -64,9 +64,9 @@
 									requiredMessage="El campo comentario no puede estar vacio"
 									styleClass="contenido-textarea" />
 								<div align="right">
-									<h:commandButton id="enviarComentario"
+									<p:commandButton id="enviarComentario"
 										value="Enviar comentario"
-										action="#{comentarioMB.addComentario}"
+										action="#{comentarioMB.addComentario}" ajax="false"
 										oncomplete="document.location.reload(true)"
 										style="margin:5px 6px 0 5px" />
 								</div>

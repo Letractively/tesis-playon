@@ -12,11 +12,15 @@ public class ColorVehiculoConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-	String toObject[] = value.split(":");
-	ColorVehiculo color = new ColorVehiculo();
-	color.setId(Integer.parseInt(toObject[0]));
-	color.setNombre(toObject[1]);
-	return color;
+	if (!value.equals("-1")) {
+	    String toObject[] = value.split(":");
+	    ColorVehiculo color = new ColorVehiculo();
+	    color.setId(Integer.parseInt(toObject[0]));
+	    color.setNombre(toObject[1]);
+	    color.setValorHexadecimal(toObject[2]);
+	    return color;
+	}
+	return null;
     }
 
     @Override
@@ -25,7 +29,8 @@ public class ColorVehiculoConverter implements Converter {
 	    ColorVehiculo color = (ColorVehiculo) value;
 	    String idColor = Integer.toString(color.getId());
 	    String nombreBarrio = color.getNombre();
-	    String toString = idColor + ":" + nombreBarrio;
+	    String hexa = color.getValorHexadecimal();
+	    String toString = idColor + ":" + nombreBarrio + ":" + hexa;
 	    return toString;
 	} else {
 	    return "No se pudo parsear el objeto.";
