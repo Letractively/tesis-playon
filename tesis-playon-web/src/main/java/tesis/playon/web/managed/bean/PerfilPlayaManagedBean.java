@@ -5,7 +5,6 @@ package tesis.playon.web.managed.bean;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -57,8 +56,6 @@ public class PerfilPlayaManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{FotoService}")
     IFotoService fotoService;
-
-    private MeterGaugeChartModel velocimetro;
 
     private PerfilPlaya perfil;
 
@@ -433,28 +430,6 @@ public class PerfilPlayaManagedBean implements Serializable {
 
     public Marker getMarker() {
 	return marker;
-    }
-
-    public MeterGaugeChartModel getMeterGaugeModel() {
-	List<Number> intervals = new ArrayList<Number>() {
-
-	    private static final long serialVersionUID = 1L;
-
-	    {
-		add(0);
-		add(50);
-		add(150);
-		add(200);
-	    }
-	};
-
-	velocimetro = new MeterGaugeChartModel(getDisponibilidad(), intervals);
-
-	return velocimetro;
-    }
-
-    public void setMeterGaugeModel(MeterGaugeChartModel meterGaugeModel) {
-	this.velocimetro = meterGaugeModel;
     }
 
     public void setMarker(Marker marker) {
