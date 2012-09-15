@@ -11,11 +11,14 @@
 				<div class="box">
 					<p:menu style="width: 95%;" styleClass="side-menu">
 						<p:submenu label="Menú">
-							<p:menuitem value="Ver perfil" outcome="/playa/perfilplaya" />
+							<p:menuitem value="Ver perfil" outcome="/playa/perfilplaya"
+								icon="ui-icon-script" />
 							<p:menuitem value="Editar perfil"
-								outcome="/playa/gerencia/perfilplayaedit" />
-							<p:menuitem value="Fotos" outcome="/playa/gerencia/fotoadd" />
-							<p:menuitem value="Comentarios" outcome="/playa/comentariolist" />
+								outcome="/playa/gerencia/perfilplayaedit" icon="ui-icon-pencil" />
+							<p:menuitem value="Fotos" outcome="/playa/gerencia/fotoadd"
+								icon="ui-icon-image" />
+							<p:menuitem value="Comentarios" outcome="/playa/comentariolist"
+								icon="ui-icon-comment" />
 						</p:submenu>
 					</p:menu>
 				</div>
@@ -39,19 +42,19 @@
 					<p:menu style="width: 95%;" styleClass="side-menu">
 						<p:submenu label="Empleados">
 							<p:menuitem value="Nuevo empleado"
-								outcome="/playa/gerencia/empleadoadd" />
+								outcome="/playa/gerencia/empleadoadd" icon="ui-icon-plus" />
 							<p:menuitem value="Ver empleados"
-								outcome="/playa/gerencia/empleadolist" />
+								outcome="/playa/gerencia/empleadolist" icon="ui-icon-person" />
 						</p:submenu>
 						<p:submenu label="Tarifas">
 							<p:menuitem value="Ver tarifas"
-								outcome="/playa/gerencia/tarifaplayalist" />
+								outcome="/playa/gerencia/tarifaplayalist" icon="ui-icon-note" />
 						</p:submenu>
 						<p:submenu label="Promociones">
-							<p:menuitem value="Nueva promoción"
-								outcome="/index" />
-							<p:menuitem value="Ver promociones"
-								outcome="/index" />
+							<p:menuitem value="Nueva promoción" outcome="/index"
+								icon="ui-icon-plus" />
+							<p:menuitem value="Ver promociones" outcome="/index"
+								icon="ui-icon-suitcase" />
 						</p:submenu>
 					</p:menu>
 				</div>

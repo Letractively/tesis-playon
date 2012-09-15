@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div id="sidebar">
+		<ui:fragment rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}">
+
+			<ui:fragment rendered="#{!empty loadmenuclientes}">
+				<div class="box">
+					<p:menu style="width: 95%;" styleClass="side-menu">
+						<p:submenu label="Perfil">
+							<p:menuitem value="Ver perfil" outcome="/cliente/perfilcliente"
+								icon="ui-icon-script" />
+							<p:menuitem value="Editar perfil" outcome="/cliente/perfilcliente"
+								icon="ui-icon-pencil" />
+							<p:submenu label="Cuenta">
+							</p:submenu>
+							<p:menuitem value="Ver Cuenta" outcome="/cliente/perfilcliente"
+								icon="ui-icon-contact" />
+							<p:menuitem value="Cargar Saldo" outcome="/cliente/cargarcredito"
+								icon="ui-icon-cart" />
+							<p:menuitem value="Cambiar Password"
+								outcome="/cliente/cambiarpassword" icon="ui-icon-key" />
+						</p:submenu>
+					</p:menu>
+				</div>
+			</ui:fragment>
+		</ui:fragment>
+	</div>
+
+</ui:composition>
