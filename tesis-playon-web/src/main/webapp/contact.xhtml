@@ -19,31 +19,18 @@
 			nosotros. Por favor complete todos los campos solicitados.</p>
 
 		<h:form>
-		<p:growl id="messages" />
-			
-				<div align="left">
-				
+			<p:growl id="messages" />
+
+			<div align="left">
+				<h:outputLabel for="nombre" value="Mensaje"
+					styleClass="fuente-subtitle" />
+				<br />
+				<br />
 				<h:panelGrid id="displayView" columns="3" cellpadding="8"
-					styleClass="admin-input-text">
+					cellspacing="10" styleClass="admin-input-text">
 
 					<p:column>
-						<h:outputLabel for="nombre" value="Mensaje" styleClass="fuente-subtitle"/>
-					</p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
-					<p:column>
-					<h:outputLabel for="nombre" value="Nombre: " />
+						<h:outputLabel for="nombre" value="Nombre: " />
 					</p:column>
 					<p:column>
 						<p:inputText id="nombre" style="width: 200px"
@@ -56,13 +43,14 @@
 					<p:column>
 						<p:message id="nombreMsg" for="nombre" display="icon" />
 					</p:column>
-					
+
 					<p:column>
 						<h:outputLabel for="email" value="E-mail: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="email" value="#{contactoMB.mailContacto}" style="width: 200px"
-							required="true" requiredMessage="Campo obligatorio" type="email" maxlength="100">
+						<p:inputText id="email" value="#{contactoMB.mailContacto}"
+							style="width: 200px" required="true"
+							requiredMessage="Campo obligatorio" type="email" maxlength="100">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="emailMsg" />
 						</p:inputText>
@@ -70,9 +58,9 @@
 					<p:column>
 						<p:message id="emailMsg" for="email" display="icon" />
 					</p:column>
-					
+
 					<p:column>
-					<h:outputLabel for="asunto" value="Asunto: " />
+						<h:outputLabel for="asunto" value="Asunto: " />
 					</p:column>
 					<p:column>
 						<p:inputText id="asunto" style="width: 200px"
@@ -85,14 +73,16 @@
 					<p:column>
 						<p:message id="asuntoMsg" for="asunto" display="icon" />
 					</p:column>
-					
+
 					<p:column>
-					<h:outputLabel for="mensaje" value="Mensaje: " style="valign: bottom" />
+						<h:outputLabel for="mensaje" value="Mensaje: "
+							style="valign: bottom" />
 					</p:column>
-					<p:column>
-						<p:inputTextarea id="mensaje" rows="7" cols="33" style="width: 400px"
-							value="#{contactoMB.mensaje}" required="true"
-							requiredMessage="Campo obligatorio" maxlength="500">
+					<p:column styleClass="vert-align-top">
+						<p:inputTextarea id="mensaje" rows="7" cols="33"
+							style="width: 400px" value="#{contactoMB.mensaje}"
+							required="true" requiredMessage="Campo obligatorio"
+							maxlength="500">
 							<f:validateLength minimum="3" />
 							<p:ajax event="blur" update="mensajeMsg" />
 						</p:inputTextarea>
@@ -100,20 +90,7 @@
 					<p:column>
 						<p:message id="mensajeMsg" for="mensaje" display="icon" />
 					</p:column>
-					
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
-	
+
 					<p:column></p:column>
 					<p:column>
 						<div align="right">
@@ -121,9 +98,9 @@
 								action="#{contactoMB.enviarMailContacto}" ajax="false" />
 						</div>
 					</p:column>
-					<p:column></p:column>	
-					</h:panelGrid>
-			</div>		
+					<p:column></p:column>
+				</h:panelGrid>
+			</div>
 		</h:form>
 	</ui:define>
 

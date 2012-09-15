@@ -1,5 +1,9 @@
 @CHARSET "UTF-8";
 
+.vert-align-top {
+    vertical-align: top;
+}
+
 /* <PRIMEFACES> */
 .ui-widget {
 	font-size: 12px;
