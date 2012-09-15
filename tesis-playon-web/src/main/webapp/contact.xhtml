@@ -19,51 +19,111 @@
 			nosotros. Por favor complete todos los campos solicitados.</p>
 
 		<h:form>
-			<table>
-				<tr>
-					<td style="width: 150px;"><h:outputLabel for="nombre"
-							value="Nombre: " /></td>
-					<td><p:inputText id="nombre" value="#{contactoMB.nombre}">
-							<f:validateLength minimum="5" />
+		<p:growl id="messages" />
+			
+				<div align="left">
+				
+				<h:panelGrid id="displayView" columns="3" cellpadding="8"
+					styleClass="admin-input-text">
+
+					<p:column>
+						<h:outputLabel for="nombre" value="Mensaje" styleClass="fuente-subtitle"/>
+					</p:column>
+					<p:column></p:column>
+					<p:column></p:column>
+					
+					<p:column></p:column>
+					<p:column></p:column>
+					<p:column></p:column>
+					<p:column></p:column>
+					<p:column></p:column>
+					<p:column></p:column>
+					<p:column></p:column>
+					<p:column></p:column>
+					<p:column></p:column>
+					
+					<p:column>
+					<h:outputLabel for="nombre" value="Nombre: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="nombre" style="width: 200px"
+							value="#{contactoMB.nombre}" required="true"
+							requiredMessage="Campo obligatorio" maxlength="40">
+							<f:validateLength minimum="3" />
 							<p:ajax event="blur" update="nombreMsg" />
-						</p:inputText> <p:message id="nombreMsg" for="nombre" display="icon" /></td>
-				</tr>
-				<tr>
-				</tr>
-
-				<tr>
-					<td><h:outputLabel for="email" value="Correo electrónico: " /></td>
-					<td><p:inputText id="email" value="#{contactoMB.mailContacto}">
-							<f:validateLength minimum="2" />
+						</p:inputText>
+					</p:column>
+					<p:column>
+						<p:message id="nombreMsg" for="nombre" display="icon" />
+					</p:column>
+					
+					<p:column>
+						<h:outputLabel for="email" value="E-mail: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="email" value="#{contactoMB.mailContacto}" style="width: 200px"
+							required="true" requiredMessage="Campo obligatorio" type="email" maxlength="100">
+							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="emailMsg" />
-						</p:inputText> <p:message id="emailMsg" for="email" display="icon" /></td>
-				</tr>
-				<br />
-				<tr>
-					<td><h:outputLabel for="asunto" value="Asunto: " /></td>
-					<td><p:inputText id="asunto"
-							value="#{contactoMB.asuntoContacto}">
-							<f:validateLength minimum="5" />
+						</p:inputText>
+					</p:column>
+					<p:column>
+						<p:message id="emailMsg" for="email" display="icon" />
+					</p:column>
+					
+					<p:column>
+					<h:outputLabel for="asunto" value="Asunto: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="asunto" style="width: 200px"
+							value="#{contactoMB.asuntoContacto}" required="true"
+							requiredMessage="Campo obligatorio" maxlength="40">
+							<f:validateLength minimum="3" />
 							<p:ajax event="blur" update="asuntoMsg" />
-						</p:inputText> <p:message id="asuntoMsg" for="asunto" display="icon" /></td>
-				</tr>
-				<br />
-				<tr>
-					<td><h:outputText for="mensaje" value="Mensaje: " /></td>
-					<td><p:inputTextarea id="mensaje" rows="6" cols="33"
-							value="#{contactoMB.mensaje}">
-							<f:validateLength minimum="5" />
+						</p:inputText>
+					</p:column>
+					<p:column>
+						<p:message id="asuntoMsg" for="asunto" display="icon" />
+					</p:column>
+					
+					<p:column>
+					<h:outputLabel for="mensaje" value="Mensaje: " style="valign: bottom" />
+					</p:column>
+					<p:column>
+						<p:inputTextarea id="mensaje" rows="7" cols="33" style="width: 400px"
+							value="#{contactoMB.mensaje}" required="true"
+							requiredMessage="Campo obligatorio" maxlength="500">
+							<f:validateLength minimum="3" />
 							<p:ajax event="blur" update="mensajeMsg" />
-						</p:inputTextarea> <p:message id="mensajeMsg" for="mensaje" display="icon" /></td>
-				</tr>
-				<br />
-			</table>
-			<br />
-			<p>
-				<p:commandButton id="enviar" value="Enviar Mensaje"
-					action="#{contactoMB.enviarMailContacto}" ajax="false" />
-
-			</p>
+						</p:inputTextarea>
+					</p:column>
+					<p:column>
+						<p:message id="mensajeMsg" for="mensaje" display="icon" />
+					</p:column>
+					
+					<p:column></p:column>
+					<p:column></p:column>
+					<p:column></p:column>
+					
+					<p:column></p:column>
+					<p:column></p:column>
+					<p:column></p:column>
+					
+					<p:column></p:column>
+					<p:column></p:column>
+					<p:column></p:column>
+					
+	
+					<p:column></p:column>
+					<p:column>
+						<div align="right">
+							<p:commandButton id="enviar" value="Enviar Mensaje"
+								action="#{contactoMB.enviarMailContacto}" ajax="false" />
+						</div>
+					</p:column>
+					<p:column></p:column>	
+					</h:panelGrid>
+			</div>		
 		</h:form>
 	</ui:define>
 
