@@ -73,17 +73,21 @@
 				</p:commandLink>
 
 				<p:commandLink id="aprobar" title="Aprobar Playa"
-					action="#{auditoriaMB.approvePlayaAuditoria(playa)}" ajax="false">
+					action="#{auditoriaMB.approvePlayaAuditoria}" ajax="false">
+					<f:setPropertyActionListener value="#{playa}"
+						target="#{auditoriaMB.playaSeleccionada}" />
 					<h:graphicImage library="images/icons" name="check.png" />
 				</p:commandLink>
 
 				<p:commandLink id="rechazar" title="Rechazar Playa"
-					action="#{auditoriaMB.rejectPlayaAuditoria(playa)}" ajax="false">
+					action="#{auditoriaMB.rejectPlayaAuditoria}" ajax="false">
+					<f:setPropertyActionListener value="#{playa}"
+						target="#{auditoriaMB.playaSeleccionada}" />
 					<h:graphicImage library="images/icons" name="rejected.png" />
 				</p:commandLink>
 			</p:column>
 			<f:facet name="footer">
-				<h:panelGroup id="quitarFiltro"  layout="block"
+				<h:panelGroup id="quitarFiltro" layout="block"
 					style="text-align: right;">
 					<p:commandLink id="removeFilter" value="Quitar Filtro"
 						action="/auditoria/playaspendienteslist.html?faces-redirect=true"

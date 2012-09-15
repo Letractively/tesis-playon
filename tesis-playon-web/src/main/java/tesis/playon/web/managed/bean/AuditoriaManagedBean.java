@@ -123,44 +123,42 @@ public class AuditoriaManagedBean implements Serializable {
 	return ERROR;
     }
 
-    public void rejectPlayaAuditoria(Playa playa) {
+    public void rejectPlayaAuditoria() {
 	try {
 	    EstadoPlaya estado = getEstadoPlayaService().findByNombreEstadoPlaya("Rechazada");
-	    playa.setEstado(estado);
-	    getPlayaService().update(playa);
+	    playaSeleccionada.setEstado(estado);
+	    getPlayaService().update(playaSeleccionada);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se rechazó la playa: "
-		    + playa.getNombreComercial(), "");
+		    + playaSeleccionada.getNombreComercial(), "");
 	    notificador = new NotificadorUtil();
 	    mail = new Mail();
-	    mail.setDestinatario(getEmailPlaya());
+	    mail.setDestinatario(playaSeleccionada.getEmail());
 	    asunto = "Su solicitud ha sido rechazada";
 	    mail.setAsunto(asunto);
 	    mensaje = "Los datos de su solicitud de playa no son correctos o verdaderos, por lo tanto hemos rechazado su solicitud,"
 		    + " comuniquese con el equipo de Playon mediante el siguiente link http://localhost:8080/tesis-playon-web/contact.html";
 	    mail.setMensaje(mensaje);
-	    
+
 	    notificador.enviar(mail);
-	    
+
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo rechazar la playa: " + playa.getNombreComercial(),
+		    "Error, no se pudo rechazar la playa: " + playaSeleccionada.getNombreComercial(),
 		    "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
     }
 
-    public void approvePlayaAuditoria(Playa playa) {
+    public void approvePlayaAuditoria() {
 	try {
-	    
 
-	    		  
 	    EstadoPlaya estado = getEstadoPlayaService().findByNombreEstadoPlaya("Aprobada");
 
-	    playa.setEstado(estado);
+	    playaSeleccionada.setEstado(estado);
 
-	    List<Usuario> userList = getUsuarioService().findByPlaya(playa);
+	    List<Usuario> userList = getUsuarioService().findByPlaya(playaSeleccionada);
 
 	    for (Usuario usuario : userList) {
 
@@ -171,22 +169,23 @@ public class AuditoriaManagedBean implements Serializable {
 		    getUsuarioService().update(usuario);
 		}
 	    }
-	    getPlayaService().update(playa);
-	    mail=new Mail();
-	    notificador=new NotificadorUtil();
-	    asunto="Felicitaciones, su playa ya es parte de PLAYON!";
-	    mensaje="Mediante este mensaje, le confirmamos que la playa de estacionamiento" + getNombreComercial() + " ha sido aprobada" + 
-	    "para formar parte de la Red de Playas Playon";
+	    getPlayaService().update(playaSeleccionada);
+	    mail = new Mail();
+	    notificador = new NotificadorUtil();
+	    asunto = "Felicitaciones, su playa ya es parte de PLAYON!";
+	    mensaje = "Mediante este mensaje, le confirmamos que la playa de estacionamiento"
+		    + playaSeleccionada.getNombreComercial() + " ha sido aprobada"
+		    + "para formar parte de la Red de Playas Playon";
 	    mail.setAsunto(asunto);
 	    mail.setMensaje(mensaje);
-	    mail.setDestinatario(getEmailPlaya());
+	    mail.setDestinatario(playaSeleccionada.getEmail());
 	    notificador.enviar(mail);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se aprobó la playa: "
-		    + playa.getNombreComercial(), "");
+		    + playaSeleccionada.getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo aprobar la playa: "
-		    + playa.getNombreComercial(), "Por favor, inténtelo más tarde.");
+		    + playaSeleccionada.getNombreComercial(), "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
     }
