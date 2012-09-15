@@ -241,6 +241,11 @@ public class IngresoEgresoManagedBean implements Serializable {
     }
 
     public void calcularImporte() {
+	for (Tarifa tarifaAux : tarifaPlayaList) {
+	    if (tarifaAux.equals(tarifa)) {
+		tarifa = tarifaAux;
+	    }
+	}
 	TipoEstadia tipoEstadia = tarifa.getTipoEstadia();
 	Timestamp fechaHoraEgreso;
 	// calculo de importe a pagar
