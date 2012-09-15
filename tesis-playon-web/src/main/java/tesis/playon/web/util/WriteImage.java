@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 
 import tesis.playon.web.model.Foto;
 import tesis.playon.web.model.PerfilPlaya;
+import tesis.playon.web.model.Usuario;
 
 /**
  * @author pablo
@@ -62,6 +63,30 @@ public class WriteImage implements Serializable {
 
 		fos.write(foto.getImage());
 		fos.close();
+	    }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
+
+    public static void getFotoPerfilCliente(Usuario usuario) {
+	ExternalContext extContext = null;
+	try {
+	    if (usuario.getFotoPerfil() != null) {
+		String sep = File.separator;
+		extContext = FacesContext.getCurrentInstance().getExternalContext();
+
+		String path = extContext.getRealPath("resources" + sep + "fotos_perfil_clientes") + sep;
+		System.out.println(extContext.getRealPath("resources" + sep + "fotos_perfil_playas"));
+
+		File file = new File(path + usuario.getNombreUser() + ".jpg");
+
+		// FileOutputStream fos = new FileOutputStream("images\\output.jpg"); //windows
+		FileOutputStream fos = new FileOutputStream(file);
+
+		fos.write(usuario.getFotoPerfil());
+		fos.close();
+
 	    }
 	} catch (Exception e) {
 	    e.printStackTrace();

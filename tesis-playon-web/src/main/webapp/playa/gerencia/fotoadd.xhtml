@@ -15,16 +15,16 @@
 	<ui:define name="content">
 		<h1>Fotos</h1>
 
-		<h:form>
+		<h:form id="uploadForm" enctype="multipart/form-data">
 			<div align="center">
-				<p:galleria value="#{perfilPlayaMB.fotosList}" var="image"
-					effect="slide" effectSpeed="1000" showOverlays="true">
+				<p:galleria id="galeria" value="#{perfilPlayaMB.fotosList}"
+					var="image" effect="slide" effectSpeed="1000" showOverlays="true">
 					<h:graphicImage library="fotos_playas" name="#{image.nombre}"
 						style="width:190px; height:140px" />
 					<p:galleriaOverlay>
 						<div align="right">
-							<p:commandLink value="Eliminar foto" action="#{perfilPlayaMB.deleteFoto}"
-								ajax="false">
+							<p:commandLink value="Eliminar foto"
+								action="#{perfilPlayaMB.deleteFoto}" ajax="false">
 								<f:setPropertyActionListener value="#{image}"
 									target="#{perfilPlayaMB.fotoSelected}" />
 							</p:commandLink>
@@ -32,21 +32,19 @@
 					</p:galleriaOverlay>
 				</p:galleria>
 			</div>
-		</h:form>
-		<div>
-			<h:outputText value="Agregar fotos" styleClass="fuente-subtitle" />
-			<br />
-			<h:form id="uploadForm" enctype="multipart/form-data">
+			<div>
+				<h:outputText value="Agregar fotos" styleClass="fuente-subtitle" />
+				<br />
+
 				<p:fileUpload id="upload"
 					fileUploadListener="#{perfilPlayaMB.handleFileUpload}"
 					mode="advanced" multiple="true" sizeLimit="4194304"
 					allowTypes="/(\.|\/)(jpe?g)$/" label="Seleccionar fotos"
-					uploadLabel="Guardar todos" cancelLabel="Cancelar"
-					oncomplete="document.location.reload(true)">
+					uploadLabel="Guardar todos" cancelLabel="Cancelar" update="galeria">
 				</p:fileUpload>
 				<p:growl id="messages" showDetail="true" />
 				<br />
-			</h:form>
-		</div>
+			</div>
+		</h:form>
 	</ui:define>
 </ui:composition>

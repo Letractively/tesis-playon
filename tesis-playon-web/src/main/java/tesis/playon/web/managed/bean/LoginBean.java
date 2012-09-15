@@ -126,6 +126,8 @@ public class LoginBean {
 	cookie.setPath(httpServletRequest.getContextPath().length() > 0 ? httpServletRequest.getContextPath() : "/");
 	httpServletResponse.addCookie(cookie);
 	setLogueado(false);
+	setRol(null);
+	setUsuario(null);
 	return "LoggedOut";
 	//return "index?faces-redirect=true";
     }

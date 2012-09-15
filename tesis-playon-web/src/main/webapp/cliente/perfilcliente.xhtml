@@ -1,10 +1,56 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<ui:composition template="../template/templateCliente.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-</body>
-</html>
+	<ui:define name="title">
+		Perfil de playa
+    </ui:define>
+
+	<ui:define name="content">
+		<h1>Perfil</h1>
+		<div id="perfil-playa">
+			<h:panelGrid columns="2">
+				<h:graphicImage library="fotos_perfil_clientes"
+					name="#{perfilClienteMB.usuario.nombreUser}.jpg"
+					style="width:151px; height:151px; border: 2px solid black"
+					rendered="#{perfilPlayaMB.perfil.nombreFoto != null}" />
+				<h:graphicImage library="fotos_perfil_clientes" name="sinfoto.jpg"
+					style="width:151px; height:151px; border: 2px solid black"
+					rendered="#{perfilClienteMB.usuario.fotoPerfil == null}" />
+				<h1 style="width: 400px">#{perfilClienteMB.usuario.apellido}
+					#{perfilClienteMB.usuario.nombre}</h1>
+			</h:panelGrid>
+		</div>
+		<br />
+		<div id="perfil-playa">
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<h:outputText value="Nombre de usuario: "
+					styleClass="fuente-outputtext" />
+				<h:outputText value="#{perfilClienteMB.usuario.nombreUser}"
+					styleClass="fuente-perfil" />
+
+				<h:outputText value="E-mail: " styleClass="fuente-outputtext" />
+				<h:outputText value="#{perfilClienteMB.usuario.email}"
+					styleClass="fuente-perfil" />
+
+				<h:outputText value="Teléfono: " styleClass="fuente-outputtext" />
+				<h:outputText value="#{perfilClienteMB.cliente.telefono}"
+					styleClass="fuente-perfil" />
+
+				<h:outputText value="Domicilio: " styleClass="fuente-outputtext" />
+				<h:outputText value="#{perfilClienteMB.cliente.domicilio}"
+					styleClass="fuente-perfil" />
+
+				<h:outputText value="Barrio: " styleClass="fuente-outputtext" />
+				<h:outputText value="#{perfilClienteMB.cliente.barrio.nombre}"
+					styleClass="fuente-perfil" />
+
+			</h:panelGrid>
+		</div>
+
+	</ui:define>
+</ui:composition>

@@ -17,7 +17,6 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
-import org.primefaces.model.chart.MeterGaugeChartModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -98,10 +97,6 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    this.telefono = perfil.getPlaya().getTelefono();
 	    this.email = perfil.getPlaya().getEmail();
 	    this.disponibilidad = perfil.getPlaya().getDisponibilidad();
-	    // if (perfil.getTotalCalificaciones() != null && perfil.getCantidadVotantes() != null)
-	    // calificacion = Math.round(perfil.getTotalCalificaciones() / perfil.getCantidadVotantes());
-	    // else
-	    // calificacion = 0;
 	    WriteImage.getFotoPerfil(perfil);
 	    this.coordenadas = initCoordenadas(perfil);
 	}
@@ -211,6 +206,7 @@ public class PerfilPlayaManagedBean implements Serializable {
 
     private String initCoordenadas(PerfilPlaya perfil) {
 	try {
+	    advancedModel = new DefaultMapModel();
 	    latLonUtil = new LatitudlongitudUtil();
 	    // GeoposicionDePlaya
 	    respuesta = latLonUtil.getLocationFromAddress(perfil.getPlaya().getDomicilio()
@@ -388,7 +384,7 @@ public class PerfilPlayaManagedBean implements Serializable {
 
     private String coordenadasSelected;
 
-    private final MapModel advancedModel = new DefaultMapModel();
+    private MapModel advancedModel;
 
     private Marker marker;
 
