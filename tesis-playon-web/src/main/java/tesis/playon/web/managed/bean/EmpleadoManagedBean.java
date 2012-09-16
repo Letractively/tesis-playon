@@ -144,6 +144,7 @@ public class EmpleadoManagedBean implements Serializable {
 	    usuario.setPassword(getPassword());
 	    usuario.setNombreUser(getNombreUser());
 	    usuario.setTipoDoc(getTipoDoc());
+	    usuario.setEnable(new Boolean(true));
 
 	    FacesContext facesContext = FacesContext.getCurrentInstance();
 	    String userName = facesContext.getExternalContext().getRemoteUser();

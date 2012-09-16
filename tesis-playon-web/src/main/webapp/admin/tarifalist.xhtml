@@ -91,7 +91,9 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Opciones" styleClass="column-options">
+				<p:column headerText="Opciones" styleClass="column-options"
+					style="text-align:center; width:75px;">
+					
 					<p:commandLink id="edit" title="Editar Datos"
 						action="#{tarifaMB.updateTarifaAdmin(tarifa)}" ajax="false">
 						<f:setPropertyActionListener value="#{playa}"
@@ -107,7 +109,7 @@
 			</p:dataTable>
 
 			<p>
-				<h:panelGroup layout="block" style="text-align: right; width: 90%">
+				<h:panelGroup layout="block" style="text-align: right;">
 					<p:commandButton id="addTarifaNueva" value="Nueva Tarifa"
 						action="/admin/tarifaadd.html?faces-redirect=true" ajax="false" />
 				</h:panelGroup>

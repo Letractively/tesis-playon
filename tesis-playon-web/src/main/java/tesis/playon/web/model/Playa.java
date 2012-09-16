@@ -142,7 +142,7 @@ public class Playa implements Serializable {
 
 	latLonUtil = new LatitudlongitudUtil();
 	try {
-	    respuesta = latLonUtil.getLocationFromAddress(domicilio + ", Córdoba, Argentina");
+	    respuesta = latLonUtil.getLocationFromAddress(domicilio + ", CÃ³rdoba, CBA, Argentina");
 	    this.latitud = respuesta.getLatitud();
 	    this.longitud = respuesta.getLongitud();
 	} catch (Exception e) {

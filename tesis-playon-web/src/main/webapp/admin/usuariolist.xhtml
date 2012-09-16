@@ -44,7 +44,7 @@
 			</p:column>
 
 			<p:column headerText="Opciones" styleClass="column-options"
-				style="text-align:center; width:75px;">
+				style="text-align:center; width:95px;">
 
 				<p:commandLink id="view" update=":mainForm:displayView"
 					oncomplete="popupUsuarioDatos.show();" title="Datos Usuario">
@@ -66,6 +66,7 @@
 							target="#{usuarioMB.usuarioSelected}" />
 					<h:graphicImage library="images/icons" name="trash.png" />
 				</p:commandLink>
+				
 				<p:confirmDialog id="confirmDialog"
 					message="Seguro que desea dar de baja este usuario"
 					header="Dar de baja usuario" severity="alert" widgetVar="confirmation">

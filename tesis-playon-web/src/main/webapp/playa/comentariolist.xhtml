@@ -14,7 +14,7 @@
 
 	<ui:define name="content">
 		<h1>Comentarios a mi playa</h1>
-		<h:form>
+		<h:form id="form">
 			<div>
 				<p:dataTable id="comentarios"
 					value="#{comentarioMB.comentariosList}" var="comentario"
@@ -34,7 +34,7 @@
 					</p:column>
 
 					<p:column headerText="Comentario">
-						<table style="border: 0px solid transparent">
+						<table  style="border: 0px solid transparent">
 							<tr>
 								<td style="text-align: left;"><h:outputText
 										value="#{comentario.fecha}" /></td>
