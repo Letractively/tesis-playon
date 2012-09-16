@@ -25,8 +25,7 @@ import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
  * @author Alejandro
  * @date 08/07/2012
  */
-@NamedNativeQueries({ @NamedNativeQuery(name = "callPlayasStoreProcedure",
-	query = "CALL busquedaplaya(:platitud,:plongitud, :pdistancia)", resultClass = Playa.class) })
+@NamedNativeQueries({ @NamedNativeQuery(name = "callPlayasStoreProcedure", query = "CALL busquedaplaya(:platitud,:plongitud, :pdistancia)", resultClass = Playa.class) })
 @Entity
 @Table(name = "playa", catalog = "tesis_playon")
 public class Playa implements Serializable {
@@ -61,7 +60,7 @@ public class Playa implements Serializable {
 
     @Column(name = "telefono")
     private String telefono;
-    
+
     @Column(name = "email")
     private String email;
 
@@ -78,8 +77,8 @@ public class Playa implements Serializable {
 
     }
 
-    public Playa(String cuit, Integer disponibilidad, String domicilio, String nombreComercial,
-	    String razonSocial, Barrio barrio, EstadoPlaya estado, String telefono, String email) {
+    public Playa(String cuit, Integer disponibilidad, String domicilio, String nombreComercial, String razonSocial,
+	    Barrio barrio, EstadoPlaya estado, String telefono, String email) {
 	this.cuit = cuit;
 	this.disponibilidad = disponibilidad;
 	this.domicilio = domicilio;
@@ -88,7 +87,7 @@ public class Playa implements Serializable {
 	this.barrio = barrio;
 	this.estado = estado;
 	this.telefono = telefono;
-	this.email= email;
+	this.email = email;
     }
 
     public Playa(String nombreComercial, EstadoPlaya estado) {
@@ -143,17 +142,11 @@ public class Playa implements Serializable {
 
 	latLonUtil = new LatitudlongitudUtil();
 	try {
-	    respuesta = latLonUtil.getLocationFromAddress(domicilio + ", Cordoba, Argentina");
+	    respuesta = latLonUtil.getLocationFromAddress(domicilio + ", Córdoba, Argentina");
 	    this.latitud = respuesta.getLatitud();
 	    this.longitud = respuesta.getLongitud();
 	} catch (Exception e) {
-//	    public Set<Provincia> getProvincias() {
-//		return provincias;
-//	    }
-	//
-//	    public void setProvincias(Set<Provincia> provincias) {
-//		this.provincias = provincias;
-//	    }
+
 	    e.printStackTrace();
 	}
 
@@ -200,13 +193,13 @@ public class Playa implements Serializable {
     }
 
     public String getEmail() {
-        return email;
+	return email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+	this.email = email;
     }
-    
+
     public Integer getId() {
 	return id;
     }
@@ -229,14 +222,13 @@ public class Playa implements Serializable {
 
     @Override
     public String toString() {
-	return "Playa:\t [playaID=" + id + ", cuit=" + cuit + ", nombreComercial=" + nombreComercial
-		+ ", razonSocial=" + razonSocial + ", domicilio=" + domicilio + "]";
+	return "Playa:\t [playaID=" + id + ", cuit=" + cuit + ", nombreComercial=" + nombreComercial + ", razonSocial="
+		+ razonSocial + ", domicilio=" + domicilio + "]";
     }
 
     public String toString2() {
 
-	return "Nombre: " + nombreComercial + "\nDomicilio: " + domicilio + "\nLugares disponibles: "
-		+ disponibilidad;
+	return "Nombre: " + nombreComercial + "\nDomicilio: " + domicilio + "\nLugares disponibles: " + disponibilidad;
 
     }
 
