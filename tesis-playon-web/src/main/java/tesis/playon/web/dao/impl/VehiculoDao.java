@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IVehiculoDao;
+import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.model.Vehiculo;
 
 /**
@@ -48,21 +49,39 @@ public class VehiculoDao implements IVehiculoDao {
 
     public List<Vehiculo> findByCliente(int idCliente) {
 	List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Vehiculo where cliente.id=?")
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Vehiculo where cliente.id=? and habilitado=true order by patente")
 		.setParameter(0, idCliente).list();
-	for (Object object : list) {
-	    vehiculos.add((Vehiculo) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		vehiculos.add((Vehiculo) object);
+	    }
+	    return vehiculos;
 	}
-	return vehiculos;
+	return null;
     }
 
     public List<Vehiculo> findAll() {
 	List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Vehiculo").list();
-	for (Object object : list) {
-	    vehiculos.add((Vehiculo) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		vehiculos.add((Vehiculo) object);
+	    }
+	    return vehiculos;
 	}
-	return vehiculos;
+	return null;
+
     }
+
+    // public List<Vehiculo> findByEstado() {
+    // List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
+    // List<?> list =
+    // getSessionFactory().getCurrentSession().createQuery("from Vehiculo where habilitado=true order by patente").list();
+    // for (Object object : list) {
+    // vehiculos.add((Vehiculo) object);
+    // }
+    // return vehiculos;
+    // }
 
 }

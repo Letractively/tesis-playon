@@ -17,7 +17,6 @@ import javax.faces.context.FacesContext;
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.ColorVehiculo;
-import tesis.playon.web.model.Empleado;
 import tesis.playon.web.model.MarcaVehiculo;
 import tesis.playon.web.model.ModeloVehiculo;
 import tesis.playon.web.model.Usuario;
@@ -111,6 +110,7 @@ public class VehiculoManagedBean implements Serializable {
 		vehiculo.setColorVehiculo(getColorVehiculo());
 		vehiculo.setModeloVehiculo(getModeloVehiculo());
 		vehiculo.setPatente(getPatente());
+		vehiculo.setHabilitado(true);
 
 		getVehiculoService().save(vehiculo);
 
@@ -311,7 +311,7 @@ public class VehiculoManagedBean implements Serializable {
 	Usuario usuario = getUsuarioService().findByNombreUsuario(userName);
 	cliente = getClienteService().findByUsuario(usuario);
 
-	vehiculoList.addAll(getVehiculoService().findByCliente(cliente.getId()));
+	vehiculoList = getVehiculoService().findByCliente(cliente.getId());
 
 	return vehiculoList;
     }

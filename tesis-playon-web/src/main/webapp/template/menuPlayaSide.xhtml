@@ -6,6 +6,17 @@
 
 	<div id="sidebar">
 		<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_GERENTE]'}">
+			<ui:fragment rendered="#{!empty loadmenuempleados}">
+				<div class="box">
+					<h3>Empleados</h3>
+					<ul class="list">
+						<li class="first"><a href="#">Ver Empleados</a></li>
+						<li><a href="#">Nuevo Empleado</a></li>
+						<li><a href="#">Borrar Empleado</a></li>
+						<li class="last"><a href="#">Editar Empleado</a></li>
+					</ul>
+				</div>
+			</ui:fragment>
 
 			<ui:fragment rendered="#{!empty loadmenuperfil}">
 				<div class="box">
@@ -24,17 +35,6 @@
 				</div>
 			</ui:fragment>
 
-			<ui:fragment rendered="#{!empty loadmenuempleados}">
-				<div class="box">
-					<h3>Empleados</h3>
-					<ul class="list">
-						<li class="first"><a href="#">Ver Empleados</a></li>
-						<li><a href="#">Nuevo Empleado</a></li>
-						<li><a href="#">Borrar Empleado</a></li>
-						<li class="last"><a href="#">Editar Empleado</a></li>
-					</ul>
-				</div>
-			</ui:fragment>
 
 			<ui:fragment rendered="#{!empty loadmenuadmin}">
 				<div class="box">
