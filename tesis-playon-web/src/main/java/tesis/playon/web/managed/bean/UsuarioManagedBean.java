@@ -145,13 +145,13 @@ public class UsuarioManagedBean implements Serializable {
 	    usu = getUsuarioService().findByNombreUsuario(getNombreUser());
 	    Mail mail = new Mail();
 	    NotificadorUtil notificador = new NotificadorUtil();
-	    mail.setAsunto("Contraseña de Playon - Red de plaayas");
+	    mail.setAsunto("ContraseÃ±a de Playon - Red de plaayas");
 	    mail.setDestinatario(usu.getEmail());
 	    mail.setMensaje("Estimado: " + usu.getNombre()
-		    + " su contraseña de Playon - Red de playas es la siguiente: " + usu.getPassword());
+		    + " su contraseÃ±a de Playon - Red de playas es la siguiente: " + usu.getPassword());
 	    notificador.enviar(mail);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se envio correctamente su contraseña: " + usu.getApellido() + " " + usu.getNombre(), "");
+		    "Se envio correctamente su contraseï¿½a: " + usu.getApellido() + " " + usu.getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return "recuperarpasswordend";
@@ -178,7 +178,7 @@ public class UsuarioManagedBean implements Serializable {
 
 	    getUsuarioService().update(usu);
 
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modifico contraseña: "
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modifico contraseï¿½a: "
 		    + usu.getApellido() + " " + usu.getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
@@ -188,7 +188,7 @@ public class UsuarioManagedBean implements Serializable {
 
 	catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "No se pudo modificar su contraseña, Por favor, intÃ©ntelo mÃ¡s tarde.", "");
+		    "No se pudo modificar su contraseï¿½a, Por favor, intÃ©ntelo mÃ¡s tarde.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	    return "ERROR";

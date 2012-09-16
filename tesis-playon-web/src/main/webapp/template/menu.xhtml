@@ -31,7 +31,7 @@
 						<ul>
 							<li><h:link value="Administracion" outcome="/playa/gerencia/administracion" /></li>
 							<li><h:link value="Perfil" outcome="/playa/perfilplaya" /></li>
-							<li><h:link value="Ingreso / Egreso" outcome="about" /></li>
+							<li><h:link value="Ingreso / Egreso" outcome="/playa/ingresoegresovehiculo" /></li>
 							<li><h:link value="Informes" outcome="/about" /></li>
 							<li><h:link value="Usuario" outcome="/about" /></li>
 						</ul></li>
@@ -40,7 +40,7 @@
 				<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_EMPLEADO]'}">
 					<li><span class="opener">Menu Playa<b></b></span>
 						<ul>
-							<li><h:link value="Ingreso / Egreso" outcome="/about" /></li>
+							<li><h:link value="Ingreso / Egreso" outcome="/playa/ingresoegresovehiculo" /></li>
 							<li><h:link value="Perfil" outcome="playa/perfilplaya" /></li>
 							<li><h:link value="Usuario" outcome="/about" /></li>
 						</ul></li>

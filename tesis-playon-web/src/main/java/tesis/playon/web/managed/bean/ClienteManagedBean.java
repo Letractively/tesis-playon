@@ -206,13 +206,13 @@ public class ClienteManagedBean implements Serializable {
 	    mail.setDestinatario(getEmail());
 	    mail.setMensaje("Estimado "
 		    + getNombre()
-		    + " usted ya es usuario de PLAYON RED DE PLAYAS.\n\n Acceda desde aqu� y busque su playa de estacionamiento!\n\n http://localhost:8080/tesis-playon-web/");
+		    + " usted ya es usuario de PLAYON RED DE PLAYAS.\n\n Acceda desde aquí y busque su playa de estacionamiento!\n\n http://localhost:8080/tesis-playon-web/");
 	    notificador = new NotificadorUtil();
 	    notificador.enviar(mail);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el cliente: "
 		    + cliente.getUsuario().getApellido() + " " + cliente.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return "solicitudclienteend";
+	    return "solicitudclienteend.html?faces-redirect=true";
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo agregar el cliente: " + cliente.getUsuario().getApellido() + " "

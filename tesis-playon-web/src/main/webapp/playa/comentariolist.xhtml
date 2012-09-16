@@ -34,17 +34,17 @@
 					</p:column>
 
 					<p:column headerText="Comentario">
-						<table  style="border: 0px solid transparent">
+						<table class="no-border">
 							<tr>
-								<td style="text-align: left;"><h:outputText
+								<td style="text-align: left; border-style:none;"><h:outputText
 										value="#{comentario.fecha}" /></td>
-								<td style="text-align: right;"><h:commandLink
+								<td style="text-align: right; border-style:none;"><h:commandLink
 										id="denunciaComentario" value="Denunciar" action="#"
 										oncomplete="document.location.reload(true)"
 										styleClass="fuente-link-denuncia" /></td>
 							</tr>
 							<tr>
-								<td colspan="2" id="perfil-playa-frente"><p>#{comentario.comentario}</p></td>
+								<td colspan="2" id="perfil-playa-frente" style="border-style:none;"><p>#{comentario.comentario}</p></td>
 							</tr>
 						</table>
 					</p:column>
@@ -74,8 +74,8 @@
 						</h:panelGrid>
 					</f:facet>
 				</p:dataTable>
-				<p:messages id="messageComentario" showDetail="true" autoUpdate="true"
-					closable="true" />
+				<p:messages id="messageComentario" showDetail="true"
+					autoUpdate="true" closable="true" />
 			</div>
 		</h:form>
 	</ui:define>

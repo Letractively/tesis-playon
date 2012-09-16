@@ -9,21 +9,22 @@
 	 -->
 
 	<h:form>
-		<p:menubar>
-			<p:menuitem value="Home" url="#{request.contextPath}/../admin"
-				icon="ui-icon-home" />
+		<p:menubar style="font-size: 0.8em;">
+			<p:menuitem value="Inicio" url="#{request.contextPath}/../admin" />
 
-			<p:submenu label="Auditoría" icon="ui-icon-help">
+			<p:submenu label="Auditoría">
 				<p:menuitem value="Playas Pendientes"
-					url="#{request.contextPath}/../auditoria/playaspendienteslist.html" />
+					url="#{request.contextPath}/../auditoria/playaspendienteslist.html"
+					icon="ui-icon-help" />
 				<p:menuitem value="Playas Rechazadas"
-					url="#{request.contextPath}/../auditoria/playasrechazadaslist.html" />
+					url="#{request.contextPath}/../auditoria/playasrechazadaslist.html"
+					icon="ui-icon-close" />
 			</p:submenu>
 
-			<p:submenu label="Usuario" icon="ui-icon-help">
+			<p:submenu label="Usuario">
 				<p:menuitem value="Cambiar Contraseña"
-					url="#{request.contextPath}/../admin/" />
-				<p:menuitem value="Cerrar sesión" icon="ui-icon-circle-close"
+					url="#{request.contextPath}/../admin/" icon="ui-icon-key" />
+				<p:menuitem value="Cerrar sesión" icon="ui-icon-power"
 					action="#{loginMB.logout}" />
 			</p:submenu>
 		</p:menubar>

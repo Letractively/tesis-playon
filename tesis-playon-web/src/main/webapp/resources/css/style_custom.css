@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 .vert-align-top {
-    vertical-align: top;
+	vertical-align: top;
 }
 
 /* <PRIMEFACES> */
@@ -21,7 +21,14 @@
 	width: 200px;
 }
 
+.ui-paginator {
+	line-height: 1.4em;
+}
+
 /* </PRIMEFACES> */
+.no-border {
+	border: 0px solid white;
+}
 
 /* <SIDE MENU> */
 #sidebar .ui-widget .ui-widget {
@@ -81,7 +88,7 @@
 	border-bottom: 1px solid rgb(166, 201, 226);
 }
 
-#content h2, #content h3, #content h4 {
+#content h2,#content h3,#content h4 {
 	border-bottom: 1px dotted rgb(166, 201, 226);
 }
 
