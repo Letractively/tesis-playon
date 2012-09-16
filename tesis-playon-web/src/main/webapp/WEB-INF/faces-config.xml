@@ -37,7 +37,7 @@
     	<navigation-case>
     		<from-action>#{loginMB.login}</from-action>
     		<from-outcome>SecuredGerentePlaya</from-outcome>
-    		<to-view-id>/playa/panelcontrol.xhtml</to-view-id>
+    		<to-view-id>playa/gerencia/administracion.html</to-view-id>
     		<redirect />
     	</navigation-case>
     	<navigation-case>

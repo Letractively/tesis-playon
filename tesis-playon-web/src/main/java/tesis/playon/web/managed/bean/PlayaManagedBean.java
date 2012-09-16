@@ -17,6 +17,8 @@ import org.primefaces.model.map.Marker;
 import org.springframework.dao.DataAccessException;
 
 import tesis.playon.web.model.Barrio;
+import tesis.playon.web.model.CargoEmpleado;
+import tesis.playon.web.model.Empleado;
 import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Mail;
@@ -26,6 +28,8 @@ import tesis.playon.web.model.RolesPorUsuario;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IBarrioService;
+import tesis.playon.web.service.ICargoEmpleadoService;
+import tesis.playon.web.service.IEmpleadoService;
 import tesis.playon.web.service.IEstadiaService;
 import tesis.playon.web.service.IEstadoPlayaService;
 import tesis.playon.web.service.IPerfilPlayaService;
@@ -80,6 +84,12 @@ public class PlayaManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{PerfilPlayaService}")
     IPerfilPlayaService perfilPlayaService;
+    
+    @ManagedProperty(value = "#{CargoEmpleadoService}")
+    ICargoEmpleadoService cargoEmpleadoService;
+    
+    @ManagedProperty(value = "#{EmpleadoService}")
+    IEmpleadoService empleadoService;
 
     List<Playa> playaList;
 
@@ -169,6 +179,8 @@ public class PlayaManagedBean implements Serializable {
 
 	    Usuario usuario = addUsuario();
 
+	    CargoEmpleado cargo = getCargoEmpleadoService().findByNombreCargo("Gerente General");
+	    
 	    Playa playa = new Playa();
 	    playa.setBarrio(getBarrio());
 	    playa.setCuit(getCuit());
@@ -193,12 +205,18 @@ public class PlayaManagedBean implements Serializable {
 
 	    usuario.setPlaya(playa);
 	    getUsuarioService().save(usuario);
+	    
+	    Empleado empleado = new Empleado();
+	    empleado.setUsuario(usuario);
+	    empleado.setLegajo(new Integer(1001));
+	    empleado.setCargoEmpleado(cargo);
+	    getEmpleadoService().save(empleado);
 
 	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_PLAYA_GERENTE");
 	    getRolesPorUsuarioService().save(rp);
 
-	    String asunto = "Notoficaci�n equipo de Playon";
-	    String mensaje = "Su solicitud esta en el �rea de auditoria, en breve nos comunicaremos con usted,\n\n muchas gracias";
+	    String asunto = "Notoficación equipo de Playon";
+	    String mensaje = "Su solicitud esta en el área de auditoria, en breve nos comunicaremos con usted,\n\n muchas gracias";
 	    mail = new Mail();
 	    mail.setAsunto(asunto);
 	    mail.setMensaje(mensaje);
@@ -403,6 +421,22 @@ public class PlayaManagedBean implements Serializable {
 
     public void setPerfilPlayaService(IPerfilPlayaService perfilPlayaService) {
 	this.perfilPlayaService = perfilPlayaService;
+    }
+
+    public ICargoEmpleadoService getCargoEmpleadoService() {
+        return cargoEmpleadoService;
+    }
+
+    public void setCargoEmpleadoService(ICargoEmpleadoService cargoEmpleadoService) {
+        this.cargoEmpleadoService = cargoEmpleadoService;
+    }
+
+    public IEmpleadoService getEmpleadoService() {
+        return empleadoService;
+    }
+
+    public void setEmpleadoService(IEmpleadoService empleadoService) {
+        this.empleadoService = empleadoService;
     }
 
     public List<Playa> getPlayaList() {

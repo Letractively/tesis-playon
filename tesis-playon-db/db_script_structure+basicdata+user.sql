@@ -411,7 +411,7 @@ DROP TABLE IF EXISTS `empleado`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `empleado` (
   `cargoEmpleadoID` int(11) NOT NULL,
-  `legajo` int(11) NOT NULL UNIQUE,
+  `legajo` int(11) DEFAULT NULL,
   `empleadoID` int(11) NOT NULL auto_increment,
   `usuarioID` int(11) NOT NULL,
   PRIMARY KEY (`empleadoID`),
@@ -1027,7 +1027,7 @@ UNLOCK TABLES;
 LOCK TABLES `cargo_empleado` WRITE;
 /*!40000 ALTER TABLE `cargo_empleado` DISABLE KEYS */;
 INSERT INTO `cargo_empleado` (`descripcion`, `nombre`, `cargoEmpleadoID`) 
-VALUES ('','Gerente General',1),('','Encargado',2),('','Playero',3);
+VALUES ('','Gerente General',1),('','Playero',2);
 /*!40000 ALTER TABLE `cargo_empleado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1257,7 +1257,7 @@ UNLOCK TABLES;
 LOCK TABLES `empleado` WRITE;
 /*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
 INSERT INTO `empleado` (`cargoEmpleadoID`, `legajo`, `empleadoID`, `usuarioID`) 
-VALUES (1,1001,1001,1),(3,1002,1002,5);
+VALUES (1,1001,1001,1),(2,1002,1002,5);
 /*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
 UNLOCK TABLES;
 
