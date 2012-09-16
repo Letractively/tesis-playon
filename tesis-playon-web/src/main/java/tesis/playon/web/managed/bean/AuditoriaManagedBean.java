@@ -136,8 +136,8 @@ public class AuditoriaManagedBean implements Serializable {
 	    mail.setDestinatario(playaSeleccionada.getEmail());
 	    asunto = "Su solicitud ha sido rechazada";
 	    mail.setAsunto(asunto);
-	    mensaje = "Los datos de su solicitud de playa no son correctos o verdaderos, por lo tanto hemos rechazado su solicitud,"
-		    + " comuniquese con el equipo de Playon mediante el siguiente link http://localhost:8080/tesis-playon-web/contact.html";
+	    mensaje = " Los datos de su solicitud de playa no son correctos o verdaderos, por lo tanto hemos rechazado su solicitud,"
+		    + " comuníquese con el equipo de Playon mediante el siguiente link http://localhost:8080/tesis-playon-web/contact.html";
 	    mail.setMensaje(mensaje);
 
 	    notificador.enviar(mail);
@@ -172,8 +172,8 @@ public class AuditoriaManagedBean implements Serializable {
 	    getPlayaService().update(playaSeleccionada);
 	    mail = new Mail();
 	    notificador = new NotificadorUtil();
-	    asunto = "Felicitaciones, su playa ya es parte de PLAYON!";
-	    mensaje = "Mediante este mensaje, le confirmamos que la playa de estacionamiento"
+	    asunto = "Felicitaciones, su playa ya es parte de PLAYON - RED DE PLAYAS DE ESTACIONAMIENTO!";
+	    mensaje = "Mediante este mensaje, le confirmamos que la playa de estacionamiento "
 		    + playaSeleccionada.getNombreComercial() + " ha sido aprobada"
 		    + "para formar parte de la Red de Playas Playon";
 	    mail.setAsunto(asunto);

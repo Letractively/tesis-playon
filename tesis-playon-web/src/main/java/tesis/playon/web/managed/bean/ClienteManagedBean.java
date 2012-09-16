@@ -138,9 +138,9 @@ public class ClienteManagedBean implements Serializable {
 	    mail = new Mail();
 	    mail.setAsunto("Felicitaciones " + getNombreUser() + "ya sos usuario de PLAYON!");
 	    mail.setDestinatario(getEmail());
-	    mail.setMensaje("Estimado "
+	    mail.setMensaje("Estimado: "
 		    + getNombre()
-		    + " usted ya es usuario de PLAYON RED DE PLAYAS.\n\n Acceda desde aqu� y busque su playa de estacionamiento!\n\n http://localhost:8080/tesis-playon-web/");
+		    + " usted ya es usuario de PLAYON RED DE PLAYAS.\n\n Acceda desde aquí y busque su playa de estacionamiento! \n\n http://localhost:8080/tesis-playon-web/ \n\n ¡Muchas gracias!");
 	    notificador = new NotificadorUtil();
 	    notificador.enviar(mail);
 	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
@@ -204,9 +204,9 @@ public class ClienteManagedBean implements Serializable {
 	    mail = new Mail();
 	    mail.setAsunto("Felicitaciones " + getNombreUser() + "ya sos usuario de PLAYON!");
 	    mail.setDestinatario(getEmail());
-	    mail.setMensaje("Estimado "
+	    mail.setMensaje("Estimado: "
 		    + getNombre()
-		    + " usted ya es usuario de PLAYON RED DE PLAYAS.\n\n Acceda desde aquí y busque su playa de estacionamiento!\n\n http://localhost:8080/tesis-playon-web/");
+		    + " usted ya es usuario de PLAYON RED DE PLAYAS.\n\n Acceda desde aquí y busque su playa de estacionamiento! \n\n http://localhost:8080/tesis-playon-web/ \n\n ¡Muchas gracias!");
 	    notificador = new NotificadorUtil();
 	    notificador.enviar(mail);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el cliente: "
@@ -287,8 +287,8 @@ public class ClienteManagedBean implements Serializable {
 	    Usuario usuario = clienteSelected.getUsuario();
 	    getUsuarioService().update(usuario);
 	    getClienteService().update(clienteSelected);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "La cliente se modificó correctamente", "");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La cliente se modificó correctamente",
+		    "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_CLIENTES;
 	} catch (DataAccessException e) {
