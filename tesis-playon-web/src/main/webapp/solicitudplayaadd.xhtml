@@ -11,35 +11,25 @@
 
 	<ui:define name="content">
 		<h1>Solicitud de alta de playa</h1>
-		<p>Con el siguiente formulario puede solicitar la incorporación
-			de una nueva playa al sistema, luego de la revisión de un auditor
-			quién realizará la verificación de los datos datos cargados.</p>
 
-		<h:form>
+		<p>Con el siguiente formulario puede solicitar la incorporación de
+			una nueva playa al sistema, luego de la revisión de un auditor quién
+			realizará la verificación de los datos datos cargados.</p>
 
+		<h:form id="form" style="margin-left:30px">
 			<p:growl id="messages" />
 
-			<div align="left">
+			<div align="left" style="margin-top: 10px">
 
 				<h:panelGrid id="displayView" columns="3" cellpadding="8"
-					styleClass="admin-input-text">
+					cellspacing="10">
 
 					<p:column>
 						<h:outputLabel for="nombre" value="Datos de Playa"
 							styleClass="fuente-subtitle" />
 					</p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
+					<p:column />
+					<p:column />
 
 					<p:column>
 						<h:outputLabel for="razonSocial" value="Razon Social: " />
@@ -158,32 +148,15 @@
 							display="icon" />
 					</p:column>
 
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-
+					<p:column>
+						<br />
+					</p:column>
+					<p:column />
+					<p:column />
 					<p:column>
 						<h:outputLabel for="nombre" value="Encargado de Playa"
 							styleClass="fuente-subtitle" />
 					</p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-
-					<p:column></p:column>
 					<p:column></p:column>
 					<p:column></p:column>
 
@@ -280,7 +253,7 @@
 					</p:column>
 					<p:column>
 						<p:password id="password" style="width: 200px"
-							value="#{playaMB.password}" required="true"
+							value="#{playaMB.password}" required="true" feedback="true"
 							match="passwordRepeat" requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="passwordRepeatMsg" />
@@ -294,7 +267,7 @@
 					</p:column>
 					<p:column>
 						<p:password id="passwordRepeat" style="width: 200px"
-							value="#{playaMB.password}" required="true"
+							value="#{playaMB.password}" required="true" feedback="true"
 							requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="passwordRepeatMsg" />
@@ -306,32 +279,16 @@
 					</p:column>
 
 					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-
-
-					<p:column></p:column>
 					<p:column>
-						<div align="right">
-
+						<div align="center">
 							<p:commandButton id="addPlaya" value="Enviar Solicitud"
 								action="#{playaMB.addSolicitudPlaya}" ajax="false" />
 							<p:commandButton id="reset" value="Cancelar" immediate="true"
 								action="/index.html?faces-redirect=true" ajax="false"
-								style="margin-right:15px" />
-
+								style="margin-left:10px" />
 						</div>
 					</p:column>
-					<p:column></p:column>
-
+					<p:column />
 				</h:panelGrid>
 			</div>
 		</h:form>

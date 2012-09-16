@@ -162,7 +162,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	    if (null != cuentaPlaya)
 		getEstadiaService().save(estadia);
 	}
-	setCargoEmpleado(empleado.getCargoEmpleado());
+	setCargoEmpleado(empleado.getCargoEmpleado()); //tira error
     }
 
     public void searchVehiculo() {

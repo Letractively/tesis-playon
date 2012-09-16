@@ -55,7 +55,9 @@
 				<h:outputText value="#{playa.estado.nombre}" />
 			</p:column>
 
-			<p:column headerText="Opciones" styleClass="column-options">
+			<p:column headerText="Opciones" styleClass="column-options"
+				style="text-align:center; width:100px;">
+				
 				<p:commandLink id="view" update=":mainForm:displayView"
 					oncomplete="carDialog.show();" title="Ver Datos">
 					<f:setPropertyActionListener value="#{playa}"
@@ -191,7 +193,6 @@
 				</p:column>
 
 			</h:panelGrid>
-
 		</p:dialog>
 	</ui:define>
 </ui:composition>

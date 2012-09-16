@@ -13,32 +13,24 @@
 		<h1>Solicitud de alta de cliente</h1>
 		<p>Con el siguiente formulario usted puede formar parte de nuestro
 			sistema, aprovechando todos nuestros beneficios.</p>
-		
-		<h:form>
+
+		<h:form id="form" style="margin-left:30px">
 			<p:growl id="messages" />
-			
-				<div align="left">
-				<h:panelGrid id="displayView" columns="3" cellpadding="8"
+
+
+			<div align="left" style="margin-top: 10px">
+
+				<h:panelGrid id="displayView" columns="3" cellspacing="10"
 					styleClass="admin-input-text">
+					<p:column>
+						<h:outputLabel for="nombre" value="Datos de Usuario"
+							styleClass="fuente-subtitle" />
+					</p:column>
+					<p:column />
+					<p:column />
 
 					<p:column>
-						<h:outputLabel for="nombre" value="Datos de Usuario" styleClass="fuente-subtitle"/>
-					</p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
-					<p:column>
-					<h:outputLabel for="nombreUser" value="Usuario: " />
+						<h:outputLabel for="nombreUser" value="Usuario: " />
 					</p:column>
 					<p:column>
 						<p:inputText id="nombreUser" style="width: 200px"
@@ -51,69 +43,51 @@
 					<p:column>
 						<p:message id="nombreUserMsg" for="nombreUser" display="icon" />
 					</p:column>
-					
+
 					<p:column>
 						<h:outputLabel for="password" value="Contraseña: " />
 					</p:column>
 					<p:column>
-						<p:password id="password" style="width: 200px"
-							value="#{clienteMB.password}" required="true" match="passwordRepeat"
-							requiredMessage="Campo obligatorio" >
+						<p:password id="password" style="width: 200px" feedback="true"
+							value="#{clienteMB.password}" required="true"
+							match="passwordRepeat" requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="passwordRepeatMsg" />
 						</p:password>
 					</p:column>
-					<p:column>
-					</p:column>
-					
+					<p:column />
+
 					<p:column>
 						<h:outputLabel for="passwordRepeat" value="Repetir Contraseña: " />
 					</p:column>
 					<p:column>
 						<p:password id="passwordRepeat" style="width: 200px"
-							value="#{clienteMB.password}" required="true" 
-							requiredMessage="Campo obligatorio" >
+							value="#{clienteMB.password}" required="true" feedback="true"
+							requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="passwordRepeatMsg" />
 						</p:password>
 					</p:column>
 					<p:column>
-						<p:message id="passwordRepeatMsg" for="passwordRepeat" display="icon" />
+						<p:message id="passwordRepeatMsg" for="passwordRepeat"
+							display="icon" />
 					</p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
+
 					<p:column>
-						<h:outputLabel for="nombre" value="Datos de Cliente" styleClass="fuente-subtitle"/>
+						<br />
 					</p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-									
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
+					<p:column />
+					<p:column />
+
 					<p:column>
-					<h:outputLabel for="nombre" value="Nombre: " />
+						<h:outputLabel for="nombre" value="Datos de Cliente"
+							styleClass="fuente-subtitle" />
+					</p:column>
+					<p:column />
+					<p:column />
+
+					<p:column>
+						<h:outputLabel for="nombre" value="Nombre: " />
 					</p:column>
 					<p:column>
 						<p:inputText id="nombre" style="width: 200px"
@@ -126,7 +100,7 @@
 					<p:column>
 						<p:message id="nombreMsg" for="nombre" display="icon" />
 					</p:column>
-	
+
 					<p:column>
 						<h:outputLabel for="apellido" value="Apellido: " />
 					</p:column>
@@ -141,26 +115,27 @@
 					<p:column>
 						<p:message id="apellidoMsg" for="apellido" display="icon" />
 					</p:column>
-					
+
 					<p:column>
 						<h:outputText for="tipoDoc" value="Tipo Doc.: " />
 					</p:column>
 					<p:column>
-						<p:selectOneMenu style="width: 220px"
-							value="#{clienteMB.tipoDoc}" effect="fade">
+						<p:selectOneMenu style="width: 220px" value="#{clienteMB.tipoDoc}"
+							effect="fade">
 							<f:selectItems value="#{tipoDocMB.tipoDocList}" var="tipoDoc"
 								itemValue="#{tipoDoc}" itemLabel="#{tipoDoc.nombre}" />
 							<f:converter converterId="tipoDocConverter" />
 						</p:selectOneMenu>
 					</p:column>
 					<p:column></p:column>
-					
+
 					<p:column>
 						<h:outputLabel for="nroDoc" value="Nro. Documento: " />
 					</p:column>
 					<p:column>
 						<p:inputText id="nroDoc" value="#{clienteMB.nroDoc}"
-							required="true" requiredMessage="Campo obligatorio" type="numeric" maxlength="10">
+							required="true" requiredMessage="Campo obligatorio"
+							type="numeric" maxlength="10">
 							<f:validateLength minimum="6" />
 							<p:ajax event="blur" update="nroDocMsg" />
 						</p:inputText>
@@ -168,13 +143,14 @@
 					<p:column>
 						<p:message id="nroDocMsg" for="nroDoc" display="icon" />
 					</p:column>
-	
+
 					<p:column>
 						<h:outputLabel for="email" value="E-mail: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="email" value="#{clienteMB.email}" style="width: 200px"
-							required="true" requiredMessage="Campo obligatorio" type="email" maxlength="100">
+						<p:inputText id="email" value="#{clienteMB.email}"
+							style="width: 200px" required="true"
+							requiredMessage="Campo obligatorio" type="email" maxlength="100">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="emailMsg" />
 						</p:inputText>
@@ -182,26 +158,27 @@
 					<p:column>
 						<p:message id="emailMsg" for="email" display="icon" />
 					</p:column>
-					
+
 					<p:column>
 						<h:outputText for="barrio" value="Barrio: " />
 					</p:column>
 					<p:column>
-						<p:selectOneMenu style="width: 220px"
-							value="#{clienteMB.barrio}" effect="fade">
+						<p:selectOneMenu style="width: 220px" value="#{clienteMB.barrio}"
+							effect="fade">
 							<f:selectItems value="#{barrioMB.barrioList}" var="barrio"
 								itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
 							<f:converter converterId="barrioConverter" />
 						</p:selectOneMenu>
 					</p:column>
 					<p:column></p:column>
-					
+
 					<p:column>
 						<h:outputLabel for="domicilio" value="Domicilio: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="domicilio" value="#{clienteMB.domicilio}" style="width: 200px"
-							required="true" requiredMessage="Campo obligatorio" maxlength="100">
+						<p:inputText id="domicilio" value="#{clienteMB.domicilio}"
+							style="width: 200px" required="true"
+							requiredMessage="Campo obligatorio" maxlength="100">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="domicilioMsg" />
 						</p:inputText>
@@ -209,43 +186,30 @@
 					<p:column>
 						<p:message id="domicilioMsg" for="domicilio" display="icon" />
 					</p:column>
-	
+
 					<p:column>
-						<h:outputLabel for="telefono" value="Telefono: " /> 
+						<h:outputLabel for="telefono" value="Telefono: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="telefono" value="#{clienteMB.telefono}" style="width: 200px" maxlength="25">
+						<p:inputText id="telefono" value="#{clienteMB.telefono}"
+							style="width: 200px" maxlength="25">
 						</p:inputText>
 					</p:column>
+					<p:column />
+
+					<p:column />
 					<p:column>
-					</p:column>
-					
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
-					<p:column></p:column>
-					<p:column></p:column>
-					<p:column></p:column>
-					
-	
-					<p:column></p:column>
-					<p:column>
-						<div align="right">
+						<div align="center">
 							<p:commandButton id="addCliente" value="Registrar Cliente"
 								action="#{clienteMB.addClienteAdmin}" ajax="false" />
 							<p:commandButton id="reset" value="Cancelar" immediate="true"
 								action="/index.html?faces-redirect=true" ajax="false"
-								style="margin-right:15px" />
+								style="margin-left:10px" />
 						</div>
 					</p:column>
-					<p:column></p:column>			
-					
-					</h:panelGrid>
+					<p:column />
+
+				</h:panelGrid>
 			</div>
 		</h:form>
 	</ui:define>
