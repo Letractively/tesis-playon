@@ -46,6 +46,16 @@ public class VehiculoDao implements IVehiculoDao {
 	}
     }
 
+    public List<Vehiculo> findByCliente(int idCliente) {
+	List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Vehiculo where cliente.id=?")
+		.setParameter(0, idCliente).list();
+	for (Object object : list) {
+	    vehiculos.add((Vehiculo) object);
+	}
+	return vehiculos;
+    }
+
     public List<Vehiculo> findAll() {
 	List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Vehiculo").list();
@@ -54,4 +64,5 @@ public class VehiculoDao implements IVehiculoDao {
 	}
 	return vehiculos;
     }
+
 }

@@ -6,7 +6,7 @@ import tesis.playon.web.model.Vehiculo;
 
 /**
  * @author Pablo
- *
+ * 
  */
 public interface IVehiculoDao {
 
@@ -17,7 +17,9 @@ public interface IVehiculoDao {
     void delete(Vehiculo vehiculo);
 
     Vehiculo findByPatenteVehiculo(String patenteVehiculo);
-    
+
     List<Vehiculo> findAll();
-    
+
+    List<Vehiculo> findByCliente(int idCliente);
+
 }

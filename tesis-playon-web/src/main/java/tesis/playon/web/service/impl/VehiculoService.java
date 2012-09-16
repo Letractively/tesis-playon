@@ -7,16 +7,17 @@ import org.springframework.transaction.annotation.Transactional;
 import tesis.playon.web.dao.IVehiculoDao;
 import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.IVehiculoService;
+
 /**
  * 
  * @author pablo
- *
+ * 
  */
 @Transactional(readOnly = true)
 public class VehiculoService implements IVehiculoService {
 
     IVehiculoDao vehiculoDao;
-    
+
     @Transactional(readOnly = false)
     @Override
     public void save(Vehiculo vehiculo) {
@@ -41,16 +42,21 @@ public class VehiculoService implements IVehiculoService {
     }
 
     @Override
+    public List<Vehiculo> findByCliente(int idCliente) {
+	return getVehiculoDao().findByCliente(idCliente);
+    }
+
+    @Override
     public List<Vehiculo> findAll() {
 	return getVehiculoDao().findAll();
     }
 
     public IVehiculoDao getVehiculoDao() {
-        return vehiculoDao;
+	return vehiculoDao;
     }
 
     public void setVehiculoDao(IVehiculoDao vehiculoDao) {
-        this.vehiculoDao = vehiculoDao;
+	this.vehiculoDao = vehiculoDao;
     }
 
 }

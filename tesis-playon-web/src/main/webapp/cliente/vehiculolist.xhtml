@@ -1,0 +1,63 @@
+<ui:composition template="../template/templateCliente.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+		Lista
+    </ui:define>
+
+	<ui:define name="content">
+		<p:growl id="messages" />
+		<h1>Estos son sus vehiculos registrados</h1>
+		<h:form>
+			<p:dataTable id="vehiculos" var="vehiculo" paginator="true" rows="3"
+				value="#{vehiculoMB.vehiculoList}"
+				emptyMessage="No ha registrado vehiculos" paginatorPosition="bottom">
+
+				<f:facet name="header">
+						Listado de sus vehiculos
+					</f:facet>
+
+				<p:column headerText="Patente">
+					<h:outputText value="#{vehiculo.patente}" />
+				</p:column>
+
+				<p:column headerText="Marca">
+					<h:outputText value="#{marcavehiculo.nombre}" />
+				</p:column>
+
+				<p:column headerText="Modelo">
+					<h:outputText value="#{vehiculo.modeloVehiculo.nombre}" />
+				</p:column>
+
+
+				<p:column headerText="Opciones"
+					style="text-align:center; width:100px;">
+
+					<p:commandLink id="darBaja" title="Dar de baja"
+						action="#{vehiculoMB.deleteVehiculo}" ajax="false">
+						<f:setPropertyActionListener value="#{vehiculo}"
+							target="#{vehiculoMB.vehiculoSelected}" />
+						<h:graphicImage library="images/icons" name="trash.png"
+							style="width:25px; height:25px;" />
+					</p:commandLink>
+				</p:column>
+				<f:facet name="footer">
+					<h:panelGroup id="quitarfiltro" layout="block"
+						style="text-align: right;">
+						<p:commandLink id="removeFilter" value="Quitar Filtro"
+							action="/cliente/vehiculolist.html?faces-redirect=true"
+							ajax="false" />
+					</h:panelGroup>
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+		<div align="right">
+			<br />
+			<h:link value="volver a su perfil" outcome="/cliente/perfilcliente" />
+		</div>
+	</ui:define>
+</ui:composition>

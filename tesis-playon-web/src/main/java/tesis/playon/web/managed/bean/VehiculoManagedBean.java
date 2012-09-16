@@ -17,13 +17,16 @@ import javax.faces.context.FacesContext;
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.ColorVehiculo;
+import tesis.playon.web.model.Empleado;
 import tesis.playon.web.model.MarcaVehiculo;
 import tesis.playon.web.model.ModeloVehiculo;
+import tesis.playon.web.model.Usuario;
 import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.IClienteService;
 import tesis.playon.web.service.IColorVehiculoService;
 import tesis.playon.web.service.IMarcaVehiculoService;
 import tesis.playon.web.service.IModeloVehiculoService;
+import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.service.IVehiculoService;
 
 /**
@@ -50,12 +53,23 @@ public class VehiculoManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{ColorVehiculoService}")
     IColorVehiculoService colorVehiculoService;
-    
+
+    @ManagedProperty(value = "#{UsuarioService}")
+    IUsuarioService usuarioService;
+
     private int anio;
+
+    private static final String LISTA_VEHICULOS = "vehiculolist";
+
+    private static final String ERROR = "error";
+
+    private static Vehiculo vehiculoSelected;
 
     private CategoriaVehiculo categoriaVehiculo;
 
     private String codigoBarra;
+
+    private List<Vehiculo> vehiculoList;
 
     private ColorVehiculo colorVehiculo;
 
@@ -73,9 +87,9 @@ public class VehiculoManagedBean implements Serializable {
     private List<MarcaVehiculo> marcasList;
 
     private List<ModeloVehiculo> modelosList;
-    
+
     private List<ColorVehiculo> colorVehiculoList;
-    
+
     @PostConstruct
     private void init() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -158,11 +172,11 @@ public class VehiculoManagedBean implements Serializable {
     }
 
     public IColorVehiculoService getColorVehiculoService() {
-        return colorVehiculoService;
+	return colorVehiculoService;
     }
 
     public void setColorVehiculoService(IColorVehiculoService colorVehiculoService) {
-        this.colorVehiculoService = colorVehiculoService;
+	this.colorVehiculoService = colorVehiculoService;
     }
 
     public List<MarcaVehiculo> getMarcasList() {
@@ -182,11 +196,11 @@ public class VehiculoManagedBean implements Serializable {
     }
 
     public List<ColorVehiculo> getColorVehiculoList() {
-        return colorVehiculoList;
+	return colorVehiculoList;
     }
 
     public void setColorVehiculoList(List<ColorVehiculo> colorVehiculoList) {
-        this.colorVehiculoList = colorVehiculoList;
+	this.colorVehiculoList = colorVehiculoList;
     }
 
     public int getAnio() {
@@ -259,6 +273,59 @@ public class VehiculoManagedBean implements Serializable {
 
     public void setMarca(MarcaVehiculo marca) {
 	this.marca = marca;
+    }
+
+    public IUsuarioService getUsuarioService() {
+	return usuarioService;
+    }
+
+    public void setUsuarioService(IUsuarioService usuarioService) {
+	this.usuarioService = usuarioService;
+    }
+
+    public String deleteVehiculo() {
+	try {
+	    vehiculoSelected.setHabilitado(new Boolean(false));
+
+	    getVehiculoService().update(vehiculoSelected);
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se dió de baja el vehiculo: "
+		    + vehiculoSelected.getPatente() + " " + "", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    // reset();
+	    return "/cliente/vehiculolist";
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo dar de baja el empleado: " + vehiculoSelected.getPatente() + " " + " ",
+		    "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    // reset();
+	}
+	return ERROR;
+    }
+
+    public List<Vehiculo> getVehiculoList() {
+	vehiculoList = new ArrayList<Vehiculo>();
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	String userName = facesContext.getExternalContext().getRemoteUser();
+	Usuario usuario = getUsuarioService().findByNombreUsuario(userName);
+	cliente = getClienteService().findByUsuario(usuario);
+
+	vehiculoList.addAll(getVehiculoService().findByCliente(cliente.getId()));
+
+	return vehiculoList;
+    }
+
+    public void setVehiculoList(List<Vehiculo> vehiculoList) {
+	this.vehiculoList = vehiculoList;
+    }
+
+    public Vehiculo getVehiculoSelected() {
+	return vehiculoSelected;
+    }
+
+    public void setVehiculoSelected(Vehiculo vehiculoSelected) {
+	VehiculoManagedBean.vehiculoSelected = vehiculoSelected;
     }
 
 }
