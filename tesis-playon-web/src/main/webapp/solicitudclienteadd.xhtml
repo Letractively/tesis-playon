@@ -87,21 +87,6 @@
 					<p:column />
 
 					<p:column>
-						<h:outputLabel for="nombre" value="Nombre: " />
-					</p:column>
-					<p:column>
-						<p:inputText id="nombre" style="width: 200px"
-							value="#{clienteMB.nombre}" required="true"
-							requiredMessage="Campo obligatorio" maxlength="40">
-							<f:validateLength minimum="3" />
-							<p:ajax event="blur" update="nombreMsg" />
-						</p:inputText>
-					</p:column>
-					<p:column>
-						<p:message id="nombreMsg" for="nombre" display="icon" />
-					</p:column>
-
-					<p:column>
 						<h:outputLabel for="apellido" value="Apellido: " />
 					</p:column>
 					<p:column>
@@ -114,6 +99,21 @@
 					</p:column>
 					<p:column>
 						<p:message id="apellidoMsg" for="apellido" display="icon" />
+					</p:column>
+
+					<p:column>
+						<h:outputLabel for="nombre" value="Nombre: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="nombre" style="width: 200px"
+							value="#{clienteMB.nombre}" required="true"
+							requiredMessage="Campo obligatorio" maxlength="40">
+							<f:validateLength minimum="3" />
+							<p:ajax event="blur" update="nombreMsg" />
+						</p:inputText>
+					</p:column>
+					<p:column>
+						<p:message id="nombreMsg" for="nombre" display="icon" />
 					</p:column>
 
 					<p:column>

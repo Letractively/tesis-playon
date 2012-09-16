@@ -24,207 +24,209 @@ import tesis.playon.web.util.WriteImage;
 
 /**
  * @author pablo
- *
+ * 
  */
 @ManagedBean(name = "perfilClienteMB")
 @RequestScoped
-public class PerfilClienteManagedBean implements Serializable{
+public class PerfilClienteManagedBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    
-    @ManagedProperty(value = "#{ClienteService}")
-    IClienteService clienteService;
+	private static final long serialVersionUID = 1L;
 
-    @ManagedProperty(value = "#{UsuarioService}")
-    IUsuarioService usuarioService;
-    
-    private String apellido;
+	@ManagedProperty(value = "#{ClienteService}")
+	IClienteService clienteService;
 
-    private String nombre;
+	@ManagedProperty(value = "#{UsuarioService}")
+	IUsuarioService usuarioService;
 
-    private String email;
+	private String apellido;
 
-    private TipoDoc tipoDoc;
-    
-    private Integer nroDocumento;
+	private String nombre;
 
-    private String domicilio;
+	private String email;
 
-    private String telefono;
-    
-    private Barrio barrio;
-    
-    private Cliente cliente;
-    
-    private Usuario usuario;
-    
-    private UploadedFile fotoPerfilFile;
-    
-    @PostConstruct
-    private void init(){
-	FacesContext facesContext = FacesContext.getCurrentInstance();
-	String userName = facesContext.getExternalContext().getRemoteUser();
-	Usuario user = getUsuarioService().findByNombreUsuario(userName);
-	if(user!= null){
-	    this.usuario = user;
-	    this.cliente = getClienteService().findByUsuario(user);
-	    WriteImage.getFotoPerfilCliente(user);
-	    this.apellido = user.getApellido();
-	    this.nombre = user.getNombre();
-	    this.email = user.getEmail();
-	    this.tipoDoc = user.getTipoDoc();
-	    this.nroDocumento = user.getNroDoc();
-	    this.domicilio = cliente.getDomicilio();
-	    this.telefono = cliente.getTelefono();
-	    this.barrio = cliente.getBarrio();
+	private TipoDoc tipoDoc;
+
+	private Integer nroDocumento;
+
+	private String domicilio;
+
+	private String telefono;
+
+	private Barrio barrio;
+
+	private Cliente cliente;
+
+	private Usuario usuario;
+
+	private UploadedFile fotoPerfilFile;
+
+	@PostConstruct
+	private void init() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		String userName = facesContext.getExternalContext().getRemoteUser();
+		Usuario user = getUsuarioService().findByNombreUsuario(userName);
+		if (user != null) {
+			this.usuario = user;
+			this.cliente = getClienteService().findByUsuario(user);
+			WriteImage.getFotoPerfilCliente(user);
+			this.apellido = user.getApellido();
+			this.nombre = user.getNombre();
+			this.email = user.getEmail();
+			this.tipoDoc = user.getTipoDoc();
+			this.nroDocumento = user.getNroDoc();
+			this.domicilio = cliente.getDomicilio();
+			this.telefono = cliente.getTelefono();
+			this.barrio = cliente.getBarrio();
+		}
 	}
-    }
-    
-    public String upload() {
-	try {
-	    this.cliente.getUsuario().setFotoPerfil(fotoPerfilFile.getContents());
-	    getUsuarioService().update(this.cliente.getUsuario());
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se modificó exitosamente su foto de perfil", "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    
-	    WriteImage.getFotoPerfilCliente(this.cliente.getUsuario());
-	    
-	    return "perfilclienteedit";
-	} catch (Exception ex) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se pudo cargar su foto de perfil",
-		    "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    ex.printStackTrace();
+
+	public String upload() {
+		try {
+			this.cliente.getUsuario().setFotoPerfil(
+					fotoPerfilFile.getContents());
+			getUsuarioService().update(this.cliente.getUsuario());
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Se modificó exitosamente su foto de perfil", "");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+
+			WriteImage.getFotoPerfilCliente(this.cliente.getUsuario());
+
+			return "perfilclienteedit";
+		} catch (Exception ex) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"No se pudo cargar su foto de perfil", "");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			ex.printStackTrace();
+		}
+		return "/error";
 	}
-	return "/error";
-    }
-    
-    private String updateCliente(){
+
 	
-	try{
-	    this.cliente.setBarrio(getBarrio());
-	    this.cliente.setDomicilio(getDomicilio());
-	    this.cliente.setTelefono(getTelefono());
-	    this.cliente.getUsuario().setApellido(getApellido());
-	    this.cliente.getUsuario().setEmail(getEmail());
-	    this.cliente.getUsuario().setNombre(getNombre());
-	    this.cliente.getUsuario().setNroDoc(getNroDocumento());
-	    this.cliente.getUsuario().setTipoDoc(getTipoDoc());
-	    
-	    getUsuarioService().update(this.cliente.getUsuario());
-	    getClienteService().update(this.cliente);
-	    
-	    return "perfilcliente";
-	    
-	}catch(Exception ex){
-	    ex.printStackTrace();
+	@SuppressWarnings("unused")
+	private String updateCliente() {
+		try {
+			this.cliente.setBarrio(getBarrio());
+			this.cliente.setDomicilio(getDomicilio());
+			this.cliente.setTelefono(getTelefono());
+			this.cliente.getUsuario().setApellido(getApellido());
+			this.cliente.getUsuario().setEmail(getEmail());
+			this.cliente.getUsuario().setNombre(getNombre());
+			this.cliente.getUsuario().setNroDoc(getNroDocumento());
+			this.cliente.getUsuario().setTipoDoc(getTipoDoc());
+
+			getUsuarioService().update(this.cliente.getUsuario());
+			getClienteService().update(this.cliente);
+
+			return "perfilcliente";
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "/error";
 	}
-	return "/error";
-    }
 
-    public IClienteService getClienteService() {
-        return clienteService;
-    }
+	public IClienteService getClienteService() {
+		return clienteService;
+	}
 
-    public void setClienteService(IClienteService clienteService) {
-        this.clienteService = clienteService;
-    }
+	public void setClienteService(IClienteService clienteService) {
+		this.clienteService = clienteService;
+	}
 
-    public IUsuarioService getUsuarioService() {
-        return usuarioService;
-    }
+	public IUsuarioService getUsuarioService() {
+		return usuarioService;
+	}
 
-    public void setUsuarioService(IUsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-    }
+	public void setUsuarioService(IUsuarioService usuarioService) {
+		this.usuarioService = usuarioService;
+	}
 
-    public Cliente getCliente() {
-        return cliente;
-    }
+	public Cliente getCliente() {
+		return cliente;
+	}
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
+	public Usuario getUsuario() {
+		return usuario;
+	}
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
-    public String getApellido() {
-        return apellido;
-    }
+	public String getApellido() {
+		return apellido;
+	}
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public TipoDoc getTipoDoc() {
-        return tipoDoc;
-    }
+	public TipoDoc getTipoDoc() {
+		return tipoDoc;
+	}
 
-    public void setTipoDoc(TipoDoc tipoDoc) {
-        this.tipoDoc = tipoDoc;
-    }
+	public void setTipoDoc(TipoDoc tipoDoc) {
+		this.tipoDoc = tipoDoc;
+	}
 
-    public String getDomicilio() {
-        return domicilio;
-    }
+	public String getDomicilio() {
+		return domicilio;
+	}
 
-    public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
-    }
+	public void setDomicilio(String domicilio) {
+		this.domicilio = domicilio;
+	}
 
-    public String getTelefono() {
-        return telefono;
-    }
+	public String getTelefono() {
+		return telefono;
+	}
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
 
-    public Barrio getBarrio() {
-        return barrio;
-    }
+	public Barrio getBarrio() {
+		return barrio;
+	}
 
-    public void setBarrio(Barrio barrio) {
-        this.barrio = barrio;
-    }
+	public void setBarrio(Barrio barrio) {
+		this.barrio = barrio;
+	}
 
-    public Integer getNroDocumento() {
-        return nroDocumento;
-    }
+	public Integer getNroDocumento() {
+		return nroDocumento;
+	}
 
-    public void setNroDocumento(Integer nroDocumento) {
-        this.nroDocumento = nroDocumento;
-    }
+	public void setNroDocumento(Integer nroDocumento) {
+		this.nroDocumento = nroDocumento;
+	}
 
-    public UploadedFile getFotoPerfilFile() {
-        return fotoPerfilFile;
-    }
+	public UploadedFile getFotoPerfilFile() {
+		return fotoPerfilFile;
+	}
 
-    public void setFotoPerfilFile(UploadedFile fotoPerfilFile) {
-        this.fotoPerfilFile = fotoPerfilFile;
-    }
+	public void setFotoPerfilFile(UploadedFile fotoPerfilFile) {
+		this.fotoPerfilFile = fotoPerfilFile;
+	}
 
 }
