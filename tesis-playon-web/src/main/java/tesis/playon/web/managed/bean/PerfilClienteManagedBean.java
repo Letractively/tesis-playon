@@ -99,6 +99,29 @@ public class PerfilClienteManagedBean implements Serializable{
 	}
 	return "/error";
     }
+    
+    private String updateCliente(){
+	
+	try{
+	    this.cliente.setBarrio(getBarrio());
+	    this.cliente.setDomicilio(getDomicilio());
+	    this.cliente.setTelefono(getTelefono());
+	    this.cliente.getUsuario().setApellido(getApellido());
+	    this.cliente.getUsuario().setEmail(getEmail());
+	    this.cliente.getUsuario().setNombre(getNombre());
+	    this.cliente.getUsuario().setNroDoc(getNroDocumento());
+	    this.cliente.getUsuario().setTipoDoc(getTipoDoc());
+	    
+	    getUsuarioService().update(this.cliente.getUsuario());
+	    getClienteService().update(this.cliente);
+	    
+	    return "perfilcliente";
+	    
+	}catch(Exception ex){
+	    ex.printStackTrace();
+	}
+	return "/error";
+    }
 
     public IClienteService getClienteService() {
         return clienteService;

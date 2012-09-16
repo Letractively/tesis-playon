@@ -28,7 +28,7 @@
 					<p:fileUpload id="fotoPerfil"
 						value="#{perfilClienteMB.fotoPerfilFile}" mode="simple"
 						allowTypes="*.jpg;" />
-					<p:commandButton value="Subir foto" ajax="false"
+					<h:commandButton value="Subir foto" ajax="false"
 						actionListener="#{perfilClienteMB.upload}"
 						style="margin:0 10px 0 0; padding: 0 5px 0 5px" />
 				</h:form>
@@ -36,39 +36,51 @@
 		</div>
 		<br />
 		<div id="perfil-playa">
-			<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid columns="2" cellpadding="5" cellspacing="10">
 
 				<h:outputText value="Apellido: " styleClass="fuente-outputtext" />
-				<h:outputText value="#{perfilClienteMB.usuario.nombreUser}"
-					styleClass="fuente-perfil" />
+				<p:inputText id="apellido" value="#{perfilClienteMB.apellido}"
+					style="width:200px;" />
 
 				<h:outputText value="Nombre: " styleClass="fuente-outputtext" />
-				<h:outputText value="#{perfilClienteMB.usuario.email}"
-					styleClass="fuente-perfil" />
+				<p:inputText id="nombre" value="#{perfilClienteMB.nombre}"
+					style="width:200px;" />
 
 				<h:outputText value="Nombre de usuario: "
 					styleClass="fuente-outputtext" />
-				<h:outputText value="#{perfilClienteMB.usuario.nombreUser}"
-					styleClass="fuente-perfil" />
+				<p:inputText id="nombreUser" readonly="true"
+					value="#{perfilClienteMB.usuario.nombreUser}" style="width:200px;" />
 
 				<h:outputText value="E-mail: " styleClass="fuente-outputtext" />
-				<h:outputText value="#{perfilClienteMB.usuario.email}"
-					styleClass="fuente-perfil" />
+				<p:inputText id="email" value="#{perfilClienteMB.email}"
+					style="width:200px;" />
 
 				<h:outputText value="Teléfono: " styleClass="fuente-outputtext" />
 				<p:inputText id="telefono" value="#{perfilClienteMB.telefono}"
-						style="width:200px;" />
+					style="width:200px;" />
 
 				<h:outputText value="Domicilio: " styleClass="fuente-outputtext" />
-				<h:outputText value="#{perfilClienteMB.cliente.domicilio}"
-					styleClass="fuente-perfil" />
+				<p:inputText id="domicilio" value="#{perfilClienteMB.domicilio}"
+					style="width:200px;" />
 
 				<h:outputText value="Barrio: " styleClass="fuente-outputtext" />
-				<h:outputText value="#{perfilClienteMB.cliente.barrio.nombre}"
-					styleClass="fuente-perfil" />
+				<p:selectOneMenu value="#{perfilClienteMB.barrio}" effect="fade">
+					<f:selectItems value="#{barrioMB.barrioList}" var="barrio"
+						itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
+					<f:converter converterId="barrioConverter" />
+				</p:selectOneMenu>
 
+				<p:column />
+				<p:column>
+					<p:commandButton id="Modificar" value="Modificar"
+						action="#{perfilClienteMB.updateCliente}">
+					</p:commandButton>s
+					<p:commandButton id="cancelar" value="Cancelar"
+						action="/cliente/perfilcliente.html?faces-redirect=true"
+						ajax="false">
+					</p:commandButton>
+				</p:column>
 			</h:panelGrid>
 		</div>
-
 	</ui:define>
 </ui:composition>
