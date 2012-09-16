@@ -50,12 +50,13 @@
 				<f:facet name="footer" style="text-align: right;">
 					<div align="right">
 						<p:commandButton id="btnLoginId" value="Login" update=":growl"
-							action="#{loginMB.login}" redirect="true"
+							action="#{loginMB.login}"
 							oncomplete="handleLoginRequest(xhr, status, args)">
 							</p:commandButton>
 						<p:commandButton id="btnCancelar" value="Cancelar"
 							oncomplete="handleLoginRequest(xhr, status, args)"
-							onclick="dlg.hide()" />
+							onclick="dlg.hide()">
+							</p:commandButton>
 					</div>
 
 				</f:facet>
