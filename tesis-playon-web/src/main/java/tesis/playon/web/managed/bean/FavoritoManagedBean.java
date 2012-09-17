@@ -14,6 +14,11 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.component.menuitem.MenuItem;
+import org.primefaces.component.submenu.Submenu;
+import org.primefaces.model.DefaultMenuModel;
+import org.primefaces.model.MenuModel;
+
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.Favorito;
 import tesis.playon.web.model.Playa;
@@ -40,6 +45,8 @@ public class FavoritoManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{FavoritoService}")
     IFavoritoService favoritoService;
+    
+    private MenuModel model;
 
     private static Playa playaSelected;
 
@@ -56,6 +63,7 @@ public class FavoritoManagedBean implements Serializable {
 	    this.cliente = getClienteService().findByUsuario(user);
 	    favoritosListPerfil = new ArrayList<Favorito>();
 	    favoritosListPerfil = getFavoritoService().findByCliente(this.cliente);
+	    menuFavorito();
 	}
     }
 
@@ -81,6 +89,23 @@ public class FavoritoManagedBean implements Serializable {
 		    "No se pudo agregar la playa a favoritos.\nDisculpe las molestias ocacionadas", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
+    }
+    
+    private void menuFavorito(){
+	model = new DefaultMenuModel();
+	
+	//SubMenu favorito  
+        Submenu submenu = new Submenu();  
+        submenu.setLabel("Playas Favoritas");
+        
+        for (Favorito favorito : favoritosListPerfil) {
+            MenuItem item = new MenuItem();
+            item.setValue(favorito.getPlaya().getNombreComercial());  
+            item.setUrl("#");
+            item.setIcon("ui-icon-star");
+            submenu.getChildren().add(item);
+	}
+        model.addSubmenu(submenu);
     }
 
     public IClienteService getClienteService() {
@@ -129,6 +154,14 @@ public class FavoritoManagedBean implements Serializable {
 
     public void setPlayaSelected(Playa playaSelected) {
 	FavoritoManagedBean.playaSelected = playaSelected;
+    }
+
+    public MenuModel getModel() {
+        return model;
+    }
+
+    public void setModel(MenuModel model) {
+        this.model = model;
     }
 
 }
