@@ -1191,7 +1191,8 @@ VALUES (2,'30-11111111-1',55,'Buenos Aires 548',2,'Estacionamiento Europa',-31.4
 	(1,'30-11111111-1',100,'Bv. Ilia 156',2,'Estacionamiento Mercado Sur',-31.421251,-64.184234,'Estacionamiento Mercado Sur',6),
 	(1,'30-11111111-1',100,'Santa Rosa 631',2,'Parking One',-31.409921,-64.191527,'Parking One',7),
 	(1,'30-11111111-1',100,'Bv. Chacabuco 728',2,'Playa Sur',-31.425904,-64.183791,'Playa Sur',8),
-	(1,'30-11111111-1',100,'Bv. Illia 70',2,'Parquin Verde',-31.420956,-64.18535,'Parquin Verde',9);
+	(1,'30-11111111-1',100,'Bv. Illia 70',2,'Parquin Verde',-31.420956,-64.18535,'Parquin Verde',9),
+	(1,'30-11111111-1',100,'Av. Colón 756',2,'Estacionamiento Colón',-31.412075,-64.188117,'Estacionamiento Colón',10);
 /*!40000 ALTER TABLE `playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1209,7 +1210,8 @@ VALUES ('¡Los esperamos en Estacionamiento Europa, les ofrecemos una excelente 
 ('Playa "Estacionamiento Mercado Sur"', 6, 6, NULL),
 ('Playa "Parking One"', 7, 7, NULL),
 ('Playa "Playa Sur"', 8, 8, NULL),
-('Playa "Parquin Verde"', 9, 9, NULL);
+('Playa "Parquin Verde"', 9, 9, NULL),
+('Playa "Estacionamiento Colón"', 10, 10, NULL);
 /*!40000 ALTER TABLE `perfil_playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1228,7 +1230,8 @@ VALUES ('Moreno','pablo_la31@hotmail.com','Pablo','123456',NULL,'pablo_la31',1,1
  ('Admin','admin@playon.com.ar','Super','123456',NULL,'admin',6,1,'66666666',1,NULL),
  ('Gomez','sgomez@playon.com.ar','Silvina','123456',NULL,'sgomez',7,1,'10456654',1,NULL),
  ('Lopez','jjlopez@playon.com.ar','Juana Josefa','123456',NULL,'jjlopez',8,1,'27600710',1,NULL),
- ('Pérez','jperez@playon.com.ar','Juan','123456',NULL,'jperez',9,1,'31234234',1,NULL);
+ ('Pérez','jperez@playon.com.ar','Juan','123456',NULL,'jperez',9,1,'31234234',1,NULL),
+ ('Santoni','rsantoni@playon.com.ar','Rafael','123456',NULL,'rsantoni',10,1,'15454597',1,NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1247,7 +1250,8 @@ VALUES (1,'pablo_la31','ROLE_PLAYA_GERENTE'),
  (6,'admin','ROLE_ADMIN'),
  (7,'sgomez','ROLE_CLIENT'),
  (8,'jjlopez','ROLE_CLIENT'),
- (9,'jperez','ROLE_CLIENT');  
+ (9,'jperez','ROLE_CLIENT'),
+ (10,'rsantoni','ROLE_PLAYA_GERENTE');  
 /*!40000 ALTER TABLE `roles_por_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1258,7 +1262,7 @@ UNLOCK TABLES;
 LOCK TABLES `empleado` WRITE;
 /*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
 INSERT INTO `empleado` (`cargoEmpleadoID`, `legajo`, `empleadoID`, `usuarioID`) 
-VALUES (1,1001,1001,1),(2,1002,1002,5);
+VALUES (1,1001,1001,1),(2,1002,1002,5),(1,1003,1003,10);
 /*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1343,11 +1347,20 @@ UNLOCK TABLES;
 
 LOCK TABLES `tarifa` WRITE;
 /*!40000 ALTER TABLE `tarifa` DISABLE KEYS */;
-INSERT INTO `tesis_playon`.`tarifa` (`fechaAlta`,`fechaBaja`,`importe`,`vigente`,`tarifaID`,`playaID`,`tipoEstadiaID`,`categoriaVehiculoID`) VALUES 
- (NULL,NULL,10,1,1,3,1,1),
- (NULL,NULL,12,1,2,3,1,3),
- (NULL,NULL,500,1,3,3,2,1),
- (NULL,NULL,550,1,4,3,2,3);
+INSERT INTO `tesis_playon`.`tarifa` (`fechaAlta`,`fechaBaja`,`importe`,`vigente`,`tarifaID`,
+    `playaID`,`tipoEstadiaID`,`categoriaVehiculoID`) VALUES 
+ ('2012-07-04 19:25:23',NULL,10 ,1 ,1,3 ,1,1),
+ ('2012-07-04 19:25:23',NULL,12 ,1 ,2,3 ,1,2),
+ ('2012-07-04 19:25:23',NULL,12 ,1 ,3,3 ,1,3),
+ ('2012-07-04 19:25:23',NULL,500,1 ,4,3 ,2,1),
+ ('2012-07-04 19:25:23',NULL,550,1 ,5,3 ,2,2),
+ ('2012-07-04 19:25:23',NULL,550,1 ,6,3 ,2,3),
+ ('2012-07-04 19:25:23',NULL,11 ,1 ,7,10,1,1),
+ ('2012-07-04 19:25:23',NULL,13 ,1 ,8,10,1,2),
+ ('2012-07-04 19:25:23',NULL,14 ,1 ,9,10,1,3),
+ ('2012-07-04 19:25:23',NULL,650,1,10,10,2,1),
+ ('2012-07-04 19:25:23',NULL,690,1,11,10,2,2),
+ ('2012-07-04 19:25:23',NULL,700,1,12,10,2,3);
 /*!40000 ALTER TABLE `tarifa` ENABLE KEYS */;
 UNLOCK TABLES;
 
