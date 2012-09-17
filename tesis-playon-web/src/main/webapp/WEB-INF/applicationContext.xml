@@ -271,7 +271,7 @@
 		<property name="key" value="jsfspring-sec" />
 		<property name="userDetailsService" ref="customJDBCUserService" />
 		<property name="alwaysRemember" value="true" />
-		<property name="tokenValiditySeconds" value="60" />
+		<property name="tokenValiditySeconds" value="28800" />
 	</bean>
 	<bean id="customJDBCUserService" class="tesis.playon.web.dao.impl.CustomJDBCDao">
 		<property name="dataSource" ref="dataSource" />
