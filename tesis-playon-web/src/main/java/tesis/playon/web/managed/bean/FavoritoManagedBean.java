@@ -45,7 +45,7 @@ public class FavoritoManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{FavoritoService}")
     IFavoritoService favoritoService;
-    
+
     private MenuModel model;
 
     private static Playa playaSelected;
@@ -90,22 +90,25 @@ public class FavoritoManagedBean implements Serializable {
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
     }
-    
-    private void menuFavorito(){
+
+    private void menuFavorito() {
 	model = new DefaultMenuModel();
-	
-	//SubMenu favorito  
-        Submenu submenu = new Submenu();  
-        submenu.setLabel("Playas Favoritas");
-        
-        for (Favorito favorito : favoritosListPerfil) {
-            MenuItem item = new MenuItem();
-            item.setValue(favorito.getPlaya().getNombreComercial());  
-            item.setUrl("#");
-            item.setIcon("ui-icon-star");
-            submenu.getChildren().add(item);
+
+	// SubMenu favorito
+	Submenu submenu = new Submenu();
+	submenu.setLabel("Playas Favoritas");
+
+	if (favoritosListPerfil != null) {
+	    for (Favorito favorito : favoritosListPerfil) {
+		MenuItem item = new MenuItem();
+		item.setValue(favorito.getPlaya().getNombreComercial());
+		item.setUrl("#");
+		item.setIcon("ui-icon-star");
+		submenu.getChildren().add(item);
+	    }
 	}
-        model.addSubmenu(submenu);
+
+	model.addSubmenu(submenu);
     }
 
     public IClienteService getClienteService() {
@@ -157,11 +160,11 @@ public class FavoritoManagedBean implements Serializable {
     }
 
     public MenuModel getModel() {
-        return model;
+	return model;
     }
 
     public void setModel(MenuModel model) {
-        this.model = model;
+	this.model = model;
     }
 
 }
