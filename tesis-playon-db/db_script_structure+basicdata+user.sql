@@ -564,9 +564,10 @@ DROP TABLE IF EXISTS `favorito`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `favorito` (
+  `favoritoID` int(11) NOT NULL auto_increment,
   `clienteID` int(11) NOT NULL,
   `playaID` int(11) NOT NULL,
-  PRIMARY KEY (`clienteID`,`playaID`),
+  PRIMARY KEY (`favoritoID`),
   KEY `clienteID` (`clienteID`),
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_favorito_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
