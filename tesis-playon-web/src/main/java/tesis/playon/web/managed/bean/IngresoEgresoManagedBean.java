@@ -247,6 +247,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	Integer disponibilidad = playa.getDisponibilidad() + 1;
 	playa.setDisponibilidad(disponibilidad);
 	getPlayaService().update(playa);
+	limpiar();
     }
 
     public void calcularImporte() {
@@ -326,7 +327,6 @@ public class IngresoEgresoManagedBean implements Serializable {
 	horaIngresoFormateada = null;
 	cobrado = true;
 	importe = 0;
-	// patente = "";
     }
 
     public IEmpleadoService getEmpleadoService() {
