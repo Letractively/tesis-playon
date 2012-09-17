@@ -58,7 +58,7 @@ public class VehiculoManagedBean implements Serializable {
 
     private int anio;
 
-    private static final String LISTA_VEHICULOS = "vehiculolist";
+    // private static final String LISTA_VEHICULOS = "vehiculolist";
 
     private static final String ERROR = "error";
 

@@ -2,6 +2,7 @@ package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -124,6 +125,10 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     private String patente;
 
+    private String fechaIngresoFormateada;
+
+    private String horaIngresoFormateada;
+
     private boolean existeVehiculo = false;
 
     private boolean existeTarifa = true;
@@ -162,7 +167,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	    if (null != cuentaPlaya)
 		getEstadiaService().save(estadia);
 	}
-	setCargoEmpleado(empleado.getCargoEmpleado()); //tira error
+	setCargoEmpleado(empleado.getCargoEmpleado()); // tira error
     }
 
     public void searchVehiculo() {
@@ -189,6 +194,9 @@ public class IngresoEgresoManagedBean implements Serializable {
 	}
 	if (null != detalleEstadia && !detalleEstadia.getCobrado()) {
 	    cobrado = false;
+	    Timestamp ts = detalleEstadia.getFechaHoraIngreso();
+	    fechaIngresoFormateada = new SimpleDateFormat("dd/MM/yyyy").format(ts);
+	    horaIngresoFormateada = new SimpleDateFormat("HH:mm aa").format(ts);
 	}
 	if (null != vehiculo && getTarifaPlayaList().isEmpty()) {
 	    setExisteTarifa(false);
@@ -237,7 +245,6 @@ public class IngresoEgresoManagedBean implements Serializable {
 	Integer disponibilidad = playa.getDisponibilidad() + 1;
 	playa.setDisponibilidad(disponibilidad);
 	getPlayaService().update(playa);
-	limpiar();
     }
 
     public void calcularImporte() {
@@ -296,6 +303,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	detalleEstadia.setTarifa(tarifa);
 	detalleEstadia.setCobrado(true);
 	importeCalculado = true;
+	patente = null;
     }
 
     public void limpiar() {
@@ -313,6 +321,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 	existeTarifa = true;
 	saldoPositvo = false;
 	importeCalculado = false;
+	fechaIngresoFormateada = null;
+	horaIngresoFormateada = null;
 	cobrado = true;
 	importe = 0;
     }
@@ -578,8 +588,29 @@ public class IngresoEgresoManagedBean implements Serializable {
 	this.patente = patente;
     }
 
-    public Timestamp getHoraActual() {
-	return new Timestamp(Calendar.getInstance().getTimeInMillis());
+    public String getFechaIngresoFormateada() {
+	return fechaIngresoFormateada;
+    }
+
+    public void setFechaIngresoFormateada(String fechaIngresoFormateada) {
+	this.fechaIngresoFormateada = fechaIngresoFormateada;
+    }
+
+    public String getFechaActualFormateada() {
+
+	return new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
+    }
+
+    public String getHoraIngresoFormateada() {
+	return horaIngresoFormateada;
+    }
+
+    public void setHoraIngresoFormateada(String horaIngresoFormateada) {
+	this.horaIngresoFormateada = horaIngresoFormateada;
+    }
+
+    public String getHoraActualFormateada() {
+	return new SimpleDateFormat("HH:mm aa").format(Calendar.getInstance().getTime());
     }
 
     public boolean getExisteVehiculo() {

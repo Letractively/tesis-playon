@@ -6,7 +6,6 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IVehiculoDao;
-import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.model.Vehiculo;
 
 /**

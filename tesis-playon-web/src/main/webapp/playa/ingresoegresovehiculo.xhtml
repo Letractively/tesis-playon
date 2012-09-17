@@ -28,12 +28,15 @@
 				closable="true" />
 
 			<div style="margin: 20px 0px 0px 50px; width: 100%;">
-				Buscar vehiculo
+				Buscar vehículo
 				<p:separator id="separator" />
 			</div>
 			<div id="perfil-playa">
-				<h:panelGrid columns="2" cellpadding="5">
-					<h:outputLabel for="patente" value="Ingrese la patente: " />
+
+				<h:panelGrid columns="3" cellpadding="5">
+
+					<h:outputLabel for="patente" value="Ingrese la patente: "
+						styleClass="fuente-outputtext" />
 					<p:inputText id="patente" style="width:197px"
 						value="#{ingresoEgresoMB.patente}" required="true"
 						requiredMessage="Campo obligatorio">
@@ -41,72 +44,90 @@
 						<p:ajax event="blur" update="patenteMsg" />
 					</p:inputText>
 					<p:message id="patenteMsg" for="patente" display="icon" />
+
+					<p:commandButton id="cancelar" value="Cancelar"
+						action="#{ingresoEgresoMB.limpiar}" ajax="false"
+						style="margin-right:15px" />
+					<p:commandButton id="buscarVehiculo" value="Buscar vehículo"
+						action="#{ingresoEgresoMB.searchVehiculo}" ajax="false" />
+
 				</h:panelGrid>
 
 			</div>
-
-			<p:commandButton id="cancelar" value="Cancelar"
-				action="#{ingresoEgresoMB.limpiar}" ajax="false"
-				style="margin-right:15px" />
-
-			<p:commandButton id="buscarVehiculo" value="Buscar vehículo"
-				action="#{ingresoEgresoMB.searchVehiculo}" ajax="false" />
 
 			<div style="margin: 20px 0px 0px 50px; width: 100%;">
 				Cliente
 				<p:separator id="separator2" />
 			</div>
+
 			<div id="perfil-playa">
 				<h:panelGrid rendered="#{ingresoEgresoMB.existeVehiculo}"
 					columns="2" cellpadding="5">
 
-					<h:outputText value="Cliente: " />
+					<h:outputText value="Cliente: " styleClass="fuente-outputtext" />
 					<h:outputText id="txt_nombre"
-						value="#{ingresoEgresoMB.usuarioCliente.nombre}&#160;#{ingresoEgresoMB.usuarioCliente.apellido}" />
+						value="#{ingresoEgresoMB.usuarioCliente.nombre}&#160;#{ingresoEgresoMB.usuarioCliente.apellido}"
+						styleClass="fuente-perfil" />
 
-					<h:outputText value="Patente: " />
+					<h:outputText value="Patente: " styleClass="fuente-outputtext" />
 					<h:outputText id="txt_patente"
-						value="#{ingresoEgresoMB.vehiculo.patente}" />
+						value="#{ingresoEgresoMB.vehiculo.patente}"
+						styleClass="fuente-perfil" />
 
-					<h:outputText value="Vehiculo: " />
+					<h:outputText value="Vehiculo: " styleClass="fuente-outputtext" />
 					<h:outputText id="txt_mod_vehiculo"
-						value="#{ingresoEgresoMB.modeloVehiculo.nombre}&#160;#{ingresoEgresoMB.marcaVehiculo.nombre}" />
+						value="#{ingresoEgresoMB.modeloVehiculo.nombre}&#160;#{ingresoEgresoMB.marcaVehiculo.nombre}"
+						styleClass="fuente-perfil" />
 
-					<h:outputText value="Tipo: " />
+					<h:outputText value="Tipo: " styleClass="fuente-outputtext" />
 					<h:outputText id="txt_cat_vehiculo"
-						value="#{ingresoEgresoMB.categoriaVehiculo.nombre}" />
+						value="#{ingresoEgresoMB.categoriaVehiculo.nombre}"
+						styleClass="fuente-perfil" />
 
-					<h:outputText value="Saldo: $" />
+					<h:outputText value="Saldo: " styleClass="fuente-outputtext" />
 					<h:outputText id="txt_saldo"
-						value="#{ingresoEgresoMB.cuentaCliente.saldo}" />
+						value="$#{ingresoEgresoMB.cuentaCliente.saldo}"
+						styleClass="fuente-perfil" />
 
+					<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
+						value="Fecha ingreso: " styleClass="fuente-outputtext" />
+					<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
+						id="txt_fecha_ingreso"
+						value="#{ingresoEgresoMB.fechaIngresoFormateada}"
+						styleClass="fuente-perfil" />
 
-					<h:outputText value="Hora actual: " />
+					<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
+						value="Hora ingreso: " styleClass="fuente-outputtext" />
+					<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
+						id="txt_hora_ingreso"
+						value="#{ingresoEgresoMB.horaIngresoFormateada}"
+						styleClass="fuente-perfil" />
+
+					<h:outputText value="Fecha actual: " styleClass="fuente-outputtext" />
+					<h:outputText id="txt_fecha_actual"
+						value="#{ingresoEgresoMB.fechaActualFormateada}"
+						styleClass="fuente-perfil" />
+
+					<h:outputText value="Hora actual: " styleClass="fuente-outputtext" />
 					<h:outputText id="txt_hora_actual"
-						value="#{ingresoEgresoMB.horaActual}" />
+						value="#{ingresoEgresoMB.horaActualFormateada}"
+						styleClass="fuente-perfil" />
 
 				</h:panelGrid>
 			</div>
-
-			<h:panelGroup rendered="#{!ingresoEgresoMB.cobrado}">
-				<h:outputText value="Hora ingreso: " />
-				<h:outputText id="txt_hora_ingreso"
-					value="#{ingresoEgresoMB.detalleEstadia.fechaHoraIngreso}" />
-			</h:panelGroup>
 
 			<h:panelGroup rendered="#{ingresoEgresoMB.cobrado}">
 				<p:commandButton id="ingreso" value="Registrar ingreso"
 					action="#{ingresoEgresoMB.registrarIngresoVehiculo}" ajax="false" />
 			</h:panelGroup>
 
-			<h:panelGrid rendered="#{!ingresoEgresoMB.cobrado}" columns="3"
-				cellpadding="5">
+			<div id="perfil-playa">
 
-				<p:column>
-					<h:outputText for="tarifa" value="Tarifa: " />
-				</p:column>
+				<h:panelGrid rendered="#{!ingresoEgresoMB.cobrado}" columns="2"
+					cellpadding="5">
 
-				<p:column>
+					<h:outputText for="tarifa" value="Tarifa: "
+						styleClass="fuente-outputtext" />
 					<p:selectOneMenu style="width: 293px"
 						value="#{ingresoEgresoMB.tarifa}" effect="fade">
 						<f:selectItems value="#{ingresoEgresoMB.tarifaPlayaList}"
@@ -114,19 +135,16 @@
 							itemLabel="#{tarifa.tipoEstadia.nombre} $#{tarifa.importe}" />
 						<f:converter converterId="tarifaConverter" />
 					</p:selectOneMenu>
-				</p:column>
 
-				<p:column>
 					<p:commandButton id="calcImporte" value="Calcular importe"
 						action="#{ingresoEgresoMB.calcularImporte}" ajax="false" />
-				</p:column>
 
-				<p:column>
 					<p:commandButton rendered="#{ingresoEgresoMB.importeCalculado}"
 						id="egreso" value="Registrar egreso"
 						action="#{ingresoEgresoMB.registrarEgresoVehiculo}" ajax="false" />
-				</p:column>
-			</h:panelGrid>
+
+				</h:panelGrid>
+			</div>
 
 		</h:form>
 	</ui:define>
