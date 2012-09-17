@@ -79,7 +79,7 @@ public class FavoritoManagedBean implements Serializable {
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 		} else {
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
-			    "Ya se registró la playa en favoritos", "");
+			    "Ya se encontraba registrada la playa en favoritos", "");
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 

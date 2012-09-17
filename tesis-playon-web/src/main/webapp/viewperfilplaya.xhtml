@@ -27,7 +27,8 @@
 		</div>
 		<h:form style="margin: 0 0 0 50px;">
 			<p:growl id="messages" />
-			<h:commandLink actionListener="#" id="favorito" action="#{favoritoMB.addFavorito}"
+			<h:commandLink actionListener="#" id="favorito"
+				action="#{favoritoMB.addFavorito}"
 				rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}">
 				<h:graphicImage library="images/icons" name="star.png" />
 				<h:outputText value="Agregar a favoritos" />
@@ -39,12 +40,12 @@
 						<h:outputText value="Calificación:" styleClass="fuente-outputtext" />
 					</p:column>
 					<p:column>
-						<p:rating value="#{calificacionMB.calificacionPlaya}" stars="10"
-							cancel="false"
+						<p:rating id="rating" value="#{calificacionMB.calificacionPlaya}"
+							stars="10" cancel="false"
 							onRate="if(!confirm('¿Está seguro que desea calificar la playa con '
 								+ value +' puntos')) return false;">
 							<p:ajax event="rate" listener="#{calificacionMB.onrate}"
-								oncomplete="document.location.reload(true)" />
+								update="rating,messages" />
 						</p:rating>
 					</p:column>
 				</h:panelGrid>
@@ -56,103 +57,105 @@
 			</div>
 
 			<div>
-				<p:accordionPanel multiple="true" dynamic="true">
-					<p:tab title="Información">
-						<div style="margin: 0 0 0 10px;">
-							<h:panelGrid columns="2" cellpadding="8">
-								<h:outputText value="Domicilio: " styleClass="fuente-outputtext" />
-								<h:outputText
-									value="#{perfilPlayaMB.playaSelected.domicilio}, Córdoba "
-									styleClass="fuente-perfil" />
+				<h:form>
+					<p:accordionPanel multiple="true" dynamic="true">
+						<p:tab title="Información">
+							<div style="margin: 0 0 0 10px;">
+								<h:panelGrid columns="2" cellpadding="8">
+									<h:outputText value="Domicilio: "
+										styleClass="fuente-outputtext" />
+									<h:outputText
+										value="#{perfilPlayaMB.playaSelected.domicilio}, Córdoba "
+										styleClass="fuente-perfil" />
 
-								<h:outputText value="Barrio: " styleClass="fuente-outputtext" />
-								<h:outputText
-									value="#{perfilPlayaMB.playaSelected.barrio.nombre}"
-									styleClass="fuente-perfil" />
+									<h:outputText value="Barrio: " styleClass="fuente-outputtext" />
+									<h:outputText
+										value="#{perfilPlayaMB.playaSelected.barrio.nombre}"
+										styleClass="fuente-perfil" />
 
-								<h:outputText value="Teléfono: " styleClass="fuente-outputtext" />
-								<h:outputText value="#{perfilPlayaMB.playaSelected.telefono}"
-									styleClass="fuente-perfil" />
+									<h:outputText value="Teléfono: " styleClass="fuente-outputtext" />
+									<h:outputText value="#{perfilPlayaMB.playaSelected.telefono}"
+										styleClass="fuente-perfil" />
 
-								<h:outputText value="E-mail: " styleClass="fuente-outputtext" />
-								<h:outputText value="#{perfilPlayaMB.playaSelected.email}"
-									styleClass="fuente-perfil" />
+									<h:outputText value="E-mail: " styleClass="fuente-outputtext" />
+									<h:outputText value="#{perfilPlayaMB.playaSelected.email}"
+										styleClass="fuente-perfil" />
 
-								<h:outputText value="Disponibilidad: "
-									styleClass="fuente-outputtext" />
-								<h:outputText
-									value="#{perfilPlayaMB.playaSelected.disponibilidad}"
-									styleClass="fuente-perfil" />
+									<h:outputText value="Disponibilidad: "
+										styleClass="fuente-outputtext" />
+									<h:outputText
+										value="#{perfilPlayaMB.playaSelected.disponibilidad}"
+										styleClass="fuente-perfil" />
+								</h:panelGrid>
+							</div>
+						</p:tab>
+						<p:tab title="Tarifas">
+							<p:dataTable id="tarifas" value="#{tarifaMB.tarifaListSelected}"
+								var="tarifa"
+								emptyMessage="No existen tarifas en esta playa de estacionamiento">
+
+								<p:column headerText="Tipo Estadía">
+									<h:outputText value="#{tarifa.tipoEstadia.nombre}" />
+								</p:column>
+
+								<p:column headerText="Categoría">
+									<h:outputText value="#{tarifa.categoriaVehiculo.nombre}" />
+								</p:column>
+
+								<p:column headerText="Importe">
+									<h:outputText value="#{tarifa.importe}" />
+								</p:column>
+							</p:dataTable>
+
+							<h:panelGrid columns="2" cellpadding="10">
+								<p:column>
+
+								</p:column>
+								<p:column>
+
+								</p:column>
 							</h:panelGrid>
-						</div>
-					</p:tab>
-					<p:tab title="Tarifas">
-						<p:dataTable id="tarifas" value="#{tarifaMB.tarifaListSelected}"
-							var="tarifa"
-							emptyMessage="No existen tarifas en esta playa de estacionamiento">
+						</p:tab>
+						<p:tab title="Promociones">
+							<h:panelGrid columns="2" cellpadding="10">
 
-							<p:column headerText="Tipo Estadía">
-								<h:outputText value="#{tarifa.tipoEstadia.nombre}" />
-							</p:column>
+							</h:panelGrid>
+						</p:tab>
+						<p:tab title="Comentarios">
+							<p:dataTable id="comentarios"
+								value="#{comentarioMB.comentariosListPerfil}" var="comentario"
+								emptyMessage="No existen comentarios en esta playa de estacionamiento">
 
-							<p:column headerText="Categoría">
-								<h:outputText value="#{tarifa.categoriaVehiculo.nombre}" />
-							</p:column>
+								<p:column headerText="Usuario" style="width:95px;">
+									<div align="center">
+										<h:graphicImage library="fotos_perfil_clientes"
+											name="#{comentario.cliente.usuario.nombreUser}.jpg"
+											style="width:75px; height:75px; border: 2px solid black"
+											rendered="#{comentario.usuario.fotoPerfil != null}" />
+										<h:graphicImage library="fotos_perfil_clientes"
+											name="sinfoto.jpg"
+											style="width:75px; height:75px; border: 2px solid black"
+											rendered="#{comentario.usuario.fotoPerfil == null}" />
+									</div>
+								</p:column>
 
-							<p:column headerText="Importe">
-								<h:outputText value="#{tarifa.importe}" />
-							</p:column>
-						</p:dataTable>
+								<p:column headerText="Comentario">
+									<table style="border: 0px solid transparent">
+										<tr>
+											<td style="text-align: left; border-style: none;"><h:outputText
+													value="#{comentario.fecha}" /></td>
+											<td style="text-align: right; border-style: none;"><h:commandLink
+													id="denunciaComentario" value="Denunciar" action="#"
+													styleClass="fuente-link-denuncia" /></td>
+										</tr>
+										<tr>
+											<td colspan="2" id="perfil-playa-frente"
+												style="border-style: none;"><p>#{comentario.comentario}</p></td>
+										</tr>
+									</table>
+								</p:column>
+								<f:facet name="footer">
 
-						<h:panelGrid columns="2" cellpadding="10">
-							<p:column>
-
-							</p:column>
-							<p:column>
-
-							</p:column>
-						</h:panelGrid>
-					</p:tab>
-					<p:tab title="Promociones">
-						<h:panelGrid columns="2" cellpadding="10">
-
-						</h:panelGrid>
-					</p:tab>
-					<p:tab title="Comentarios">
-						<p:dataTable id="comentarios"
-							value="#{comentarioMB.comentariosListPerfil}" var="comentario"
-							emptyMessage="No existen comentarios en esta playa de estacionamiento">
-
-							<p:column headerText="Usuario" style="width:95px;">
-								<div align="center">
-									<h:graphicImage library="fotos_perfil_clientes"
-										name="#{comentario.cliente.nroCliente}.jpg"
-										style="width:75px; height:75px; border: 2px solid black"
-										rendered="#{comentario.usuario.fotoPerfil != null}" />
-									<h:graphicImage library="fotos_perfil_clientes"
-										name="sinfoto.jpg"
-										style="width:75px; height:75px; border: 2px solid black"
-										rendered="#{comentario.usuario.fotoPerfil == null}" />
-								</div>
-							</p:column>
-
-							<p:column headerText="Comentario">
-								<table style="border: 0px solid transparent">
-									<tr>
-										<td style="text-align: left; border-style: none;"><h:outputText
-												value="#{comentario.fecha}" /></td>
-										<td style="text-align: right; border-style: none;"><h:commandLink
-												id="denunciaComentario" value="Denunciar" action="#"
-												styleClass="fuente-link-denuncia" /></td>
-									</tr>
-									<tr>
-										<td colspan="2" id="perfil-playa-frente"
-											style="border-style: none;"><p>#{comentario.comentario}</p></td>
-									</tr>
-								</table>
-							</p:column>
-							<f:facet name="footer">
-								<h:form>
 									<h:panelGrid columns="2">
 										<p:column>
 											<div align="left" style="width: 75px; margin-right: 10px">
@@ -170,17 +173,17 @@
 												<p:commandButton id="enviarComentario"
 													value="Enviar comentario" ajax="false"
 													action="#{comentarioMB.addComentarioPerfil}"
-													style="margin:5px 5px 0 5px" update="messageComentario" />
+													style="margin:5px 5px 0 5px" update="messageComentario, comentarios" />
 											</div>
 										</p:column>
 									</h:panelGrid>
-									<p:messages id="messageComentario" showDetail="true" closable="true" />
-								</h:form>
-							</f:facet>
-						</p:dataTable>
-					</p:tab>
-				</p:accordionPanel>
-				
+									<p:messages id="messageComentario" showDetail="true"
+										closable="true" />
+								</f:facet>
+							</p:dataTable>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
 			</div>
 
 			<br />
