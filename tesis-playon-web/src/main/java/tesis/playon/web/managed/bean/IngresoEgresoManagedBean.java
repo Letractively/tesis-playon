@@ -172,7 +172,9 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void searchVehiculo() {
 	limpiar();
-	setVehiculo(getVehiculoService().findByPatenteVehiculo(patente.toUpperCase()));
+	String auxPatente = patente.trim();
+	setVehiculo(getVehiculoService().findByPatenteVehiculo(auxPatente.toUpperCase()));
+
 	if (null != vehiculo) {
 	    setCategoriaVehiculo(vehiculo.getCategoriaVehiculo());
 	    setModeloVehiculo(vehiculo.getModeloVehiculo());
@@ -303,7 +305,6 @@ public class IngresoEgresoManagedBean implements Serializable {
 	detalleEstadia.setTarifa(tarifa);
 	detalleEstadia.setCobrado(true);
 	importeCalculado = true;
-	patente = null;
     }
 
     public void limpiar() {
@@ -325,6 +326,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	horaIngresoFormateada = null;
 	cobrado = true;
 	importe = 0;
+	// patente = "";
     }
 
     public IEmpleadoService getEmpleadoService() {

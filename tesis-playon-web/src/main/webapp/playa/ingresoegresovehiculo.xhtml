@@ -31,10 +31,9 @@
 				Buscar vehículo
 				<p:separator id="separator" />
 			</div>
+
 			<div id="perfil-playa">
-
 				<h:panelGrid columns="3" cellpadding="5">
-
 					<h:outputLabel for="patente" value="Ingrese la patente: "
 						styleClass="fuente-outputtext" />
 					<p:inputText id="patente" style="width:197px"
@@ -44,15 +43,12 @@
 						<p:ajax event="blur" update="patenteMsg" />
 					</p:inputText>
 					<p:message id="patenteMsg" for="patente" display="icon" />
-
 					<p:commandButton id="cancelar" value="Cancelar"
 						action="#{ingresoEgresoMB.limpiar}" ajax="false"
 						style="margin-right:15px" />
 					<p:commandButton id="buscarVehiculo" value="Buscar vehículo"
 						action="#{ingresoEgresoMB.searchVehiculo}" ajax="false" />
-
 				</h:panelGrid>
-
 			</div>
 
 			<div style="margin: 20px 0px 0px 50px; width: 100%;">
@@ -76,7 +72,7 @@
 
 					<h:outputText value="Vehiculo: " styleClass="fuente-outputtext" />
 					<h:outputText id="txt_mod_vehiculo"
-						value="#{ingresoEgresoMB.modeloVehiculo.nombre}&#160;#{ingresoEgresoMB.marcaVehiculo.nombre}"
+						value="#{ingresoEgresoMB.marcaVehiculo.nombre}&#160;#{ingresoEgresoMB.modeloVehiculo.nombre}"
 						styleClass="fuente-perfil" />
 
 					<h:outputText value="Tipo: " styleClass="fuente-outputtext" />
@@ -113,19 +109,16 @@
 						value="#{ingresoEgresoMB.horaActualFormateada}"
 						styleClass="fuente-perfil" />
 
+					<p:commandButton rendered="#{ingresoEgresoMB.cobrado}" id="ingreso"
+						value="Registrar ingreso"
+						action="#{ingresoEgresoMB.registrarIngresoVehiculo}" ajax="false" />
+
 				</h:panelGrid>
 			</div>
 
-			<h:panelGroup rendered="#{ingresoEgresoMB.cobrado}">
-				<p:commandButton id="ingreso" value="Registrar ingreso"
-					action="#{ingresoEgresoMB.registrarIngresoVehiculo}" ajax="false" />
-			</h:panelGroup>
-
 			<div id="perfil-playa">
-
 				<h:panelGrid rendered="#{!ingresoEgresoMB.cobrado}" columns="2"
 					cellpadding="5">
-
 					<h:outputText for="tarifa" value="Tarifa: "
 						styleClass="fuente-outputtext" />
 					<p:selectOneMenu style="width: 293px"
@@ -138,6 +131,19 @@
 
 					<p:commandButton id="calcImporte" value="Calcular importe"
 						action="#{ingresoEgresoMB.calcularImporte}" ajax="false" />
+
+				</h:panelGrid>
+			</div>
+
+			<div id="perfil-playa">
+				<h:panelGrid rendered="#{!ingresoEgresoMB.cobrado}" columns="2"
+					cellpadding="5">
+
+					<h:outputText rendered="#{ingresoEgresoMB.importeCalculado}"
+						value="Importe: " styleClass="fuente-outputtext" />
+					<h:outputText rendered="#{ingresoEgresoMB.importeCalculado}"
+						id="txt_importe_calculado" value="$#{ingresoEgresoMB.importe}"
+						styleClass="fuente-perfil" />
 
 					<p:commandButton rendered="#{ingresoEgresoMB.importeCalculado}"
 						id="egreso" value="Registrar egreso"
