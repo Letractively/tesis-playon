@@ -220,6 +220,11 @@ public class ClienteManagedBean implements Serializable {
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
+    catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados", "Usuario duplicado");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
 	return ERROR;
     }
 
@@ -238,6 +243,10 @@ public class ClienteManagedBean implements Serializable {
 	    return usuario;
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
+	}catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados", "Usuario duplicado");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	return null;
     }
@@ -296,6 +305,11 @@ public class ClienteManagedBean implements Serializable {
 		    "Error,el cliente no se pudo modificar", "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
+	}
+    catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados", "Usuario duplicado");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	return ERROR;
     }

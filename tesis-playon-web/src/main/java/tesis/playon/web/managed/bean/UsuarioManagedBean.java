@@ -132,11 +132,15 @@ public class UsuarioManagedBean implements Serializable {
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
+    catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados", "Usuario duplicado");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
 	return ERROR;
     }
 
     public String recuperarPass()
-
     {
 	Usuario usu = new Usuario();
 
@@ -168,11 +172,11 @@ public class UsuarioManagedBean implements Serializable {
 
     }
 
-    public String modificarPassword() {
-
-	Usuario usu;
-	usu = getUsuario();
-	try {
+    public String modificarPassword() 
+    {
+		Usuario usu;
+		usu = getUsuario();
+		try {
 
 	    usu.setPassword(getPassword());
 
@@ -184,15 +188,14 @@ public class UsuarioManagedBean implements Serializable {
 
 	    return "cambiarpasswordend";
 
-	}
-
-	catch (DataAccessException e) {
+		}
+		catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "No se pudo modificar su contrase�a, Por favor, inténtelo más tarde.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	    return "ERROR";
-	}
+		}
     }
 
     public String modificarUsuarioAdmin(Usuario usuario) {
