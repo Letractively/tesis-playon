@@ -11,93 +11,93 @@
 
 	<ui:define name="content">
 		<h1>¡Registre el ingreso y egreso de sus clientes!</h1>
-		<p></p>
-
+		<div id="perfil-playa">
+			<h:panelGrid columns="2">
+				<h:graphicImage library="fotos_perfil_playas"
+					name="#{perfilPlayaMB.perfil.nombreFoto}"
+					style="width:151px; height:151px; border: 2px solid black"
+					rendered="#{perfilPlayaMB.perfil.nombreFoto != null}" />
+				<h:graphicImage library="fotos_perfil_playas" name="sinfoto.jpg"
+					style="width:151px; height:151px; border: 2px solid black"
+					rendered="#{perfilPlayaMB.perfil.nombreFoto == null}" />
+				<h1 style="width: 400px">#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
+			</h:panelGrid>
+		</div>
 		<h:form>
 			<p:growl id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 
-			<table class="admin-input-text" style="margin-left: 25px">
-				<tr>
-					<td><h:outputLabel for="patente" value="Ingrese la patente: " /></td>
-					<td><p:inputText id="patente" style="width:197px"
-							value="#{ingresoEgresoMB.patente}" required="true"
-							requiredMessage="Campo obligatorio">
-							<f:validateLength minimum="6" />
-							<p:ajax event="blur" update="patenteMsg" />
-						</p:inputText></td>
-					<td><p:message id="patenteMsg" for="patente" display="icon" /></td>
-				</tr>
+			<div style="margin: 20px 0px 0px 50px; width: 100%;">
+				Buscar vehiculo
+				<p:separator id="separator" />
+			</div>
+			<div id="perfil-playa">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputLabel for="patente" value="Ingrese la patente: " />
+					<p:inputText id="patente" style="width:197px"
+						value="#{ingresoEgresoMB.patente}" required="true"
+						requiredMessage="Campo obligatorio">
+						<f:validateLength minimum="6" />
+						<p:ajax event="blur" update="patenteMsg" />
+					</p:inputText>
+					<p:message id="patenteMsg" for="patente" display="icon" />
+				</h:panelGrid>
 
-				<tr>
-					<td colspan="3"><br /></td>
-				</tr>
-				<tr style="text-align: right;">
-					<td colspan="2"><p:commandButton id="cancelar"
-							value="Cancelar" action="#{ingresoEgresoMB.limpiar}" ajax="false"
-							style="margin-right:15px" /> <p:commandButton
-							id="buscarVehiculo" value="Buscar vehículo"
-							action="#{ingresoEgresoMB.searchVehiculo}" ajax="false" /></td>
-				</tr>
-			</table>
+			</div>
 
-			<h:panelGrid rendered="#{ingresoEgresoMB.existeVehiculo}" columns="1"
-				cellpadding="5">
+			<p:commandButton id="cancelar" value="Cancelar"
+				action="#{ingresoEgresoMB.limpiar}" ajax="false"
+				style="margin-right:15px" />
 
-				<h:panelGroup>
+			<p:commandButton id="buscarVehiculo" value="Buscar vehículo"
+				action="#{ingresoEgresoMB.searchVehiculo}" ajax="false" />
+
+			<div style="margin: 20px 0px 0px 50px; width: 100%;">
+				Cliente
+				<p:separator id="separator2" />
+			</div>
+			<div id="perfil-playa">
+				<h:panelGrid rendered="#{ingresoEgresoMB.existeVehiculo}"
+					columns="2" cellpadding="5">
+
 					<h:outputText value="Cliente: " />
 					<h:outputText id="txt_nombre"
-						value="#{ingresoEgresoMB.usuarioCliente.nombre}" />
-					<h:outputText value="&#160;" />
-					<h:outputText id="txt_apellido"
-						value="#{ingresoEgresoMB.usuarioCliente.apellido}" />
-				</h:panelGroup>
+						value="#{ingresoEgresoMB.usuarioCliente.nombre}&#160;#{ingresoEgresoMB.usuarioCliente.apellido}" />
 
-				<h:panelGroup>
 					<h:outputText value="Patente: " />
 					<h:outputText id="txt_patente"
 						value="#{ingresoEgresoMB.vehiculo.patente}" />
-				</h:panelGroup>
 
-				<h:panelGroup>
 					<h:outputText value="Vehiculo: " />
 					<h:outputText id="txt_mod_vehiculo"
-						value="#{ingresoEgresoMB.modeloVehiculo.nombre}" />
-					<h:outputText value="&#160;" />
-					<h:outputText id="txt_marca_vehiculo"
-						value="#{ingresoEgresoMB.marcaVehiculo.nombre}" />
-				</h:panelGroup>
+						value="#{ingresoEgresoMB.modeloVehiculo.nombre}&#160;#{ingresoEgresoMB.marcaVehiculo.nombre}" />
 
-				<h:panelGroup>
 					<h:outputText value="Tipo: " />
 					<h:outputText id="txt_cat_vehiculo"
 						value="#{ingresoEgresoMB.categoriaVehiculo.nombre}" />
-				</h:panelGroup>
 
-				<h:panelGroup>
 					<h:outputText value="Saldo: $" />
 					<h:outputText id="txt_saldo"
 						value="#{ingresoEgresoMB.cuentaCliente.saldo}" />
-				</h:panelGroup>
 
-				<h:panelGroup rendered="#{!ingresoEgresoMB.cobrado}">
-					<h:outputText value="Hora ingreso: " />
-					<h:outputText id="txt_hora_ingreso"
-						value="#{ingresoEgresoMB.detalleEstadia.fechaHoraIngreso}" />
-				</h:panelGroup>
 
-				<h:panelGroup>
 					<h:outputText value="Hora actual: " />
 					<h:outputText id="txt_hora_actual"
 						value="#{ingresoEgresoMB.horaActual}" />
-				</h:panelGroup>
 
-				<h:panelGroup rendered="#{ingresoEgresoMB.cobrado}">
-					<p:commandButton id="ingreso" value="Registrar ingreso"
-						action="#{ingresoEgresoMB.registrarIngresoVehiculo}" ajax="false" />
-				</h:panelGroup>
+				</h:panelGrid>
+			</div>
 
-			</h:panelGrid>
+			<h:panelGroup rendered="#{!ingresoEgresoMB.cobrado}">
+				<h:outputText value="Hora ingreso: " />
+				<h:outputText id="txt_hora_ingreso"
+					value="#{ingresoEgresoMB.detalleEstadia.fechaHoraIngreso}" />
+			</h:panelGroup>
+
+			<h:panelGroup rendered="#{ingresoEgresoMB.cobrado}">
+				<p:commandButton id="ingreso" value="Registrar ingreso"
+					action="#{ingresoEgresoMB.registrarIngresoVehiculo}" ajax="false" />
+			</h:panelGroup>
 
 			<h:panelGrid rendered="#{!ingresoEgresoMB.cobrado}" columns="3"
 				cellpadding="5">

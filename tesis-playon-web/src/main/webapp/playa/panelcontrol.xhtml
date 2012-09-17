@@ -5,53 +5,67 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+	<ui:param name="loadmenuperfil" value="true" />
+
 	<ui:define name="title">
-		Solicitud de registro de vehículo
+		Panel de control
     </ui:define>
 
 	<ui:define name="content">
-		<h1>Bienvenido a Playon</h1>
-		<p></p>
-
+		<h1>Panel de control</h1>
+		<div id="perfil-playa">
+			<h:panelGrid columns="2">
+				<h:graphicImage library="fotos_perfil_playas"
+					name="#{perfilPlayaMB.perfil.nombreFoto}"
+					style="width:151px; height:151px; border: 2px solid black"
+					rendered="#{perfilPlayaMB.perfil.nombreFoto != null}" />
+				<h:graphicImage library="fotos_perfil_playas" name="sinfoto.jpg"
+					style="width:151px; height:151px; border: 2px solid black"
+					rendered="#{perfilPlayaMB.perfil.nombreFoto == null}" />
+				<h1 style="width: 400px">#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
+			</h:panelGrid>
+		</div>
+		<br />
 		<h:form>
 			<f:event type="preRenderView"
 				listener="#{ingresoEgresoMB.preRenderView}" />
 			<p:growl id="messages" />
+			<div id="perfil-playa">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputText value="Playa: " styleClass="fuente-outputtext" />
+					<h:outputText id="txt_playa"
+						value="#{ingresoEgresoMB.playa.nombreComercial}"
+						styleClass="fuente-perfil" />
 
-			<h:panelGrid columns="2" cellpadding="5">
-				<h:outputText value="Playa: " />
-				<h:outputText id="txt_playa"
-					value="#{ingresoEgresoMB.playa.nombreComercial}" />
-			</h:panelGrid>
+					<h:outputText value="Cargo: " styleClass="fuente-outputtext" />
+					<h:outputText id="txt_cargo"
+						value="#{ingresoEgresoMB.cargoEmpleado.nombre}"
+						styleClass="fuente-perfil" />
 
-			<h:panelGrid columns="2" cellpadding="5">
-				<h:outputText value="Cargo: " />
-				<h:outputText id="txt_cargo"
-					value="#{ingresoEgresoMB.cargoEmpleado.nombre}" />
-			</h:panelGrid>
+					<h:outputText value="Apellido: " styleClass="fuente-outputtext" />
+					<h:outputText id="txt_apellido"
+						value="#{ingresoEgresoMB.usuario.apellido}"
+						styleClass="fuente-perfil" />
 
-			<h:panelGrid columns="2" cellpadding="5">
-				<h:outputText value="Apellido: " />
-				<h:outputText id="txt_apellido"
-					value="#{ingresoEgresoMB.usuario.apellido}" />
-			</h:panelGrid>
+					<h:outputText value="Nombre: " styleClass="fuente-outputtext" />
+					<h:outputText id="txt_nombre"
+						value="#{ingresoEgresoMB.usuario.nombre}"
+						styleClass="fuente-perfil" />
+				</h:panelGrid>
+			</div>
 
-			<h:panelGrid columns="2" cellpadding="5">
-				<h:outputText value="Nombre: " />
-				<h:outputText id="txt_nombre"
-					value="#{ingresoEgresoMB.usuario.nombre}" />
-			</h:panelGrid>
+			<div style="margin: 20px 0px 0px 50px; width: 100%;">
+				Tareas
+				<p:separator id="separator" />
 
-			<h:link outcome="/playa/perfilplaya.xhtml">
-				<f:verbatim>Perfil de Playa</f:verbatim>
-			</h:link>
-
-			<br />
-
-			<h:link outcome="/playa/ingresoegresovehiculo.xhtml">
-				<f:verbatim>Ingreso/Egreso de Cliente</f:verbatim>
-			</h:link>
-
+				<h:link outcome="/playa/perfilplaya.xhtml">
+					<f:verbatim>Perfil de Playa</f:verbatim>
+				</h:link>
+				<br />
+				<h:link outcome="/playa/ingresoegresovehiculo.xhtml">
+					<f:verbatim>Ingreso/Egreso de Cliente</f:verbatim>
+				</h:link>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>
