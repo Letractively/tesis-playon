@@ -162,14 +162,17 @@
 					</p:column>
 					<p:column />
 
+					<p:column />
 					<p:column>
-						<p:commandButton id="Modificar" value="Modificar"
-							action="#{perfilClienteMB.updateCliente}">
-						</p:commandButton>
-					<p:commandButton id="cancelar" value="Cancelar"
-							action="/cliente/perfilcliente.html?faces-redirect=true"
-							ajax="false">
-						</p:commandButton>
+						<div align="right">
+							<p:commandButton id="Modificar" value="Modificar"
+								action="#{perfilClienteMB.updateCliente}" ajax="false">
+							</p:commandButton>
+							<p:commandButton id="cancelar" value="Cancelar"
+								action="/cliente/perfilcliente.html?faces-redirect=true"
+								ajax="false" style="margin-left:15px">
+							</p:commandButton>
+						</div>
 					</p:column>
 				</h:panelGrid>
 			</h:form>

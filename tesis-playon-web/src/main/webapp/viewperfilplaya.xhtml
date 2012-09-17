@@ -27,7 +27,7 @@
 		</div>
 		<h:form style="margin: 0 0 0 50px;">
 			<p:growl id="messages" />
-			<h:commandLink actionListener="#" id="favorito"
+			<h:commandLink actionListener="#" id="favorito" action="#{favoritoMB.addFavorito}"
 				rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}">
 				<h:graphicImage library="images/icons" name="favorite_add.png" />
 				<h:outputText value="Agregar a favoritos" />

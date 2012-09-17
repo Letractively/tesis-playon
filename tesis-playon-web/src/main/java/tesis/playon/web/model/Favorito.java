@@ -3,13 +3,17 @@
  */
 package tesis.playon.web.model;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Embeddable;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * @author Pablo
@@ -21,80 +25,67 @@ public class Favorito implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private FavoritoPK primaryKey;
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "favoritoID")
+    private int id;
+    
+    @ManyToOne
+    @JoinColumn(name = "playaID")
+    private Playa playa;
+
+    @ManyToOne
+    @JoinColumn(name = "clienteID")
+    private Cliente cliente;
+
+    public Favorito(Playa playa, Cliente cliente) {
+	this.playa = playa;
+	this.cliente = cliente;
+    }
 
     public Favorito() {
     }
 
-    public Favorito(Playa playa, Cliente cliente) {
-	primaryKey = new FavoritoPK(playa, cliente);
+    public Playa getPlaya() {
+	return playa;
     }
 
-    @Id
-    public FavoritoPK getPrimaryKey() {
-	return primaryKey;
+    public void setPlaya(Playa playa) {
+	this.playa = playa;
     }
 
-    public void setPrimaryKey(FavoritoPK primaryKey) {
-	this.primaryKey = primaryKey;
+    public Cliente getCliente() {
+	return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+	this.cliente = cliente;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean equals(Object object) {
+	if (object == this)
+	    return true;
+	if (object == null || getClass() != object.getClass())
+	    return false;
+
+	Favorito otroFavorito = (Favorito) object;
+
+	if (playa.equals(otroFavorito.getPlaya()) && cliente.equals(otroFavorito.getCliente()))
+	    return true;
+	return false;
     }
 
     @Override
     public String toString() {
-	return "Favorito:\t [Favorito= " + primaryKey + "]";
-    }
-
-    @Embeddable()
-    class FavoritoPK implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	@Column(name = "playaID")
-	private Playa playa;
-
-	@Column(name = "clienteID")
-	private Cliente cliente;
-
-	public FavoritoPK(Playa playa, Cliente cliente) {
-	    this.playa = playa;
-	    this.cliente = cliente;
-	}
-
-	public FavoritoPK() {
-	}
-
-	public Playa getPlaya() {
-	    return playa;
-	}
-
-	public void setPlaya(Playa playa) {
-	    this.playa = playa;
-	}
-
-	public Cliente getCliente() {
-	    return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-	    this.cliente = cliente;
-	}
-
-	public boolean equals(Object object) {
-	    if (object == this)
-		return true;
-	    if (object == null || getClass() != object.getClass())
-		return false;
-
-	    Favorito otroFavorito = (Favorito) object;
-	    if (primaryKey != otroFavorito.primaryKey)
-		return false;
-	    return true;
-	}
-
-	@Override
-	public String toString() {
-	    return "FavoritoPK:\t [nombre playa= " + playa.getNombreComercial() + ", nroCliente= "
-		    + cliente.getNroCliente() + "]";
-	}
+	return "Favorito:\t [nombre playa= " + playa.getNombreComercial() + ", nroCliente= "
+		+ cliente.getNroCliente() + "]";
     }
 }
