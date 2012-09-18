@@ -131,9 +131,13 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    this.perfil.setFotoPerfil(fotoPerfilFile.getContents());
 	    this.perfil.setNombreFoto(fotoPerfilFile.getFileName());
 	    getPerfilPlayaService().update(this.perfil);
+	    
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se modificó exitosamente su foto de perfil", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    
+	    WriteImage.getFotoPerfil(this.perfil);
+	    
 	    return "perfilplayaedit";
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se pudo cargar su foto de perfil",

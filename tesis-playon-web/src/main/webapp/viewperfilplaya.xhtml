@@ -160,7 +160,7 @@
 										<p:column>
 											<div align="left" style="width: 75px; margin-right: 10px">
 												<h:graphicImage library="fotos_perfil_clientes"
-													name="sinfoto.jpg" style="width:75px; height:75px;" />
+													name="#{comentario.usuario.nombreUser}.jpg" style="width:75px; height:75px;" />
 											</div>
 										</p:column>
 
@@ -173,7 +173,7 @@
 												<p:commandButton id="enviarComentario"
 													value="Enviar comentario" ajax="false"
 													action="#{comentarioMB.addComentarioPerfil}"
-													style="margin:5px 5px 0 5px" update="messageComentario, comentarios" />
+													style="margin:5px 5px 0 5px" update="messageComentario" />
 											</div>
 										</p:column>
 									</h:panelGrid>
