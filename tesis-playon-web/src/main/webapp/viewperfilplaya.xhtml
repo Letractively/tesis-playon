@@ -11,6 +11,7 @@
 
 	<ui:define name="content">
 		<h1>Perfil de la playa</h1>
+
 		<h:form id="form" style="margin: 0 0 0 40px;">
 			<p:growl id="messages" />
 			<div id="perfil-playa">
@@ -176,25 +177,24 @@
 											<tr>
 												<td style="text-align: right; border-style: none;">
 													<div align="right" style="width: 98%;">
-														<h:commandButton id="enviarComentario"
+														<p:commandButton id="enviarComentario"
 															value="Enviar comentario"
 															action="#{comentarioMB.addComentario}" ajax="false"
-															style="margin:5px 5px 0 5px">
+															style="margin:5px 5px 0 5px" update=":messageComentario">
 															<f:setPropertyActionListener value="viewperfilplaya"
 																target="#{comentarioMB.previusPage}" />
-														</h:commandButton>
+														</p:commandButton>
 													</div>
 												</td>
 											</tr>
 										</table>
 									</p:column>
 								</h:panelGrid>
-								<p:messages id="messageComentario" showDetail="true" autoUpdate="true"
-									closable="true" for="enviarComentario" />
 							</f:facet>
 						</p:dataTable>
 					</p:tab>
 				</p:accordionPanel>
+				<p:messages id="messageComentario" showDetail="true" closable="true" />
 			</div>
 
 			<br />
