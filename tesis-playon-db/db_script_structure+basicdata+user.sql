@@ -1192,7 +1192,7 @@ VALUES (2,'30-11111111-1',55,'Buenos Aires 548',2,'Estacionamiento Europa',-31.4
 	(1,'30-11111111-1',100,'Santa Rosa 631',2,'Parking One',-31.409921,-64.191527,'Parking One',7),
 	(1,'30-11111111-1',100,'Bv. Chacabuco 728',2,'Playa Sur',-31.425904,-64.183791,'Playa Sur',8),
 	(1,'30-11111111-1',100,'Bv. Illia 70',2,'Parquin Verde',-31.420956,-64.18535,'Parquin Verde',9),
-	(1,'30-11111111-1',100,'Av. Colón 756',2,'Estacionamiento Colón',-31.412075,-64.188117,'Estacionamiento Colón',10);
+	(1,'30-11111111-1',100,'Colon 756',2,'Estacionamiento Colón',-31.4105156,-64.1936078,'Estacionamiento Colón',10);
 /*!40000 ALTER TABLE `playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
