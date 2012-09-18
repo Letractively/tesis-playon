@@ -1394,6 +1394,14 @@ INSERT INTO `tesis_playon`.`transaccion_playa` (`fecha`,`importe`,`tipoPagoID`,`
 /*!40000 ALTER TABLE `transaccion_playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
+/*!40000 ALTER TABLE `comentario` DISABLE KEYS */;
+LOCK TABLES `comentario` WRITE;
+INSERT INTO `tesis_playon`.`comentario` (`comentario`, `fecha`, `habilitado`, `playaID`,
+`comentarioID`, `usuarioID`) 
+VALUES ('No me gusto, hay que dejar  la llave del auto', '2012-09-18 09:55:22', 1, 10, 1000, 3);
+/*!40000 ALTER TABLE `comentario` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Dumping data for table `tesis_playon`.`vehiculo`
 --
