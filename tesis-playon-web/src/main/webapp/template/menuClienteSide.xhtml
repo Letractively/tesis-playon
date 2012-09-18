@@ -17,7 +17,7 @@
 								outcome="/cliente/perfilclienteedit" icon="ui-icon-pencil" />
 						</p:submenu>
 						<p:submenu label="Cuenta">
-							<p:menuitem value="Ver Cuenta" outcome="/cliente/perfilcliente"
+							<p:menuitem value="Ver Cuenta" outcome="/cliente/cuentacliente"
 								icon="ui-icon-contact" />
 							<p:menuitem value="Cargar Saldo" outcome="/cliente/cargarcredito"
 								icon="ui-icon-cart" />
@@ -33,7 +33,8 @@
 					</p:menu>
 				</div>
 				<div class="box">
-					<p:menu style="width: 95%;" styleClass="side-menu" model="#{favoritoMB.model}"/>					
+					<p:menu style="width: 95%;" styleClass="side-menu"
+						model="#{favoritoMB.model}" />
 				</div>
 			</ui:fragment>
 		</ui:fragment>
