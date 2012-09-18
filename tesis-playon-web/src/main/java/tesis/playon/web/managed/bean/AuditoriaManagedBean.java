@@ -140,7 +140,7 @@ public class AuditoriaManagedBean implements Serializable {
 		    + " comuníquese con el equipo de Playon mediante el siguiente link http://localhost:8080/tesis-playon-web/contact.html";
 	    mail.setMensaje(mensaje);
 
-	    notificador.enviar(mail);
+	    notificador.enviarMailAuditor(mail);
 
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	} catch (Exception e) {
@@ -172,14 +172,14 @@ public class AuditoriaManagedBean implements Serializable {
 	    getPlayaService().update(playaSeleccionada);
 	    mail = new Mail();
 	    notificador = new NotificadorUtil();
-	    asunto = "Felicitaciones, su playa ya es parte de PLAYON - RED DE PLAYAS DE ESTACIONAMIENTO!";
-	    mensaje = "Mediante este mensaje, le confirmamos que la playa de estacionamiento "
-		    + playaSeleccionada.getNombreComercial() + " ha sido aprobada"
-		    + "para formar parte de la Red de Playas Playon";
+	    asunto = " PLAYON - RED DE PLAYAS DE ESTACIONAMIENTO ";
+	    mensaje = "�Felicitaciones la playa de estacionamiento "
+		    + playaSeleccionada.getNombreComercial().toUpperCase() + " ha sido aprobada"
+		    + " para formar parte nuestro sistema!";
 	    mail.setAsunto(asunto);
 	    mail.setMensaje(mensaje);
 	    mail.setDestinatario(playaSeleccionada.getEmail());
-	    notificador.enviar(mail);
+	    notificador.enviarMailAuditor(mail);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se aprobó la playa: "
 		    + playaSeleccionada.getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
