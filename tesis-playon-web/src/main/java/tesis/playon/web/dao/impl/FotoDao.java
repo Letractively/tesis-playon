@@ -46,29 +46,35 @@ public class FotoDao implements IFotoDao {
     public List<Foto> findAll() {
 	List<Foto> fotos = new ArrayList<Foto>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Foto").list();
-	for (Object object : list) {
-	    fotos.add((Foto) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		fotos.add((Foto) object);
+	    }
+	    return fotos;
 	}
-	return fotos;
+	return null;
     }
 
     public Integer obtenerUltimoID() {
 	List<?> list = getSessionFactory().getCurrentSession().createSQLQuery("SELECT MAX(fotoID) FROM foto").list();
 	Integer ultimoID;
-	if(list.get(0) == null)
+	if (list.get(0) == null)
 	    ultimoID = 1;
 	else
-	     ultimoID = ((Integer) list.get(0)) + 1;
+	    ultimoID = ((Integer) list.get(0)) + 1;
 	return ultimoID;
     }
-    
-    public List<Foto> findByPlaya(PerfilPlaya perfil){
+
+    public List<Foto> findByPlaya(PerfilPlaya perfil) {
 	List<Foto> fotos = new ArrayList<Foto>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Foto where perfilPlaya=?")
 		.setParameter(0, perfil).list();
-	for (Object object : list) {
-	    fotos.add((Foto) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		fotos.add((Foto) object);
+	    }
+	    return fotos;
 	}
-	return fotos;
+	return null;
     }
 }

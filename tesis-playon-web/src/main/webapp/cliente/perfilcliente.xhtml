@@ -15,12 +15,12 @@
 			<h:panelGrid columns="2">
 				<h:graphicImage library="fotos_perfil_clientes"
 					name="#{perfilClienteMB.usuario.nombreUser}.jpg"
-					style="width:151px; height:151px; border: 2px solid black"
+					styleClass="bordes-foto-perfil"
 					rendered="#{perfilClienteMB.usuario.fotoPerfil != null}" />
 				<h:graphicImage library="fotos_perfil_clientes" name="sinfoto.jpg"
-					style="width:151px; height:151px; border: 2px solid black"
+					styleClass="bordes-foto-perfil"
 					rendered="#{perfilClienteMB.usuario.fotoPerfil == null}" />
-				<h1 style="width: 400px">#{perfilClienteMB.usuario.apellido}
+				<h1 style="width: 100%">#{perfilClienteMB.usuario.apellido}
 					#{perfilClienteMB.usuario.nombre}</h1>
 			</h:panelGrid>
 		</div>

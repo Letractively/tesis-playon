@@ -1,6 +1,7 @@
 package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -17,6 +18,7 @@ import tesis.playon.web.service.IComentarioService;
 import tesis.playon.web.service.IPerfilPlayaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IUsuarioService;
+import tesis.playon.web.util.WriteImage;
 
 /**
  * @author pablo
@@ -46,6 +48,8 @@ public class ComentarioManagedBean implements Serializable {
 
     private List<Comentario> comentariosListPerfil;
 
+    private static String previusPage;
+
     // ATRIBUTOS PARA LA CREACION DE UN COMENTARIO
     private String comentario;
 
@@ -71,24 +75,28 @@ public class ComentarioManagedBean implements Serializable {
 		    getComentarioService().save(comentario);
 		    comentariosListPerfil = getComentarioService().findByPlaya(playaSelected);
 		} else {
-		    comentario = new Comentario(user, getComentario(), user.getPlaya(), new Boolean(true));
-		    getComentarioService().save(comentario);
-		    comentariosList = getComentarioService().findByPlaya(user.getPlaya());
+		    if (playaSelected == null) {
+			comentario = new Comentario(user, getComentario(), user.getPlaya(), new Boolean(true));
+			getComentarioService().save(comentario);
+			comentariosList = getComentarioService().findByPlaya(user.getPlaya());
+		    } else {
+			comentario = new Comentario(user, getComentario(), playaSelected, new Boolean(true));
+			getComentarioService().save(comentario);
+			comentariosList = getComentarioService().findByPlaya(user.getPlaya());
+		    }
 		}
-		
+
 		setComentario(null);
-		
-		FacesContext.getCurrentInstance().addMessage(
-			"messageComentario",
-			new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró exitosamente su comentario",
-				""));
+
+		FacesContext.getCurrentInstance().addMessage("messageComentario",
+			new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró exitosamente su comentario", ""));
 	    } else {
 		FacesContext.getCurrentInstance().addMessage(
 			"messageComentario",
 			new FacesMessage(FacesMessage.SEVERITY_WARN, "No se pudó registrar su comentario",
 				"¡Debe iniciar sesión para poder comentar la playa!"));
 	    }
-	    return "/playa/comentariolist";
+	    return previusPage;
 	} catch (Exception e) {
 	    FacesContext.getCurrentInstance().addMessage(
 		    "messageComentario",
@@ -97,7 +105,7 @@ public class ComentarioManagedBean implements Serializable {
 	}
 	return "/error";
     }
-    
+
     public String addComentarioPerfil() {
 	Comentario comentario = null;
 	try {
@@ -114,20 +122,18 @@ public class ComentarioManagedBean implements Serializable {
 		    getComentarioService().save(comentario);
 		    comentariosList = getComentarioService().findByPlaya(user.getPlaya());
 		}
-		
+
 		setComentario(null);
-		
-		FacesContext.getCurrentInstance().addMessage(
-			"messageComentario",
-			new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró exitosamente su comentario",
-				""));
+
+		FacesContext.getCurrentInstance().addMessage("messageComentario",
+			new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró exitosamente su comentario", ""));
 	    } else {
 		FacesContext.getCurrentInstance().addMessage(
 			"messageComentario",
 			new FacesMessage(FacesMessage.SEVERITY_WARN, "No se pudó registrar su comentario",
 				"¡Debe iniciar sesión para poder comentar la playa!"));
 	    }
-	    return "/viewperfilplaya";
+	    return previusPage;
 	} catch (Exception e) {
 	    FacesContext.getCurrentInstance().addMessage(
 		    "messageComentario",
@@ -170,6 +176,15 @@ public class ComentarioManagedBean implements Serializable {
     }
 
     public Playa getPlayaSelected() {
+	comentariosListPerfil = new ArrayList<Comentario>();
+	if (playaSelected != null) {
+	    comentariosListPerfil = getComentarioService().findByPlaya(playaSelected);
+	    if (comentariosListPerfil != null) {
+		for (Comentario comentario : comentariosListPerfil) {
+		    WriteImage.getFotoPerfilCliente(comentario.getUsuario());
+		}
+	    }
+	}
 	return playaSelected;
     }
 
@@ -186,8 +201,14 @@ public class ComentarioManagedBean implements Serializable {
     }
 
     public List<Comentario> getComentariosListPerfil() {
+	comentariosListPerfil = new ArrayList<Comentario>();
 	if (playaSelected != null) {
 	    comentariosListPerfil = getComentarioService().findByPlaya(playaSelected);
+	    if (comentariosListPerfil != null) {
+		for (Comentario comentario : comentariosListPerfil) {
+		    WriteImage.getFotoPerfilCliente(comentario.getUsuario());
+		}
+	    }
 	}
 	return comentariosListPerfil;
     }
@@ -202,5 +223,13 @@ public class ComentarioManagedBean implements Serializable {
 
     public void setComentario(String comentario) {
 	this.comentario = comentario;
+    }
+
+    public String getPreviusPage() {
+	return previusPage;
+    }
+
+    public void setPreviusPage(String previusPage) {
+	ComentarioManagedBean.previusPage = previusPage;
     }
 }

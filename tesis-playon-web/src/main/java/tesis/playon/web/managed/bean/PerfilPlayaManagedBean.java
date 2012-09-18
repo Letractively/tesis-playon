@@ -131,13 +131,13 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    this.perfil.setFotoPerfil(fotoPerfilFile.getContents());
 	    this.perfil.setNombreFoto(fotoPerfilFile.getFileName());
 	    getPerfilPlayaService().update(this.perfil);
-	    
+
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se modificó exitosamente su foto de perfil", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    
+
 	    WriteImage.getFotoPerfil(this.perfil);
-	    
+
 	    return "perfilplayaedit";
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se pudo cargar su foto de perfil",
@@ -345,8 +345,8 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    PerfilPlayaManagedBean.perfilSelected = getPerfilPlayaService().findByPlaya(playaSelected);
 	    coordenadas = initCoordenadas(perfilSelected);
 	    fotosListSelected = getFotoService().findByPlaya(perfilSelected);
-	    WriteImage.writeFotos(fotosListSelected);
-
+	    if (fotosListSelected != null)
+		WriteImage.writeFotos(fotosListSelected);
 	}
 	return playaSelected;
     }
