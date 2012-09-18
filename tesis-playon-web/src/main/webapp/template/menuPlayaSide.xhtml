@@ -61,15 +61,16 @@
 			</ui:fragment>
 		</ui:fragment>
 		<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_EMPLEADO]'}">
-			<h3>Menú Empleado Playa</h3>
 			<div class="box">
-				<h3>Empleados</h3>
-				<ul class="list">
-					<li class="first"><a href="#">Ver Empleados</a></li>
-					<li><a href="#">Nuevo Empleado</a></li>
-					<li><a href="#">Borrar Empleado</a></li>
-					<li class="last"><a href="#">Editar Empleado</a></li>
-				</ul>
+				<p:menu style="width: 95%;" styleClass="side-menu">
+					<p:submenu label="Menú">
+						<p:menuitem value="Perfil de playa" outcome="/playa/perfilplaya"
+							icon="ui-icon-script" />
+						<p:menuitem value="Ingreso / Egreso"
+							outcome="/playa/ingresoegresovehiculo"
+							icon="ui-icon-arrow-2-e-w" />
+					</p:submenu>
+				</p:menu>
 			</div>
 		</ui:fragment>
 	</div>
