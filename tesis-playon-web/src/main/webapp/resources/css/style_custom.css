@@ -135,5 +135,9 @@
 }
 
 #header a {
-	color: lightgrey;
+	color: GhostWhite;
+}
+
+#header a:hover {
+	color: white;
 }

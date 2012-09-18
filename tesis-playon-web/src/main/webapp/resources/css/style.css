@@ -326,11 +326,16 @@ gif.dropotron-level-1 {
 	color: #DCDCDC;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
-	text-shadow: 0 1px 1px #444444;
 }
 
-#page-bottom a {
-	color: #F5F5F5;
+#page-bottom a { /* 	color: #F5F5F5; */
+	color: DarkSlateGrey;
+	text-shadow: 0 1px 1px lightgrey;
+}
+
+#page-bottom a:hover {
+	color: white;
+	text-shadow: 0 1px 1px #444444;
 }
 
 #page-bottom h2,#page-bottom h3,#page-bottom h4 {

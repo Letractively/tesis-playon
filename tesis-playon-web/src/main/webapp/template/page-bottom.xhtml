@@ -1,17 +1,20 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 	<div id="page-bottom">
 		<div id="page-bottom-menu">
 			<ul class="list">
 				<li class="first"><h:link value="Inicio" outcome="/index" /></li>
 				<li><h:link value="Acerca de" outcome="/about" /></li>
+				<li><h:link value="¿Cómo funciona?" outcome="/comofunciona" /></li>
 				<li class="last"><h:link value="Contacto" outcome="/contact" /></li>
 			</ul>
+			<div align="right" style="color:white; text-shadow:0;">
+				<h:link value="Solicitar Suscripción" outcome="/solicitudplayaadd" />
+			</div>
 		</div>
 		<br class="clearfix" />
 	</div>
