@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="app_name">Playón</string>
+    <string name="hello_world">Bienvenido a Playón</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Playón</string>
+
+</resources>
