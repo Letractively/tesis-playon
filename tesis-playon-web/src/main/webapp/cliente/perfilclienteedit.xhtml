@@ -11,7 +11,7 @@
 
 	<ui:define name="content">
 		<h1>Editar perfil</h1>
-		<h:form id="uploadForm" enctype="multipart/form-data" style="margin: 0 0 0 40px;">
+		<h:form id="form" style="margin: 0 0 0 40px;">
 			<div id="perfil-playa">
 				<h:panelGrid id="fotosPerfil" columns="2">
 					<h:graphicImage library="fotos_perfil_clientes"
@@ -25,14 +25,15 @@
 						#{perfilClienteMB.usuario.nombre}</h1>
 				</h:panelGrid>
 				<h:panelGrid columns="2">
-
-					<p:fileUpload id="fotoPerfil"
-						value="#{perfilClienteMB.fotoPerfilFile}" mode="simple"
-						allowTypes="*.jpg;" />
-					<h:commandButton value="Subir foto" ajax="false"
-						actionListener="#{perfilClienteMB.upload}"
-						style="margin:0 10px 0 0; padding: 0 5px 0 5px"
-						oncomplete="document.location.reload(true)" />
+					<h:form id="uploadForm" enctype="multipart/form-data">
+						<p:fileUpload id="fotoPerfil"
+							value="#{perfilClienteMB.fotoPerfilFile}" mode="simple"
+							allowTypes="*.jpg;" />
+						<h:commandButton value="Subir foto" ajax="false"
+							actionListener="#{perfilClienteMB.upload}"
+							style="margin:0 10px 0 0; padding: 0 5px 0 5px"
+							oncomplete="document.location.reload(true)" />
+					</h:form>
 				</h:panelGrid>
 			</div>
 			<br />
