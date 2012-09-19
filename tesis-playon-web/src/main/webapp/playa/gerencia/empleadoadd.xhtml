@@ -16,11 +16,12 @@
 
 		<p:growl id="messages" />
 		<h:form>
-			<div align="center">
+			
+			<div align="left" style="margin-top: 10px">
 
-				<h:panelGrid id="displayView" columns="3" cellpadding="8">
+				<h:panelGrid id="displayView" columns="3" cellpadding="8" cellspacing="10">
 
-					<p:column>Datos de Usuario:</p:column>
+					<h:outputLabel for="nombre" value="Datos de Usuario" styleClass="fuente-subtitle" />
 					<p:column></p:column>
 					<p:column></p:column>
 
@@ -28,7 +29,9 @@
 						<h:outputLabel for="nombreUser" value="Nombre usuario: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="nombreUser" value="#{empleadoMB.nombreUser}">
+						<p:inputText id="nombreUser" style="width: 200px"
+							value="#{empleadoMB.nombreUser}" 
+							required="true"	requiredMessage="Campo obligatorio" maxlength="25">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="nombreUserMsg" />
 						</p:inputText>
@@ -41,7 +44,7 @@
 						<h:outputLabel for="password" value="Contraseña: " />
 					</p:column>
 					<p:column>
-						<p:password id="password" value="#{empleadoMB.password}"
+						<p:password id="password" style="width: 200px" value="#{empleadoMB.password}"
 							match="passwordRepeat" required="true" feedback="true"
 							requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
@@ -54,7 +57,7 @@
 						<h:outputLabel for="passwordRepeat" value="Repita Contraseña: " />
 					</p:column>
 					<p:column>
-						<p:password id="passwordRepeat" value="#{empleadoMB.password}"
+						<p:password id="passwordRepeat" style="width: 200px" value="#{empleadoMB.password}"
 							required="true" requiredMessage="Campo obligatorio"
 							feedback="true">
 							<f:validateLength minimum="5" />
@@ -71,7 +74,7 @@
 					<p:column></p:column>
 					<p:column></p:column>
 
-					<p:column>Datos del Empleado:</p:column>
+					<h:outputLabel for="nombre" value="Datos de Empleado" styleClass="fuente-subtitle" />
 					<p:column></p:column>
 					<p:column></p:column>
 
@@ -79,7 +82,10 @@
 						<h:outputLabel for="apellido" value="Apellido " />
 					</p:column>
 					<p:column>
-						<p:inputText id="apellido" value="#{empleadoMB.apellido}">
+						<p:inputText id="apellido" value="#{empleadoMB.apellido}"
+							style="width: 200px"
+							required="true"
+							requiredMessage="Campo obligatorio" maxlength="40">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="apellidoMsg" />
 						</p:inputText>
@@ -92,7 +98,10 @@
 						<h:outputLabel for="nombre" value="Nombre: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="nombre" value="#{empleadoMB.nombre}">
+						<p:inputText id="nombre" value="#{empleadoMB.nombre}"
+							style="width: 200px"
+							required="true"
+							requiredMessage="Campo obligatorio" maxlength="40">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="nombreMsg" />
 						</p:inputText>
@@ -105,7 +114,9 @@
 						<h:outputLabel for="email" value="E-mail: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="email" value="#{empleadoMB.email}">
+						<p:inputText id="email" value="#{empleadoMB.email}"
+							style="width: 200px" required="true"
+							requiredMessage="Campo obligatorio" type="email" maxlength="100">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="emailMsg" />
 						</p:inputText>
@@ -132,7 +143,7 @@
 					</p:column>
 					<p:column>
 						<p:inputText id="nroDoc" value="#{empleadoMB.nroDoc}">
-							<f:validateLength minimum="8" />
+							<f:validateLength minimum="6" />
 							<p:ajax event="blur" update="nroDocMsg" />
 						</p:inputText>
 					</p:column>
@@ -169,7 +180,7 @@
 					<p:column></p:column>
 					<p:column>
 						<br />
-						<div align="right">
+						<div align="center">
 							<p:commandButton id="addEmploy" value="Registrar"
 								action="#{empleadoMB.addEmpleado}" ajax="false" />
 							<p:commandButton id="cancelar" immediate="true" value="Cancelar"

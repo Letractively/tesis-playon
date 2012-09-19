@@ -40,7 +40,8 @@
 					</p:column>
 					<p:column>
 						<p:password id="password"
-							value="#{clienteMB.password}" required="true" match="passwordRepeat"
+							value="#{clienteMB.password}" required="true" feedback="true"
+							match="passwordRepeat"
 							requiredMessage="Campo obligatorio" >
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="passwordRepeatMsg" />
@@ -54,15 +55,17 @@
 					</p:column>
 					<p:column>
 						<p:password id="passwordRepeat"
-							value="#{clienteMB.password}" required="true" 
-							requiredMessage="Campo obligatorio" >
+							value="#{clienteMB.password}" required="true" feedback="true"
+							requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="passwordRepeatMsg" />
 						</p:password>
 					</p:column>
 					<p:column>
-						<p:message id="passwordRepeatMsg" for="passwordRepeat" display="icon" />
+						<p:message id="passwordRepeatMsg" for="passwordRepeat"
+							display="icon" />
 					</p:column>
+					
 					<p:column></p:column>
 					<p:column></p:column>
 					<p:column></p:column>
@@ -80,7 +83,7 @@
 						<p:inputText id="nombre"
 							value="#{clienteMB.nombre}" required="true"
 							requiredMessage="Campo obligatorio" maxlength="40">
-							<f:validateLength minimum="3" />
+							<f:validateLength minimum="2" />
 							<p:ajax event="blur" update="nombreMsg" />
 						</p:inputText>
 					</p:column>
@@ -95,7 +98,7 @@
 						<p:inputText id="apellido"
 							value="#{clienteMB.apellido}" required="true"
 							requiredMessage="Campo obligatorio" maxlength="40">
-							<f:validateLength minimum="4" />
+							<f:validateLength minimum="2" />
 							<p:ajax event="blur" update="apellidoMsg" />
 						</p:inputText>
 					</p:column>
@@ -175,7 +178,7 @@
 						<h:outputLabel for="telefono" value="Telefono: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="telefono" value="#{clienteMB.telefono}" maxlength="20">
+						<p:inputText id="telefono" value="#{clienteMB.telefono}" maxlength="25">
 						</p:inputText>
 					</p:column>
 					<p:column>

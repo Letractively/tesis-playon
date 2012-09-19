@@ -109,7 +109,7 @@
 					</p:column>
 					<p:column>
 						<p:inputText id="telefono" value="#{playaMB.telefono}"
-							maxlength="30">
+							maxlength="25">
 							<p:ajax event="blur" update="telefonoMsg" />
 						</p:inputText>
 					</p:column>
@@ -167,7 +167,7 @@
 						<p:inputText id="nombre" style="width: 200px"
 							value="#{playaMB.nombre}" required="true"
 							requiredMessage="Campo obligatorio" maxlength="40">
-							<f:validateLength minimum="3" />
+							<f:validateLength minimum="2" />
 							<p:ajax event="blur" update="nombreMsg" />
 						</p:inputText>
 					</p:column>
@@ -182,7 +182,7 @@
 						<p:inputText id="apellido" style="width: 200px"
 							value="#{playaMB.apellido}" required="true"
 							requiredMessage="Campo obligatorio" maxlength="40">
-							<f:validateLength minimum="3" />
+							<f:validateLength minimum="2" />
 							<p:ajax event="blur" update="apellidoMsg" />
 						</p:inputText>
 					</p:column>

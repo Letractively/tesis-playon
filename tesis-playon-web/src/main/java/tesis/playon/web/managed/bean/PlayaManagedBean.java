@@ -169,6 +169,11 @@ public class PlayaManagedBean implements Serializable {
 	    reset();
 	    e.printStackTrace();
 	}
+	catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo agregar la Playa. Nombre de usuario o mail Duplicados", "Usuario duplicado");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
 	return ERROR;
     }
 
@@ -237,6 +242,10 @@ public class PlayaManagedBean implements Serializable {
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    reset();
 	    e.printStackTrace();
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+			    "Error, no se pudo agregar la Playa. Nombre de usuario o mail Duplicados", "Usuario duplicado");
+		    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	return ERROR;
     }
@@ -255,6 +264,11 @@ public class PlayaManagedBean implements Serializable {
 	    return usuario;
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
+	}
+	catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+			    "Error, no se pudo agregar la Playa. Nombre de usuario o mail Duplicados", "Usuario duplicado");
+		    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	return null;
     }
