@@ -14,29 +14,21 @@
 
 	<ui:define name="content">
 		<h1>¡Registre el ingreso y egreso de sus clientes!</h1>
-		<div id="perfil-playa">
-			<h:panelGrid columns="2">
-				<h:graphicImage library="fotos_perfil_playas"
-					name="#{perfilPlayaMB.perfil.nombreFoto}"
-					style="width:151px; height:151px; border: 2px solid black"
-					rendered="#{perfilPlayaMB.perfil.nombreFoto != null}" />
-				<h:graphicImage library="fotos_perfil_playas" name="sinfoto.jpg"
-					style="width:151px; height:151px; border: 2px solid black"
-					rendered="#{perfilPlayaMB.perfil.nombreFoto == null}" />
-				<h1 style="width: 400px">#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
-			</h:panelGrid>
-		</div>
-		<h:form>
-			<p:growl id="messages" showDetail="true" autoUpdate="true"
-				closable="true" />
 
-			<div style="margin: 20px 0px 0px 50px; width: 100%;">
+		<div id="perfil-playa" align="center">
+			<h1>#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
+		</div>
+
+		<h:form style="margin: 10px 0px 0px 30px;">
+			<p:growl id="messages" />
+
+			<div style="width: 100%;">
 				Buscar vehículo
 				<p:separator id="separator" />
 			</div>
 
-			<div id="perfil-playa">
-				<h:panelGrid columns="3" cellpadding="5">
+			<div id="perfil-playa" style="margin-left: 10px;">
+				<h:panelGrid columns="4" cellpadding="5" cellspacing="10">
 					<h:outputLabel for="patente" value="Ingrese la patente: "
 						styleClass="fuente-outputtext" />
 					<p:inputText id="patente" style="width:197px"
@@ -46,115 +38,113 @@
 						<p:ajax event="blur" update="patenteMsg" />
 					</p:inputText>
 					<p:message id="patenteMsg" for="patente" display="icon" />
-					<p:commandButton id="cancelar" value="Cancelar"
-						action="#{ingresoEgresoMB.limpiar}" ajax="false"
-						style="margin-right:15px" />
 					<p:commandButton id="buscarVehiculo" value="Buscar vehículo"
 						action="#{ingresoEgresoMB.searchVehiculo}" ajax="false" />
 				</h:panelGrid>
+				<p:messages id="messagesGral" showDetail="true" autoUpdate="true"
+					closable="true" />
 			</div>
 
-			<div style="margin: 20px 0px 0px 50px; width: 100%;">
-				Cliente
-				<p:separator id="separator2" />
-			</div>
+			<ui:fragment rendered="#{ingresoEgresoMB.existeVehiculo}">
+				<div id="perfil-playa" style="margin-left: 50px; width: 100%;">
+					Cliente
+					<p:separator id="separator2" />
+					<h:panelGrid columns="2" cellpadding="5" cellspacing="10">
 
-			<div id="perfil-playa">
-				<h:panelGrid rendered="#{ingresoEgresoMB.existeVehiculo}"
-					columns="2" cellpadding="5">
+						<h:outputText value="Cliente: " styleClass="fuente-outputtext" />
+						<h:outputText id="txt_nombre"
+							value="#{ingresoEgresoMB.usuarioCliente.nombre}&#160;#{ingresoEgresoMB.usuarioCliente.apellido}"
+							styleClass="fuente-perfil" />
 
-					<h:outputText value="Cliente: " styleClass="fuente-outputtext" />
-					<h:outputText id="txt_nombre"
-						value="#{ingresoEgresoMB.usuarioCliente.nombre}&#160;#{ingresoEgresoMB.usuarioCliente.apellido}"
-						styleClass="fuente-perfil" />
+						<h:outputText value="Patente: " styleClass="fuente-outputtext" />
+						<h:outputText id="txt_patente"
+							value="#{ingresoEgresoMB.vehiculo.patente}"
+							styleClass="fuente-perfil" />
 
-					<h:outputText value="Patente: " styleClass="fuente-outputtext" />
-					<h:outputText id="txt_patente"
-						value="#{ingresoEgresoMB.vehiculo.patente}"
-						styleClass="fuente-perfil" />
+						<h:outputText value="Vehiculo: " styleClass="fuente-outputtext" />
+						<h:outputText id="txt_mod_vehiculo"
+							value="#{ingresoEgresoMB.marcaVehiculo.nombre}&#160;#{ingresoEgresoMB.modeloVehiculo.nombre}"
+							styleClass="fuente-perfil" />
 
-					<h:outputText value="Vehiculo: " styleClass="fuente-outputtext" />
-					<h:outputText id="txt_mod_vehiculo"
-						value="#{ingresoEgresoMB.marcaVehiculo.nombre}&#160;#{ingresoEgresoMB.modeloVehiculo.nombre}"
-						styleClass="fuente-perfil" />
+						<h:outputText value="Tipo: " styleClass="fuente-outputtext" />
+						<h:outputText id="txt_cat_vehiculo"
+							value="#{ingresoEgresoMB.categoriaVehiculo.nombre}"
+							styleClass="fuente-perfil" />
 
-					<h:outputText value="Tipo: " styleClass="fuente-outputtext" />
-					<h:outputText id="txt_cat_vehiculo"
-						value="#{ingresoEgresoMB.categoriaVehiculo.nombre}"
-						styleClass="fuente-perfil" />
+						<h:outputText value="Saldo: " styleClass="fuente-outputtext" />
+						<h:outputText id="txt_saldo"
+							value="$#{ingresoEgresoMB.cuentaCliente.saldo}"
+							styleClass="fuente-perfil" />
 
-					<h:outputText value="Saldo: " styleClass="fuente-outputtext" />
-					<h:outputText id="txt_saldo"
-						value="$#{ingresoEgresoMB.cuentaCliente.saldo}"
-						styleClass="fuente-perfil" />
+						<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
+							value="Fecha ingreso: " styleClass="fuente-outputtext" />
+						<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
+							id="txt_fecha_ingreso"
+							value="#{ingresoEgresoMB.fechaIngresoFormateada}"
+							styleClass="fuente-perfil" />
 
-					<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
-						value="Fecha ingreso: " styleClass="fuente-outputtext" />
-					<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
-						id="txt_fecha_ingreso"
-						value="#{ingresoEgresoMB.fechaIngresoFormateada}"
-						styleClass="fuente-perfil" />
+						<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
+							value="Hora ingreso: " styleClass="fuente-outputtext" />
+						<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
+							id="txt_hora_ingreso"
+							value="#{ingresoEgresoMB.horaIngresoFormateada}"
+							styleClass="fuente-perfil" />
 
-					<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
-						value="Hora ingreso: " styleClass="fuente-outputtext" />
-					<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
-						id="txt_hora_ingreso"
-						value="#{ingresoEgresoMB.horaIngresoFormateada}"
-						styleClass="fuente-perfil" />
+						<h:outputText value="Fecha actual: "
+							styleClass="fuente-outputtext" />
+						<h:outputText id="txt_fecha_actual"
+							value="#{ingresoEgresoMB.fechaActualFormateada}"
+							styleClass="fuente-perfil" />
 
-					<h:outputText value="Fecha actual: " styleClass="fuente-outputtext" />
-					<h:outputText id="txt_fecha_actual"
-						value="#{ingresoEgresoMB.fechaActualFormateada}"
-						styleClass="fuente-perfil" />
+						<h:outputText value="Hora actual: " styleClass="fuente-outputtext" />
+						<h:outputText id="txt_hora_actual"
+							value="#{ingresoEgresoMB.horaActualFormateada}"
+							styleClass="fuente-perfil" />
 
-					<h:outputText value="Hora actual: " styleClass="fuente-outputtext" />
-					<h:outputText id="txt_hora_actual"
-						value="#{ingresoEgresoMB.horaActualFormateada}"
-						styleClass="fuente-perfil" />
+						<p:column style="text-align:right">
+							<p:commandButton rendered="#{ingresoEgresoMB.cobrado}"
+								id="ingreso" value="Registrar ingreso"
+								action="#{ingresoEgresoMB.registrarIngresoVehiculo}"
+								ajax="false" />
+						</p:column>
+						<p:column style="text-align:right">
+							<p:commandButton id="cancelar" value="Cancelar" immediate="true"
+								action="#{ingresoEgresoMB.reset}" ajax="false" />
+						</p:column>
+					</h:panelGrid>
+				</div>
+			</ui:fragment>
 
-					<p:commandButton rendered="#{ingresoEgresoMB.cobrado}" id="ingreso"
-						value="Registrar ingreso"
-						action="#{ingresoEgresoMB.registrarIngresoVehiculo}" ajax="false" />
+			<ui:fragment rendered="#{!ingresoEgresoMB.cobrado}">
+				<div id="perfil-playa" style="margin-left: 50px; width: 100%;">
+					<h:panelGrid columns="2" cellpadding="5" cellspacing="10">
+						<h:outputText for="tarifa" value="Tarifa: "
+							styleClass="fuente-outputtext" />
+						<p:selectOneMenu value="#{ingresoEgresoMB.tarifa}" effect="fade">
+							<f:selectItems value="#{ingresoEgresoMB.tarifaPlayaList}"
+								var="tarifa" itemValue="#{tarifa}"
+								itemLabel="#{tarifa.tipoEstadia.nombre} $#{tarifa.importe}" />
+							<f:converter converterId="tarifaConverter" />
+						</p:selectOneMenu>
 
-				</h:panelGrid>
-			</div>
+						<p:column />
+						<p:column>
+							<p:commandButton id="calcImporte" value="Calcular importe"
+								action="#{ingresoEgresoMB.calcularImporte}" ajax="false" />
+						</p:column>
+						<h:outputText rendered="#{ingresoEgresoMB.importeCalculado}"
+							value="Importe: " styleClass="fuente-outputtext" />
+						<h:outputText rendered="#{ingresoEgresoMB.importeCalculado}"
+							id="txt_importe_calculado" value="$#{ingresoEgresoMB.importe}"
+							styleClass="fuente-perfil" />
 
-			<div id="perfil-playa">
-				<h:panelGrid rendered="#{!ingresoEgresoMB.cobrado}" columns="2"
-					cellpadding="5">
-					<h:outputText for="tarifa" value="Tarifa: "
-						styleClass="fuente-outputtext" />
-					<p:selectOneMenu style="width: 293px"
-						value="#{ingresoEgresoMB.tarifa}" effect="fade">
-						<f:selectItems value="#{ingresoEgresoMB.tarifaPlayaList}"
-							var="tarifa" itemValue="#{tarifa}"
-							itemLabel="#{tarifa.tipoEstadia.nombre} $#{tarifa.importe}" />
-						<f:converter converterId="tarifaConverter" />
-					</p:selectOneMenu>
-
-					<p:commandButton id="calcImporte" value="Calcular importe"
-						action="#{ingresoEgresoMB.calcularImporte}" ajax="false" />
-
-				</h:panelGrid>
-			</div>
-
-			<div id="perfil-playa">
-				<h:panelGrid rendered="#{!ingresoEgresoMB.cobrado}" columns="2"
-					cellpadding="5">
-
-					<h:outputText rendered="#{ingresoEgresoMB.importeCalculado}"
-						value="Importe: " styleClass="fuente-outputtext" />
-					<h:outputText rendered="#{ingresoEgresoMB.importeCalculado}"
-						id="txt_importe_calculado" value="$#{ingresoEgresoMB.importe}"
-						styleClass="fuente-perfil" />
-
-					<p:commandButton rendered="#{ingresoEgresoMB.importeCalculado}"
-						id="egreso" value="Registrar egreso"
-						action="#{ingresoEgresoMB.registrarEgresoVehiculo}" ajax="false" />
-
-				</h:panelGrid>
-			</div>
-
+						<p:column />
+						<p:commandButton rendered="#{ingresoEgresoMB.importeCalculado}"
+							id="egreso" value="Registrar egreso"
+							action="#{ingresoEgresoMB.registrarEgresoVehiculo}" ajax="false" />
+					</h:panelGrid>
+				</div>
+			</ui:fragment>
 		</h:form>
 	</ui:define>
 </ui:composition>

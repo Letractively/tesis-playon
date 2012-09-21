@@ -181,6 +181,10 @@ public class IngresoEgresoManagedBean implements Serializable {
 	    setMarcaVehiculo(modeloVehiculo.getMarcaVehiculo());
 	    setCliente(vehiculo.getCliente());
 	    setDetalleEstadia(getDetalleEstadiaService().findByVehiculoDetalleEstadia(vehiculo));
+	} else {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+		    "No se encontró el vehículo con patente: ", auxPatente);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	if (null != cliente) {
 	    setUsuarioCliente(cliente.getUsuario());
@@ -218,6 +222,9 @@ public class IngresoEgresoManagedBean implements Serializable {
 	Integer disponibilidad = playa.getDisponibilidad() - 1;
 	playa.setDisponibilidad(disponibilidad);
 	getPlayaService().update(playa);
+	FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		"Se registró el ingreso exitosamente del vehiculo patente:", patente);
+	FacesContext.getCurrentInstance().addMessage(null, message);
 	limpiar();
     }
 
@@ -247,6 +254,11 @@ public class IngresoEgresoManagedBean implements Serializable {
 	Integer disponibilidad = playa.getDisponibilidad() + 1;
 	playa.setDisponibilidad(disponibilidad);
 	getPlayaService().update(playa);
+	
+	FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		"Se registró el engreso exitosamente del vehiculo patente:", patente);
+	FacesContext.getCurrentInstance().addMessage(null, message);
+	
 	limpiar();
     }
 
@@ -661,6 +673,30 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void setImporte(float importe) {
 	this.importe = importe;
+    }
+
+    // método para cancelar la página.
+    public String reset() {
+	usuarioCliente = null;
+	cliente = null;
+	cuentaCliente = null;
+	vehiculo = null;
+	categoriaVehiculo = null;
+	modeloVehiculo = null;
+	marcaVehiculo = null;
+	detalleEstadia = null;
+	tarifa = null;
+	tarifaPlayaList = null;
+	existeVehiculo = false;
+	existeTarifa = true;
+	saldoPositvo = false;
+	importeCalculado = false;
+	fechaIngresoFormateada = null;
+	horaIngresoFormateada = null;
+	cobrado = true;
+	importe = 0;
+	patente = null;
+	return "/playa/ingresoegresovehiculo";
     }
 
 }
