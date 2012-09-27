@@ -382,7 +382,6 @@ DROP TABLE IF EXISTS `vehiculo`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vehiculo` (
   `anio` int(11) DEFAULT NULL,
-  `categoriaID` int(11) NOT NULL,
   `codigoBarra` varchar(50) DEFAULT NULL,
   `colorVehiculoID` int(11) NOT NULL,
   `habilitado` tinyint(1) DEFAULT 1,
@@ -391,13 +390,11 @@ CREATE TABLE `vehiculo` (
   `vehiculoID` int(11) NOT NULL auto_increment,
   `clienteID` int(11) NOT NULL,
   PRIMARY KEY (`vehiculoID`),
-  KEY `categoriaID` (`categoriaID`),
   KEY `modeloVehiculoID` (`modeloVehiculoID`),
   KEY `colorVehiculoID` (`colorVehiculoID`),
   KEY `clienteID` (`clienteID`),
   CONSTRAINT `FK_vehiculo_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
   CONSTRAINT `FK_vehiculo_color_vehiculo` FOREIGN KEY (`colorVehiculoID`) REFERENCES `color_vehiculo` (`colorVehiculoID`),
-  CONSTRAINT `FK_vehiculo_categoria_vehiculo` FOREIGN KEY (`categoriaID`) REFERENCES `categoria_vehiculo` (`categoriaVehiculoID`),
   CONSTRAINT `FK_vehiculo_modelo_vehiculo` FOREIGN KEY (`modeloVehiculoID`) REFERENCES `modelo_vehiculo` (`modeloVehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -687,9 +684,12 @@ CREATE TABLE `modelo_vehiculo` (
   `nombre` varchar(50) NOT NULL,
   `modeloVehiculoID` int(11) NOT NULL auto_increment,
   `marcaVehiculoID` int(11) NOT NULL,
+  `categoriaID` int(11) NOT NULL,
   PRIMARY KEY (`modeloVehiculoID`),
+  KEY `categoriaID` (`categoriaID`),
   KEY `marcaVehiculoID` (`marcaVehiculoID`),
-  CONSTRAINT `FK_modelo_vehiculo_marca_vehiculo` FOREIGN KEY (`marcaVehiculoID`) REFERENCES `marca_vehiculo` (`marcaVehiculoID`)
+  CONSTRAINT `FK_modelo_vehiculo_marca_vehiculo` FOREIGN KEY (`marcaVehiculoID`) REFERENCES `marca_vehiculo` (`marcaVehiculoID`),
+  CONSTRAINT `FK_modelo_vehiculo_categoria_vehiculo` FOREIGN KEY (`categoriaID`) REFERENCES `categoria_vehiculo` (`categoriaVehiculoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1125,11 +1125,49 @@ UNLOCK TABLES;
 
 LOCK TABLES `modelo_vehiculo` WRITE;
 /*!40000 ALTER TABLE `modelo_vehiculo` DISABLE KEYS */;
-INSERT INTO `modelo_vehiculo` (`descripcion`, `nombre`, `modeloVehiculoID`, `marcaVehiculoID`) 
-VALUES (NULL,'Clio',1,1),(NULL,'Fluence',2,1),(NULL,'Ka',3,2),(NULL,'Ranger',4,2),
-    (NULL,'Mondeo',5,2),(NULL,'Amarok',6,3),(NULL,'Vento',7,3),(NULL,'CLC',8,4),
-    (NULL,'Sprinter',9,4),(NULL,'407',10,5),(NULL,'308',11,5),(NULL,'Picasso',14,6),
-    (NULL,'C4',15,6);
+INSERT INTO `modelo_vehiculo` (`categoriaID`, `nombre`, `marcaVehiculoID`) 
+VALUES (1,'Clio',1),(1,'Sandero',1),(1,'Logan',1),(1,'Symbol',1),(1,'Fluence',1),
+(1,'Mégane',1),(1,'Latitude',1),(3,'Kangoo',1),(3,'Master Furgón',1),
+(3,'Master Minibus',1),(4,'Duster',1),(4,'Koleos',1),(1,'Scénic',1),
+(1,'Laguna',1),(1,'Twingo',1),(1,'12',1),(1,'18',1),(1,'21',1),(1,'19',1),
+(1,'Ka',2),(1,'Fiesta',2),(1,'Focus',2),(1,'Mondeo',2),(1,'S-Max',2),
+(1,'Falcon',2),(1,'Fairlane',2),(1,'Taunus',2),(1,'Taurus',2),(1,'Torino',2),
+(1,'Escort',2),(1,'C-Max',2),(1,'Galaxi',2),(1,'Mustang',2),(1,'Escape',2),
+(4,'kuga',2),(4,'EcoSport',2),(4,'Ranger',2),(3,'Transit Furgon',2),
+(3,'Transit Minibus',2),(4,'F100',2),(4,'F150',2),(4,'F250',2),
+(4,'F350',2),(4,'F450',2),(4,'F650',2),(1,'Gol',3),(1,'Fox',3),(1,'Crossfox',3),
+(1,'Golf GTI',3),(1,'Voyage',3),(1,'Bora',3),(1,'Vento',3),(1,'Passat',3),
+(1,'Scirocco',3),(1,'CC',3),(4,'Tiguan',3),(4,'Touareg',3),(1,'Gol Country',3),
+(1,'Suran',3),(1,'Vento Variant',3),(1,'Sharan',3),(1,'Passat Variant',3),
+(4,'Saveiro',3),(4,'Amarok',3),(1,'Clase C Sedán',4),(1,'Clase E Sedán',4),
+(1,'Clase S Sedán',4),(1,'Clase C Coupé',4),(1,'Clase E Coupé',4),(1,'SLS AMG',4),
+(4,'Clase GLK',4),(1,'Clase SLK',4),(4,'Clase M',4),(1,'207',5),(1,'308',5),
+(1,'3008',5),(1,'5008',5),(1,'RCZ',5),(1,'408',5),(3,'Partner Furgón',5),
+(3,'Partner Patagónica',5),(4,'Hoggar',5),(1,'C3',6),(1,'C2',6),(1,'C1',6),
+(1,'Xsara',6),(1,'C4',6),(1,'C6',6),(1,'DS3',6),(1,'DS4',6),(1,'DS9',6),
+(3,'Berlingo',6),(1,'C5',6),(1,'C1',6),(1,'Serie 1',7),(1,'Serie 3',7),
+(1,'Serie 5',7),(1,'Serie 6',7),(1,'Serie 7',7),(4,'X1',7),(4,'X3',7),
+(4,'X5',7),(4,'X6',7),(1,'Z4',7),(1,'M3',7),(1,'A1',8),(1,'A3',8),(1,'A4',8),
+(1,'A5',8),(1,'A6',8),(1,'A7',8),(1,'A8',8),(4,'Q5',8),(4,'Q7',8),(1,'TT',8),
+(1,'R8',8),(1,'Marbella',9),(1,'Ibiza',9),(1,'Córdoba',9),(1,'León',9),(4,'Alhambra',9),
+(1,'K-180',10),(1,'Linea',11),(1,'Palio',11),(1,'Uno',11),(1,'Punto',11),(1,'Siena',11),
+(1,'500',11),(4,'Gama Strada',11),(1,'Idea',11),(1,'Palio Weekend',11),(3,'Qubo',11),
+(3,'Fiorino',11),(3,'Ducato',11),(1,'March',12),(1,'Tiida',12),(1,'Sentra',12),(1,'370Z',12),
+(4,'NP300',12),(4,'Frontier',12),(4,'X-Trail',12),(4,'Murano',12),(1,'Corolla',13),
+(1,'Camry',13),(1,'Prius',13),(4,'Rav4',13),(4,'SW4',13),(4,'Land Cruiser Prado',13),
+(4,'Land Cruise 200',13),(4,'Hilux',13),(1,'i10',14),(1,'i30',14),(1,'Genesis',14),
+(1,'Veloster',14),(4,'Tucson',14),(4,'Santa Fe',14),(3,'H1 Minibus',14),(1,'C30',15),
+(1,'S40',15),(1,'S80',15),(1,'V50',15),(4,'XC60',15),(1,'XC70',15),(1,'XC90',15),
+(1,'Picanto',16),(1,'Cerato Force',16),(1,'Soul',16),(4,'Sportage',16),(4,'Sorento',16),
+(1,'Lancer',17),(1,'Outlander',17),(4,'L200',17),(4,'Montero',17),(4,'Defender',18),
+(4,'Freelander',18),(4,'Range Rover',18),(4,'Discovery',18),(1,'Fun',19),(4,'Vitara',19),
+(1,'Swift',19),(1,'Boxster',20),(1,'Cayman',20),(1,'911',20),(1,'Panamera',20),
+(4,'Cayenne',20),(1,'Celta',21),(1,'Classic',21),(1,'Prisma',21),(1,'Agile',21),
+(1,'Aveo',21),(1,'Spatk',21),(1,'Cruze',21),(1,'Sonic',21),(1,'Meriva',21),
+(1,'Zafira',21),(4,'Montana',21),(4,'S10',21),(4,'Captiva',21),(1,'Cooper',22),(1,'Giulietta',23),
+(1,'MiTo',23),(1,'159',23),(1,'8C',23),(1,'4C',23),(1,'Civic',24),(4,'CR-V',24),(1,'City',24),
+(1,'S2000',24),(4,'Cherooke',25),(4,'Rangler',25),(4,'Armado',25),(1,'300C',26),(1,'PT Cruiser',26),
+(1,'Neon',26),(1,'Speed 6',27),(1,'RX-8',27),(1,'RX-7',27),(1,'l2000',27);
 /*!40000 ALTER TABLE `modelo_vehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1408,11 +1446,11 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE `vehiculo` DISABLE KEYS */;
 LOCK TABLES `vehiculo` WRITE;
-INSERT INTO `tesis_playon`.`vehiculo` (`anio`,`categoriaID`,`codigoBarra`,`colorVehiculoID`,`habilitado`,`modeloVehiculoID`,`patente`,`vehiculoID`,`clienteID`) 
-VALUES (2010,1,NULL,2,1,1,'ABC123',1,1), 
- (2011,4,NULL,9,1,6,'DEF456',2,2),
- (2009,1,NULL,12,1,15,'GHI789',3,3),
- (2009,1,NULL,3,1,10,'JKL159',4,4);
+INSERT INTO `tesis_playon`.`vehiculo` (`anio`,`codigoBarra`,`colorVehiculoID`,`habilitado`,`modeloVehiculoID`,`patente`,`vehiculoID`,`clienteID`) 
+VALUES (2010,NULL,2,1,1,'ABC123',1,1), 
+ (2011,NULL,9,1,6,'DEF456',2,2),
+ (2009,NULL,12,1,15,'GHI789',3,3),
+ (2009,NULL,3,1,10,'JKL159',4,4);
 /*!40000 ALTER TABLE `vehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
