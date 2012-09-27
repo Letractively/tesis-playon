@@ -14,10 +14,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "categoria_vehiculo")
 @Entity
 @Table(name = "categoria_vehiculo")
-public class CategoriaVehiculo implements Serializable{
+public class CategoriaVehiculo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "categoriaVehiculoID")
@@ -25,38 +25,43 @@ public class CategoriaVehiculo implements Serializable{
 
     @Column(name = "nombre")
     private String nombre;
-    
+
     @Column(name = "descripcion", unique = false, nullable = true)
     private String descripcion;
+
+    public CategoriaVehiculo() {
+
+    }
 
     public CategoriaVehiculo(String nombre, String descripcion) {
 	this.nombre = nombre;
 	this.descripcion = descripcion;
-    }    
-
-    public CategoriaVehiculo() {
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     public Integer getId() {
-        return id;
-    }   
-    
+	return id;
+    }
+
+    public void setId(Integer id) {
+	this.id = id;
+    }
+
+    public String getNombre() {
+	return nombre;
+    }
+
+    public void setNombre(String nombre) {
+	this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+	return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+	this.descripcion = descripcion;
+    }
+
     public boolean equals(Object object) {
 	if (object == this)
 	    return true;
@@ -72,13 +77,10 @@ public class CategoriaVehiculo implements Serializable{
 	return true;
     }
 
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
-	return "CategoriaVehiculo:\t[categoriaVehiculoID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion + "]";
+	return "CategoriaVehiculo:\t[categoriaVehiculoID= " + id + ", nombre= " + nombre + ", descripcion= "
+		+ descripcion + "]";
     }
+
 }

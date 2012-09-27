@@ -3,16 +3,11 @@ package tesis.playon.restful.bean;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,19 +29,9 @@ public class MarcaVehiculo implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @OneToMany
-    @JoinTable(name = "marca_vehiculo", joinColumns = { @JoinColumn(name = "modeloVehiculoID") })
-    private Set<ModeloVehiculo> modelos = new HashSet<ModeloVehiculo>(0);
-
     public MarcaVehiculo(String nombre, String descripcion) {
 	this.nombre = nombre;
 	this.descripcion = descripcion;
-    }
-
-    public MarcaVehiculo(String nombre, String descripcion, Set<ModeloVehiculo> modelos) {
-	this.nombre = nombre;
-	this.descripcion = descripcion;
-	this.modelos = modelos;
     }
 
     public MarcaVehiculo() {
@@ -66,14 +51,6 @@ public class MarcaVehiculo implements Serializable {
 
     public void setDescripcion(String descripcion) {
 	this.descripcion = descripcion;
-    }
-
-    public Set<ModeloVehiculo> getModelos() {
-	return modelos;
-    }
-
-    public void setModelos(Set<ModeloVehiculo> modelos) {
-	this.modelos = modelos;
     }
 
     public Integer getId() {
