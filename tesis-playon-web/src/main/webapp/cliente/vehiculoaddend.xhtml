@@ -11,7 +11,8 @@
 
 	<ui:define name="content">
 		<h1>Vehículo agregado</h1>
+		<p:growl id="messagesGrowl" />
 		<p>¡Su vehículo fue agregado correctamente!</p>
-		<p:growl id="messages" />
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 	</ui:define>
 </ui:composition>

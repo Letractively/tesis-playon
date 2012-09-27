@@ -88,6 +88,8 @@ public class VehiculoManagedBean implements Serializable {
     private List<ModeloVehiculo> modelosList;
 
     private List<ColorVehiculo> colorVehiculoList;
+    
+    private List<CategoriaVehiculo> categoriaVehiculoList;
 
     @PostConstruct
     private void init() {
@@ -104,7 +106,6 @@ public class VehiculoManagedBean implements Serializable {
 	try {
 	    if (cliente != null) {
 		vehiculo.setAnio(getAnio());
-		vehiculo.setCategoriaVehiculo(getCategoriaVehiculo());
 		vehiculo.setCliente(cliente);
 		vehiculo.setCodigoBarra(getCodigoBarra());
 		vehiculo.setColorVehiculo(getColorVehiculo());
@@ -115,9 +116,8 @@ public class VehiculoManagedBean implements Serializable {
 		getVehiculoService().save(vehiculo);
 
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-			"Se agregó correctamente el vehiculo con patente: " + vehiculo.getPatente(), "");
+			"Se agregó correctamente el vehículo con patente: " + vehiculo.getPatente(), "");
 		FacesContext.getCurrentInstance().addMessage(null, message);
-
 	    }
 
 	    return "vehiculoaddend";
@@ -328,4 +328,11 @@ public class VehiculoManagedBean implements Serializable {
 	VehiculoManagedBean.vehiculoSelected = vehiculoSelected;
     }
 
+    public List<CategoriaVehiculo> getCategoriaVehiculoList() {
+        return categoriaVehiculoList;
+    }
+
+    public void setCategoriaVehiculoList(List<CategoriaVehiculo> categoriaVehiculoList) {
+        this.categoriaVehiculoList = categoriaVehiculoList;
+    }
 }

@@ -40,7 +40,6 @@
 				<h:outputText for="modelo" value="Modelo: " />
 				<p:selectOneMenu id="modelos" style="width:200px"
 					value="#{vehiculoMB.modeloVehiculo}" effect="fade">
-					<f:selectItem itemLabel="Seleccione un modelo" itemValue="-1" />
 					<f:selectItems value="#{vehiculoMB.modelosList}" var="modelo"
 						itemValue="#{modelo}" itemLabel="#{modelo.nombre}" />
 					<f:converter converterId="modeloVehiculoConverter" />
@@ -72,17 +71,6 @@
 					<p:ajax event="blur" update="anioMsg" />
 				</p:inputMask>
 				<p:message id="anioMsg" for="anio" display="icon" />
-
-				<h:outputText for="categoriaVehiculo" value="Categoria Vehiculo: " />
-				<p:selectOneMenu value="#{vehiculoMB.categoriaVehiculo}"
-					effect="fade" style="width:200px">
-					<f:selectItem itemLabel="Seleccione una categoria" itemValue="-1" />
-					<f:selectItems value="#{categoriaVehiculoMB.categoriaVehiculoList}"
-						var="categoriaVehiculo" itemValue="#{categoriaVehiculo}"
-						itemLabel="#{categoriaVehiculo.nombre}" />
-					<f:converter converterId="categoriaVehiculoConverter" />
-				</p:selectOneMenu>
-				<p:column />
 
 				<p:column />
 				<p:column>

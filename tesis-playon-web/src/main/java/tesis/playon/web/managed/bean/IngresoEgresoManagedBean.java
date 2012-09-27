@@ -176,7 +176,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	setVehiculo(getVehiculoService().findByPatenteVehiculo(auxPatente.toUpperCase()));
 
 	if (null != vehiculo) {
-	    setCategoriaVehiculo(vehiculo.getCategoriaVehiculo());
+	    setCategoriaVehiculo(vehiculo.getModeloVehiculo().getCategoriaVehiculo());
 	    setModeloVehiculo(vehiculo.getModeloVehiculo());
 	    setMarcaVehiculo(modeloVehiculo.getMarcaVehiculo());
 	    setCliente(vehiculo.getCliente());

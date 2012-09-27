@@ -35,10 +35,6 @@ public class Vehiculo implements Serializable {
     @Column(name = "anio")
     private int anio;
 
-    @ManyToOne
-    @JoinColumn(name = "categoriaID")
-    private CategoriaVehiculo categoriaVehiculo;
-
     @Column(name = "codigoBarra")
     private String codigoBarra;
 
@@ -60,10 +56,9 @@ public class Vehiculo implements Serializable {
     @JoinColumn(name = "clienteID")
     private Cliente cliente;
 
-    public Vehiculo(int anio, CategoriaVehiculo categoriaVehiculo, String codigoBarra, ColorVehiculo colorVehiculo,
+    public Vehiculo(int anio, String codigoBarra, ColorVehiculo colorVehiculo,
 	    boolean habilitado, ModeloVehiculo modeloVehiculo, String patente, Cliente cliente) {
 	this.anio = anio;
-	this.categoriaVehiculo = categoriaVehiculo;
 	this.codigoBarra = codigoBarra;
 	this.colorVehiculo = colorVehiculo;
 	this.habilitado = habilitado;
@@ -73,14 +68,6 @@ public class Vehiculo implements Serializable {
     }
 
     public Vehiculo(){}
-    
-    public CategoriaVehiculo getCategoriaVehiculo() {
-	return categoriaVehiculo;
-    }
-
-    public void setCategoriaVehiculo(CategoriaVehiculo categoriaVehiculo) {
-	this.categoriaVehiculo = categoriaVehiculo;
-    }
 
     public String getCodigoBarra() {
 	return codigoBarra;

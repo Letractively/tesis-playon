@@ -43,6 +43,10 @@ public class ModeloVehiculo implements Serializable {
     @ManyToOne
     @JoinColumn(name = "marcaVehiculoID")
     private MarcaVehiculo marcaVehiculo;
+    
+    @ManyToOne
+    @JoinColumn(name = "categoriaID")
+    private CategoriaVehiculo categoriaVehiculo;
 
     public ModeloVehiculo(String descripcion, MarcaVehiculo marcaVehiculo, String nombre) {
 	this.nombre = nombre;
@@ -79,6 +83,14 @@ public class ModeloVehiculo implements Serializable {
 
     public Integer getId() {
 	return id;
+    }
+
+    public CategoriaVehiculo getCategoriaVehiculo() {
+        return categoriaVehiculo;
+    }
+
+    public void setCategoriaVehiculo(CategoriaVehiculo categoriaVehiculo) {
+        this.categoriaVehiculo = categoriaVehiculo;
     }
 
     public boolean equals(Object object) {
