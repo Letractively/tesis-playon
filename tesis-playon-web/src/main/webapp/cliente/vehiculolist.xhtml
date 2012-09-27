@@ -13,13 +13,13 @@
 		<p:growl id="messages" />
 		<h1>Mis vehículos</h1>
 		<h:form>
-			<p:dataTable id="vehiculos" var="vehiculo" paginator="true" rows="3"
+			<p:dataTable id="vehiculos" var="vehiculo" paginator="true" rows="5"
 				value="#{vehiculoMB.vehiculoList}"
 				emptyMessage="No ha registrado vehiculos" paginatorPosition="bottom">
 
 				<f:facet name="header">
-						Listado de sus vehiculos
-					</f:facet>
+						Listado de sus vehículos
+				</f:facet>
 
 				<p:column headerText="Patente">
 					<h:outputText value="#{vehiculo.patente}" />
@@ -33,11 +33,20 @@
 				<p:column headerText="Modelo">
 					<h:outputText value="#{vehiculo.modeloVehiculo.nombre}" />
 				</p:column>
-
+				
+				<p:column headerText="Categoría">
+					<h:outputText value="#{vehiculo.modeloVehiculo.categoriaVehiculo.nombre}" />
+				</p:column>
 
 				<p:column headerText="Opciones"
-					style="text-align:center; width:100px;">
-
+					style="text-align:center; width:80px;">
+					<p:commandLink id="edit" title="Editar"
+						action="/cliente/vehiculoedit.html?faces-redirect=true" ajax="false">
+						<f:setPropertyActionListener value="#{vehiculo}"
+							target="#{vehiculoMB.vehiculoSelected}" />
+						<h:graphicImage library="images/icons" name="pencil.png"
+							style="width:25px; height:25px;" />
+					</p:commandLink>
 					<p:commandLink id="darBaja" title="Dar de baja"
 						action="#{vehiculoMB.deleteVehiculo}" ajax="false">
 						<f:setPropertyActionListener value="#{vehiculo}"

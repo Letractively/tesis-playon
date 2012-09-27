@@ -5,6 +5,7 @@ package tesis.playon.web.service;
 
 import java.util.List;
 
+import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.Vehiculo;
 
 /**
@@ -24,4 +25,6 @@ public interface IVehiculoService {
     List<Vehiculo> findAll();
 
     List<Vehiculo> findByCliente(int idCliente);
+    
+    boolean isPropietario(String patente, Cliente cliente);
 }

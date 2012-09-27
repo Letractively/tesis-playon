@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IVehiculoDao;
+import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.IVehiculoService;
 
@@ -49,6 +50,11 @@ public class VehiculoService implements IVehiculoService {
     @Override
     public List<Vehiculo> findAll() {
 	return getVehiculoDao().findAll();
+    }
+    
+    @Override
+    public boolean isPropietario(String patente, Cliente cliente){
+	return getVehiculoDao().isPropietario(patente, cliente);
     }
 
     public IVehiculoDao getVehiculoDao() {

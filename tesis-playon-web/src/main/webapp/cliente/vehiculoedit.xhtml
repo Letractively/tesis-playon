@@ -6,11 +6,11 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="title">
-		Solicitud de registro de vehículo
+		Edición de vehículo
     </ui:define>
 
 	<ui:define name="content">
-		<h1>Registrar vehículo</h1>
+		<h1>Editar vehículo</h1>
 		<p></p>
 
 		<h:form id="form">
@@ -18,7 +18,7 @@
 			<h:panelGrid columns="3" cellpadding="8" cellspacing="10">
 				<h:outputLabel for="patente" value="Patente: " />
 				<p:inputText id="patente" style="width:197px"
-					value="#{vehiculoMB.patente}" required="true"
+					value="#{vehiculoMB.vehiculoSelected.patente}" required="true"
 					requiredMessage="Campo obligatorio">
 					<f:validateLength minimum="6" />
 					<p:ajax event="blur" update="patenteMsg" />
@@ -27,7 +27,7 @@
 
 				<h:outputText for="marcaVehiculo" value="Marca: " />
 				<p:selectOneMenu id="marcas" style="width:200px"
-					value="#{vehiculoMB.marca}" effect="fade">
+					value="#{vehiculoMB.vehiculoSelected.modeloVehiculo.marcaVehiculo}" effect="fade">
 					<f:selectItem itemLabel="Seleccione una marca" itemValue="-1" />
 					<f:selectItems value="#{vehiculoMB.marcasList}" var="marca"
 						itemValue="#{marca}" itemLabel="#{marca.nombre}" />
@@ -39,7 +39,7 @@
 
 				<h:outputText for="modelo" value="Modelo: " />
 				<p:selectOneMenu id="modelos" style="width:200px"
-					value="#{vehiculoMB.modeloVehiculo}" effect="fade">
+					value="#{vehiculoMB.vehiculoSelected.modeloVehiculo}" effect="fade">
 					<f:selectItem itemLabel="Seleccione un modelo" itemValue="-1" />
 					<f:selectItems value="#{vehiculoMB.modelosList}" var="modelo"
 						itemValue="#{modelo}" itemLabel="#{modelo.nombre}" />
@@ -49,7 +49,7 @@
 
 				<h:outputText for="colorVehiculo" value="Color: " />
 				<p:selectOneMenu id="colores" style="width:200px" var="colour"
-					value="#{vehiculoMB.colorVehiculo}" effect="fade">
+					value="#{vehiculoMB.vehiculoSelected.colorVehiculo}" effect="fade">
 					<f:selectItem itemLabel="Seleccione un color" itemValue="-1" />
 					<f:selectItems value="#{vehiculoMB.colorVehiculoList}" var="color"
 						itemValue="#{color}" itemLabel="#{color.nombre}" />
@@ -67,7 +67,7 @@
 
 				<h:outputLabel for="anio" value="Año: " />
 				<p:inputMask id="anio" style="width:197px" mask="9999"
-					value="#{vehiculoMB.anio}">
+					value="#{vehiculoMB.vehiculoSelected.anio}">
 					<f:validateLength minimum="4" />
 					<p:ajax event="blur" update="anioMsg" />
 				</p:inputMask>

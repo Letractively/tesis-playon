@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IVehiculoDao;
+import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.Vehiculo;
 
 /**
@@ -72,15 +73,14 @@ public class VehiculoDao implements IVehiculoDao {
 	return null;
 
     }
-
-    // public List<Vehiculo> findByEstado() {
-    // List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
-    // List<?> list =
-    // getSessionFactory().getCurrentSession().createQuery("from Vehiculo where habilitado=true order by patente").list();
-    // for (Object object : list) {
-    // vehiculos.add((Vehiculo) object);
-    // }
-    // return vehiculos;
-    // }
-
+    
+    public boolean isPropietario(String patente, Cliente cliente){
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Vehiculo where (pantente = ? and habilitado = true and cliente = ?)")
+		.setParameter(0, patente).setParameter(1, cliente).list();
+	if (list.isEmpty()) {
+	    return false;
+	}
+	return true;
+    }
 }

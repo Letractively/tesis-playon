@@ -90,7 +90,7 @@ public class VehiculoManagedBean implements Serializable {
     private List<ModeloVehiculo> modelosList;
 
     private List<ColorVehiculo> colorVehiculoList;
-    
+
     private List<CategoriaVehiculo> categoriaVehiculoList;
 
     @PostConstruct
@@ -103,35 +103,75 @@ public class VehiculoManagedBean implements Serializable {
     }
 
     public String addVehiculo() {
-
 	Vehiculo vehiculo = new Vehiculo();
 	try {
 	    if (cliente != null) {
-		vehiculo.setAnio(getAnio());
-		vehiculo.setCliente(cliente);
-		vehiculo.setCodigoBarra(getCodigoBarra());
-		vehiculo.setColorVehiculo(getColorVehiculo());
-		vehiculo.setModeloVehiculo(getModeloVehiculo());
-		vehiculo.setPatente(getPatente());
-		vehiculo.setHabilitado(true);
+		if (!getVehiculoService().isPropietario(getPatente(), cliente)) {
+		    vehiculo.setAnio(getAnio());
+		    vehiculo.setCliente(cliente);
+		    vehiculo.setCodigoBarra(getCodigoBarra());
+		    vehiculo.setColorVehiculo(getColorVehiculo());
+		    vehiculo.setModeloVehiculo(getModeloVehiculo());
+		    vehiculo.setPatente(getPatente());
+		    vehiculo.setHabilitado(true);
 
-		getVehiculoService().save(vehiculo);
+		    getVehiculoService().save(vehiculo);
 
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-			"Se agregó correctamente el vehículo con patente: " + vehiculo.getPatente(), "");
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			    "Se agregó correctamente el vehículo con patente: " + getPatente(), "");
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+		    
+		    return "vehiculoaddend";
+		} else {
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "El vehículo con patente :"
+			    + getPatente() + " ya está registrado", "");
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+		}
 	    }
-
-	    return "vehiculoaddend";
-	}catch (DuplicateKeyException e){
+	    return null;
+	} catch (DuplicateKeyException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, Ya existe un vehículo con patente: " + vehiculo.getPatente(),
-		    "");
+		    "Error, Ya éxiste un vehículo con patente: " + getPatente(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo agregar el vehículo con patente: " + vehiculo.getPatente(),
+		    "Error, no se pudo agregar el vehículo con patente: " + getPatente(),
+		    "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    ex.printStackTrace();
+	}
+	return null;
+    }
+
+    public String updateVehiculo() {
+	try {
+	    if (cliente != null && vehiculoSelected != null) {
+		if (!getVehiculoService().isPropietario(vehiculoSelected.getPatente(), cliente)) {
+
+		    getVehiculoService().update(vehiculoSelected);
+
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			    "Se modificó correctamente el vehículo con patente: " + vehiculoSelected.getPatente(), "");
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+		    
+		    return "vehiculolist";
+		} else {
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "El vehículo con patente :"
+			    + getPatente() + " ya está registrado", "");
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+	    }
+
+	    return null;
+	} catch (DuplicateKeyException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, Ya éxiste un vehículo con patente: " + getPatente(), "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
+	} catch (Exception ex) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo modificar el vehículo con patente: " + getPatente(),
 		    "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
@@ -336,10 +376,10 @@ public class VehiculoManagedBean implements Serializable {
     }
 
     public List<CategoriaVehiculo> getCategoriaVehiculoList() {
-        return categoriaVehiculoList;
+	return categoriaVehiculoList;
     }
 
     public void setCategoriaVehiculoList(List<CategoriaVehiculo> categoriaVehiculoList) {
-        this.categoriaVehiculoList = categoriaVehiculoList;
+	this.categoriaVehiculoList = categoriaVehiculoList;
     }
 }
