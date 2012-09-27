@@ -33,7 +33,8 @@ public class ColorVehiculoConverter implements Converter {
 	    String toString = idColor + ":" + nombreBarrio + ":" + hexa;
 	    return toString;
 	} else {
-	    return "No se pudo parsear el objeto.";
+	    //return "No se pudo parsear el objeto.";
+	    return "-1";
 	}
     }
 }

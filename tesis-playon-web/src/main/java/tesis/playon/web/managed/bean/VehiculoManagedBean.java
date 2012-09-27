@@ -14,6 +14,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.springframework.dao.DuplicateKeyException;
+
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.ColorVehiculo;
@@ -121,7 +123,12 @@ public class VehiculoManagedBean implements Serializable {
 	    }
 
 	    return "vehiculoaddend";
-
+	}catch (DuplicateKeyException e){
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, Ya existe un vehículo con patente: " + vehiculo.getPatente(),
+		    "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo agregar el vehículo con patente: " + vehiculo.getPatente(),
@@ -129,7 +136,7 @@ public class VehiculoManagedBean implements Serializable {
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}
-	return "/error";
+	return null;
     }
 
     public void handleMarcaChange() {
