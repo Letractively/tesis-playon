@@ -1,15 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:p="http://www.springframework.org/schema/p"
-    xmlns="http://www.springframework.org/schema/beans"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans 
-	   		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd" >
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/oxm
+		http://www.springframework.org/schema/oxm/spring-oxm-3.1.xsd">
 
-    <!-- Declare a view resolver -->
-    <bean
-        id="viewResolver"
-        class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-        p:prefix="/WEB-INF/jsp/"
-        p:suffix=".jsp" />
+	<context:component-scan base-package="tesis.playon.restful" />
+
+	<!-- Format Output -->
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+	<bean id="abonoXmlView"
+		class="org.springframework.web.servlet.view.xml.MarshallingView">
+		<constructor-arg>
+			<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
+				<property name="autodetectAnnotations" value="true" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<!-- Convert Input -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="marshallingHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="marshallingHttpMessageConverter"
+		class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+		<property name="marshaller" ref="jaxb2Marshaller" />
+		<property name="unmarshaller" ref="jaxb2Marshaller" />
+	</bean>
+
+	<bean id="jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<list>
+				<value>com.dyuti.spring.rest.domain.Person</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/tesis_playon?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="username" value="playonAdmin" />
+		<property name="password" value="playon" />
+	</bean>
+
+	<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>tesis.playon.restful.domain.Abono</value>
+				<value>tesis.playon.restful.domain.Barrio</value>
+				<value>tesis.playon.restful.domain.Calificacion</value>
+				<value>tesis.playon.restful.domain.CargoEmpleado</value>
+				<value>tesis.playon.restful.domain.CategoriaVehiculo</value>
+				<value>tesis.playon.restful.domain.Cliente</value>
+				<value>tesis.playon.restful.domain.ColorVehiculo</value>
+				<value>tesis.playon.restful.domain.Comentario</value>
+				<value>tesis.playon.restful.domain.CuentaCliente</value>
+				<value>tesis.playon.restful.domain.CuentaPlaya</value>
+				<value>tesis.playon.restful.domain.DenunciaPlaya</value>
+				<value>tesis.playon.restful.domain.DenunciaVehiculo</value>
+				<value>tesis.playon.restful.domain.DetalleEstadia</value>
+				<value>tesis.playon.restful.domain.Empleado</value>
+				<value>tesis.playon.restful.domain.Estadia</value>
+				<value>tesis.playon.restful.domain.EstadoDenuncia</value>
+				<value>tesis.playon.restful.domain.EstadoPlaya</value>
+				<value>tesis.playon.restful.domain.EstadoPromocion</value>
+				<value>tesis.playon.restful.domain.EstadoPublicidad</value>
+				<value>tesis.playon.restful.domain.Favorito</value>
+				<value>tesis.playon.restful.domain.Foto</value>
+				<value>tesis.playon.restful.domain.HistorialDeCambio</value>
+				<value>tesis.playon.restful.domain.Liquidacion</value>
+				<value>tesis.playon.restful.domain.Localidad</value>
+				<value>tesis.playon.restful.domain.MarcaVehiculo</value>
+				<value>tesis.playon.restful.domain.ModeloVehiculo</value>
+				<value>tesis.playon.restful.domain.Pais</value>
+				<value>tesis.playon.restful.domain.PerfilPlaya</value>
+				<value>tesis.playon.restful.domain.Playa</value>
+				<value>tesis.playon.restful.domain.Posicion</value>
+				<value>tesis.playon.restful.domain.Promocion</value>
+				<value>tesis.playon.restful.domain.Provincia</value>
+				<value>tesis.playon.restful.domain.Publicidad</value>
+				<value>tesis.playon.restful.domain.RolesPorUsuario</value>
+				<value>tesis.playon.restful.domain.RolUsuario</value>
+				<value>tesis.playon.restful.domain.Sesion</value>
+				<value>tesis.playon.restful.domain.Tarifa</value>
+				<value>tesis.playon.restful.domain.TipoDoc</value>
+				<value>tesis.playon.restful.domain.TipoEstadia</value>
+				<value>tesis.playon.restful.domain.TipoPago</value>
+				<value>tesis.playon.restful.domain.TransaccionCliente</value>
+				<value>tesis.playon.restful.domain.TransaccionPlaya</value>
+				<value>tesis.playon.restful.domain.Usuario</value>
+				<value>tesis.playon.restful.domain.UsuarioSistema</value>
+				<value>tesis.playon.restful.domain.Vehiculo</value>
+				
+				<value>tesis.playon.restful.domain.Person</value>
+
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="abonoDao" class="tesis.playon.restful.dao.impl.AbonoDao">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
 
 </beans>
