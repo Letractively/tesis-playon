@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.ITransaccionClienteDao;
 import tesis.playon.restful.domain.TransaccionCliente;
 
-@Repository("transaccionClienteDao")
 public class TransaccionClienteDao extends HibernateDaoSupport implements ITransaccionClienteDao {
 
     @Override

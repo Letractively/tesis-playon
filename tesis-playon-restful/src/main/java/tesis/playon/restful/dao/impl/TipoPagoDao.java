@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.ITipoPagoDao;
 import tesis.playon.restful.domain.TipoPago;
 
-@Repository("tipoPagoDao")
 public class TipoPagoDao extends HibernateDaoSupport implements ITipoPagoDao {
 
     @Override

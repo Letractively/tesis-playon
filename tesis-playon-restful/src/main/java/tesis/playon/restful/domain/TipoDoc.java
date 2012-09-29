@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "tipo_doc")
+@XmlRootElement(name = "tipoDoc")
 @Entity
 @Table(name = "tipo_doc")
 public class TipoDoc implements Serializable {
@@ -25,13 +25,6 @@ public class TipoDoc implements Serializable {
 
     @Column(name = "nombre")
     private String nombre;
-
-    public TipoDoc() {
-    }
-
-    public TipoDoc(String nombre, String descripcion) {
-	this.nombre = nombre;
-    }
 
     public Integer getId() {
 	return id;
@@ -47,26 +40,6 @@ public class TipoDoc implements Serializable {
 
     public void setNombre(String nombre) {
 	this.nombre = nombre;
-    }
-
-    public boolean equals(Object object) {
-	if (object == this)
-	    return true;
-	if (object == null || getClass() != object.getClass())
-	    return false;
-
-	TipoDoc otroTipoDoc = (TipoDoc) object;
-	if (id != otroTipoDoc.id)
-	    return false;
-	if (nombre == null ? otroTipoDoc.nombre != null : !nombre.equals(otroTipoDoc.nombre))
-	    return false;
-
-	return true;
-    }
-
-    @Override
-    public String toString() {
-	return "TipoDoc:\t [TipoDocID= " + id + ", nombre= " + nombre + "]";
     }
 
 }

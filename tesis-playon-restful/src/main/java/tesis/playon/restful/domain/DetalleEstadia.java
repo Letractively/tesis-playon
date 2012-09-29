@@ -12,9 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.hibernate.annotations.Type;
+import tesis.playon.restful.util.TimestampAdapter;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -22,6 +25,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("detalleEstadia")
 @Entity
 @Table(name = "detalle_estadia")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DetalleEstadia implements Serializable {
 
     private static final long serialVersionUID = -1682927511100627927L;
@@ -32,16 +36,17 @@ public class DetalleEstadia implements Serializable {
     private Integer id;
 
     @Column(name = "fechaHoraEgreso")
+    @XmlJavaTypeAdapter(TimestampAdapter.class)
     private Timestamp fechaHoraEgreso;
 
     @Column(name = "fechaHoraIngreso")
+    @XmlJavaTypeAdapter(TimestampAdapter.class)
     private Timestamp fechaHoraIngreso;
 
     @Column(name = "importeTotal")
     private float importeTotal;
 
     @Column(name = "cobrado", columnDefinition = "TINYINT")
-    @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean cobrado;
 
     @ManyToOne

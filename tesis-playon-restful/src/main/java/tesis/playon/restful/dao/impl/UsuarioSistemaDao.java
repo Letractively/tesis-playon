@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.IUsuarioSistemaDao;
 import tesis.playon.restful.domain.Usuario;
 import tesis.playon.restful.domain.UsuarioSistema;
 
-@Repository("usuarioSistemaDao")
 public class UsuarioSistemaDao extends HibernateDaoSupport implements IUsuarioSistemaDao {
 
     @Override

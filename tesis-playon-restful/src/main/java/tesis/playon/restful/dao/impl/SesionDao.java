@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.ISesionDao;
 import tesis.playon.restful.domain.Sesion;
 
-@Repository("sesionDao")
 public class SesionDao extends HibernateDaoSupport implements ISesionDao {
 
     @Override

@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.ICategoriaVehiculoDao;
 import tesis.playon.restful.domain.CategoriaVehiculo;
 
-@Repository("categoriaVehiculoDao")
 public class CategoriaVehiculoDao extends HibernateDaoSupport implements ICategoriaVehiculoDao {
 
     @Override

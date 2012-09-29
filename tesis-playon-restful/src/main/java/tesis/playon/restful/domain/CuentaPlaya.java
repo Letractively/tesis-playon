@@ -12,7 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import tesis.playon.restful.util.TimestampAdapter;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -20,6 +25,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("cuentaPlaya")
 @Entity
 @Table(name = "cuenta_playa")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CuentaPlaya implements Serializable {
 
     private static final long serialVersionUID = -7370950550724631370L;
@@ -33,6 +39,7 @@ public class CuentaPlaya implements Serializable {
     private Integer nroCuenta;
 
     @Column(name = "fechaCreacion")
+    @XmlJavaTypeAdapter(TimestampAdapter.class)
     private Timestamp fechaCreacion;
 
     @Column(name = "saldo")

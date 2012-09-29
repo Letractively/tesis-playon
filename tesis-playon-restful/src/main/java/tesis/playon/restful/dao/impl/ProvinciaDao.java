@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.IProvinciaDao;
 import tesis.playon.restful.domain.Pais;
 import tesis.playon.restful.domain.Provincia;
 
-@Repository("provinciaDao")
 public class ProvinciaDao extends HibernateDaoSupport implements IProvinciaDao {
 
     @Override

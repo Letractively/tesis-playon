@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.IComentarioDao;
 import tesis.playon.restful.domain.Comentario;
 import tesis.playon.restful.domain.Playa;
 
-@Repository("comentarioDao")
 public class ComentarioDao extends HibernateDaoSupport implements IComentarioDao {
 
     @Override

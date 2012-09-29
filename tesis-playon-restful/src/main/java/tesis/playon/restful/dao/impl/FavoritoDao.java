@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.IFavoritoDao;
 import tesis.playon.restful.domain.Cliente;
 import tesis.playon.restful.domain.Favorito;
 import tesis.playon.restful.domain.Playa;
 
-@Repository("favoritoDao")
 public class FavoritoDao extends HibernateDaoSupport implements IFavoritoDao {
 
     @Override

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:oxm="http://www.springframework.org/schema/oxm"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -45,12 +44,58 @@
 	<bean id="jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
 		<property name="classesToBeBound">
 			<list>
-				<value>com.dyuti.spring.rest.domain.Person</value>
+				<value>tesis.playon.restful.domain.Abono</value>
+				<value>tesis.playon.restful.domain.Barrio</value>
+				<value>tesis.playon.restful.domain.Calificacion</value>
+				<value>tesis.playon.restful.domain.CargoEmpleado</value>
+				<value>tesis.playon.restful.domain.CategoriaVehiculo</value>
+				<value>tesis.playon.restful.domain.Cliente</value>
+				<value>tesis.playon.restful.domain.ColorVehiculo</value>
+				<value>tesis.playon.restful.domain.Comentario</value>
+				<value>tesis.playon.restful.domain.CuentaCliente</value>
+				<value>tesis.playon.restful.domain.CuentaPlaya</value>
+				<value>tesis.playon.restful.domain.DenunciaPlaya</value>
+				<value>tesis.playon.restful.domain.DenunciaVehiculo</value>
+				<value>tesis.playon.restful.domain.DetalleEstadia</value>
+				<value>tesis.playon.restful.domain.Empleado</value>
+				<value>tesis.playon.restful.domain.Estadia</value>
+				<value>tesis.playon.restful.domain.EstadoDenuncia</value>
+				<value>tesis.playon.restful.domain.EstadoPlaya</value>
+				<value>tesis.playon.restful.domain.EstadoPromocion</value>
+				<value>tesis.playon.restful.domain.EstadoPublicidad</value>
+				<value>tesis.playon.restful.domain.Favorito</value>
+				<value>tesis.playon.restful.domain.Foto</value>
+				<value>tesis.playon.restful.domain.HistorialDeCambio</value>
+				<value>tesis.playon.restful.domain.Liquidacion</value>
+				<value>tesis.playon.restful.domain.Localidad</value>
+				<value>tesis.playon.restful.domain.MarcaVehiculo</value>
+				<value>tesis.playon.restful.domain.ModeloVehiculo</value>
+				<value>tesis.playon.restful.domain.Pais</value>
+				<value>tesis.playon.restful.domain.PerfilPlaya</value>
+				<value>tesis.playon.restful.domain.Playa</value>
+				<value>tesis.playon.restful.domain.Posicion</value>
+				<value>tesis.playon.restful.domain.Promocion</value>
+				<value>tesis.playon.restful.domain.Provincia</value>
+				<value>tesis.playon.restful.domain.Publicidad</value>
+				<value>tesis.playon.restful.domain.RolesPorUsuario</value>
+				<value>tesis.playon.restful.domain.RolUsuario</value>
+				<value>tesis.playon.restful.domain.Sesion</value>
+				<value>tesis.playon.restful.domain.Tarifa</value>
+				<value>tesis.playon.restful.domain.TipoDoc</value>
+				<value>tesis.playon.restful.domain.TipoEstadia</value>
+				<value>tesis.playon.restful.domain.TipoPago</value>
+				<value>tesis.playon.restful.domain.TransaccionCliente</value>
+				<value>tesis.playon.restful.domain.TransaccionPlaya</value>
+				<value>tesis.playon.restful.domain.Usuario</value>
+				<value>tesis.playon.restful.domain.UsuarioSistema</value>
+				<value>tesis.playon.restful.domain.Vehiculo</value>
+
+				<value>tesis.playon.restful.domain.Person</value>
 			</list>
 		</property>
 	</bean>
 
-	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"
 			value="jdbc:mysql://localhost:3306/tesis_playon?useUnicode=true&amp;characterEncoding=UTF-8" />
@@ -58,9 +103,9 @@
 		<property name="password" value="playon" />
 	</bean>
 
-	<bean id="mySessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="dataSource" ref="myDataSource" />
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
 		<property name="annotatedClasses">
 			<list>
 				<value>tesis.playon.restful.domain.Abono</value>
@@ -108,9 +153,8 @@
 				<value>tesis.playon.restful.domain.Usuario</value>
 				<value>tesis.playon.restful.domain.UsuarioSistema</value>
 				<value>tesis.playon.restful.domain.Vehiculo</value>
-				
-				<value>tesis.playon.restful.domain.Person</value>
 
+				<value>tesis.playon.restful.domain.Person</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -121,8 +165,17 @@
 		</property>
 	</bean>
 
+	<!-- DAO -->
 	<bean id="abonoDao" class="tesis.playon.restful.dao.impl.AbonoDao">
-		<property name="sessionFactory" ref="mySessionFactory" />
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="barrioDao" class="tesis.playon.restful.dao.impl.BarrioDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="tipoDocDao" class="tesis.playon.restful.dao.impl.TipoDocDao">
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 </beans>

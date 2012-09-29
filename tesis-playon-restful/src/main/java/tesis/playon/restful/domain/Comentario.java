@@ -14,8 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.hibernate.annotations.Type;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XmlRootElement
@@ -38,7 +36,6 @@ public class Comentario implements Serializable {
     private String comentario;
 
     @Column(name = "habilitado")
-    @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean habilitado;
 
     @ManyToOne

@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.ILocalidadDao;
 import tesis.playon.restful.domain.Barrio;
 import tesis.playon.restful.domain.Localidad;
 
-@Repository("localidadDao")
 public class LocalidadDao extends HibernateDaoSupport implements ILocalidadDao {
 
     @Override

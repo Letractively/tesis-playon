@@ -14,8 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.hibernate.annotations.Type;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XmlRootElement
@@ -58,7 +56,6 @@ public class Usuario implements Serializable {
     private String nombreUser;
 
     @Column(name = "enable", columnDefinition = "TINYINT")
-    @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean enable;
 
     @Lob

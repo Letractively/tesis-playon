@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.IDenunciaPlayaDao;
 import tesis.playon.restful.domain.DenunciaPlaya;
 
-@Repository("denunciaPlayaDao")
 public class DenunciaPlayaDao extends HibernateDaoSupport implements IDenunciaPlayaDao {
 
     @Override

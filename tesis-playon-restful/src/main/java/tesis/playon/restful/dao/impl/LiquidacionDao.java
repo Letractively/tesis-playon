@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.ILiquidacionDao;
 import tesis.playon.restful.domain.Liquidacion;
 
-@Repository("liquidacionDao")
 public class LiquidacionDao extends HibernateDaoSupport implements ILiquidacionDao {
 
     @Override

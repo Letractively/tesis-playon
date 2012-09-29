@@ -13,7 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import tesis.playon.restful.util.DateAdapter;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -21,6 +26,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("sesion")
 @Entity
 @Table(name = "sesion")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Sesion implements Serializable {
 
     private static final long serialVersionUID = 3859234299526922177L;
@@ -31,9 +37,11 @@ public class Sesion implements Serializable {
     private Integer id;
 
     @Column(name = "fechaFin")
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fechaFin;
 
     @Column(name = "fechaInicio")
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fechaInicio;
 
     @Column(name = "idSesion")

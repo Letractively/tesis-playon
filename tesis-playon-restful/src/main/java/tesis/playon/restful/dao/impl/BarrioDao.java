@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.IBarrioDao;
 import tesis.playon.restful.domain.Barrio;
 
-@Repository("barrioDao")
 public class BarrioDao extends HibernateDaoSupport implements IBarrioDao {
 
     @Override

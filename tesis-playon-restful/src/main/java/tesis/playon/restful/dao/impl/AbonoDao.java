@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.IAbonoDao;
 import tesis.playon.restful.domain.Abono;
 
-@Repository("abonoDao")
 public class AbonoDao extends HibernateDaoSupport implements IAbonoDao {
 
     @Override

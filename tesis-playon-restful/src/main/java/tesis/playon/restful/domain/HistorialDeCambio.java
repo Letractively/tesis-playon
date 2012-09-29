@@ -12,7 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import tesis.playon.restful.util.DateAdapter;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -20,6 +25,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("historialDeCambio")
 @Entity
 @Table(name = "historial_de_cambio")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class HistorialDeCambio implements Serializable {
 
     private static final long serialVersionUID = 740960507447874471L;
@@ -33,6 +39,7 @@ public class HistorialDeCambio implements Serializable {
     private String comentario;
 
     @Column(name = "fecha")
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fecha;
 
     @ManyToOne

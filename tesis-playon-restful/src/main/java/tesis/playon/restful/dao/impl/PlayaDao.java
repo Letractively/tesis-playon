@@ -5,13 +5,11 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.IPlayaDao;
 import tesis.playon.restful.domain.EstadoPlaya;
 import tesis.playon.restful.domain.Playa;
 
-@Repository("playaDao")
 public class PlayaDao extends HibernateDaoSupport implements IPlayaDao {
 
     @Override

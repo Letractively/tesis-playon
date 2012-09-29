@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.IEstadoPlayaDao;
 import tesis.playon.restful.domain.EstadoPlaya;
 
-@Repository("estadoPlayaDao")
 public class EstadoPlayaDao extends HibernateDaoSupport implements IEstadoPlayaDao {
 
     @Override

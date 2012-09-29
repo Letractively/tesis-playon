@@ -12,7 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import tesis.playon.restful.util.DateAdapter;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -20,6 +25,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("liquidacion")
 @Entity
 @Table(name = "liquidacion")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Liquidacion implements Serializable {
 
     private static final long serialVersionUID = 298942841995116227L;
@@ -30,12 +36,15 @@ public class Liquidacion implements Serializable {
     private Integer id;
 
     @Column(name = "fecha")
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fecha;
 
     @Column(name = "fechaDesde")
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fechaDesde;
 
     @Column(name = "fechaHasta")
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fechaHasta;
 
     @Column(name = "importeTotal")

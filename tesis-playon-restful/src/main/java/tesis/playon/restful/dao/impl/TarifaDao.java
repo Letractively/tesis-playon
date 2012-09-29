@@ -7,14 +7,12 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import tesis.playon.restful.dao.ITarifaDao;
 import tesis.playon.restful.domain.CategoriaVehiculo;
 import tesis.playon.restful.domain.Playa;
 import tesis.playon.restful.domain.Tarifa;
 
-@Repository("tarifaDao")
 public class TarifaDao extends HibernateDaoSupport implements ITarifaDao {
 
     @Override

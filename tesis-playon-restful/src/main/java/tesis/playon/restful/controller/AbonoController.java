@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import tesis.playon.restful.domain.Abono;
 import tesis.playon.restful.service.IAbonoService;
 
-@Controller
+@Controller("abonoController")
 public class AbonoController {
 
     @Autowired
