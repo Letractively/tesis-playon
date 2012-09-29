@@ -386,7 +386,7 @@ CREATE TABLE `vehiculo` (
   `colorVehiculoID` int(11) NOT NULL,
   `habilitado` tinyint(1) DEFAULT 1,
   `modeloVehiculoID` int(11) NOT NULL,
-  `patente` varchar(50) NOT NULL UNIQUE,
+  `patente` varchar(50) NOT NULL,
   `vehiculoID` int(11) NOT NULL auto_increment,
   `clienteID` int(11) NOT NULL,
   PRIMARY KEY (`vehiculoID`),
