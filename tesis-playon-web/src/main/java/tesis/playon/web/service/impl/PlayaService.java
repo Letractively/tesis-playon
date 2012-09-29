@@ -21,40 +21,39 @@ public class PlayaService implements IPlayaService {
     @Transactional(readOnly = false)
     @Override
     public void save(Playa playa) {
-	// TODO Auto-generated method stub
 	getPlayaDao().save(playa);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void update(Playa playa) {
-	// TODO Auto-generated method stub
 	getPlayaDao().update(playa);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(Playa playa) {
-	// TODO Auto-generated method stub
 	getPlayaDao().delete(playa);
     }
 
 
     @Override
     public Playa findByNombreComercial(String nombreComercial) {
-	// TODO Auto-generated method stub
 	return getPlayaDao().findByNombreComercial(nombreComercial);
     }
 
     @Override
     public Playa findByRazonSocial(String razonSocial) {
-	// TODO Auto-generated method stub
 	return getPlayaDao().findByRazonSocial(razonSocial);
+    }
+    
+    @Override
+    public Playa findById(int idPlaya) {
+	return getPlayaDao().findById(idPlaya);
     }
 
     @Override
     public List<Playa> findAll() {
-	// TODO Auto-generated method stub
 	return getPlayaDao().findAll();
     }
 

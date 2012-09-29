@@ -17,6 +17,8 @@ public interface IPlayaDao {
 
     Playa findByRazonSocial(String razonSocial);
 
+    Playa findById(int idPlaya);
+    
     List<Playa> findAll();
 
     List<Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia);

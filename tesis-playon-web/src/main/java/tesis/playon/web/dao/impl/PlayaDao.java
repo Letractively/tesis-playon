@@ -49,6 +49,13 @@ public class PlayaDao implements IPlayaDao {
 	    return (Playa) list.get(0);
 	return null;
     }
+    
+    public Playa findById(int idPlaya) {
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Playa where id=?")
+		.setParameter(0, idPlaya).list();
+	return (Playa) list.get(0);
+    }
 
     public List<Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia) {
 	// Query query = getSessionFactory().getCurrentSession()

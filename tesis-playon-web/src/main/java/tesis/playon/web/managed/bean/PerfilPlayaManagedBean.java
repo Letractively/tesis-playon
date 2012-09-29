@@ -102,6 +102,18 @@ public class PerfilPlayaManagedBean implements Serializable {
 	}
     }
 
+    public void findPlayaById() {
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	int idPlayaSelected = Integer.parseInt(facesContext.getExternalContext().getRequestParameterMap().get("id"));
+	playaSelected = getPlayaService().findById(idPlayaSelected);
+	perfilSelected = getPerfilPlayaService().findByPlaya(playaSelected);
+    }
+
+    // public void findPlayaById(int idPlaya){
+    // playaSelected = getPlayaService().findById(idPlaya);
+    // perfilSelected = getPerfilPlayaService().findByPlaya(playaSelected);
+    // }
+
     public String updatePerfil() {
 	Playa playa = new Playa();
 	try {

@@ -102,7 +102,8 @@ public class FavoritoManagedBean implements Serializable {
 	    for (Favorito favorito : favoritosListPerfil) {
 		MenuItem item = new MenuItem();
 		item.setValue(favorito.getPlaya().getNombreComercial());
-		item.setUrl("#");
+		int idPlaya = favorito.getPlaya().getId();
+		item.setUrl("/viewperfilplayaid.html?id="+idPlaya);
 		item.setIcon("ui-icon-star");
 		submenu.getChildren().add(item);
 	    }

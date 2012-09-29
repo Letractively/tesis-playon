@@ -23,6 +23,8 @@ public interface IPlayaService {
     Playa findByNombreComercial(String nombreComercial);
 
     Playa findByRazonSocial(String razonSocial);
+    
+    Playa findById(int idPlaya);
 
     List<Playa> findAll();
 

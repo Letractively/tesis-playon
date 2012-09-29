@@ -622,6 +622,13 @@ public class PlayaManagedBean implements Serializable {
     public void setPlayaSelected(Playa playaSelected) {
 	PlayaManagedBean.playaSelected = playaSelected;
     }
+    
+    public void findPlayaById(){
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	int idPlayaSelected = Integer.parseInt(facesContext.getExternalContext().
+		getRequestParameterMap().get("id"));
+	PlayaManagedBean.playaSelected = getPlayaService().findById(idPlayaSelected);
+    }
 
     public MapModel getAdvancedModel() {
 	return advancedModel;
