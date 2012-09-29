@@ -1133,7 +1133,7 @@ VALUES (1,'Clio',1),(1,'Sandero',1),(1,'Logan',1),(1,'Symbol',1),(1,'Fluence',1)
 (1,'Ka',2),(1,'Fiesta',2),(1,'Focus',2),(1,'Mondeo',2),(1,'S-Max',2),
 (1,'Falcon',2),(1,'Fairlane',2),(1,'Taunus',2),(1,'Taurus',2),(1,'Torino',2),
 (1,'Escort',2),(1,'C-Max',2),(1,'Galaxi',2),(1,'Mustang',2),(1,'Escape',2),
-(4,'kuga',2),(4,'EcoSport',2),(4,'Ranger',2),(3,'Transit Furgon',2),
+(4,'Kuga',2),(4,'EcoSport',2),(4,'Ranger',2),(3,'Transit Furgon',2),
 (3,'Transit Minibus',2),(4,'F100',2),(4,'F150',2),(4,'F250',2),
 (4,'F350',2),(4,'F450',2),(4,'F650',2),(1,'Gol',3),(1,'Fox',3),(1,'Crossfox',3),
 (1,'Golf GTI',3),(1,'Voyage',3),(1,'Bora',3),(1,'Vento',3),(1,'Passat',3),
