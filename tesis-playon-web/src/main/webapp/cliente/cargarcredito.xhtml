@@ -79,33 +79,7 @@
 
 						</form>
 					</div></td>
-				<td><div align="center" style="width: 160px;">
-						<h:outputText value="PayPal" />
-						<form id="paypal"
-							action="https://www.sandbox.paypal.com/cgi-bin/webscr"
-							method="post">
-							<input type="image"
-								src="https://www.paypalobjects.com/es_ES/ES/i/btn/btn_buynowCC_LG.gif" />
-							<input type="hidden" name="shipping" value="0" /> <input
-								type="hidden" name="cbt"
-								value="http://localhost:8080/tesis-playon-web/index.jsf" /> <input
-								type="hidden" name="cmd" value="_xclick" /> <input
-								type="hidden" name="rm" value="2" /> <input type="hidden"
-								name="bn" value="PLAYON  - RED DE PLAYAS" /> <input
-								type="hidden" name="business"
-								value="playon_1346219039_biz@gmail.com" /> <input type="hidden"
-								name="item_number" value="Nombre del comprador" /> <input
-								type="hidden" name="amount" value="#{cuentaClienteMB.saldo}" />
-							<input type="hidden" name="currency_code" value="USD" /> <input
-								type="hidden" name="image_url" value="" /> <input type="hidden"
-								name="return"
-								value="http://localhost:8080/tesis-playon-web/cliente/operacionexitosa.jsf" />
-							<input type="hidden" name="cancel_return"
-								value="http://localhost:8080/tesis-playon-web/transactionerror.jsf" />
-							<input type="hidden" name="no_shipping" value="1" /><input
-								type="hidden" name="no_note" value="1" />
-						</form>
-					</div></td>
+
 			</tr>
 		</table>
 	</ui:define>
