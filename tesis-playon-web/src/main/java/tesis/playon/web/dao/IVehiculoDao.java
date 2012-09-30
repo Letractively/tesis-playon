@@ -24,4 +24,6 @@ public interface IVehiculoDao {
     List<Vehiculo> findByCliente(int idCliente);
 
     boolean isPropietario(String patente, Cliente cliente);
+    
+    boolean isHabilitado(String patente);
 }

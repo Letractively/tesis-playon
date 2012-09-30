@@ -76,8 +76,18 @@ public class VehiculoDao implements IVehiculoDao {
     
     public boolean isPropietario(String patente, Cliente cliente){
 	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from Vehiculo where (pantente = ? and habilitado = true and cliente = ?)")
+		.createQuery("from Vehiculo where patente=? and habilitado=true and cliente=?")
 		.setParameter(0, patente).setParameter(1, cliente).list();
+	if (list.isEmpty()) {
+	    return false;
+	}
+	return true;
+    }
+    
+    public boolean isHabilitado(String patente){
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Vehiculo where patente=? and habilitado=true")
+		.setParameter(0, patente).list();
 	if (list.isEmpty()) {
 	    return false;
 	}

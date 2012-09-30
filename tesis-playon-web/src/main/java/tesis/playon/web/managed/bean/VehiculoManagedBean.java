@@ -14,8 +14,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.springframework.dao.DuplicateKeyException;
-
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.ColorVehiculo;
@@ -93,6 +91,13 @@ public class VehiculoManagedBean implements Serializable {
 
     private List<CategoriaVehiculo> categoriaVehiculoList;
 
+    // ATRIBUTOS PARA EDITAR UN VEHICULO
+    private ColorVehiculo colorSeleccionado;
+    private ModeloVehiculo modeloSeleccionado;
+    private MarcaVehiculo marcaSeleccionada;
+    private String patenteSeleccionada;
+    private Integer anioSeleccionado;
+
     @PostConstruct
     private void init() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -100,13 +105,20 @@ public class VehiculoManagedBean implements Serializable {
 	this.cliente = getClienteService().findByNombreUsuario(userName);
 	marcasList = getMarcaVehiculoService().findAll();
 	colorVehiculoList = getColorVehiculoService().findAll();
+	if (vehiculoSelected != null) {
+	    anioSeleccionado = vehiculoSelected.getAnio();
+	    patenteSeleccionada = vehiculoSelected.getPatente();
+	    colorSeleccionado = vehiculoSelected.getColorVehiculo();
+	    modeloSeleccionado = vehiculoSelected.getModeloVehiculo();
+	    marcaSeleccionada = vehiculoSelected.getModeloVehiculo().getMarcaVehiculo();
+	}
     }
 
     public String addVehiculo() {
 	Vehiculo vehiculo = new Vehiculo();
 	try {
 	    if (cliente != null) {
-		if (!getVehiculoService().isPropietario(getPatente(), cliente)) {
+		if (!getVehiculoService().isHabilitado(getPatente())) {
 		    vehiculo.setAnio(getAnio());
 		    vehiculo.setCliente(cliente);
 		    vehiculo.setCodigoBarra(getCodigoBarra());
@@ -120,7 +132,7 @@ public class VehiculoManagedBean implements Serializable {
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 			    "Se agregó correctamente el vehículo con patente: " + getPatente(), "");
 		    FacesContext.getCurrentInstance().addMessage(null, message);
-		    
+
 		    return "vehiculoaddend";
 		} else {
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "El vehículo con patente :"
@@ -129,15 +141,9 @@ public class VehiculoManagedBean implements Serializable {
 		}
 	    }
 	    return null;
-	} catch (DuplicateKeyException e) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, Ya éxiste un vehículo con patente: " + getPatente(), "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    e.printStackTrace();
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo agregar el vehículo con patente: " + getPatente(),
-		    "Por favor, inténtelo más tarde.");
+		    "Error, Ya éxiste un vehículo con patente: " + getPatente(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}
@@ -147,34 +153,46 @@ public class VehiculoManagedBean implements Serializable {
     public String updateVehiculo() {
 	try {
 	    if (cliente != null && vehiculoSelected != null) {
-		if (!getVehiculoService().isPropietario(vehiculoSelected.getPatente(), cliente)) {
+		if (getVehiculoService().isPropietario(patenteSeleccionada, cliente)) {
+		    vehiculoSelected.setAnio(anioSeleccionado);
+		    vehiculoSelected.setColorVehiculo(colorSeleccionado);
+		    vehiculoSelected.setModeloVehiculo(modeloSeleccionado);
+		    vehiculoSelected.setPatente(patenteSeleccionada);
 
 		    getVehiculoService().update(vehiculoSelected);
 
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-			    "Se modificó correctamente el vehículo con patente: " + vehiculoSelected.getPatente(), "");
+			    "Se modificó correctamente el vehículo con patente: " + patenteSeleccionada, "");
 		    FacesContext.getCurrentInstance().addMessage(null, message);
-		    
+
 		    return "vehiculolist";
 		} else {
-		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "El vehículo con patente :"
-			    + getPatente() + " ya está registrado", "");
-		    FacesContext.getCurrentInstance().addMessage(null, message);
+		    if (!getVehiculoService().isHabilitado(patenteSeleccionada)) {
+			vehiculoSelected.setAnio(anioSeleccionado);
+			vehiculoSelected.setColorVehiculo(colorSeleccionado);
+			vehiculoSelected.setModeloVehiculo(modeloSeleccionado);
+			vehiculoSelected.setPatente(patenteSeleccionada);
+
+			getVehiculoService().update(vehiculoSelected);
+
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Se modificó correctamente el vehículo con patente: " + patenteSeleccionada, "");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			
+			return "vehiculolist";
+		    } else {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+				"Ya se encuentra registrado el vehículo con patente: " + patenteSeleccionada,
+				"");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		    }
 		}
 	    }
-
-	    return null;
-	} catch (DuplicateKeyException e) {
+	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, Ya éxiste un vehículo con patente: " + getPatente(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
-	} catch (Exception ex) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo modificar el vehículo con patente: " + getPatente(),
-		    "Por favor, inténtelo más tarde.");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    ex.printStackTrace();
 	}
 	return null;
     }
@@ -184,6 +202,13 @@ public class VehiculoManagedBean implements Serializable {
 	    modelosList = getModeloVehiculoService().findByMarca(marca);
 	else
 	    modelosList = new ArrayList<ModeloVehiculo>();
+    }
+
+    public void handleMarcaSelectedChange() {
+	if (marcaSeleccionada != null && !marcaSeleccionada.equals(""))
+	    modelosList = getModeloVehiculoService().findByMarca(marcaSeleccionada);
+	else
+	    modelosList.add(vehiculoSelected.getModeloVehiculo());
     }
 
     public IVehiculoService getVehiculoService() {
@@ -381,5 +406,45 @@ public class VehiculoManagedBean implements Serializable {
 
     public void setCategoriaVehiculoList(List<CategoriaVehiculo> categoriaVehiculoList) {
 	this.categoriaVehiculoList = categoriaVehiculoList;
+    }
+
+    public ColorVehiculo getColorSeleccionado() {
+	return colorSeleccionado;
+    }
+
+    public void setColorSeleccionado(ColorVehiculo colorSeleccionado) {
+	this.colorSeleccionado = colorSeleccionado;
+    }
+
+    public ModeloVehiculo getModeloSeleccionado() {
+	return modeloSeleccionado;
+    }
+
+    public void setModeloSeleccionado(ModeloVehiculo modeloSeleccionado) {
+	this.modeloSeleccionado = modeloSeleccionado;
+    }
+
+    public MarcaVehiculo getMarcaSeleccionada() {
+	return marcaSeleccionada;
+    }
+
+    public void setMarcaSeleccionada(MarcaVehiculo marcaSeleccionada) {
+	this.marcaSeleccionada = marcaSeleccionada;
+    }
+
+    public String getPatenteSeleccionada() {
+	return patenteSeleccionada;
+    }
+
+    public void setPatenteSeleccionada(String patenteSeleccionada) {
+	this.patenteSeleccionada = patenteSeleccionada;
+    }
+
+    public Integer getAnioSeleccionado() {
+	return anioSeleccionado;
+    }
+
+    public void setAnioSeleccionado(Integer anioSeleccionado) {
+	this.anioSeleccionado = anioSeleccionado;
     }
 }

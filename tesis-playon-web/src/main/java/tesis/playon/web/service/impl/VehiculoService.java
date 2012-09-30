@@ -56,6 +56,11 @@ public class VehiculoService implements IVehiculoService {
     public boolean isPropietario(String patente, Cliente cliente){
 	return getVehiculoDao().isPropietario(patente, cliente);
     }
+    
+    @Override
+    public boolean isHabilitado(String patente){
+	return getVehiculoDao().isHabilitado(patente);
+    }
 
     public IVehiculoDao getVehiculoDao() {
 	return vehiculoDao;
