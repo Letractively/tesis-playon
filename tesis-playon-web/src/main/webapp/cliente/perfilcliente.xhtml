@@ -11,46 +11,47 @@
 
 	<ui:define name="content">
 		<h1>Perfil</h1>
-		<div id="perfil-playa">
-			<h:panelGrid columns="2">
-				<h:graphicImage library="fotos_perfil_clientes"
-					name="#{perfilClienteMB.usuario.nombreUser}.jpg"
-					styleClass="bordes-foto-perfil"
-					rendered="#{perfilClienteMB.usuario.fotoPerfil != null}" />
-				<h:graphicImage library="fotos_perfil_clientes" name="sinfoto.jpg"
-					styleClass="bordes-foto-perfil"
-					rendered="#{perfilClienteMB.usuario.fotoPerfil == null}" />
-				<h1 style="width: 100%">#{perfilClienteMB.usuario.apellido}
-					#{perfilClienteMB.usuario.nombre}</h1>
-			</h:panelGrid>
+		<div style="margin: 0 0 0 40px;">
+			<div id="perfil-playa">
+				<h:panelGrid columns="2">
+					<h:graphicImage library="fotos_perfil_clientes"
+						name="#{perfilClienteMB.usuario.nombreUser}.jpg"
+						styleClass="bordes-foto-perfil"
+						rendered="#{perfilClienteMB.usuario.fotoPerfil != null}" />
+					<h:graphicImage library="fotos_perfil_clientes" name="sinfoto.jpg"
+						styleClass="bordes-foto-perfil"
+						rendered="#{perfilClienteMB.usuario.fotoPerfil == null}" />
+					<h1 style="width: 100%">#{perfilClienteMB.usuario.apellido}
+						#{perfilClienteMB.usuario.nombre}</h1>
+				</h:panelGrid>
+			</div>
+			<br />
+			<div id="perfil-playa">
+				<h:panelGrid columns="2" cellpadding="8" cellspacing="10">
+
+					<h:outputText value="Nombre de usuario: "
+						styleClass="fuente-outputtext" />
+					<h:outputText value="#{perfilClienteMB.usuario.nombreUser}"
+						styleClass="fuente-perfil" />
+
+					<h:outputText value="E-mail: " styleClass="fuente-outputtext" />
+					<h:outputText value="#{perfilClienteMB.usuario.email}"
+						styleClass="fuente-perfil" />
+
+					<h:outputText value="Teléfono: " styleClass="fuente-outputtext" />
+					<h:outputText value="#{perfilClienteMB.cliente.telefono}"
+						styleClass="fuente-perfil" />
+
+					<h:outputText value="Domicilio: " styleClass="fuente-outputtext" />
+					<h:outputText value="#{perfilClienteMB.cliente.domicilio}"
+						styleClass="fuente-perfil" />
+
+					<h:outputText value="Barrio: " styleClass="fuente-outputtext" />
+					<h:outputText value="#{perfilClienteMB.cliente.barrio.nombre}"
+						styleClass="fuente-perfil" />
+
+				</h:panelGrid>
+			</div>
 		</div>
-		<br />
-		<div id="perfil-playa">
-			<h:panelGrid columns="2" cellpadding="8" cellspacing="10">
-
-				<h:outputText value="Nombre de usuario: "
-					styleClass="fuente-outputtext" />
-				<h:outputText value="#{perfilClienteMB.usuario.nombreUser}"
-					styleClass="fuente-perfil" />
-
-				<h:outputText value="E-mail: " styleClass="fuente-outputtext" />
-				<h:outputText value="#{perfilClienteMB.usuario.email}"
-					styleClass="fuente-perfil" />
-
-				<h:outputText value="Teléfono: " styleClass="fuente-outputtext" />
-				<h:outputText value="#{perfilClienteMB.cliente.telefono}"
-					styleClass="fuente-perfil" />
-
-				<h:outputText value="Domicilio: " styleClass="fuente-outputtext" />
-				<h:outputText value="#{perfilClienteMB.cliente.domicilio}"
-					styleClass="fuente-perfil" />
-
-				<h:outputText value="Barrio: " styleClass="fuente-outputtext" />
-				<h:outputText value="#{perfilClienteMB.cliente.barrio.nombre}"
-					styleClass="fuente-perfil" />
-
-			</h:panelGrid>
-		</div>
-
 	</ui:define>
 </ui:composition>

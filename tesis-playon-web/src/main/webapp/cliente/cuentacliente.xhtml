@@ -12,16 +12,16 @@
 	<ui:define name="content">
 		<h1>Mi estado de cuenta</h1>
 
-		<h:form id="contenido">
+		<h:form id="contenido" style="margin: 0 0 0 40px;">
 			<p:growl id="messages" />
 			<div id="perfil-playa">
 				<h:panelGrid columns="2">
 					<h:graphicImage library="fotos_perfil_clientes"
 						name="#{perfilClienteMB.usuario.nombreUser}.jpg"
-						style="width:151px; height:151px; border: 2px solid black"
+						styleClass="bordes-foto-perfil"
 						rendered="#{perfilClienteMB.usuario.fotoPerfil != null}" />
 					<h:graphicImage library="fotos_perfil_clientes" name="sinfoto.jpg"
-						style="width:151px; height:151px; border: 2px solid black"
+						styleClass="bordes-foto-perfil"
 						rendered="#{perfilClienteMB.usuario.fotoPerfil == null}" />
 					<h1 style="width: 400px">#{perfilClienteMB.usuario.apellido}
 						#{perfilClienteMB.usuario.nombre}</h1>
