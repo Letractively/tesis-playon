@@ -40,16 +40,21 @@ public class EstadoPromocionDao implements IEstadoPromocionDao {
     public EstadoPromocion findByNombreEstadoPromocion(String nombreEstadoPromocion) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoPromocion where nombre=?")
 		.setParameter(0, nombreEstadoPromocion).list();
-	return (EstadoPromocion) list.get(0);
+	if (!list.isEmpty())
+	    return (EstadoPromocion) list.get(0);
+	return null;
     }
 
     public List<EstadoPromocion> findAll() {
 	List<EstadoPromocion> listaEstadoPromocion = new ArrayList<EstadoPromocion>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoPromocion").list();
-	for (Object obj : list) {
-	    listaEstadoPromocion.add((EstadoPromocion) obj);
+	if (!list.isEmpty()) {
+	    for (Object obj : list) {
+		listaEstadoPromocion.add((EstadoPromocion) obj);
+	    }
+	    return listaEstadoPromocion;
 	}
-	return listaEstadoPromocion;
+	return null;
     }
 
 }

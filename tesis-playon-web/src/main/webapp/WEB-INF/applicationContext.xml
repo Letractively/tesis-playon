@@ -39,7 +39,7 @@
 	<bean id="Estadia" class="tesis.playon.web.model.Estadia" />
 	<!-- <bean id="EstadoDenuncia" class="tesis.playon.web.model.EstadoDenuncia" /> -->
 	<bean id="EstadoPlaya" class="tesis.playon.web.model.EstadoPlaya" />
-	<!-- <bean id="EstadoPromocion" class="tesis.playon.web.model.EstadoPromocion" /> -->
+	<bean id="EstadoPromocion" class="tesis.playon.web.model.EstadoPromocion" />
 	<!-- <bean id="EstadoPublicidad" class="tesis.playon.web.model.EstadoPublicidad" /> -->
 	<bean id="Favorito" class="tesis.playon.web.model.Favorito" />
 	<bean id="Foto" class="tesis.playon.web.model.Foto" />
@@ -50,6 +50,7 @@
 	<bean id="PerfilPlaya" class="tesis.playon.web.model.PerfilPlaya" />
 	<bean id="Playa" class="tesis.playon.web.model.Playa" />
 	<!-- <bean id="Posicion" class="tesis.playon.web.model.Posicion" /> -->
+	<bean id="Promocion" class="tesis.playon.web.model.Promocion" />
 	<bean id="Provincia" class="tesis.playon.web.model.Provincia" />
 	<bean id="RolesPorUsuario" class="tesis.playon.web.model.RolesPorUsuario" />
 	<bean id="RolUsuario" class="tesis.playon.web.model.RolUsuario" />
@@ -99,6 +100,11 @@
 	<bean id="EstadoPlayaService" class="tesis.playon.web.service.impl.EstadoPlayaService">
 		<property name="estadoPlayaDao" ref="EstadoPlayaDao" />
 	</bean>
+	
+	<bean id="EstadoPromocionService" class="tesis.playon.web.service.impl.EstadoPromocionService">
+		<property name="estadoPromocionDao" ref="EstadoPromocionDao" />
+	</bean>
+	
 	<bean id="EmpleadoService" class="tesis.playon.web.service.impl.EmpleadoService">
 		<property name="empleadoDao" ref="EmpleadoDao" />
 	</bean>
@@ -126,6 +132,11 @@
 	<bean id="PlayaService" class="tesis.playon.web.service.impl.PlayaService">
 		<property name="playaDao" ref="PlayaDao" />
 	</bean>
+	
+	<bean id="PromocionService" class="tesis.playon.web.service.impl.PromocionService">
+		<property name="promocionDao" ref="PromocionDao" />
+	</bean>
+	
 	<bean id="ProvinciaService" class="tesis.playon.web.service.impl.ProvinciaService">
 		<property name="provinciaDao" ref="ProvinciaDao" />
 	</bean>
@@ -194,6 +205,11 @@
 	<bean id="EstadoPlayaDao" class="tesis.playon.web.dao.impl.EstadoPlayaDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
+	
+	<bean id="EstadoPromocionDao" class="tesis.playon.web.dao.impl.EstadoPromocionDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
+	
 	<bean id="EmpleadoDao" class="tesis.playon.web.dao.impl.EmpleadoDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
@@ -221,6 +237,11 @@
 	<bean id="PlayaDao" class="tesis.playon.web.dao.impl.PlayaDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
+	
+	<bean id="PromocionDao" class="tesis.playon.web.dao.impl.PromocionDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
+	
 	<bean id="ProvinciaDao" class="tesis.playon.web.dao.impl.ProvinciaDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>

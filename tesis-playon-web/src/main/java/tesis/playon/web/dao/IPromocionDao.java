@@ -2,6 +2,8 @@ package tesis.playon.web.dao;
 
 import java.util.List;
 
+import tesis.playon.web.model.EstadoPromocion;
+import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Promocion;
 
 /**
@@ -19,4 +21,10 @@ public interface IPromocionDao {
     Promocion findByNombrePromocion(String nombrePromocion);
 
     List<Promocion> findAll();
+    
+    List<Promocion> findByEstado(EstadoPromocion estado);
+    
+    List<Promocion> findByPlaya(Playa playa, EstadoPromocion estado);
+    
+    List<Promocion> findByPlaya(Playa playa);
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IPromocionDao;
+import tesis.playon.web.model.EstadoPromocion;
+import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Promocion;
 
 /**
@@ -39,15 +41,61 @@ public class PromocionDao implements IPromocionDao {
     public Promocion findByNombrePromocion(String nombrePromocion) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Promocion where nombre=?")
 		.setParameter(0, nombrePromocion).list();
-	return (Promocion) list.get(0);
+	if(!list.isEmpty())
+	    return (Promocion) list.get(0);
+	return null;
     }
 
     public List<Promocion> findAll() {
 	List<Promocion> promociones = new ArrayList<Promocion>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Promocion").list();
-	for (Object object : list) {
-	    promociones.add((Promocion) object);
+	if(!list.isEmpty()){
+	    for (Object object : list) {
+		    promociones.add((Promocion) object);
+		}
+		return promociones;
 	}
-	return promociones;
+	return null;
+    }
+
+    public List<Promocion> findByEstado(EstadoPromocion estado){
+	List<Promocion> promociones = new ArrayList<Promocion>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Promocion where estadoPromocion=?").setParameter(0, estado).list();
+	if(!list.isEmpty()){
+	    for (Object object : list) {
+		    promociones.add((Promocion) object);
+		}
+		return promociones;
+	}
+	return null;
+    }
+
+    public List<Promocion> findByPlaya(Playa playa, EstadoPromocion estado){
+	List<Promocion> promociones = new ArrayList<Promocion>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Promocion where estadoPromocion=? and playa=?")
+		.setParameter(0, estado).setParameter(1, playa).list();
+	if(!list.isEmpty()){
+	    for (Object object : list) {
+		    promociones.add((Promocion) object);
+		}
+		return promociones;
+	}
+	return null;
+    }
+
+    public List<Promocion> findByPlaya(Playa playa){
+	List<Promocion> promociones = new ArrayList<Promocion>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Promocion where playa=?")
+		.setParameter(1, playa).list();
+	if(!list.isEmpty()){
+	    for (Object object : list) {
+		    promociones.add((Promocion) object);
+		}
+		return promociones;
+	}
+	return null;
     }
 }
