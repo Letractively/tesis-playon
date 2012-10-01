@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "tipoDoc")
+@XmlRootElement(name = "tipo_doc")
 @Entity
 @Table(name = "tipo_doc")
 public class TipoDoc implements Serializable {

@@ -12,34 +12,36 @@ public class TipoDocDao extends HibernateDaoSupport implements ITipoDocDao {
 
     @Override
     public void save(TipoDoc tipoDoc) {
-	getSessionFactory().getCurrentSession().save(tipoDoc);
+	getHibernateTemplate().save(tipoDoc);
     }
 
     @Override
     public void update(TipoDoc tipoDoc) {
-	getSessionFactory().getCurrentSession().update(tipoDoc);
+	getHibernateTemplate().update(tipoDoc);
     }
 
     @Override
     public void delete(TipoDoc tipoDoc) {
-	getSessionFactory().getCurrentSession().delete(tipoDoc);
+	getHibernateTemplate().delete(tipoDoc);
     }
 
     @Override
     public TipoDoc findByNombreTipoDoc(String nombreTipoDoc) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoDoc where nombre=?")
-		.setParameter(0, nombreTipoDoc).list();
+	List<?> list = getHibernateTemplate(). find("from TipoDoc where nombre=?", nombreTipoDoc);
 	return (TipoDoc) list.get(0);
     }
 
     @Override
     public List<TipoDoc> findAll() {
-	List<TipoDoc> documentos = new ArrayList<TipoDoc>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoDoc order by nombre").list();
-	for (Object object : list) {
-	    documentos.add((TipoDoc) object);
+	List<TipoDoc> tipoDocumentos = new ArrayList<TipoDoc>();
+	List<?> list = getHibernateTemplate().find("from TipoDoc");
+	if (!list.isEmpty()) {
+	    for (Object obj : list) {
+		tipoDocumentos.add((TipoDoc) obj);
+	    }
+	    return tipoDocumentos;
 	}
-	return documentos;
+	return null;
     }
 
 }
