@@ -27,4 +27,5 @@ public interface IUsuarioService {
     
     boolean existeEmail(String email);
 
+    boolean existeUserName(String userName);
 }

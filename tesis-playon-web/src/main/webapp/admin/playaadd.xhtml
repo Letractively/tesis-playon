@@ -109,8 +109,9 @@
 						<h:outputLabel for="emailPlaya" value="E-mail: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="emailPlaya"
-							value="#{playaMB.email}">
+						<p:inputText id="emailPlaya" feedback="true"
+							value="#{playaMB.email}" type="email"
+							validator="#{validatorMB.isValidEmailPlaya}">
 							<p:ajax event="blur" update="emailPlayaMsg" />
 						</p:inputText>
 					</p:column>

@@ -177,8 +177,7 @@ public class ClienteManagedBean implements Serializable {
 
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
-	}
-	catch (Exception e) {
+	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados", "Usuario duplicado");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
@@ -224,8 +223,7 @@ public class ClienteManagedBean implements Serializable {
 			    + cliente.getUsuario().getNombre(), "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
-	}
-    catch (Exception e) {
+	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados", "Usuario duplicado");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
@@ -245,14 +243,15 @@ public class ClienteManagedBean implements Serializable {
 	    usuario.setTipoDoc(getTipoDoc());
 	    usuario.setEnable(new Boolean(true));
 	    getUsuarioService().save(usuario);
-	    
+
 	    return usuario;
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
-	}catch (Exception e) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-			"Error, no se pudo crear la Cuenta del Cliente. Nombre de usuario o mail Duplicados", "Usuario duplicado");
-		FacesContext.getCurrentInstance().addMessage(null, message);
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo crear la Cuenta del Cliente. Nombre de usuario o mail Duplicados",
+		    "Usuario duplicado");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	return null;
     }
@@ -268,13 +267,13 @@ public class ClienteManagedBean implements Serializable {
 	    return cuenta;
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
-	}
-	catch (Exception e) {
+	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo crear la Cuenta del Cliente. Nombre de usuario o mail Duplicados", "Usuario duplicado");
+		    "Error, no se pudo crear la Cuenta del Cliente. Nombre de usuario o mail Duplicados",
+		    "Usuario duplicado");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
-	
+
 	return null;
     }
 
@@ -317,8 +316,7 @@ public class ClienteManagedBean implements Serializable {
 		    "Error,el cliente no se pudo modificar", "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
-	}
-    catch (Exception e) {
+	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados", "Usuario duplicado");
 	    FacesContext.getCurrentInstance().addMessage(null, message);

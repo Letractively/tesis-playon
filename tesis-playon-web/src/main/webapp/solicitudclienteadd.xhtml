@@ -35,7 +35,8 @@
 					<p:column>
 						<p:inputText id="nombreUser" style="width: 200px"
 							value="#{clienteMB.nombreUser}" required="true"
-							requiredMessage="Campo obligatorio" maxlength="25">
+							requiredMessage="Campo obligatorio" maxlength="25"
+							validator="#{validatorMB.isValidUserName}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="nombreUserMsg" />
 						</p:inputText>
@@ -150,9 +151,10 @@
 					<p:column>
 						<p:inputText id="email" value="#{clienteMB.email}"
 							style="width: 200px" required="true"
-							requiredMessage="Campo obligatorio" type="email" maxlength="100">
+							requiredMessage="Campo obligatorio" type="email"
+							maxlength="100" validator="#{validatorMB.isValidEmailUsuario}">
 							<f:validateLength minimum="5" />
-							<p:ajax event="blur" update="emailMsg" />
+							<p:ajax event="blur" update="emailMsg"/>
 						</p:inputText>
 					</p:column>
 					<p:column>

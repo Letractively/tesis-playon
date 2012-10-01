@@ -368,7 +368,7 @@ public class PlayaManagedBean implements Serializable {
 	this.setTipoDoc(null);
 	this.setPlaya(null);
     }
-
+    
     public IUsuarioService getUsuarioService() {
 	return usuarioService;
     }

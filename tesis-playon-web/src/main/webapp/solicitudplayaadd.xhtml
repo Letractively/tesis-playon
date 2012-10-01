@@ -123,7 +123,8 @@
 					<p:column>
 						<p:inputText id="emailPlaya" value="#{playaMB.emailPlaya}"
 							style="width: 200px" required="true"
-							requiredMessage="Campo obligatorio" type="email" maxlength="100">
+							requiredMessage="Campo obligatorio" type="email"
+							maxlength="100" validator="#{validatorMB.isValidEmailPlaya}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="emailPlayaMsg" />
 						</p:inputText>
@@ -224,7 +225,8 @@
 					<p:column>
 						<p:inputText id="email" value="#{playaMB.email}"
 							style="width: 200px" required="true"
-							requiredMessage="Campo obligatorio" type="email" maxlength="100">
+							requiredMessage="Campo obligatorio" type="email"
+							maxlength="100" validator="#{validatorMB.isValidEmailUsuario}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="emailMsg" />
 						</p:inputText>
@@ -239,7 +241,8 @@
 					<p:column>
 						<p:inputText id="nombreUser" style="width: 200px"
 							value="#{playaMB.nombreUser}" required="true"
-							requiredMessage="Campo obligatorio" maxlength="25">
+							requiredMessage="Campo obligatorio" maxlength="25"
+							validator="#{validatorMB.isValidUserName}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="nombreUserMsg" />
 						</p:inputText>
