@@ -24,5 +24,7 @@ public interface IUsuarioService {
     List<Usuario> findByPlaya(Playa playa);
     
     Usuario findGerenteByPlaya(Playa playa);
+    
+    boolean existeEmail(String email);
 
 }

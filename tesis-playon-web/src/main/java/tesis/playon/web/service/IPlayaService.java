@@ -32,4 +32,5 @@ public interface IPlayaService {
 
     List<Playa> findByEstado(EstadoPlaya estado);
 
+    boolean existeEmail(String email);
 }

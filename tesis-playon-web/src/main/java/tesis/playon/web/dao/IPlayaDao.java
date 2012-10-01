@@ -25,4 +25,5 @@ public interface IPlayaDao {
 
     List<Playa> findByEstado(EstadoPlaya estado);
 
+    boolean existeEmail(String email);
 }

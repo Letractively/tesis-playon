@@ -100,4 +100,14 @@ public class PlayaDao implements IPlayaDao {
 	}
 	return null;
     }
+    
+    @Override
+    public boolean existeEmail(String email){
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Playa where email=?")
+		.setParameter(0, email).list();
+	if (list.isEmpty()) {
+	    return false;
+	}
+	return true;
+    }
 }

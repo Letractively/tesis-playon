@@ -21,4 +21,5 @@ public interface IUsuarioDao {
     
     List<Usuario> findAll();
 
+    boolean existeEmail(String email);
 }

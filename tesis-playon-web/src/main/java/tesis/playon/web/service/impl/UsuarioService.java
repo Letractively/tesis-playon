@@ -64,5 +64,9 @@ public class UsuarioService implements IUsuarioService {
     public Usuario findGerenteByPlaya(Playa playa) {
 	return getUsuarioDao().findGerenteByPlaya(playa);
     }
-
+    
+    @Override
+    public boolean existeEmail(String email){
+	return getUsuarioDao().existeEmail(email);
+    }
 }

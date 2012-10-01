@@ -28,7 +28,7 @@ public class UsuarioManagedBean implements Serializable {
     private static final String LISTA_USUARIOS = "usuariolist";
 
     private static final String ERROR = "error";
-
+    
     @ManagedProperty(value = "#{UsuarioService}")
     IUsuarioService usuarioService;
 
@@ -326,5 +326,4 @@ public class UsuarioManagedBean implements Serializable {
 
 	return usuario;
     }
-
 }

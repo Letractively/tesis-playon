@@ -75,5 +75,9 @@ public class PlayaService implements IPlayaService {
 	// TODO Auto-generated method stub
 	return getPlayaDao().findByEstado(estado);
     }
-
+    
+    @Override
+    public boolean existeEmail(String email){
+	return getPlayaDao().existeEmail(email);
+    }
 }
