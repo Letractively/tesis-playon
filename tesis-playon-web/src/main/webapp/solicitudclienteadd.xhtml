@@ -41,9 +41,15 @@
 							<p:ajax event="blur" update="nombreUserMsg" />
 						</p:inputText>
 					</p:column>
+					<p:column />
+
+					<p:column />
 					<p:column>
-						<p:message id="nombreUserMsg" for="nombreUser" display="icon" />
+						<div style="width: 215px;">
+							<p:message id="nombreUserMsg" for="nombreUser" display="text" />
+						</div>
 					</p:column>
+					<p:column />
 
 					<p:column>
 						<h:outputLabel for="password" value="Contraseña: " />
@@ -151,15 +157,21 @@
 					<p:column>
 						<p:inputText id="email" value="#{clienteMB.email}"
 							style="width: 200px" required="true"
-							requiredMessage="Campo obligatorio" type="email"
-							maxlength="100" validator="#{validatorMB.isValidEmailUsuario}">
+							requiredMessage="Campo obligatorio" type="email" maxlength="100"
+							validator="#{validatorMB.isValidEmailUsuario}">
 							<f:validateLength minimum="5" />
-							<p:ajax event="blur" update="emailMsg"/>
+							<p:ajax event="blur" update="emailMsg" />
 						</p:inputText>
 					</p:column>
+					<p:column />
+
+					<p:column />
 					<p:column>
-						<p:message id="emailMsg" for="email" display="icon" />
+						<div style="width: 215px;">
+							<p:message id="emailMsg" for="email" display="text" />
+						</div>
 					</p:column>
+					<p:column />
 
 					<p:column>
 						<h:outputText for="barrio" value="Barrio: " />
@@ -185,7 +197,7 @@
 							<p:ajax event="blur" update="domicilioMsg" />
 						</p:inputText>
 					</p:column>
-					<p:column>	
+					<p:column>
 						<p:message id="domicilioMsg" for="domicilio" display="icon" />
 					</p:column>
 
@@ -210,7 +222,6 @@
 						</div>
 					</p:column>
 					<p:column />
-
 				</h:panelGrid>
 			</div>
 		</h:form>

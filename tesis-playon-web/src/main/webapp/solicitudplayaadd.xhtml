@@ -123,15 +123,21 @@
 					<p:column>
 						<p:inputText id="emailPlaya" value="#{playaMB.emailPlaya}"
 							style="width: 200px" required="true"
-							requiredMessage="Campo obligatorio" type="email"
-							maxlength="100" validator="#{validatorMB.isValidEmailPlaya}">
+							requiredMessage="Campo obligatorio" type="email" maxlength="100"
+							validator="#{validatorMB.isValidEmailPlaya}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="emailPlayaMsg" />
 						</p:inputText>
 					</p:column>
+					<p:column />
+
+					<p:column />
 					<p:column>
-						<p:message id="emailPlayaMsg" for="emailPlaya" display="icon" />
+						<div style="width: 215px;">
+							<p:message id="emailPlayaMsg" for="emailPlaya" display="text" />
+						</div>
 					</p:column>
+					<p:column />
 
 					<p:column>
 						<h:outputLabel for="disponibilidad" value="Disponibilidad: " />
@@ -149,17 +155,16 @@
 							display="icon" />
 					</p:column>
 
-					<p:column>
 						<br />
-					</p:column>
 					<p:column />
 					<p:column />
+
 					<p:column>
 						<h:outputLabel for="nombre" value="Encargado de Playa"
 							styleClass="fuente-subtitle" />
 					</p:column>
-					<p:column></p:column>
-					<p:column></p:column>
+					<p:column />
+					<p:column />
 
 					<p:column>
 						<h:outputLabel for="nombre" value="Nombre: " />
@@ -225,15 +230,21 @@
 					<p:column>
 						<p:inputText id="email" value="#{playaMB.email}"
 							style="width: 200px" required="true"
-							requiredMessage="Campo obligatorio" type="email"
-							maxlength="100" validator="#{validatorMB.isValidEmailUsuario}">
+							requiredMessage="Campo obligatorio" type="email" maxlength="100"
+							validator="#{validatorMB.isValidEmailUsuario}">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="emailMsg" />
 						</p:inputText>
 					</p:column>
+					<p:column />
+					
+					<p:column />
 					<p:column>
-						<p:message id="emailMsg" for="email" display="icon" />
+						<div style="width: 215px;">
+							<p:message id="emailMsg" for="email" display="text" />
+						</div>
 					</p:column>
+					<p:column />
 
 					<p:column>
 						<h:outputLabel for="nombreUser" value="Usuario: " />
@@ -247,9 +258,15 @@
 							<p:ajax event="blur" update="nombreUserMsg" />
 						</p:inputText>
 					</p:column>
+					<p:column />
+					
+					<p:column />
 					<p:column>
-						<p:message id="nombreUserMsg" for="nombreUser" display="icon" />
+						<div style="width: 215px;">
+							<p:message id="nombreUserMsg" for="nombreUser" display="text" />
+						</div>
 					</p:column>
+					<p:column />
 
 					<p:column>
 						<h:outputLabel for="password" value="Contraseña: " />
