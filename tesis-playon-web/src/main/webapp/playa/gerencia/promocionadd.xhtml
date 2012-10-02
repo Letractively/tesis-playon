@@ -1,0 +1,28 @@
+<ui:composition template="../../template/templatePlaya.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="loadmenuadmin" value="true" />
+
+	<ui:define name="title">
+		Nueva promoción
+    </ui:define>
+
+	<ui:define name="content">
+		<h1>Nueva promoción</h1>
+
+		<p:growl id="messages" />
+		<h:form>
+			<div align="left" style="margin-top: 10px">
+				<p:panelGrid id="addPromocion" columns="3" cellspacing="5" cellpadding="5" 
+					style="border: none solid black">
+					<h:outputLabel for="nombre" value="Nombre: " />
+					
+				</p:panelGrid>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
