@@ -13,4 +13,6 @@ public interface ITransaccionPlayaDao {
     void delete(TransaccionPlaya transaccionPlaya);
 
     List<TransaccionPlaya> findAll();
+
+    TransaccionPlaya findByTransaccionPlayaID(int id);
 }

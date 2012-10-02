@@ -46,4 +46,11 @@ public class TransaccionPlayaDao implements ITransaccionPlayaDao {
 	return transaccionPlaya;
     }
 
+    public TransaccionPlaya findByTransaccionPlayaID(int transaccionPlayaID) {
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from TransaccionPlaya where transaccionPlayaID=?").setParameter(0, transaccionPlayaID)
+		.list();
+	return (TransaccionPlaya) list.get(0);
+    }
+
 }
