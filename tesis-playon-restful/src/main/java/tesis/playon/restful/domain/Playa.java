@@ -16,10 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 @XmlRootElement
-@XStreamAlias("playa")
 @NamedNativeQueries({ @NamedNativeQuery(name = "callPlayasStoreProcedure", query = "CALL busquedaplaya(:platitud,:plongitud, :pdistancia)", resultClass = Playa.class) })
 @Entity
 @Table(name = "playa")

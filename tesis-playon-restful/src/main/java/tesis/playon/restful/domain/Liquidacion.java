@@ -19,10 +19,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import tesis.playon.restful.util.DateAdapter;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 @XmlRootElement
-@XStreamAlias("liquidacion")
 @Entity
 @Table(name = "liquidacion")
 @XmlAccessorType(XmlAccessType.FIELD)

@@ -1,43 +1,67 @@
 package tesis.playon.restful.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import javax.annotation.Resource;
 
-import tesis.playon.restful.dao.ITipoDocDao;
+import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import tesis.playon.restful.domain.TipoDoc;
 import tesis.playon.restful.service.ITipoDocService;
 
 @Service("tipoDocService")
+@Transactional
 public class TipoDocService implements ITipoDocService {
 
-    @Autowired
-    private ITipoDocDao tipoDocDao;
+    protected static Logger logger = Logger.getLogger("service");
+
+    @Resource(name = "sessionFactory")
+    private SessionFactory sessionFactory;
 
     @Override
     public void save(TipoDoc tipoDoc) {
-	tipoDocDao.save(tipoDoc);
+	logger.debug("Agregando un tipo de documento");
+	Session session = sessionFactory.getCurrentSession();
+	session.save(tipoDoc);
     }
 
     @Override
     public void update(TipoDoc tipoDoc) {
-	tipoDocDao.update(tipoDoc);
+	logger.debug("Actualizando un tipo de documento");
+	Session session = sessionFactory.getCurrentSession();
+	session.update(tipoDoc);
     }
 
     @Override
     public void delete(TipoDoc tipoDoc) {
-	tipoDocDao.delete(tipoDoc);
+	logger.debug("Borrando un tipo de documento");
+	Session session = sessionFactory.getCurrentSession();
+	session.delete(tipoDoc);
     }
 
     @Override
     public TipoDoc findByNombreTipoDoc(String nombreTipoDoc) {
-	return tipoDocDao.findByNombreTipoDoc(nombreTipoDoc);
+	Session session = sessionFactory.getCurrentSession();
+	TipoDoc tipoDoc = (TipoDoc) session.get(TipoDoc.class, nombreTipoDoc);
+	return tipoDoc;
     }
 
     @Override
     public List<TipoDoc> findAll() {
-	return tipoDocDao.findAll();
+	List<TipoDoc> lista = new ArrayList<TipoDoc>();
+	Session session = sessionFactory.getCurrentSession();
+	Query query = session.createQuery("FROM  TipoDoc");
+	if (!query.list().isEmpty()) {
+	    for (Object obj : query.list()) {
+		lista.add((TipoDoc) obj);
+	    }
+	}
+	return lista;
     }
-
 }

@@ -14,10 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 @XmlRootElement
-@XStreamAlias("denunciaVehiculo")
 @Entity
 @Table(name = "denuncia_vehiculo")
 public class DenunciaVehiculo implements Serializable {

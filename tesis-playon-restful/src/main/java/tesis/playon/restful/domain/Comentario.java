@@ -14,10 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 @XmlRootElement
-@XStreamAlias("comentario")
 @Entity
 @Table(name = "comentario")
 public class Comentario implements Serializable {

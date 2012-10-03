@@ -13,10 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 @XmlRootElement
-@XStreamAlias("estadia")
 @Entity
 @Table(name = "estadia")
 public class Estadia implements Serializable {

@@ -2,7 +2,8 @@ package tesis.playon.restful.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +17,7 @@ import tesis.playon.restful.service.IAbonoService;
 @Controller("abonoController")
 public class AbonoController {
 
-    @Autowired
+    @Resource(name="abonoService")
     private IAbonoService abonoService;
 
     @RequestMapping(value = "/abonos", method = RequestMethod.GET)

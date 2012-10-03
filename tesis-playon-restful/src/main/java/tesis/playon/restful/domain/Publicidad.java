@@ -13,10 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 @XmlRootElement
-@XStreamAlias("publicidad")
 @Entity
 @Table(name = "publicidad")
 public class Publicidad implements Serializable {

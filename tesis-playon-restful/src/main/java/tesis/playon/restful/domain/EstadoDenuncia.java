@@ -11,10 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 @XmlRootElement
-@XStreamAlias("estadoDenuncia")
 @Entity
 @Table(name = "estado_denuncia")
 public class EstadoDenuncia implements Serializable {
