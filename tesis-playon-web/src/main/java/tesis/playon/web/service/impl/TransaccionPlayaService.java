@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import tesis.playon.web.dao.ITransaccionClienteDao;
 import tesis.playon.web.dao.ITransaccionPlayaDao;
 import tesis.playon.web.model.TransaccionPlaya;
 
@@ -39,7 +38,7 @@ public class TransaccionPlayaService {
 	return transaccionPlayaDao;
     }
 
-    public void setTransaccionClienteDao(ITransaccionPlayaDao transaccionPlayaDao) {
+    public void setTransaccionPlayaDao(ITransaccionPlayaDao transaccionPlayaDao) {
 	this.transaccionPlayaDao = transaccionPlayaDao;
     }
 

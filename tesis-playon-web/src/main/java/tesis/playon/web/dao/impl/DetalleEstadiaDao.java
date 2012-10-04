@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import tesis.playon.web.dao.IDetalleEstadiaDao;
 import tesis.playon.web.model.DetalleEstadia;
+import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.Vehiculo;
 
 @Repository("detalleEstadiaDao")
@@ -44,10 +45,23 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
 	return detalleEstadia;
     }
 
+    public List<DetalleEstadia> findByEstadia(Estadia estadia)
+
+    {
+	List<DetalleEstadia> detallesEstadia = new ArrayList<DetalleEstadia>();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DetalleEstadia where estadia=?")
+		.setParameter(0, estadia).list();
+	for (Object object : list) {
+	    detallesEstadia.add((DetalleEstadia) object);
+	}
+	return detallesEstadia;
+
+    }
+
     @Override
     public DetalleEstadia findByVehiculoDetalleEstadia(Vehiculo vehiculo) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DetalleEstadia where vehiculo=? and cobrado=0")
-		.setParameter(0, vehiculo).list();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from DetalleEstadia where vehiculo=? and cobrado=0").setParameter(0, vehiculo).list();
 	if (!list.isEmpty()) {
 	    return (DetalleEstadia) list.get(0);
 	}

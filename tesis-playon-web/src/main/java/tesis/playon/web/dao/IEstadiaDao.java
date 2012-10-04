@@ -12,9 +12,11 @@ public interface IEstadiaDao {
     void update(Estadia estadia);
 
     void delete(Estadia estadia);
-    
+
     List<Estadia> findAll();
-    
+
     Estadia findByPlaya(Playa playa);
-    
+
+    List<Estadia> findEstadiasPorPlaya(Playa playa);
+
 }

@@ -36,12 +36,12 @@ public class EstadiaDao implements IEstadiaDao {
     }
 
     public List<Estadia> findAll() {
-	List<Estadia> colores = new ArrayList<Estadia>();
+	List<Estadia> estadias = new ArrayList<Estadia>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Estadia").list();
 	for (Object object : list) {
-	    colores.add((Estadia) object);
+	    estadias.add((Estadia) object);
 	}
-	return colores;
+	return estadias;
     }
 
     public Estadia findByPlaya(Playa playa) {
@@ -51,6 +51,16 @@ public class EstadiaDao implements IEstadiaDao {
 	    return (Estadia) list.get(0);
 	}
 	return null;
+    }
+
+    public List<Estadia> findEstadiasPorPlaya(Playa playa) {
+	List<Estadia> estadias = new ArrayList<Estadia>();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Estadia where playa=?")
+		.setParameter(0, playa).list();
+	for (Object object : list) {
+	    estadias.add((Estadia) object);
+	}
+	return estadias;
     }
 
 }
