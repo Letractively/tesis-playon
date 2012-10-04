@@ -7,7 +7,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 import tesis.playon.web.model.EstadoPromocion;
-import tesis.playon.web.model.ModeloVehiculo;
 /**
  * 
  * @author pablo
@@ -21,10 +20,10 @@ public class EstadoPromocionConverter implements Converter {
 	// TODO Auto-generated method stub
 	if (value != null) {
 	    String toObject[] = value.split(":");
-	    ModeloVehiculo modelo = new ModeloVehiculo();
-	    modelo.setId(Integer.parseInt(toObject[0]));
-	    modelo.setNombre(toObject[1]);
-	    return modelo;
+	    EstadoPromocion estadoPromocion = new EstadoPromocion();
+	    estadoPromocion.setId(Integer.parseInt(toObject[0]));
+	    estadoPromocion.setNombre(toObject[1]);
+	    return estadoPromocion;
 	}
 	return null;
     }
