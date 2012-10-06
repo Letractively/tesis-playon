@@ -98,7 +98,12 @@ public class TarifaManagedBean implements Serializable {
     private String utilitarioPorDia;
     private String pickupPorDia;
     private String motoPorDia;
-
+    
+    private String autoPorNoche;
+    private String utilitarioPorNoche;
+    private String pickupPorNoche;
+    private String motoPorNoche;
+    
     private String autoPorSemana;
     private String utilitarioPorSemana;
     private String pickupPorSemana;
@@ -265,7 +270,32 @@ public class TarifaManagedBean implements Serializable {
 	    this.setImporte(Float.valueOf(motoPorDia));
 	    this.addTarifa();
 	}
-
+	
+	if (autoPorNoche != null && !autoPorNoche.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Noche"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Auto"));
+	    this.setImporte(Float.valueOf(autoPorNoche));
+	    this.addTarifa();
+	}
+	if (utilitarioPorNoche != null && !utilitarioPorNoche.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Noche"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Utilitario"));
+	    this.setImporte(Float.valueOf(utilitarioPorNoche));
+	    this.addTarifa();
+	}
+	if (pickupPorNoche != null && !pickupPorNoche.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Noche"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("PickUp / 4X4"));
+	    this.setImporte(Float.valueOf(pickupPorNoche));
+	    this.addTarifa();
+	}
+	if (motoPorNoche != null && !motoPorNoche.toString().trim().isEmpty()) {
+	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Noche"));
+	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Moto"));
+	    this.setImporte(Float.valueOf(motoPorNoche));
+	    this.addTarifa();
+	}
+	
 	if (autoPorSemana != null && !autoPorSemana.toString().trim().isEmpty()) {
 	    this.setTipoEstadia(getTipoEstadiaService().findByNombreTipoEstadia("Por Semana"));
 	    this.setCategoriaVehiculo(getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Auto"));
@@ -450,57 +480,71 @@ public class TarifaManagedBean implements Serializable {
     
     private void cargarTarifasPlayaLogged() {
 	if (this.tarifaPlayaLogged == null) return;
+	
+	int idTipoEstadiaHora = 1; //getTipoEstadiaService().findByNombreTipoEstadia("Por Hora").getId().intValue();
+	int idTipoEstadiaDia = 4; //getTipoEstadiaService().findByNombreTipoEstadia("Por Día").getId().intValue();
+	int idTipoEstadiaNoche = 3; //getTipoEstadiaService().findByNombreTipoEstadia("Por Noche").getId().intValue();
+	int idTipoEstadiaSemana = 5; //getTipoEstadiaService().findByNombreTipoEstadia("Por Semana").getId().intValue();
+	int idTipoEstadiaMes = 2; //getTipoEstadiaService().findByNombreTipoEstadia("Por Mes").getId().intValue();
+	
+	int idCategoriaVehiculoAuto = getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Auto").getId().intValue();
+	int idCategoriaVehiculoUtilitario = getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Utilitario").getId().intValue();
+	int idCategoriaVehiculoPickUp = getCategoriaVehiculoService().findByNombreCategoriaVehiculo("PickUp / 4X4").getId().intValue();
+	int idCategoriaVehiculoMoto = getCategoriaVehiculoService().findByNombreCategoriaVehiculo("Moto").getId().intValue();
+	
+	int idTipoEstadiaActual;
+	int idCategoriaVehiculoActual;
+	
 	for (Tarifa tarifa : this.tarifaPlayaLogged) {
-	    if (tarifa.getCategoriaVehiculo().getNombre().compareTo("Auto") == 0) {
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Hora") == 0) {
+	    idTipoEstadiaActual = tarifa.getTipoEstadia().getId().intValue();
+	    idCategoriaVehiculoActual = tarifa.getCategoriaVehiculo().getId().intValue();
+	    
+	    if (idCategoriaVehiculoActual == idCategoriaVehiculoAuto) {
+		if (idTipoEstadiaActual == idTipoEstadiaHora){
 		    this.autoPorHora = tarifa.getImporte().toString();
-		}
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Día") == 0) {
+		}else if (idTipoEstadiaActual == idTipoEstadiaDia) {
 		    this.autoPorDia = tarifa.getImporte().toString();
-		}
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Semana") == 0) {
+		}else if (idTipoEstadiaActual == idTipoEstadiaNoche) {
+		    this.autoPorNoche = tarifa.getImporte().toString();
+		}else if (idTipoEstadiaActual == idTipoEstadiaSemana) {
 		    this.autoPorSemana = tarifa.getImporte().toString();
-		}
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Mes") == 0) {
+		}else if (idTipoEstadiaActual == idTipoEstadiaMes) {
 		    this.autoPorMes = tarifa.getImporte().toString();
 		}
-	    }else if (tarifa.getCategoriaVehiculo().getNombre().compareTo("Moto") == 0){
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Hora") == 0) {
+	    }else if (idCategoriaVehiculoActual == idCategoriaVehiculoMoto){
+		if (idTipoEstadiaActual == idTipoEstadiaHora){
 		    this.motoPorHora = tarifa.getImporte().toString();
-		}
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Día") == 0) {
+		}else if (idTipoEstadiaActual == idTipoEstadiaDia) {
 		    this.motoPorDia = tarifa.getImporte().toString();
-		}
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Semana") == 0) {
+		}else if (idTipoEstadiaActual == idTipoEstadiaNoche) {
+		    this.motoPorNoche = tarifa.getImporte().toString();
+		}else if (idTipoEstadiaActual == idTipoEstadiaSemana) {
 		    this.motoPorSemana = tarifa.getImporte().toString();
-		}
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Mes") == 0) {
+		}else if (idTipoEstadiaActual == idTipoEstadiaMes) {
 		    this.motoPorMes = tarifa.getImporte().toString();
 		}
-	    }else if (tarifa.getCategoriaVehiculo().getNombre().compareTo("Utilitario") == 0){
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Hora") == 0) {
+	    }else if (idCategoriaVehiculoActual == idCategoriaVehiculoUtilitario){
+		if (idTipoEstadiaActual == idTipoEstadiaHora){
 		    this.utilitarioPorHora = tarifa.getImporte().toString();
-		}
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Día") == 0) {
+		}else if (idTipoEstadiaActual == idTipoEstadiaDia) {
 		    this.utilitarioPorDia = tarifa.getImporte().toString();
-		}
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Semana") == 0) {
+		}else if (idTipoEstadiaActual == idTipoEstadiaNoche) {
+		    this.utilitarioPorNoche = tarifa.getImporte().toString();
+		}else if (idTipoEstadiaActual == idTipoEstadiaSemana) {
 		    this.utilitarioPorSemana = tarifa.getImporte().toString();
-		}
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Mes") == 0) {
+		}else if (idTipoEstadiaActual == idTipoEstadiaMes) {
 		    this.utilitarioPorMes = tarifa.getImporte().toString();
 		}
-	    }else if (tarifa.getCategoriaVehiculo().getNombre().compareTo("PickUp / 4X4") == 0){
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Hora") == 0) {
+	    }else if (idCategoriaVehiculoActual == idCategoriaVehiculoPickUp){
+		if (idTipoEstadiaActual == idTipoEstadiaHora){
 		    this.pickupPorHora = tarifa.getImporte().toString();
-		}
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Día") == 0) {
+		}else if (idTipoEstadiaActual == idTipoEstadiaDia) {
 		    this.pickupPorDia = tarifa.getImporte().toString();
-		}
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Semana") == 0) {
+		}else if (idTipoEstadiaActual == idTipoEstadiaNoche) {
+		    this.pickupPorNoche = tarifa.getImporte().toString();
+		}else if (idTipoEstadiaActual == idTipoEstadiaSemana) {
 		    this.pickupPorSemana = tarifa.getImporte().toString();
-		}
-		if (tarifa.getTipoEstadia().getNombre().compareTo("Por Mes") == 0) {
+		}else if (idTipoEstadiaActual == idTipoEstadiaMes) {
 		    this.pickupPorMes = tarifa.getImporte().toString();
 		}
 	    }
@@ -707,6 +751,38 @@ public class TarifaManagedBean implements Serializable {
 
     public void setMotoPorSemana(String motoPorSemana) {
 	this.motoPorSemana = motoPorSemana;
+    }
+
+    public String getAutoPorNoche() {
+        return autoPorNoche;
+    }
+
+    public void setAutoPorNoche(String autoPorNoche) {
+        this.autoPorNoche = autoPorNoche;
+    }
+
+    public String getUtilitarioPorNoche() {
+        return utilitarioPorNoche;
+    }
+
+    public void setUtilitarioPorNoche(String utilitarioPorNoche) {
+        this.utilitarioPorNoche = utilitarioPorNoche;
+    }
+
+    public String getPickupPorNoche() {
+        return pickupPorNoche;
+    }
+
+    public void setPickupPorNoche(String pickupPorNoche) {
+        this.pickupPorNoche = pickupPorNoche;
+    }
+
+    public String getMotoPorNoche() {
+        return motoPorNoche;
+    }
+
+    public void setMotoPorNoche(String motoPorNoche) {
+        this.motoPorNoche = motoPorNoche;
     }
 
     public String getAutoPorMes() {
