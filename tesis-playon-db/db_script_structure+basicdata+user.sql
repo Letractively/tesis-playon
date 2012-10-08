@@ -1016,7 +1016,7 @@ LOCK TABLES `tipo_estadia` WRITE;
 /*!40000 ALTER TABLE `tipo_estadia` DISABLE KEYS */;
 INSERT INTO `tipo_estadia` (`descripcion`, `nombre`, `tipoEstadiaID`) 
 VALUES ('','Por Hora',1),('','Por Mes',2),('','Por Noche',3),
-	('','Por Dí­a',4),('','Por Semana',5);
+	('','Por Día',4),('','Por Semana',5);
 /*!40000 ALTER TABLE `tipo_estadia` ENABLE KEYS */;
 UNLOCK TABLES;
 
