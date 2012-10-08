@@ -8,11 +8,13 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.restful.domain.RolesPorUsuario;
 import tesis.playon.restful.service.IRolesPorUsuarioService;
 
 @Service("rolesPorUsuarioService")
+@Transactional
 public class RolesPorUsuarioService implements IRolesPorUsuarioService {
 
     @Resource(name = "sessionFactory")

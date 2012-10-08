@@ -8,11 +8,13 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.restful.domain.Barrio;
 import tesis.playon.restful.service.IBarrioService;
 
 @Service("barrioService")
+@Transactional
 public class BarrioService implements IBarrioService {
 
     @Resource(name = "sessionFactory")

@@ -27,12 +27,10 @@ public class UsuarioSistema implements Serializable {
     private int id;
 
     @ManyToOne
-    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rolUsuarioID")
     private RolUsuario rolUsuario;
 
     @OneToOne
-    // @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuarioID")
     private Usuario usuario;
 

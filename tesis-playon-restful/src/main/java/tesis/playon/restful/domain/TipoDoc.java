@@ -41,5 +41,4 @@ public class TipoDoc implements Serializable {
     public void setNombre(String nombre) {
 	this.nombre = nombre;
     }
-
 }

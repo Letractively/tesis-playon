@@ -8,17 +8,19 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.restful.domain.PerfilPlaya;
 import tesis.playon.restful.domain.Playa;
 import tesis.playon.restful.service.IPerfilPlayaService;
 
 @Service("perfilPlayaService")
+@Transactional
 public class PerfilPlayaService implements IPerfilPlayaService {
 
     @Resource(name = "sessionFactory")
     private SessionFactory sessionFactory;
-    
+
     @Override
     public void save(PerfilPlaya perfilPlaya) {
 	Session session = sessionFactory.getCurrentSession();
@@ -38,16 +40,6 @@ public class PerfilPlayaService implements IPerfilPlayaService {
     }
 
     @Override
-    public PerfilPlaya findByNombrePerfilPlaya(String nombrePerfilPlaya) {
-	Session session = sessionFactory.getCurrentSession();
-	List<?> list = session.createQuery("from PerfilPlaya where nombre=?")
-		.setParameter(0, nombrePerfilPlaya).list();
-	if (!list.isEmpty())
-	    return (PerfilPlaya) list.get(0);
-	return null;
-    }
-
-    @Override
     public List<PerfilPlaya> findAll() {
 	Session session = sessionFactory.getCurrentSession();
 	List<PerfilPlaya> perfiles = new ArrayList<PerfilPlaya>();
@@ -64,8 +56,7 @@ public class PerfilPlayaService implements IPerfilPlayaService {
     @Override
     public PerfilPlaya findByPlaya(Playa playa) {
 	Session session = sessionFactory.getCurrentSession();
-	List<?> list = session.createQuery("from PerfilPlaya where playa=?")
-		.setParameter(0, playa).list();
+	List<?> list = session.createQuery("from PerfilPlaya where playa=?").setParameter(0, playa).list();
 	if (!list.isEmpty())
 	    return (PerfilPlaya) list.get(0);
 	return null;

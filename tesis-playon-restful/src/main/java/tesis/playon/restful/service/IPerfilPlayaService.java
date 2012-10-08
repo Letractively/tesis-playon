@@ -13,8 +13,6 @@ public interface IPerfilPlayaService {
 
     void delete(PerfilPlaya perfilPlaya);
 
-    PerfilPlaya findByNombrePerfilPlaya(String nombrePerfilPlaya);
-    
     PerfilPlaya findByPlaya(Playa playa);
     
     List<PerfilPlaya> findAll();

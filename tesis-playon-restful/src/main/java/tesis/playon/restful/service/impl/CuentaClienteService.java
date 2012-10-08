@@ -8,11 +8,13 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.restful.domain.CuentaCliente;
 import tesis.playon.restful.service.ICuentaClienteService;
 
 @Service("cuentaClienteService")
+@Transactional
 public class CuentaClienteService implements ICuentaClienteService {
 
     @Resource(name = "sessionFactory")

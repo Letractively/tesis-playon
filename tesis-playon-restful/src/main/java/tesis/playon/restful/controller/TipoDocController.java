@@ -19,12 +19,11 @@ public class TipoDocController {
     @Resource(name="tipoDocService")
     private ITipoDocService tipoDocService;
 
-    @RequestMapping(value = "/listatipodocumentos", method = RequestMethod.GET, headers = "Accept=application/xml, application/json")
+    @RequestMapping(value = "/tipodocumentos", method = RequestMethod.GET, headers = "Accept=application/xml, application/json")
     public @ResponseBody
-    List<TipoDoc> getPerson() {
+    List<TipoDoc> getTipoDoc() {
 	List<TipoDoc> result = new ArrayList<TipoDoc>();
 	result = tipoDocService.findAll();
 	return result;
     }
-
 }

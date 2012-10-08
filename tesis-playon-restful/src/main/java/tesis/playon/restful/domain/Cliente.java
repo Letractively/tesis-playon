@@ -36,12 +36,8 @@ public class Cliente implements Serializable {
     private String telefono;
 
     @ManyToOne
-    @JoinColumn(name = "barrioID", nullable = true)
+    @JoinColumn(name = "barrioID")
     private Barrio barrio;
-
-    @OneToOne
-    @JoinColumn(name = "cuentaClienteID")
-    private CuentaCliente cuentaCliente;
 
     @OneToOne
     @JoinColumn(name = "usuarioID")
@@ -85,14 +81,6 @@ public class Cliente implements Serializable {
 
     public void setBarrio(Barrio barrio) {
 	this.barrio = barrio;
-    }
-
-    public CuentaCliente getCuentaCliente() {
-	return cuentaCliente;
-    }
-
-    public void setCuentaCliente(CuentaCliente cuentaCliente) {
-	this.cuentaCliente = cuentaCliente;
     }
 
     public Usuario getUsuario() {

@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.restful.domain.Calificacion;
 import tesis.playon.restful.domain.Cliente;
@@ -15,6 +16,7 @@ import tesis.playon.restful.domain.Playa;
 import tesis.playon.restful.service.ICalificacionService;
 
 @Service("calificacionService")
+@Transactional
 public class CalificacionService implements ICalificacionService {
 
     @Resource(name = "sessionFactory")

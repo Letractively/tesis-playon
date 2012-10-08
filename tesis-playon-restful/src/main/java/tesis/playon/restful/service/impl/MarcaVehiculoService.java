@@ -8,11 +8,13 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.restful.domain.MarcaVehiculo;
 import tesis.playon.restful.service.IMarcaVehiculoService;
 
 @Service("marcaVehiculoService")
+@Transactional
 public class MarcaVehiculoService implements IMarcaVehiculoService {
 
     @Resource(name = "sessionFactory")

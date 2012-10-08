@@ -15,8 +15,6 @@ public interface IClienteService {
 
     Cliente findByNumeroCliente(Integer numeroCliente);
 
-    Cliente findByNombreUsuario(String nombreUser);
-
     Cliente findByIdUsuario(Usuario usuario);
 
     List<Cliente> findAll();

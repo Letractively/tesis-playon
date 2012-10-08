@@ -11,6 +11,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.restful.domain.CategoriaVehiculo;
 import tesis.playon.restful.domain.Playa;
@@ -18,6 +19,7 @@ import tesis.playon.restful.domain.Tarifa;
 import tesis.playon.restful.service.ITarifaService;
 
 @Service("tarifaService")
+@Transactional
 public class TarifaService implements ITarifaService {
 
     @Resource(name = "sessionFactory")

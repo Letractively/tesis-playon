@@ -8,11 +8,13 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.restful.domain.ColorVehiculo;
 import tesis.playon.restful.service.IColorVehiculoService;
 
 @Service("colorVehiculoService")
+@Transactional
 public class ColorVehiculoService implements IColorVehiculoService {
 
     @Resource(name = "sessionFactory")

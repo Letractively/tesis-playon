@@ -8,11 +8,13 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.restful.domain.HistorialDeCambio;
 import tesis.playon.restful.service.IHistorialDeCambioService;
 
 @Service("historialDeCambioService")
+@Transactional
 public class HistorialDeCambioService implements IHistorialDeCambioService {
 
     @Resource(name = "sessionFactory")

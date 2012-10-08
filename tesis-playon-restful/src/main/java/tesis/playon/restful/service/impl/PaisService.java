@@ -8,12 +8,14 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.restful.domain.Pais;
 import tesis.playon.restful.domain.Provincia;
 import tesis.playon.restful.service.IPaisService;
 
 @Service("paisService")
+@Transactional
 public class PaisService implements IPaisService {
 
     @Resource(name = "sessionFactory")

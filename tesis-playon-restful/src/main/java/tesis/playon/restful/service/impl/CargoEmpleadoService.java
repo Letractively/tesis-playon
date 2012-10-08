@@ -8,11 +8,13 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.restful.domain.CargoEmpleado;
 import tesis.playon.restful.service.ICargoEmpleadoService;
 
 @Service("cargoEmpleadoService")
+@Transactional
 public class CargoEmpleadoService implements ICargoEmpleadoService {
 
     @Resource(name = "sessionFactory")

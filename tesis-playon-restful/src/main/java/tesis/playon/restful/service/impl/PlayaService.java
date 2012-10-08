@@ -9,12 +9,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.restful.domain.EstadoPlaya;
 import tesis.playon.restful.domain.Playa;
 import tesis.playon.restful.service.IPlayaService;
 
 @Service("playaService")
+@Transactional
 public class PlayaService implements IPlayaService {
 
     @Resource(name = "sessionFactory")
