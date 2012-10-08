@@ -21,26 +21,26 @@ public class TipoPagoDao implements ITipoPagoDao {
     }
 
     public void save(TipoPago tipoPago) {
-	getSessionFactory().getCurrentSession().save(tipoPago);
+	session.save(tipoPago);
     }
 
     public void update(TipoPago tipoPago) {
-	getSessionFactory().getCurrentSession().update(tipoPago);
+	session.update(tipoPago);
     }
 
     public void delete(TipoPago tipoPago) {
-	getSessionFactory().getCurrentSession().delete(tipoPago);
+	session.delete(tipoPago);
     }
 
     public TipoPago findByNameTipoPago(String nombreTipoPago) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoPago where nombre=?")
+	List<?> list = session.createQuery("from TipoPago where nombre=?")
 		.setParameter(0, nombreTipoPago).list();
 	return (TipoPago) list.get(0);
     }
 
     public List<TipoPago> findAll() {
 	List<TipoPago> tipos = new ArrayList<TipoPago>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoPago order by nombre").list();
+	List<?> list = session.createQuery("from TipoPago order by nombre").list();
 	for (Object object : list) {
 	    tipos.add((TipoPago) object);
 	}

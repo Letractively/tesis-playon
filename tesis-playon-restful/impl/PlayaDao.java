@@ -23,26 +23,26 @@ public class PlayaDao implements IPlayaDao {
     }
 
     public void save(Playa playa) {
-	getSessionFactory().getCurrentSession().save(playa);
+	session.save(playa);
     }
 
     public void update(Playa playa) {
-	getSessionFactory().getCurrentSession().update(playa);
+	session.update(playa);
     }
 
     public void delete(Playa playa) {
-	getSessionFactory().getCurrentSession().delete(playa);
+	session.delete(playa);
     }
 
     public Playa findByNombreComercial(String nombreComercial) {
-	List<?> list = getSessionFactory().getCurrentSession()
+	List<?> list = session
 		.createQuery("from Playa where nombreComercial=?  order by razonSocial")
 		.setParameter(0, nombreComercial).list();
 	return (Playa) list.get(0);
     }
 
     public Playa findByRazonSocial(String razonSocial) {
-	List<?> list = getSessionFactory().getCurrentSession()
+	List<?> list = session
 		.createQuery("from Playa where razonSocial=?  order by razonSocial").setParameter(0, razonSocial)
 		.list();
 	if (!list.isEmpty())
@@ -51,11 +51,11 @@ public class PlayaDao implements IPlayaDao {
     }
 
     public List<Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia) {
-	// Query query = getSessionFactory().getCurrentSession()
+	// Query query = session
 	// .createSQLQuery("CALL busquedaplaya(:platitud, :plongitud, :pdistancia")
 	// .setParameter("platitud", latitud).setParameter("plongitud", longitud)
 	// .setParameter("pdistancia", distancia);
-	Query query = getSessionFactory().getCurrentSession().getNamedQuery("callPlayasStoreProcedure")
+	Query query = session.getNamedQuery("callPlayasStoreProcedure")
 		.setParameter("platitud", latitud).setParameter("plongitud", longitud)
 		.setParameter("pdistancia", distancia);
 	List<?> list = query.list();
@@ -71,7 +71,7 @@ public class PlayaDao implements IPlayaDao {
 
     public List<Playa> findAll() {
 	List<Playa> playa = new ArrayList<Playa>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Playa order by razonSocial").list();
+	List<?> list = session.createQuery("from Playa order by razonSocial").list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
 		playa.add((Playa) object);
@@ -83,7 +83,7 @@ public class PlayaDao implements IPlayaDao {
 
     public List<Playa> findByEstado(EstadoPlaya estado) {
 	List<Playa> playa = new ArrayList<Playa>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Playa where estado=?")
+	List<?> list = session.createQuery("from Playa where estado=?")
 		.setParameter(0, estado).list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {

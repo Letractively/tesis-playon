@@ -26,26 +26,26 @@ public class TipoEstadiaDao implements ITipoEstadiaDao {
     }
 
     public void save(TipoEstadia tipoEstadia) {
-	getSessionFactory().getCurrentSession().save(tipoEstadia);
+	session.save(tipoEstadia);
     }
 
     public void update(TipoEstadia tipoEstadia) {
-	getSessionFactory().getCurrentSession().update(tipoEstadia);
+	session.update(tipoEstadia);
     }
 
     public void delete(TipoEstadia tipoEstadia) {
-	getSessionFactory().getCurrentSession().delete(tipoEstadia);
+	session.delete(tipoEstadia);
     }
 
     public TipoEstadia findByNombreTipoEstadia(String nombreTipoEstadia) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoEstadia where nombre=?")
+	List<?> list = session.createQuery("from TipoEstadia where nombre=?")
 		.setParameter(0, nombreTipoEstadia).list();
 	return (TipoEstadia) list.get(0);
     }
 
     public List<TipoEstadia> findAll() {
 	List<TipoEstadia> tipos = new ArrayList<TipoEstadia>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoEstadia order by nombre").list();
+	List<?> list = session.createQuery("from TipoEstadia order by nombre").list();
 	for (Object object : list) {
 	    tipos.add((TipoEstadia) object);
 	}

@@ -28,26 +28,26 @@ public class PosicionDao implements IPosicionDao {
     }
 
     public void save(Posicion posicion) {
-	getSessionFactory().getCurrentSession().save(posicion);
+	session.save(posicion);
     }
 
     public void update(Posicion posicion) {
-	getSessionFactory().getCurrentSession().update(posicion);
+	session.update(posicion);
     }
 
     public void delete(Posicion posicion) {
-	getSessionFactory().getCurrentSession().delete(posicion);
+	session.delete(posicion);
     }
 
     public Posicion findByUbicacion(String ubicacion) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Posicion where ubicacion=?")
+	List<?> list = session.createQuery("from Posicion where ubicacion=?")
 		.setParameter(0, ubicacion).list();
 	return (Posicion) list.get(0);
     }
 
     public List<Posicion> findAll() {
 	List<Posicion> posiciones = new ArrayList<Posicion>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Posicion").list();
+	List<?> list = session.createQuery("from Posicion").list();
 	for (Object object : list) {
 	    posiciones.add((Posicion) object);
 	}

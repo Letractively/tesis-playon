@@ -25,26 +25,26 @@ public class TransaccionClienteDao implements ITransaccionClienteDao {
     }
 
     public void save(TransaccionCliente transaccionCliente) {
-	getSessionFactory().getCurrentSession().save(transaccionCliente);
+	session.save(transaccionCliente);
     }
 
     public void update(TransaccionCliente transaccionCliente) {
-	getSessionFactory().getCurrentSession().update(transaccionCliente);
+	session.update(transaccionCliente);
     }
 
     public void delete(TransaccionCliente transaccionCliente) {
-	getSessionFactory().getCurrentSession().delete(transaccionCliente);
+	session.delete(transaccionCliente);
     }
 
     public TransaccionCliente findByCuentaCliente(String cuentaClienteID) {
-	List<?> list = getSessionFactory().getCurrentSession()
+	List<?> list = session
 		.createQuery("from TransaccionCliente where cuentaCliente=?").setParameter(0, cuentaClienteID).list();
 	return (TransaccionCliente) list.get(0);
     }
 
     public List<TransaccionCliente> findAll() {
 	List<TransaccionCliente> transaccionesCliente = new ArrayList<TransaccionCliente>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TransaccionCliente").list();
+	List<?> list = session.createQuery("from TransaccionCliente").list();
 	for (Object object : list) {
 	    transaccionesCliente.add((TransaccionCliente) object);
 	}

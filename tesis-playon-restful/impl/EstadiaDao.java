@@ -24,20 +24,20 @@ public class EstadiaDao implements IEstadiaDao {
     }
 
     public void save(Estadia estadia) {
-	getSessionFactory().getCurrentSession().save(estadia);
+	session.save(estadia);
     }
 
     public void update(Estadia estadia) {
-	getSessionFactory().getCurrentSession().update(estadia);
+	session.update(estadia);
     }
 
     public void delete(Estadia estadia) {
-	getSessionFactory().getCurrentSession().delete(estadia);
+	session.delete(estadia);
     }
 
     public List<Estadia> findAll() {
 	List<Estadia> colores = new ArrayList<Estadia>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Estadia").list();
+	List<?> list = session.createQuery("from Estadia").list();
 	for (Object object : list) {
 	    colores.add((Estadia) object);
 	}
@@ -45,7 +45,7 @@ public class EstadiaDao implements IEstadiaDao {
     }
 
     public Estadia findByPlaya(Playa playa) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Estadia where playa=?")
+	List<?> list = session.createQuery("from Estadia where playa=?")
 		.setParameter(0, playa).list();
 	if (!list.isEmpty()) {
 	    return (Estadia) list.get(0);

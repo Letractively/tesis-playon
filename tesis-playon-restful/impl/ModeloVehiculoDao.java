@@ -27,26 +27,26 @@ public class ModeloVehiculoDao implements IModeloVehiculoDao {
     }
 
     public void save(ModeloVehiculo modelo) {
-	getSessionFactory().getCurrentSession().save(modelo);
+	session.save(modelo);
     }
 
     public void update(ModeloVehiculo modelo) {
-	getSessionFactory().getCurrentSession().update(modelo);
+	session.update(modelo);
     }
 
     public void delete(ModeloVehiculo modelo) {
-	getSessionFactory().getCurrentSession().delete(modelo);
+	session.delete(modelo);
     }
 
     public ModeloVehiculo findByNombreModeloVehiculo(String nombreModelo) {
-	List<?> list = getSessionFactory().getCurrentSession()
+	List<?> list = session
 		.createQuery("from ModeloVehiculo where nombre=? ORDER BY nombre").setParameter(0, nombreModelo).list();
 	return (ModeloVehiculo) list.get(0);
     }
 
     public List<ModeloVehiculo> findByMarca(MarcaVehiculo marca) {
 	List<ModeloVehiculo> modelos = new ArrayList<ModeloVehiculo>();
-	List<?> list = getSessionFactory().getCurrentSession()
+	List<?> list = session
 		.createQuery("from ModeloVehiculo where marcaVehiculo=? ORDER BY nombre").setParameter(0, marca).list();
 	for (Object object : list) {
 	    modelos.add((ModeloVehiculo) object);
@@ -56,7 +56,7 @@ public class ModeloVehiculoDao implements IModeloVehiculoDao {
 
     public List<ModeloVehiculo> findAll() {
 	List<ModeloVehiculo> modelos = new ArrayList<ModeloVehiculo>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from ModeloVehiculo ORDER BY nombre")
+	List<?> list = session.createQuery("from ModeloVehiculo ORDER BY nombre")
 		.list();
 	for (Object object : list) {
 	    modelos.add((ModeloVehiculo) object);

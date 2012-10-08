@@ -25,26 +25,26 @@ public class DenunciaPlayaDao implements IDenunciaPlayaDao {
     }
 
     public void save(DenunciaPlaya denunciaPlaya) {
-	getSessionFactory().getCurrentSession().save(denunciaPlaya);
+	session.save(denunciaPlaya);
     }
 
     public void update(DenunciaPlaya denunciaPlaya) {
-	getSessionFactory().getCurrentSession().update(denunciaPlaya);
+	session.update(denunciaPlaya);
     }
 
     public void delete(DenunciaPlaya denunciaPlaya) {
-	getSessionFactory().getCurrentSession().delete(denunciaPlaya);
+	session.delete(denunciaPlaya);
     }
 
     public DenunciaPlaya findByAsuntoDenunciaPlaya(String asuntoDenunciaPlaya) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DenunciaPlaya where asunto=?")
+	List<?> list = session.createQuery("from DenunciaPlaya where asunto=?")
 		.setParameter(0, asuntoDenunciaPlaya).list();
 	return (DenunciaPlaya) list.get(0);
     }
 
     public List<DenunciaPlaya> findAll() {
 	List<DenunciaPlaya> denuncias = new ArrayList<DenunciaPlaya>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DenunciaPlaya").list();
+	List<?> list = session.createQuery("from DenunciaPlaya").list();
 	for (Object object : list) {
 	    denuncias.add((DenunciaPlaya) object);
 	}

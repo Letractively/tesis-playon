@@ -29,26 +29,26 @@ public class LocalidadDao implements ILocalidadDao {
     }
 
     public void save(Localidad localidad) {
-	getSessionFactory().getCurrentSession().save(localidad);
+	session.save(localidad);
     }
 
     public void update(Localidad localidad) {
-	getSessionFactory().getCurrentSession().update(localidad);
+	session.update(localidad);
     }
 
     public void delete(Localidad localidad) {
-	getSessionFactory().getCurrentSession().delete(localidad);
+	session.delete(localidad);
     }
 
     public Localidad findByNombreLocalidad(String nombreLocalidad) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Localidad where nombre=?")
+	List<?> list = session.createQuery("from Localidad where nombre=?")
 		.setParameter(0, nombreLocalidad).list();
 	return (Localidad) list.get(0);
     }
 
     public List<Localidad> findAll() {
 	List<Localidad> localidades = new ArrayList<Localidad>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Localidad order by nombre").list();
+	List<?> list = session.createQuery("from Localidad order by nombre").list();
 	for (Object object : list) {
 	    localidades.add((Localidad) object);
 	}
@@ -57,7 +57,7 @@ public class LocalidadDao implements ILocalidadDao {
     
     public Set<Barrio> findBarrio(Localidad localidad){
 	Set<Barrio> barrios = new HashSet<Barrio>(0);
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Barrio where localidad=?")
+	List<?> list = session.createQuery("from Barrio where localidad=?")
 		.setParameter(0, localidad).list();
 	for (Object object : list) {
 	    barrios.add((Barrio) object);

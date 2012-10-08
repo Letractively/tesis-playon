@@ -21,20 +21,20 @@ public class HistorialDeCambioDao implements IHistorialDeCambioDao {
     }
 
     public void save(HistorialDeCambio historialDeCambio) {
-	getSessionFactory().getCurrentSession().save(historialDeCambio);
+	session.save(historialDeCambio);
     }
 
     public void update(HistorialDeCambio historialDeCambio) {
-	getSessionFactory().getCurrentSession().update(historialDeCambio);
+	session.update(historialDeCambio);
     }
 
     public void delete(HistorialDeCambio historialDeCambio) {
-	getSessionFactory().getCurrentSession().delete(historialDeCambio);
+	session.delete(historialDeCambio);
     }
 
     public List<HistorialDeCambio> findAll() {
 	List<HistorialDeCambio> historialDeCambio = new ArrayList<HistorialDeCambio>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from HistorialDeCambio").list();
+	List<?> list = session.createQuery("from HistorialDeCambio").list();
 	for (Object object : list) {
 	    historialDeCambio.add((HistorialDeCambio) object);
 	}

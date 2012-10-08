@@ -26,26 +26,26 @@ public class MarcaVehiculoDao implements IMarcaVehiculoDao {
     }
 
     public void save(MarcaVehiculo marcaVehiculo) {
-	getSessionFactory().getCurrentSession().save(marcaVehiculo);
+	session.save(marcaVehiculo);
     }
 
     public void update(MarcaVehiculo marcaVehiculo) {
-	getSessionFactory().getCurrentSession().update(marcaVehiculo);
+	session.update(marcaVehiculo);
     }
 
     public void delete(MarcaVehiculo marcaVehiculo) {
-	getSessionFactory().getCurrentSession().delete(marcaVehiculo);
+	session.delete(marcaVehiculo);
     }
 
     public MarcaVehiculo findByNombreMarcaVehiculo(String nombreMarcaVehiculo) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from MarcaVehiculo where nombre=? order by nombre asc")
+	List<?> list = session.createQuery("from MarcaVehiculo where nombre=? order by nombre asc")
 		.setParameter(0, nombreMarcaVehiculo).list();
 	return (MarcaVehiculo) list.get(0);
     }
 
     public List<MarcaVehiculo> findAll() {
 	List<MarcaVehiculo> marcas = new ArrayList<MarcaVehiculo>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from MarcaVehiculo marca order by marca.nombre").list();
+	List<?> list = session.createQuery("from MarcaVehiculo marca order by marca.nombre").list();
 	for (Object object : list) {
 	    marcas.add((MarcaVehiculo) object);
 	}

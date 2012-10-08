@@ -27,20 +27,20 @@ public class PublicidadDao implements IPublicidadDao {
     }
 
     public void save(Publicidad publicidad) {
-	getSessionFactory().getCurrentSession().save(publicidad);
+	session.save(publicidad);
     }
 
     public void update(Publicidad publicidad) {
-	getSessionFactory().getCurrentSession().update(publicidad);
+	session.update(publicidad);
     }
 
     public void delete(Publicidad publicidad) {
-	getSessionFactory().getCurrentSession().delete(publicidad);
+	session.delete(publicidad);
     }
 
     public List<Publicidad> findAll() {
 	List<Publicidad> publicidades = new ArrayList<Publicidad>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Publicidad").list();
+	List<?> list = session.createQuery("from Publicidad").list();
 	for (Object object : list) {
 	    publicidades.add((Publicidad) object);
 	}

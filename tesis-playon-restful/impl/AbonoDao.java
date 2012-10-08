@@ -26,20 +26,20 @@ public class AbonoDao implements IAbonoDao {
     }
 
     public void save(Abono abono) {
-	getSessionFactory().getCurrentSession().save(abono);
+	session.save(abono);
     }
 
     public void update(Abono abono) {
-	getSessionFactory().getCurrentSession().update(abono);
+	session.update(abono);
     }
 
     public void delete(Abono abono) {
-	getSessionFactory().getCurrentSession().delete(abono);
+	session.delete(abono);
     }
 
     public List<Abono> findAll() {
 	List<Abono> abonos = new ArrayList<Abono>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Abono").list();
+	List<?> list = session.createQuery("from Abono").list();
 	if(!list.isEmpty()){
 	    for (Object obj : list) {
 		    abonos.add((Abono) obj);

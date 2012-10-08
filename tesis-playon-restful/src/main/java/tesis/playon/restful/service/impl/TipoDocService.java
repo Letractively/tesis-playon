@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,28 +18,23 @@ import tesis.playon.restful.service.ITipoDocService;
 @Transactional
 public class TipoDocService implements ITipoDocService {
 
-    protected static Logger logger = Logger.getLogger("service");
-
     @Resource(name = "sessionFactory")
     private SessionFactory sessionFactory;
 
     @Override
     public void save(TipoDoc tipoDoc) {
-	logger.debug("Agregando un tipo de documento");
 	Session session = sessionFactory.getCurrentSession();
 	session.save(tipoDoc);
     }
 
     @Override
     public void update(TipoDoc tipoDoc) {
-	logger.debug("Actualizando un tipo de documento");
 	Session session = sessionFactory.getCurrentSession();
 	session.update(tipoDoc);
     }
 
     @Override
     public void delete(TipoDoc tipoDoc) {
-	logger.debug("Borrando un tipo de documento");
 	Session session = sessionFactory.getCurrentSession();
 	session.delete(tipoDoc);
     }

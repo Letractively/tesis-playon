@@ -21,20 +21,20 @@ public class CuentaClienteDao implements ICuentaClienteDao {
     }
 
     public void save(CuentaCliente cuentaCliente) {
-	getSessionFactory().getCurrentSession().save(cuentaCliente);
+	session.save(cuentaCliente);
     }
 
     public void update(CuentaCliente cuentaCliente) {
-	getSessionFactory().getCurrentSession().update(cuentaCliente);
+	session.update(cuentaCliente);
     }
 
     public void delete(CuentaCliente cuentaCliente) {
-	getSessionFactory().getCurrentSession().delete(cuentaCliente);
+	session.delete(cuentaCliente);
     }
 
     public List<CuentaCliente> findAll() {
 	List<CuentaCliente> colores = new ArrayList<CuentaCliente>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaCliente").list();
+	List<?> list = session.createQuery("from CuentaCliente").list();
 	for (Object object : list) {
 	    colores.add((CuentaCliente) object);
 	}
@@ -42,7 +42,7 @@ public class CuentaClienteDao implements ICuentaClienteDao {
     }
 
     public CuentaCliente findByNroCuenta(Integer nroCuenta) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaCliente where nroCuenta=?")
+	List<?> list = session.createQuery("from CuentaCliente where nroCuenta=?")
 		.setParameter(0, nroCuenta).list();
 	if (!list.isEmpty()) {
 	    return (CuentaCliente) list.get(0);

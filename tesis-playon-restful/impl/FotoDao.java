@@ -26,26 +26,26 @@ public class FotoDao implements IFotoDao {
     }
 
     public void save(Foto foto) {
-	getSessionFactory().getCurrentSession().save(foto);
+	session.save(foto);
     }
 
     public void update(Foto foto) {
-	getSessionFactory().getCurrentSession().update(foto);
+	session.update(foto);
     }
 
     public void delete(Foto foto) {
-	getSessionFactory().getCurrentSession().delete(foto);
+	session.delete(foto);
     }
 
     public Foto findByLinkFoto(String link) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Foto where nombre=?")
+	List<?> list = session.createQuery("from Foto where nombre=?")
 		.setParameter(0, link).list();
 	return (Foto) list.get(0);
     }
 
     public List<Foto> findAll() {
 	List<Foto> fotos = new ArrayList<Foto>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Foto").list();
+	List<?> list = session.createQuery("from Foto").list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
 		fotos.add((Foto) object);
@@ -56,7 +56,7 @@ public class FotoDao implements IFotoDao {
     }
 
     public Integer obtenerUltimoID() {
-	List<?> list = getSessionFactory().getCurrentSession().createSQLQuery("SELECT MAX(fotoID) FROM foto").list();
+	List<?> list = session.createSQLQuery("SELECT MAX(fotoID) FROM foto").list();
 	Integer ultimoID;
 	if (list.get(0) == null)
 	    ultimoID = 1;
@@ -67,7 +67,7 @@ public class FotoDao implements IFotoDao {
 
     public List<Foto> findByPlaya(PerfilPlaya perfil) {
 	List<Foto> fotos = new ArrayList<Foto>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Foto where perfilPlaya=?")
+	List<?> list = session.createQuery("from Foto where perfilPlaya=?")
 		.setParameter(0, perfil).list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {

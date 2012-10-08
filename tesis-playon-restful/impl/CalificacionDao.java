@@ -25,25 +25,25 @@ public class CalificacionDao implements ICalificacionDao {
     @Override
     public void save(Calificacion calificacion) {
 	// TODO Auto-generated method stub
-	getSessionFactory().getCurrentSession().save(calificacion);
+	session.save(calificacion);
     }
 
     @Override
     public void update(Calificacion calificacion) {
 	// TODO Auto-generated method stub
-	getSessionFactory().getCurrentSession().update(calificacion);
+	session.update(calificacion);
     }
 
     @Override
     public void delete(Calificacion calificacion) {
 	// TODO Auto-generated method stub
-	getSessionFactory().getCurrentSession().delete(calificacion);
+	session.delete(calificacion);
     }
 
     @Override
     public List<Calificacion> findByPlaya(Playa playa) {
 	List<Calificacion> calificaciones = new ArrayList<Calificacion>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Calificacion where playa=?")
+	List<?> list = session.createQuery("from Calificacion where playa=?")
 		.setParameter(0, playa).list();
 	if (!list.isEmpty()) {
 	    for (Object obj : list) {
@@ -57,7 +57,7 @@ public class CalificacionDao implements ICalificacionDao {
     @Override
     public List<Calificacion> findAll() {
 	List<Calificacion> calificaciones = new ArrayList<Calificacion>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Calificacion").list();
+	List<?> list = session.createQuery("from Calificacion").list();
 	if (!list.isEmpty()) {
 	    for (Object obj : list) {
 		calificaciones.add((Calificacion) obj);
@@ -69,7 +69,7 @@ public class CalificacionDao implements ICalificacionDao {
 
     @Override
     public boolean isRate(Playa playa, Cliente cliente) {
-	List<?> list = getSessionFactory().getCurrentSession()
+	List<?> list = session
 		.createQuery("from Calificacion where playa=? and cliente=?").setParameter(0, playa)
 		.setParameter(1, cliente).list();
 	if (!list.isEmpty()) {

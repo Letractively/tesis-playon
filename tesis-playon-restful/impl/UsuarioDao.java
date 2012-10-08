@@ -27,19 +27,19 @@ public class UsuarioDao implements IUsuarioDao {
     }
 
     public void save(Usuario usuario) {
-	getSessionFactory().getCurrentSession().save(usuario);
+	session.save(usuario);
     }
 
     public void update(Usuario usuario) {
-	getSessionFactory().getCurrentSession().update(usuario);
+	session.update(usuario);
     }
 
     public void delete(Usuario usuario) {
-	getSessionFactory().getCurrentSession().delete(usuario);
+	session.delete(usuario);
     }
 
     public Usuario findByNombreUsuario(String usuario) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario where nombreUser=?")
+	List<?> list = session.createQuery("from Usuario where nombreUser=?")
 		.setParameter(0, usuario).list();
 	if (!list.isEmpty())
 	    return (Usuario) list.get(0);
@@ -48,7 +48,7 @@ public class UsuarioDao implements IUsuarioDao {
 
     public List<Usuario> findAll() {
 	List<Usuario> usuarios = new ArrayList<Usuario>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario ORDER BY nombreUser").list();
+	List<?> list = session.createQuery("from Usuario ORDER BY nombreUser").list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
 		usuarios.add((Usuario) object);
@@ -61,7 +61,7 @@ public class UsuarioDao implements IUsuarioDao {
     @Override
     public List<Usuario> findByPlaya(Playa playa) {
 	List<Usuario> usuarios = new ArrayList<Usuario>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario where playa=?")
+	List<?> list = session.createQuery("from Usuario where playa=?")
 		.setParameter(0, playa).list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {

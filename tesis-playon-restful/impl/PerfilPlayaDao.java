@@ -27,19 +27,19 @@ public class PerfilPlayaDao implements IPerfilPlayaDao {
     }
 
     public void save(PerfilPlaya perfilPlaya) {
-	getSessionFactory().getCurrentSession().save(perfilPlaya);
+	session.save(perfilPlaya);
     }
 
     public void update(PerfilPlaya perfilPlaya) {
-	getSessionFactory().getCurrentSession().update(perfilPlaya);
+	session.update(perfilPlaya);
     }
 
     public void delete(PerfilPlaya perfilPlaya) {
-	getSessionFactory().getCurrentSession().delete(perfilPlaya);
+	session.delete(perfilPlaya);
     }
 
     public PerfilPlaya findByNombrePerfilPlaya(String nombrePerfilPlaya) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from PerfilPlaya where nombre=?")
+	List<?> list = session.createQuery("from PerfilPlaya where nombre=?")
 		.setParameter(0, nombrePerfilPlaya).list();
 	if (!list.isEmpty())
 	    return (PerfilPlaya) list.get(0);
@@ -48,7 +48,7 @@ public class PerfilPlayaDao implements IPerfilPlayaDao {
 
     public List<PerfilPlaya> findAll() {
 	List<PerfilPlaya> perfiles = new ArrayList<PerfilPlaya>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from PerfilPlaya").list();
+	List<?> list = session.createQuery("from PerfilPlaya").list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
 		perfiles.add((PerfilPlaya) object);
@@ -59,7 +59,7 @@ public class PerfilPlayaDao implements IPerfilPlayaDao {
     }
 
     public PerfilPlaya findByPlaya(Playa playa) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from PerfilPlaya where playa=?")
+	List<?> list = session.createQuery("from PerfilPlaya where playa=?")
 		.setParameter(0, playa).list();
 	if (!list.isEmpty())
 	    return (PerfilPlaya) list.get(0);

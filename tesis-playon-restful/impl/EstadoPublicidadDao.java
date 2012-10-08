@@ -21,26 +21,26 @@ public class EstadoPublicidadDao implements IEstadoPublicidadDao {
     }
 
     public void save(EstadoPublicidad estadoPublicidad) {
-	getSessionFactory().getCurrentSession().save(estadoPublicidad);
+	session.save(estadoPublicidad);
     }
 
     public void update(EstadoPublicidad estadoPublicidad) {
-	getSessionFactory().getCurrentSession().update(estadoPublicidad);
+	session.update(estadoPublicidad);
     }
 
     public void delete(EstadoPublicidad estadoPublicidad) {
-	getSessionFactory().getCurrentSession().delete(estadoPublicidad);
+	session.delete(estadoPublicidad);
     }
 
     public EstadoPublicidad findByNombreEstadoPublicidad(String nombreEstadoPublicidad) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoPublicidad where nombre=?")
+	List<?> list = session.createQuery("from EstadoPublicidad where nombre=?")
 		.setParameter(0, nombreEstadoPublicidad).list();
 	return (EstadoPublicidad) list.get(0);
     }
 
     public List<EstadoPublicidad> findAll() {
 	List<EstadoPublicidad> listaEstadoPublicidad = new ArrayList<EstadoPublicidad>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoPublicidad").list();
+	List<?> list = session.createQuery("from EstadoPublicidad").list();
 	for (Object obj : list) {
 	    listaEstadoPublicidad.add((EstadoPublicidad) obj);
 	}

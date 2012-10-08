@@ -21,26 +21,26 @@ public class EstadoPlayaDao implements IEstadoPlayaDao {
     }
 
     public void save(EstadoPlaya estadoPlaya) {
-	getSessionFactory().getCurrentSession().save(estadoPlaya);
+	session.save(estadoPlaya);
     }
 
     public void update(EstadoPlaya estadoPlaya) {
-	getSessionFactory().getCurrentSession().update(estadoPlaya);
+	session.update(estadoPlaya);
     }
 
     public void delete(EstadoPlaya estadoPlaya) {
-	getSessionFactory().getCurrentSession().delete(estadoPlaya);
+	session.delete(estadoPlaya);
     }
 
     public EstadoPlaya findByNombreEstadoPlaya(String nombreEstado) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoPlaya where nombre=?")
+	List<?> list = session.createQuery("from EstadoPlaya where nombre=?")
 		.setParameter(0, nombreEstado).list();
 	return (EstadoPlaya) list.get(0);
     }
 
     public List<EstadoPlaya> findAll() {
 	List<EstadoPlaya> estadoPlaya = new ArrayList<EstadoPlaya>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoPlaya order by nombre").list();
+	List<?> list = session.createQuery("from EstadoPlaya order by nombre").list();
 	for (Object object : list) {
 	    estadoPlaya.add((EstadoPlaya) object);
 	}

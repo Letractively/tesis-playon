@@ -27,20 +27,20 @@ public class ComentarioDao implements IComentarioDao {
     }
 
     public void save(Comentario comentario) {
-	getSessionFactory().getCurrentSession().save(comentario);
+	session.save(comentario);
     }
 
     public void update(Comentario comentario) {
-	getSessionFactory().getCurrentSession().update(comentario);
+	session.update(comentario);
     }
 
     public void delete(Comentario comentario) {
-	getSessionFactory().getCurrentSession().delete(comentario);
+	session.delete(comentario);
     }
 
     public List<Comentario> findByPlaya(Playa playa) {
 	List<Comentario> comentarios = new ArrayList<Comentario>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Comentario where playa=? and habilitado=1")
+	List<?> list = session.createQuery("from Comentario where playa=? and habilitado=1")
 		.setParameter(0, playa).list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
@@ -53,7 +53,7 @@ public class ComentarioDao implements IComentarioDao {
 
     public List<Comentario> findAll() {
 	List<Comentario> comentarios = new ArrayList<Comentario>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Comentario").list();
+	List<?> list = session.createQuery("from Comentario").list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
 		comentarios.add((Comentario) object);

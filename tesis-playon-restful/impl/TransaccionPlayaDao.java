@@ -26,20 +26,20 @@ public class TransaccionPlayaDao implements ITransaccionPlayaDao {
     }
 
     public void save(TransaccionPlaya transaccionPlaya) {
-	getSessionFactory().getCurrentSession().save(transaccionPlaya);
+	session.save(transaccionPlaya);
     }
 
     public void update(TransaccionPlaya transaccionPlaya) {
-	getSessionFactory().getCurrentSession().update(transaccionPlaya);
+	session.update(transaccionPlaya);
     }
 
     public void delete(TransaccionPlaya transaccionPlaya) {
-	getSessionFactory().getCurrentSession().delete(transaccionPlaya);
+	session.delete(transaccionPlaya);
     }
 
     public List<TransaccionPlaya> findAll() {
 	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TransaccionPlaya").list();
+	List<?> list = session.createQuery("from TransaccionPlaya").list();
 	for (Object object : list) {
 	    transaccionPlaya.add((TransaccionPlaya) object);
 	}

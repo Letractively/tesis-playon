@@ -21,26 +21,26 @@ public class SesionDao implements ISesionDao {
     }
 
     public void save(Sesion sesion) {
-	getSessionFactory().getCurrentSession().save(sesion);
+	session.save(sesion);
     }
 
     public void update(Sesion sesion) {
-	getSessionFactory().getCurrentSession().update(sesion);
+	session.update(sesion);
     }
 
     public void delete(Sesion sesion) {
-	getSessionFactory().getCurrentSession().delete(sesion);
+	session.delete(sesion);
     }
 
     public Sesion findByIDSesionSesion(String idSesion) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Sesion where sesionId=?")
+	List<?> list = session.createQuery("from Sesion where sesionId=?")
 		.setParameter(0, idSesion).list();
 	return (Sesion) list.get(0);
     }
 
     public List<Sesion> findAll() {
 	List<Sesion> sesiones = new ArrayList<Sesion>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Sesion").list();
+	List<?> list = session.createQuery("from Sesion").list();
 	for (Object object : list) {
 	    sesiones.add((Sesion) object);
 	}

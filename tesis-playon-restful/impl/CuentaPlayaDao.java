@@ -27,20 +27,20 @@ public class CuentaPlayaDao implements ICuentaPlayaDao {
     }
 
     public void save(CuentaPlaya cuentaPlaya) {
-	getSessionFactory().getCurrentSession().save(cuentaPlaya);
+	session.save(cuentaPlaya);
     }
 
     public void update(CuentaPlaya cuentaPlaya) {
-	getSessionFactory().getCurrentSession().update(cuentaPlaya);
+	session.update(cuentaPlaya);
     }
 
     public void delete(CuentaPlaya cuentaPlaya) {
-	getSessionFactory().getCurrentSession().delete(cuentaPlaya);
+	session.delete(cuentaPlaya);
     }
 
     public List<CuentaPlaya> findAll() {
 	List<CuentaPlaya> cuentas = new ArrayList<CuentaPlaya>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaPlaya").list();
+	List<?> list = session.createQuery("from CuentaPlaya").list();
 	for (Object object : list) {
 	    cuentas.add((CuentaPlaya) object);
 	}
@@ -48,7 +48,7 @@ public class CuentaPlayaDao implements ICuentaPlayaDao {
     }
 
     public CuentaPlaya findByNroCuenta(Integer nroCuenta) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaPlaya where nroCuenta=?")
+	List<?> list = session.createQuery("from CuentaPlaya where nroCuenta=?")
 		.setParameter(0, nroCuenta).list();
 	if (!list.isEmpty()) {
 	    return (CuentaPlaya) list.get(0);
@@ -57,7 +57,7 @@ public class CuentaPlayaDao implements ICuentaPlayaDao {
     }
 
     public CuentaPlaya findByPlaya(Playa playa) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaPlaya where playa=?")
+	List<?> list = session.createQuery("from CuentaPlaya where playa=?")
 		.setParameter(0, playa).list();
 	if (!list.isEmpty()) {
 	    return (CuentaPlaya) list.get(0);

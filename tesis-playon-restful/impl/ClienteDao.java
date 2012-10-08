@@ -26,35 +26,35 @@ public class ClienteDao implements IClienteDao {
     }
 
     public void save(Cliente cliente) {
-	getSessionFactory().getCurrentSession().save(cliente);
+	session.save(cliente);
     }
 
     public void update(Cliente cliente) {
-	getSessionFactory().getCurrentSession().update(cliente);
+	session.update(cliente);
     }
 
     public void delete(Cliente cliente) {
-	getSessionFactory().getCurrentSession().delete(cliente);
+	session.delete(cliente);
     }
 
     public Cliente findByNumeroCliente(Integer numeroCliente) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Cliente where nroCliente=?")
+	List<?> list = session.createQuery("from Cliente where nroCliente=?")
 		.setParameter(0, numeroCliente).list();
 	return (Cliente) list.get(0);
     }
 
     public Cliente findByNombreUsuario(String nombreUser) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario where nombreUser=?")
+	List<?> list = session.createQuery("from Usuario where nombreUser=?")
 		.setParameter(0, nombreUser).list();
 	Usuario usuario = (Usuario) list.get(0);
-	List<?> usuarioList = getSessionFactory().getCurrentSession().createQuery("from Cliente where usuario=?")
+	List<?> usuarioList = session.createQuery("from Cliente where usuario=?")
 		.setParameter(0, usuario).list();
 	return (Cliente) usuarioList.get(0);
     }
 
     public List<Cliente> findAll() {
 	List<Cliente> clientes = new ArrayList<Cliente>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Cliente").list();
+	List<?> list = session.createQuery("from Cliente").list();
 	for (Object object : list) {
 	    clientes.add((Cliente) object);
 	}
@@ -62,7 +62,7 @@ public class ClienteDao implements IClienteDao {
     }
 
     public Cliente findByIdUsuario(Usuario usuario) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Cliente where usuario=?")
+	List<?> list = session.createQuery("from Cliente where usuario=?")
 		.setParameter(0, usuario).list();
 	if(!list.isEmpty())
 	    return (Cliente) list.get(0);

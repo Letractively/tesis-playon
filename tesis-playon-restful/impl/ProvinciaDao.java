@@ -27,26 +27,26 @@ public class ProvinciaDao implements IProvinciaDao {
     }
 
     public void save(Provincia provincia) {
-	getSessionFactory().getCurrentSession().save(provincia);
+	session.save(provincia);
     }
 
     public void update(Provincia cliente) {
-	getSessionFactory().getCurrentSession().update(cliente);
+	session.update(cliente);
     }
 
     public void delete(Provincia cliente) {
-	getSessionFactory().getCurrentSession().delete(cliente);
+	session.delete(cliente);
     }
 
     public Provincia findByNombreProvincia(String nombreProvincia) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Provincia where nombre=?")
+	List<?> list = session.createQuery("from Provincia where nombre=?")
 		.setParameter(0, nombreProvincia).list();
 	return (Provincia) list.get(0);
     }
 
     public List<Provincia> findAll() {
 	List<Provincia> provincias = new ArrayList<Provincia>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Provincia order by nombre").list();
+	List<?> list = session.createQuery("from Provincia order by nombre").list();
 	for (Object object : list) {
 	    provincias.add((Provincia) object);
 	}
@@ -54,14 +54,14 @@ public class ProvinciaDao implements IProvinciaDao {
     }
     
     public Provincia findByProvinciaId(Integer id){
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Provincia where id=?")
+	List<?> list = session.createQuery("from Provincia where id=?")
 		.setParameter(0, id).list();
 	return (Provincia) list.get(0);
     }
     
     public List<Provincia> findProvincias(Pais pais){
 	List<Provincia> provincias = new ArrayList<Provincia>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Provincia where pais=?")
+	List<?> list = session.createQuery("from Provincia where pais=?")
 		.setParameter(0, pais).list();
 	for (Object object : list) {
 	    provincias.add((Provincia) object);

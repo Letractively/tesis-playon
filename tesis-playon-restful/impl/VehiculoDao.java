@@ -25,19 +25,19 @@ public class VehiculoDao implements IVehiculoDao {
     }
 
     public void save(Vehiculo vehiculo) {
-	getSessionFactory().getCurrentSession().save(vehiculo);
+	session.save(vehiculo);
     }
 
     public void update(Vehiculo vehiculo) {
-	getSessionFactory().getCurrentSession().update(vehiculo);
+	session.update(vehiculo);
     }
 
     public void delete(Vehiculo vehiculo) {
-	getSessionFactory().getCurrentSession().delete(vehiculo);
+	session.delete(vehiculo);
     }
 
     public Vehiculo findByPatenteVehiculo(String patenteVehiculo) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Vehiculo where patente=?")
+	List<?> list = session.createQuery("from Vehiculo where patente=?")
 		.setParameter(0, patenteVehiculo).list();
 	if (!list.isEmpty()) {
 	    return (Vehiculo) list.get(0);
@@ -48,7 +48,7 @@ public class VehiculoDao implements IVehiculoDao {
 
     public List<Vehiculo> findByCliente(int idCliente) {
 	List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
-	List<?> list = getSessionFactory().getCurrentSession()
+	List<?> list = session
 		.createQuery("from Vehiculo where cliente.id=? and habilitado=true order by patente")
 		.setParameter(0, idCliente).list();
 	if (!list.isEmpty()) {
@@ -62,7 +62,7 @@ public class VehiculoDao implements IVehiculoDao {
 
     public List<Vehiculo> findAll() {
 	List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Vehiculo").list();
+	List<?> list = session.createQuery("from Vehiculo").list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
 		vehiculos.add((Vehiculo) object);
@@ -76,7 +76,7 @@ public class VehiculoDao implements IVehiculoDao {
     // public List<Vehiculo> findByEstado() {
     // List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
     // List<?> list =
-    // getSessionFactory().getCurrentSession().createQuery("from Vehiculo where habilitado=true order by patente").list();
+    // session.createQuery("from Vehiculo where habilitado=true order by patente").list();
     // for (Object object : list) {
     // vehiculos.add((Vehiculo) object);
     // }

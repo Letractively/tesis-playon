@@ -24,20 +24,20 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
     }
 
     public void save(DetalleEstadia detalleEstadia) {
-	getSessionFactory().getCurrentSession().save(detalleEstadia);
+	session.save(detalleEstadia);
     }
 
     public void update(DetalleEstadia detalleEstadia) {
-	getSessionFactory().getCurrentSession().update(detalleEstadia);
+	session.update(detalleEstadia);
     }
 
     public void delete(DetalleEstadia detalleEstadia) {
-	getSessionFactory().getCurrentSession().delete(detalleEstadia);
+	session.delete(detalleEstadia);
     }
 
     public List<DetalleEstadia> findAll() {
 	List<DetalleEstadia> detalleEstadia = new ArrayList<DetalleEstadia>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DetalleEstadia").list();
+	List<?> list = session.createQuery("from DetalleEstadia").list();
 	for (Object object : list) {
 	    detalleEstadia.add((DetalleEstadia) object);
 	}
@@ -46,7 +46,7 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
 
     @Override
     public DetalleEstadia findByVehiculoDetalleEstadia(Vehiculo vehiculo) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DetalleEstadia where vehiculo=? and cobrado=0")
+	List<?> list = session.createQuery("from DetalleEstadia where vehiculo=? and cobrado=0")
 		.setParameter(0, vehiculo).list();
 	if (!list.isEmpty()) {
 	    return (DetalleEstadia) list.get(0);

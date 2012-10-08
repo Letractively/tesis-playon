@@ -26,26 +26,26 @@ public class TipoDocDao implements ITipoDocDao {
     }
 
     public void save(TipoDoc tipoDoc) {
-	getSessionFactory().getCurrentSession().save(tipoDoc);
+	session.save(tipoDoc);
     }
 
     public void update(TipoDoc tipoDoc) {
-	getSessionFactory().getCurrentSession().update(tipoDoc);
+	session.update(tipoDoc);
     }
 
     public void delete(TipoDoc tipoDoc) {
-	getSessionFactory().getCurrentSession().delete(tipoDoc);
+	session.delete(tipoDoc);
     }
 
     public TipoDoc findByNombreTipoDoc(String nombreTipoDoc) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoDoc where nombre=?")
+	List<?> list = session.createQuery("from TipoDoc where nombre=?")
 		.setParameter(0, nombreTipoDoc).list();
 	return (TipoDoc) list.get(0);
     }
 
     public List<TipoDoc> findAll() {
 	List<TipoDoc> documentos = new ArrayList<TipoDoc>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoDoc order by nombre").list();
+	List<?> list = session.createQuery("from TipoDoc order by nombre").list();
 	for (Object object : list) {
 	    documentos.add((TipoDoc) object);
 	}

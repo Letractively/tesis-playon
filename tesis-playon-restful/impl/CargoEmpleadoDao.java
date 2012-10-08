@@ -25,26 +25,26 @@ public class CargoEmpleadoDao implements ICargoEmpleadoDao {
     }
 
     public void save(CargoEmpleado cargo) {
-	getSessionFactory().getCurrentSession().save(cargo);
+	session.save(cargo);
     }
 
     public void update(CargoEmpleado cargo) {
-	getSessionFactory().getCurrentSession().update(cargo);
+	session.update(cargo);
     }
 
     public void delete(CargoEmpleado cargo) {
-	getSessionFactory().getCurrentSession().delete(cargo);
+	session.delete(cargo);
     }
 
     public CargoEmpleado findByNombreCargo(String nombreCargo) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CargoEmpleado where nombre=?")
+	List<?> list = session.createQuery("from CargoEmpleado where nombre=?")
 		.setParameter(0, nombreCargo).list();
 	return (CargoEmpleado) list.get(0);
     }
 
     public List<CargoEmpleado> findAll() {
 	List<CargoEmpleado> cargos = new ArrayList<CargoEmpleado>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CargoEmpleado order by nombre").list();
+	List<?> list = session.createQuery("from CargoEmpleado order by nombre").list();
 	for (Object object : list) {
 	    cargos.add((CargoEmpleado) object);
 	}
@@ -52,7 +52,7 @@ public class CargoEmpleadoDao implements ICargoEmpleadoDao {
     }
 
     public CargoEmpleado findById(Integer id) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CargoEmpleado where id=?")
+	List<?> list = session.createQuery("from CargoEmpleado where id=?")
 		.setParameter(0, id).list();
 	return (CargoEmpleado) list.get(0);
 

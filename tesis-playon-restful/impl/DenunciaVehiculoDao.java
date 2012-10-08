@@ -27,26 +27,26 @@ public class DenunciaVehiculoDao implements IDenunciaVehiculoDao {
     }
 
     public void save(DenunciaVehiculo denunciaVehiculo) {
-	getSessionFactory().getCurrentSession().save(denunciaVehiculo);
+	session.save(denunciaVehiculo);
     }
 
     public void update(DenunciaVehiculo denunciaVehiculo) {
-	getSessionFactory().getCurrentSession().update(denunciaVehiculo);
+	session.update(denunciaVehiculo);
     }
 
     public void delete(DenunciaVehiculo denunciaVehiculo) {
-	getSessionFactory().getCurrentSession().delete(denunciaVehiculo);
+	session.delete(denunciaVehiculo);
     }
 
     public DenunciaVehiculo findByAsuntoDenunciaVehiculo(String asuntoDenunciaVehiculo) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DenunciaVehiculo where asunto=?")
+	List<?> list = session.createQuery("from DenunciaVehiculo where asunto=?")
 		.setParameter(0, asuntoDenunciaVehiculo).list();
 	return (DenunciaVehiculo) list.get(0);
     }
 
     public List<DenunciaVehiculo> findAll() {
 	List<DenunciaVehiculo> denuncias = new ArrayList<DenunciaVehiculo>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DenunciaVehiculo").list();
+	List<?> list = session.createQuery("from DenunciaVehiculo").list();
 	for (Object object : list) {
 	    denuncias.add((DenunciaVehiculo) object);
 	}

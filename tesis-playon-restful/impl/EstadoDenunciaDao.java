@@ -25,26 +25,26 @@ public class EstadoDenunciaDao implements IEstadoDenunciaDao {
     }
 
     public void save(EstadoDenuncia estadoDenuncia) {
-	getSessionFactory().getCurrentSession().save(estadoDenuncia);
+	session.save(estadoDenuncia);
     }
 
     public void update(EstadoDenuncia estadoDenuncia) {
-	getSessionFactory().getCurrentSession().update(estadoDenuncia);
+	session.update(estadoDenuncia);
     }
 
     public void delete(EstadoDenuncia estadoDenuncia) {
-	getSessionFactory().getCurrentSession().delete(estadoDenuncia);
+	session.delete(estadoDenuncia);
     }
 
     public EstadoDenuncia findByNombreEstadoDenuncia(String nombreDenuncia) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoDenuncia where nombre=?")
+	List<?> list = session.createQuery("from EstadoDenuncia where nombre=?")
 		.setParameter(0, nombreDenuncia).list();
 	return (EstadoDenuncia) list.get(0);
     }
 
     public List<EstadoDenuncia> findAll() {
 	List<EstadoDenuncia> estados = new ArrayList<EstadoDenuncia>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoDenuncia").list();
+	List<?> list = session.createQuery("from EstadoDenuncia").list();
 	for (Object object : list) {
 	    estados.add((EstadoDenuncia) object);
 	}

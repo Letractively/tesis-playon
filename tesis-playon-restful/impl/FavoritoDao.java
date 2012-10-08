@@ -27,20 +27,20 @@ public class FavoritoDao implements IFavoritoDao {
     }
 
     public void save(Favorito favorito) {
-	getSessionFactory().getCurrentSession().save(favorito);
+	session.save(favorito);
     }
 
     public void update(Favorito favorito) {
-	getSessionFactory().getCurrentSession().update(favorito);
+	session.update(favorito);
     }
 
     public void delete(Favorito favorito) {
-	getSessionFactory().getCurrentSession().delete(favorito);
+	session.delete(favorito);
     }
 
     public List<Favorito> findAll() {
 	List<Favorito> favoritos = new ArrayList<Favorito>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Favorito").list();
+	List<?> list = session.createQuery("from Favorito").list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
 		favoritos.add((Favorito) object);
@@ -52,7 +52,7 @@ public class FavoritoDao implements IFavoritoDao {
 
     public List<Favorito> findByCliente(Cliente cliente) {
 	List<Favorito> favoritos = new ArrayList<Favorito>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Favorito where cliente=?")
+	List<?> list = session.createQuery("from Favorito where cliente=?")
 		.setParameter(0, cliente).list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
@@ -64,7 +64,7 @@ public class FavoritoDao implements IFavoritoDao {
     }
     
     public boolean isFavorito(Cliente cliente, Playa playa){
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Favorito where cliente=? and playa=?")
+	List<?> list = session.createQuery("from Favorito where cliente=? and playa=?")
 		.setParameter(0, cliente)
 		.setParameter(1, playa).list();
 	if (list.isEmpty()) {

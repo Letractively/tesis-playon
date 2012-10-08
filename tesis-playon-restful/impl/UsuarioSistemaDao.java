@@ -27,26 +27,26 @@ public class UsuarioSistemaDao implements IUsuarioSistemaDao {
     }
 
     public void save(UsuarioSistema usuarioSistema) {
-	getSessionFactory().getCurrentSession().save(usuarioSistema);
+	session.save(usuarioSistema);
     }
 
     public void update(UsuarioSistema usuarioSistema) {
-	getSessionFactory().getCurrentSession().update(usuarioSistema);
+	session.update(usuarioSistema);
     }
 
     public void delete(UsuarioSistema usuarioSistema) {
-	getSessionFactory().getCurrentSession().delete(usuarioSistema);
+	session.delete(usuarioSistema);
     }
 
     public UsuarioSistema findByNombreUsuarioSistema(Usuario usuario) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from UsuarioSistema where usuario=?")
+	List<?> list = session.createQuery("from UsuarioSistema where usuario=?")
 		.setParameter(0, usuario).list();
 	return (UsuarioSistema) list.get(0);
     }
 
     public List<UsuarioSistema> findAll() {
 	List<UsuarioSistema> usuarios = new ArrayList<UsuarioSistema>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from UsuarioSistema").list();
+	List<?> list = session.createQuery("from UsuarioSistema").list();
 	for (Object object : list) {
 	    usuarios.add((UsuarioSistema) object);
 	}

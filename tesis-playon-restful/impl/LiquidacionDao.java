@@ -21,20 +21,20 @@ public class LiquidacionDao implements ILiquidacionDao {
     }
 
     public void save(Liquidacion liquidacion) {
-	getSessionFactory().getCurrentSession().save(liquidacion);
+	session.save(liquidacion);
     }
 
     public void update(Liquidacion liquidacion) {
-	getSessionFactory().getCurrentSession().update(liquidacion);
+	session.update(liquidacion);
     }
 
     public void delete(Liquidacion liquidacion) {
-	getSessionFactory().getCurrentSession().delete(liquidacion);
+	session.delete(liquidacion);
     }
 
     public List<Liquidacion> findAll() {
 	List<Liquidacion> colores = new ArrayList<Liquidacion>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Liquidacion").list();
+	List<?> list = session.createQuery("from Liquidacion").list();
 	for (Object object : list) {
 	    colores.add((Liquidacion) object);
 	}

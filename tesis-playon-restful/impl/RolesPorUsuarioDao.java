@@ -26,26 +26,26 @@ public class RolesPorUsuarioDao implements IRolesPorUsuarioDao {
     }
 
     public void save(RolesPorUsuario rolPorUser) {
-	getSessionFactory().getCurrentSession().save(rolPorUser);
+	session.save(rolPorUser);
     }
 
     public void update(RolesPorUsuario rolPorUser) {
-	getSessionFactory().getCurrentSession().update(rolPorUser);
+	session.update(rolPorUser);
     }
 
     public void delete(RolesPorUsuario rolPorUser) {
-	getSessionFactory().getCurrentSession().delete(rolPorUser);
+	session.delete(rolPorUser);
     }
 
     public RolesPorUsuario findByNombreUsuario(String nombreUser) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from RolesPorUsuario where usuario=?")
+	List<?> list = session.createQuery("from RolesPorUsuario where usuario=?")
 		.setParameter(0, nombreUser).list();
 	return (RolesPorUsuario) list.get(0);
     }
 
     public List<RolesPorUsuario> findAll() {
 	List<RolesPorUsuario> rolesPorUser = new ArrayList<RolesPorUsuario>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from RolesPorUsuario").list();
+	List<?> list = session.createQuery("from RolesPorUsuario").list();
 	for (Object object : list) {
 	    rolesPorUser.add((RolesPorUsuario) object);
 	}

@@ -26,20 +26,20 @@ public class EmpleadoDao implements IEmpleadoDao {
     }
 
     public void save(Empleado empleado) {
-	getSessionFactory().getCurrentSession().save(empleado);
+	session.save(empleado);
     }
 
     public void update(Empleado empleado) {
-	getSessionFactory().getCurrentSession().update(empleado);
+	session.update(empleado);
     }
 
     public void delete(Empleado empleado) {
-	getSessionFactory().getCurrentSession().delete(empleado);
+	session.delete(empleado);
     }
 
     public List<Empleado> findAll() {
 	List<Empleado> empleados = new ArrayList<Empleado>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Empleado").list();
+	List<?> list = session.createQuery("from Empleado").list();
 	for (Object object : list) {
 	    empleados.add((Empleado) object);
 	}
@@ -48,7 +48,7 @@ public class EmpleadoDao implements IEmpleadoDao {
 
     public List<Empleado> findAll(Integer idCargoEmpleado) {
 	List<Empleado> empleados = new ArrayList<Empleado>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Empleado where cargoEmpleado.id=?")
+	List<?> list = session.createQuery("from Empleado where cargoEmpleado.id=?")
 		.setParameter(0, idCargoEmpleado).list();
 	for (Object object : list) {
 	    empleados.add((Empleado) object);
@@ -57,7 +57,7 @@ public class EmpleadoDao implements IEmpleadoDao {
     }
 
     public Empleado findById(Integer id) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Empleado where id=?")
+	List<?> list = session.createQuery("from Empleado where id=?")
 		.setParameter(0, id).list();
 	if (!list.isEmpty()) {
 	    return (Empleado) list.get(0);
@@ -66,7 +66,7 @@ public class EmpleadoDao implements IEmpleadoDao {
     }
 
     public Empleado findByIdUsuario(Usuario usuario) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Empleado where usuario=?")
+	List<?> list = session.createQuery("from Empleado where usuario=?")
 		.setParameter(0, usuario).list();
 	if (!list.isEmpty()) {
 	    return (Empleado) list.get(0);
@@ -75,7 +75,7 @@ public class EmpleadoDao implements IEmpleadoDao {
     }
 
     public Empleado findByLegajo(Integer legajo) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Empleado where legajo=?")
+	List<?> list = session.createQuery("from Empleado where legajo=?")
 		.setParameter(0, legajo).list();
 	if (!list.isEmpty()) {
 	    return (Empleado) list.get(0);

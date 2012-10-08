@@ -26,20 +26,20 @@ public class RolUsuarioDao implements IRolUsuarioDao {
     }
 
     public void save(RolUsuario rolUsuario) {
-	getSessionFactory().getCurrentSession().save(rolUsuario);
+	session.save(rolUsuario);
     }
 
     public void update(RolUsuario rolUsuario) {
-	getSessionFactory().getCurrentSession().update(rolUsuario);
+	session.update(rolUsuario);
     }
 
     public void delete(RolUsuario rolUsuario) {
-	getSessionFactory().getCurrentSession().delete(rolUsuario);
+	session.delete(rolUsuario);
     }
 
     public List<RolUsuario> findAll() {
 	List<RolUsuario> listaRolUsuario = new ArrayList<RolUsuario>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from RolUsuario order by nombre").list();
+	List<?> list = session.createQuery("from RolUsuario order by nombre").list();
 	for (Object obj : list) {
 	    listaRolUsuario.add((RolUsuario) obj);
 	}
@@ -47,7 +47,7 @@ public class RolUsuarioDao implements IRolUsuarioDao {
     }
 
     public RolUsuario findByNombreRolUsuario(String nombreRolUsuario) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from RolUsuario where nombre=?")
+	List<?> list = session.createQuery("from RolUsuario where nombre=?")
 		.setParameter(0, nombreRolUsuario).list();
 	return (RolUsuario) list.get(0);
     }

@@ -25,26 +25,26 @@ public class PromocionDao implements IPromocionDao {
     }
 
     public void save(Promocion promocion) {
-	getSessionFactory().getCurrentSession().save(promocion);
+	session.save(promocion);
     }
 
     public void update(Promocion promocion) {
-	getSessionFactory().getCurrentSession().update(promocion);
+	session.update(promocion);
     }
 
     public void delete(Promocion promocion) {
-	getSessionFactory().getCurrentSession().delete(promocion);
+	session.delete(promocion);
     }
 
     public Promocion findByNombrePromocion(String nombrePromocion) {
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Promocion where nombre=?")
+	List<?> list = session.createQuery("from Promocion where nombre=?")
 		.setParameter(0, nombrePromocion).list();
 	return (Promocion) list.get(0);
     }
 
     public List<Promocion> findAll() {
 	List<Promocion> promociones = new ArrayList<Promocion>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Promocion").list();
+	List<?> list = session.createQuery("from Promocion").list();
 	for (Object object : list) {
 	    promociones.add((Promocion) object);
 	}
