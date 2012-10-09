@@ -2,6 +2,7 @@ package tesis.playon.web.dao;
 
 import java.util.List;
 
+import tesis.playon.web.model.CuentaPlaya;
 import tesis.playon.web.model.TransaccionPlaya;
 
 public interface ITransaccionPlayaDao {
@@ -15,4 +16,10 @@ public interface ITransaccionPlayaDao {
     List<TransaccionPlaya> findAll();
 
     TransaccionPlaya findByTransaccionPlayaID(int id);
+    
+    List<TransaccionPlaya> findTransaccionesNoLiquidadas();
+    
+    List<TransaccionPlaya> findByCuentaPlaya(CuentaPlaya cuentaPlaya);
+
+    List<TransaccionPlaya> findNoLiquidadasByCuentaPlaya(CuentaPlaya cuentaPlaya);
 }

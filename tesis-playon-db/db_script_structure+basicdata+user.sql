@@ -1351,7 +1351,7 @@ UNLOCK TABLES;
 LOCK TABLES `cuenta_playa` WRITE;
 /*!40000 ALTER TABLE `cuenta_playa` DISABLE KEYS */;
 INSERT INTO `tesis_playon`.`cuenta_playa` (`fechaCreacion`,`nroCuenta`,`saldo`,`cuentaPlayaID`,`playaID`) VALUES 
- ('2012-08-22 00:00:00',1,1001,1,3);
+ ('2012-08-22 00:00:00',1,40,1,3);
 /*!40000 ALTER TABLE `cuenta_playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1436,7 +1436,7 @@ UNLOCK TABLES;
 LOCK TABLES `comentario` WRITE;
 INSERT INTO `tesis_playon`.`comentario` (`comentario`, `fecha`, `habilitado`, `playaID`,
 `comentarioID`, `usuarioID`) 
-VALUES ('No me gusto, hay que dejar  la llave del auto', '2012-09-18 09:55:22', 1, 10, 1000, 3);
+VALUES ('No me gusto, hay que dejar la llave del auto', '2012-09-18 09:55:22', 1, 10, 1000, 3);
 /*!40000 ALTER TABLE `comentario` ENABLE KEYS */;
 UNLOCK TABLES;
 

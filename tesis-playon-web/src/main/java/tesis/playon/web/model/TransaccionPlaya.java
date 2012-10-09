@@ -44,7 +44,7 @@ public class TransaccionPlaya implements Serializable {
     private CuentaPlaya cuentaPlaya;
 
     @ManyToOne
-    @JoinColumn(name = "liquidacion", nullable = false)
+    @JoinColumn(name = "liquidacionID", nullable = false)
     private Liquidacion liquidacion;
 
     @ManyToOne

@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.ITransaccionPlayaDao;
+import tesis.playon.web.model.CuentaPlaya;
 import tesis.playon.web.model.TransaccionPlaya;
+import tesis.playon.web.service.ITransaccionPlayaService;
 
 @Transactional(readOnly = true)
-public class TransaccionPlayaService {
+public class TransaccionPlayaService implements ITransaccionPlayaService {
     ITransaccionPlayaDao transaccionPlayaDao;
 
     @Transactional(readOnly = false)
@@ -42,4 +44,19 @@ public class TransaccionPlayaService {
 	this.transaccionPlayaDao = transaccionPlayaDao;
     }
 
+    public TransaccionPlaya findByTransaccionPlayaid(int transaccionID) {
+	return getTransaccionPlayaDao().findByTransaccionPlayaID(transaccionID);
+    }
+
+    public List<TransaccionPlaya> findTransaccionesNoLiquidadas() {
+	return getTransaccionPlayaDao().findTransaccionesNoLiquidadas();
+    }
+
+    public List<TransaccionPlaya> findByCuentaPlaya(CuentaPlaya cuentaPlaya) {
+	return getTransaccionPlayaDao().findByCuentaPlaya(cuentaPlaya);
+    }
+
+    public List<TransaccionPlaya> findNoLiquidadasByCuentaPlaya(CuentaPlaya cuentaPlaya) {
+	return getTransaccionPlayaDao().findNoLiquidadasByCuentaPlaya(cuentaPlaya);
+    }
 }

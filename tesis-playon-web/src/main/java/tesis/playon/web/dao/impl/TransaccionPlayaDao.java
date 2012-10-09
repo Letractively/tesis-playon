@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.ITransaccionPlayaDao;
+import tesis.playon.web.model.CuentaPlaya;
 import tesis.playon.web.model.TransaccionPlaya;
 
 /**
@@ -51,6 +52,40 @@ public class TransaccionPlayaDao implements ITransaccionPlayaDao {
 		.createQuery("from TransaccionPlaya where transaccionPlayaID=?").setParameter(0, transaccionPlayaID)
 		.list();
 	return (TransaccionPlaya) list.get(0);
+    }
+
+    @Override
+    public List<TransaccionPlaya> findTransaccionesNoLiquidadas() {
+	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from TransaccionPlaya where liquidacion is null").list();
+	for (Object object : list) {
+	    transaccionPlaya.add((TransaccionPlaya) object);
+	}
+	return transaccionPlaya;
+    }
+
+    @Override
+    public List<TransaccionPlaya> findByCuentaPlaya(CuentaPlaya cuentaPlaya) {
+	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from TransaccionPlaya where cuentaPlaya = ?").setParameter(0, cuentaPlaya).list();
+	for (Object object : list) {
+	    transaccionPlaya.add((TransaccionPlaya) object);
+	}
+	return transaccionPlaya;
+    }
+
+    @Override
+    public List<TransaccionPlaya> findNoLiquidadasByCuentaPlaya(CuentaPlaya cuentaPlaya) {
+	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from TransaccionPlaya where cuentaPlaya = ? and liquidacion is null")
+		.setParameter(0, cuentaPlaya).list();
+	for (Object object : list) {
+	    transaccionPlaya.add((TransaccionPlaya) object);
+	}
+	return transaccionPlaya;
     }
 
 }
