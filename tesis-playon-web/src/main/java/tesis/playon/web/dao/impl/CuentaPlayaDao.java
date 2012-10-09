@@ -41,10 +41,13 @@ public class CuentaPlayaDao implements ICuentaPlayaDao {
     public List<CuentaPlaya> findAll() {
 	List<CuentaPlaya> cuentas = new ArrayList<CuentaPlaya>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaPlaya").list();
-	for (Object object : list) {
-	    cuentas.add((CuentaPlaya) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		cuentas.add((CuentaPlaya) object);
+	    }
+	    return cuentas;
 	}
-	return cuentas;
+	return null;
     }
 
     public CuentaPlaya findByNroCuenta(Integer nroCuenta) {

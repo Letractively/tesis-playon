@@ -39,23 +39,26 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
     public List<DetalleEstadia> findAll() {
 	List<DetalleEstadia> detalleEstadia = new ArrayList<DetalleEstadia>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DetalleEstadia").list();
-	for (Object object : list) {
-	    detalleEstadia.add((DetalleEstadia) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		detalleEstadia.add((DetalleEstadia) object);
+	    }
+	    return detalleEstadia;
 	}
-	return detalleEstadia;
+	return null;
     }
 
-    public List<DetalleEstadia> findByEstadia(Estadia estadia)
-
-    {
+    public List<DetalleEstadia> findByEstadia(Estadia estadia){
 	List<DetalleEstadia> detallesEstadia = new ArrayList<DetalleEstadia>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DetalleEstadia where estadia=?")
 		.setParameter(0, estadia).list();
-	for (Object object : list) {
-	    detallesEstadia.add((DetalleEstadia) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		detallesEstadia.add((DetalleEstadia) object);
+	    }
+	    return detallesEstadia;
 	}
-	return detallesEstadia;
-
+	return null;
     }
 
     @Override

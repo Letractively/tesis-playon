@@ -12,26 +12,24 @@
     </ui:define>
 
 	<ui:define name="content">
-		<h1>Panel de control</h1>
-		<div id="perfil-playa">
-			<h:panelGrid columns="2">
-				<h:graphicImage library="fotos_perfil_playas"
-					name="#{perfilPlayaMB.perfil.nombreFoto}"
-					style="width:151px; height:151px; border: 2px solid black"
-					rendered="#{perfilPlayaMB.perfil.nombreFoto != null}" />
-				<h:graphicImage library="fotos_perfil_playas" name="sinfoto.jpg"
-					style="width:151px; height:151px; border: 2px solid black"
-					rendered="#{perfilPlayaMB.perfil.nombreFoto == null}" />
-				<h1 style="width: 400px">#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
-			</h:panelGrid>
-		</div>
-		<br />
-		<h:form>
-			<f:event type="preRenderView"
-				listener="#{ingresoEgresoMB.preRenderView}" />
+		<h:form style="margin: 0 0 0 30px;">
+			<h1>Panel de control</h1>
+			<div id="perfil-playa">
+				<h:panelGrid columns="2">
+					<h:graphicImage library="fotos_perfil_playas"
+						name="#{perfilPlayaMB.perfil.nombreFoto}"
+						styleClass="bordes-foto-perfil"
+						rendered="#{perfilPlayaMB.perfil.nombreFoto != null}" />
+					<h:graphicImage library="fotos_perfil_playas" name="sinfoto.jpg"
+						styleClass="bordes-foto-perfil"
+						rendered="#{perfilPlayaMB.perfil.nombreFoto == null}" />
+					<h1 style="width: 400px">#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
+				</h:panelGrid>
+			</div>
+
 			<p:growl id="messages" />
 			<div id="perfil-playa">
-				<h:panelGrid columns="2" cellpadding="5">
+				<h:panelGrid columns="2" cellpadding="8" cellspacing="10">
 					<h:outputText value="Playa: " styleClass="fuente-outputtext" />
 					<h:outputText id="txt_playa"
 						value="#{ingresoEgresoMB.playa.nombreComercial}"
@@ -54,7 +52,7 @@
 				</h:panelGrid>
 			</div>
 
-			<div style="margin: 20px 0px 0px 50px; width: 100%;">
+			<div style="width: 100%;">
 				Tareas
 				<p:separator id="separator" />
 

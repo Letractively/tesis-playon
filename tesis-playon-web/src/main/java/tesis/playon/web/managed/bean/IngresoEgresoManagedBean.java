@@ -3,10 +3,11 @@ package tesis.playon.web.managed.bean;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -24,10 +25,12 @@ import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.MarcaVehiculo;
 import tesis.playon.web.model.ModeloVehiculo;
 import tesis.playon.web.model.Playa;
+import tesis.playon.web.model.Promocion;
 import tesis.playon.web.model.Tarifa;
 import tesis.playon.web.model.TipoEstadia;
 import tesis.playon.web.model.TipoPago;
 import tesis.playon.web.model.TransaccionCliente;
+import tesis.playon.web.model.TransaccionPlaya;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.ICargoEmpleadoService;
@@ -37,9 +40,12 @@ import tesis.playon.web.service.IDetalleEstadiaService;
 import tesis.playon.web.service.IEmpleadoService;
 import tesis.playon.web.service.IEstadiaService;
 import tesis.playon.web.service.IPlayaService;
+import tesis.playon.web.service.IPromocionService;
 import tesis.playon.web.service.ITarifaService;
+import tesis.playon.web.service.ITipoEstadiaService;
 import tesis.playon.web.service.ITipoPagoService;
 import tesis.playon.web.service.ITransaccionClienteService;
+import tesis.playon.web.service.ITransaccionPlayaService;
 import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.service.IVehiculoService;
 
@@ -78,12 +84,21 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{TarifaService}")
     ITarifaService tarifaService;
+    
+    @ManagedProperty(value = "#{PromocionService}")
+    IPromocionService promocionService;
 
     @ManagedProperty(value = "#{TipoPagoService}")
     ITipoPagoService tipoPagoService;
 
     @ManagedProperty(value = "#{TransaccionClienteService}")
     ITransaccionClienteService transaccionClienteService;
+    
+    @ManagedProperty(value = "#{TransaccionPlayaService}")
+    ITransaccionPlayaService transaccionPlayaService;
+
+    @ManagedProperty(value = "#{TipoEstadiaService}")
+    ITipoEstadiaService tipoEstadiaService;
 
     private List<Tarifa> tarifaPlayaList;
 
@@ -141,34 +156,116 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     private float importe;
 
-    public void preRenderView() {
+    private List<TipoEstadia> tipoEstadiaList;
+    
+    private List<Promocion> promocionesDisponibles;
+    
+    private Promocion promocion;
+
+    @PostConstruct
+    private void init() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
-	setNombreUsuario(facesContext.getExternalContext().getRemoteUser());
-	if (null != nombreUsuario) {
-	    setUsuario(getUsuarioService().findByNombreUsuario(nombreUsuario));
+	String userName = facesContext.getExternalContext().getRemoteUser();
+	try {
+	    usuario = getUsuarioService().findByNombreUsuario(userName);
+	    if (usuario != null) {
+		this.empleado = getEmpleadoService().findByUsuario(usuario);
+		this.playa = usuario.getPlaya();
+		if (playa != null) {
+		    this.cuentaPlaya = getCuentaPlayaService().findByPlaya(playa);
+		    if (cuentaPlaya == null) {
+			cuentaPlaya = new CuentaPlaya(playa);
+			getCuentaPlayaService().save(cuentaPlaya);
+		    }
+
+		    this.estadia = getEstadiaService().findByPlaya(playa);
+		    if (estadia == null) {
+			estadia = new Estadia(playa);
+			getEstadiaService().save(estadia);
+		    }
+
+		    this.cargoEmpleado = empleado.getCargoEmpleado();
+		}
+	    }
+	    tipoEstadiaList = getTipoEstadiaService().findAll();
+	} catch (Exception ex) {
+	    ex.printStackTrace();
 	}
-	if (null != usuario) {
-	    setEmpleado(getEmpleadoService().findByUsuario(usuario));
-	    setPlaya(usuario.getPlaya());
-	}
-	if (null != playa) {
-	    setCuentaPlaya(getCuentaPlayaService().findByPlaya(playa));
-	    setEstadia(getEstadiaService().findByPlaya(playa));
-	}
-	if (null == cuentaPlaya) {
-	    // la cuenta aun no existe y debe ser creada
-	    cuentaPlaya = new CuentaPlaya(playa);
-	    if (null != cuentaPlaya)
-		getCuentaPlayaService().save(cuentaPlaya);
-	}
-	if (null == estadia) {
-	    // la estadia aun no existe y debe ser creada
-	    estadia = new Estadia(playa);
-	    if (null != cuentaPlaya)
-		getEstadiaService().save(estadia);
-	}
-	setCargoEmpleado(empleado.getCargoEmpleado()); // tira error
     }
+
+//    public void preRenderView() {
+//	FacesContext facesContext = FacesContext.getCurrentInstance();
+//	setNombreUsuario(facesContext.getExternalContext().getRemoteUser());
+//	if (null != nombreUsuario) {
+//	    setUsuario(getUsuarioService().findByNombreUsuario(nombreUsuario));
+//	}
+//	if (null != usuario) {
+//	    setEmpleado(getEmpleadoService().findByUsuario(usuario));
+//	    setPlaya(usuario.getPlaya());
+//	}
+//	if (null != playa) {
+//	    setCuentaPlaya(getCuentaPlayaService().findByPlaya(playa));
+//	    setEstadia(getEstadiaService().findByPlaya(playa));
+//	}
+//	if (null == cuentaPlaya) {
+//	    // la cuenta aun no existe y debe ser creada
+//	    cuentaPlaya = new CuentaPlaya(playa);
+//	    if (null != cuentaPlaya)
+//		getCuentaPlayaService().save(cuentaPlaya);
+//	}
+//	if (null == estadia) {
+//	    // la estadia aun no existe y debe ser creada
+//	    estadia = new Estadia(playa);
+//	    if (null != cuentaPlaya)
+//		getEstadiaService().save(estadia);
+//	}
+//	setCargoEmpleado(empleado.getCargoEmpleado()); // tira error
+//    }
+
+    // public void searchVehiculo() {
+    // limpiar();
+    // String auxPatente = patente.trim();
+    // setVehiculo(getVehiculoService().findByPatenteVehiculo(auxPatente.toUpperCase()));
+    //
+    // if (null != vehiculo) {
+    // setCategoriaVehiculo(vehiculo.getModeloVehiculo().getCategoriaVehiculo());
+    // setModeloVehiculo(vehiculo.getModeloVehiculo());
+    // setMarcaVehiculo(modeloVehiculo.getMarcaVehiculo());
+    // setCliente(vehiculo.getCliente());
+    // setDetalleEstadia(getDetalleEstadiaService().findByVehiculoDetalleEstadia(vehiculo));
+    // } else {
+    // FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+    // "No se encontró el vehículo con patente: ", auxPatente);
+    // FacesContext.getCurrentInstance().addMessage(null, message);
+    // }
+    // if (null != cliente) {
+    // setUsuarioCliente(cliente.getUsuario());
+    // setCuentaCliente(getCuentaClienteService()
+    // .findByNroCuentaCliente(cliente.getCuentaCliente().getNroCuenta()));
+    // }
+    // if (null != cuentaCliente) {
+    // if (cuentaCliente.getSaldo() > 0) {
+    // saldoPositvo = true;
+    // } else {
+    // saldoPositvo = false;
+    // }
+    // }
+    // if (null != detalleEstadia && !detalleEstadia.getCobrado()) {
+    // cobrado = false;
+    // Timestamp ts = detalleEstadia.getFechaHoraIngreso();
+    // fechaIngresoFormateada = new SimpleDateFormat("dd/MM/yyyy").format(ts);
+    // horaIngresoFormateada = new SimpleDateFormat("HH:mm aa").format(ts);
+    // }
+    // if (null != vehiculo && getTarifaPlayaList().isEmpty()) {
+    // setExisteTarifa(false);
+    // FacesContext.getCurrentInstance().addMessage(
+    // null,
+    // new FacesMessage(FacesMessage.SEVERITY_WARN, "Tarifas no encontradas", "Cargue tarifas para "
+    // + categoriaVehiculo.getNombre()));
+    // } else if (cliente != null && null != vehiculo && null != cuentaCliente) {
+    // setExisteVehiculo(true);
+    // }
+    // }
 
     public void searchVehiculo() {
 	limpiar();
@@ -180,38 +277,45 @@ public class IngresoEgresoManagedBean implements Serializable {
 	    setModeloVehiculo(vehiculo.getModeloVehiculo());
 	    setMarcaVehiculo(modeloVehiculo.getMarcaVehiculo());
 	    setCliente(vehiculo.getCliente());
+
+	    if (null != cliente) {
+		setUsuarioCliente(cliente.getUsuario());
+		setCuentaCliente(getCuentaClienteService().findByNroCuentaCliente(
+			cliente.getCuentaCliente().getNroCuenta()));
+		if (null != cuentaCliente) {
+		    if (cuentaCliente.getSaldo() > 0) {
+			saldoPositvo = true;
+		    } else {
+			saldoPositvo = false;
+		    }
+		}
+	    }
+
 	    setDetalleEstadia(getDetalleEstadiaService().findByVehiculoDetalleEstadia(vehiculo));
+	    if (null != detalleEstadia && !detalleEstadia.getCobrado()) {
+		cobrado = false;
+		Timestamp ts = detalleEstadia.getFechaHoraIngreso();
+		fechaIngresoFormateada = new SimpleDateFormat("dd/MM/yyyy").format(ts);
+		horaIngresoFormateada = new SimpleDateFormat("HH:mm aa").format(ts);
+	    }
+
+	    tarifaPlayaList = getTarifaService().findTarifaVigenteByPlayaAndCategoriaVehiculo(playa,
+		    vehiculo.getModeloVehiculo().getCategoriaVehiculo());
+
+	    if (tarifaPlayaList == null) {
+		setExisteTarifa(false);
+		FacesContext.getCurrentInstance().addMessage(
+			null,
+			new FacesMessage(FacesMessage.SEVERITY_WARN,
+				"No existen tarifas registradas para la categoria: " + categoriaVehiculo.getNombre(),
+				null));
+	    }
+	    setExisteVehiculo(true);
+
 	} else {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
 		    "No se encontró el vehículo con patente: ", auxPatente);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-	if (null != cliente) {
-	    setUsuarioCliente(cliente.getUsuario());
-	    setCuentaCliente(getCuentaClienteService()
-		    .findByNroCuentaCliente(cliente.getCuentaCliente().getNroCuenta()));
-	}
-	if (null != cuentaCliente) {
-	    if (cuentaCliente.getSaldo() > 0) {
-		saldoPositvo = true;
-	    } else {
-		saldoPositvo = false;
-	    }
-	}
-	if (null != detalleEstadia && !detalleEstadia.getCobrado()) {
-	    cobrado = false;
-	    Timestamp ts = detalleEstadia.getFechaHoraIngreso();
-	    fechaIngresoFormateada = new SimpleDateFormat("dd/MM/yyyy").format(ts);
-	    horaIngresoFormateada = new SimpleDateFormat("HH:mm aa").format(ts);
-	}
-	if (null != vehiculo && getTarifaPlayaList().isEmpty()) {
-	    setExisteTarifa(false);
-	    FacesContext.getCurrentInstance().addMessage(
-		    null,
-		    new FacesMessage(FacesMessage.SEVERITY_WARN, "Tarifas no encontradas", "Cargue tarifas para "
-			    + categoriaVehiculo.getNombre()));
-	} else if (cliente != null && null != vehiculo && null != cuentaCliente) {
-	    setExisteVehiculo(true);
 	}
     }
 
@@ -222,8 +326,9 @@ public class IngresoEgresoManagedBean implements Serializable {
 	Integer disponibilidad = playa.getDisponibilidad() - 1;
 	playa.setDisponibilidad(disponibilidad);
 	getPlayaService().update(playa);
+
 	FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		"Se registró el ingreso exitosamente del vehiculo patente:", patente);
+		"Se registró el ingreso exitosamente del vehiculo patente: ", patente);
 	FacesContext.getCurrentInstance().addMessage(null, message);
 	limpiar();
     }
@@ -255,69 +360,83 @@ public class IngresoEgresoManagedBean implements Serializable {
 	playa.setDisponibilidad(disponibilidad);
 	getPlayaService().update(playa);
 	
-	FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		"Se registró el engreso exitosamente del vehiculo patente:", patente);
-	FacesContext.getCurrentInstance().addMessage(null, message);
+	//Registrar la transacción playa.
+	TransaccionPlaya txPlaya = new TransaccionPlaya();
+	txPlaya.setFecha(new Date());
+	txPlaya.setDetalleEstadia(detalleEstadia);
+	txPlaya.setCuentaPlaya(cuentaPlaya);
+	txPlaya.setImporte(importe);
+	txPlaya.setTipoPago(tipoPago);
+	getTransaccionPlayaService().save(txPlaya);
 	
+
+	FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		"Se registró el egreso exitosamente del vehículo patente:", patente);
+	FacesContext.getCurrentInstance().addMessage(null, message);
+
 	limpiar();
     }
 
     public void calcularImporte() {
-	for (Tarifa tarifaAux : tarifaPlayaList) {
-	    if (tarifaAux.equals(tarifa)) {
-		tarifa = tarifaAux;
+	if (tarifaPlayaList != null) {
+	    for (Tarifa tarifaAux : tarifaPlayaList) {
+		if (tarifaAux.equals(tarifa)) {
+		    tarifa = tarifaAux;
+		}
 	    }
+
+	    TipoEstadia tipoEstadia = tarifa.getTipoEstadia();
+	    Timestamp fechaHoraEgreso;
+	    // calculo de importe a pagar
+	    if ("Por Hora".equals(tipoEstadia.getNombre())) {
+		fechaHoraEgreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
+		detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+		long diff = detalleEstadia.getFechaHoraEgreso().getTime()
+			- detalleEstadia.getFechaHoraIngreso().getTime();
+		double diferenciaEnHoras = diff / ((double) 1000 * 60 * 60);
+		int horasACobrar = (int) diferenciaEnHoras;
+		int minutos = (int) ((diferenciaEnHoras - horasACobrar) * 60);
+		if (minutos > 10 || horasACobrar == 0)
+		    horasACobrar++;
+		importe = tarifa.getImporte() * horasACobrar;
+	    } else if ("Por Mes".equals(tipoEstadia.getNombre())) {
+		Calendar calendario = Calendar.getInstance();
+		calendario.clear();
+		calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
+		calendario.add(Calendar.MONTH, 1);
+		fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
+		detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+		importe = tarifa.getImporte();
+	    } else if ("Por Noche".equals(tipoEstadia.getNombre())) {
+		Calendar calendario = Calendar.getInstance();
+		calendario.clear();
+		calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
+		calendario.add(Calendar.HOUR_OF_DAY, 8);
+		fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
+		detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+		importe = tarifa.getImporte();
+	    } else if ("Por Día".equals(tipoEstadia.getNombre())) {
+		Calendar calendario = Calendar.getInstance();
+		calendario.clear();
+		calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
+		calendario.add(Calendar.DAY_OF_MONTH, 1);
+		fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
+		detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+		importe = tarifa.getImporte();
+	    } else if ("Por Semana".equals(tipoEstadia.getNombre())) {
+		Calendar calendario = Calendar.getInstance();
+		calendario.clear();
+		calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
+		calendario.add(Calendar.DAY_OF_MONTH, 7);
+		fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
+		detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+		importe = tarifa.getImporte();
+	    }
+	    detalleEstadia.setImporteTotal(importe);
+	    detalleEstadia.setTarifa(tarifa);
+	    detalleEstadia.setCobrado(true);
+	    importeCalculado = true;
 	}
-	TipoEstadia tipoEstadia = tarifa.getTipoEstadia();
-	Timestamp fechaHoraEgreso;
-	// calculo de importe a pagar
-	if ("Por Hora".equals(tipoEstadia.getNombre())) {
-	    fechaHoraEgreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
-	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
-	    long diff = detalleEstadia.getFechaHoraEgreso().getTime() - detalleEstadia.getFechaHoraIngreso().getTime();
-	    double diferenciaEnHoras = diff / ((double) 1000 * 60 * 60);
-	    int horasACobrar = (int) diferenciaEnHoras;
-	    int minutos = (int) ((diferenciaEnHoras - horasACobrar) * 60);
-	    if (minutos > 10 || horasACobrar == 0)
-		horasACobrar++;
-	    importe = tarifa.getImporte() * horasACobrar;
-	} else if ("Por Mes".equals(tipoEstadia.getNombre())) {
-	    Calendar calendario = Calendar.getInstance();
-	    calendario.clear();
-	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
-	    calendario.add(Calendar.MONTH, 1);
-	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
-	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
-	    importe = tarifa.getImporte();
-	} else if ("Por Noche".equals(tipoEstadia.getNombre())) {
-	    Calendar calendario = Calendar.getInstance();
-	    calendario.clear();
-	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
-	    calendario.add(Calendar.HOUR_OF_DAY, 8);
-	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
-	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
-	    importe = tarifa.getImporte();
-	} else if ("Por Día".equals(tipoEstadia.getNombre())) {
-	    Calendar calendario = Calendar.getInstance();
-	    calendario.clear();
-	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
-	    calendario.add(Calendar.DAY_OF_MONTH, 1);
-	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
-	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
-	    importe = tarifa.getImporte();
-	} else if ("Por Semana".equals(tipoEstadia.getNombre())) {
-	    Calendar calendario = Calendar.getInstance();
-	    calendario.clear();
-	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
-	    calendario.add(Calendar.DAY_OF_MONTH, 7);
-	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
-	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
-	    importe = tarifa.getImporte();
-	}
-	detalleEstadia.setImporteTotal(importe);
-	detalleEstadia.setTarifa(tarifa);
-	detalleEstadia.setCobrado(true);
-	importeCalculado = true;
     }
 
     public void limpiar() {
@@ -437,12 +556,31 @@ public class IngresoEgresoManagedBean implements Serializable {
 	this.transaccionClienteService = transaccionClienteService;
     }
 
+    public ITipoEstadiaService getTipoEstadiaService() {
+	return tipoEstadiaService;
+    }
+
+    public void setTipoEstadiaService(ITipoEstadiaService tipoEstadiaService) {
+	this.tipoEstadiaService = tipoEstadiaService;
+    }
+
+    public ITransaccionPlayaService getTransaccionPlayaService() {
+        return transaccionPlayaService;
+    }
+
+    public void setTransaccionPlayaService(ITransaccionPlayaService transaccionPlayaService) {
+        this.transaccionPlayaService = transaccionPlayaService;
+    }
+
+    public IPromocionService getPromocionService() {
+        return promocionService;
+    }
+
+    public void setPromocionService(IPromocionService promocionService) {
+        this.promocionService = promocionService;
+    }
+
     public List<Tarifa> getTarifaPlayaList() {
-	tarifaPlayaList = new ArrayList<Tarifa>();
-	if (null != getTarifaService().findTarifaVigenteByPlayaAndCategoriaVehiculo(playa, categoriaVehiculo)) {
-	    tarifaPlayaList.addAll(getTarifaService().findTarifaVigenteByPlayaAndCategoriaVehiculo(playa,
-		    categoriaVehiculo));
-	}
 	return tarifaPlayaList;
     }
 
@@ -673,6 +811,30 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public void setImporte(float importe) {
 	this.importe = importe;
+    }
+
+    public List<TipoEstadia> getTipoEstadiaList() {
+	return tipoEstadiaList;
+    }
+
+    public void setTipoEstadiaList(List<TipoEstadia> tipoEstadiaList) {
+	this.tipoEstadiaList = tipoEstadiaList;
+    }
+
+    public List<Promocion> getPromocionesDisponibles() {
+        return promocionesDisponibles;
+    }
+
+    public void setPromocionesDisponibles(List<Promocion> promocionesDisponibles) {
+        this.promocionesDisponibles = promocionesDisponibles;
+    }
+
+    public Promocion getPromocion() {
+        return promocion;
+    }
+
+    public void setPromocion(Promocion promocion) {
+        this.promocion = promocion;
     }
 
     // método para cancelar la página.

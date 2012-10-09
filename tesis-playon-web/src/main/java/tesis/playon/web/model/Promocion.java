@@ -165,6 +165,10 @@ public class Promocion implements Serializable {
 	return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public boolean equals(Object object) {
 	if (object == this)
 	    return true;
