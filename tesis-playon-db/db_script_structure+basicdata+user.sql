@@ -1068,11 +1068,8 @@ UNLOCK TABLES;
 LOCK TABLES `estado_promocion` WRITE;
 /*!40000 ALTER TABLE `estado_promocion` DISABLE KEYS */;
 INSERT INTO `estado_promocion` (`descripcion`, `nombre`, `estadoPromocionID`) 
-VALUES ('Pendiente de Aprobación','Pendiente',1),
-	('Aprobada y pendiente de publicación','Aprobada',2),
-	('No Aprobada','Rechazada',3),
-	('Aprobada y publicandose','Vigente',4),
-	('Período de publicación vencido','Vencida',5);
+VALUES ('Rechazada o de baja','De baja',1),
+	('Aprobada y publicandose','Vigente',2);
 /*!40000 ALTER TABLE `estado_promocion` ENABLE KEYS */;
 UNLOCK TABLES;
 
