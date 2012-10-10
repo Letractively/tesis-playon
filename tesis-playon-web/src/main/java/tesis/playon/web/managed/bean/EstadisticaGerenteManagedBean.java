@@ -146,6 +146,7 @@ public class EstadisticaGerenteManagedBean {
     private float importe;
 
     private static int cantAutos, cantUtilitarios, cantMotos, cantPickUp;
+    private int mayorCant;
 
     @SuppressWarnings("unused")
     private static double ingAuto, ingUtilitario, ingMoto, ingPickUp;
@@ -165,12 +166,11 @@ public class EstadisticaGerenteManagedBean {
 
     }
 
-    @SuppressWarnings("unused")
     private void cantidadTiposVehiculo() {
-	cantAutos = 0;
-	cantMotos = 27;
-	cantPickUp = 43;
-	cantUtilitarios = 58;
+	cantAutos = 13;
+	cantMotos = 100;
+	cantPickUp = 50;
+	cantUtilitarios = 5;
 
 	for (DetalleEstadia detalleAux : detalles) {
 	    if (detalleAux.getVehiculo().getModeloVehiculo().getCategoriaVehiculo().getNombre().equals("Auto")) {
@@ -187,6 +187,32 @@ public class EstadisticaGerenteManagedBean {
 	    }
 
 	}
+	maximoValor();
+
+    }
+
+    private void maximoValor() {
+	mayorCant = cantAutos;
+
+	if (cantMotos > mayorCant) {
+	    mayorCant = cantMotos;
+	    if (cantUtilitarios > mayorCant)
+		mayorCant = cantUtilitarios;
+	    if (cantPickUp > mayorCant)
+		mayorCant = cantPickUp;
+	}
+
+	else if (cantUtilitarios > mayorCant) {
+	    mayorCant = cantUtilitarios;
+	    if (cantPickUp > mayorCant)
+		mayorCant = cantPickUp;
+
+	}
+
+	else if (cantPickUp > mayorCant)
+	    mayorCant = cantPickUp;
+
+	mayorCant = mayorCant + (int) (mayorCant * 0.25);
     }
 
     private void importePorTipo()
@@ -572,6 +598,14 @@ public class EstadisticaGerenteManagedBean {
 	EstadisticaGerenteManagedBean.user = user;
     }
 
+    public int getMayorCant() {
+	return mayorCant;
+    }
+
+    public void setMayorCant(int mayorCant) {
+	this.mayorCant = mayorCant;
+    }
+
     /**************************************************************************************************/
     private static CartesianChartModel linearModel;
 
@@ -625,7 +659,7 @@ public class EstadisticaGerenteManagedBean {
 	ChartSeries motos = new ChartSeries();
 	ChartSeries utilitarios = new ChartSeries();
 	ChartSeries pickup = new ChartSeries();
-
+	//
 	autos.setLabel("Autos");
 	motos.setLabel("Motos");
 	utilitarios.setLabel("Utilitarios");
