@@ -154,14 +154,14 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     private boolean importeCalculado;
 
-    private float importe;
+    private Float importe;
 
     private List<TipoEstadia> tipoEstadiaList;
     
     private List<Promocion> promocionesDisponibles;
     
     private Promocion promocion;
-
+    
     @PostConstruct
     private void init() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -301,6 +301,9 @@ public class IngresoEgresoManagedBean implements Serializable {
 
 	    tarifaPlayaList = getTarifaService().findTarifaVigenteByPlayaAndCategoriaVehiculo(playa,
 		    vehiculo.getModeloVehiculo().getCategoriaVehiculo());
+	    
+	    promocionesDisponibles = getPromocionService()
+		    .findByCategoria(vehiculo.getModeloVehiculo().getCategoriaVehiculo(), playa);
 
 	    if (tarifaPlayaList == null) {
 		setExisteTarifa(false);
@@ -387,6 +390,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 
 	    TipoEstadia tipoEstadia = tarifa.getTipoEstadia();
 	    Timestamp fechaHoraEgreso;
+	    
 	    // calculo de importe a pagar
 	    if ("Por Hora".equals(tipoEstadia.getNombre())) {
 		fechaHoraEgreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
@@ -399,6 +403,9 @@ public class IngresoEgresoManagedBean implements Serializable {
 		if (minutos > 10 || horasACobrar == 0)
 		    horasACobrar++;
 		importe = tarifa.getImporte() * horasACobrar;
+		if(promocion != null){
+		    importe = importe  * (1 - promocion.getDescuento()/100);
+		}
 	    } else if ("Por Mes".equals(tipoEstadia.getNombre())) {
 		Calendar calendario = Calendar.getInstance();
 		calendario.clear();
@@ -407,6 +414,9 @@ public class IngresoEgresoManagedBean implements Serializable {
 		fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
 		detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
 		importe = tarifa.getImporte();
+		if(promocion != null){
+		    importe = importe  * (1 - promocion.getDescuento()/100);
+		}
 	    } else if ("Por Noche".equals(tipoEstadia.getNombre())) {
 		Calendar calendario = Calendar.getInstance();
 		calendario.clear();
@@ -415,6 +425,9 @@ public class IngresoEgresoManagedBean implements Serializable {
 		fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
 		detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
 		importe = tarifa.getImporte();
+		if(promocion != null){
+		    importe = importe  * (1 - promocion.getDescuento()/100);
+		}
 	    } else if ("Por Día".equals(tipoEstadia.getNombre())) {
 		Calendar calendario = Calendar.getInstance();
 		calendario.clear();
@@ -423,6 +436,9 @@ public class IngresoEgresoManagedBean implements Serializable {
 		fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
 		detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
 		importe = tarifa.getImporte();
+		if(promocion != null){
+		    importe = importe  * (1 - promocion.getDescuento()/100);
+		}
 	    } else if ("Por Semana".equals(tipoEstadia.getNombre())) {
 		Calendar calendario = Calendar.getInstance();
 		calendario.clear();
@@ -431,9 +447,13 @@ public class IngresoEgresoManagedBean implements Serializable {
 		fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
 		detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
 		importe = tarifa.getImporte();
+		if(promocion != null){
+		    importe = importe  * (1 - promocion.getDescuento()/100);
+		}
 	    }
 	    detalleEstadia.setImporteTotal(importe);
 	    detalleEstadia.setTarifa(tarifa);
+	    detalleEstadia.setPromocion(promocion);
 	    detalleEstadia.setCobrado(true);
 	    importeCalculado = true;
 	}
@@ -457,7 +477,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	fechaIngresoFormateada = null;
 	horaIngresoFormateada = null;
 	cobrado = true;
-	importe = 0;
+	importe = 0.0f;
     }
 
     public IEmpleadoService getEmpleadoService() {
@@ -805,11 +825,12 @@ public class IngresoEgresoManagedBean implements Serializable {
 	this.importeCalculado = importeCalculado;
     }
 
-    public float getImporte() {
+    public Float getImporte() {
 	return importe;
+	//return Float.parseFloat(formatter.format(importe));
     }
 
-    public void setImporte(float importe) {
+    public void setImporte(Float importe) {
 	this.importe = importe;
     }
 
@@ -856,7 +877,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	fechaIngresoFormateada = null;
 	horaIngresoFormateada = null;
 	cobrado = true;
-	importe = 0;
+	importe = 0.0f;
 	patente = null;
 	return "/playa/ingresoegresovehiculo";
     }

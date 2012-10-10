@@ -80,6 +80,7 @@ public class PromocionManagedBean implements Serializable {
 	Usuario user = getUsuarioService().findByNombreUsuario(userName);
 	if (user != null && user.getPlaya() != null) {
 	    this.playa = user.getPlaya();
+	    estadoPromocion = getEstadoPromocionService().findByNombreEstadoPromocion("Aprobada");
 	}
 	today= new Date();
     }

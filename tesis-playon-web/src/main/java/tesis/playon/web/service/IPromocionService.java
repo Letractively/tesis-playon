@@ -5,6 +5,7 @@ package tesis.playon.web.service;
 
 import java.util.List;
 
+import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.EstadoPromocion;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Promocion;
@@ -30,4 +31,6 @@ public interface IPromocionService {
     List<Promocion> findByPlaya(Playa playa, EstadoPromocion estado);
     
     List<Promocion> findByPlaya(Playa playa);
+    
+    List<Promocion> findByCategoria(CategoriaVehiculo categoria, Playa playa);
 }

@@ -15,7 +15,7 @@
 	<ui:define name="content">
 		<h1>¡Registre el ingreso y egreso de sus clientes!</h1>
 
-		<div id="perfil-playa" align="left" style="margin-left:30px">
+		<div id="perfil-playa" align="left" style="margin-left: 30px">
 			<h1>#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
 		</div>
 
@@ -101,12 +101,14 @@
 
 					</h:panelGrid>
 					<div align="right" style="width: 300px;">
-						<p:commandButton rendered="#{ingresoEgresoMB.cobrado and  ingresoEgresoMB.existeTarifa}"
+						<p:commandButton
+							rendered="#{ingresoEgresoMB.cobrado and  ingresoEgresoMB.existeTarifa}"
 							id="ingreso" value="Registrar ingreso"
 							action="#{ingresoEgresoMB.registrarIngresoVehiculo}" ajax="false"
 							style="width:140px; margin-right:10px" />
 						<p:commandButton id="cancelar" value="Cancelar" immediate="true"
-							action="#{ingresoEgresoMB.reset}" ajax="false" />
+							action="#{ingresoEgresoMB.reset}" ajax="false"
+							rendered="#{ingresoEgresoMB.cobrado}" />
 					</div>
 					<br />
 				</div>
@@ -114,45 +116,78 @@
 
 			<ui:fragment rendered="#{!ingresoEgresoMB.cobrado}">
 				<div id="perfil-playa" style="margin-left: 50px; width: 100%;">
-					<h:panelGrid columns="2" cellpadding="5" cellspacing="5">
-						<h:outputText for="tarifa" value="Tarifas disponibles: "
-							styleClass="fuente-outputtext" />
+					<h:panelGrid columns="3" cellpadding="8" cellspacing="8">
+						<p:column>
+							<div align="right">
+								<h:outputText for="tarifas" value="Tarifas disponibles: "
+									styleClass="fuente-outputtext" />
+							</div>
+						</p:column>
 						<p:column style="text-align:right;">
-						<p:selectOneMenu value="#{ingresoEgresoMB.tarifa}" effect="fade">
-							<f:selectItems value="#{ingresoEgresoMB.tarifaPlayaList}"
-								var="tarifa" itemValue="#{tarifa}"
-								itemLabel="#{tarifa.tipoEstadia.nombre} $#{tarifa.importe}" />
-							<f:converter converterId="tarifaConverter" />
-						</p:selectOneMenu></p:column>
-						
-						<h:outputText for="promociones" value="Promociones disponibles: "
-							styleClass="fuente-outputtext" />
+							<p:selectOneMenu id="tarifas" value="#{ingresoEgresoMB.tarifa}"
+								effect="fade" style="width:242px">
+								<f:selectItem itemLabel="Seleccione una tarifa" itemValue="" />
+								<f:selectItems value="#{ingresoEgresoMB.tarifaPlayaList}"
+									var="tarifa" itemValue="#{tarifa}"
+									itemLabel="#{tarifa.tipoEstadia.nombre} $#{tarifa.importe}" />
+								<f:converter converterId="tarifaConverter" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:message id="tarifasMsg" for="tarifas" display="icon" />
+
+						<p:column>
+							<div align="right">
+								<h:outputText for="promociones"
+									value="Promociones disponibles: "
+									styleClass="fuente-outputtext" />
+							</div>
+						</p:column>
 						<p:column style="text-align:right;">
-						<p:selectOneMenu value="#{ingresoEgresoMB.promocion}" effect="fade">
-							<f:selectItem itemLabel="Seleccione una promoción" itemValue="" />
-							<f:selectItems value="#{ingresoEgresoMB.promocionesDisponibles}"
-								var="promocion" itemValue="#{promocion}"
-								itemLabel="#{promocion.nombre} $#{promocion.descuento}" />
-							<f:converter converterId="promocionConverter" />
-						</p:selectOneMenu></p:column>
+							<p:selectOneMenu value="#{ingresoEgresoMB.promocion}"
+								effect="fade" id="promociones">
+								<f:selectItem itemLabel="Seleccione una promoción" itemValue="" />
+								<f:selectItems value="#{ingresoEgresoMB.promocionesDisponibles}"
+									var="promocion" itemValue="#{promocion}"
+									itemLabel="#{promocion.nombre}&#160;-&#160;#{promocion.descuento}%&#160;
+										desc" />
+								<f:converter converterId="promocionConverter" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column />
 
 						<p:column />
 						<p:column>
-							<p:commandButton id="calcImporte" value="Calcular importe"
-								action="#{ingresoEgresoMB.calcularImporte}" ajax="false"
-								style="width:140px;" />
+							<div style="width: 240px" align="center">
+								<p:commandButton id="calcImporte" value="Calcular importe"
+									action="#{ingresoEgresoMB.calcularImporte}" ajax="false"
+									style="width:140px; margin-right:15px" />
+								<p:commandButton id="cancelar2" value="Cancelar"
+									immediate="true" action="#{ingresoEgresoMB.reset}" ajax="false" />
+							</div>
 						</p:column>
-
-						<h:outputText rendered="#{ingresoEgresoMB.importeCalculado}"
-							value="Importe: " styleClass="fuente-outputtext" />
-						<h:outputText rendered="#{ingresoEgresoMB.importeCalculado}"
-							id="txt_importe_calculado" value="$#{ingresoEgresoMB.importe}"
-							styleClass="fuente-perfil" />
+						<p:column />
 
 						<p:column />
-						<p:commandButton rendered="#{ingresoEgresoMB.importeCalculado}"
-							id="egreso" value="Registrar egreso" style="width:140px;"
-							action="#{ingresoEgresoMB.registrarEgresoVehiculo}" ajax="false" />
+						<br />
+						<p:column />
+
+						<p:column>
+							<div align="right">
+								<h:outputText rendered="#{ingresoEgresoMB.importeCalculado}"
+									value="Importe: " styleClass="fuente-outputtext" />
+							</div>
+						</p:column>
+
+						<p:column>
+							<h:outputText rendered="#{ingresoEgresoMB.importeCalculado}"
+								id="txt_importe_calculado" value="$#{ingresoEgresoMB.importe}"
+								styleClass="fuente-perfil" type="currency" />
+							<p:commandButton rendered="#{ingresoEgresoMB.importeCalculado}"
+								id="egreso" value="Registrar egreso" style="width:140px; margin-left:10px;"
+								action="#{ingresoEgresoMB.registrarEgresoVehiculo}" ajax="false" />
+						</p:column>
+						<p:column />
+
 					</h:panelGrid>
 				</div>
 			</ui:fragment>

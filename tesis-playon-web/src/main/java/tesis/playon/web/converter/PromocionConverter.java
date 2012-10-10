@@ -6,8 +6,9 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
-import tesis.playon.web.model.Promocion;
 import org.apache.commons.lang.StringUtils;
+
+import tesis.playon.web.model.Promocion;
 
 /**
  * 
@@ -22,11 +23,12 @@ public class PromocionConverter implements Converter {
 	if (!StringUtils.isEmpty(value)) {
 	    String toObject[] = value.split(":");
 	    Promocion promocion = new Promocion();
-	    if (toObject.length != 2) {
+	    if (toObject.length != 3) {
 		return null;
 	    } else {
 		promocion.setId(Integer.parseInt(toObject[0]));
 		promocion.setNombre(toObject[1]);
+		promocion.setDescuento(Float.parseFloat(toObject[2]));
 		return promocion;
 	    }
 	}
@@ -40,7 +42,8 @@ public class PromocionConverter implements Converter {
 		Promocion promocion = (Promocion) value;
 		String idPromocion = Integer.toString(promocion.getId());
 		String nombrePromocion = promocion.getNombre();
-		String toString = idPromocion + ":" + nombrePromocion;
+		String descuento = Float.toString(promocion.getDescuento());
+		String toString = idPromocion + ":" + nombrePromocion + ":" + descuento;
 		return toString;
 	    } else {
 		System.out.println("No se pudo parsear el objeto");

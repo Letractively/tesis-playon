@@ -13,6 +13,35 @@
 
 	<ui:define name="content">
 		<h1>Nueva promoción</h1>
+		
+		<script type="text/javascript">
+        PrimeFaces.locales['es'] = {
+        	    closeText: 'Cerrar',
+        	    prevText: 'Anterior',
+        	    nextText: 'Siguiente',
+        	    monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        	    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+        	    dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+        	    dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+        	    dayNamesMin: ['D','L','M','M','J','V','S'],
+        	    weekHeader: 'Semana',
+        	    firstDay: 1,
+        	    isRTL: false,
+        	    showMonthAfterYear: false,
+        	    yearSuffix: '',
+        	    timeOnlyTitle: 'Sólo hora',
+        	    timeText: 'Tiempo',
+        	    hourText: 'Hora',
+        	    minuteText: 'Minuto',
+        	    secondText: 'Segundo',
+        	    currentText: 'Fecha actual',
+        	    ampm: false,
+        	    month: 'Mes',
+        	    week: 'Semana',
+        	    day: 'Día',
+        	    allDayText : 'Todo el día'
+        	};
+        </script>
 
 		<p:growl id="messages" />
 		<h:form id="form">
@@ -41,7 +70,7 @@
 					<p:calendar showButtonPanel="true" navigator="true"
 						mindate="#{promocionMB.today}" id="fechaInicio"
 						value="#{promocionMB.fechaInicio}" required="true"
-						requiredMessage="Campo obligatorio"
+						requiredMessage="Campo obligatorio" locale="es"
 						validator="#{promocionMB.validateDateInicial}">
 						<p:ajax event="blur" update="fechaInicioMsg" />
 					</p:calendar>
@@ -51,7 +80,7 @@
 					<p:calendar showButtonPanel="true" navigator="true"
 						mindate="#{promocionMB.today}" id="fechaFin"
 						value="#{promocionMB.fechaFin}" required="true"
-						requiredMessage="Campo obligatorio"
+						requiredMessage="Campo obligatorio" locale="es"
 						validator="#{promocionMB.validateDate}">
 						<p:ajax event="blur" update="fechaFinMsg" />
 					</p:calendar>
@@ -103,23 +132,12 @@
 						value="Monto con descuento: " />
 					<p:inputText id="montoConDescuento" style="width: 200px"
 						value="$#{promocionMB.montoConDescuento}" maxlength="25"
-						 readonly="true">
+						readonly="true">
 						<f:validateLength minimum="3" />
 						<p:ajax event="blur" update="montoConDescuentoMsg" />
 					</p:inputText>
 					<p:message id="montoConDescuentoMsg" for="montoConDescuento"
 						display="icon" />
-
-					<h:outputLabel for="estadoPromocion"
-						value="Estado de la promoción: " />
-					<p:selectOneMenu id="estadoPromocion"
-						value="#{promocionMB.estadoPromocion}" effect="fade"
-						style="width:159px;">
-						<f:selectItems value="#{estadoPromocionMB.estadoPromocionList}"
-							var="estado" itemValue="#{estado}" itemLabel="#{estado.nombre}" />
-						<f:converter converterId="estadoPromocionConverter" />
-					</p:selectOneMenu>
-					<p:column />
 
 					<p:column />
 					<p:column>
@@ -141,12 +159,12 @@
 							value="#{tarifaMB.tarifaPlayaLogged}"
 							emptyMessage="No existen tarifas" paginatorPosition="bottom">
 							<p:panel
-								header="#{tarifa.categoriaVehiculo.nombre} / #{tarifa.tipoEstadia.nombre}"
+								header="#{tarifa.categoriaVehiculo.nombre}&#160;/&#160;#{tarifa.tipoEstadia.nombre}"
 								style="text-align:center">
-								<h:panelGrid columns="1" style="width:100%;">
-									<h:outputText value="#{tarifa.categoriaVehiculo.nombre}" />
-									<h:outputText value="#{tarifa.tipoEstadia.nombre}" />
-									<h:outputText value="$#{tarifa.importe}" />
+								<h:panelGrid columns="2" style="width:100%;">
+									<h:outputText value="Importe: $" />
+									<h:outputText value="#{tarifa.importe}" />
+									<p:column />
 									<p:commandButton id="seleccionar" value="Seleccionar"
 										action="#{promocionMB.seleccionarTarifa(tarifa)}" ajax="false"
 										oncomplete="popupTarifas.hide();" immediate="true">
@@ -158,5 +176,6 @@
 				</p:dialog>
 			</div>
 		</h:form>
+		<h:outputScript name="js/i18n.js" />
 	</ui:define>
 </ui:composition>

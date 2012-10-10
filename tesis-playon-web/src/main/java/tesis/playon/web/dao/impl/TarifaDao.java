@@ -87,7 +87,8 @@ public class TarifaDao implements ITarifaDao {
 		.setParameter(0, playa).setParameter(1, categoriaVehiculo).list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
-		tarifas.add((Tarifa) object);
+		if(!((Tarifa)object).getTipoEstadia().getNombre().equals("Por Mes"))
+		    tarifas.add((Tarifa) object);
 	    }
 	    return tarifas;
 	}

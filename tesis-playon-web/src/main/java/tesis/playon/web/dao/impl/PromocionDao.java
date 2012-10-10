@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IPromocionDao;
+import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.EstadoPromocion;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Promocion;
@@ -89,9 +90,26 @@ public class PromocionDao implements IPromocionDao {
 	List<Promocion> promociones = new ArrayList<Promocion>();
 	List<?> list = getSessionFactory().getCurrentSession()
 		.createQuery("from Promocion where playa=?")
-		.setParameter(1, playa).list();
+		.setParameter(0, playa).list();
 	if(!list.isEmpty()){
 	    for (Object object : list) {
+		    promociones.add((Promocion) object);
+		}
+		return promociones;
+	}
+	return null;
+    }
+    
+    @Override
+    public List<Promocion> findByCategoria(CategoriaVehiculo categoria, Playa playa){
+	List<Promocion> promociones = new ArrayList<Promocion>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Promocion where tarifa.categoriaVehiculo=? and playa=? " +
+				"and now()>=fechaInicio and now()<=fechaFin")
+		.setParameter(0, categoria).setParameter(1, playa).list();
+	if(!list.isEmpty()){
+	    for (Object object : list) {
+		if(!((Promocion)object).getTarifa().getTipoEstadia().getNombre().equals("Por Mes"))
 		    promociones.add((Promocion) object);
 		}
 		return promociones;

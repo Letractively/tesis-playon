@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IPromocionDao;
+import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.EstadoPromocion;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Promocion;
@@ -68,6 +69,11 @@ public class PromocionService implements IPromocionService {
     public List<Promocion> findByPlaya(Playa playa) {
 	// TODO Auto-generated method stub
 	return getPromocionDao().findByPlaya(playa);
+    }
+    
+    @Override
+    public List<Promocion> findByCategoria(CategoriaVehiculo categoria, Playa playa){
+	return getPromocionDao().findByCategoria(categoria, playa);
     }
 
     public IPromocionDao getPromocionDao() {
