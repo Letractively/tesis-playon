@@ -22,6 +22,4 @@ public interface IEstadiaService {
 
     Estadia findByPlaya(Playa playa);
 
-    List<Estadia> findEstadiasPorPlaya(Playa playa);
-
 }

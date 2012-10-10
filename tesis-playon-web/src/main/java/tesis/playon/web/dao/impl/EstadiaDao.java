@@ -53,14 +53,4 @@ public class EstadiaDao implements IEstadiaDao {
 	return null;
     }
 
-    public List<Estadia> findEstadiasPorPlaya(Playa playa) {
-	List<Estadia> estadias = new ArrayList<Estadia>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Estadia where playa=?")
-		.setParameter(0, playa).list();
-	for (Object object : list) {
-	    estadias.add((Estadia) object);
-	}
-	return estadias;
-    }
-
 }

@@ -1,0 +1,26 @@
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="dontloadsidebar" value="true" />
+
+	<ui:define name="title">
+		Acerca de Playón
+    </ui:define>
+
+	<ui:define name="content">
+		<h:panelGrid columns="2">
+<!-- 			<p:lineChart value="#{estadisticaGerenteMB.linearModel}" -->
+<!-- 				legendPosition="e" zoom="true" animate="true" title="Linear Chart" -->
+<!-- 				minY="0" maxY="10" style="width:400px;" widgetVar="chart" /> -->
+
+			<p:barChart id="basic" value="#{estadisticaGerenteMB.categoryModel}"
+				legendPosition="ne"
+				title="Cantidad de ingresos por tipo de Vehiculo" min="0" max="200"
+				style="width:800px" animate="true" />
+		</h:panelGrid>
+	</ui:define>
+</ui:composition>

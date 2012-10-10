@@ -17,6 +17,4 @@ public interface IEstadiaDao {
 
     Estadia findByPlaya(Playa playa);
 
-    List<Estadia> findEstadiasPorPlaya(Playa playa);
-
 }

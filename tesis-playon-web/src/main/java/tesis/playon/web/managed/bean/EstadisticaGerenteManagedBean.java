@@ -5,10 +5,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.model.chart.CartesianChartModel;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LineChartSeries;
 
 import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.model.CategoriaVehiculo;
@@ -40,7 +45,7 @@ import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.service.IVehiculoService;
 
 @ManagedBean(name = "estadisticaGerenteMB")
-@SessionScoped
+@ViewScoped
 public class EstadisticaGerenteManagedBean {
     @ManagedProperty(value = "#{EmpleadoService}")
     IEmpleadoService empleadoService;
@@ -92,8 +97,6 @@ public class EstadisticaGerenteManagedBean {
 
     private CuentaPlaya cuentaPlaya;
 
-    private Estadia estadia;
-
     private DetalleEstadia detalleEstadia;
 
     private Tarifa tarifa;
@@ -134,7 +137,7 @@ public class EstadisticaGerenteManagedBean {
 
     private static Playa playaSelected;
 
-    private static List<Estadia> estadias;
+    private static Estadia estadia;
 
     private static List<DetalleEstadia> detalles;
 
@@ -142,46 +145,73 @@ public class EstadisticaGerenteManagedBean {
 
     private float importe;
 
+    private static int cantAutos, cantUtilitarios, cantMotos, cantPickUp;
+
+    @SuppressWarnings("unused")
+    private static double ingAuto, ingUtilitario, ingMoto, ingPickUp;
+
+    @PostConstruct
     public void init() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	String userName = facesContext.getExternalContext().getRemoteUser();
-	user = getUsuarioService().findByNombreUsuario(userName);
-	// FacesContext facesContexto = FacesContext.getCurrentInstance();
-	int idPlayaSelected = Integer.parseInt(facesContext.getExternalContext().getRequestParameterMap().get("id"));
-	playaSelected = getPlayaService().findById(idPlayaSelected);
-
-	// setEstadias(getEstadiaService().findAll());
-	// setDetalles(getDetalleEstadiaService().findByEstadia(estadia))
+	Usuario usuario = getUsuarioService().findByNombreUsuario(userName);
+	playaSelected = usuario.getPlaya();
+	setEstadia(getEstadiaService().findByPlaya(playaSelected));
+	setDetalles(getDetalleEstadiaService().findByEstadia(estadia));
+	cantidadTiposVehiculo();
+	// importePorTipo();
+	createLinearModel();
+	createCategoryModel();
 
     }
 
-    //
-    // public void findPlayaById() {
-    // FacesContext facesContext = FacesContext.getCurrentInstance();
-    // int idPlayaSelected = Integer.parseInt(facesContext.getExternalContext().getRequestParameterMap().get("id"));
-    // playaSelected = getPlayaService().findById(idPlayaSelected);
-    //
-    // }
+    @SuppressWarnings("unused")
+    private void cantidadTiposVehiculo() {
+	cantAutos = 0;
+	cantMotos = 27;
+	cantPickUp = 43;
+	cantUtilitarios = 58;
 
-    public void limpiar() {
-	usuarioCliente = null;
-	cliente = null;
-	cuentaCliente = null;
-	vehiculo = null;
-	categoriaVehiculo = null;
-	modeloVehiculo = null;
-	marcaVehiculo = null;
-	detalleEstadia = null;
-	tarifa = null;
-	tarifaPlayaList = null;
-	existeVehiculo = false;
-	existeTarifa = true;
-	saldoPositvo = false;
-	importeCalculado = false;
-	fechaIngresoFormateada = null;
-	horaIngresoFormateada = null;
-	cobrado = true;
-	importe = 0;
+	for (DetalleEstadia detalleAux : detalles) {
+	    if (detalleAux.getVehiculo().getModeloVehiculo().getCategoriaVehiculo().getNombre().equals("Auto")) {
+		cantAutos++;
+	    }
+	    if (detalleAux.getVehiculo().getModeloVehiculo().getCategoriaVehiculo().getNombre().equals("Moto")) {
+		cantMotos++;
+	    }
+	    if (detalleAux.getVehiculo().getModeloVehiculo().getCategoriaVehiculo().getNombre().equals("Utilitario")) {
+		cantUtilitarios++;
+	    }
+	    if (detalleAux.getVehiculo().getModeloVehiculo().getCategoriaVehiculo().getNombre().equals("Pickup")) {
+		cantPickUp++;
+	    }
+
+	}
+    }
+
+    private void importePorTipo()
+
+    {
+	ingAuto = 0;
+	ingMoto = 0;
+	ingUtilitario = 0;
+	ingPickUp = 0;
+	for (DetalleEstadia detalleAux : detalles) {
+	    if (detalleAux.getVehiculo().getModeloVehiculo().getCategoriaVehiculo().getNombre().equals("Auto")) {
+		ingAuto += detalleAux.getImporteTotal();
+	    }
+	    if (detalleAux.getVehiculo().getModeloVehiculo().getCategoriaVehiculo().getNombre().equals("Moto")) {
+		ingMoto += detalleAux.getImporteTotal();
+
+	    }
+	    if (detalleAux.getVehiculo().getModeloVehiculo().getCategoriaVehiculo().getNombre().equals("Utilitario")) {
+		ingUtilitario += detalleAux.getImporteTotal();
+	    }
+	    if (detalleAux.getVehiculo().getModeloVehiculo().getCategoriaVehiculo().getNombre().equals("Pickup")) {
+		ingPickUp += detalleAux.getImporteTotal();
+	    }
+
+	}
     }
 
     public IEmpleadoService getEmpleadoService() {
@@ -339,14 +369,6 @@ public class EstadisticaGerenteManagedBean {
 
     public void setCuentaPlaya(CuentaPlaya cuentaPlaya) {
 	this.cuentaPlaya = cuentaPlaya;
-    }
-
-    public Estadia getEstadia() {
-	return estadia;
-    }
-
-    public void setEstadia(Estadia estadia) {
-	this.estadia = estadia;
     }
 
     public DetalleEstadia getDetalleEstadia() {
@@ -518,30 +540,6 @@ public class EstadisticaGerenteManagedBean {
 	this.importe = importe;
     }
 
-    // método para cancelar la página.
-    public String reset() {
-	usuarioCliente = null;
-	cliente = null;
-	cuentaCliente = null;
-	vehiculo = null;
-	categoriaVehiculo = null;
-	modeloVehiculo = null;
-	marcaVehiculo = null;
-	detalleEstadia = null;
-	tarifa = null;
-	tarifaPlayaList = null;
-	existeVehiculo = false;
-	existeTarifa = true;
-	saldoPositvo = false;
-	importeCalculado = false;
-	fechaIngresoFormateada = null;
-	horaIngresoFormateada = null;
-	cobrado = true;
-	importe = 0;
-	patente = null;
-	return "/playa/ingresoegresovehiculo";
-    }
-
     public static Playa getPlayaSelected() {
 	return playaSelected;
     }
@@ -550,12 +548,12 @@ public class EstadisticaGerenteManagedBean {
 	EstadisticaGerenteManagedBean.playaSelected = playaSelected;
     }
 
-    public static List<Estadia> getEstadias() {
-	return estadias;
+    public static Estadia getEstadia() {
+	return estadia;
     }
 
-    public static void setEstadias(List<Estadia> estadias) {
-	EstadisticaGerenteManagedBean.estadias = estadias;
+    public void setEstadia(Estadia estadia) {
+	this.estadia = estadia;
     }
 
     public static List<DetalleEstadia> getDetalles() {
@@ -572,6 +570,75 @@ public class EstadisticaGerenteManagedBean {
 
     public static void setUser(Usuario user) {
 	EstadisticaGerenteManagedBean.user = user;
+    }
+
+    /**************************************************************************************************/
+    private static CartesianChartModel linearModel;
+
+    public CartesianChartModel getLinearModel() {
+	return linearModel;
+    }
+
+    public void setLinearModel(CartesianChartModel linearModel) {
+	EstadisticaGerenteManagedBean.linearModel = linearModel;
+    }
+
+    public CartesianChartModel getCategoryModel() {
+	return categoryModel;
+    }
+
+    public void setCategoryModel(CartesianChartModel categoryModel) {
+	this.categoryModel = categoryModel;
+    }
+
+    private CartesianChartModel categoryModel;
+
+    private void createLinearModel() {
+	linearModel = new CartesianChartModel();
+
+	LineChartSeries series1 = new LineChartSeries();
+	series1.setLabel("Series 1");
+
+	series1.set(1, 2);
+	series1.set(2, 1);
+	series1.set(3, 3);
+	series1.set(4, 6);
+	series1.set(5, 8);
+
+	LineChartSeries series2 = new LineChartSeries();
+	series2.setLabel("Series 2");
+	series2.setMarkerStyle("diamond");
+	series2.set(1, 6);
+	series2.set(2, 3);
+	series2.set(3, 2);
+	series2.set(4, 7);
+	series2.set(5, 9);
+
+	linearModel.addSeries(series1);
+	linearModel.addSeries(series2);
+    }
+
+    private void createCategoryModel() {
+	categoryModel = new CartesianChartModel();
+
+	ChartSeries autos = new ChartSeries();
+	ChartSeries motos = new ChartSeries();
+	ChartSeries utilitarios = new ChartSeries();
+	ChartSeries pickup = new ChartSeries();
+
+	autos.setLabel("Autos");
+	motos.setLabel("Motos");
+	utilitarios.setLabel("Utilitarios");
+	pickup.setLabel("Pick-Up");
+
+	autos.set("Autos", cantAutos);
+	motos.set("Motos", cantMotos);
+	utilitarios.set("Utilitarios", cantUtilitarios);
+	pickup.set("PickUP", cantPickUp);
+	categoryModel.addSeries(autos);
+	categoryModel.addSeries(motos);
+	categoryModel.addSeries(utilitarios);
+	categoryModel.addSeries(pickup);
     }
 
 }

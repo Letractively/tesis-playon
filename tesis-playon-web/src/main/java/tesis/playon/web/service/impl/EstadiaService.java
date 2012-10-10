@@ -55,11 +55,4 @@ public class EstadiaService implements IEstadiaService {
 	this.estadiaDao = estadiaDao;
     }
 
-    public List<Estadia> findEstadiasPorPlaya(Playa playa)
-
-    {
-	return getEstadiaDao().findEstadiasPorPlaya(playa);
-
-    }
-
 }
