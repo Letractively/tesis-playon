@@ -659,7 +659,8 @@ public class EstadisticaGerenteManagedBean {
 	ChartSeries motos = new ChartSeries();
 	ChartSeries utilitarios = new ChartSeries();
 	ChartSeries pickup = new ChartSeries();
-	//
+	ChartSeries blanco = new ChartSeries();
+
 	autos.setLabel("Autos");
 	motos.setLabel("Motos");
 	utilitarios.setLabel("Utilitarios");
@@ -673,6 +674,7 @@ public class EstadisticaGerenteManagedBean {
 	categoryModel.addSeries(motos);
 	categoryModel.addSeries(utilitarios);
 	categoryModel.addSeries(pickup);
+	categoryModel.addSeries(blanco);
     }
 
 }

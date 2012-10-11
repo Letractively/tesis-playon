@@ -5,6 +5,7 @@ package tesis.playon.web.service;
 
 import java.util.List;
 
+import tesis.playon.web.model.CuentaCliente;
 import tesis.playon.web.model.TransaccionCliente;
 
 /**
@@ -19,8 +20,9 @@ public interface ITransaccionClienteService {
 
     public void delete(TransaccionCliente transaccionCliente);
 
-    public TransaccionCliente findByCuentaCliente(String cuentaClienteID);
+    public TransaccionCliente findByCuentaCliente(CuentaCliente cuentaCliente);
 
     public List<TransaccionCliente> findAll();
-    
+
+    public List<TransaccionCliente> findTransaccionesByCuentaCliente(CuentaCliente cuentaCliente);
 }

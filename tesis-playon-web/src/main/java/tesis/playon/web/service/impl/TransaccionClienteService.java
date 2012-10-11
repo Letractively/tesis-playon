@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.ITransaccionClienteDao;
+import tesis.playon.web.model.CuentaCliente;
 import tesis.playon.web.model.TransaccionCliente;
 import tesis.playon.web.service.ITransaccionClienteService;
 
@@ -41,9 +42,13 @@ public class TransaccionClienteService implements ITransaccionClienteService {
 	return getTransaccionClienteDao().findAll();
     }
 
+    public List<TransaccionCliente> findTransaccionesByCuentaCliente(CuentaCliente cuentaCliente) {
+	return getTransaccionClienteDao().findTransaccionesByCuentaCliente(cuentaCliente);
+    }
+
     @Override
-    public TransaccionCliente findByCuentaCliente(String cuentaClienteID) {
-	return getTransaccionClienteDao().findByCuentaCliente(cuentaClienteID);
+    public TransaccionCliente findByCuentaCliente(CuentaCliente cuentaCliente) {
+	return getTransaccionClienteDao().findByCuentaCliente(cuentaCliente);
     }
 
     public ITransaccionClienteDao getTransaccionClienteDao() {

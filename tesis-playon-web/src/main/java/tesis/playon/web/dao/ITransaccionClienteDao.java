@@ -2,12 +2,12 @@ package tesis.playon.web.dao;
 
 import java.util.List;
 
+import tesis.playon.web.model.CuentaCliente;
 import tesis.playon.web.model.TransaccionCliente;
-
 
 /**
  * @author Pablo
- *
+ * 
  */
 public interface ITransaccionClienteDao {
 
@@ -17,8 +17,10 @@ public interface ITransaccionClienteDao {
 
     void delete(TransaccionCliente transaccionCliente);
 
-    TransaccionCliente findByCuentaCliente(String cuentaClienteID);
+    TransaccionCliente findByCuentaCliente(CuentaCliente cuentaClienteID);
 
     List<TransaccionCliente> findAll();
-    
+
+    List<TransaccionCliente> findTransaccionesByCuentaCliente(CuentaCliente cuentaCliente);
+
 }

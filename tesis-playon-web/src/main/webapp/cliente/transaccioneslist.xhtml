@@ -1,0 +1,67 @@
+<ui:composition template="../template/templateCliente.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+		Lista
+    </ui:define>
+
+	<ui:define name="content">
+		<p:growl id="messages" />
+		<h1>Mis Transacciones</h1>
+		<h:form>
+			<p:dataTable id="transacciones" var="transaccionCliente"
+				paginator="true" rows="3" value="#{cuentaClienteMB.transacciones}"
+				emptyMessage="No ha realizado transacciones"
+				paginatorPosition="bottom">
+
+				<f:facet name="header">
+						Historial de movimientos
+				</f:facet>
+
+				<p:column headerText="Fecha">
+					<h:outputText value="#{transaccionCliente.fecha}">
+						<f:convertDateTime dateStyle="full" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Tipo Transaccion">
+					<h:outputText value="#{transaccionCliente.tipoPago.nombre}" />
+				</p:column>
+
+				<p:column headerText="Importe">
+					<h:outputText value="#{transaccionCliente.importe}" />
+				</p:column>
+
+				<!-- 				<p:column headerText="Categoría"> -->
+				<!-- 					<h:outputText value="#{vehiculo.modeloVehiculo.categoriaVehiculo.nombre}" /> -->
+				<!-- 				</p:column> -->
+
+				<!-- 				<p:column headerText="Opciones" -->
+				<!-- 					style="text-align:center; width:80px;"> -->
+				<!-- 					<p:commandLink id="edit" title="Editar" -->
+				<!-- 						action="/cliente/vehiculoedit.html?faces-redirect=true" ajax="false"> -->
+				<!-- 						<f:setPropertyActionListener value="#{vehiculo}" -->
+				<!-- 							target="#{vehiculoMB.vehiculoSelected}" /> -->
+				<!-- 						<h:graphicImage library="images/icons" name="pencil.png" -->
+				<!-- 							style="width:25px; height:25px;" /> -->
+				<!-- 					</p:commandLink> -->
+				<!-- 					<p:commandLink id="darBaja" title="Dar de baja" -->
+				<!-- 						action="#{vehiculoMB.deleteVehiculo}" ajax="false"> -->
+				<!-- 						<f:setPropertyActionListener value="#{vehiculo}" -->
+				<!-- 							target="#{vehiculoMB.vehiculoSelected}" /> -->
+				<!-- 						<h:graphicImage library="images/icons" name="trash.png" -->
+				<!-- 							style="width:25px; height:25px;" /> -->
+				<!-- 					</p:commandLink> -->
+				<!-- 				</p:column> -->
+			</p:dataTable>
+		</h:form>
+		<div align="right">
+			<br />
+			<h:link value="volver a su perfil" outcome="/cliente/perfilcliente" />
+		</div>
+	</ui:define>
+</ui:composition>

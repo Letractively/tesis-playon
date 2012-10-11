@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.ITransaccionClienteDao;
+import tesis.playon.web.model.CuentaCliente;
 import tesis.playon.web.model.TransaccionCliente;
 
 /**
@@ -36,15 +37,25 @@ public class TransaccionClienteDao implements ITransaccionClienteDao {
 	getSessionFactory().getCurrentSession().delete(transaccionCliente);
     }
 
-    public TransaccionCliente findByCuentaCliente(String cuentaClienteID) {
+    public TransaccionCliente findByCuentaCliente(CuentaCliente cuentaCliente) {
 	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from TransaccionCliente where cuentaCliente=?").setParameter(0, cuentaClienteID).list();
+		.createQuery("from TransaccionCliente where cuentaCliente=?").setParameter(0, cuentaCliente).list();
 	return (TransaccionCliente) list.get(0);
     }
 
     public List<TransaccionCliente> findAll() {
 	List<TransaccionCliente> transaccionesCliente = new ArrayList<TransaccionCliente>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TransaccionCliente").list();
+	for (Object object : list) {
+	    transaccionesCliente.add((TransaccionCliente) object);
+	}
+	return transaccionesCliente;
+    }
+
+    public List<TransaccionCliente> findTransaccionesByCuentaCliente(CuentaCliente cuentaCliente) {
+	List<TransaccionCliente> transaccionesCliente = new ArrayList<TransaccionCliente>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from TransaccionCliente where cuentaCliente=?").setParameter(0, cuentaCliente).list();
 	for (Object object : list) {
 	    transaccionesCliente.add((TransaccionCliente) object);
 	}

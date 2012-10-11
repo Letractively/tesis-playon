@@ -4,7 +4,9 @@
 package tesis.playon.web.managed.bean;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -15,6 +17,7 @@ import javax.faces.context.FacesContext;
 import org.springframework.dao.DataAccessException;
 
 import tesis.playon.web.model.Cliente;
+import tesis.playon.web.model.CuentaCliente;
 import tesis.playon.web.model.TipoPago;
 import tesis.playon.web.model.TransaccionCliente;
 import tesis.playon.web.model.Usuario;
@@ -49,9 +52,15 @@ public class CuentaClienteManagedBean {
 
     private static Cliente cliente;
 
-    private static TransaccionCliente transaccionCliente;
+    private double importe;
+
+    private CuentaCliente cuentaCliente;
+
+    private TransaccionCliente transaccionCliente;
 
     private static Float saldo = 0.f;
+
+    private List<TransaccionCliente> transacciones;
 
     private TipoPago tipoPago;
 
@@ -59,7 +68,7 @@ public class CuentaClienteManagedBean {
 	try {
 	    float saldoCliente = cliente.getCuentaCliente().getSaldo();
 	    cliente.getCuentaCliente().setSaldo(saldoCliente + saldo);
-	    getCuentaClienteService().update(cliente.getCuentaCliente());
+
 	    transaccionCliente = new TransaccionCliente();
 	    Timestamp fecha = new Timestamp(Calendar.getInstance().getTimeInMillis());
 	    transaccionCliente.setFecha(fecha);
@@ -77,6 +86,17 @@ public class CuentaClienteManagedBean {
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
 	}
+    }
+
+    public List<TransaccionCliente> getTransacciones() {
+	transacciones = new ArrayList<TransaccionCliente>();
+	cliente = getCliente();
+	transacciones = getTransaccionClienteService().findTransaccionesByCuentaCliente(cliente.getCuentaCliente());
+	return transacciones;
+    }
+
+    public void setTransacciones(List<TransaccionCliente> transacciones) {
+	this.transacciones = transacciones;
     }
 
     public IClienteService getClienteService() {
@@ -123,6 +143,14 @@ public class CuentaClienteManagedBean {
 	CuentaClienteManagedBean.cliente = cliente;
     }
 
+    public TipoPago getTipoPago() {
+	return tipoPago;
+    }
+
+    public void setTipoPago(TipoPago tipoPago) {
+	this.tipoPago = tipoPago;
+    }
+
     public Float getSaldo() {
 	return saldo;
     }
@@ -131,12 +159,36 @@ public class CuentaClienteManagedBean {
 	CuentaClienteManagedBean.saldo = saldo;
     }
 
+    public double getImporte() {
+	return importe;
+    }
+
+    public void setImporte(double importe) {
+	this.importe = importe;
+    }
+
     public ITipoPagoService getTipoPagoService() {
 	return tipoPagoService;
     }
 
     public void setTipoPagoService(ITipoPagoService tipoPagoService) {
 	this.tipoPagoService = tipoPagoService;
+    }
+
+    public CuentaCliente getCuentaCliente() {
+	return cuentaCliente;
+    }
+
+    public void setCuentaCliente(CuentaCliente cuentaCliente) {
+	this.cuentaCliente = cuentaCliente;
+    }
+
+    public TransaccionCliente getTransaccionCliente() {
+	return transaccionCliente;
+    }
+
+    public void setTransaccionCliente(TransaccionCliente transaccionCliente) {
+	this.transaccionCliente = transaccionCliente;
     }
 
 }
