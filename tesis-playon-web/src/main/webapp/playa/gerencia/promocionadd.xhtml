@@ -85,7 +85,7 @@
 						<p:ajax event="blur" update="fechaFinMsg" />
 					</p:calendar>
 					<p:column />
-
+					
 					<p:column />
 					<p:column>
 						<div style="width: 215px;">
@@ -93,6 +93,17 @@
 						</div>
 					</p:column>
 					<p:column />
+					
+					<h:outputLabel for="horaInicio" value="Hora de inicio: " />
+					<p:calendar value="#{promocionMB.horaInicio}" pattern="HH:mm"
+						timeOnly="true" locale="es" />
+					<p:column />
+
+					<h:outputLabel for="horaFin" value="Hora de finalización: " />
+					<p:calendar value="#{promocionMB.horaFin}" pattern="HH:mm"
+						timeOnly="true" locale="es" />
+					<p:column />
+					
 
 					<h:outputLabel for="tarifa" value="Tarifa: " />
 					<p:inputText id="tarifa" style="width: 200px" readonly="true"
@@ -102,7 +113,7 @@
 					</p:inputText>
 					<p:commandButton id="seleccionarTarifa" value="Seleccionar tarifa"
 						onclick="popupTarifas.show();" type="button" style="width: 150px" />
-
+					
 					<p:column />
 					<p:column>
 						<div style="width: 215px;">
@@ -110,7 +121,7 @@
 						</div>
 					</p:column>
 					<p:column />
-
+					
 					<h:outputLabel for="descuento" value="Descuento: (%)" />
 					<p:inputText id="descuento" style="width: 200px"
 						value="#{promocionMB.descuento}" required="true"

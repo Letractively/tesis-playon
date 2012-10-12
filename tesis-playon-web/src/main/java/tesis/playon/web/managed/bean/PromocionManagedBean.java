@@ -1,6 +1,8 @@
 package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +13,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+
+import org.testng.annotations.Test;
 
 import tesis.playon.web.model.EstadoPromocion;
 import tesis.playon.web.model.Playa;
@@ -59,6 +63,10 @@ public class PromocionManagedBean implements Serializable {
     private Date fechaInicio;
 
     private Date fechaFin;
+    
+    private Date horaInicio;
+    
+    private Date horaFin;
 
     private Float montoFijo;
 
@@ -91,6 +99,7 @@ public class PromocionManagedBean implements Serializable {
 	today = new Date();
     }
 
+    @Test
     public String addPromocion() {
 	Promocion promocion = null;
 
@@ -102,6 +111,24 @@ public class PromocionManagedBean implements Serializable {
 	    promocion.setFechaAlta(new Date());
 	    promocion.setFechaFin(getFechaFin());
 	    promocion.setFechaInicio(getFechaInicio());
+	    
+	    Calendar calendario = Calendar.getInstance();
+	    calendario.setTime(getHoraInicio());
+	    int hora = calendario.get(Calendar.HOUR_OF_DAY);
+	    int minutos = calendario.get(Calendar.MINUTE);
+	    int segundos = calendario.get(Calendar.SECOND);
+	    
+	    String sHora = hora + ":" + minutos + ":" + segundos;
+	    
+	    promocion.setHoraInicio(Time.valueOf(sHora));
+	    
+	    calendario.setTime(getHoraFin());
+	    hora = calendario.get(Calendar.HOUR_OF_DAY);
+	    minutos = calendario.get(Calendar.MINUTE);
+	    segundos = calendario.get(Calendar.SECOND);
+	    sHora = hora + ":" + minutos + ":" + segundos;
+	    
+	    promocion.setHoraFin(Time.valueOf(sHora));
 	    promocion.setMontoFijo(getTarifa().getImporte());
 	    promocion.setNombre(getNombre());
 	    promocion.setPlaya(getPlaya());
@@ -329,5 +356,21 @@ public class PromocionManagedBean implements Serializable {
 
     public void setPromocionSelected(Promocion promocionSelected) {
 	PromocionManagedBean.promocionSelected = promocionSelected;
+    }
+
+    public Date getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(Date horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public Date getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(Date horaFin) {
+        this.horaFin = horaFin;
     }
 }
