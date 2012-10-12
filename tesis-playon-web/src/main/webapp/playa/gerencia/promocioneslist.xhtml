@@ -7,12 +7,82 @@
 
 	<ui:param name="loadmenuadmin" value="true" />
 
-	<ui:param name="title" value="Listado de Tarifas y Promociones" />
+	<ui:param name="title" value="Listado de Promociones" />
 
 	<ui:define name="content" class="admin-font">
+		<h1>Listados de promociones</h1>
 
 		<p:growl id="messages" />
+		<h:form>
+			<p:dataGrid var="promocion" value="#{promocionMB.promocionPlayaList}"
+				columns="1" rows="6" paginator="true"
+				emptyMessage="No existen promociones en su playa"
+				paginatorPosition="bottom">
+
+				<f:facet name="header">
+						Listado de promociones de la playa
+					</f:facet>
+
+				<p:panel header="#{promocion.nombre}" style="text-align:left">
+					<h:outputText value="Descripción: " />
+					<h:outputText value="#{promocion.descripcion}" />
+					<h:panelGrid columns="4" style="width:100%" cellpadding="2"
+						cellspacing="2">
+						<h:outputText value="Fecha de inicio: " />
+						<h:outputText value="#{promocion.fechaInicio}" />
+
+						<h:outputText value="Fecha de finalización: " />
+						<h:outputText value="#{promocion.fechaFin}" />
+
+						<h:outputText value="Tipo de estadía: " />
+						<h:outputText value="#{promocion.tarifa.tipoEstadia.nombre}" />
+
+						<h:outputText value="Categoría de vehículo: " />
+						<h:outputText value="#{promocion.tarifa.categoriaVehiculo.nombre}" />
+
+						<h:outputText value="Monto fijo: " />
+						<h:outputText value="#{promocion.montoFijo}" />
+
+						<h:outputText value="Monto con descuento: " />
+						<h:outputText
+							value="#{promocion.montoFijo * (1- promocion.descuento/100)}" />
+
+						<p:column>
+							<h:outputText value="Descuento: " />
+							<h:outputText value="&#160;#{promocion.descuento}%" />
+						</p:column>
+						<p:column>
+							<h:outputText value="Estado: " />
+							<h:outputText
+								value="&#160;#{promocion.estadoPromocion.nombre eq 'Vigente' and
+							promocion.fechaFin ge promocionMB.today ? 'Vigente' : 'De Baja'}" />
+						</p:column>
+
+						<p:column />
+
+						<p:column>
+							<div align="center">
+								<p:commandLink id="edit" title="Editar Promoción" ajax="false">
+									<f:setPropertyActionListener value="#{promocion}"
+										target="#{promocionMB.promocionSelected}" />
+									<h:graphicImage library="images/icons" name="pencil.png"
+										style="width:25px; height:25px;" />
+								</p:commandLink>
+								&#160;&#160;&#160;&#160;
+								<p:commandLink id="darBaja" title="Dar de baja"
+									action="#{promocionMB.deletePromocion}" ajax="false">
+									<f:setPropertyActionListener value="#{promocion}" 
+										target="#{promocionMB.promocionSelected}" />
+									<h:graphicImage library="images/icons" name="trash.png"
+										style="width:25px; height:25px;" />
+								</p:commandLink>
+							</div>
+						</p:column>
 
 
+					</h:panelGrid>
+				</p:panel>
+			</p:dataGrid>
+		</h:form>
 	</ui:define>
 </ui:composition>

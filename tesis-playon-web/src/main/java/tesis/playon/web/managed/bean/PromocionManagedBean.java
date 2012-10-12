@@ -2,6 +2,7 @@ package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -70,8 +71,12 @@ public class PromocionManagedBean implements Serializable {
     private Playa playa;
 
     private EstadoPromocion estadoPromocion;
-    
+
     private Date today;
+
+    private List<Promocion> promocionPlayaList;
+
+    private static Promocion promocionSelected;
 
     @PostConstruct
     private void init() {
@@ -80,14 +85,15 @@ public class PromocionManagedBean implements Serializable {
 	Usuario user = getUsuarioService().findByNombreUsuario(userName);
 	if (user != null && user.getPlaya() != null) {
 	    this.playa = user.getPlaya();
-	    estadoPromocion = getEstadoPromocionService().findByNombreEstadoPromocion("Aprobada");
+	    estadoPromocion = getEstadoPromocionService().findByNombreEstadoPromocion("Vigente");
+	    promocionPlayaList = getPromocionService().findByPlaya(playa);
 	}
-	today= new Date();
+	today = new Date();
     }
 
     public String addPromocion() {
 	Promocion promocion = null;
-	
+
 	try {
 	    promocion = new Promocion();
 	    promocion.setDescripcion(getDescripcion());
@@ -100,7 +106,7 @@ public class PromocionManagedBean implements Serializable {
 	    promocion.setNombre(getNombre());
 	    promocion.setPlaya(getPlaya());
 	    promocion.setTarifa(getTarifa());
-	    
+
 	    getPromocionService().save(promocion);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -108,8 +114,7 @@ public class PromocionManagedBean implements Serializable {
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return "promocionaddend";
-	}
-	catch (Exception e) {
+	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo registrar la promoción, Disculpe las molestias ocacionadas.", null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
@@ -122,12 +127,29 @@ public class PromocionManagedBean implements Serializable {
 	return null;
     }
 
-    public String deletePromocion() {
-	return null;
+    public void deletePromocion() {
+	try {
+	    if (promocionSelected != null) {
+		EstadoPromocion estado = getEstadoPromocionService().findByNombreEstadoPromocion("De baja");
+		promocionSelected.setEstadoPromocion(estado);
+
+		getPromocionService().update(promocionSelected);
+
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			"Se dió de baja la promoción correctamente.", null);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+
+	    }
+	} catch (Exception ex) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo dar de baja la promoción, Disculpe las molestias ocacionadas.", null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    ex.printStackTrace();
+	}
     }
 
     public void calcularDescuento() {
-	this.montoConDescuento = tarifa.getImporte() *(1- (descuento / 100));
+	this.montoConDescuento = tarifa.getImporte() * (1 - (descuento / 100));
     }
 
     public void seleccionarTarifa(Tarifa tarifaParameter) {
@@ -143,14 +165,14 @@ public class PromocionManagedBean implements Serializable {
 	    this.setFechaInicio(dateInicial);
 	}
     }
-    
+
     public void validateDate(FacesContext context, UIComponent component, Object value) {
 	Date dateFin = (Date) value;
 	if (getFechaInicio() != null) {
-	    if(dateFin.before(getFechaInicio())){
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "La fecha de finalización debe ser mayor a la fecha de inicio.", null);
-	    throw new ValidatorException(message);
+	    if (dateFin.before(getFechaInicio())) {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+			"La fecha de finalización debe ser mayor a la fecha de inicio.", null);
+		throw new ValidatorException(message);
 	    }
 	}
     }
@@ -187,8 +209,6 @@ public class PromocionManagedBean implements Serializable {
 	this.estadoPromocionService = estadoPromocionService;
     }
 
-    // ============================ GETTER && SETTER =======================================
-
     public IPromocionService getPromocionService() {
 	return promocionService;
     }
@@ -196,6 +216,8 @@ public class PromocionManagedBean implements Serializable {
     public void setPromocionService(IPromocionService promocionService) {
 	this.promocionService = promocionService;
     }
+
+    // ============================ GETTER && SETTER =======================================
 
     public String getDescripcion() {
 	return descripcion;
@@ -286,10 +308,26 @@ public class PromocionManagedBean implements Serializable {
     }
 
     public Date getToday() {
-        return today;
+	return today;
     }
 
     public void setToday(Date today) {
-        this.today = today;
+	this.today = today;
+    }
+
+    public List<Promocion> getPromocionPlayaList() {
+	return promocionPlayaList;
+    }
+
+    public void setPromocionPlayaList(List<Promocion> promocionPlayaList) {
+	this.promocionPlayaList = promocionPlayaList;
+    }
+
+    public Promocion getPromocionSelected() {
+	return promocionSelected;
+    }
+
+    public void setPromocionSelected(Promocion promocionSelected) {
+	PromocionManagedBean.promocionSelected = promocionSelected;
     }
 }
