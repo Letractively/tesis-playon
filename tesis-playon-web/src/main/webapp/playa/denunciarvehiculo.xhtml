@@ -1,0 +1,72 @@
+<ui:composition template="../template/templatePlaya.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="loadmenuperfil" value="true" />
+
+	<ui:define name="title">
+		Panel de control
+    </ui:define>
+
+	<ui:define name="content">
+		<h:form style="margin: 0 0 0 30px;">
+
+			<p:growl id="messages" />
+
+			<div align="left">
+				<h:panelGrid id="displayView" columns="3" cellpadding="8"
+					cellspacing="10" styleClass="admin-input-text">
+
+					<p:column>
+						<h:outputLabel for="patente"
+							value="Patente del vehiculo a denunciar " />
+					</p:column>
+					<p:column>
+						<p:inputText id="patente" style="width: 200px"
+							value="#{denunciaVehiculoMB.patente}" required="true"
+							requiredMessage="Campo obligatorio" maxlength="6">
+							<f:validateLength minimum="6" />
+
+						</p:inputText>
+					</p:column>
+					<p:column>
+						<p:message id="patenteMsg" for="patente" display="icon" />
+					</p:column>
+
+					<p:column>
+						<h:outputLabel for="asunto" value="Causa de la denuncia " />
+					</p:column>
+
+					<p:column styleClass="vert-align-top">
+						<p:inputTextarea id="asunto" rows="7" cols="33"
+							style="width: 400px" value="#{denunciaVehiculoMB.asunto}"
+							required="true" requiredMessage="Campo obligatorio"
+							maxlength="500">
+							<f:validateLength minimum="3" />
+							<p:ajax event="blur" update="mensajeMsg" />
+						</p:inputTextarea>
+					</p:column>
+					<p:column>
+						<p:message id="mensajeMsg" for="asunto" display="icon" />
+					</p:column>
+
+					<p:column></p:column>
+					<p:column>
+						<div align="right">
+							<p:commandButton id="enviar" value="Enviar denuncia"
+								action="#{denunciaVehiculoMB.denunciar}" ajax="false" />
+						</div>
+					</p:column>
+					<p:column></p:column>
+				</h:panelGrid>
+			</div>
+
+
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>
