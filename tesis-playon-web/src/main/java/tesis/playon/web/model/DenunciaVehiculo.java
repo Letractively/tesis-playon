@@ -31,21 +31,21 @@ public class DenunciaVehiculo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "denunciaVehiculoID", nullable = false)
+    @Column(name = "denunciaVehiculoID")
     private Integer id;
 
-    @Column(name = "asunto", unique = false, nullable = false)
+    @Column(name = "asunto")
     private String asunto;
 
-    @Column(name = "fechaAlta", unique = true, nullable = false)
+    @Column(name = "fechaAlta")
     private Date fechaAlta;
 
     @ManyToOne
-    @JoinColumn(name = "vehiculoID", nullable = false)
+    @JoinColumn(name = "vehiculoID")
     private Vehiculo vehiculo;
 
     @ManyToOne
-    @JoinColumn(name = "playaID", nullable = false)
+    @JoinColumn(name = "playaID")
     private Playa playa;
 
     public DenunciaVehiculo() {

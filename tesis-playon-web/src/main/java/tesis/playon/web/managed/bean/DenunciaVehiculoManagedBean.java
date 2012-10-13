@@ -44,7 +44,7 @@ public class DenunciaVehiculoManagedBean implements Serializable {
 
     private DenunciaVehiculo denuncia;
     private String asunto;
-    private Date fecha;
+    private static Date fecha;
     private Vehiculo vehiculo;
     private String patente;
     private static Playa playa;
@@ -61,12 +61,9 @@ public class DenunciaVehiculoManagedBean implements Serializable {
 
     public void denunciar() {
 	vehiculo = vehiculoService.findByPatenteVehiculo(getPatente());
-	denuncia = new DenunciaVehiculo();
-	Timestamp fecha = new Timestamp(Calendar.getInstance().getTimeInMillis());
-	denuncia.setFechaAlta(fecha);
-	denuncia.setAsunto(getAsunto());
-	denuncia.setVehiculo(getVehiculo());
-	denuncia.setPlaya(getPlaya());
+
+	fecha = new Timestamp(Calendar.getInstance().getTimeInMillis());
+	denuncia = new DenunciaVehiculo(getAsunto(), fecha, vehiculo, playa);
 	getDenunciaService().save(denuncia);
 
     }
