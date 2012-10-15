@@ -34,6 +34,7 @@
 	<bean id="Comentario" class="tesis.playon.web.model.Comentario" />
 	<bean id="CuentaCliente" class="tesis.playon.web.model.CuentaCliente" />
 	<bean id="CuentaPlaya" class="tesis.playon.web.model.CuentaPlaya" />
+	<bean id="DenunciaVehiculo" class="tesis.playon.web.model.DenunciaVehiculo" />
 	<bean id="DetalleEstadia" class="tesis.playon.web.model.DetalleEstadia" />
 	<bean id="Empleado" class="tesis.playon.web.model.Empleado" />
 	<bean id="Estadia" class="tesis.playon.web.model.Estadia" />
@@ -92,6 +93,11 @@
 	<bean id="CuentaPlayaService" class="tesis.playon.web.service.impl.CuentaPlayaService">
 		<property name="cuentaPlayaDao" ref="CuentaPlayaDao" />
 	</bean>
+	
+	<bean id="DenunciaVehiculoService" class="tesis.playon.web.service.impl.DenunciaVehiculoService">
+		<property name="denunciaVehiculoDao" ref="DenunciaVehiculoDao" />
+	</bean>
+	
 	<bean id="DetalleEstadiaService" class="tesis.playon.web.service.impl.DetalleEstadiaService">
 		<property name="detalleEstadiaDao" ref="DetalleEstadiaDao" />
 	</bean>
@@ -196,6 +202,11 @@
 	<bean id="CuentaPlayaDao" class="tesis.playon.web.dao.impl.CuentaPlayaDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
+	
+	<bean id="DenunciaVehiculoDao" class="tesis.playon.web.dao.impl.DenunciaVehiculoDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
+	
 	<bean id="DetalleEstadiaDao" class="tesis.playon.web.dao.impl.DetalleEstadiaDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
