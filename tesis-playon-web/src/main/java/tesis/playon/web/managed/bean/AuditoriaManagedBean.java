@@ -17,12 +17,16 @@ import javax.faces.model.SelectItem;
 import org.springframework.dao.DataAccessException;
 
 import tesis.playon.web.model.Barrio;
+import tesis.playon.web.model.DenunciaVehiculo;
+import tesis.playon.web.model.EstadoDenuncia;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Mail;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.RolesPorUsuario;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IBarrioService;
+import tesis.playon.web.service.IDenunciaVehiculoService;
+import tesis.playon.web.service.IEstadoDenunciaService;
 import tesis.playon.web.service.IEstadoPlayaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IRolesPorUsuarioService;
@@ -64,7 +68,15 @@ public class AuditoriaManagedBean implements Serializable {
     @ManagedProperty(value = "#{RolesPorUsuarioService}")
     IRolesPorUsuarioService rolesPorUsuarioService;
 
+    @ManagedProperty(value = "#{EstadoDenunciaService}")
+    IEstadoDenunciaService estadoDenunciaService;
+
+    @ManagedProperty(value = "#{DenunciaVehiculoService}")
+    IDenunciaVehiculoService denunciaVehiculoService;
+
     static Playa playaSeleccionada;
+
+    public DenunciaVehiculo denunciaVehiculoSeleccionada;
 
     private String cuit;
 
@@ -88,6 +100,12 @@ public class AuditoriaManagedBean implements Serializable {
 
     List<Playa> playasRechazadasList;
 
+    List<DenunciaVehiculo> denunciasPendientesVehiculosList;
+
+    List<DenunciaVehiculo> denunciasRechazadasVehiculosList;
+
+    List<DenunciaVehiculo> denunciasAceptadasVehiculosList;
+
     private List<Playa> filteredPlayas;
 
     private static String previusPage;
@@ -98,6 +116,7 @@ public class AuditoriaManagedBean implements Serializable {
     @SuppressWarnings("unused")
     private SelectItem[] estadosOptions;
 
+    /********************* METODOS PARA PLAYAS ****************************************************************/
     public String updatePlayaAuditor() {
 	try {
 	    if (playaSeleccionada.getEstado().getNombre().equals("De Baja")) {
@@ -188,6 +207,74 @@ public class AuditoriaManagedBean implements Serializable {
 		    + playaSeleccionada.getNombreComercial(), "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
+    }
+
+    /************************** METODOS PARA DENUNCIAS *****************************************************/
+    public void rejectDenunciaVehiculo() {
+	try {
+	    EstadoDenuncia estado = getEstadoDenunciaService().findByNombreEstadoDenuncia("Rechazada");
+	    denunciaVehiculoSeleccionada.setEstado(estado);
+	    getDenunciaVehiculoService().update(denunciaVehiculoSeleccionada);
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se rechazó la denuncia " + "", "");
+
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo rechazar la denuncia: " + "", "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+    }
+
+    public void approveDenunciaVehiculo() {
+	try {
+	    EstadoDenuncia estado = getEstadoDenunciaService().findByNombreEstadoDenuncia("Aceptada");
+	    denunciaVehiculoSeleccionada.setEstado(estado);
+	    getDenunciaVehiculoService().update(denunciaVehiculoSeleccionada);
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La denuncia se dio por FINALIZADA "
+		    + "", "");
+
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo finalizar la denuncia: " + "", "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+    }
+
+    public void procesarDenunciaVehiculo() {
+	try {
+	    EstadoDenuncia estado = getEstadoDenunciaService().findByNombreEstadoDenuncia("En Proceso");
+	    denunciaVehiculoSeleccionada.setEstado(estado);
+	    getDenunciaVehiculoService().update(denunciaVehiculoSeleccionada);
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "La denuncia se aceptó y será investigada " + "", "");
+
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo procesar la denuncia: " + "", "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+    }
+
+    /********************* SERVICIOS + GET + SET **********************************************/
+    public IEstadoDenunciaService getEstadoDenunciaService() {
+	return estadoDenunciaService;
+    }
+
+    public void setEstadoDenunciaService(IEstadoDenunciaService estadoDenunciaService) {
+	this.estadoDenunciaService = estadoDenunciaService;
+    }
+
+    public IDenunciaVehiculoService getDenunciaVehiculoService() {
+	return denunciaVehiculoService;
+    }
+
+    public void setDenunciaVehiculoService(IDenunciaVehiculoService denunciaVehiculoService) {
+	this.denunciaVehiculoService = denunciaVehiculoService;
     }
 
     public String returnPage() {
@@ -388,4 +475,49 @@ public class AuditoriaManagedBean implements Serializable {
     public void setPreviusPage(String previusPage) {
 	AuditoriaManagedBean.previusPage = previusPage;
     }
+
+    public List<DenunciaVehiculo> getDenunciasPendientesVehiculosList() {
+	denunciasPendientesVehiculosList = new ArrayList<DenunciaVehiculo>();
+	EstadoDenuncia estado = new EstadoDenuncia();
+	estado = getEstadoDenunciaService().findByNombreEstadoDenuncia("Pendiente");
+	denunciasPendientesVehiculosList = getDenunciaVehiculoService().findByEstadoDenunciaVehiculo(estado);
+	return denunciasPendientesVehiculosList;
+    }
+
+    public void setDenunciasPendientesVehiculosList(List<DenunciaVehiculo> denunciasPendientesVehiculosList) {
+	this.denunciasPendientesVehiculosList = denunciasPendientesVehiculosList;
+    }
+
+    public List<DenunciaVehiculo> getDenunciasRechazadasVehiculosList() {
+	denunciasPendientesVehiculosList = new ArrayList<DenunciaVehiculo>();
+	EstadoDenuncia estado = new EstadoDenuncia();
+	estado = getEstadoDenunciaService().findByNombreEstadoDenuncia("Rechazada");
+	denunciasPendientesVehiculosList = getDenunciaVehiculoService().findByEstadoDenunciaVehiculo(estado);
+	return denunciasPendientesVehiculosList;
+    }
+
+    public void setDenunciasRechazadasVehiculosList(List<DenunciaVehiculo> denunciasRechazadasVehiculosList) {
+	this.denunciasRechazadasVehiculosList = denunciasRechazadasVehiculosList;
+    }
+
+    public List<DenunciaVehiculo> getDenunciasAceptadasVehiculosList() {
+	denunciasPendientesVehiculosList = new ArrayList<DenunciaVehiculo>();
+	EstadoDenuncia estado = new EstadoDenuncia();
+	estado = getEstadoDenunciaService().findByNombreEstadoDenuncia("Aceptada");
+	denunciasPendientesVehiculosList = getDenunciaVehiculoService().findByEstadoDenunciaVehiculo(estado);
+	return denunciasPendientesVehiculosList;
+    }
+
+    public void setDenunciasAceptadasVehiculosList(List<DenunciaVehiculo> denunciasAceptadasVehiculosList) {
+	this.denunciasAceptadasVehiculosList = denunciasAceptadasVehiculosList;
+    }
+
+    public DenunciaVehiculo getDenunciaVehiculoSeleccionada() {
+	return denunciaVehiculoSeleccionada;
+    }
+
+    public  void setDenunciaVehiculoSeleccionada(DenunciaVehiculo denunciaVehiculoSeleccionada) {
+	this.denunciaVehiculoSeleccionada = denunciaVehiculoSeleccionada;
+    }
+
 }

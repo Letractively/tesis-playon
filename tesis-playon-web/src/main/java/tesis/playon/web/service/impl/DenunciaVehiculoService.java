@@ -56,7 +56,7 @@ public class DenunciaVehiculoService implements IDenunciaVehiculoService {
     }
 
     @Override
-    public DenunciaVehiculo findByEstadoDenunciaVehiculo(EstadoDenuncia estado) {
+    public List<DenunciaVehiculo> findByEstadoDenunciaVehiculo(EstadoDenuncia estado) {
 	return getDenunciaVehiculoDao().findByEstadoDenunciaVehiculo(estado);
 
     }

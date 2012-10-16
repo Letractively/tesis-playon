@@ -45,11 +45,14 @@ public class DenunciaVehiculoDao implements IDenunciaVehiculoDao {
 	return (DenunciaVehiculo) list.get(0);
     }
 
-    public DenunciaVehiculo findByEstadoDenunciaVehiculo(EstadoDenuncia estado) {
+    public List<DenunciaVehiculo> findByEstadoDenunciaVehiculo(EstadoDenuncia estado) {
+	List<DenunciaVehiculo> denuncias = new ArrayList<DenunciaVehiculo>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DenunciaVehiculo where estado=?")
 		.setParameter(0, estado).list();
-	return (DenunciaVehiculo) list.get(0);
-
+	for (Object object : list) {
+	    denuncias.add((DenunciaVehiculo) object);
+	}
+	return denuncias;
     }
 
     public List<DenunciaVehiculo> findAll() {

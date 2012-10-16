@@ -6,10 +6,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
+import org.springframework.dao.DataAccessException;
 
 import tesis.playon.web.model.DenunciaVehiculo;
 import tesis.playon.web.model.EstadoDenuncia;
@@ -65,14 +68,24 @@ public class DenunciaVehiculoManagedBean implements Serializable {
 	playa = user.getPlaya();
     }
 
-    public void denunciar() {
-	vehiculo = vehiculoService.findByPatenteVehiculo(getPatente());
+    public String denunciar() {
+	try {
+	    vehiculo = vehiculoService.findByPatenteVehiculo(getPatente());
 
-	fecha = new Timestamp(Calendar.getInstance().getTimeInMillis());
-	estado = getEstadoDenunciaService().findByNombreEstadoDenuncia("Pendiente");
-	denuncia = new DenunciaVehiculo(getAsunto(), fecha, vehiculo, playa, estado);
-	getDenunciaService().save(denuncia);
+	    fecha = new Timestamp(Calendar.getInstance().getTimeInMillis());
+	    estado = getEstadoDenunciaService().findByNombreEstadoDenuncia("Pendiente");
+	    denuncia = new DenunciaVehiculo(getAsunto(), fecha, vehiculo, playa, estado);
+	    getDenunciaService().save(denuncia);
+	    return "denunciarvehiculoend";
+	} catch (DataAccessException e) {
 
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Problemas al enviar su denuncia "
+		    + "Vuelva  a intentarlo ", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
+	    return "ERROR";
+
+	}
     }
 
     public IPlayaService getPlayaService() {

@@ -22,7 +22,7 @@ public interface IDenunciaVehiculoService {
 
     DenunciaVehiculo findByAsuntoDenunciaVehiculo(String asuntoDenunciaVehiculo);
 
-    DenunciaVehiculo findByEstadoDenunciaVehiculo(EstadoDenuncia estado);
+    List<DenunciaVehiculo> findByEstadoDenunciaVehiculo(EstadoDenuncia estado);
 
     List<DenunciaVehiculo> findAll();
 

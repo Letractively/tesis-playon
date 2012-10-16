@@ -12,14 +12,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 /**
  * @author Pablo
  * 
  */
 @Entity
-@Table(name = "estado_denuncia", catalog = "tesis_playon", uniqueConstraints = { @UniqueConstraint(columnNames = "nombre") })
+@Table(name = "estado_denuncia", catalog = "tesis_playon")
 public class EstadoDenuncia implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -76,6 +75,10 @@ public class EstadoDenuncia implements Serializable {
 	    return false;
 
 	return true;
+    }
+
+    public void setId(Integer id) {
+	this.id = id;
     }
 
     @Override

@@ -12,6 +12,7 @@ import tesis.playon.web.model.EstadoDenuncia;
  * @author Pablo
  * 
  */
+
 public class EstadoDenunciaDao implements IEstadoDenunciaDao {
 
     private SessionFactory sessionFactory;
