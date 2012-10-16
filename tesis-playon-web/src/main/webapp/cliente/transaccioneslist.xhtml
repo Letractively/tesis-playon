@@ -5,6 +5,12 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+<!-- 	<style type="text/css"> -->
+/* .old { */
+/* 	background: pink; */
+/* 	color: #FF0000 !important; */
+/* } */
+<!-- </style> -->
 	<ui:define name="title">
 		Lista
     </ui:define>
@@ -14,32 +20,43 @@
 		<h1>Mis Transacciones</h1>
 		<h:form>
 			<p:dataTable id="transacciones" var="transaccionCliente"
-				paginator="true" rows="3" value="#{cuentaClienteMB.transacciones}"
+			rowStyleClass="#{transaccionCliente.tipoPago.nombre eq 'Cuenta' ? 'old' :null}"
+				paginator="false" rows="3" value="#{cuentaClienteMB.transacciones}"
 				emptyMessage="No ha realizado transacciones"
-				paginatorPosition="bottom">
+				paginatorPosition="bottom" >
 
 				<f:facet name="header">
 						Historial de movimientos
 				</f:facet>
 
-				<p:column headerText="Fecha">
+				<p:column style="text-align:center">	
+					<f:facet name="header">
+						<h:outputText value="Fecha" />
+					</f:facet>
 					<h:outputText value="#{transaccionCliente.fecha}">
 						<f:convertDateTime dateStyle="full" />
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Tipo Transaccion">
-					<h:outputText value="#{transaccionCliente.tipoPago.nombre}" />
+				<p:column style="text-align:center">
+					<f:facet name="header">
+						<h:outputText value="Tipo Transacción" />
+					</f:facet>
+					<h:outputText value="#{transaccionCliente.tipoPago.descripcion}" />
 				</p:column>
 
-				<p:column headerText="Importe">
+				<p:column style="text-align:center">
+					<f:facet name="header">
+						<h:outputText value="Importe" />
+					</f:facet>
+
 					<h:outputText value="#{transaccionCliente.importe}" />
 				</p:column>
 
 
 			</p:dataTable>
 			<h:panelGrid columns="1">
-				<p:panel header="¡Exporte sus transacciones!">
+				<p:panel header="Exportar">
 					<h:commandLink>
 						<p:graphicImage
 							value="http://www.primefaces.org/showcase/images/excel.png" />

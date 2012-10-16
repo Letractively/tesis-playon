@@ -31,22 +31,26 @@ public class DenunciaPlaya implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "denunciaPlayaID", nullable = false)
+    @Column(name = "denunciaPlayaID")
     private Integer id;
 
-    @Column(name = "asunto", unique = false, nullable = false)
+    @Column(name = "asunto")
     private String asunto;
 
-    @Column(name = "fechaAlta", unique = true, nullable = false)
+    @Column(name = "fechaAlta")
     private Date fechaAlta;
 
     @ManyToOne
-    @JoinColumn(name = "clienteID", nullable = false)
+    @JoinColumn(name = "clienteID")
     private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn(name = "playaID", nullable = false)
+    @JoinColumn(name = "playaID")
     private Playa playa;
+    
+    @ManyToOne
+    @JoinColumn(name = "estadoID")
+    private EstadoDenuncia estado;
 
     public DenunciaPlaya() {
     }
@@ -72,6 +76,16 @@ public class DenunciaPlaya implements Serializable {
 
     public void setFechaAlta(Date fechaAlta) {
 	this.fechaAlta = fechaAlta;
+    }
+    
+    
+
+    public EstadoDenuncia getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoDenuncia estado) {
+        this.estado = estado;
     }
 
     public Cliente getCliente() {

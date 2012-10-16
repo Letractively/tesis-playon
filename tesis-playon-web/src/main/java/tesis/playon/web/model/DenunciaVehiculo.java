@@ -48,14 +48,19 @@ public class DenunciaVehiculo implements Serializable {
     @JoinColumn(name = "playaID")
     private Playa playa;
 
+    @ManyToOne
+    @JoinColumn(name = "estadoID")
+    private EstadoDenuncia estado;
+
     public DenunciaVehiculo() {
     }
 
-    public DenunciaVehiculo(String asunto, Date fechaAlta, Vehiculo vehiculo, Playa playa) {
+    public DenunciaVehiculo(String asunto, Date fechaAlta, Vehiculo vehiculo, Playa playa, EstadoDenuncia estado) {
 	this.asunto = asunto;
 	this.fechaAlta = fechaAlta;
 	this.vehiculo = vehiculo;
 	this.playa = playa;
+	this.estado = estado;
     }
 
     public String getAsunto() {
@@ -92,6 +97,14 @@ public class DenunciaVehiculo implements Serializable {
 
     public Integer getId() {
 	return id;
+    }
+
+    public EstadoDenuncia getEstado() {
+	return estado;
+    }
+
+    public void setEstado(EstadoDenuncia estado) {
+	this.estado = estado;
     }
 
     public boolean equals(Object object) {

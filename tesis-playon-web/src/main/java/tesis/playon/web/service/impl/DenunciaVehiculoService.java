@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IDenunciaVehiculoDao;
 import tesis.playon.web.model.DenunciaVehiculo;
+import tesis.playon.web.model.EstadoDenuncia;
 import tesis.playon.web.service.IDenunciaVehiculoService;
 
 /**
@@ -52,6 +53,12 @@ public class DenunciaVehiculoService implements IDenunciaVehiculoService {
 
     public void setDenunciaVehiculoDao(IDenunciaVehiculoDao denuncia) {
 	this.denunciaVehiculoDao = denuncia;
+    }
+
+    @Override
+    public DenunciaVehiculo findByEstadoDenunciaVehiculo(EstadoDenuncia estado) {
+	return getDenunciaVehiculoDao().findByEstadoDenunciaVehiculo(estado);
+
     }
 
 }

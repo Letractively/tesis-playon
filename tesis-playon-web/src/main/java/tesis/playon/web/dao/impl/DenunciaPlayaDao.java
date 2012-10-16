@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IDenunciaPlayaDao;
 import tesis.playon.web.model.DenunciaPlaya;
+import tesis.playon.web.model.EstadoDenuncia;
 
 /**
  * @author garribere
@@ -49,5 +50,12 @@ public class DenunciaPlayaDao implements IDenunciaPlayaDao {
 	    denuncias.add((DenunciaPlaya) object);
 	}
 	return denuncias;
+    }
+
+    public DenunciaPlaya findByEstadoDenunciaPlaya(EstadoDenuncia estado) {
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DenunciaPlaya where estado=?")
+		.setParameter(0, estado).list();
+	return (DenunciaPlaya) list.get(0);
+
     }
 }

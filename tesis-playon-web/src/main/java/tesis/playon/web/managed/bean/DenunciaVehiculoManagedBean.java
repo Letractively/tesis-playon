@@ -12,10 +12,12 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import tesis.playon.web.model.DenunciaVehiculo;
+import tesis.playon.web.model.EstadoDenuncia;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.IDenunciaVehiculoService;
+import tesis.playon.web.service.IEstadoDenunciaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.service.IVehiculoService;
@@ -42,12 +44,16 @@ public class DenunciaVehiculoManagedBean implements Serializable {
     @ManagedProperty(value = "#{VehiculoService}")
     IVehiculoService vehiculoService;
 
+    @ManagedProperty(value = "#{EstadoDenunciaService}")
+    IEstadoDenunciaService estadoDenunciaService;
+
     private DenunciaVehiculo denuncia;
     private String asunto;
     private static Date fecha;
     private Vehiculo vehiculo;
     private String patente;
     private static Playa playa;
+    private EstadoDenuncia estado;
 
     private static Usuario user;
 
@@ -63,7 +69,8 @@ public class DenunciaVehiculoManagedBean implements Serializable {
 	vehiculo = vehiculoService.findByPatenteVehiculo(getPatente());
 
 	fecha = new Timestamp(Calendar.getInstance().getTimeInMillis());
-	denuncia = new DenunciaVehiculo(getAsunto(), fecha, vehiculo, playa);
+	estado = getEstadoDenunciaService().findByNombreEstadoDenuncia("Pendiente");
+	denuncia = new DenunciaVehiculo(getAsunto(), fecha, vehiculo, playa, estado);
 	getDenunciaService().save(denuncia);
 
     }
@@ -154,6 +161,22 @@ public class DenunciaVehiculoManagedBean implements Serializable {
 
     public static void setPlaya(Playa playa) {
 	DenunciaVehiculoManagedBean.playa = playa;
+    }
+
+    public EstadoDenuncia getEstado() {
+	return estado;
+    }
+
+    public void setEstado(EstadoDenuncia estado) {
+	this.estado = estado;
+    }
+
+    public IEstadoDenunciaService getEstadoDenunciaService() {
+	return estadoDenunciaService;
+    }
+
+    public void setEstadoDenunciaService(IEstadoDenunciaService estadoDenunciaService) {
+	this.estadoDenunciaService = estadoDenunciaService;
     }
 
 }

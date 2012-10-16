@@ -3,10 +3,11 @@ package tesis.playon.web.dao;
 import java.util.List;
 
 import tesis.playon.web.model.DenunciaVehiculo;
+import tesis.playon.web.model.EstadoDenuncia;
 
 /**
  * @author Pablo
- *
+ * 
  */
 public interface IDenunciaVehiculoDao {
 
@@ -17,6 +18,8 @@ public interface IDenunciaVehiculoDao {
     void delete(DenunciaVehiculo denunciaVehiculo);
 
     DenunciaVehiculo findByAsuntoDenunciaVehiculo(String asuntoDenunciaVehiculo);
-    
+
+    DenunciaVehiculo findByEstadoDenunciaVehiculo(EstadoDenuncia estado);
+
     List<DenunciaVehiculo> findAll();
 }

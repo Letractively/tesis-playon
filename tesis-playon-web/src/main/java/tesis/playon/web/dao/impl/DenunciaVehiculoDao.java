@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import tesis.playon.web.dao.IDenunciaVehiculoDao;
 import tesis.playon.web.model.DenunciaVehiculo;
+import tesis.playon.web.model.EstadoDenuncia;
 
 /**
  * @author Pablo
@@ -42,6 +43,13 @@ public class DenunciaVehiculoDao implements IDenunciaVehiculoDao {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DenunciaVehiculo where asunto=?")
 		.setParameter(0, asuntoDenunciaVehiculo).list();
 	return (DenunciaVehiculo) list.get(0);
+    }
+
+    public DenunciaVehiculo findByEstadoDenunciaVehiculo(EstadoDenuncia estado) {
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DenunciaVehiculo where estado=?")
+		.setParameter(0, estado).list();
+	return (DenunciaVehiculo) list.get(0);
+
     }
 
     public List<DenunciaVehiculo> findAll() {
