@@ -12,8 +12,8 @@
 	<ui:define name="content" class="admin-font">
 		<h1>Listados de promociones</h1>
 
-		<p:growl id="messages" />
 		<h:form>
+			<p:growl id="messages" />
 			<p:dataGrid var="promocion" value="#{promocionMB.promocionPlayaList}"
 				columns="1" rows="6" paginator="true"
 				emptyMessage="No existen promociones en su playa"
@@ -29,10 +29,20 @@
 					<h:panelGrid columns="4" style="width:100%" cellpadding="2"
 						cellspacing="2">
 						<h:outputText value="Fecha de inicio: " />
-						<h:outputText value="#{promocion.fechaInicio}" />
+						<h:outputText value="#{promocion.fechaInicio}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
 
 						<h:outputText value="Fecha de finalización: " />
-						<h:outputText value="#{promocion.fechaFin}" />
+						<h:outputText value="#{promocion.fechaFin}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+
+						<h:outputText value="Hora de inicio: " />
+						<h:outputText value="#{promocion.horaInicio}" />
+
+						<h:outputText value="Hora de finalización: " />
+						<h:outputText value="#{promocion.horaFin}" />
 
 						<h:outputText value="Tipo de estadía: " />
 						<h:outputText value="#{promocion.tarifa.tipoEstadia.nombre}" />
@@ -62,7 +72,8 @@
 
 						<p:column>
 							<div align="center">
-								<p:commandLink id="edit" title="Editar Promoción" ajax="false">
+								<p:commandLink id="edit" title="Editar Promoción" ajax="false"
+									action="/playa/gerencia/promocionedit.html?faces-redirect=true">
 									<f:setPropertyActionListener value="#{promocion}"
 										target="#{promocionMB.promocionSelected}" />
 									<h:graphicImage library="images/icons" name="pencil.png"
@@ -71,7 +82,7 @@
 								&#160;&#160;&#160;&#160;
 								<p:commandLink id="darBaja" title="Dar de baja"
 									action="#{promocionMB.deletePromocion}" ajax="false">
-									<f:setPropertyActionListener value="#{promocion}" 
+									<f:setPropertyActionListener value="#{promocion}"
 										target="#{promocionMB.promocionSelected}" />
 									<h:graphicImage library="images/icons" name="trash.png"
 										style="width:25px; height:25px;" />

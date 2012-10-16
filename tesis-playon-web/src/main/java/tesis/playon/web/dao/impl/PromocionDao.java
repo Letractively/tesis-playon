@@ -75,7 +75,7 @@ public class PromocionDao implements IPromocionDao {
     public List<Promocion> findByPlaya(Playa playa, EstadoPromocion estado){
 	List<Promocion> promociones = new ArrayList<Promocion>();
 	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from Promocion where estadoPromocion=? and playa=?")
+		.createQuery("from Promocion where estadoPromocion=? and playa=? order by fechaAlta desc")
 		.setParameter(0, estado).setParameter(1, playa).list();
 	if(!list.isEmpty()){
 	    for (Object object : list) {

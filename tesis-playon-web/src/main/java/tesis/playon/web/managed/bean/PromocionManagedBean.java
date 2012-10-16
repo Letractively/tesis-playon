@@ -14,8 +14,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
-import org.testng.annotations.Test;
-
 import tesis.playon.web.model.EstadoPromocion;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Promocion;
@@ -63,10 +61,14 @@ public class PromocionManagedBean implements Serializable {
     private Date fechaInicio;
 
     private Date fechaFin;
-    
+
     private Date horaInicio;
-    
+
     private Date horaFin;
+
+    private static Date horaInicioSelected;
+
+    private static Date horaFinSelected;
 
     private Float montoFijo;
 
@@ -99,7 +101,6 @@ public class PromocionManagedBean implements Serializable {
 	today = new Date();
     }
 
-    @Test
     public String addPromocion() {
 	Promocion promocion = null;
 
@@ -111,23 +112,23 @@ public class PromocionManagedBean implements Serializable {
 	    promocion.setFechaAlta(new Date());
 	    promocion.setFechaFin(getFechaFin());
 	    promocion.setFechaInicio(getFechaInicio());
-	    
+
 	    Calendar calendario = Calendar.getInstance();
 	    calendario.setTime(getHoraInicio());
 	    int hora = calendario.get(Calendar.HOUR_OF_DAY);
 	    int minutos = calendario.get(Calendar.MINUTE);
 	    int segundos = calendario.get(Calendar.SECOND);
-	    
+
 	    String sHora = hora + ":" + minutos + ":" + segundos;
-	    
+
 	    promocion.setHoraInicio(Time.valueOf(sHora));
-	    
+
 	    calendario.setTime(getHoraFin());
 	    hora = calendario.get(Calendar.HOUR_OF_DAY);
 	    minutos = calendario.get(Calendar.MINUTE);
 	    segundos = calendario.get(Calendar.SECOND);
 	    sHora = hora + ":" + minutos + ":" + segundos;
-	    
+
 	    promocion.setHoraFin(Time.valueOf(sHora));
 	    promocion.setMontoFijo(getTarifa().getImporte());
 	    promocion.setNombre(getNombre());
@@ -137,7 +138,7 @@ public class PromocionManagedBean implements Serializable {
 	    getPromocionService().save(promocion);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se registró exitosamente la promoción: ", promocion.getNombre());
+		    "Se registró exitosamente la promoción: " + promocion.getNombre(), null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return "promocionaddend";
@@ -151,7 +152,42 @@ public class PromocionManagedBean implements Serializable {
     }
 
     public String updatePromocion() {
-	return null;
+	try {
+	    Promocion promo = new Promocion();
+	    promo = promocionSelected;
+
+	    Calendar calendario = Calendar.getInstance();
+	    calendario.setTime(horaInicioSelected);
+	    int hora = calendario.get(Calendar.HOUR_OF_DAY);
+	    int minutos = calendario.get(Calendar.MINUTE);
+	    int segundos = calendario.get(Calendar.SECOND);
+
+	    String sHora = hora + ":" + minutos + ":" + segundos;
+
+	    promo.setHoraInicio(Time.valueOf(sHora));
+
+	    calendario.setTime(horaFinSelected);
+	    hora = calendario.get(Calendar.HOUR_OF_DAY);
+	    minutos = calendario.get(Calendar.MINUTE);
+	    segundos = calendario.get(Calendar.SECOND);
+	    sHora = hora + ":" + minutos + ":" + segundos;
+
+	    promo.setHoraFin(Time.valueOf(sHora));
+
+	    getPromocionService().update(promo);
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "Se modificó exitosamente la promoción: " + promocionSelected.getNombre(), null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+
+	    return "promocioneslist";
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo modificar la promoción, Disculpe las molestias ocacionadas.", null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
+	}
+	return "error";
     }
 
     public void deletePromocion() {
@@ -327,6 +363,10 @@ public class PromocionManagedBean implements Serializable {
     }
 
     public Float getMontoConDescuento() {
+	if (promocionSelected != null) {
+	    this.montoConDescuento = promocionSelected.getTarifa().getImporte()
+		    * (1 - (promocionSelected.getDescuento() / 100));
+	}
 	return montoConDescuento;
     }
 
@@ -351,6 +391,20 @@ public class PromocionManagedBean implements Serializable {
     }
 
     public Promocion getPromocionSelected() {
+	if(promocionSelected != null){
+	    Calendar calendario = Calendar.getInstance();
+	    int hora = getHora(promocionSelected.getHoraInicio());
+	    int minute = getMinutos(promocionSelected.getHoraInicio());
+	    int second = getSegundos(promocionSelected.getHoraInicio());
+	    calendario.set(2012, 01, 01, hora, minute, second);
+	    horaInicioSelected = calendario.getTime();
+	    
+	    hora = getHora(promocionSelected.getHoraFin());
+	    minute = getMinutos(promocionSelected.getHoraFin());
+	    second = getSegundos(promocionSelected.getHoraFin());
+	    calendario.set(2012, 01, 01, hora, minute, second);
+	    horaFinSelected = calendario.getTime();
+	}
 	return promocionSelected;
     }
 
@@ -359,18 +413,52 @@ public class PromocionManagedBean implements Serializable {
     }
 
     public Date getHoraInicio() {
-        return horaInicio;
+	return horaInicio;
     }
 
     public void setHoraInicio(Date horaInicio) {
-        this.horaInicio = horaInicio;
+	this.horaInicio = horaInicio;
     }
 
     public Date getHoraFin() {
-        return horaFin;
+	return horaFin;
     }
 
     public void setHoraFin(Date horaFin) {
-        this.horaFin = horaFin;
+	this.horaFin = horaFin;
+    }
+
+    public Date getHoraInicioSelected() {
+	return horaInicioSelected;
+    }
+
+    public void setHoraInicioSelected(Date horaInicioSelected) {
+	PromocionManagedBean.horaInicioSelected = horaInicioSelected;
+    }
+
+    public Date getHoraFinSelected() {
+	return horaFinSelected;
+    }
+
+    public void setHoraFinSelected(Date horaFinSelected) {
+	PromocionManagedBean.horaFinSelected = horaFinSelected;
+    }
+    
+    private int getHora(Time time){
+	String horaCompleta = time.toString();
+	String toObject[] = horaCompleta.split(":");
+	return Integer.parseInt(toObject[0]);
+    }
+    
+    private int getMinutos(Time time){
+	String horaCompleta = time.toString();
+	String toObject[] = horaCompleta.split(":");
+	return Integer.parseInt(toObject[1]);
+    }
+    
+    private int getSegundos(Time time){
+	String horaCompleta = time.toString();
+	String toObject[] = horaCompleta.split(":");
+	return Integer.parseInt(toObject[2]);
     }
 }
