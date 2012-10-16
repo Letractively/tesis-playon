@@ -6,9 +6,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.map.OverlaySelectEvent;
@@ -33,17 +34,13 @@ import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
 import tesis.playon.web.util.WriteImage;
 
 @ManagedBean(name = "busquedaplayaMB")
-@RequestScoped
+@ViewScoped
 public class BusquedaPlayasManagedBean implements Serializable {
 
     private static final long serialVersionUID = -1085389423375986168L;
 
-    private static final String LISTA_PLAYAS = "playalist";
-
-    private static final String ERROR = "error";
-
     private MapModel simpleModel;
-    private final MapModel advancedModel = new DefaultMapModel();
+    private MapModel advancedModel;
     private Marker marker;
 
     @ManagedProperty(value = "#{PlayaService}")
@@ -93,6 +90,87 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     private Estadia estadia;
 
+    private Playa playa;
+
+    private Integer distancia = 25;
+
+    private GeoposicionDePlaya respuesta;
+
+    private String coordenadas;
+
+    // para modificar una playa
+    private static Playa playaSelected;
+    
+    @PostConstruct
+    private void init(){
+	playaResultadoBusqueda = new ArrayList<Playa>();
+    }
+
+    public void preRenderView() {
+	if (!FacesContext.getCurrentInstance().isPostback()) {
+	    // if (getDireccionBusqueda() == null) {
+	    // if (getDireccionBusqueda().trim().isEmpty()) {
+	    if (getPlayaResultadoBusqueda() != null) {
+		playaResultadoBusqueda.clear();
+		playaResultadoBusqueda = null;
+	    }
+	    // }
+	    // }
+	}
+    }
+
+    public void buscarPlaya() {
+
+	if (null != getDireccionBusqueda() && !getDireccionBusqueda().trim().isEmpty()) {
+	    try {
+
+		latLonUtil = new LatitudlongitudUtil();
+		// GeoposicionDePlaya
+		respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda().trim() + ", Cordoba, Argentina");
+		coordenadas = respuesta.toString();
+
+		playaResultadoBusqueda = new ArrayList<Playa>();
+		advancedModel = new DefaultMapModel();
+		for (Playa playaAux : getPlayaList()) {
+		    Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
+		    if (comparacion < getDistancia() && playaAux.getEstado().getId() == 2) {
+			playaResultadoBusqueda.add(playaAux);
+			LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
+			PerfilPlaya perfil = new PerfilPlaya();
+			perfil = getPerfilPlayaService().findByPlaya(playaAux);
+			WriteImage.getFotoPerfil(perfil);
+			advancedModel.addOverlay(new Marker(coord1, playaAux.getNombreComercial() , perfil,
+				"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
+		    }
+		    LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
+
+		    advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
+			    "http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
+
+		}
+		ordenar();
+	    } catch (Exception e) {
+		e.printStackTrace();
+	    }
+	}
+    }
+    
+    class Comparar implements Comparator<Playa> {
+	public int compare(Playa p1, Playa p2) {
+	    Double comparacion1 = p1.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
+	    Double comparacion2 = p2.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
+
+	    return comparacion1.compareTo(comparacion2);
+	}
+
+    }
+
+    public void ordenar() {
+	List<Playa> playas = playaResultadoBusqueda;
+	Collections.sort(playas, new Comparar());
+
+    }
+    
     public IEstadoPlayaService getEstadoPlayaService() {
 	return estadoPlayaService;
     }
@@ -253,79 +331,8 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	BusquedaPlayasManagedBean.playaSelected = playaSelected;
     }
 
-    public static long getSerialversionuid() {
-	return serialVersionUID;
-    }
-
-    public static String getListaPlayas() {
-	return LISTA_PLAYAS;
-    }
-
-    public static String getError() {
-	return ERROR;
-    }
-
     public void setMarker(Marker marker) {
 	this.marker = marker;
-    }
-
-    private Playa playa;
-
-    private Integer distancia = 25;
-
-    private GeoposicionDePlaya respuesta;
-
-    private String coordenadas;
-
-    // para modificar una playa
-    private static Playa playaSelected;
-
-    public void preRenderView() {
-	if (!FacesContext.getCurrentInstance().isPostback()) {
-	    // if (getDireccionBusqueda() == null) {
-	    // if (getDireccionBusqueda().trim().isEmpty()) {
-	    if (getPlayaResultadoBusqueda() != null) {
-		playaResultadoBusqueda.clear();
-		playaResultadoBusqueda = null;
-	    }
-	    // }
-	    // }
-	}
-    }
-
-    public void buscarPlaya() {
-
-	if (null != getDireccionBusqueda() && !getDireccionBusqueda().trim().isEmpty()) {
-	    try {
-
-		latLonUtil = new LatitudlongitudUtil();
-		// GeoposicionDePlaya
-		respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda().trim() + ", Cordoba, Argentina");
-		coordenadas = respuesta.toString();
-
-		playaResultadoBusqueda = new ArrayList<Playa>();
-		for (Playa playaAux : getPlayaList()) {
-		    Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
-		    if (comparacion < getDistancia() && playaAux.getEstado().getId() == 2) {
-			playaResultadoBusqueda.add(playaAux);
-			LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
-			PerfilPlaya perfil = new PerfilPlaya();
-			perfil = getPerfilPlayaService().findByPlaya(playaAux);
-			WriteImage.getFotoPerfil(perfil);
-			advancedModel.addOverlay(new Marker(coord1, playaAux.toString2(), perfil.getNombreFoto(),
-				"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
-		    }
-		    LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
-
-		    advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
-			    "http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
-
-		}
-		ordenar();
-	    } catch (Exception e) {
-		e.printStackTrace();
-	    }
-	}
     }
 
     public String getDireccionBusqueda() {
@@ -390,20 +397,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	return marker;
     }
 
-    class Comparar implements Comparator<Playa> {
-	public int compare(Playa p1, Playa p2) {
-	    Double comparacion1 = p1.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
-	    Double comparacion2 = p2.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
-
-	    return comparacion1.compareTo(comparacion2);
-	}
-
+    public void setAdvancedModel(MapModel advancedModel) {
+        this.advancedModel = advancedModel;
     }
-
-    public void ordenar() {
-	List<Playa> playas = playaResultadoBusqueda;
-	Collections.sort(playas, new Comparar());
-
-    }
-
 }

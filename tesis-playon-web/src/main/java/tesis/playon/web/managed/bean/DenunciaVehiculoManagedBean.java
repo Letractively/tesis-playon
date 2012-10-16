@@ -120,7 +120,7 @@ public class DenunciaVehiculoManagedBean implements Serializable {
     }
 
     public void setFecha(Date fecha) {
-	this.fecha = fecha;
+	DenunciaVehiculoManagedBean.fecha = fecha;
     }
 
     public Vehiculo getVehiculo() {

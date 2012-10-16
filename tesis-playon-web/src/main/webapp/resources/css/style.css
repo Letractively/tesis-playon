@@ -108,10 +108,11 @@ ul h4 {
 }
 
 #footer {
-	margin: 40px 0 120px 0;
+	margin: 20px 0 50px 0;
 	text-align: center;
 	color: #8C8B8B;
 	text-shadow: 0 1px 0 #FFFFFF;
+	height:20px;
 }
 
 #footer a {
@@ -320,6 +321,7 @@ gif.dropotron-level-1 {
 	/* 	background: #6E6E6E url(../images/img03.jpg) top left no-repeat; */
 	/* 	border: solid 1px #7E7E7E; */
 	width: 980px;
+	height: 55px;
 	/* 	width: 888px; */
 	/* 	padding: 10px 45px 0 45px; */
 	/* 	padding: 45px 45px 0 45px; */

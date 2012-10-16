@@ -579,7 +579,7 @@ public class EstadisticaGerenteManagedBean {
     }
 
     public void setEstadia(Estadia estadia) {
-	this.estadia = estadia;
+	EstadisticaGerenteManagedBean.estadia = estadia;
     }
 
     public static List<DetalleEstadia> getDetalles() {
