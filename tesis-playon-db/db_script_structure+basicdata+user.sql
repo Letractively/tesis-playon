@@ -76,11 +76,13 @@ CREATE TABLE `denuncia_vehiculo` (
   `vehiculoID` int(11) NOT NULL,
   `denunciaVehiculoID` int(11) NOT NULL auto_increment,
   `playaID` int(11) NOT NULL,
+  `estadoID` int(11) NOT NULL,
   PRIMARY KEY (`denunciaVehiculoID`),
   KEY `vehiculoID` (`vehiculoID`),
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_denuncia_vehiculo_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
-  CONSTRAINT `FK_denuncia_vehiculo_vehiculo` FOREIGN KEY (`vehiculoID`) REFERENCES `vehiculo` (`vehiculoID`)
+  CONSTRAINT `FK_denuncia_vehiculo_vehiculo` FOREIGN KEY (`vehiculoID`) REFERENCES `vehiculo` (`vehiculoID`),
+  CONSTRAINT `FK_denuncia_vehiculo_estado` FOREIGN KEY (`estadoID`) REFERENCES `estado_denuncia` (`estadoDenunciaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -209,11 +211,13 @@ CREATE TABLE `denuncia_playa` (
   `playaID` int(11) NOT NULL,
   `denunciaPlayaID` int(11) NOT NULL auto_increment,
   `clienteID` int(11) NOT NULL,
+  `estadoID` int(11) NOT NULL,
   PRIMARY KEY (`denunciaPlayaID`),
   KEY `playaID` (`playaID`),
   KEY `clienteID` (`clienteID`),
   CONSTRAINT `FK_denuncia_playa_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
-  CONSTRAINT `FK_denuncia_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
+  CONSTRAINT `FK_denuncia_playa_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
+  CONSTRAINT `FK_denuncia_playa_estado` FOREIGN KEY (`estadoID`) REFERENCES `estado_denuncia` (`estadoDenunciaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
