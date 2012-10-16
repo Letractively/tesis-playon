@@ -22,4 +22,6 @@ public interface ITransaccionPlayaDao {
     List<TransaccionPlaya> findByCuentaPlaya(CuentaPlaya cuentaPlaya);
 
     List<TransaccionPlaya> findNoLiquidadasByCuentaPlaya(CuentaPlaya cuentaPlaya);
+    
+    
 }

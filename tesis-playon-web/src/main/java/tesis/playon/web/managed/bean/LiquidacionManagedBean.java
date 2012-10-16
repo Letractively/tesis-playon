@@ -5,6 +5,7 @@ package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -14,11 +15,16 @@ import javax.faces.bean.ViewScoped;
 import tesis.playon.web.datamodel.PlayaDataModel;
 import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.CuentaPlaya;
+import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.EstadoPlaya;
+import tesis.playon.web.model.Liquidacion;
 import tesis.playon.web.model.Mail;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.TransaccionPlaya;
+import tesis.playon.web.service.ICuentaPlayaService;
+import tesis.playon.web.service.IEstadiaService;
 import tesis.playon.web.service.IEstadoPlayaService;
+import tesis.playon.web.service.ILiquidacionService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.ITransaccionPlayaService;
 import tesis.playon.web.util.NotificadorUtil;
@@ -51,6 +57,15 @@ public class LiquidacionManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{TransaccionPlayaService}")
     ITransaccionPlayaService transaccionPlayaService;
+
+    @ManagedProperty(value = "#{CuentaPlayaService}")
+    ICuentaPlayaService cuentaPlayaService;
+
+    @ManagedProperty(value = "#{LiquidacionService}")
+    ILiquidacionService liquidacionService;
+    
+    @ManagedProperty(value = "#{EstadiaService}")
+    IEstadiaService estadiaService;
 
     Playa playaSeleccionada;
 
@@ -108,9 +123,33 @@ public class LiquidacionManagedBean implements Serializable {
 	this.transaccionPlayaService = transaccionPlayaService;
     }
 
-    public int cantTransacciones(CuentaPlaya cuentaPlaya) {
+    public ICuentaPlayaService getCuentaPlayaService() {
+	return cuentaPlayaService;
+    }
+
+    public void setCuentaPlayaService(ICuentaPlayaService cuentaPlayaService) {
+	this.cuentaPlayaService = cuentaPlayaService;
+    }
+
+    public ILiquidacionService getLiquidacionService() {
+	return liquidacionService;
+    }
+
+    public void setLiquidacionService(ILiquidacionService liquidacionService) {
+	this.liquidacionService = liquidacionService;
+    }
+
+    public IEstadiaService getEstadiaService() {
+        return estadiaService;
+    }
+
+    public void setEstadiaService(IEstadiaService estadiaService) {
+        this.estadiaService = estadiaService;
+    }
+
+    private int cantTransacciones(CuentaPlaya cuentaPlaya) {
 	int contTransacciones = 0;
-	for (TransaccionPlaya transaccion : transaccionesALiquidar) {
+	for (TransaccionPlaya transaccion : getTransaccionesALiquidar()) {
 	    if (transaccion.getCuentaPlaya().equals(cuentaPlaya)) {
 		contTransacciones++;
 	    }
@@ -118,14 +157,26 @@ public class LiquidacionManagedBean implements Serializable {
 	return contTransacciones;
     }
 
-    public int importeTotal(CuentaPlaya cuentaPlaya) {
+    private int importeTotal(CuentaPlaya cuentaPlaya) {
 	int importe = 0;
-	for (TransaccionPlaya transaccion : transaccionesALiquidar) {
+	for (TransaccionPlaya transaccion : getTransaccionesALiquidar()) {
 	    if (transaccion.getCuentaPlaya().equals(cuentaPlaya)) {
 		importe += transaccion.getImporte();
 	    }
 	}
 	return importe;
+    }
+
+    public int cantTransacciones(int idPlaya) {
+	Playa playa = this.getPlayaService().findById(idPlaya);
+	CuentaPlaya cuentaPlaya = this.getCuentaPlayaService().findByPlaya(playa);
+	return this.cantTransacciones(cuentaPlaya);
+    }
+
+    public int importeTotal(int idPlaya) {
+	Playa playa = this.getPlayaService().findById(idPlaya);
+	CuentaPlaya cuentaPlaya = this.getCuentaPlayaService().findByPlaya(playa);
+	return this.importeTotal(cuentaPlaya);
     }
 
     public List<Playa> getPlayasAprobadasList() {
@@ -134,6 +185,33 @@ public class LiquidacionManagedBean implements Serializable {
 	estado = getEstadoPlayaService().findByNombreEstadoPlaya("Aprobada");
 	playasAprobadasList = getPlayaService().findByEstado(estado);
 	return playasAprobadasList;
+    }
+
+    public String liquidar() {
+	for (Playa playa : this.getPlayasAprobadasList()) {
+	    if (cantTransacciones(playa.getId()) <= 0)
+		continue;
+	    // Generamos la Liquidación con los datos
+	    Liquidacion liquidacion = new Liquidacion();
+	    Estadia estadiaPlaya = getEstadiaService().findByPlaya(playa);
+	    liquidacion.setEstadia(estadiaPlaya);
+	    liquidacion.setFecha(Calendar.getInstance().getTime());
+	    liquidacion.setFechaDesde(null); //TODO Cambiar esto cuando filtre por fecha desde
+	    liquidacion.setFechaHasta(null); //TODO Cambiar esto cuando filtre por fecha hasta
+	    liquidacion.setImporteTotal(0);
+	    getLiquidacionService().save(liquidacion);
+	    
+	    // Agregamos el ID de la liquidacion generada a 
+	    // cada una de las transaciones liquidadas para esa playa.
+	    for (TransaccionPlaya transaccion : this.getTransaccionesALiquidar()) {
+		if (transaccion.getCuentaPlaya().getPlaya().getId() != playa.getId())
+		    continue;
+		transaccion.setLiquidacion(liquidacion);
+		getTransaccionPlayaService().update(transaccion);
+	    }
+	    
+	}
+	return "/admin/liquidacionplayasend.html?faces-redirect=true";
     }
 
     public void setPlayasAprobadasList(List<Playa> playasAceptadasList) {
@@ -245,8 +323,10 @@ public class LiquidacionManagedBean implements Serializable {
     }
 
     public List<TransaccionPlaya> getTransaccionesALiquidar() {
-	transaccionesALiquidar = new ArrayList<TransaccionPlaya>();
-	transaccionesALiquidar = getTransaccionPlayaService().findTransaccionesNoLiquidadas();
+	if (transaccionesALiquidar == null) {
+	    transaccionesALiquidar = new ArrayList<TransaccionPlaya>();
+	    transaccionesALiquidar = getTransaccionPlayaService().findTransaccionesNoLiquidadas();
+	}
 	return transaccionesALiquidar;
     }
 
