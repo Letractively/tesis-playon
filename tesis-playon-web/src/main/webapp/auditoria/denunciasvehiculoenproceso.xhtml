@@ -10,7 +10,7 @@
 	<ui:define name="panelContent" class="admin-font">
 		<p:growl id="messages" />
 		<p:dataTable id="denuncia" var="denuncias"
-			value="#{auditoriaMB.denunciasPendientesVehiculosList}"
+			value="#{auditoriaMB.denunciasEnProcesoVehiculosList}"
 			paginatorPosition="bottom" paginator="true" rows="5"
 			emptyMessage="No existen denuncias para auditar" text-align="center">
 
@@ -45,24 +45,7 @@
 						target="#{auditoriaMB.denunciaVehiculoSeleccionada}" />
 					<h:graphicImage library="images/icons" name="check.png" />
 				</p:commandLink>
-
-				<p:commandLink id="procesar" title="Aceptar y procesar denuncia"
-					action="#{auditoriaMB.procesarDenunciaVehiculo}" ajax="false">
-					<f:setPropertyActionListener value="#{denuncias}"
-						target="#{auditoriaMB.denunciaVehiculoSeleccionada}" />
-					<h:graphicImage library="images/icons" name="pencil.png" />
-				</p:commandLink>
-
-				<p:commandLink id="rechazar" title="Rechazar denuncia"
-					action="#{auditoriaMB.rejectDenunciaVehiculo}" ajax="false">
-					<f:setPropertyActionListener value="#{denuncias}"
-						target="#{auditoriaMB.denunciaVehiculoSeleccionada}" />
-					<h:graphicImage library="images/icons" name="rejected.png" />
-				</p:commandLink>
 			</p:column>
-			<f:facet name="footer">
-
-			</f:facet>
 		</p:dataTable>
 
 		<!-- DIALOG PARA VER LOS DATOS DE LA Denuncia SELECCIONADA -->
@@ -126,9 +109,9 @@
 				<p:column>
 					<h:outputText
 						value="#{auditoriaMB.denunciaVehiculoSeleccionada.asunto}"
-						style="font-weight:bold" >
-				
-				</h:outputText>
+						style="font-weight:bold">
+
+					</h:outputText>
 
 				</p:column>
 

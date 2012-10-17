@@ -102,9 +102,11 @@ public class AuditoriaManagedBean implements Serializable {
 
     List<DenunciaVehiculo> denunciasPendientesVehiculosList;
 
+    List<DenunciaVehiculo> denunciasEnProcesoVehiculosList;
+
     List<DenunciaVehiculo> denunciasRechazadasVehiculosList;
 
-    List<DenunciaVehiculo> denunciasAceptadasVehiculosList;
+    List<DenunciaVehiculo> denunciasFinalizadasVehiculosList;
 
     private List<Playa> filteredPlayas;
 
@@ -500,24 +502,36 @@ public class AuditoriaManagedBean implements Serializable {
 	this.denunciasRechazadasVehiculosList = denunciasRechazadasVehiculosList;
     }
 
-    public List<DenunciaVehiculo> getDenunciasAceptadasVehiculosList() {
-	denunciasPendientesVehiculosList = new ArrayList<DenunciaVehiculo>();
+    public List<DenunciaVehiculo> getDenunciasFinalizadasVehiculosList() {
+	denunciasFinalizadasVehiculosList = new ArrayList<DenunciaVehiculo>();
 	EstadoDenuncia estado = new EstadoDenuncia();
 	estado = getEstadoDenunciaService().findByNombreEstadoDenuncia("Aceptada");
-	denunciasPendientesVehiculosList = getDenunciaVehiculoService().findByEstadoDenunciaVehiculo(estado);
-	return denunciasPendientesVehiculosList;
+	denunciasFinalizadasVehiculosList = getDenunciaVehiculoService().findByEstadoDenunciaVehiculo(estado);
+	return denunciasFinalizadasVehiculosList;
     }
 
-    public void setDenunciasAceptadasVehiculosList(List<DenunciaVehiculo> denunciasAceptadasVehiculosList) {
-	this.denunciasAceptadasVehiculosList = denunciasAceptadasVehiculosList;
+    public void setDenunciasFinalizadasVehiculosList(List<DenunciaVehiculo> denunciasAceptadasVehiculosList) {
+	this.denunciasFinalizadasVehiculosList = denunciasAceptadasVehiculosList;
     }
 
     public DenunciaVehiculo getDenunciaVehiculoSeleccionada() {
 	return denunciaVehiculoSeleccionada;
     }
 
-    public  void setDenunciaVehiculoSeleccionada(DenunciaVehiculo denunciaVehiculoSeleccionada) {
+    public void setDenunciaVehiculoSeleccionada(DenunciaVehiculo denunciaVehiculoSeleccionada) {
 	this.denunciaVehiculoSeleccionada = denunciaVehiculoSeleccionada;
+    }
+
+    public List<DenunciaVehiculo> getDenunciasEnProcesoVehiculosList() {
+	denunciasPendientesVehiculosList = new ArrayList<DenunciaVehiculo>();
+	EstadoDenuncia estado = new EstadoDenuncia();
+	estado = getEstadoDenunciaService().findByNombreEstadoDenuncia("En Proceso");
+	denunciasPendientesVehiculosList = getDenunciaVehiculoService().findByEstadoDenunciaVehiculo(estado);
+	return denunciasPendientesVehiculosList;
+    }
+
+    public void setDenunciasEnProcesoVehiculosList(List<DenunciaVehiculo> denunciasEnProcesoVehiculosList) {
+	this.denunciasEnProcesoVehiculosList = denunciasEnProcesoVehiculosList;
     }
 
 }
