@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartSeries;
+import org.testng.annotations.Test;
 
 import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.model.CategoriaVehiculo;
@@ -215,6 +216,7 @@ public class EstadisticaGerenteManagedBean {
 	mayorCant = mayorCant + (int) (mayorCant * 0.25);
     }
 
+    @Test
     private void importePorTipo()
 
     {

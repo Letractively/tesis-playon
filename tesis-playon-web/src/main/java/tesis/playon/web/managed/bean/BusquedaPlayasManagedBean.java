@@ -18,17 +18,10 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
-import tesis.playon.web.model.Barrio;
-import tesis.playon.web.model.Estadia;
-import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.model.Playa;
-import tesis.playon.web.service.IBarrioService;
-import tesis.playon.web.service.IEstadoPlayaService;
 import tesis.playon.web.service.IPerfilPlayaService;
 import tesis.playon.web.service.IPlayaService;
-import tesis.playon.web.service.IRolUsuarioService;
-import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.util.LatitudlongitudUtil;
 import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
 import tesis.playon.web.util.WriteImage;
@@ -49,61 +42,24 @@ public class BusquedaPlayasManagedBean implements Serializable {
     @ManagedProperty(value = "#{PerfilPlayaService}")
     IPerfilPlayaService perfilPlayaService;
 
-    @ManagedProperty(value = "#{EstadoPlayaService}")
-    IEstadoPlayaService estadoPlayaService;
-
-    @ManagedProperty(value = "#{UsuarioService}")
-    IUsuarioService usuarioService;
-
-    @ManagedProperty(value = "#{BarrioService}")
-    IBarrioService barrioService;
-
-    @ManagedProperty(value = "#{RolUsuarioService}")
-    IRolUsuarioService rolUsuarioService;
-
     List<Playa> playaList;
 
     private static List<Playa> playaResultadoBusqueda;
 
     LatitudlongitudUtil latLonUtil;
 
-    // Atributos de las playas.
-    private String cuit;
-
-    private Integer disponibilidad;
-
     private String direccionBusqueda;
 
-    private String domicilio;
-
-    private String nombreComercial;
-
-    private String razonSocial;
-
-    private Barrio barrio;
-
-    private String telefono;
-
-    private String emailPlaya;
-
-    private EstadoPlaya estado;
-
-    private Estadia estadia;
-
-    private Playa playa;
-
-    private Integer distancia = 25;
+    private Integer distancia;
 
     private GeoposicionDePlaya respuesta;
 
     private String coordenadas;
-
-    // para modificar una playa
-    private static Playa playaSelected;
     
     @PostConstruct
     private void init(){
 	playaResultadoBusqueda = new ArrayList<Playa>();
+	distancia = 25;
     }
 
     public void preRenderView() {
@@ -171,38 +127,6 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     }
     
-    public IEstadoPlayaService getEstadoPlayaService() {
-	return estadoPlayaService;
-    }
-
-    public void setEstadoPlayaService(IEstadoPlayaService estadoPlayaService) {
-	this.estadoPlayaService = estadoPlayaService;
-    }
-
-    public IUsuarioService getUsuarioService() {
-	return usuarioService;
-    }
-
-    public void setUsuarioService(IUsuarioService usuarioService) {
-	this.usuarioService = usuarioService;
-    }
-
-    public IBarrioService getBarrioService() {
-	return barrioService;
-    }
-
-    public void setBarrioService(IBarrioService barrioService) {
-	this.barrioService = barrioService;
-    }
-
-    public IRolUsuarioService getRolUsuarioService() {
-	return rolUsuarioService;
-    }
-
-    public void setRolUsuarioService(IRolUsuarioService rolUsuarioService) {
-	this.rolUsuarioService = rolUsuarioService;
-    }
-
     public IPerfilPlayaService getPerfilPlayaService() {
 	return perfilPlayaService;
     }
@@ -219,94 +143,6 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	this.latLonUtil = latLonUtil;
     }
 
-    public String getCuit() {
-	return cuit;
-    }
-
-    public void setCuit(String cuit) {
-	this.cuit = cuit;
-    }
-
-    public Integer getDisponibilidad() {
-	return disponibilidad;
-    }
-
-    public void setDisponibilidad(Integer disponibilidad) {
-	this.disponibilidad = disponibilidad;
-    }
-
-    public String getDomicilio() {
-	return domicilio;
-    }
-
-    public void setDomicilio(String domicilio) {
-	this.domicilio = domicilio;
-    }
-
-    public String getNombreComercial() {
-	return nombreComercial;
-    }
-
-    public void setNombreComercial(String nombreComercial) {
-	this.nombreComercial = nombreComercial;
-    }
-
-    public String getRazonSocial() {
-	return razonSocial;
-    }
-
-    public void setRazonSocial(String razonSocial) {
-	this.razonSocial = razonSocial;
-    }
-
-    public Barrio getBarrio() {
-	return barrio;
-    }
-
-    public void setBarrio(Barrio barrio) {
-	this.barrio = barrio;
-    }
-
-    public String getTelefono() {
-	return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-	this.telefono = telefono;
-    }
-
-    public String getEmailPlaya() {
-	return emailPlaya;
-    }
-
-    public void setEmailPlaya(String emailPlaya) {
-	this.emailPlaya = emailPlaya;
-    }
-
-    public EstadoPlaya getEstado() {
-	return estado;
-    }
-
-    public void setEstado(EstadoPlaya estado) {
-	this.estado = estado;
-    }
-
-    public Estadia getEstadia() {
-	return estadia;
-    }
-
-    public void setEstadia(Estadia estadia) {
-	this.estadia = estadia;
-    }
-
-    public Playa getPlaya() {
-	return playa;
-    }
-
-    public void setPlaya(Playa playa) {
-	this.playa = playa;
-    }
-
     public GeoposicionDePlaya getRespuesta() {
 	return respuesta;
     }
@@ -321,14 +157,6 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     public void setCoordenadas(String coordenadas) {
 	this.coordenadas = coordenadas;
-    }
-
-    public static Playa getPlayaSelected() {
-	return playaSelected;
-    }
-
-    public static void setPlayaSelected(Playa playaSelected) {
-	BusquedaPlayasManagedBean.playaSelected = playaSelected;
     }
 
     public void setMarker(Marker marker) {

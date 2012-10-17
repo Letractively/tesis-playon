@@ -175,6 +175,7 @@
 						</p:dataGrid>
 					</p:tab>
 					<p:tab title="Comentarios">
+						<div align="left">
 						<p:dataTable id="comentarios"
 							value="#{comentarioMB.comentariosListPerfil}" var="comentario"
 							emptyMessage="No existen comentarios en esta playa de estacionamiento">
@@ -221,7 +222,7 @@
 											<tr>
 												<td style="text-align: left; border-style: none;">
 													<div style="width: 100%;">
-														<p:inputTextarea id="comentario" cols="65" rows="2"
+														<p:inputTextarea id="comentario" cols="63" rows="2"
 															value="#{comentarioMB.comentario}" required="true"
 															requiredMessage="El campo comentario no puede estar vacio"
 															styleClass="contenido-textarea" />
@@ -230,7 +231,7 @@
 											</tr>
 											<tr>
 												<td style="text-align: right; border-style: none;">
-													<div align="right" style="width: 98%;">
+													<div align="right" style="width: 97%;">
 														<p:commandButton id="enviarComentario"
 															value="Enviar comentario"
 															action="#{comentarioMB.addComentario}" ajax="false"
@@ -246,6 +247,7 @@
 								</h:panelGrid>
 							</f:facet>
 						</p:dataTable>
+						</div>
 					</p:tab>
 				</p:accordionPanel>
 				<p:messages id="messageComentario" showDetail="true" closable="true" />
