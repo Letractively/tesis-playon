@@ -87,6 +87,10 @@ public class PromocionManagedBean implements Serializable {
     private List<Promocion> promocionPlayaList;
 
     private static Promocion promocionSelected;
+    
+    private List<Promocion> promocionPlayaListSelected;
+    
+    private static Playa playaSelected;
 
     @PostConstruct
     private void init() {
@@ -95,7 +99,6 @@ public class PromocionManagedBean implements Serializable {
 	Usuario user = getUsuarioService().findByNombreUsuario(userName);
 	if (user != null && user.getPlaya() != null) {
 	    this.playa = user.getPlaya();
-	    estadoPromocion = getEstadoPromocionService().findByNombreEstadoPromocion("Vigente");
 	    promocionPlayaList = getPromocionService().findByPlaya(playa);
 	}
 	today = new Date();
@@ -390,6 +393,18 @@ public class PromocionManagedBean implements Serializable {
 	this.promocionPlayaList = promocionPlayaList;
     }
 
+    public List<Promocion> getPromocionPlayaListSelected() {
+	if(playaSelected != null){
+	    estadoPromocion = getEstadoPromocionService().findByNombreEstadoPromocion("Vigente");
+	    promocionPlayaListSelected = getPromocionService().findByPlaya(playaSelected,estadoPromocion);
+	}
+        return promocionPlayaListSelected;
+    }
+
+    public void setPromocionPlayaListSelected(List<Promocion> promocionPlayaListSelected) {
+        this.promocionPlayaListSelected = promocionPlayaListSelected;
+    }
+
     public Promocion getPromocionSelected() {
 	if(promocionSelected != null){
 	    Calendar calendario = Calendar.getInstance();
@@ -410,6 +425,14 @@ public class PromocionManagedBean implements Serializable {
 
     public void setPromocionSelected(Promocion promocionSelected) {
 	PromocionManagedBean.promocionSelected = promocionSelected;
+    }
+
+    public Playa getPlayaSelected() {
+        return playaSelected;
+    }
+
+    public void setPlayaSelected(Playa playaSelected) {
+        PromocionManagedBean.playaSelected = playaSelected;
     }
 
     public Date getHoraInicio() {

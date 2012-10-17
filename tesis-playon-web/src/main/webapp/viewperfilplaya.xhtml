@@ -116,9 +116,56 @@
 						</h:panelGrid>
 					</p:tab>
 					<p:tab title="Promociones">
-						<h:panelGrid columns="2" cellpadding="10">
+						<p:dataGrid var="promocion"
+							value="#{promocionMB.promocionPlayaListSelected}" columns="1"
+							rows="6" paginator="true"
+							emptyMessage="No existen promociones en esta playa"
+							paginatorPosition="bottom">
 
-						</h:panelGrid>
+							<p:panel header="#{promocion.nombre}" style="text-align:left">
+								<h:outputText value="Descripción: " />
+								<h:outputText value="#{promocion.descripcion}" />
+
+								<h:panelGrid columns="4"
+									style="width:100%; margin:5px 0 0 10px;" cellpadding="2"
+									cellspacing="2">
+									<h:outputText value="Fecha de inicio: " />
+									<h:outputText value="#{promocion.fechaInicio}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+
+									<h:outputText value="Fecha de finalización: " />
+									<h:outputText value="#{promocion.fechaFin}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+
+									<h:outputText value="Hora de inicio: " />
+									<h:outputText value="#{promocion.horaInicio}" />
+
+									<h:outputText value="Hora de finalización: " />
+									<h:outputText value="#{promocion.horaFin}" />
+
+									<h:outputText value="Tipo de estadía: " />
+									<h:outputText value="#{promocion.tarifa.tipoEstadia.nombre}" />
+
+									<h:outputText value="Categoría de vehículo: " />
+									<h:outputText
+										value="#{promocion.tarifa.categoriaVehiculo.nombre}" />
+
+									<h:outputText value="Monto fijo: " />
+									<h:outputText value="#{promocion.montoFijo}" />
+
+									<h:outputText value="Monto con descuento: " />
+									<h:outputText
+										value="#{promocion.montoFijo * (1- promocion.descuento/100)}" />
+
+									<p:column>
+										<h:outputText value="Descuento: " />
+										<h:outputText value="&#160;#{promocion.descuento}%" />
+									</p:column>
+								</h:panelGrid>
+							</p:panel>
+						</p:dataGrid>
 					</p:tab>
 					<p:tab title="Comentarios">
 						<p:dataTable id="comentarios"
@@ -208,7 +255,7 @@
 					<p:gmap center="#{perfilPlayaMB.coordenadas}" zoom="15"
 						streetView="true" type="ROADMAP"
 						model="#{perfilPlayaMB.advancedModel}"
-						style="width: 500px ;height:250px">
+						style="width: 500px ;height:250px; border:2px solid #819FF7;">
 
 						<p:ajax event="overlaySelect"
 							listener="#{perfilPlayaMB.onMarkerSelect}" />
