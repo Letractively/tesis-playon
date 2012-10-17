@@ -5,14 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<!-- 	<style type="text/css"> -->
-/* .old { */
-/* 	background: pink; */
-/* 	color: #FF0000 !important; */
-/* } */
-<!-- </style> -->
 	<ui:define name="title">
-		Lista
+		Historial de movimientos
     </ui:define>
 
 	<ui:define name="content">
@@ -20,16 +14,12 @@
 		<h1>Mis Transacciones</h1>
 		<h:form>
 			<p:dataTable id="transacciones" var="transaccionCliente"
-			rowStyleClass="#{transaccionCliente.tipoPago.nombre eq 'Cuenta' ? 'old' :null}"
+				rowStyleClass="#{transaccionCliente.tipoPago.nombre eq 'Cuenta' ? 'old' :null}"
 				paginator="false" rows="3" value="#{cuentaClienteMB.transacciones}"
 				emptyMessage="No ha realizado transacciones"
-				paginatorPosition="bottom" >
+				paginatorPosition="bottom">
 
-				<f:facet name="header">
-						Historial de movimientos
-				</f:facet>
-
-				<p:column style="text-align:center">	
+				<p:column style="text-align:center">
 					<f:facet name="header">
 						<h:outputText value="Fecha" />
 					</f:facet>
@@ -53,31 +43,26 @@
 					<h:outputText value="#{transaccionCliente.importe}" />
 				</p:column>
 
+				<f:facet name="footer">
+					<div align="center">
+						<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+							<h:commandLink title="Exportar a excel">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/excel.png" />
+								<p:dataExporter type="xls" target="transacciones"
+									fileName="Transacciones" />
+							</h:commandLink>
 
+							<h:commandLink title="Exportar a PDF">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/pdf.png" />
+								<p:dataExporter type="pdf" target="transacciones"
+									fileName="Transacciones" />
+							</h:commandLink>
+						</h:panelGrid>
+					</div>
+				</f:facet>
 			</p:dataTable>
-			<h:panelGrid columns="1">
-				<p:panel header="Exportar">
-					<h:commandLink>
-						<p:graphicImage
-							value="http://www.primefaces.org/showcase/images/excel.png" />
-						<p:dataExporter type="xls" target="transacciones"
-							fileName="Transacciones" />
-					</h:commandLink>
-
-					<h:commandLink>
-						<p:graphicImage
-							value="http://www.primefaces.org/showcase/images/pdf.png" />
-						<p:dataExporter type="pdf" target="transacciones"
-							fileName="Transacciones" />
-					</h:commandLink>
-
-
-				</p:panel>
-			</h:panelGrid>
 		</h:form>
-		<div align="right">
-			<br />
-			<h:link value="volver a su perfil" outcome="/cliente/perfilcliente" />
-		</div>
 	</ui:define>
 </ui:composition>
