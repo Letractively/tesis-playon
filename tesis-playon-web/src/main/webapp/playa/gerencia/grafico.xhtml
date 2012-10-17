@@ -5,27 +5,48 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:param name="loadmenuperfil" value="true" />
+	<ui:param name="loadmenuadmin" value="true" />
 
-
-	<ui:define name="title">
-		Fotos del perfil
-    </ui:define>
+	<ui:param name="title" value="Estadísticas" />
 
 	<ui:define name="content">
-		<h1>Fotos</h1>
+		<h1>Estadísticas</h1>
 		<h:form>
-			<h:panelGrid columns="2">
-				<!-- 			<p:lineChart value="#{estadisticaGerenteMB.linearModel}" -->
-				<!-- 				legendPosition="e" zoom="true" animate="true" title="Linear Chart" -->
-				<!-- 				minY="0" maxY="10" style="width:400px;" widgetVar="chart" /> -->
+			<p:tabMenu activeIndex="2">
+				<p:menuitem value="Ingresos por categoría de vehículo"
+					url="grafico.html" />
+				<p:menuitem value="Otro gráfico" url="grafico2.html" />
+			</p:tabMenu>
+			
+			<br />
+			
+			<p:tabView id="tabView">
 
-				<p:barChart id="basic" value="#{estadisticaGerenteMB.categoryModel}"
-					legendPosition="se"
-					title="Cantidad de ingresos por tipo de Vehiculo" min="0"
-					max="#{estadisticaGerenteMB.mayorCant}" style="width:650px"
-					animate="true" />
-			</h:panelGrid>
+				<p:tab id="tab1" title="Ingresos por categoría de vehículo">
+					<h:panelGrid columns="2">
+						<!-- 			<p:lineChart value="#{estadisticaGerenteMB.linearModel}" -->
+						<!-- 				legendPosition="e" zoom="true" animate="true" title="Linear Chart" -->
+						<!-- 				minY="0" maxY="10" style="width:400px;" widgetVar="chart" /> -->
+
+						<p:barChart id="basic"
+							value="#{estadisticaGerenteMB.categoryModel}" legendPosition="ne"
+							legendRows="1" xaxisLabel="Categoría de vehículo"
+							xaxisAngle="320" animate="true"
+							title="Cantidad de ingresos por categoría de vehículo" min="0"
+							max="#{estadisticaGerenteMB.mayorCant}"
+							style="margin: 5px 5px 5px 5px; width:620px" />
+					</h:panelGrid>
+				</p:tab>
+
+				<p:tab id="tab2" title="Otro gráfico">
+
+				</p:tab>
+
+
+			</p:tabView>
+
+
+
 		</h:form>
 	</ui:define>
 </ui:composition>
