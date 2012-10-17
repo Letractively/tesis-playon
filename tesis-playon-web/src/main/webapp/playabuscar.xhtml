@@ -87,7 +87,8 @@
 
 								<h:outputText
 									value="#{busquedaplayaMB.marker.data.playa.barrio.nombre}" />
-								<p:commandLink id="link" tittle="Ir a playa" value="playa" />
+								<h:link id="link" tittle="Ir a playa" value="Ver información"
+									outcome="/viewperfilplaya.html?id=#{busquedaplayaMB.marker.data.playa.id}" />
 
 							</h:panelGrid>
 						</div>
@@ -124,22 +125,10 @@
 			<p:column headerText="Opciones"
 				style="text-align:center; width:50px;">
 
-				<p:commandLink id="verPerfil" title="Ver perfil"
-					action="viewperfilplaya.html?faces-redirect=true" ajax="false">
-					<f:setPropertyActionListener value="#{playa}"
-						target="#{perfilPlayaMB.playaSelected}" />
-					<f:setPropertyActionListener value="#{playa}"
-						target="#{tarifaMB.playaSelected}" />
-					<f:setPropertyActionListener value="#{playa}"
-						target="#{comentarioMB.playaSelected}" />
-					<f:setPropertyActionListener value="#{playa}"
-						target="#{calificacionMB.playaSelected}" />
-					<f:setPropertyActionListener value="#{playa}"
-						target="#{favoritoMB.playaSelected}" />
-					<f:setPropertyActionListener value="#{playa}"
-						target="#{promocionMB.playaSelected}" />
+				<h:link id="verPerfil" title="Ver perfil"
+					outcome="/viewperfilplaya.html?id=#{playa.id}">
 					<h:graphicImage library="images/icons" name="go.png" />
-				</p:commandLink>
+				</h:link>
 			</p:column>
 		</p:dataTable>
 

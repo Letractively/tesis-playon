@@ -242,6 +242,12 @@ public class PromocionManagedBean implements Serializable {
 	    }
 	}
     }
+    
+    public void findPlayaById() {
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	int idPlayaSelected = Integer.parseInt(facesContext.getExternalContext().getRequestParameterMap().get("id"));
+	playaSelected = getPlayaService().findById(idPlayaSelected);
+    }
 
     public IUsuarioService getUsuarioService() {
 	return usuarioService;

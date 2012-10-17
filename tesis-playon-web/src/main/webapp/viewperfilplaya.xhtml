@@ -11,6 +11,13 @@
 
 	<ui:define name="content">
 		<h1>Perfil de la playa</h1>
+		
+		#{perfilPlayaMB.findPlayaById()}
+		#{tarifaMB.findPlayaById()}
+		#{comentarioMB.findPlayaById()}
+		#{calificacionMB.findPlayaById()}
+		#{favoritoMB.findPlayaById()}
+		#{promocionMB.findPlayaById()}
 
 		<h:form id="form" style="margin: 0 0 0 40px;">
 			<p:growl id="messages" />

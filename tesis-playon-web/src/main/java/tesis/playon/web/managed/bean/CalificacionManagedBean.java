@@ -122,6 +122,12 @@ public class CalificacionManagedBean implements Serializable {
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
     }
+    
+    public void findPlayaById() {
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	int idPlayaSelected = Integer.parseInt(facesContext.getExternalContext().getRequestParameterMap().get("id"));
+	playaSelected = getPlayaService().findById(idPlayaSelected);
+    }
 
     public IPlayaService getPlayaService() {
 	return playaService;

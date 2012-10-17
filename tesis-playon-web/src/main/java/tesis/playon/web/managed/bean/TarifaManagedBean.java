@@ -27,6 +27,7 @@ import tesis.playon.web.model.Tarifa;
 import tesis.playon.web.model.TipoEstadia;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.ICategoriaVehiculoService;
+import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.ITarifaService;
 import tesis.playon.web.service.ITipoEstadiaService;
 import tesis.playon.web.service.IUsuarioService;
@@ -58,6 +59,9 @@ public class TarifaManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{CategoriaVehiculoService}")
     ICategoriaVehiculoService categoriaVehiculoService;
+    
+    @ManagedProperty(value = "#{PlayaService}")
+    IPlayaService playaService;
 
     List<Tarifa> tarifaList;
 
@@ -439,6 +443,12 @@ public class TarifaManagedBean implements Serializable {
 	this.setVigente(false);
 
     }
+    
+    public void findPlayaById() {
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	int idPlayaSelected = Integer.parseInt(facesContext.getExternalContext().getRequestParameterMap().get("id"));
+	playaSelected = getPlayaService().findById(idPlayaSelected);
+    }
 
     public ITarifaService getTarifaService() {
 	return tarifaService;
@@ -462,6 +472,14 @@ public class TarifaManagedBean implements Serializable {
 
     public void setCategoriaVehiculoService(ICategoriaVehiculoService categoriaVehiculoService) {
 	this.categoriaVehiculoService = categoriaVehiculoService;
+    }
+
+    public IPlayaService getPlayaService() {
+        return playaService;
+    }
+
+    public void setPlayaService(IPlayaService playaService) {
+        this.playaService = playaService;
     }
 
     public List<Tarifa> getTarifaList() {
