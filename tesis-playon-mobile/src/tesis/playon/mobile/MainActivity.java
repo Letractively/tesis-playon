@@ -20,12 +20,6 @@ public class MainActivity extends Activity {
 	startActivityForResult(loginIntent, LOGIN_ID);
     }
 
-    // @Override
-    // public boolean onCreateOptionsMenu(Menu menu) {
-    // getMenuInflater().inflate(R.menu.activity_main, menu);
-    // return true;
-    // }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	super.onActivityResult(requestCode, resultCode, data);
@@ -37,6 +31,7 @@ public class MainActivity extends Activity {
 			Usuario usuario = (Usuario) bundle.getSerializable("json.model.usuario");
 			Toast.makeText(getBaseContext(), "Logueado correctamente: " + usuario.getNombreUser(),
 				Toast.LENGTH_SHORT).show();
+			onSearchRequested();
 		    } else if (resultCode == Activity.RESULT_CANCELED) {
 			Toast.makeText(getBaseContext(), "El usuario no existe o los datos eran incorrectos!",
 				Toast.LENGTH_SHORT).show();
