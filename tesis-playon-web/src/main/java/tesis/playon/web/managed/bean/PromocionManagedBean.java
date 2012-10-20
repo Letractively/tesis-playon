@@ -87,9 +87,9 @@ public class PromocionManagedBean implements Serializable {
     private List<Promocion> promocionPlayaList;
 
     private static Promocion promocionSelected;
-    
+
     private List<Promocion> promocionPlayaListSelected;
-    
+
     private static Playa playaSelected;
 
     @PostConstruct
@@ -242,11 +242,16 @@ public class PromocionManagedBean implements Serializable {
 	    }
 	}
     }
-    
+
     public void findPlayaById() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
-	int idPlayaSelected = Integer.parseInt(facesContext.getExternalContext().getRequestParameterMap().get("id"));
-	playaSelected = getPlayaService().findById(idPlayaSelected);
+	if (!facesContext.isPostback()) {
+	    String parametroID = facesContext.getExternalContext().getRequestParameterMap().get("id");
+	    if (!parametroID.equals("") || parametroID != null) {
+		int idPlayaSelected = Integer.parseInt(parametroID);
+		playaSelected = getPlayaService().findById(idPlayaSelected);
+	    }
+	}
     }
 
     public IUsuarioService getUsuarioService() {
@@ -400,26 +405,26 @@ public class PromocionManagedBean implements Serializable {
     }
 
     public List<Promocion> getPromocionPlayaListSelected() {
-	if(playaSelected != null){
+	if (playaSelected != null) {
 	    estadoPromocion = getEstadoPromocionService().findByNombreEstadoPromocion("Vigente");
-	    promocionPlayaListSelected = getPromocionService().findByPlaya(playaSelected,estadoPromocion);
+	    promocionPlayaListSelected = getPromocionService().findByPlaya(playaSelected, estadoPromocion);
 	}
-        return promocionPlayaListSelected;
+	return promocionPlayaListSelected;
     }
 
     public void setPromocionPlayaListSelected(List<Promocion> promocionPlayaListSelected) {
-        this.promocionPlayaListSelected = promocionPlayaListSelected;
+	this.promocionPlayaListSelected = promocionPlayaListSelected;
     }
 
     public Promocion getPromocionSelected() {
-	if(promocionSelected != null){
+	if (promocionSelected != null) {
 	    Calendar calendario = Calendar.getInstance();
 	    int hora = getHora(promocionSelected.getHoraInicio());
 	    int minute = getMinutos(promocionSelected.getHoraInicio());
 	    int second = getSegundos(promocionSelected.getHoraInicio());
 	    calendario.set(2012, 01, 01, hora, minute, second);
 	    horaInicioSelected = calendario.getTime();
-	    
+
 	    hora = getHora(promocionSelected.getHoraFin());
 	    minute = getMinutos(promocionSelected.getHoraFin());
 	    second = getSegundos(promocionSelected.getHoraFin());
@@ -434,11 +439,11 @@ public class PromocionManagedBean implements Serializable {
     }
 
     public Playa getPlayaSelected() {
-        return playaSelected;
+	return playaSelected;
     }
 
     public void setPlayaSelected(Playa playaSelected) {
-        PromocionManagedBean.playaSelected = playaSelected;
+	PromocionManagedBean.playaSelected = playaSelected;
     }
 
     public Date getHoraInicio() {
@@ -472,20 +477,20 @@ public class PromocionManagedBean implements Serializable {
     public void setHoraFinSelected(Date horaFinSelected) {
 	PromocionManagedBean.horaFinSelected = horaFinSelected;
     }
-    
-    private int getHora(Time time){
+
+    private int getHora(Time time) {
 	String horaCompleta = time.toString();
 	String toObject[] = horaCompleta.split(":");
 	return Integer.parseInt(toObject[0]);
     }
-    
-    private int getMinutos(Time time){
+
+    private int getMinutos(Time time) {
 	String horaCompleta = time.toString();
 	String toObject[] = horaCompleta.split(":");
 	return Integer.parseInt(toObject[1]);
     }
-    
-    private int getSegundos(Time time){
+
+    private int getSegundos(Time time) {
 	String horaCompleta = time.toString();
 	String toObject[] = horaCompleta.split(":");
 	return Integer.parseInt(toObject[2]);

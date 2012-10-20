@@ -8,7 +8,7 @@
 
 		<p:growl id="messages" />
 		<div align="center">
-			<h:panelGrid columns="3" cellspacing="5">
+			<h:panelGrid columns="4" cellspacing="10" cellpadding="8">
 				<p:column>
 					<h:outputLabel for="direccionBusqueda"
 						value="Dirección de búsqueda: " />
@@ -20,35 +20,95 @@
 						<p:ajax event="blur" update="direccionBusquedaMsg" />
 					</p:inputText>
 				</p:column>
+
+				<p:column style="vertical-align: center;">
+					<h:outputLabel for="distancia" value="N° de cuadras: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="distancia" value="#{busquedaplayaMB.distancia}" />
+				</p:column>
+
+				<p:column />
 				<p:column>
 					<p:message id="direccionBusquedaMsg" for="direccionBusqueda"
 						display="icon" />
 				</p:column>
 
-				<p:column style="vertical-align: center;">
-					<h:outputLabel for="distancia"
-						value="Ingrese la cantidad de cuadras: " />
-				</p:column>
-				<p:column>
-					<p:inputText id="distancia" value="#{busquedaplayaMB.distancia}" />
-				</p:column>
-				<p:column></p:column>
-
-				<p:column></p:column>
+				<p:column />
 				<p:column>
 					<p:slider for="distancia" minValue="1" maxValue="50" />
 				</p:column>
-				<p:column></p:column>
+				<p:column />
 
-				<p:column></p:column>
+				<p:column />
 				<p:column>
 					<div align="right">
 						<p:commandButton id="btnBuscarId" update="playas,mapa"
 							value="Buscar" action="#{busquedaplayaMB.buscarPlaya}"
+							ajax="false" rendered="#{!busquedaplayaMB.opcionesAvanzadas}" />
+					</div>
+				</p:column>
+				<p:column>
+					<p:commandLink id="btnOpcionesAvanzadas" value="opciones avanzadas"
+						action="#{busquedaplayaMB.settearOpcionesAvanzadas()}"
+						ajax="false" immediate="true"
+						rendered="#{!busquedaplayaMB.opcionesAvanzadas}" />
+				</p:column>
+
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
+					<div align="right">
+						<h:outputText value="Categoría: " />
+					</div>
+				</p:column>
+
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
+					<p:selectOneMenu value="" effect="fade" style="width:130px;">
+						<f:selectItem itemLabel="Todas" itemValue="" />
+						<f:selectItems
+							value="#{categoriaVehiculoMB.categoriaVehiculoList}"
+							var="categoria" itemValue="#{categoria}"
+							itemLabel="#{categoria.nombre}" />
+						<f:converter converterId="categoriaVehiculoConverter" />
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
+					<div align="right">
+						<h:outputText value="Tipo estadía: " />
+					</div>
+				</p:column>
+
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
+					<p:selectOneMenu value="" effect="fade" style="width:130px;">
+						<f:selectItem itemLabel="Todas" itemValue="" />
+						<f:selectItems value="#{tipoEstadiaMB.tipoEstadiaList}"
+							var="tipoEstadia" itemValue="#{tipoEstadia}"
+							itemLabel="#{tipoEstadia.nombre}" />
+						<f:converter converterId="tipoEstadiaConverter" />
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column />
+				<p:column />
+				<p:column />
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
+					<div align="right">
+						<p:commandButton id="btnBuscarAvanzado" update="playas,mapa"
+							value="Buscar" action="#{busquedaplayaMB.buscarPlaya}"
 							ajax="false" />
 					</div>
 				</p:column>
-				<p:column></p:column>
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}"></p:column>
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}"></p:column>
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}"></p:column>
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}"></p:column>
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}"></p:column>
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}"></p:column>
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}"></p:column>
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}"></p:column>
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}"></p:column>
+
+
 			</h:panelGrid>
 		</div>
 
@@ -65,10 +125,9 @@
 					<p:ajax event="overlaySelect"
 						listener="#{busquedaplayaMB.onMarkerSelect}" />
 
-					<p:gmapInfoWindow >
+					<p:gmapInfoWindow>
 						<div align="center">
-							<h:panelGrid column="1"
-								style="text-align:center;"
+							<h:panelGrid column="1" style="text-align:center;"
 								cellspacing="0px" cellpadding="0px">
 								<p:column>
 									<h:graphicImage library="fotos_perfil_playas"

@@ -25,9 +25,9 @@ import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
  * @author Alejandro
  * @date 08/07/2012
  */
-@NamedNativeQueries({ @NamedNativeQuery(name = "callPlayasStoreProcedure", query = "CALL busquedaplaya(:platitud,:plongitud, :pdistancia)", resultClass = Playa.class) })
 @Entity
 @Table(name = "playa", catalog = "tesis_playon")
+@NamedNativeQueries({ @NamedNativeQuery(name = "callPlayasSP", query = "CALL tesis_playon.busquedaAvanzada(:platitud,:plongitud, :pdistancia)", resultClass = Playa.class) })
 public class Playa implements Serializable {
 
     private static final long serialVersionUID = -5969681339752247843L;

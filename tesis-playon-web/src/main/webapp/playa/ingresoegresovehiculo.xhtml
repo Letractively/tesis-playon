@@ -15,9 +15,7 @@
 	<ui:define name="content">
 		<h1>¡Registre el ingreso y egreso de sus clientes!</h1>
 
-		<div id="perfil-playa" align="left" style="margin-left: 30px">
-			<h1>#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
-		</div>
+
 
 		<h:form style="margin: 10px 0px 0px 30px;">
 			<p:growl id="messages" />
@@ -50,39 +48,47 @@
 				<div id="perfil-playa" style="margin-left: 50px; width: 100%;">
 					Cliente
 					<p:separator id="separator2" />
-					<h:panelGrid columns="2" cellpadding="8" cellspacing="10">
+					<h:panelGrid columns="4" cellpadding="10" cellspacing="5">
 
 						<h:outputText value="Cliente: " styleClass="fuente-outputtext" />
 						<h:outputText id="txt_nombre"
 							value="#{ingresoEgresoMB.usuarioCliente.nombre}&#160;#{ingresoEgresoMB.usuarioCliente.apellido}"
 							styleClass="fuente-perfil" />
-
-						<h:outputText value="Patente: " styleClass="fuente-outputtext" />
-						<h:outputText id="txt_patente"
-							value="#{ingresoEgresoMB.vehiculo.patente}"
+						<p:column>
+							<div align="right">
+								<h:outputText value="Saldo: " styleClass="fuente-outputtext" />
+							</div>
+						</p:column>
+						<h:outputText id="txt_saldo"
+							value="$#{ingresoEgresoMB.cuentaCliente.saldo}"
 							styleClass="fuente-perfil" />
 
 						<h:outputText value="Vehiculo: " styleClass="fuente-outputtext" />
 						<h:outputText id="txt_mod_vehiculo"
 							value="#{ingresoEgresoMB.marcaVehiculo.nombre}&#160;#{ingresoEgresoMB.modeloVehiculo.nombre}"
 							styleClass="fuente-perfil" />
+						<p:column>
+							<div align="right">
+								<h:outputText value="Patente: " styleClass="fuente-outputtext" />
+							</div>
+						</p:column>
+						<h:outputText id="txt_patente"
+							value="#{ingresoEgresoMB.vehiculo.patente}"
+							styleClass="fuente-perfil" />
+
 
 						<h:outputText value="Tipo: " styleClass="fuente-outputtext" />
 						<h:outputText id="txt_cat_vehiculo"
 							value="#{ingresoEgresoMB.categoriaVehiculo.nombre}"
 							styleClass="fuente-perfil" />
-
-						<h:outputText value="Saldo: " styleClass="fuente-outputtext" />
-						<h:outputText id="txt_saldo"
-							value="$#{ingresoEgresoMB.cuentaCliente.saldo}"
-							styleClass="fuente-perfil" />
+						<p:column />
+						<p:column />
 
 						<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
 							value="Fecha ingreso: " styleClass="fuente-outputtext" />
 						<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
 							id="txt_fecha_ingreso" styleClass="fuente-perfil"
 							value="#{ingresoEgresoMB.fechaIngresoFormateada}" />
-
 						<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
 							value="Hora ingreso: " styleClass="fuente-outputtext" />
 						<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
@@ -94,7 +100,6 @@
 						<h:outputText id="txt_fecha_actual"
 							value="#{ingresoEgresoMB.fechaActualFormateada}"
 							styleClass="fuente-perfil" />
-
 						<h:outputText value="Hora actual: " styleClass="fuente-outputtext" />
 						<h:outputText id="txt_hora_actual" styleClass="fuente-perfil"
 							value="#{ingresoEgresoMB.horaActualFormateada}" />
@@ -167,12 +172,8 @@
 						</p:column>
 						<p:column />
 
-						<p:column />
-						<br />
-						<p:column />
-
 						<p:column>
-							<div align="right">
+							<div align="right" style="margin-top:10px;">
 								<h:outputText rendered="#{ingresoEgresoMB.importeCalculado}"
 									value="Importe: " styleClass="fuente-outputtext" />
 							</div>
@@ -183,7 +184,8 @@
 								id="txt_importe_calculado" value="$#{ingresoEgresoMB.importe}"
 								styleClass="fuente-perfil" type="currency" />
 							<p:commandButton rendered="#{ingresoEgresoMB.importeCalculado}"
-								id="egreso" value="Registrar egreso" style="width:140px; margin-left:10px;"
+								id="egreso" value="Registrar egreso"
+								style="width:140px; margin-left:10px;"
 								action="#{ingresoEgresoMB.registrarEgresoVehiculo}" ajax="false" />
 						</p:column>
 						<p:column />

@@ -46,7 +46,7 @@ public class FavoritoManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{FavoritoService}")
     IFavoritoService favoritoService;
-    
+
     @ManagedProperty(value = "#{PlayaService}")
     IPlayaService playaService;
 
@@ -107,7 +107,7 @@ public class FavoritoManagedBean implements Serializable {
 		MenuItem item = new MenuItem();
 		item.setValue(favorito.getPlaya().getNombreComercial());
 		int idPlaya = favorito.getPlaya().getId();
-		item.setUrl("/viewperfilplaya.html?id="+idPlaya);
+		item.setUrl("/viewperfilplaya.html?id=" + idPlaya);
 		item.setIcon("ui-icon-star");
 		submenu.getChildren().add(item);
 	    }
@@ -115,11 +115,16 @@ public class FavoritoManagedBean implements Serializable {
 
 	model.addSubmenu(submenu);
     }
-    
+
     public void findPlayaById() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
-	int idPlayaSelected = Integer.parseInt(facesContext.getExternalContext().getRequestParameterMap().get("id"));
-	playaSelected = getPlayaService().findById(idPlayaSelected);
+	if (!facesContext.isPostback()) {
+	    String parametroID = facesContext.getExternalContext().getRequestParameterMap().get("id");
+	    if (!parametroID.equals("") || parametroID != null) {
+		int idPlayaSelected = Integer.parseInt(parametroID);
+		playaSelected = getPlayaService().findById(idPlayaSelected);
+	    }
+	}
     }
 
     public IClienteService getClienteService() {
@@ -147,11 +152,11 @@ public class FavoritoManagedBean implements Serializable {
     }
 
     public IPlayaService getPlayaService() {
-        return playaService;
+	return playaService;
     }
 
     public void setPlayaService(IPlayaService playaService) {
-        this.playaService = playaService;
+	this.playaService = playaService;
     }
 
     public Cliente getCliente() {

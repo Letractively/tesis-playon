@@ -43,22 +43,22 @@ public class CalificacionManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{CalificacionService}")
     ICalificacionService calificacionService;
-    
+
     @ManagedProperty(value = "#{ClienteService}")
     IClienteService clienteService;
 
     private Integer calificacionPlaya;
-    
+
     private Integer calificacion;
 
     private static Playa playaSelected;
 
     private List<Calificacion> calificacionListPerfil;
-    
+
     private List<Calificacion> calificacionList;
-    
+
     @PostConstruct
-    private void init(){
+    private void init() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	String userName = facesContext.getExternalContext().getRemoteUser();
 	Usuario user = getUsuarioService().findByNombreUsuario(userName);
@@ -66,7 +66,7 @@ public class CalificacionManagedBean implements Serializable {
 	    calificacionList = new ArrayList<Calificacion>();
 	    calificacionList = getCalificacionService().findByPlaya(user.getPlaya());
 	    this.calificacion = 0;
-	    if(calificacionList != null){
+	    if (calificacionList != null) {
 		for (Calificacion calificacion : calificacionList) {
 		    this.calificacion += calificacion.getCalificacion();
 		}
@@ -74,59 +74,60 @@ public class CalificacionManagedBean implements Serializable {
 	    }
 	}
     }
-    
+
     public void onrate(RateEvent rateEvent) {
 	Cliente cliente = null;
-	try{
+	try {
 	    FacesContext facesContext = FacesContext.getCurrentInstance();
 	    String userName = facesContext.getExternalContext().getRemoteUser();
 	    Usuario user = getUsuarioService().findByNombreUsuario(userName);
-	    if (user != null){
+	    if (user != null) {
 		cliente = getClienteService().findByUsuario(user);
-		if(cliente != null){
+		if (cliente != null) {
 		    boolean califico = getCalificacionService().isRate(playaSelected, cliente);
-		    if(!califico){
-			Calificacion calificacion = new Calificacion(((Integer) rateEvent.getRating()).intValue()
-				, playaSelected, cliente);
+		    if (!califico) {
+			Calificacion calificacion = new Calificacion(((Integer) rateEvent.getRating()).intValue(),
+				playaSelected, cliente);
 			getCalificacionService().save(calificacion);
-			
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO
-				    , "Se registró la califación exitosamente, " 
-				    , "puntuación: " + ((Integer) rateEvent.getRating()).intValue());
+
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Se registró la califación exitosamente, ", "puntuación: "
+					+ ((Integer) rateEvent.getRating()).intValue());
 			FacesContext.getCurrentInstance().addMessage(null, message);
-			
-		    }else{
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN
-				    , "Usted ya ha calificado esta playa, " 
-				    , "Sólo se permite calificar una vez la misma playa");
+
+		    } else {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+				"Usted ya ha calificado esta playa, ",
+				"Sólo se permite calificar una vez la misma playa");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		    }
-		}
-		else{
-		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN
-			    , "¡Sólo pueden calificar clientes de las playas!" , "");
+		} else {
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+			    "¡Sólo pueden calificar clientes de las playas!", "");
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 		}
-	    }
-	    else{
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN
-			    , "No se pudo registrar su calificación, "
-			    , "¡Debe iniciar sesión para poder calificar la playa!");
+	    } else {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"No se pudo registrar su calificación, ", "¡Debe iniciar sesión para poder calificar la playa!");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	    }
-	    
-	}catch(Exception ex){
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR
-		    , "¡No se pudo registrar la calificación! "
-		    , "Disculpe las molestias ocacionadas");
+
+	} catch (Exception ex) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "¡No se pudo registrar la calificación! ", "Disculpe las molestias ocacionadas");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
     }
-    
+
     public void findPlayaById() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
-	int idPlayaSelected = Integer.parseInt(facesContext.getExternalContext().getRequestParameterMap().get("id"));
-	playaSelected = getPlayaService().findById(idPlayaSelected);
+	if (!facesContext.isPostback()) {
+	    String parametroID = facesContext.getExternalContext().getRequestParameterMap().get("id");
+	    if (!parametroID.equals("") || parametroID != null) {
+		int idPlayaSelected = Integer.parseInt(parametroID);
+		playaSelected = getPlayaService().findById(idPlayaSelected);
+	    }
+	}
     }
 
     public IPlayaService getPlayaService() {
@@ -146,27 +147,27 @@ public class CalificacionManagedBean implements Serializable {
     }
 
     public IUsuarioService getUsuarioService() {
-        return usuarioService;
+	return usuarioService;
     }
 
     public void setUsuarioService(IUsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
+	this.usuarioService = usuarioService;
     }
 
     public IClienteService getClienteService() {
-        return clienteService;
+	return clienteService;
     }
 
     public void setClienteService(IClienteService clienteService) {
-        this.clienteService = clienteService;
+	this.clienteService = clienteService;
     }
 
     public Integer getCalificacionPlaya() {
-	if(playaSelected != null){
+	if (playaSelected != null) {
 	    calificacionListPerfil = new ArrayList<Calificacion>();
 	    calificacionListPerfil = getCalificacionService().findByPlaya(playaSelected);
 	    calificacionPlaya = 0;
-	    if(calificacionListPerfil != null){
+	    if (calificacionListPerfil != null) {
 		for (Calificacion calificacion : calificacionListPerfil) {
 		    calificacionPlaya += calificacion.getCalificacion();
 		}
@@ -181,7 +182,7 @@ public class CalificacionManagedBean implements Serializable {
     }
 
     public Playa getPlayaSelected() {
-        return playaSelected;
+	return playaSelected;
     }
 
     public void setPlayaSelected(Playa playaSelected) {
@@ -197,19 +198,19 @@ public class CalificacionManagedBean implements Serializable {
     }
 
     public Integer getCalificacion() {
-        return calificacion;
+	return calificacion;
     }
 
     public void setCalificacion(Integer calificacion) {
-        this.calificacion = calificacion;
+	this.calificacion = calificacion;
     }
 
     public List<Calificacion> getCalificacionList() {
-        return calificacionList;
+	return calificacionList;
     }
 
     public void setCalificacionList(List<Calificacion> calificacionList) {
-        this.calificacionList = calificacionList;
+	this.calificacionList = calificacionList;
     }
 
 }

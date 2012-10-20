@@ -56,10 +56,21 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     private String coordenadas;
     
+    //Atributos para los filtros.
+    private boolean opcionesAvanzadas;
+
     @PostConstruct
-    private void init(){
+    private void init() {
 	playaResultadoBusqueda = new ArrayList<Playa>();
 	distancia = 25;
+	List<Playa> playasCercanas = new ArrayList<Playa>();
+	playasCercanas = getPlayaService().findByPlayasCercanas(-31.430531, -64.189428, 5);
+	if (playasCercanas != null) {
+	    for (Playa playa : playasCercanas) {
+		System.out.println(playa.toString());
+	    }
+	}
+	opcionesAvanzadas = false;
     }
 
     public void preRenderView() {
@@ -95,7 +106,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
 			PerfilPlaya perfil = new PerfilPlaya();
 			perfil = getPerfilPlayaService().findByPlaya(playaAux);
 			WriteImage.getFotoPerfil(perfil);
-			advancedModel.addOverlay(new Marker(coord1, playaAux.getNombreComercial() , perfil,
+			advancedModel.addOverlay(new Marker(coord1, playaAux.getNombreComercial(), perfil,
 				"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
 		    }
 		    LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
@@ -110,7 +121,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	    }
 	}
     }
-    
+
     class Comparar implements Comparator<Playa> {
 	public int compare(Playa p1, Playa p2) {
 	    Double comparacion1 = p1.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
@@ -126,7 +137,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	Collections.sort(playas, new Comparar());
 
     }
-    
+
     public IPerfilPlayaService getPerfilPlayaService() {
 	return perfilPlayaService;
     }
@@ -226,6 +237,19 @@ public class BusquedaPlayasManagedBean implements Serializable {
     }
 
     public void setAdvancedModel(MapModel advancedModel) {
-        this.advancedModel = advancedModel;
+	this.advancedModel = advancedModel;
+    }
+
+    // ==================================GETTER & SETTER DE LOS FILTROS ===============================//
+    public boolean isOpcionesAvanzadas() {
+        return opcionesAvanzadas;
+    }
+
+    public void setOpcionesAvanzadas(boolean opcionesAvanzadas) {
+        this.opcionesAvanzadas = opcionesAvanzadas;
+    }
+    
+    public void settearOpcionesAvanzadas(){
+	this.opcionesAvanzadas = true;
     }
 }

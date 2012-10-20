@@ -20,6 +20,8 @@ public interface IPlayaDao {
     Playa findById(int idPlaya);
     
     List<Playa> findAll();
+    
+    List<Playa> findByPlayasCercanas(Double longitud, Double latitud, int distancia);
 
     List<Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia);
 

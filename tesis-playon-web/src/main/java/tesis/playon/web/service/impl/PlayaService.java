@@ -80,4 +80,9 @@ public class PlayaService implements IPlayaService {
     public boolean existeEmail(String email){
 	return getPlayaDao().existeEmail(email);
     }
+    
+    @Override
+    public List<Playa> findByPlayasCercanas(Double longitud, Double latitud, int distancia){
+	return getPlayaDao().findByPlayasCercanas(longitud, latitud, distancia);
+    }
 }

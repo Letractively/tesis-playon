@@ -29,6 +29,8 @@ public interface IPlayaService {
     List<Playa> findAll();
 
     List<Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia);
+    
+    List<Playa> findByPlayasCercanas(Double longitud, Double latitud, int distancia);
 
     List<Playa> findByEstado(EstadoPlaya estado);
 

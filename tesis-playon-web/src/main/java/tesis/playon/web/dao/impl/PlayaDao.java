@@ -49,24 +49,41 @@ public class PlayaDao implements IPlayaDao {
 	    return (Playa) list.get(0);
 	return null;
     }
-    
+
     public Playa findById(int idPlaya) {
-	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from Playa where id=?")
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Playa where id=?")
 		.setParameter(0, idPlaya).list();
-	if(!list.isEmpty())
+	if (!list.isEmpty())
 	    return (Playa) list.get(0);
 	return null;
     }
 
     public List<Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia) {
-	// Query query = getSessionFactory().getCurrentSession()
-	// .createSQLQuery("CALL busquedaplaya(:platitud, :plongitud, :pdistancia")
-	// .setParameter("platitud", latitud).setParameter("plongitud", longitud)
-	// .setParameter("pdistancia", distancia);
-	Query query = getSessionFactory().getCurrentSession().getNamedQuery("callPlayasStoreProcedure")
+	List<?> list = getSessionFactory().getCurrentSession().getNamedQuery("callPlayasStoreProcedure")
 		.setParameter("platitud", latitud).setParameter("plongitud", longitud)
-		.setParameter("pdistancia", distancia);
+		.setParameter("pdistancia", distancia).list();
+	List<Playa> playas = new ArrayList<Playa>();
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		playas.add((Playa) object);
+	    }
+	    return playas;
+	}
+	return null;
+    }
+
+    public List<Playa> findByPlayasCercanas(Double longitud, Double latitud, int distancia) {
+//	 List<?> list = getSessionFactory().getCurrentSession()
+//	 .createSQLQuery("CALL busquedaAvanzada(:platitud, :plongitud, :pdistancia)")
+//	 .addEntity(Playa.class)
+//	 .setParameter("platitud", latitud)
+//	 .setParameter("plongitud", longitud)
+//	 .setParameter("pdistancia", distancia).list();
+
+	Query query = getSessionFactory().getCurrentSession().getNamedQuery("callPlayasSP")
+		.setDouble("platitud", latitud)
+		.setDouble("plongitud", longitud)
+		.setInteger("pdistancia", distancia);
 	List<?> list = query.list();
 	List<Playa> playas = new ArrayList<Playa>();
 	if (!list.isEmpty()) {
@@ -102,9 +119,9 @@ public class PlayaDao implements IPlayaDao {
 	}
 	return null;
     }
-    
+
     @Override
-    public boolean existeEmail(String email){
+    public boolean existeEmail(String email) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Playa where email=?")
 		.setParameter(0, email).list();
 	if (list.isEmpty()) {

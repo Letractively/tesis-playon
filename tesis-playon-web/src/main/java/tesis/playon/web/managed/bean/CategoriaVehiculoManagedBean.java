@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -39,7 +40,11 @@ public class CategoriaVehiculoManagedBean implements Serializable{
 
     private String descripcion;
     
-    private CategoriaVehiculo categoriaNula;
+    @PostConstruct
+    private void init(){
+	categoriaVehiculoList= new ArrayList<CategoriaVehiculo>();
+	categoriaVehiculoList=getCategoriaVehiculoService().findAll();
+    }
     
     public String addCategoriaVehiculo() {
 	try {
@@ -76,8 +81,6 @@ public class CategoriaVehiculoManagedBean implements Serializable{
     }
 
     public List<CategoriaVehiculo> getCategoriaVehiculoList() {
-	categoriaVehiculoList= new ArrayList<CategoriaVehiculo>();
-	categoriaVehiculoList.addAll(getCategoriaVehiculoService().findAll());
 	return categoriaVehiculoList;
     }
 
@@ -99,16 +102,5 @@ public class CategoriaVehiculoManagedBean implements Serializable{
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public CategoriaVehiculo getCategoriaNula() {
-	categoriaNula = new CategoriaVehiculo();
-	categoriaNula.setId(0);
-	categoriaNula.setNombre("Seleccione una Categoria");
-        return categoriaNula;
-    }
-
-    public void setCategoriaNula(CategoriaVehiculo categoriaNula) {
-        this.categoriaNula = categoriaNula;
     }
 }
