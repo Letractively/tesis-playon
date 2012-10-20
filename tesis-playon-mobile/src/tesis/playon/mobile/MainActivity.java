@@ -1,5 +1,6 @@
 package tesis.playon.mobile;
 
+import tesis.playon.mobile.json.model.Usuario;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,9 +33,13 @@ public class MainActivity extends Activity {
 	    switch (requestCode) {
 		case LOGIN_ID: {
 		    if (resultCode == Activity.RESULT_OK) {
-			Toast.makeText(getBaseContext(), "Logueado correctamente", Toast.LENGTH_SHORT).show();
-		    } else {
-			Toast.makeText(getBaseContext(), "El usuario no existe", Toast.LENGTH_SHORT).show();
+			Bundle bundle = data.getExtras();
+			Usuario usuario = (Usuario) bundle.getSerializable("json.model.usuario");
+			Toast.makeText(getBaseContext(), "Logueado correctamente: " + usuario.getNombreUser(),
+				Toast.LENGTH_SHORT).show();
+		    } else if (resultCode == Activity.RESULT_CANCELED) {
+			Toast.makeText(getBaseContext(), "El usuario no existe o los datos eran incorrectos!",
+				Toast.LENGTH_SHORT).show();
 		    }
 		    break;
 		}

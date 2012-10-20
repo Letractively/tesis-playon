@@ -1,8 +1,12 @@
 package tesis.playon.mobile.json.model;
 
+import java.io.Serializable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Usuario {
+public class Usuario implements Serializable {
+
+    private static final long serialVersionUID = 1378629978330011740L;
 
     @SerializedName("id")
     private Integer id;

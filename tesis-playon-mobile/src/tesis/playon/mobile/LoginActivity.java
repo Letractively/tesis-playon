@@ -13,6 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import tesis.playon.mobile.json.model.Usuario;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,11 +29,17 @@ public class LoginActivity extends Activity implements OnClickListener {
 
     private static final String LOG_TAG = "LoginActivity";
 
+    private static final String URL_USUARIO = "http://10.0.2.2:8080/tesis-playon-restful/usuario/";
+
     private TextView txtUser;
 
     private TextView txtPass;
 
-    String urlUsuario = "http://10.0.2.2:8080/tesis-playon-restful/usuario/gmorales";
+    private String username;
+
+    private String password;
+
+    private Usuario usuario;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +54,9 @@ public class LoginActivity extends Activity implements OnClickListener {
     @Override
     public void onClick(View arg0) {
 	Log.d(LOG_TAG, "onClick");
-	if (!txtUser.getText().toString().trim().equals("") && !txtPass.getText().toString().trim().equals("")) {
+	username = txtUser.getText().toString().trim();
+	password = txtPass.getText().toString().trim();
+	if (!username.equals("") && !password.equals("")) {
 	    Button b = (Button) findViewById(R.id.btn_login);
 	    b.setClickable(false);
 	    new LoginService().execute();
@@ -81,20 +90,28 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 	@Override
 	protected String doInBackground(Void... params) {
-
-	    InputStream source = retrieveStream(urlUsuario);
+	    String url = URL_USUARIO + username;
+	    InputStream source = retrieveStream(url);
 	    Gson gson = new Gson();
 	    Reader reader = new InputStreamReader(source);
-	    // RolesPorUsuario response = gson.fromJson(reader, RolesPorUsuario.class);
-	    Usuario response = gson.fromJson(reader, Usuario.class);
-	    return response.getNombreUser() + " " + response.getNombre() + " " + response.getApellido() + " "
-		    + response.getEmail();
+	    usuario = gson.fromJson(reader, Usuario.class);
+	    return usuario.toString();
 	}
 
 	protected void onPostExecute(String results) {
 	    Log.d(LOG_TAG, "onPostExecute");
-	    if (results != null) {
-		Log.d(LOG_TAG, "Results: " + results);
+	    if (username.equals(usuario.getNombreUser()) && password.equals(usuario.getPassword())
+		    && usuario.getEnable()) {
+		Intent result = new Intent();
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("json.model.usuario", usuario);
+		result.putExtras(bundle);
+		setResult(RESULT_OK, result);
+		finish();
+	    } else {
+		Intent result = new Intent();
+		setResult(RESULT_CANCELED, result);
+		finish();
 	    }
 	    Button b = (Button) findViewById(R.id.btn_login);
 	    b.setClickable(true);
