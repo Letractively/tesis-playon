@@ -76,7 +76,7 @@ public class AuditoriaManagedBean implements Serializable {
 
     static Playa playaSeleccionada;
 
-    public DenunciaVehiculo denunciaVehiculoSeleccionada;
+    public static DenunciaVehiculo denunciaVehiculoSeleccionada;
 
     private String cuit;
 
@@ -519,7 +519,7 @@ public class AuditoriaManagedBean implements Serializable {
     }
 
     public void setDenunciaVehiculoSeleccionada(DenunciaVehiculo denunciaVehiculoSeleccionada) {
-	this.denunciaVehiculoSeleccionada = denunciaVehiculoSeleccionada;
+	AuditoriaManagedBean.denunciaVehiculoSeleccionada = denunciaVehiculoSeleccionada;
     }
 
     public List<DenunciaVehiculo> getDenunciasEnProcesoVehiculosList() {
