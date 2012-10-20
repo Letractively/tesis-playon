@@ -63,7 +63,7 @@ public class ComentarioManagedBean implements Serializable {
 	}
     }
 
-    public void addComentario() {
+    public String addComentario() {
 	Comentario comentario = null;
 	try {
 	    FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -96,12 +96,15 @@ public class ComentarioManagedBean implements Serializable {
 			new FacesMessage(FacesMessage.SEVERITY_WARN, "No se pudó registrar su comentario",
 				"¡Debe iniciar sesión para poder comentar la playa!"));
 	    }
+	    return previusPage;
+	    
 	} catch (Exception e) {
 	    FacesContext.getCurrentInstance().addMessage(
 		    "messageComentario",
 		    new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudó registrar su comentario",
 			    "Disculpe las molestias ocacionadas"));
 	}
+	return null;
     }
 
     public String addComentarioPerfil() {

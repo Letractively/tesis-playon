@@ -2,8 +2,10 @@ package tesis.playon.web.dao;
 
 import java.util.List;
 
+import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
+import tesis.playon.web.model.TipoEstadia;
 
 public interface IPlayaDao {
 
@@ -21,7 +23,8 @@ public interface IPlayaDao {
     
     List<Playa> findAll();
     
-    List<Playa> findByPlayasCercanas(Double longitud, Double latitud, int distancia);
+    List<Playa> findByPlayasCercanas(Double longitud, Double latitud
+	    , int distancia,CategoriaVehiculo categoriaParameter, TipoEstadia tipoEstadiaParameter);
 
     List<Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia);
 

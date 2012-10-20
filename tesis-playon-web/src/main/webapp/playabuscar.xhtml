@@ -62,7 +62,8 @@
 				</p:column>
 
 				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
-					<p:selectOneMenu value="" effect="fade" style="width:130px;">
+					<p:selectOneMenu value="#{busquedaplayaMB.categoriaParameter}"
+						effect="fade" style="width:130px;">
 						<f:selectItem itemLabel="Todas" itemValue="" />
 						<f:selectItems
 							value="#{categoriaVehiculoMB.categoriaVehiculoList}"
@@ -79,7 +80,8 @@
 				</p:column>
 
 				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
-					<p:selectOneMenu value="" effect="fade" style="width:130px;">
+					<p:selectOneMenu value="#{categoriaVehiculoMB.tipoEstadiaParameter}"
+						effect="fade" style="width:130px;">
 						<f:selectItem itemLabel="Todas" itemValue="" />
 						<f:selectItems value="#{tipoEstadiaMB.tipoEstadiaList}"
 							var="tipoEstadia" itemValue="#{tipoEstadia}"

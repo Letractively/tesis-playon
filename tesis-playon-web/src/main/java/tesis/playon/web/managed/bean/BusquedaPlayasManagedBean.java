@@ -18,8 +18,10 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
+import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.model.Playa;
+import tesis.playon.web.model.TipoEstadia;
 import tesis.playon.web.service.IPerfilPlayaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.util.LatitudlongitudUtil;
@@ -58,18 +60,23 @@ public class BusquedaPlayasManagedBean implements Serializable {
     
     //Atributos para los filtros.
     private boolean opcionesAvanzadas;
+    
+    private CategoriaVehiculo categoriaParameter;
+    
+    private TipoEstadia tipoEstadiaParameter;
 
     @PostConstruct
     private void init() {
 	playaResultadoBusqueda = new ArrayList<Playa>();
 	distancia = 25;
-	List<Playa> playasCercanas = new ArrayList<Playa>();
-	playasCercanas = getPlayaService().findByPlayasCercanas(-31.430531, -64.189428, 5);
-	if (playasCercanas != null) {
-	    for (Playa playa : playasCercanas) {
-		System.out.println(playa.toString());
-	    }
-	}
+//	List<Playa> playasCercanas = new ArrayList<Playa>();
+//	playasCercanas = getPlayaService()
+//		.findByPlayasCercanas(-31.430531, -64.189428, 5,categoriaParameter, tipoEstadiaParameter);
+//	if (playasCercanas != null) {
+//	    for (Playa playa : playasCercanas) {
+//		System.out.println(playa.toString());
+//	    }
+//	}
 	opcionesAvanzadas = false;
     }
 
@@ -120,6 +127,10 @@ public class BusquedaPlayasManagedBean implements Serializable {
 		e.printStackTrace();
 	    }
 	}
+    }
+    
+    public void busquedaAvanzada(){
+	
     }
 
     class Comparar implements Comparator<Playa> {
@@ -251,5 +262,21 @@ public class BusquedaPlayasManagedBean implements Serializable {
     
     public void settearOpcionesAvanzadas(){
 	this.opcionesAvanzadas = true;
+    }
+
+    public CategoriaVehiculo getCategoriaParameter() {
+        return categoriaParameter;
+    }
+
+    public void setCategoriaParameter(CategoriaVehiculo categoriaParameter) {
+        this.categoriaParameter = categoriaParameter;
+    }
+
+    public TipoEstadia getTipoEstadiaParameter() {
+        return tipoEstadiaParameter;
+    }
+
+    public void setTipoEstadiaParameter(TipoEstadia tipoEstadiaParameter) {
+        this.tipoEstadiaParameter = tipoEstadiaParameter;
     }
 }

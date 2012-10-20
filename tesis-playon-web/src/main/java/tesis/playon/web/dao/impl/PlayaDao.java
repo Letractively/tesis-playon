@@ -7,8 +7,10 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IPlayaDao;
+import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
+import tesis.playon.web.model.TipoEstadia;
 
 public class PlayaDao implements IPlayaDao {
 
@@ -72,7 +74,8 @@ public class PlayaDao implements IPlayaDao {
 	return null;
     }
 
-    public List<Playa> findByPlayasCercanas(Double longitud, Double latitud, int distancia) {
+    public List<Playa> findByPlayasCercanas(Double longitud, Double latitud
+	    , int distancia,CategoriaVehiculo categoriaParameter, TipoEstadia tipoEstadiaParameter) {
 //	 List<?> list = getSessionFactory().getCurrentSession()
 //	 .createSQLQuery("CALL busquedaAvanzada(:platitud, :plongitud, :pdistancia)")
 //	 .addEntity(Playa.class)
