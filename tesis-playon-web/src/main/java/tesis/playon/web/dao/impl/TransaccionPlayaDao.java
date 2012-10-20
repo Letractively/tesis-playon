@@ -88,4 +88,16 @@ public class TransaccionPlayaDao implements ITransaccionPlayaDao {
 	return transaccionPlaya;
     }
 
+    public List<TransaccionPlaya> findTransaccionesByCuentaPlaya(CuentaPlaya cuentaPlaya) {
+
+	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from TransaccionPlaya where cuentaPlaya = ?").setParameter(0, cuentaPlaya).list();
+	for (Object object : list) {
+	    transaccionPlaya.add((TransaccionPlaya) object);
+	}
+	return transaccionPlaya;
+
+    }
+
 }

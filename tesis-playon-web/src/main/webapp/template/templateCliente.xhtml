@@ -19,14 +19,15 @@ Released   : 20120624
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	
+
 	<ui:param name="loadmenuclientes" value="true" />
-	
+
 	<style type="text/css">
-.old {
-/* 	background: pink;  */
+.old { /* 	background: pink;  */
 	color: #FF0000 !important;
-}</style>
+}
+</style>
+
 
 	<h:outputStylesheet library="css" name="style.css" />
 	<h:outputStylesheet library="css" name="style_custom.css" />
@@ -97,8 +98,7 @@ Released   : 20120624
 			</div>
 
 			<ui:fragment rendered="#{loginMB.logueado}">
-				<ui:fragment
-					rendered="#{(loginMB.rol eq '[ROLE_CLIENT]')}">
+				<ui:fragment rendered="#{(loginMB.rol eq '[ROLE_CLIENT]')}">
 					<ui:include src="menuClienteSide.xhtml" />
 				</ui:fragment>
 			</ui:fragment>

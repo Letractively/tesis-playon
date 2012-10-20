@@ -59,4 +59,10 @@ public class TransaccionPlayaService implements ITransaccionPlayaService {
     public List<TransaccionPlaya> findNoLiquidadasByCuentaPlaya(CuentaPlaya cuentaPlaya) {
 	return getTransaccionPlayaDao().findNoLiquidadasByCuentaPlaya(cuentaPlaya);
     }
+
+    public List<TransaccionPlaya> findTransaccionesByCuentaPlaya(CuentaPlaya cuentaPlaya) {
+	return getTransaccionPlayaDao().findTransaccionesByCuentaPlaya(cuentaPlaya);
+
+    }
+
 }

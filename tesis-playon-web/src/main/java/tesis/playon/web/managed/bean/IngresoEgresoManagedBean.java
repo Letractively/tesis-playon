@@ -3,6 +3,7 @@ package tesis.playon.web.managed.bean;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -84,7 +85,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{TarifaService}")
     ITarifaService tarifaService;
-    
+
     @ManagedProperty(value = "#{PromocionService}")
     IPromocionService promocionService;
 
@@ -93,7 +94,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{TransaccionClienteService}")
     ITransaccionClienteService transaccionClienteService;
-    
+
     @ManagedProperty(value = "#{TransaccionPlayaService}")
     ITransaccionPlayaService transaccionPlayaService;
 
@@ -157,11 +158,13 @@ public class IngresoEgresoManagedBean implements Serializable {
     private Float importe;
 
     private List<TipoEstadia> tipoEstadiaList;
-    
+
     private List<Promocion> promocionesDisponibles;
-    
+
+    private List<TransaccionPlaya> transaccionesPlayas;
+
     private Promocion promocion;
-    
+
     @PostConstruct
     private void init() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -193,34 +196,34 @@ public class IngresoEgresoManagedBean implements Serializable {
 	}
     }
 
-//    public void preRenderView() {
-//	FacesContext facesContext = FacesContext.getCurrentInstance();
-//	setNombreUsuario(facesContext.getExternalContext().getRemoteUser());
-//	if (null != nombreUsuario) {
-//	    setUsuario(getUsuarioService().findByNombreUsuario(nombreUsuario));
-//	}
-//	if (null != usuario) {
-//	    setEmpleado(getEmpleadoService().findByUsuario(usuario));
-//	    setPlaya(usuario.getPlaya());
-//	}
-//	if (null != playa) {
-//	    setCuentaPlaya(getCuentaPlayaService().findByPlaya(playa));
-//	    setEstadia(getEstadiaService().findByPlaya(playa));
-//	}
-//	if (null == cuentaPlaya) {
-//	    // la cuenta aun no existe y debe ser creada
-//	    cuentaPlaya = new CuentaPlaya(playa);
-//	    if (null != cuentaPlaya)
-//		getCuentaPlayaService().save(cuentaPlaya);
-//	}
-//	if (null == estadia) {
-//	    // la estadia aun no existe y debe ser creada
-//	    estadia = new Estadia(playa);
-//	    if (null != cuentaPlaya)
-//		getEstadiaService().save(estadia);
-//	}
-//	setCargoEmpleado(empleado.getCargoEmpleado()); // tira error
-//    }
+    // public void preRenderView() {
+    // FacesContext facesContext = FacesContext.getCurrentInstance();
+    // setNombreUsuario(facesContext.getExternalContext().getRemoteUser());
+    // if (null != nombreUsuario) {
+    // setUsuario(getUsuarioService().findByNombreUsuario(nombreUsuario));
+    // }
+    // if (null != usuario) {
+    // setEmpleado(getEmpleadoService().findByUsuario(usuario));
+    // setPlaya(usuario.getPlaya());
+    // }
+    // if (null != playa) {
+    // setCuentaPlaya(getCuentaPlayaService().findByPlaya(playa));
+    // setEstadia(getEstadiaService().findByPlaya(playa));
+    // }
+    // if (null == cuentaPlaya) {
+    // // la cuenta aun no existe y debe ser creada
+    // cuentaPlaya = new CuentaPlaya(playa);
+    // if (null != cuentaPlaya)
+    // getCuentaPlayaService().save(cuentaPlaya);
+    // }
+    // if (null == estadia) {
+    // // la estadia aun no existe y debe ser creada
+    // estadia = new Estadia(playa);
+    // if (null != cuentaPlaya)
+    // getEstadiaService().save(estadia);
+    // }
+    // setCargoEmpleado(empleado.getCargoEmpleado()); // tira error
+    // }
 
     // public void searchVehiculo() {
     // limpiar();
@@ -301,9 +304,9 @@ public class IngresoEgresoManagedBean implements Serializable {
 
 	    tarifaPlayaList = getTarifaService().findTarifaVigenteByPlayaAndCategoriaVehiculo(playa,
 		    vehiculo.getModeloVehiculo().getCategoriaVehiculo());
-	    
-	    promocionesDisponibles = getPromocionService()
-		    .findByCategoria(vehiculo.getModeloVehiculo().getCategoriaVehiculo(), playa);
+
+	    promocionesDisponibles = getPromocionService().findByCategoria(
+		    vehiculo.getModeloVehiculo().getCategoriaVehiculo(), playa);
 
 	    if (tarifaPlayaList == null) {
 		setExisteTarifa(false);
@@ -362,8 +365,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 	Integer disponibilidad = playa.getDisponibilidad() + 1;
 	playa.setDisponibilidad(disponibilidad);
 	getPlayaService().update(playa);
-	
-	//Registrar la transacción playa.
+
+	// Registrar la transacción playa.
 	TransaccionPlaya txPlaya = new TransaccionPlaya();
 	txPlaya.setFecha(new Date());
 	txPlaya.setDetalleEstadia(detalleEstadia);
@@ -371,7 +374,6 @@ public class IngresoEgresoManagedBean implements Serializable {
 	txPlaya.setImporte(importe);
 	txPlaya.setTipoPago(tipoPago);
 	getTransaccionPlayaService().save(txPlaya);
-	
 
 	FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		"Se registró el egreso exitosamente del vehículo patente:", patente);
@@ -390,7 +392,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 
 	    TipoEstadia tipoEstadia = tarifa.getTipoEstadia();
 	    Timestamp fechaHoraEgreso;
-	    
+
 	    // calculo de importe a pagar
 	    if ("Por Hora".equals(tipoEstadia.getNombre())) {
 		fechaHoraEgreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
@@ -403,8 +405,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 		if (minutos > 10 || horasACobrar == 0)
 		    horasACobrar++;
 		importe = tarifa.getImporte() * horasACobrar;
-		if(promocion != null){
-		    importe = importe  * (1 - promocion.getDescuento()/100);
+		if (promocion != null) {
+		    importe = importe * (1 - promocion.getDescuento() / 100);
 		}
 	    } else if ("Por Mes".equals(tipoEstadia.getNombre())) {
 		Calendar calendario = Calendar.getInstance();
@@ -414,8 +416,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 		fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
 		detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
 		importe = tarifa.getImporte();
-		if(promocion != null){
-		    importe = importe  * (1 - promocion.getDescuento()/100);
+		if (promocion != null) {
+		    importe = importe * (1 - promocion.getDescuento() / 100);
 		}
 	    } else if ("Por Noche".equals(tipoEstadia.getNombre())) {
 		Calendar calendario = Calendar.getInstance();
@@ -425,8 +427,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 		fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
 		detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
 		importe = tarifa.getImporte();
-		if(promocion != null){
-		    importe = importe  * (1 - promocion.getDescuento()/100);
+		if (promocion != null) {
+		    importe = importe * (1 - promocion.getDescuento() / 100);
 		}
 	    } else if ("Por Día".equals(tipoEstadia.getNombre())) {
 		Calendar calendario = Calendar.getInstance();
@@ -436,8 +438,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 		fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
 		detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
 		importe = tarifa.getImporte();
-		if(promocion != null){
-		    importe = importe  * (1 - promocion.getDescuento()/100);
+		if (promocion != null) {
+		    importe = importe * (1 - promocion.getDescuento() / 100);
 		}
 	    } else if ("Por Semana".equals(tipoEstadia.getNombre())) {
 		Calendar calendario = Calendar.getInstance();
@@ -447,8 +449,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 		fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
 		detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
 		importe = tarifa.getImporte();
-		if(promocion != null){
-		    importe = importe  * (1 - promocion.getDescuento()/100);
+		if (promocion != null) {
+		    importe = importe * (1 - promocion.getDescuento() / 100);
 		}
 	    }
 	    detalleEstadia.setImporteTotal(importe);
@@ -585,19 +587,19 @@ public class IngresoEgresoManagedBean implements Serializable {
     }
 
     public ITransaccionPlayaService getTransaccionPlayaService() {
-        return transaccionPlayaService;
+	return transaccionPlayaService;
     }
 
     public void setTransaccionPlayaService(ITransaccionPlayaService transaccionPlayaService) {
-        this.transaccionPlayaService = transaccionPlayaService;
+	this.transaccionPlayaService = transaccionPlayaService;
     }
 
     public IPromocionService getPromocionService() {
-        return promocionService;
+	return promocionService;
     }
 
     public void setPromocionService(IPromocionService promocionService) {
-        this.promocionService = promocionService;
+	this.promocionService = promocionService;
     }
 
     public List<Tarifa> getTarifaPlayaList() {
@@ -827,7 +829,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     public Float getImporte() {
 	return importe;
-	//return Float.parseFloat(formatter.format(importe));
+	// return Float.parseFloat(formatter.format(importe));
     }
 
     public void setImporte(Float importe) {
@@ -843,19 +845,19 @@ public class IngresoEgresoManagedBean implements Serializable {
     }
 
     public List<Promocion> getPromocionesDisponibles() {
-        return promocionesDisponibles;
+	return promocionesDisponibles;
     }
 
     public void setPromocionesDisponibles(List<Promocion> promocionesDisponibles) {
-        this.promocionesDisponibles = promocionesDisponibles;
+	this.promocionesDisponibles = promocionesDisponibles;
     }
 
     public Promocion getPromocion() {
-        return promocion;
+	return promocion;
     }
 
     public void setPromocion(Promocion promocion) {
-        this.promocion = promocion;
+	this.promocion = promocion;
     }
 
     // método para cancelar la página.
@@ -880,6 +882,17 @@ public class IngresoEgresoManagedBean implements Serializable {
 	importe = 0.0f;
 	patente = null;
 	return "/playa/ingresoegresovehiculo";
+    }
+
+    public List<TransaccionPlaya> getTransaccionesPlayas() {
+
+	transaccionesPlayas = new ArrayList<TransaccionPlaya>();
+	transaccionesPlayas = getTransaccionPlayaService().findByCuentaPlaya(getCuentaPlaya());
+	return transaccionesPlayas;
+    }
+
+    public void setTransaccionesPlayas(List<TransaccionPlaya> transaccionesPlayas) {
+	this.transaccionesPlayas = transaccionesPlayas;
     }
 
 }

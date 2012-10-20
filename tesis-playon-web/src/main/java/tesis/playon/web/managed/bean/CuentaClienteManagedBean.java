@@ -3,6 +3,7 @@
  */
 package tesis.playon.web.managed.bean;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,6 +27,12 @@ import tesis.playon.web.service.ICuentaClienteService;
 import tesis.playon.web.service.ITipoPagoService;
 import tesis.playon.web.service.ITransaccionClienteService;
 import tesis.playon.web.service.IUsuarioService;
+
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
 
 /**
  * @author pablo
@@ -191,4 +198,12 @@ public class CuentaClienteManagedBean {
 	this.transaccionCliente = transaccionCliente;
     }
 
+    public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+	Document pdf = (Document) document;
+	pdf.open();
+	pdf.setPageSize(PageSize.A4);
+	String logo = "/home/gonza/workspace2/tesis-playon-web/src/main/webapp/resources/images/transacciones.png";
+	pdf.addTitle("Historial de Transacciones");
+	pdf.add(Image.getInstance(logo));
+    }
 }
