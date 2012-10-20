@@ -20,7 +20,7 @@ public class UsuarioController {
     @Resource(name = "usuarioService")
     private IUsuarioService usuarioService;
 
-    @RequestMapping(value = "/usuarios", method = RequestMethod.GET, headers = "Accept=application/xml, application/json")
+    @RequestMapping(value = "/usuarios", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
     List<Usuario> getUsuario() {
 	List<Usuario> result = new ArrayList<Usuario>();
@@ -28,7 +28,7 @@ public class UsuarioController {
 	return result;
     }
 
-    @RequestMapping(value = "/usuario/{usuario}", method = RequestMethod.GET, headers = "Accept=application/xml, application/json")
+    @RequestMapping(value = "/usuario/{usuario}", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
     Usuario getUsuario(@PathVariable("usuario") String usuario) {
 	return usuarioService.findByNombreUsuario(usuario);

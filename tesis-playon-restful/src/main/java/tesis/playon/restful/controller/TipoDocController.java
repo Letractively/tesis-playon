@@ -19,7 +19,7 @@ public class TipoDocController {
     @Resource(name="tipoDocService")
     private ITipoDocService tipoDocService;
 
-    @RequestMapping(value = "/tipodocumentos", method = RequestMethod.GET, headers = "Accept=application/xml, application/json")
+    @RequestMapping(value = "/tipodocumentos", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
     List<TipoDoc> getTipoDoc() {
 	List<TipoDoc> result = new ArrayList<TipoDoc>();

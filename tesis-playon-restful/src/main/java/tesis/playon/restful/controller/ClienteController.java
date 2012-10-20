@@ -20,7 +20,7 @@ public class ClienteController {
     @Resource(name = "clienteService")
     private IClienteService clienteService;
 
-    @RequestMapping(value = "/clientes", method = RequestMethod.GET, headers = "Accept=application/xml, application/json")
+    @RequestMapping(value = "/clientes", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
     List<Cliente> getCliente() {
 	List<Cliente> result = new ArrayList<Cliente>();
@@ -28,7 +28,7 @@ public class ClienteController {
 	return result;
     }
 
-    @RequestMapping(value = "/cliente/{nroCliente}", method = RequestMethod.GET, headers = "Accept=application/xml, application/json")
+    @RequestMapping(value = "/cliente/{nroCliente}", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
     Cliente getCliente(@PathVariable("nroCliente") Integer nroCliente) {
 	return clienteService.findByNumeroCliente(nroCliente);

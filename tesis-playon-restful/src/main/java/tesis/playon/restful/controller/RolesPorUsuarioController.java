@@ -20,7 +20,7 @@ public class RolesPorUsuarioController {
     @Resource(name="rolesPorUsuarioService")
     private IRolesPorUsuarioService rolesPorUsuarioService;
 
-    @RequestMapping(value = "/rolesporusuarios", method = RequestMethod.GET, headers = "Accept=application/xml, application/json")
+    @RequestMapping(value = "/rolesporusuarios", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
     List<RolesPorUsuario> getRolesPorUsuario() {
 	List<RolesPorUsuario> result = new ArrayList<RolesPorUsuario>();
@@ -28,7 +28,7 @@ public class RolesPorUsuarioController {
 	return result;
     }
     
-    @RequestMapping(value = "/rolesporusuario/{nombreUsuario}", method = RequestMethod.GET, headers = "Accept=application/xml, application/json")
+    @RequestMapping(value = "/rolesporusuario/{nombreUsuario}", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
     RolesPorUsuario getRolesPorUsuario(@PathVariable("nombreUsuario") String nombreUsuario) {
 	return rolesPorUsuarioService.findByNombreUsuario(nombreUsuario);

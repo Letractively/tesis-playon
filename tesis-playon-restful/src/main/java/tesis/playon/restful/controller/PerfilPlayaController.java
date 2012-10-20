@@ -21,7 +21,7 @@ public class PerfilPlayaController {
     @Resource(name = "perfilPlayaService")
     private IPerfilPlayaService perfilPlayaService;
 
-    @RequestMapping(value = "/perfilesplayas", method = RequestMethod.GET, headers = "Accept=application/xml, application/json")
+    @RequestMapping(value = "/perfilesplayas", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
     List<PerfilPlaya> getPerfilesPlayas() {
 	List<PerfilPlaya> result = new ArrayList<PerfilPlaya>();
@@ -29,7 +29,7 @@ public class PerfilPlayaController {
 	return result;
     }
 
-    @RequestMapping(value = "/perfilplaya/{playa}", method = RequestMethod.GET, headers = "Accept=application/xml, application/json")
+    @RequestMapping(value = "/perfilplaya/{playa}", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
     PerfilPlaya getPerfilPlaya(@PathVariable("playa") Playa playa) {
 	return perfilPlayaService.findByPlaya(playa);

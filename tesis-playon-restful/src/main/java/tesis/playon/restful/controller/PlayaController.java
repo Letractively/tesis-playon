@@ -21,7 +21,7 @@ public class PlayaController {
     @Resource(name = "playaService")
     private IPlayaService playaService;
 
-    @RequestMapping(value = "/playas", method = RequestMethod.GET, headers = "Accept=application/xml, application/json")
+    @RequestMapping(value = "/playas", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
     List<Playa> getPlayas() {
 	List<Playa> result = new ArrayList<Playa>();
@@ -29,7 +29,7 @@ public class PlayaController {
 	return result;
     }
 
-    @RequestMapping(value = "/playas/{estado}", method = RequestMethod.GET, headers = "Accept=application/xml, application/json")
+    @RequestMapping(value = "/playas/{estado}", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
     List<Playa> getPlayas(@PathVariable("estado") EstadoPlaya estado) {
 	List<Playa> result = new ArrayList<Playa>();
@@ -37,7 +37,7 @@ public class PlayaController {
 	return result;
     }
 
-    @RequestMapping(value = "/playa/{nombreComercial}", method = RequestMethod.GET, headers = "Accept=application/xml, application/json")
+    @RequestMapping(value = "/playa/{nombreComercial}", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
     Playa getPlayaNombre(@PathVariable("nombreComercial") String nombreComercial) {
 	return playaService.findByNombreComercial(nombreComercial);
