@@ -32,14 +32,15 @@
 					</p:column>
 
 					<p:column headerText="Patente " styleClass="column-font">
-						<h:outputText value="#{denuncias.vehiculo.patente}" align="center" />
+						<h:outputText value="#{denuncias.vehiculo.patente}"
+							text-align="center" />
 					</p:column>
 
 					<p:column headerText="Opciones" styleClass="column-options"
 						style="text-align:center; width:120px;">
 
-						<p:commandLink id="view" oncomplete="carDialog.show();"
-							title="Ver Datos">
+						<p:commandLink id="view" update=":mainForm:carDlg3"
+							oncomplete="carDialog.show();" title="Ver Datos">
 							<f:setPropertyActionListener value="#{denuncias}"
 								target="#{auditoriaMB.denunciaVehiculoSeleccionada}" />
 							<h:graphicImage library="images/icons" name="search.png" />
@@ -94,15 +95,16 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Patente " styleClass="column-font">
+					<p:column headerText="Patente " styleClass="column-font"
+						text-align="center">
 						<h:outputText value="#{denuncias.vehiculo.patente}" align="center" />
 					</p:column>
 
 					<p:column headerText="Opciones" styleClass="column-options"
 						style="text-align:center; width:120px;">
 
-						<p:commandLink id="view2" oncomplete="carDialog.show();"
-							title="Ver Datos">
+						<p:commandLink id="view2" update=":mainForm:carDlg3"
+							oncomplete="carDialog.show();" title="Ver Datos">
 							<f:setPropertyActionListener value="#{denuncias}"
 								target="#{auditoriaMB.denunciaVehiculoSeleccionada}" />
 							<h:graphicImage library="images/icons" name="search.png" />
@@ -145,8 +147,8 @@
 					<p:column headerText="Opciones" styleClass="column-options"
 						style="text-align:center; width:120px;">
 
-						<p:commandLink id="view3" oncomplete="carDialog.show();"
-							title="Ver Datos">
+						<p:commandLink id="view3" update=":mainForm:carDlg3"
+							oncomplete="carDialog.show();" title="Ver Datos">
 							<f:setPropertyActionListener value="#{denuncias}"
 								target="#{auditoriaMB.denunciaVehiculoSeleccionada}" />
 							<h:graphicImage library="images/icons" name="search.png" />

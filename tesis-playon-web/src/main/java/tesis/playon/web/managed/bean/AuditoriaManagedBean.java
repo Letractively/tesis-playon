@@ -74,7 +74,7 @@ public class AuditoriaManagedBean implements Serializable {
     @ManagedProperty(value = "#{DenunciaVehiculoService}")
     IDenunciaVehiculoService denunciaVehiculoService;
 
-    static Playa playaSeleccionada;
+    public static Playa playaSeleccionada;
 
     public static DenunciaVehiculo denunciaVehiculoSeleccionada;
 
