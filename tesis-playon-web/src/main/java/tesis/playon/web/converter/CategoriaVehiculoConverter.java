@@ -24,6 +24,8 @@ public class CategoriaVehiculoConverter implements Converter {
 	if (!StringUtils.isEmpty(value)) {
 	    String toObject[] = value.split(":");
 	    if (toObject.length != 2) {
+//		CategoriaVehiculo cv = new CategoriaVehiculo("Todas",null);
+//		cv.setId(0);
 		return null;
 	    } else {
 		CategoriaVehiculo categoriaVehiculo = new CategoriaVehiculo();

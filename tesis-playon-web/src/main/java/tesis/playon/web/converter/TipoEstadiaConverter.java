@@ -22,6 +22,8 @@ public class TipoEstadiaConverter implements Converter {
 	if (!StringUtils.isEmpty(value)) {
 	    String toObject[] = value.split(":");
 	    if (toObject.length != 2) {
+//		TipoEstadia te= new TipoEstadia("Todas",null);
+//		te.setId(0);
 		return null;
 	    } else {
 		TipoEstadia tipoEstadia = new TipoEstadia();

@@ -57,26 +57,26 @@ public class BusquedaPlayasManagedBean implements Serializable {
     private GeoposicionDePlaya respuesta;
 
     private String coordenadas;
-    
-    //Atributos para los filtros.
+
+    // Atributos para los filtros.
     private boolean opcionesAvanzadas;
-    
+
     private CategoriaVehiculo categoriaParameter;
-    
+
     private TipoEstadia tipoEstadiaParameter;
 
     @PostConstruct
     private void init() {
 	playaResultadoBusqueda = new ArrayList<Playa>();
 	distancia = 25;
-//	List<Playa> playasCercanas = new ArrayList<Playa>();
-//	playasCercanas = getPlayaService()
-//		.findByPlayasCercanas(-31.430531, -64.189428, 5,categoriaParameter, tipoEstadiaParameter);
-//	if (playasCercanas != null) {
-//	    for (Playa playa : playasCercanas) {
-//		System.out.println(playa.toString());
-//	    }
-//	}
+	// List<Playa> playasCercanas = new ArrayList<Playa>();
+	// playasCercanas = getPlayaService()
+	// .findByPlayasCercanas(-31.430531, -64.189428, 5,categoriaParameter, tipoEstadiaParameter);
+	// if (playasCercanas != null) {
+	// for (Playa playa : playasCercanas) {
+	// System.out.println(playa.toString());
+	// }
+	// }
 	opcionesAvanzadas = false;
     }
 
@@ -128,9 +128,52 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	    }
 	}
     }
-    
-    public void busquedaAvanzada(){
+
+    public void busquedaAvanzada() {
+	int idCategoria = 0;
+	int idTipoEstadia = 0;
+
+	if (categoriaParameter != null)
+	    idCategoria = categoriaParameter.getId();
+	if (tipoEstadiaParameter != null)
+	    idTipoEstadia = tipoEstadiaParameter.getId();
 	
+	if (null != getDireccionBusqueda() && !getDireccionBusqueda().trim().isEmpty()) {
+	    try {
+
+		latLonUtil = new LatitudlongitudUtil();
+		// GeoposicionDePlaya
+		respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda().trim() + ", Cordoba, Argentina");
+		coordenadas = respuesta.toString();
+
+		playaResultadoBusqueda = new ArrayList<Playa>();
+		advancedModel = new DefaultMapModel();
+		
+		List<Playa> playasCercanas = new ArrayList<Playa>();
+		playasCercanas = getPlayaService().findByPlayasCercanas(-31.430531, -64.189428, 4, idCategoria, idTipoEstadia);
+		
+		for (Playa playaAux : playasCercanas) {
+		    Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
+		    if (comparacion < getDistancia() && playaAux.getEstado().getId() == 2) {
+			playaResultadoBusqueda.add(playaAux);
+			LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
+			PerfilPlaya perfil = new PerfilPlaya();
+			perfil = getPerfilPlayaService().findByPlaya(playaAux);
+			WriteImage.getFotoPerfil(perfil);
+			advancedModel.addOverlay(new Marker(coord1, playaAux.getNombreComercial(), perfil,
+				"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
+		    }
+		    LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
+
+		    advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
+			    "http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
+
+		}
+		ordenar();
+	    } catch (Exception e) {
+		e.printStackTrace();
+	    }
+	}
     }
 
     class Comparar implements Comparator<Playa> {
@@ -253,30 +296,30 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     // ==================================GETTER & SETTER DE LOS FILTROS ===============================//
     public boolean isOpcionesAvanzadas() {
-        return opcionesAvanzadas;
+	return opcionesAvanzadas;
     }
 
     public void setOpcionesAvanzadas(boolean opcionesAvanzadas) {
-        this.opcionesAvanzadas = opcionesAvanzadas;
+	this.opcionesAvanzadas = opcionesAvanzadas;
     }
-    
-    public void settearOpcionesAvanzadas(){
+
+    public void settearOpcionesAvanzadas() {
 	this.opcionesAvanzadas = true;
     }
 
     public CategoriaVehiculo getCategoriaParameter() {
-        return categoriaParameter;
+	return categoriaParameter;
     }
 
     public void setCategoriaParameter(CategoriaVehiculo categoriaParameter) {
-        this.categoriaParameter = categoriaParameter;
+	this.categoriaParameter = categoriaParameter;
     }
 
     public TipoEstadia getTipoEstadiaParameter() {
-        return tipoEstadiaParameter;
+	return tipoEstadiaParameter;
     }
 
     public void setTipoEstadiaParameter(TipoEstadia tipoEstadiaParameter) {
-        this.tipoEstadiaParameter = tipoEstadiaParameter;
+	this.tipoEstadiaParameter = tipoEstadiaParameter;
     }
 }

@@ -7,10 +7,8 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IPlayaDao;
-import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
-import tesis.playon.web.model.TipoEstadia;
 
 public class PlayaDao implements IPlayaDao {
 
@@ -75,7 +73,7 @@ public class PlayaDao implements IPlayaDao {
     }
 
     public List<Playa> findByPlayasCercanas(Double longitud, Double latitud
-	    , int distancia,CategoriaVehiculo categoriaParameter, TipoEstadia tipoEstadiaParameter) {
+	    , int distancia, int categoriaParameter, int tipoEstadiaParameter) {
 //	 List<?> list = getSessionFactory().getCurrentSession()
 //	 .createSQLQuery("CALL busquedaAvanzada(:platitud, :plongitud, :pdistancia)")
 //	 .addEntity(Playa.class)
@@ -84,9 +82,11 @@ public class PlayaDao implements IPlayaDao {
 //	 .setParameter("pdistancia", distancia).list();
 
 	Query query = getSessionFactory().getCurrentSession().getNamedQuery("callPlayasSP")
-		.setDouble("platitud", latitud)
-		.setDouble("plongitud", longitud)
-		.setInteger("pdistancia", distancia);
+		.setParameter("platitud", latitud)
+		.setParameter("plongitud", longitud)
+		.setParameter("pdistancia", distancia)
+		.setParameter("pTipoEstadia", tipoEstadiaParameter)
+		.setParameter("pCategoriaVehiculo", categoriaParameter);
 	List<?> list = query.list();
 	List<Playa> playas = new ArrayList<Playa>();
 	if (!list.isEmpty()) {

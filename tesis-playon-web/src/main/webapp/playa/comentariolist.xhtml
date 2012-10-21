@@ -74,11 +74,8 @@
 											<div align="right" style="width: 98%;">
 												<p:commandButton id="enviarComentario"
 													value="Enviar comentario"
-													action="#{comentarioMB.addComentario}" ajax="false"
-													oncomplete="document.location.reload(true)"
+													action="#{comentarioMB.addComentarioPerfil}" ajax="false"
 													style="margin:5px 6px 0 5px">
-													<f:setPropertyActionListener value="comentariolist"
-														target="#{comentarioMB.previusPage}" />
 												</p:commandButton>
 											</div>
 										</td>

@@ -5,10 +5,8 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IPlayaDao;
-import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
-import tesis.playon.web.model.TipoEstadia;
 import tesis.playon.web.service.IPlayaService;
 /**
  * 
@@ -85,7 +83,7 @@ public class PlayaService implements IPlayaService {
     
     @Override
     public List<Playa> findByPlayasCercanas(Double longitud, Double latitud
-	    , int distancia,CategoriaVehiculo categoriaParameter, TipoEstadia tipoEstadiaParameter){
+	    , int distancia,int categoriaParameter, int tipoEstadiaParameter){
 	return getPlayaDao().findByPlayasCercanas(longitud, latitud, distancia,categoriaParameter,tipoEstadiaParameter);
     }
 }

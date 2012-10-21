@@ -234,12 +234,9 @@
 													<td style="text-align: right; border-style: none;">
 														<div align="right" style="width: 97%;">
 															<p:commandButton id="enviarComentario"
-															value="Enviar comentario"
-															action="#{comentarioMB.addComentario}" ajax="false"
-															style="margin:5px 5px 0 5px" update=":messageComentario">
-															<f:setPropertyActionListener
-																value="/viewperfilplaya.html?faces-redirect=true&id= #{playaSelected.id}"
-																target="#{comentarioMB.previusPage}" />
+																value="Enviar comentario"
+																action="#{comentarioMB.addComentario}" ajax="false"
+																style="margin:5px 5px 0 5px" update=":messageComentario">
 														</p:commandButton>
 														</div>
 													</td>
