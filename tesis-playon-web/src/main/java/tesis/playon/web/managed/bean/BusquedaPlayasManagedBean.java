@@ -65,6 +65,8 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     private TipoEstadia tipoEstadiaParameter;
 
+    private static Playa playaSeleccionada;
+
     @PostConstruct
     private void init() {
 	playaResultadoBusqueda = new ArrayList<Playa>();
@@ -137,7 +139,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	    idCategoria = categoriaParameter.getId();
 	if (tipoEstadiaParameter != null)
 	    idTipoEstadia = tipoEstadiaParameter.getId();
-	
+
 	if (null != getDireccionBusqueda() && !getDireccionBusqueda().trim().isEmpty()) {
 	    try {
 
@@ -148,10 +150,11 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
 		playaResultadoBusqueda = new ArrayList<Playa>();
 		advancedModel = new DefaultMapModel();
-		
+
 		List<Playa> playasCercanas = new ArrayList<Playa>();
-		playasCercanas = getPlayaService().findByPlayasCercanas(-31.430531, -64.189428, 4, idCategoria, idTipoEstadia);
-		
+		playasCercanas = getPlayaService().findByPlayasCercanas(-31.430531, -64.189428, 4, idCategoria,
+			idTipoEstadia);
+
 		for (Playa playaAux : playasCercanas) {
 		    Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
 		    if (comparacion < getDistancia() && playaAux.getEstado().getId() == 2) {
@@ -322,4 +325,13 @@ public class BusquedaPlayasManagedBean implements Serializable {
     public void setTipoEstadiaParameter(TipoEstadia tipoEstadiaParameter) {
 	this.tipoEstadiaParameter = tipoEstadiaParameter;
     }
+
+    public Playa getPlayaSeleccionada() {
+	return playaSeleccionada;
+    }
+
+    public void setPlayaSeleccionada(Playa playaSeleccionada) {
+	BusquedaPlayasManagedBean.playaSeleccionada = playaSeleccionada;
+    }
+
 }
