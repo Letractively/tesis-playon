@@ -171,7 +171,7 @@
 
 		<div>
 			<f:view contentType="text/html">
-				<h1>Playas encontradas:</h1>
+				<!-- 				<h1>Playas encontradas:</h1> -->
 				<script src="http://maps.google.com/maps/api/js?sensor=false"
 					type="text/javascript"></script>
 
@@ -257,19 +257,17 @@
 		</p:dataTable>
 
 		<p:dialog widgetVar="dlg2" width="1000" height="550" modal="true"
-			id="dialog" draggable="false">
+			id="dialog" draggable="false" closable="false">
 			<f:facet name="header">
 				<h:outputText value="¿Cómo llegar a la playa?" />
 			</f:facet>
 			<div id="map_canvas" style="float: left; width: 65%; height: 100%"></div>
 			<div style="float: right; width: 35%; height: 100%; overflow: auto">
-				<button id="undo" style="display: block; margin: auto"
-					onclick="undo();">Cerrar</button>
 				<div id="directions_panel" style="width: 100%"></div>
 			</div>
-			<f:facet name="footer" style="text-align=rigth;">
-				<p:commandButton id="undo" value="Cerrar"
-					onclick="undo();"></p:commandButton>
+			<f:facet name="footer" style="text-align=right;" >
+				<p:commandButton id="undo" value="Volver" 
+					style="float:left; width:640px; height: 42px" onclick="undo();"></p:commandButton>
 			</f:facet>
 		</p:dialog>
 
