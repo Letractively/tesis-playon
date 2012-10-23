@@ -11,8 +11,27 @@
 	<ui:define name="panelContent" class="admin-font">
 		<p:growl id="messages" />
 
+		<table style="border-collapse: collapse; border: 0px solid black;">
+			<tr>
+				<td><h:outputText value="Desde:" /></td>
+				<td><p:calendar value="#{liquidacionMB.fechaDesde}"
+						id="calDesde" /></td>
+			</tr>
+			<tr>
+				<td><h:outputText value="Hasta:" /></td>
+				<td><p:calendar value="#{liquidacionMB.fechaHasta}"
+						id="calHasta" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><p:commandButton id="buscarButton"
+						value="Buscar" icon="ui-icon-search"
+						action="#{liquidacionMB.updatePlayasALiquidar}" ajax="true" update="playas" /></td>
+			</tr>
+		</table>
+
+		<br />
 		<p:dataTable id="playas" var="playa"
-			value="#{liquidacionMB.playasAprobadasList}"
+			value="#{liquidacionMB.playasALiquidarList}"
 			filteredValue="#{liquidacionMB.filteredPlayas}"
 			widgetVar="playasTable" paginatorPosition="bottom" paginator="true"
 			rows="20" emptyMessage="No existen playas para liquidar"

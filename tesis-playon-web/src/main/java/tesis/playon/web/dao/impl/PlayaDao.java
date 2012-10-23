@@ -1,12 +1,14 @@
 package tesis.playon.web.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IPlayaDao;
+import tesis.playon.web.model.CuentaPlaya;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
 
@@ -133,5 +135,27 @@ public class PlayaDao implements IPlayaDao {
 	    return false;
 	}
 	return true;
+    }
+    
+    @Override
+    public List<Playa> findByFechaDesdeHasta(Date fechaDesde, Date fechaHasta) {
+	List<Playa> playas = new ArrayList<Playa>();
+//	List<?> list = getSessionFactory().getCurrentSession().
+//		createQuery("select distinct cuentaPlaya.playa from TransaccionPlaya " +
+//				"where fecha>=? and fecha<=?")
+//		.setParameter(0, fechaDesde).setParameter(1, fechaHasta)
+//		.list();
+	List<?> list = getSessionFactory().getCurrentSession().
+		createQuery("select distinct tp.cuentaPlaya.playa from TransaccionPlaya as tp " +
+				"where (tp.liquidacion is null) and tp.fecha>=? and tp.fecha<=?")
+		.setParameter(0, fechaDesde).setParameter(1, fechaHasta)
+		.list();
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		playas.add(((Playa) object));
+	    }
+	    return playas;
+	}
+	return null;
     }
 }

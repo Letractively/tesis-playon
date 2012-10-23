@@ -1,5 +1,6 @@
 package tesis.playon.web.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -85,5 +86,10 @@ public class PlayaService implements IPlayaService {
     public List<Playa> findByPlayasCercanas(Double longitud, Double latitud
 	    , int distancia,int categoriaParameter, int tipoEstadiaParameter){
 	return getPlayaDao().findByPlayasCercanas(longitud, latitud, distancia,categoriaParameter,tipoEstadiaParameter);
+    }
+    
+    @Override
+    public List<Playa> findByFechaDesdeHasta(Date fechaDesde, Date fechaHasta){
+	return getPlayaDao().findByFechaDesdeHasta(fechaDesde, fechaHasta);
     }
 }

@@ -259,7 +259,7 @@ DROP TABLE IF EXISTS `liquidacion`;
 CREATE TABLE `liquidacion` (
   `fecha` datetime NOT NULL,
   `fechaHasta` datetime NOT NULL,
-  `ferchaDesde` datetime NOT NULL,
+  `fechaDesde` datetime NOT NULL,
   `importeTotal` float NOT NULL DEFAULT 0,
   `liquidacionID` int(11) NOT NULL auto_increment,
   `estadiaID` int(11) NOT NULL,

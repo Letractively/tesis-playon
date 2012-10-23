@@ -64,6 +64,7 @@
 	<bean id="TransaccionPlaya" class="tesis.playon.web.model.TransaccionPlaya" />
 	<bean id="Usuario" class="tesis.playon.web.model.Usuario" />
 	<bean id="Vehiculo" class="tesis.playon.web.model.Vehiculo" />
+	<bean id="Liquidacion" class="tesis.playon.web.model.Liquidacion" />
 
 
 	<!-- User Service Declaration -->
@@ -177,6 +178,9 @@
 	<bean id="VehiculoService" class="tesis.playon.web.service.impl.VehiculoService">
 		<property name="vehiculoDao" ref="VehiculoDao" />
 	</bean>
+	<bean id="LiquidacionService" class="tesis.playon.web.service.impl.LiquidacionService">
+		<property name="liquidacionDao" ref="LiquidacionDao" />
+	</bean>
 
 	<!-- User DAO Declaration -->
 	<bean id="BarrioDao" class="tesis.playon.web.dao.impl.BarrioDao">
@@ -289,6 +293,9 @@
 	<bean id="VehiculoDao" class="tesis.playon.web.dao.impl.VehiculoDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
+	<bean id="LiquidacionDao" class="tesis.playon.web.dao.impl.LiquidacionDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
 
 	<!-- Provider Declaration -->
 	<bean id="rememberMeAuthenticationProvider"
@@ -391,6 +398,7 @@
 				<value>tesis.playon.web.model.TransaccionPlaya</value>
 				<value>tesis.playon.web.model.Usuario</value>
 				<value>tesis.playon.web.model.Vehiculo</value>
+				<value>tesis.playon.web.model.Liquidacion</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

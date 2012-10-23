@@ -3,6 +3,7 @@
  */
 package tesis.playon.web.service;
 
+import java.util.Date;
 import java.util.List;
 
 import tesis.playon.web.model.EstadoPlaya;
@@ -36,4 +37,6 @@ public interface IPlayaService {
     List<Playa> findByEstado(EstadoPlaya estado);
 
     boolean existeEmail(String email);
+    
+    List<Playa> findByFechaDesdeHasta(Date fechaDesde, Date fechaHasta);
 }
