@@ -167,7 +167,8 @@ public class BusquedaPlayasManagedBean implements Serializable {
 		    LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
 
 		    advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
-			    "http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
+			    "http://files.softicons.com/download/system-icons/web0.2ama-icons-by-chrfb/png/32x32/Maps%20-%20Car.png"));
+		    //http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg
 
 		}
 		ordenar();

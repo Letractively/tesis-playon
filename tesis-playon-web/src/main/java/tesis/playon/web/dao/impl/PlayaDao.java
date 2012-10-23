@@ -75,11 +75,13 @@ public class PlayaDao implements IPlayaDao {
     public List<Playa> findByPlayasCercanas(Double longitud, Double latitud
 	    , int distancia, int categoriaParameter, int tipoEstadiaParameter) {
 //	 List<?> list = getSessionFactory().getCurrentSession()
-//	 .createSQLQuery("CALL busquedaAvanzada(:platitud, :plongitud, :pdistancia)")
+//	 .createSQLQuery("CALL tesis_playon.busquedaAvanzada(:platitud, :plongitud, :pdistancia, :pTipoEstadia, :pCategoriaVehiculo)")
 //	 .addEntity(Playa.class)
 //	 .setParameter("platitud", latitud)
 //	 .setParameter("plongitud", longitud)
-//	 .setParameter("pdistancia", distancia).list();
+//	 .setParameter("pdistancia", distancia)
+//	 .setParameter("pTipoEstadia", tipoEstadiaParameter)
+//	 .setParameter("pCategoriaVehiculo", tipoEstadiaParameter).list();
 
 	Query query = getSessionFactory().getCurrentSession().getNamedQuery("callPlayasSP")
 		.setParameter("platitud", latitud)
