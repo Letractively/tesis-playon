@@ -65,6 +65,9 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     private TipoEstadia tipoEstadiaParameter;
 
+    private Double latitudCentro;
+    private Double longitudCentro;
+
     @PostConstruct
     private void init() {
 	playaResultadoBusqueda = new ArrayList<Playa>();
@@ -100,6 +103,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
 		latLonUtil = new LatitudlongitudUtil();
 		// GeoposicionDePlaya
+
 		respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda().trim() + ", Cordoba, Argentina");
 		coordenadas = respuesta.toString();
 
@@ -166,9 +170,10 @@ public class BusquedaPlayasManagedBean implements Serializable {
 		    }
 		    LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
 
-		    advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
-			    "http://files.softicons.com/download/system-icons/web0.2ama-icons-by-chrfb/png/32x32/Maps%20-%20Car.png"));
-		    //http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg
+		    advancedModel
+			    .addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
+				    "http://files.softicons.com/download/system-icons/web0.2ama-icons-by-chrfb/png/32x32/Maps%20-%20Car.png"));
+		    // http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg
 
 		}
 		ordenar();
@@ -324,4 +329,51 @@ public class BusquedaPlayasManagedBean implements Serializable {
     public void setTipoEstadiaParameter(TipoEstadia tipoEstadiaParameter) {
 	this.tipoEstadiaParameter = tipoEstadiaParameter;
     }
+
+    public Double getLatitudCentro() {
+	if (getDireccionBusqueda() != null) {
+	    LatitudlongitudUtil latLon = new LatitudlongitudUtil();
+	    GeoposicionDePlaya latitud = null;
+	    try {
+		latitud = latLon.getLocationFromAddress(getDireccionBusqueda().trim() + ", Cordoba, Argentina");
+	    } catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	    double lat;
+	    lat = latitud.getLatitud();
+	    latitudCentro = lat;
+	    return latitudCentro;
+	}
+
+	else
+	    return (double) 0;
+    }
+
+    public void setLatitudCentro(Double latitudCentro) {
+	this.latitudCentro = latitudCentro;
+    }
+
+    public Double getLongitudCentro() {
+	if (getDireccionBusqueda() != null) {
+	    LatitudlongitudUtil latLon = new LatitudlongitudUtil();
+	    GeoposicionDePlaya latitud = null;
+	    try {
+		latitud = latLon.getLocationFromAddress(getDireccionBusqueda().trim() + ", Cordoba, Argentina");
+	    } catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	    double longi;
+	    longi = latitud.getLongitud();
+	    longitudCentro = longi;
+	    return longitudCentro;
+	} else
+	    return (double) 0;
+    }
+
+    public void setLongitudCentro(Double longitudCentro) {
+	this.longitudCentro = longitudCentro;
+    }
+
 }

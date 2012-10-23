@@ -80,7 +80,7 @@
 			<p:tab id="tab2" title="Proceso">
 				<p:dataTable id="denunciaproceso" var="denuncias"
 					value="#{auditoriaMB.denunciasEnProcesoVehiculosList}"
-					paginatorPosition="bottom" paginator="false" rows="5"
+					paginatorPosition="bottom" paginator="false" 
 					emptyMessage="No existen denuncias finalizadas" text-align="center">
 
 					<p:column headerText="Denunciante" styleClass="column-font">
@@ -125,7 +125,7 @@
 			<p:tab id="tab3" title="Finalizadas">
 				<p:dataTable id="denuncia2" var="denuncias"
 					value="#{auditoriaMB.denunciasFinalizadasVehiculosList}"
-					paginatorPosition="bottom" paginator="false" rows="5"
+					paginatorPosition="bottom" paginator="true" rows="8"
 					emptyMessage="No existen denuncias finalizadas" text-align="center">
 
 					<p:column headerText="Denunciante" styleClass="column-font">

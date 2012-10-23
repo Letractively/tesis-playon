@@ -25,7 +25,7 @@
 			}
 			var myOptions = {
 				zoom : 15,
-				center : new google.maps.LatLng(-31.430457, -64.187644),
+				center : new google.maps.LatLng(#{busquedaplayaMB.latitudCentro},#{busquedaplayaMB.longitudCentro}),
 				mapTypeId : google.maps.MapTypeId.ROADMAP
 			}
 			map = new google.maps.Map(document.getElementById("map_canvas"),
@@ -256,7 +256,7 @@
 			</p:column>
 		</p:dataTable>
 
-		<p:dialog widgetVar="dlg2" width="800" height="450" modal="true"
+		<p:dialog widgetVar="dlg2" width="1000" height="550" modal="true"
 			id="dialog" draggable="false">
 			<f:facet name="header">
 				<h:outputText value="¿Cómo llegar a la playa?" />
