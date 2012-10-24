@@ -1,17 +1,11 @@
 package tesis.playon.mobile;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import tesis.playon.mobile.json.model.Usuario;
+import tesis.playon.mobile.util.Utils;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -66,32 +60,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 	}
     }
 
-    private InputStream retrieveStream(String url) {
-
-	DefaultHttpClient client = new DefaultHttpClient();
-	HttpGet getRequest = new HttpGet(url);
-	try {
-	    HttpResponse getResponse = client.execute(getRequest);
-	    final int statusCode = getResponse.getStatusLine().getStatusCode();
-	    if (statusCode != HttpStatus.SC_OK) {
-		Log.w(getClass().getSimpleName(), "Error " + statusCode + " for URL " + url);
-		return null;
-	    }
-	    HttpEntity getResponseEntity = getResponse.getEntity();
-	    return getResponseEntity.getContent();
-	} catch (IOException e) {
-	    getRequest.abort();
-	    Log.w(getClass().getSimpleName(), "Error for URL " + url, e);
-	}
-	return null;
-    }
-
     class LoginService extends AsyncTask<Void, Void, String> {
 
 	@Override
 	protected String doInBackground(Void... params) {
 	    String url = URL_USUARIO + username;
-	    InputStream source = retrieveStream(url);
+	    InputStream source = new Utils().retrieveStream(url);
 	    Gson gson = new Gson();
 	    Reader reader = new InputStreamReader(source);
 	    usuario = gson.fromJson(reader, Usuario.class);
