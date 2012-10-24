@@ -7,13 +7,13 @@ public class Playas implements Serializable {
 
     private static final long serialVersionUID = -4573436968149297463L;
 
-    private List<Playa> playas;
+    private List<Playa> lista;
 
     public List<Playa> getPlayas() {
-        return playas;
+        return lista;
     }
 
-    public void setPlayas(List<Playa> playas) {
-        this.playas = playas;
+    public void setPlayas(List<Playa> lista) {
+        this.lista = lista;
     }
 }
