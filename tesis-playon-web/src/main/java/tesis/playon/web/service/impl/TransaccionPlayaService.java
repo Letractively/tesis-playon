@@ -1,5 +1,6 @@
 package tesis.playon.web.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -63,6 +64,11 @@ public class TransaccionPlayaService implements ITransaccionPlayaService {
     public List<TransaccionPlaya> findTransaccionesByCuentaPlaya(CuentaPlaya cuentaPlaya) {
 	return getTransaccionPlayaDao().findTransaccionesByCuentaPlaya(cuentaPlaya);
 
+    }
+
+    public List<TransaccionPlaya> findTransaccionesByFecha(CuentaPlaya cuentaPlaya, Date fechaD, Date fechaH) {
+
+	return getTransaccionPlayaDao().findTransaccionesByFecha(cuentaPlaya, fechaD, fechaH);
     }
 
 }

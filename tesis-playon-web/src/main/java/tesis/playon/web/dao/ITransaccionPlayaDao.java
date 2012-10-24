@@ -1,10 +1,9 @@
 package tesis.playon.web.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import tesis.playon.web.model.CuentaPlaya;
-import tesis.playon.web.model.Playa;
-import tesis.playon.web.model.TransaccionCliente;
 import tesis.playon.web.model.TransaccionPlaya;
 
 public interface ITransaccionPlayaDao {
@@ -28,5 +27,9 @@ public interface ITransaccionPlayaDao {
     // List<TransaccionPlaya> findByPlaya(Playa playa);
 
     List<TransaccionPlaya> findTransaccionesByCuentaPlaya(CuentaPlaya cuentaPlaya);
+    
+    List<TransaccionPlaya> findTransaccionesByFecha(CuentaPlaya cuentaPlaya, Date fechaD, Date fechaH);
+    
+    
 
 }

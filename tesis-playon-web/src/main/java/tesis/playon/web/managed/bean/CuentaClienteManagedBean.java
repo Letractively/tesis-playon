@@ -5,16 +5,18 @@ package tesis.playon.web.managed.bean;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.dao.DataAccessException;
 
 import tesis.playon.web.model.Cliente;
@@ -71,6 +73,19 @@ public class CuentaClienteManagedBean {
 
     private TipoPago tipoPago;
 
+    private Date fechaDesde;
+
+    private Date fechaHasta;
+
+    @PostConstruct
+    private void init() {
+	this.fechaDesde = new Date();
+	this.fechaHasta = new Date();
+	this.fechaDesde = DateUtils.setDays(this.fechaDesde, 1);
+	getCliente();
+
+    }
+
     public void cargarSaldo() {
 	try {
 	    float saldoCliente = cliente.getCuentaCliente().getSaldo();
@@ -96,9 +111,10 @@ public class CuentaClienteManagedBean {
     }
 
     public List<TransaccionCliente> getTransacciones() {
-	transacciones = new ArrayList<TransaccionCliente>();
-	cliente = getCliente();
-	transacciones = getTransaccionClienteService().findTransaccionesByCuentaCliente(cliente.getCuentaCliente());
+	Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012012));
+	Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta : Calendar.getInstance().getTime());
+	transacciones = getTransaccionClienteService().findTransaccionesByFecha(cliente.getCuentaCliente(), fechaDesde,
+		fechaHasta);
 	return transacciones;
     }
 
@@ -206,4 +222,26 @@ public class CuentaClienteManagedBean {
 	pdf.addTitle("Historial de Transacciones");
 	pdf.add(Image.getInstance(logo));
     }
+
+    public Date getFechaDesde() {
+	return fechaDesde;
+    }
+
+    public void setFechaDesde(Date fechaDesde) {
+	this.fechaDesde = fechaDesde;
+    }
+
+    public Date getFechaHasta() {
+	return fechaHasta;
+    }
+
+    public void setFechaHasta(Date fechaHasta) {
+	this.fechaHasta = fechaHasta;
+    }
+
+    public void updateListado() {
+	this.fechaDesde = null;
+	this.fechaHasta = null;
+    }
+
 }

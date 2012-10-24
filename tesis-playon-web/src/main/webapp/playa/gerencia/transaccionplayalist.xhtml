@@ -15,6 +15,25 @@
 		<p:growl id="messages" />
 		<h1>Mis Transacciones</h1>
 		<h:form>
+			<table style="border-collapse: collapse; border: 0px solid black;">
+				<tr>
+					<td><h:outputText value="Desde:" /></td>
+					<td><p:calendar value="#{ingresoEgresoMB.fechaDesde}"
+							id="calDesde" /></td>
+
+
+					<td><h:outputText value="Hasta:" /></td>
+					<td><p:calendar value="#{ingresoEgresoMB.fechaHasta}"
+							id="calHasta" /></td>
+
+					<td colspan="2"><p:commandButton id="buscarButton"
+							value="Buscar" icon="ui-icon-search" ajax="true"
+							update="transacciones" /></td>
+					<td colspan="2"><p:commandButton id="buscarButton2"
+							action="#{ingresoEgresoMB.updateListado}" value="Buscar Todas"
+							icon="ui-icon-search" ajax="true" update="transacciones" /></td>
+				</tr>
+			</table>
 			<p:dataTable id="transacciones" var="transaccionPlaya"
 				paginator="false" value="#{ingresoEgresoMB.transaccionesPlayas}"
 				emptyMessage="No ha realizado transacciones"
@@ -59,6 +78,7 @@
 								<p:graphicImage
 									value="http://www.primefaces.org/showcase/images/pdf.png" />
 								<p:dataExporter type="pdf" target="transacciones"
+									preProcessor="#{ingresoEgresoMB.preProcessPDF}"
 									fileName="Transacciones" />
 							</h:commandLink>
 						</h:panelGrid>

@@ -1,9 +1,11 @@
 package tesis.playon.web.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import tesis.playon.web.model.CuentaCliente;
 import tesis.playon.web.model.TransaccionCliente;
+import tesis.playon.web.model.TransaccionPlaya;
 
 /**
  * @author Pablo
@@ -22,5 +24,7 @@ public interface ITransaccionClienteDao {
     List<TransaccionCliente> findAll();
 
     List<TransaccionCliente> findTransaccionesByCuentaCliente(CuentaCliente cuentaCliente);
+
+    List<TransaccionCliente> findTransaccionesByFecha(CuentaCliente cuentacliente, Date fechaD, Date fechaH);
 
 }

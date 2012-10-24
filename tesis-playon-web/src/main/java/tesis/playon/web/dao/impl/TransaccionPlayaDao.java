@@ -1,6 +1,7 @@
 package tesis.playon.web.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -98,6 +99,21 @@ public class TransaccionPlayaDao implements ITransaccionPlayaDao {
 	}
 	return transaccionPlaya;
 
+    }
+
+    public List<TransaccionPlaya> findTransaccionesByFecha(CuentaPlaya cuentaPlaya, Date fechaD, Date fechaH) {
+	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from TransaccionPlaya as tp where " + "tp.cuentaPlaya=? and tp.fecha>=? and tp.fecha<=?")
+		.setParameter(0, cuentaPlaya).setParameter(1, fechaD).setParameter(2, fechaH).list();
+
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		transaccionPlaya.add(((TransaccionPlaya) object));
+	    }
+	    return transaccionPlaya;
+	}
+	return null;
     }
 
 }

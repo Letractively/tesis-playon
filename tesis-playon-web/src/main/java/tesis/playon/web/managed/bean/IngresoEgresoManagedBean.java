@@ -1,9 +1,9 @@
 package tesis.playon.web.managed.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -49,6 +49,12 @@ import tesis.playon.web.service.ITransaccionClienteService;
 import tesis.playon.web.service.ITransaccionPlayaService;
 import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.service.IVehiculoService;
+
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
 
 @ManagedBean(name = "ingresoEgresoMB")
 @SessionScoped
@@ -164,6 +170,10 @@ public class IngresoEgresoManagedBean implements Serializable {
     private List<TransaccionPlaya> transaccionesPlayas;
 
     private Promocion promocion;
+
+    private Date fechaDesde;
+
+    private Date fechaHasta;
 
     @PostConstruct
     private void init() {
@@ -884,15 +894,47 @@ public class IngresoEgresoManagedBean implements Serializable {
 	return "/playa/ingresoegresovehiculo";
     }
 
-    public List<TransaccionPlaya> getTransaccionesPlayas() {
+    public void updateListado() {
 
-	transaccionesPlayas = new ArrayList<TransaccionPlaya>();
-	transaccionesPlayas = getTransaccionPlayaService().findByCuentaPlaya(getCuentaPlaya());
+	fechaDesde = fechaHasta = null;
+
+    }
+
+    public List<TransaccionPlaya> getTransaccionesPlayas() {
+	Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012012));
+	Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta : Calendar.getInstance().getTime());
+	transaccionesPlayas = getTransaccionPlayaService().findTransaccionesByFecha(getCuentaPlaya(), fechaDesde,
+		fechaHasta);
 	return transaccionesPlayas;
     }
 
     public void setTransaccionesPlayas(List<TransaccionPlaya> transaccionesPlayas) {
 	this.transaccionesPlayas = transaccionesPlayas;
+    }
+
+    public Date getFechaDesde() {
+	return fechaDesde;
+    }
+
+    public void setFechaDesde(Date fechaDesde) {
+	this.fechaDesde = fechaDesde;
+    }
+
+    public Date getFechaHasta() {
+	return fechaHasta;
+    }
+
+    public void setFechaHasta(Date fechaHasta) {
+	this.fechaHasta = fechaHasta;
+    }
+
+    public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+	Document pdf = (Document) document;
+	pdf.open();
+	pdf.setPageSize(PageSize.A4);
+	String logo = "/home/gonza/workspace2/tesis-playon-web/src/main/webapp/resources/images/transacciones.png";
+	pdf.addTitle("Historial de Transacciones");
+	pdf.add(Image.getInstance(logo));
     }
 
 }
