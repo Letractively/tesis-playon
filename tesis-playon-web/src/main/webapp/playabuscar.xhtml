@@ -79,7 +79,8 @@
 				</p:column>
 
 				<p:column style="vertical-align: center;">
-					<h:outputLabel for="distancia" value="N° de cuadras: " />
+					<div align="right">
+					<h:outputLabel for="distancia" value="N° de cuadras: " /></div>
 				</p:column>
 				<p:column>
 					<p:inputText id="distancia" value="#{busquedaplayaMB.distancia}" />
@@ -110,6 +111,27 @@
 							value="Buscar" action="#{busquedaplayaMB.buscarPlaya}"
 							ajax="false" rendered="#{!busquedaplayaMB.opcionesAvanzadas}" />
 					</div>
+				</p:column>
+				
+				
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
+					<div align="right">
+						<h:outputLabel for="nombrePlaya" value="Nombre de la playa: " />
+					</div>
+				</p:column>
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
+					<p:inputText id="nombrePlaya"
+						value="#{busquedaplayaMB.nombrePlayaParameter}" />
+				</p:column>
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
+					<h:outputLabel for="nombrePlaya" value="Contega promociones: " />
+				</p:column>
+				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
+					<p:selectOneRadio id="check" 
+						value="#{busquedaplayaMB.checkPromociones}">
+						<f:selectItem itemLabel="SI&#160;&#160;&#160;&#160;&#160;&#160;" itemValue="1" />
+						<f:selectItem itemLabel=" NO" itemValue="0" />
+					</p:selectOneRadio>
 				</p:column>
 				
 
@@ -146,27 +168,6 @@
 							itemLabel="#{tipoEstadia.nombre}" />
 						<f:converter converterId="tipoEstadiaConverter" />
 					</p:selectOneMenu>
-				</p:column>
-
-
-				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
-					<div align="right">
-						<h:outputLabel for="nombrePlaya" value="Nombre de la playa: " />
-					</div>
-				</p:column>
-				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
-					<p:inputText id="nombrePlaya"
-						value="#{busquedaplayaMB.nombrePlayaParameter}" />
-				</p:column>
-				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
-					<h:outputLabel for="nombrePlaya" value="Contega promociones: " />
-				</p:column>
-				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
-					<p:selectOneRadio id="check" 
-						value="#{busquedaplayaMB.checkPromociones}">
-						<f:selectItem itemLabel="SI&#160;&#160;&#160;&#160;&#160;&#160;" itemValue="1" />
-						<f:selectItem itemLabel=" NO" itemValue="0" />
-					</p:selectOneRadio>
 				</p:column>
 
 				<p:column />

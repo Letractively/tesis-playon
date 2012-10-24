@@ -16,6 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
@@ -123,7 +124,6 @@ public class TarifaManagedBean implements Serializable {
     private List<Tarifa> tarifaListSelected;
 
     @PostConstruct
-    // METODO PARA INICIALIZAR TODOS LOS ATRIBUTOS
     public void init() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	String userName = facesContext.getExternalContext().getRemoteUser();
@@ -131,6 +131,7 @@ public class TarifaManagedBean implements Serializable {
 	if (user != null && user.getPlaya() != null) {
 	    this.setPlaya(user.getPlaya());
 	    this.setPlayaLogged(playa);
+	    tarifaListEmpleados= getTarifaService().findTarifaVigenteByPlaya(user.getPlaya());
 	}
     }
 
@@ -864,6 +865,65 @@ public class TarifaManagedBean implements Serializable {
 
     public void setPlayaLogged(Playa playaLogged) {
 	this.playaLogged = playaLogged;
+    }
+    
+    private List<Tarifa> tarifaListEmpleados;
+    private List<Tarifa> filteredTarifas;
+    
+    @SuppressWarnings("unused")
+    private SelectItem[] categoriaOptions;
+    
+    @SuppressWarnings("unused")
+    private SelectItem[] tipoEstadiaOptions;
+
+    public List<Tarifa> getTarifaListEmpleados() {
+        return tarifaListEmpleados;
+    }
+
+    public void setTarifaListEmpleados(List<Tarifa> tarifaListEmpleados) {
+        this.tarifaListEmpleados = tarifaListEmpleados;
+    }
+
+    public List<Tarifa> getFilteredTarifas() {
+        return filteredTarifas;
+    }
+
+    public void setFilteredTarifas(List<Tarifa> filteredTarifas) {
+        this.filteredTarifas = filteredTarifas;
+    }
+
+    public SelectItem[] getCategoriaOptions() {
+	List<CategoriaVehiculo> categorias = new ArrayList<CategoriaVehiculo>();
+	categorias= getCategoriaVehiculoService().findAll();
+	this.categoriaOptions = new SelectItem[categorias.size() + 1];
+	SelectItem[] options = new SelectItem[categorias.size() + 1];
+	options[0] = new SelectItem("", "Todos");
+
+	for (int i = 0; i < categorias.size(); i++) {
+	    options[i + 1] = new SelectItem(categorias.get(i), categorias.get(i).getNombre());
+	}
+	return options;
+    }
+
+    public void setCategoriaOptions(SelectItem[] categoriaOptions) {
+        this.categoriaOptions = categoriaOptions;
+    }
+
+    public SelectItem[] getTipoEstadiaOptions() {
+	List<TipoEstadia> tipos = new ArrayList<TipoEstadia>();
+	tipos= getTipoEstadiaService().findAll();
+	this.categoriaOptions = new SelectItem[tipos.size() + 1];
+	SelectItem[] options = new SelectItem[tipos.size() + 1];
+	options[0] = new SelectItem("", "Todos");
+
+	for (int i = 0; i < tipos.size(); i++) {
+	    options[i + 1] = new SelectItem(tipos.get(i), tipos.get(i).getNombre());
+	}
+	return options;
+    }
+
+    public void setTipoEstadiaOptions(SelectItem[] tipoEstadiaOptions) {
+        this.tipoEstadiaOptions = tipoEstadiaOptions;
     }
 
 }

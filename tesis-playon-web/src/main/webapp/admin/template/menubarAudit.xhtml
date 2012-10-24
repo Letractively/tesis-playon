@@ -10,16 +10,19 @@
 
 	<h:form>
 		<p:menubar style="font-size: 0.8em;">
-			<p:menuitem value="Inicio" url="#{request.contextPath}/../auditoria" />
-
-			<p:submenu label="Auditoría">
-				<p:menuitem value="Playas Pendientes"
+			<p:menuitem value="Inicio" url="#{request.contextPath}/../auditoria/index.html" />
+			
+			<p:menuitem value="Playas"
 					url="#{request.contextPath}/../auditoria/playaspendienteslist.html"
-					icon="ui-icon-help" />
-				<p:menuitem value="Playas Rechazadas"
-					url="#{request.contextPath}/../auditoria/playasrechazadaslist.html"
-					icon="ui-icon-close" />
-			</p:submenu>
+					icon="ui-icon-zoomin" />
+					
+			<p:menuitem value="Denuncias a vehículos"
+					url="#{request.contextPath}/../auditoria/denunciasvehiculos.html"
+					icon="ui-icon-pin-w" />
+			
+			<p:menuitem value="Denuncias a playas"
+					url="#{request.contextPath}/../auditoria/denunciasvehiculos.html"
+					icon="ui-icon-pin-w" />
 
 			<p:submenu label="Usuario">
 				<p:menuitem value="Cambiar Contraseña"
