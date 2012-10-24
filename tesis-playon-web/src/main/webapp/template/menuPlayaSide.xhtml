@@ -40,6 +40,12 @@
 				<div class="box">
 
 					<p:menu style="width: 95%;" styleClass="side-menu">
+						<p:submenu label="Perfil">
+							<p:menuitem value="Ver perfil"
+								outcome="/playa/perfilplaya" icon="ui-icon-plus" />
+							<p:menuitem value="Editar perfil"
+								outcome="/playa/gerencia/perfilplayaedit" icon="ui-icon-person" />
+						</p:submenu>
 						<p:submenu label="Empleados">
 							<p:menuitem value="Nuevo empleado"
 								outcome="/playa/gerencia/empleadoadd" icon="ui-icon-plus" />
@@ -55,6 +61,10 @@
 								icon="ui-icon-plus" />
 							<p:menuitem value="Ver promociones" outcome="/playa/gerencia/promocioneslist"
 								icon="ui-icon-suitcase" />
+						</p:submenu>
+						<p:submenu label="Transacciones">
+							<p:menuitem value="Ver transacciones"
+								outcome="/playa/gerencia/transaccionplayalist" icon="ui-icon-calculator" />
 						</p:submenu>
 						<p:submenu label="Informes">
 							<p:menuitem value="Informes" outcome="/playa/gerencia/grafico"
@@ -73,6 +83,15 @@
 						<p:menuitem value="Ingreso / Egreso"
 							outcome="/playa/ingresoegresovehiculo"
 							icon="ui-icon-arrow-2-e-w" />
+						<p:menuitem value="Consultar tarifas"
+							outcome="/playa/consultartarifas"
+							icon="ui-icon-note" />
+						<p:menuitem value="Consultar promociones"
+							outcome="/playa/consultarpromociones"
+							icon="ui-icon-suitcase" />
+						<p:menuitem value="Denunciar vehículo"
+							outcome="/playa/denunciarvehiculo"
+							icon="ui-icon-print" />
 					</p:submenu>
 				</p:menu>
 			</div>
