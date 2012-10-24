@@ -10,8 +10,6 @@ IN pNombreComercial MEDIUMTEXT,
 IN pPromociones TINYINT
 )
 BEGIN
-    DECLARE vFechaActual Date;
-    SET vFechaActual = now();
     SELECT p.barrioID, p.cuit, p.disponibilidad, p.domicilio, p.telefono, p.email,
         p.estadoPlayaID, p.nombreComercial, p.latitud, p.longitud, p.razonSocial,
         p.playaID
@@ -24,16 +22,10 @@ BEGIN
                                                         FROM promocion promo
                                                         WHERE pPromociones = 1
                                                                 AND promo.estadoPromocionID=2
-                                                                AND promo.fechaInicio >= vFechaActual
-                                                                AND promo.fechaFin <= vFechaActual)))
+                                                                AND (promo.fechaInicio >= now())
+                                                                AND (promo.fechaFin <= now()))))
             AND (p.estadoPlayaID = 2)
-            AND (p.disponibilidad > 0)
-            AND (pNombreComercial IS NULL OR (p.nombreComercial LIKE CONCAT('%',pNombreComercial,'%'))))
-    ORDER BY ( 6371 * acos( cos( radians(platitud) )
-                * cos( radians( latitud ) )
-                * cos( radians( longitud ) - radians(plongitud) )
-                + sin( radians(platitud) )
-                * sin( radians( latitud ) ) ) );
+            AND (p.disponibilidad > 0));
 END $$
 
 DELIMITER ;
