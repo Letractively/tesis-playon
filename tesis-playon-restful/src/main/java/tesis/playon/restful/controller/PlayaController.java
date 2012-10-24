@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import tesis.playon.restful.domain.EstadoPlaya;
 import tesis.playon.restful.domain.Playa;
+import tesis.playon.restful.domain.Playas;
 import tesis.playon.restful.service.IPlayaService;
 
 @Controller("playaController")
@@ -23,9 +24,9 @@ public class PlayaController {
 
     @RequestMapping(value = "/playas", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
-    List<Playa> getPlayas() {
-	List<Playa> result = new ArrayList<Playa>();
-	result = playaService.findAll();
+    Playas getPlayas() {
+	Playas result = new Playas();
+	result.setLista(playaService.findAll());
 	return result;
     }
 
