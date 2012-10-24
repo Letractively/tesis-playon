@@ -65,11 +65,6 @@ public class PlayaService implements IPlayaService {
     public void setPlayaDao(IPlayaDao playaDao) {
         this.playaDao = playaDao;
     }
-    
-    @Override
-    public List <Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia ){
-	return getPlayaDao().findPlayasCercanas(longitud, latitud, distancia);
-    }
 
     @Override
     public List<Playa> findByEstado(EstadoPlaya estado) {
@@ -84,8 +79,9 @@ public class PlayaService implements IPlayaService {
     
     @Override
     public List<Playa> findByPlayasCercanas(Double longitud, Double latitud
-	    , int distancia,int categoriaParameter, int tipoEstadiaParameter){
-	return getPlayaDao().findByPlayasCercanas(longitud, latitud, distancia,categoriaParameter,tipoEstadiaParameter);
+	    , int categoriaParameter, int tipoEstadiaParameter
+	    ,String nombreComercial, int checkPromociones){
+	return getPlayaDao().findByPlayasCercanas(longitud, latitud, categoriaParameter, tipoEstadiaParameter, nombreComercial, checkPromociones);
     }
     
     @Override

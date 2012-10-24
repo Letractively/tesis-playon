@@ -8,7 +8,6 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IPlayaDao;
-import tesis.playon.web.model.CuentaPlaya;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Playa;
 
@@ -75,22 +74,16 @@ public class PlayaDao implements IPlayaDao {
     }
 
     public List<Playa> findByPlayasCercanas(Double longitud, Double latitud
-	    , int distancia, int categoriaParameter, int tipoEstadiaParameter) {
-//	 List<?> list = getSessionFactory().getCurrentSession()
-//	 .createSQLQuery("CALL tesis_playon.busquedaAvanzada(:platitud, :plongitud, :pdistancia, :pTipoEstadia, :pCategoriaVehiculo)")
-//	 .addEntity(Playa.class)
-//	 .setParameter("platitud", latitud)
-//	 .setParameter("plongitud", longitud)
-//	 .setParameter("pdistancia", distancia)
-//	 .setParameter("pTipoEstadia", tipoEstadiaParameter)
-//	 .setParameter("pCategoriaVehiculo", tipoEstadiaParameter).list();
+	    , int categoriaParameter, int tipoEstadiaParameter
+	    ,String nombreComercial, int checkPromociones) {
 
 	Query query = getSessionFactory().getCurrentSession().getNamedQuery("callPlayasSP")
 		.setParameter("platitud", latitud)
 		.setParameter("plongitud", longitud)
-		.setParameter("pdistancia", distancia)
 		.setParameter("pTipoEstadia", tipoEstadiaParameter)
-		.setParameter("pCategoriaVehiculo", categoriaParameter);
+		.setParameter("pCategoriaVehiculo", categoriaParameter)
+		.setParameter("pNombreComercial",nombreComercial)
+		.setParameter("pPromociones", checkPromociones);
 	List<?> list = query.list();
 	List<Playa> playas = new ArrayList<Playa>();
 	if (!list.isEmpty()) {

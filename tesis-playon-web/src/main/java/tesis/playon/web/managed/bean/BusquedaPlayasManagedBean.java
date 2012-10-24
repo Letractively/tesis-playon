@@ -60,11 +60,11 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     // Atributos para los filtros.
     private boolean opcionesAvanzadas;
-
     private CategoriaVehiculo categoriaParameter;
-
     private TipoEstadia tipoEstadiaParameter;
-
+    private int checkPromociones;
+    private String nombrePlayaParameter;
+    
     private Double latitudCentro;
     private Double longitudCentro;
 
@@ -72,14 +72,6 @@ public class BusquedaPlayasManagedBean implements Serializable {
     private void init() {
 	playaResultadoBusqueda = new ArrayList<Playa>();
 	distancia = 25;
-	// List<Playa> playasCercanas = new ArrayList<Playa>();
-	// playasCercanas = getPlayaService()
-	// .findByPlayasCercanas(-31.430531, -64.189428, 25,categoriaParameter, tipoEstadiaParameter);
-	// if (playasCercanas != null) {
-	// for (Playa playa : playasCercanas) {
-	// System.out.println(playa.toString());
-	// }
-	// }
 	opcionesAvanzadas = false;
     }
 
@@ -136,11 +128,14 @@ public class BusquedaPlayasManagedBean implements Serializable {
     public void busquedaAvanzada() {
 	int idCategoria = 0;
 	int idTipoEstadia = 0;
+	String nombrePlaya = null;
 
 	if (categoriaParameter != null)
 	    idCategoria = categoriaParameter.getId();
 	if (tipoEstadiaParameter != null)
 	    idTipoEstadia = tipoEstadiaParameter.getId();
+	if(!nombrePlayaParameter.isEmpty())
+	    nombrePlaya = nombrePlayaParameter;
 
 	if (null != getDireccionBusqueda() && !getDireccionBusqueda().trim().isEmpty()) {
 	    try {
@@ -154,12 +149,12 @@ public class BusquedaPlayasManagedBean implements Serializable {
 		advancedModel = new DefaultMapModel();
 
 		List<Playa> playasCercanas = new ArrayList<Playa>();
-		playasCercanas = getPlayaService().findByPlayasCercanas(-31.430531, -64.189428, 25, idCategoria,
-			idTipoEstadia);
+		playasCercanas = getPlayaService().findByPlayasCercanas(respuesta.getLatitud(),
+			respuesta.getLongitud(), idCategoria, idTipoEstadia, nombrePlaya, checkPromociones);
 
 		for (Playa playaAux : playasCercanas) {
 		    Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
-		    if (comparacion < getDistancia() && playaAux.getEstado().getId() == 2) {
+		    if (comparacion < getDistancia()) {
 			playaResultadoBusqueda.add(playaAux);
 			LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
 			PerfilPlaya perfil = new PerfilPlaya();
@@ -374,6 +369,22 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     public void setLongitudCentro(Double longitudCentro) {
 	this.longitudCentro = longitudCentro;
+    }
+
+    public int getCheckPromociones() {
+        return checkPromociones;
+    }
+
+    public void setCheckPromociones(int checkPromociones) {
+        this.checkPromociones = checkPromociones;
+    }
+
+    public String getNombrePlayaParameter() {
+        return nombrePlayaParameter;
+    }
+
+    public void setNombrePlayaParameter(String nombrePlayaParameter) {
+        this.nombrePlayaParameter = nombrePlayaParameter;
     }
 
 }

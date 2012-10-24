@@ -36,9 +36,8 @@
 			</div>
 
 			<p:commandLink id="favorito" immediate="true"
-				rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}"
-				ajax="true" actionListener="#{favoritoMB.addFavorito}"
-				update="messages">
+				rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}" ajax="true"
+				actionListener="#{favoritoMB.addFavorito}" update="messages">
 				<h:graphicImage library="images/icons" name="star.png" />
 				<h:outputText value="Agregar a favoritos" />
 			</p:commandLink>
@@ -69,30 +68,35 @@
 				<p:accordionPanel multiple="true" dynamic="true">
 					<p:tab title="Información">
 						<div style="margin: 0 0 0 10px;">
-							<h:panelGrid columns="2" cellpadding="8">
+							<h:panelGrid columns="3" cellpadding="8">
 								<h:outputText value="Domicilio: " styleClass="fuente-outputtext" />
 								<h:outputText
 									value="#{perfilPlayaMB.playaSelected.domicilio}, Córdoba "
 									styleClass="fuente-perfil" />
+								<p:commandLink id="view2" oncomplete="dlg2.show();"
+									title="Ver Mapa">
+									<h:graphicImage library="images/icons" name="search-map.png"
+										style="height:40px; width:40px; margin-left:10px;" />
+								</p:commandLink>
 
 								<h:outputText value="Barrio: " styleClass="fuente-outputtext" />
 								<h:outputText
 									value="#{perfilPlayaMB.playaSelected.barrio.nombre}"
-									styleClass="fuente-perfil" />
+									styleClass="fuente-perfil" /><p:column />
 
 								<h:outputText value="Teléfono: " styleClass="fuente-outputtext" />
 								<h:outputText value="#{perfilPlayaMB.playaSelected.telefono}"
-									styleClass="fuente-perfil" />
+									styleClass="fuente-perfil" /><p:column />
 
 								<h:outputText value="E-mail: " styleClass="fuente-outputtext" />
 								<h:outputText value="#{perfilPlayaMB.playaSelected.email}"
-									styleClass="fuente-perfil" />
+									styleClass="fuente-perfil" /><p:column />
 
 								<h:outputText value="Disponibilidad: "
 									styleClass="fuente-outputtext" />
 								<h:outputText
 									value="#{perfilPlayaMB.playaSelected.disponibilidad}"
-									styleClass="fuente-perfil" />
+									styleClass="fuente-perfil" /><p:column />
 							</h:panelGrid>
 						</div>
 					</p:tab>
@@ -237,7 +241,7 @@
 																value="Enviar comentario"
 																action="#{comentarioMB.addComentario}" ajax="false"
 																style="margin:5px 5px 0 5px" update=":messageComentario">
-														</p:commandButton>
+															</p:commandButton>
 														</div>
 													</td>
 												</tr>
@@ -252,24 +256,29 @@
 				<p:messages id="messageComentario" showDetail="true" closable="true" />
 			</div>
 
-			<br />
-				Ubicación
-				<p:separator id="separatorMapa" />
-			<div align="center" style="margin: 15px 0 0 0;">
-				<f:view id="vistaGMap" contentType="text/html">
-					<script src="http://maps.google.com/maps/api/js?sensor=false"
-						type="text/javascript"></script>
+			<p:dialog widgetVar="dlg2" width="828" height="460" modal="true"
+				id="dialog" draggable="false">
+				<f:facet name="header">
+					<h:outputText
+						value="Ubicación de #{perfilPlayaMB.playaSelected.nombreComercial}" />
+				</f:facet>
+				<div align="center" style="margin: 15px 0 0 0;">
+					<f:view id="vistaGMap" contentType="text/html">
+						<script src="http://maps.google.com/maps/api/js?sensor=false"
+							type="text/javascript"></script>
 
-					<p:gmap center="#{perfilPlayaMB.coordenadas}" zoom="15"
-						streetView="true" type="ROADMAP"
-						model="#{perfilPlayaMB.advancedModel}"
-						style="width: 500px ;height:250px; border:2px solid #819FF7;">
+						<p:gmap center="#{perfilPlayaMB.coordenadas}" zoom="15"
+							streetView="true" type="ROADMAP"
+							model="#{perfilPlayaMB.advancedModel}"
+							style="width:780px ;height:420px; 
+						border:2px solid #819FF7; margin:10px 10px 10px 10px">
 
-						<p:ajax event="overlaySelect"
-							listener="#{perfilPlayaMB.onMarkerSelect}" />
-					</p:gmap>
-				</f:view>
-			</div>
+							<p:ajax event="overlaySelect"
+								listener="#{perfilPlayaMB.onMarkerSelect}" />
+						</p:gmap>
+					</f:view>
+				</div>
+			</p:dialog>
 
 			<ui:fragment rendered="#{perfilPlayaMB.fotosListSelected !=null}">
 				<br />
@@ -290,5 +299,6 @@
 				</div>
 			</ui:fragment>
 		</h:form>
+
 	</ui:define>
 </ui:composition>

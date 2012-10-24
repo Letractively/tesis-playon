@@ -28,11 +28,10 @@ public interface IPlayaService {
     Playa findById(int idPlaya);
 
     List<Playa> findAll();
-
-    List<Playa> findPlayasCercanas(Double longitud, Double latitud, int distancia);
     
     List<Playa> findByPlayasCercanas(Double longitud, Double latitud
-	    , int distancia,int categoriaParameter, int tipoEstadiaParameter);
+	    , int categoriaParameter, int tipoEstadiaParameter
+	    ,String nombreComercial, int checkPromociones);
 
     List<Playa> findByEstado(EstadoPlaya estado);
 
