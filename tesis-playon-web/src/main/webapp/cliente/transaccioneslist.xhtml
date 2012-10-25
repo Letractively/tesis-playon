@@ -12,26 +12,26 @@
 	<ui:define name="content">
 		<p:growl id="messages" />
 		<h1>Mis Transacciones</h1>
-		<h:form>
-			<table style="border-collapse: collapse; border: 0px solid black;">
-				<tr>
-					<td><h:outputText value="Desde:" /></td>
-					<td><p:calendar value="#{cuentaClienteMB.fechaDesde}"
-							id="calDesde" /></td>
+		<h:form style="margin:0 0 0 20px;">
+			<h:panelGrid columns="6" cellspacing="10">
+				<h:outputText value="Desde:" />
+				<p:calendar value="#{cuentaClienteMB.fechaDesde}" id="calDesde" />
 
+				<p:column>
+					<div align="right">
+						<h:outputText value="Hasta: " />
+					</div>
+				</p:column>
+				<p:calendar value="#{cuentaClienteMB.fechaHasta}" id="calHasta" />
 
-					<td><h:outputText value="Hasta:" /></td>
-					<td><p:calendar value="#{cuentaClienteMB.fechaHasta}"
-							id="calHasta" /></td>
+				<p:commandButton id="buscarButton" value="Buscar"
+					icon="ui-icon-search" ajax="true" update="transacciones" />
+				<p:commandButton id="buscarButton2" style="width:130px;"
+					action="#{cuentaClienteMB.updateListado}" value="Buscar Todas"
+					icon="ui-icon-search" ajax="true" update="transacciones" />
 
-					<td colspan="2"><p:commandButton id="buscarButton"
-							value="Buscar" icon="ui-icon-search" ajax="true"
-							update="transacciones" /></td>
-					<td colspan="2"><p:commandButton id="buscarButton2"
-							action="#{cuentaClienteMB.updateListado}" value="Buscar Todas"
-							icon="ui-icon-search" ajax="true" update="transacciones" /></td>
-				</tr>
-			</table>
+			</h:panelGrid>
+
 
 			<p:dataTable id="transacciones" var="transaccionCliente"
 				rowStyleClass="#{transaccionCliente.tipoPago.nombre eq 'Cuenta' ? 'old' :null}"
@@ -44,7 +44,8 @@
 						<h:outputText value="Fecha" />
 					</f:facet>
 					<h:outputText value="#{transaccionCliente.fecha}">
-						<f:convertDateTime dateStyle="full" />
+						<f:convertDateTime pattern="d - M - yyyy " timeStyle="short"
+							type="both" />
 					</h:outputText>
 				</p:column>
 

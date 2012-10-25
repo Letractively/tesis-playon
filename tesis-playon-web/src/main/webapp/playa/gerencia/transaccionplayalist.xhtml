@@ -14,7 +14,7 @@
 	<ui:define name="content">
 		<p:growl id="messages" />
 		<h1>Mis Transacciones</h1>
-		
+
 		<h:form style="margin:0 0 0 20px;">
 			<h:panelGrid columns="6" cellspacing="10">
 				<h:outputText value="Desde:" />
@@ -45,7 +45,7 @@
 						<h:outputText value="Fecha" />
 					</f:facet>
 					<h:outputText value="#{transaccionPlaya.fecha}">
-						<f:convertDateTime dateStyle="full" />
+						<f:convertDateTime pattern="d - M - yyyy" />
 					</h:outputText>
 				</p:column>
 
