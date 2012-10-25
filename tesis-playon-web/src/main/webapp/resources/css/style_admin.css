@@ -3,9 +3,9 @@
 .ui-widget,.ui-widget .ui-widget { /* 	font-size: 8pt !important; */
 	
 }
-body {
-/* 		background-color: lightgray; */
-		background-color: rgb(223, 239, 252);
+
+body { /* 		background-color: lightgray; */
+	background-color: rgb(223, 239, 252);
 }
 
 /* ********************************************** */
@@ -20,7 +20,6 @@ body {
 	width: 980px;
 	/* 	width: 100%; */
 	/* 	overflow: hidden; */
-
 }
 
 #mainbody-login {
@@ -156,8 +155,7 @@ body {
 	letter-spacing: 0.4em;
 }
 
-.admin-footer {
-/* 	color: dimgrey; */
+.admin-footer { /* 	color: dimgrey; */
 	text-decoration: none;
 	text-align: center;
 	margin-top: 20px;
@@ -182,6 +180,22 @@ body {
 .admin-input-text td {
 	margin: 15px;
 }
+
+.liquidacion-table {
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0;
+}
+
+.liquidacion-table td {
+	padding: 5px;
+}
+
+.liquidacion-table th {
+	padding: 10px;
+}
+
 
 /* ********************************************** */
 /*	Layout Login	*/

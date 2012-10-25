@@ -1364,7 +1364,9 @@ UNLOCK TABLES;
 
 LOCK TABLES `detalle_estadia` WRITE;
 /*!40000 ALTER TABLE `detalle_estadia` DISABLE KEYS */;
-INSERT INTO `tesis_playon`.`detalle_estadia` (`transaccionClienteID`,`empleadoID`,`fechaHoraEgreso`,`fechaHoraIngreso`,`importeTotal`,`cobrado`,`promocionID`,`tarifaID`,`vehiculoID`,`detalleEstadiaID`,`estadiaID`) VALUES 
+INSERT INTO `tesis_playon`.`detalle_estadia` (`transaccionClienteID`,`empleadoID`,
+`fechaHoraEgreso`,`fechaHoraIngreso`,`importeTotal`,`cobrado`,`promocionID`,
+`tarifaID`,`vehiculoID`,`detalleEstadiaID`,`estadiaID`) VALUES 
  (2,1002,'2012-08-04 17:48:45','2012-08-04 19:25:23',20,1,NULL,1,1,1,3),
  (2,1002,'2012-08-11 17:50:35','2012-08-11 18:45:21',10,1,NULL,1,1,2,3),
  (2,1002,'2012-08-18 17:51:18','2012-08-18 18:32:49',10,1,NULL,1,1,3,3);
@@ -1429,9 +1431,9 @@ UNLOCK TABLES;
 LOCK TABLES `transaccion_playa` WRITE;
 INSERT INTO `tesis_playon`.`transaccion_playa` (`fecha`,`importe`,`tipoPagoID`,`transaccionPlayaID`,
 	`cuentaPlayaID`,`liquidacionID`,`detalleEstadiaID`) VALUES 
- ('2012-08-04 19:25:23',20,4,1,1,NULL,NULL),
- ('2012-08-11 18:45:21',10,4,2,1,NULL,NULL),
- ('2012-08-18 18:32:49',10,4,3,1,NULL,NULL);
+ ('2012-08-04 19:25:23',20,4,1,1,NULL,1),
+ ('2012-08-11 18:45:21',10,4,2,1,NULL,2),
+ ('2012-08-18 18:32:49',10,4,3,1,NULL,3);
 /*!40000 ALTER TABLE `transaccion_playa` ENABLE KEYS */;
 UNLOCK TABLES;
 

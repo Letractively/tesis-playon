@@ -6,12 +6,192 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:param name="panelTitle"
-		value="Listado de Playas de Estacionamiento" />
+		value="Listado de Playas de Estacionamiento liquidadas" />
 
 	<ui:define name="panelContent" class="admin-font">
 		<p:growl id="messages" />
 
-		<h1>LIQUIDADO!!!</h1>
-		
+		<p>Liquidado con éxito. A continuación verá un listado con todas
+			las liquidaciones.</p>
+
+		<p:dataTable var="liquidacion"
+			value="#{liquidacionMB.liquidacionesList}" paginatorPosition="bottom"
+			paginator="true" rows="10" sortBy="#{liquidacion.estadia}"
+			sortOrder="ascending">
+
+			<f:facet name="header">  
+            	Listado de playas liquidadas  
+        	</f:facet>
+
+			<p:column id="fechaId" headerText="Número" sortBy="#{liquidacion.id}">  
+	                #{liquidacion.id}  
+	            </p:column>
+
+			<p:column id="playaHeader" headerText="Playa"
+				sortBy="#{liquidacion.estadia.playa.razonSocial}">  
+	                #{liquidacion.estadia.playa.razonSocial} 
+	            </p:column>
+
+			<p:column id="importeHeader" headerText="Importe"
+				sortBy="#{liquidacion.importeTotal}">  
+	                $ #{liquidacion.importeTotal} 
+	            </p:column>
+
+			<p:column headerText="Opciones" styleClass="column-options"
+				style="text-align:center; width:95px;">
+
+				<p:commandLink id="view" update=":mainForm:displayView"
+					oncomplete="playasDialog.show();" title="Ver Datos">
+					<f:setPropertyActionListener value="#{liquidacion.estadia.playa}"
+						target="#{playaMB.playaSelected}" />
+					<h:graphicImage library="images/icons" name="search.png" />
+				</p:commandLink>
+
+				<p:commandLink id="viewTrn" update=":mainForm:transaccionesView"
+					oncomplete="trnDialog.show();" title="Ver Transacciones">
+					<f:setPropertyActionListener value="#{liquidacion}"
+						target="#{transaccionPlayaMB.liquidacionSelected}" />
+					<h:graphicImage library="images/icons" name="list.png" />
+				</p:commandLink>
+
+			</p:column>
+
+		</p:dataTable>
+
+		<!-- DIALOG PARA VER LOS DATOS DE LA PLAYA SELECCIONADA -->
+		<p:dialog header="Datos de la Playa" widgetVar="playasDialog"
+			resizable="false" id="playasDlg" showEffect="fade" modal="true"
+			draggable="false">
+
+			<h:panelGrid id="displayView" columns="2" cellpadding="8"
+				style="margin:0 auto;">
+
+				<p:column>
+					<h:outputText value="Razon Social: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.razonSocial}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Nombre Comercial: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.nombreComercial}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="C.U.I.T.: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.cuit}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Barrio: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.barrio.nombre}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Domicilio: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.domicilio}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Teléfono: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.telefono}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="E-mail: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.email}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Disponibilidad: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.disponibilidad}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Estado: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{playaMB.playaSelected.estado.nombre}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+				</p:column>
+
+				<p:column style="text-align:right">
+					<div align="right">
+						<p:commandButton id="btnAceptarPlayas" value="Aceptar"
+							onclick="playasDialog.hide()" type="button" />
+					</div>
+				</p:column>
+
+			</h:panelGrid>
+		</p:dialog>
+
+
+		<!-- DIALOG PARA VER LOS DATOS DE LAS TRANSACCIONES DE LA PLAYA SELECCIONADA -->
+		<p:dialog header="Datos de las transacciones" widgetVar="trnDialog"
+			resizable="false" id="trnDlg" showEffect="fade" modal="true"
+			draggable="false" style="width:600px;">
+
+			<p:dataTable id="transaccionesView" var="transaccionPlaya"
+				paginatorPosition="bottom"
+				value="#{transaccionPlayaMB.transaccionesList}" paginator="true"
+				rows="10">
+
+				<f:facet name="header">  
+            		Listado de transacciones de la playa 
+            		"#{transaccionPlayaMB.liquidacionSelected.estadia.playa.razonSocial}"  
+        		</f:facet>
+
+				<p:column id="playaHeader" headerText="Playa">  
+	                #{transaccionPlaya.cuentaPlaya.playa.razonSocial} 
+	            </p:column>
+
+				<p:column id="fechaHeader" headerText="Fecha">  
+	                #{transaccionPlaya.fecha}  
+	            </p:column>
+
+				<p:column id="tipoPagoHeader" headerText="Tipo de Pago">  
+	                #{transaccionPlaya.tipoPago.nombre}  
+	            </p:column>
+
+				<p:column id="importeHeader" headerText="Importe">  
+	                $ #{transaccionPlaya.importe} 
+	            </p:column>
+
+			</p:dataTable>
+
+			<div align="right">
+				<p>
+					<p:commandButton id="btnAceptarTrn" value="Aceptar"
+						onclick="trnDialog.hide()" type="button" />
+				</p>
+			</div>
+		</p:dialog>
+
 	</ui:define>
 </ui:composition>

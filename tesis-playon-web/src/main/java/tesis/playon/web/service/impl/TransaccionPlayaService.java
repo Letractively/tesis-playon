@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.ITransaccionPlayaDao;
 import tesis.playon.web.model.CuentaPlaya;
+import tesis.playon.web.model.Liquidacion;
 import tesis.playon.web.model.TransaccionPlaya;
 import tesis.playon.web.service.ITransaccionPlayaService;
 
@@ -64,6 +65,15 @@ public class TransaccionPlayaService implements ITransaccionPlayaService {
     public List<TransaccionPlaya> findTransaccionesByCuentaPlaya(CuentaPlaya cuentaPlaya) {
 	return getTransaccionPlayaDao().findTransaccionesByCuentaPlaya(cuentaPlaya);
 
+    }
+    
+    public List<TransaccionPlaya> findNoLiquidadasByFechaDesdeHasta(Date fechaDesde, Date fechaHasta){
+	return getTransaccionPlayaDao().findNoLiquidadasByFechaDesdeHasta(fechaDesde, fechaHasta);
+    }
+
+    @Override
+    public List<TransaccionPlaya> findTransaccionesByLiquidacion(Liquidacion liquidacion) {
+	return getTransaccionPlayaDao().findTransaccionesByLiquidacion(liquidacion);
     }
 
     public List<TransaccionPlaya> findTransaccionesByFecha(CuentaPlaya cuentaPlaya, Date fechaD, Date fechaH) {

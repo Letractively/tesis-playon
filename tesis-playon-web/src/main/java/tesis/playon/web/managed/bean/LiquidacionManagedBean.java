@@ -22,7 +22,6 @@ import tesis.playon.web.model.CuentaPlaya;
 import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Liquidacion;
-import tesis.playon.web.model.Mail;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.TransaccionPlaya;
 import tesis.playon.web.service.ICuentaPlayaService;
@@ -31,7 +30,6 @@ import tesis.playon.web.service.IEstadoPlayaService;
 import tesis.playon.web.service.ILiquidacionService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.ITransaccionPlayaService;
-import tesis.playon.web.util.NotificadorUtil;
 
 /**
  * @author Alejandro
@@ -42,16 +40,6 @@ import tesis.playon.web.util.NotificadorUtil;
 public class LiquidacionManagedBean implements Serializable {
 
     private static final long serialVersionUID = 3053005214323025897L;
-
-    private static final String ERROR = "error";
-
-    private NotificadorUtil notificador;
-
-    private Mail mail;
-
-    private String asunto;
-
-    private String mensaje;
 
     @ManagedProperty(value = "#{PlayaService}")
     IPlayaService playaService;
@@ -108,6 +96,8 @@ public class LiquidacionManagedBean implements Serializable {
     private List<Playa> filteredPlayas;
 
     // private List<Playa> playasALiquidar;
+    
+    private List<Liquidacion> liquidacionesList;
 
     public IPlayaService getPlayaService() {
 	return playaService;
@@ -160,7 +150,7 @@ public class LiquidacionManagedBean implements Serializable {
     @SuppressWarnings("unused")
     @PostConstruct
     private void init() {
-        this.fechaDesde = new Date();
+	this.fechaDesde = new Date();
 	this.fechaHasta = new Date();
 	this.fechaDesde = DateUtils.setDays(this.fechaDesde, 1);
     }
@@ -236,8 +226,11 @@ public class LiquidacionManagedBean implements Serializable {
 
     public List<TransaccionPlaya> getTransaccionesALiquidar() {
 	if (transaccionesALiquidar == null) {
-	    transaccionesALiquidar = new ArrayList<TransaccionPlaya>();
-	    transaccionesALiquidar = getTransaccionPlayaService().findTransaccionesNoLiquidadas();
+	    Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012012));
+	    Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta : Calendar.getInstance().getTime());
+	    //transaccionesALiquidar = new ArrayList<TransaccionPlaya>();
+	    transaccionesALiquidar = getTransaccionPlayaService().findNoLiquidadasByFechaDesdeHasta(fechaDesde,
+		    fechaHasta);
 	}
 	return transaccionesALiquidar;
     }
@@ -256,18 +249,37 @@ public class LiquidacionManagedBean implements Serializable {
     }
 
     public void updatePlayasALiquidar() {
-	//getPlayasALiquidarList();
+	Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012012));
+	Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta : Calendar.getInstance().getTime());
+	// transaccionesALiquidar = new ArrayList<TransaccionPlaya>();
+	setPlayasALiquidarList(getPlayaService().findByFechaDesdeHasta(fechaDesde, fechaHasta));
+	setTransaccionesALiquidar(getTransaccionPlayaService()
+		.findNoLiquidadasByFechaDesdeHasta(fechaDesde, fechaHasta));
     }
 
     public List<Playa> getPlayasALiquidarList() {
-	Date fechaDesde = (this.fechaDesde!=null ? this.fechaDesde : new Date(01012012));
-	Date fechaHasta = (this.fechaHasta!=null ? this.fechaHasta : Calendar.getInstance().getTime());
-	playasALiquidarList = getPlayaService().findByFechaDesdeHasta(fechaDesde, fechaHasta);
+	if (playasALiquidarList == null) {
+	    Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012012));
+	    Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta : Calendar.getInstance().getTime());
+	    playasALiquidarList = getPlayaService().findByFechaDesdeHasta(fechaDesde, fechaHasta);
+	}
 	return playasALiquidarList;
     }
 
     public void setPlayasALiquidarList(List<Playa> playasALiquidarList) {
 	this.playasALiquidarList = playasALiquidarList;
+    }
+
+    public List<Liquidacion> getLiquidacionesList() {
+        if (liquidacionesList == null){
+            Date fecha = DateUtils.truncate(new Date(), Calendar.DATE);
+            liquidacionesList = getLiquidacionService().findByFecha(fecha);
+        }
+	return liquidacionesList;
+    }
+
+    public void setLiquidacionesList(List<Liquidacion> liquidacionesList) {
+        this.liquidacionesList = liquidacionesList;
     }
 
     public List<Playa> getFilteredPlayas() {

@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.ITransaccionPlayaDao;
 import tesis.playon.web.model.CuentaPlaya;
+import tesis.playon.web.model.Liquidacion;
 import tesis.playon.web.model.TransaccionPlaya;
 
 /**
@@ -66,6 +67,18 @@ public class TransaccionPlayaDao implements ITransaccionPlayaDao {
 	return transaccionPlaya;
     }
 
+    public List<TransaccionPlaya> findNoLiquidadasByFechaDesdeHasta(Date fechaDesde, Date fechaHasta) {
+	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from TransaccionPlaya where liquidacion is null and fecha>=? and fecha<=?")
+		.setParameter(0, fechaDesde).setParameter(1, fechaHasta)
+		.list();
+	for (Object object : list) {
+	    transaccionPlaya.add((TransaccionPlaya) object);
+	}
+	return transaccionPlaya;
+    }
+    
     @Override
     public List<TransaccionPlaya> findByCuentaPlaya(CuentaPlaya cuentaPlaya) {
 	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
@@ -89,11 +102,25 @@ public class TransaccionPlayaDao implements ITransaccionPlayaDao {
 	return transaccionPlaya;
     }
 
+    @Override
     public List<TransaccionPlaya> findTransaccionesByCuentaPlaya(CuentaPlaya cuentaPlaya) {
 
 	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
 	List<?> list = getSessionFactory().getCurrentSession()
 		.createQuery("from TransaccionPlaya where cuentaPlaya = ?").setParameter(0, cuentaPlaya).list();
+	for (Object object : list) {
+	    transaccionPlaya.add((TransaccionPlaya) object);
+	}
+	return transaccionPlaya;
+
+    }
+    
+    @Override
+    public List<TransaccionPlaya> findTransaccionesByLiquidacion(Liquidacion liquidacion) {
+
+	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from TransaccionPlaya where liquidacion = ?").setParameter(0, liquidacion).list();
 	for (Object object : list) {
 	    transaccionPlaya.add((TransaccionPlaya) object);
 	}

@@ -11,21 +11,31 @@
 	<ui:define name="panelContent" class="admin-font">
 		<p:growl id="messages" />
 
-		<table style="border-collapse: collapse; border: 0px solid black;">
+		<p>Seleccione el período a liquidar y luego las playas que desea
+			liquidar.</p>
+
+		<table class="ui-datatable liquidacion-table">
 			<tr>
-				<td><h:outputText value="Desde:" /></td>
-				<td><p:calendar value="#{liquidacionMB.fechaDesde}"
-						id="calDesde" /></td>
+				<th colspan="2" class="ui-widget-header ui-state-default"
+					scope="col">Período a liquidar</th>
 			</tr>
 			<tr>
-				<td><h:outputText value="Hasta:" /></td>
-				<td><p:calendar value="#{liquidacionMB.fechaHasta}"
-						id="calHasta" /></td>
+				<td style="text-align: right;" class="ui-widget-content"><h:outputText
+						value="Desde:" /></td>
+				<td class="ui-widget-content"><p:calendar
+						value="#{liquidacionMB.fechaDesde}" id="calDesde" /></td>
 			</tr>
 			<tr>
-				<td colspan="2"><p:commandButton id="buscarButton"
-						value="Buscar" icon="ui-icon-search"
-						action="#{liquidacionMB.updatePlayasALiquidar}" ajax="true" update="playas" /></td>
+				<td style="text-align: right;" class="ui-widget-content"><h:outputText
+						value="Hasta:" /></td>
+				<td class="ui-widget-content"><p:calendar
+						value="#{liquidacionMB.fechaHasta}" id="calHasta" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" style="text-align: right;" class="ui-widget-content"><p:commandButton
+						id="buscarButton" value="Buscar" icon="ui-icon-search"
+						action="#{liquidacionMB.updatePlayasALiquidar}" ajax="true"
+						update="playas" /></td>
 			</tr>
 		</table>
 
@@ -36,6 +46,10 @@
 			widgetVar="playasTable" paginatorPosition="bottom" paginator="true"
 			rows="20" emptyMessage="No existen playas para liquidar"
 			selection="#{liquidacionMB.playasSeleccionadas}">
+
+			<f:facet name="header">  
+            		Listado de transacciones Playas con transacciones  
+        		</f:facet>
 
 			<p:column headerText="Razon Social" styleClass="column-font"
 				filterBy="#{playa.razonSocial}" filterMatchMode="contains">
@@ -86,10 +100,11 @@
 		<div align="right">
 			<p>
 				<p:commandButton id="liquidacionButton" value="Liquidar"
-					icon="ui-icon-search" action="#{liquidacionMB.liquidar}"
+					icon="ui-icon-circle-arrow-e" action="#{liquidacionMB.liquidar}"
 					ajax="false" />
 			</p>
 		</div>
+
 		<!-- DIALOG PARA VER LOS DATOS DE LA PLAYA SELECCIONADA -->
 		<p:dialog header="Datos de la Playa" widgetVar="playasDialog"
 			resizable="false" id="playasDlg" showEffect="fade" modal="true"

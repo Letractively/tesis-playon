@@ -1,5 +1,6 @@
 package tesis.playon.web.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +43,11 @@ public class LiquidacionService implements ILiquidacionService {
 
     public void setLiquidacionDao(ILiquidacionDao liquidacionDao) {
         this.liquidacionDao = liquidacionDao;
+    }
+
+    @Override
+    public List<Liquidacion> findByFecha(Date fecha) {
+	return getLiquidacionDao().findByFecha(fecha);
     }
 
 }

@@ -133,11 +133,6 @@ public class PlayaDao implements IPlayaDao {
     @Override
     public List<Playa> findByFechaDesdeHasta(Date fechaDesde, Date fechaHasta) {
 	List<Playa> playas = new ArrayList<Playa>();
-//	List<?> list = getSessionFactory().getCurrentSession().
-//		createQuery("select distinct cuentaPlaya.playa from TransaccionPlaya " +
-//				"where fecha>=? and fecha<=?")
-//		.setParameter(0, fechaDesde).setParameter(1, fechaHasta)
-//		.list();
 	List<?> list = getSessionFactory().getCurrentSession().
 		createQuery("select distinct tp.cuentaPlaya.playa from TransaccionPlaya as tp " +
 				"where (tp.liquidacion is null) and tp.fecha>=? and tp.fecha<=?")
@@ -151,4 +146,5 @@ public class PlayaDao implements IPlayaDao {
 	}
 	return null;
     }
+
 }

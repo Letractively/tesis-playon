@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import tesis.playon.web.model.CuentaPlaya;
+import tesis.playon.web.model.Liquidacion;
 import tesis.playon.web.model.TransaccionPlaya;
 
 public interface ITransaccionPlayaService {
@@ -25,7 +26,10 @@ public interface ITransaccionPlayaService {
     public List<TransaccionPlaya> findNoLiquidadasByCuentaPlaya(CuentaPlaya cuentaPlaya);
 
     public List<TransaccionPlaya> findTransaccionesByCuentaPlaya(CuentaPlaya cuentaPlaya);
+    
+    public List<TransaccionPlaya> findNoLiquidadasByFechaDesdeHasta(Date fechaDesde, Date fechaHasta);
 
     public List<TransaccionPlaya> findTransaccionesByFecha(CuentaPlaya cuentaPlaya, Date fechaD, Date fechaH);
-
+    
+    public List<TransaccionPlaya> findTransaccionesByLiquidacion(Liquidacion liquidacion);
 }
