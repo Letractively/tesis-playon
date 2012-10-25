@@ -2,6 +2,7 @@ package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,17 +13,22 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 
+import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.EstadoPromocion;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Promocion;
 import tesis.playon.web.model.Tarifa;
+import tesis.playon.web.model.TipoEstadia;
 import tesis.playon.web.model.Usuario;
+import tesis.playon.web.service.ICategoriaVehiculoService;
 import tesis.playon.web.service.IEstadoPromocionService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IPromocionService;
 import tesis.playon.web.service.ITarifaService;
+import tesis.playon.web.service.ITipoEstadiaService;
 import tesis.playon.web.service.IUsuarioService;
 
 /**
@@ -49,6 +55,12 @@ public class PromocionManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{UsuarioService}")
     IUsuarioService usuarioService;
+    
+    @ManagedProperty(value = "#{TipoEstadiaService}")
+    ITipoEstadiaService tipoEstadiaService;
+
+    @ManagedProperty(value = "#{CategoriaVehiculoService}")
+    ICategoriaVehiculoService categoriaVehiculoService;
 
     // Atributtes Promocion
 
@@ -92,6 +104,8 @@ public class PromocionManagedBean implements Serializable {
 
     private static Playa playaSelected;
 
+    private List<Promocion> promocionListEmpleado;
+
     @PostConstruct
     private void init() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -100,6 +114,8 @@ public class PromocionManagedBean implements Serializable {
 	if (user != null && user.getPlaya() != null) {
 	    this.playa = user.getPlaya();
 	    promocionPlayaList = getPromocionService().findByPlaya(playa);
+	    EstadoPromocion estado = getEstadoPromocionService().findByNombreEstadoPromocion("Vigente");
+	    promocionListEmpleado = getPromocionService().findByPlaya(playa, estado);
 	}
 	today = new Date();
     }
@@ -111,32 +127,43 @@ public class PromocionManagedBean implements Serializable {
 	    promocion = new Promocion();
 	    promocion.setDescripcion(getDescripcion());
 	    promocion.setDescuento(getDescuento());
-	    promocion.setEstadoPromocion(getEstadoPromocion());
 	    promocion.setFechaAlta(new Date());
 	    promocion.setFechaFin(getFechaFin());
 	    promocion.setFechaInicio(getFechaInicio());
 
-	    Calendar calendario = Calendar.getInstance();
-	    calendario.setTime(getHoraInicio());
-	    int hora = calendario.get(Calendar.HOUR_OF_DAY);
-	    int minutos = calendario.get(Calendar.MINUTE);
-	    int segundos = calendario.get(Calendar.SECOND);
+	    Calendar calendario;
+	    int hora;
+	    int minutos;
+	    int segundos;
+	    String sHora;
 
-	    String sHora = hora + ":" + minutos + ":" + segundos;
+	    if (getHoraInicio() != null) {
+		calendario = Calendar.getInstance();
+		calendario.setTime(getHoraInicio());
+		hora = calendario.get(Calendar.HOUR_OF_DAY);
+		minutos = calendario.get(Calendar.MINUTE);
+		segundos = calendario.get(Calendar.SECOND);
 
-	    promocion.setHoraInicio(Time.valueOf(sHora));
+		sHora = hora + ":" + minutos + ":" + segundos;
 
-	    calendario.setTime(getHoraFin());
-	    hora = calendario.get(Calendar.HOUR_OF_DAY);
-	    minutos = calendario.get(Calendar.MINUTE);
-	    segundos = calendario.get(Calendar.SECOND);
-	    sHora = hora + ":" + minutos + ":" + segundos;
+		promocion.setHoraInicio(Time.valueOf(sHora));
+	    }
+	    if (getHoraFin() != null) {
+		calendario = Calendar.getInstance();
+		calendario.setTime(getHoraFin());
+		hora = calendario.get(Calendar.HOUR_OF_DAY);
+		minutos = calendario.get(Calendar.MINUTE);
+		segundos = calendario.get(Calendar.SECOND);
+		sHora = hora + ":" + minutos + ":" + segundos;
 
-	    promocion.setHoraFin(Time.valueOf(sHora));
+		promocion.setHoraFin(Time.valueOf(sHora));
+	    }
 	    promocion.setMontoFijo(getTarifa().getImporte());
 	    promocion.setNombre(getNombre());
 	    promocion.setPlaya(getPlaya());
 	    promocion.setTarifa(getTarifa());
+
+	    promocion.setEstadoPromocion(getEstadoPromocionService().findByNombreEstadoPromocion("Vigente"));
 
 	    getPromocionService().save(promocion);
 
@@ -286,6 +313,22 @@ public class PromocionManagedBean implements Serializable {
 	this.estadoPromocionService = estadoPromocionService;
     }
 
+    public ITipoEstadiaService getTipoEstadiaService() {
+        return tipoEstadiaService;
+    }
+
+    public void setTipoEstadiaService(ITipoEstadiaService tipoEstadiaService) {
+        this.tipoEstadiaService = tipoEstadiaService;
+    }
+
+    public ICategoriaVehiculoService getCategoriaVehiculoService() {
+        return categoriaVehiculoService;
+    }
+
+    public void setCategoriaVehiculoService(ICategoriaVehiculoService categoriaVehiculoService) {
+        this.categoriaVehiculoService = categoriaVehiculoService;
+    }
+
     public IPromocionService getPromocionService() {
 	return promocionService;
     }
@@ -419,17 +462,25 @@ public class PromocionManagedBean implements Serializable {
     public Promocion getPromocionSelected() {
 	if (promocionSelected != null) {
 	    Calendar calendario = Calendar.getInstance();
-	    int hora = getHora(promocionSelected.getHoraInicio());
-	    int minute = getMinutos(promocionSelected.getHoraInicio());
-	    int second = getSegundos(promocionSelected.getHoraInicio());
-	    calendario.set(2012, 01, 01, hora, minute, second);
-	    horaInicioSelected = calendario.getTime();
+	    int hora;
+	    int minute;
+	    int second;
 
-	    hora = getHora(promocionSelected.getHoraFin());
-	    minute = getMinutos(promocionSelected.getHoraFin());
-	    second = getSegundos(promocionSelected.getHoraFin());
-	    calendario.set(2012, 01, 01, hora, minute, second);
-	    horaFinSelected = calendario.getTime();
+	    if (promocionSelected.getHoraInicio() != null) {
+		hora = getHora(promocionSelected.getHoraInicio());
+		minute = getMinutos(promocionSelected.getHoraInicio());
+		second = getSegundos(promocionSelected.getHoraInicio());
+		calendario.set(2012, 01, 01, hora, minute, second);
+		horaInicioSelected = calendario.getTime();
+	    }
+
+	    if (promocionSelected.getHoraFin() != null) {
+		hora = getHora(promocionSelected.getHoraFin());
+		minute = getMinutos(promocionSelected.getHoraFin());
+		second = getSegundos(promocionSelected.getHoraFin());
+		calendario.set(2012, 01, 01, hora, minute, second);
+		horaFinSelected = calendario.getTime();
+	    }
 	}
 	return promocionSelected;
     }
@@ -494,5 +545,64 @@ public class PromocionManagedBean implements Serializable {
 	String horaCompleta = time.toString();
 	String toObject[] = horaCompleta.split(":");
 	return Integer.parseInt(toObject[2]);
+    }
+
+    public List<Promocion> getPromocionListEmpleado() {
+	return promocionListEmpleado;
+    }
+
+    public void setPromocionListEmpleado(List<Promocion> promocionListEmpleado) {
+	this.promocionListEmpleado = promocionListEmpleado;
+    }
+
+    private List<Tarifa> filteredPromociones;
+
+    @SuppressWarnings("unused")
+    private SelectItem[] categoriaOptions;
+
+    @SuppressWarnings("unused")
+    private SelectItem[] tipoEstadiaOptions;
+
+
+    public List<Tarifa> getFilteredPromociones() {
+        return filteredPromociones;
+    }
+
+    public void setFilteredPromociones(List<Tarifa> filteredPromociones) {
+        this.filteredPromociones = filteredPromociones;
+    }
+
+    public SelectItem[] getCategoriaOptions() {
+	List<CategoriaVehiculo> categorias = new ArrayList<CategoriaVehiculo>();
+	categorias = getCategoriaVehiculoService().findAll();
+	this.categoriaOptions = new SelectItem[categorias.size() + 1];
+	SelectItem[] options = new SelectItem[categorias.size() + 1];
+	options[0] = new SelectItem("", "Todos");
+
+	for (int i = 0; i < categorias.size(); i++) {
+	    options[i + 1] = new SelectItem(categorias.get(i), categorias.get(i).getNombre());
+	}
+	return options;
+    }
+
+    public void setCategoriaOptions(SelectItem[] categoriaOptions) {
+	this.categoriaOptions = categoriaOptions;
+    }
+
+    public SelectItem[] getTipoEstadiaOptions() {
+	List<TipoEstadia> tipos = new ArrayList<TipoEstadia>();
+	tipos = getTipoEstadiaService().findAll();
+	this.categoriaOptions = new SelectItem[tipos.size() + 1];
+	SelectItem[] options = new SelectItem[tipos.size() + 1];
+	options[0] = new SelectItem("", "Todos");
+
+	for (int i = 0; i < tipos.size(); i++) {
+	    options[i + 1] = new SelectItem(tipos.get(i), tipos.get(i).getNombre());
+	}
+	return options;
+    }
+
+    public void setTipoEstadiaOptions(SelectItem[] tipoEstadiaOptions) {
+	this.tipoEstadiaOptions = tipoEstadiaOptions;
     }
 }
