@@ -7,7 +7,6 @@
 
 	<ui:param name="loadmenuperfil" value="true" />
 
-
 	<ui:define name="title">
 		Solicitud de registro de vehículo
     </ui:define>
@@ -15,126 +14,161 @@
 	<ui:define name="content">
 		<h1>¡Registre el ingreso y egreso de sus clientes!</h1>
 
-
-
-		<h:form style="margin: 10px 0px 0px 30px;">
+		<h:form id="form" style="margin: 10px 0px 0px 30px;">
 			<p:growl id="messages" />
 
-			<div style="width: 100%;">
-				Buscar vehículo
-				<p:separator id="separator" />
-			</div>
-
-			<div id="perfil-playa" style="margin-left: 10px;">
-				<h:panelGrid columns="4" cellpadding="8" cellspacing="10">
-					<h:outputLabel for="patente" value="Ingrese la patente: "
-						styleClass="fuente-outputtext" />
-					<p:inputText id="patente" style="width:100px"
-						value="#{ingresoEgresoMB.patente}" required="true"
-						requiredMessage="Campo obligatorio">
-						<f:validateLength minimum="6" />
-						<p:ajax event="blur" update="patenteMsg" />
-					</p:inputText>
-					<p:message id="patenteMsg" for="patente" display="icon" />
-					<p:commandButton id="buscarVehiculo" value="Buscar vehículo"
-						action="#{ingresoEgresoMB.searchVehiculo}" ajax="false"
-						style="width:150px" />
-				</h:panelGrid>
-				<p:messages id="messagesGral" showDetail="true" autoUpdate="true"
-					closable="true" />
-			</div>
-
-			<ui:fragment rendered="#{ingresoEgresoMB.existeVehiculo}">
-				<div id="perfil-playa" style="margin-left: 50px; width: 100%;">
-					Cliente
-					<p:separator id="separator2" />
-					<h:panelGrid columns="4" cellpadding="10" cellspacing="5">
-
-						<h:outputText value="Cliente: " styleClass="fuente-outputtext" />
-						<h:outputText id="txt_nombre"
-							value="#{ingresoEgresoMB.usuarioCliente.nombre}&#160;#{ingresoEgresoMB.usuarioCliente.apellido}"
-							styleClass="fuente-perfil" />
-						<p:column>
-							<div align="right">
-								<h:outputText value="Saldo: " styleClass="fuente-outputtext" />
-							</div>
-						</p:column>
-						<h:outputText id="txt_saldo"
-							value="$#{ingresoEgresoMB.cuentaCliente.saldo}"
-							styleClass="fuente-perfil" />
-
-						<h:outputText value="Vehiculo: " styleClass="fuente-outputtext" />
-						<h:outputText id="txt_mod_vehiculo"
-							value="#{ingresoEgresoMB.marcaVehiculo.nombre}&#160;#{ingresoEgresoMB.modeloVehiculo.nombre}"
-							styleClass="fuente-perfil" />
-						<p:column>
-							<div align="right">
-								<h:outputText value="Patente: " styleClass="fuente-outputtext" />
-							</div>
-						</p:column>
-						<h:outputText id="txt_patente"
-							value="#{ingresoEgresoMB.vehiculo.patente}"
-							styleClass="fuente-perfil" />
-
-
-						<h:outputText value="Tipo: " styleClass="fuente-outputtext" />
-						<h:outputText id="txt_cat_vehiculo"
-							value="#{ingresoEgresoMB.categoriaVehiculo.nombre}"
-							styleClass="fuente-perfil" />
-						<p:column />
-						<p:column />
-
-						<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
-							value="Fecha ingreso: " styleClass="fuente-outputtext" />
-						<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
-							id="txt_fecha_ingreso" styleClass="fuente-perfil"
-							value="#{ingresoEgresoMB.fechaIngresoFormateada}" />
-						<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
-							value="Hora ingreso: " styleClass="fuente-outputtext" />
-						<h:outputText rendered="#{!ingresoEgresoMB.cobrado}"
-							id="txt_hora_ingreso" styleClass="fuente-perfil"
-							value="#{ingresoEgresoMB.horaIngresoFormateada}" />
-
-						<h:outputText value="Fecha actual: "
+			<ui:fragment>
+				<div id="perfil-playa">
+					<h:panelGrid columns="4" cellpadding="8" cellspacing="10">
+						<h:outputLabel for="patente" value="Ingrese la patente: "
 							styleClass="fuente-outputtext" />
-						<h:outputText id="txt_fecha_actual"
-							value="#{ingresoEgresoMB.fechaActualFormateada}"
-							styleClass="fuente-perfil" />
-						<h:outputText value="Hora actual: " styleClass="fuente-outputtext" />
-						<h:outputText id="txt_hora_actual" styleClass="fuente-perfil"
-							value="#{ingresoEgresoMB.horaActualFormateada}" />
-
+						<p:inputText id="patente" style="width:100px"
+							value="#{detalleEstadiaMB.patente}" required="true"
+							requiredMessage="Campo obligatorio"
+							validatorMessage="La patente debe tener como mínimo 6 caracteres">
+							<f:validateLength minimum="6" />
+							<p:ajax event="blur" update="patenteMsg" />
+						</p:inputText>
+						<p:message id="patenteMsg" for="patente" display="icon" />
+						<p:commandButton id="buscarVehiculo" value="Buscar vehículo"
+							action="#{detalleEstadiaMB.searchVehiculo}" ajax="false"
+							style="width:150px" />
 					</h:panelGrid>
-					<div align="right" style="width: 300px;">
-						<p:commandButton
-							rendered="#{ingresoEgresoMB.cobrado and  ingresoEgresoMB.existeTarifa}"
-							id="ingreso" value="Registrar ingreso"
-							action="#{ingresoEgresoMB.registrarIngresoVehiculo}" ajax="false"
-							style="width:140px; margin-right:10px" />
-						<p:commandButton id="cancelar" value="Cancelar" immediate="true"
-							action="#{ingresoEgresoMB.reset}" ajax="false"
-							rendered="#{ingresoEgresoMB.cobrado}" />
-					</div>
-					<br />
+					<p:messages id="messagesGral" showDetail="false" autoUpdate="true"
+						closable="true" showSummary="true" />
 				</div>
 			</ui:fragment>
 
-			<ui:fragment rendered="#{!ingresoEgresoMB.cobrado}">
-				<div id="perfil-playa" style="margin-left: 50px; width: 100%;">
-					<h:panelGrid columns="3" cellpadding="8" cellspacing="8">
+			<ui:fragment rendered="#{detalleEstadiaMB.existeVehiculo}">
+				<div id="perfil-playa">
+
+					<p:panel style="text-align:left;" styleClass="fuente-outputtext">
+
+						<f:facet name="header">
+							<h:outputText
+								value="Cliente:&#160;#{detalleEstadiaMB.usuarioCliente.nombre}&#160;
+									#{detalleEstadiaMB.usuarioCliente.apellido}" />
+						</f:facet>
+						<div align="center">
+							<h:panelGrid columns="5" cellpadding="10" cellspacing="5">
+								<p:column>
+									<div align="right">
+										<h:outputText value="Saldo: " />
+									</div>
+								</p:column>
+								<h:outputText id="txt_saldo"
+									value="$#{detalleEstadiaMB.cliente.cuentaCliente.saldo}" />
+
+								<p:column>&#160;&#160;&#160;&#160;&#160;</p:column>
+
+								<p:column>
+									<div align="right">
+										<h:outputText value="Vehiculo: " />
+									</div>
+								</p:column>
+								<h:outputText id="txt_mod_vehiculo"
+									value="#{detalleEstadiaMB.vehiculo.modeloVehiculo.marcaVehiculo.nombre}&#160;
+									#{detalleEstadiaMB.vehiculo.modeloVehiculo.nombre}" />
+
+
+								<p:column>
+									<div align="right">
+										<h:outputText value="Patente: " />
+									</div>
+								</p:column>
+								<h:outputText id="txt_patente"
+									value="#{detalleEstadiaMB.vehiculo.patente}" />
+
+								<p:column>&#160;&#160;&#160;&#160;&#160;</p:column>
+
+								<p:column>
+									<div align="right">
+										<h:outputText value="Categoría: " />
+									</div>
+								</p:column>
+								<h:outputText id="txt_cat_vehiculo"
+									value="#{detalleEstadiaMB.vehiculo.modeloVehiculo.categoriaVehiculo.nombre}" />
+
+
+								<h:outputText value="Fecha ingreso: "
+									rendered="#{detalleEstadiaMB.detalleEstadia != null}" />
+								<h:outputText id="txt_fecha_ingreso"
+									rendered="#{detalleEstadiaMB.detalleEstadia != null}"
+									value="#{detalleEstadiaMB.fechaIngreso}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+
+								<p:column rendered="#{detalleEstadiaMB.detalleEstadia != null}">
+								&#160;&#160;&#160;&#160;&#160;</p:column>
+
+								<h:outputText value="Hora ingreso: "
+									rendered="#{detalleEstadiaMB.detalleEstadia != null}" />
+								<h:outputText id="txt_hora_ingreso"
+									rendered="#{detalleEstadiaMB.detalleEstadia != null}"
+									value="#{detalleEstadiaMB.horaIngreso}" />
+
+								<h:outputText value="Fecha actual: " />
+								<h:outputText id="txt_fecha_actual"
+									value="#{detalleEstadiaMB.fechaActual}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+
+								<p:column>&#160;&#160;&#160;&#160;&#160;</p:column>
+
+								<h:outputText value="Hora actual: " />
+								<h:outputText id="txt_hora_actual"
+									value="#{detalleEstadiaMB.horaActual}">
+									<f:convertDateTime pattern="hh:mm:ss" />
+								</h:outputText>
+
+								<f:facet name="footer">
+									<div align="right">
+										<p:commandButton id="calcImporte" value="Calcular importe"
+											rendered="#{detalleEstadiaMB.detalleEstadia != null}"
+											style="margin-right:15px" onclick="dlgEgreso.show();"
+											action="#{detalleEstadiaMB.calcularImporte}"
+											update=":formEgreso:panelEgreso" />
+										<p:commandButton
+											rendered="#{detalleEstadiaMB.detalleEstadia == null and  detalleEstadiaMB.existeTarifa}"
+											id="ingreso" value="Registrar ingreso"
+											onclick="dlgIngreso.show();" style="margin-right:10px"
+											type="button" />
+										<p:commandButton id="cancelar" value="Cancelar"
+											immediate="true" ajax="false"
+											action="/playa/detalleestadia.html?faces-redirec=true" />
+									</div>
+								</f:facet>
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</div>
+			</ui:fragment>
+		</h:form>
+
+		<h:form id="formIngreso">
+			<ui:fragment>
+				<p:dialog header="Confirmación de ingreso de vehículo"
+					widgetVar="dlgIngreso" resizable="false">
+
+					<h:panelGrid columns="3" cellpadding="8" cellspacing="8" id="panel">
 						<p:column>
 							<div align="right">
-								<h:outputText for="tarifas" value="Tarifas disponibles: "
-									styleClass="fuente-outputtext" />
+								<h:outputText for="tarifas" styleClass="fuente-outputtext"
+									value="Tarifas disponibles: " />
 							</div>
 						</p:column>
 						<p:column style="text-align:right;">
-							<p:selectOneMenu id="tarifas" value="#{ingresoEgresoMB.tarifa}"
-								effect="fade" style="width:242px">
-								<f:selectItem itemLabel="Seleccione una tarifa" itemValue="" />
-								<f:selectItems value="#{ingresoEgresoMB.tarifaPlayaList}"
+							<p:selectOneMenu id="tarifas"
+								value="#{detalleEstadiaMB.tarifaSeleccionada}" effect="fade">
+								<f:selectItem
+									itemLabel="&#160;&#160;Seleccione una tarifa&#160;&#160;"
+									itemValue="" />
+								<f:selectItems value="#{detalleEstadiaMB.tarifaPlayaList}"
 									var="tarifa" itemValue="#{tarifa}"
-									itemLabel="#{tarifa.tipoEstadia.nombre} $#{tarifa.importe}" />
+									itemLabel="#{tarifa.tipoEstadia.nombre}&#160;-&#160;$#{tarifa.importe}" />
+								<p:ajax update="panel,promociones"
+									listener="#{detalleEstadiaMB.handleTarifa}" event="change"
+									process="@this" />
 								<f:converter converterId="tarifaConverter" />
 							</p:selectOneMenu>
 						</p:column>
@@ -148,13 +182,15 @@
 							</div>
 						</p:column>
 						<p:column style="text-align:right;">
-							<p:selectOneMenu value="#{ingresoEgresoMB.promocion}"
-								effect="fade" id="promociones">
-								<f:selectItem itemLabel="Seleccione una promoción" itemValue="" />
-								<f:selectItems value="#{ingresoEgresoMB.promocionesDisponibles}"
+							<p:selectOneMenu id="promociones"
+								value="#{detalleEstadiaMB.promocionSeleccionada}" effect="fade">
+								<f:selectItem itemLabel="&#160;Seleccione una promoción&#160;"
+									itemValue="" />
+								<f:selectItems
+									value="#{detalleEstadiaMB.promocionesDisponibles}"
 									var="promocion" itemValue="#{promocion}"
-									itemLabel="#{promocion.nombre}&#160;-&#160;#{promocion.descuento}%&#160;
-										desc" />
+									itemLabel="#{promocion.nombre}&#160;-&#160;
+												#{promocion.descuento}%&#160;desc" />
 								<f:converter converterId="promocionConverter" />
 							</p:selectOneMenu>
 						</p:column>
@@ -162,36 +198,59 @@
 
 						<p:column />
 						<p:column>
-							<div style="width: 240px" align="center">
-								<p:commandButton id="calcImporte" value="Calcular importe"
-									action="#{ingresoEgresoMB.calcularImporte}" ajax="false"
-									style="width:140px; margin-right:15px" />
-								<p:commandButton id="cancelar2" value="Cancelar"
-									immediate="true" action="#{ingresoEgresoMB.reset}" ajax="false" />
-							</div>
+							<p:selectBooleanCheckbox value="#{detalleEstadiaMB.imprimir}" />
+							<h:outputText value="&#160;imprimir ticket"
+								styleClass="fuente-outputtext" />
 						</p:column>
 						<p:column />
 
-						<p:column>
-							<div align="right" style="margin-top:10px;">
-								<h:outputText rendered="#{ingresoEgresoMB.importeCalculado}"
-									value="Importe: " styleClass="fuente-outputtext" />
+						<f:facet name="footer">
+							<div align="right">
+								<p:commandButton id="registrarIngreso" value="Registrar ingreso"
+									action="#{detalleEstadiaMB.registrarIngresoVehiculo}"
+									ajax="false" style="margin-right:10px" />
+								<p:commandButton id="cancelar" value="Cancelar" immediate="true"
+									oncomplete="dlgIngreso.hide();" />
 							</div>
-						</p:column>
-
-						<p:column>
-							<h:outputText rendered="#{ingresoEgresoMB.importeCalculado}"
-								id="txt_importe_calculado" value="$#{ingresoEgresoMB.importe}"
-								styleClass="fuente-perfil" type="currency" />
-							<p:commandButton rendered="#{ingresoEgresoMB.importeCalculado}"
-								id="egreso" value="Registrar egreso"
-								style="width:140px; margin-left:10px;"
-								action="#{ingresoEgresoMB.registrarEgresoVehiculo}" ajax="false" />
-						</p:column>
-						<p:column />
-
+						</f:facet>
 					</h:panelGrid>
-				</div>
+
+				</p:dialog>
+			</ui:fragment>
+		</h:form>
+
+		<h:form id="formEgreso">
+			<ui:fragment>
+				<p:dialog header="Confirmación de egreso de vehículo"
+					widgetVar="dlgEgreso" resizable="false">
+					
+					<div align="center">
+						<h:panelGrid columns="2" cellpadding="8" cellspacing="8"
+							id="panelEgreso">
+
+							<p:column>
+								<div align="right">
+									<h:outputText
+										value="Importe: " styleClass="fuente-outputtext" />
+								</div>
+							</p:column>
+
+							<h:outputText id="txt_importe_calculado"
+								value="$#{detalleEstadiaMB.importe}" styleClass="fuente-perfil"
+								type="currency" />
+
+							<f:facet name="footer">
+								<div align="right" style="width: 215px;">
+									<p:commandButton id="egreso" value="Registrar egreso"
+										style="margin-right:10px;" ajax="false"
+										action="#{detalleEstadiaMB.registrarEngresoVehiculo}" />
+									<p:commandButton id="cancelar" value="Cancelar"
+										immediate="true" oncomplete="dlgEgreso.hide();" />
+								</div>
+							</f:facet>
+						</h:panelGrid>
+					</div>
+				</p:dialog>
 			</ui:fragment>
 		</h:form>
 	</ui:define>

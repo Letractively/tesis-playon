@@ -10,6 +10,7 @@ import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.EstadoPromocion;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Promocion;
+import tesis.playon.web.model.TipoEstadia;
 
 /**
  * @author Pablo
@@ -108,6 +109,24 @@ public class PromocionDao implements IPromocionDao {
 		.createQuery("from Promocion where tarifa.categoriaVehiculo=? and playa=? " +
 				"and now()>=fechaInicio and now()<=fechaFin")
 		.setParameter(0, categoria).setParameter(1, playa).list();
+	if(!list.isEmpty()){
+	    for (Object object : list) {
+		if(!((Promocion)object).getTarifa().getTipoEstadia().getNombre().equals("Por Mes"))
+		    promociones.add((Promocion) object);
+		}
+		return promociones;
+	}
+	return null;
+    }
+    
+    @Override
+    public List<Promocion> findByTipoEstadiaAndPlaya(TipoEstadia tipoEstadia, Playa playa){
+	List<Promocion> promociones = new ArrayList<Promocion>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Promocion where tarifa.tipoEstadia=? and playa=? " +
+				"and now()>=fechaInicio and now()<=fechaFin " +
+				"and estadoPromocion.id=2")
+		.setParameter(0, tipoEstadia).setParameter(1, playa).list();
 	if(!list.isEmpty()){
 	    for (Object object : list) {
 		if(!((Promocion)object).getTarifa().getTipoEstadia().getNombre().equals("Por Mes"))

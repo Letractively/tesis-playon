@@ -9,6 +9,7 @@ import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.EstadoPromocion;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Promocion;
+import tesis.playon.web.model.TipoEstadia;
 
 /**
  * @author pablo
@@ -33,4 +34,6 @@ public interface IPromocionService {
     List<Promocion> findByPlaya(Playa playa);
     
     List<Promocion> findByCategoria(CategoriaVehiculo categoria, Playa playa);
+    
+    List<Promocion> findByTipoEstadiaAndPlaya(TipoEstadia tipoEstadia, Playa playa);
 }

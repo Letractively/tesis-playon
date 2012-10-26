@@ -9,7 +9,9 @@ import javax.faces.convert.FacesConverter;
 
 import org.apache.commons.lang.StringUtils;
 
+import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Tarifa;
+import tesis.playon.web.model.TipoEstadia;
 
 /**
  * 
@@ -23,14 +25,20 @@ public class TarifaConverter implements Converter {
     public Object getAsObject(FacesContext context, UIComponent component, String value) throws ConverterException {
 	if (!StringUtils.isEmpty(value)) {
 	    String toObject[] = value.split(":");
-	    if (toObject.length != 2) {
+	    if (toObject.length != 4) {
 		throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"Debe seleccionar una opción", null));
-		// return null;
+		 //return null;
 	    } else {
 		Tarifa tarifa = new Tarifa();
 		tarifa.setId(Integer.parseInt(toObject[0]));
 		tarifa.setImporte(Float.parseFloat(toObject[1]));
+		CategoriaVehiculo categoria = new CategoriaVehiculo();
+		categoria.setNombre(toObject[2].toString());
+		tarifa.setCategoriaVehiculo(categoria);
+		TipoEstadia tipo = new TipoEstadia();
+		tipo.setNombre(toObject[3].toString());
+		tarifa.setTipoEstadia(tipo);
 		return tarifa;
 	    }
 	}
@@ -44,7 +52,9 @@ public class TarifaConverter implements Converter {
 		Tarifa tarifa = (Tarifa) value;
 		String idTarifa = Integer.toString(tarifa.getId());
 		String importeTarifa = Float.toString(tarifa.getImporte());
-		String toString = idTarifa + ":" + importeTarifa;
+		String categoria = tarifa.getCategoriaVehiculo().getNombre();
+		String tipoEstadia = tarifa.getTipoEstadia().getNombre();
+		String toString = idTarifa + ":" + importeTarifa + ":" + categoria + ":" + tipoEstadia;
 		return toString;
 	    } else {
 		System.out.println("No se pudo parsear el objeto");

@@ -9,6 +9,7 @@ import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.EstadoPromocion;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Promocion;
+import tesis.playon.web.model.TipoEstadia;
 import tesis.playon.web.service.IPromocionService;
 /**
  * 
@@ -74,6 +75,11 @@ public class PromocionService implements IPromocionService {
     @Override
     public List<Promocion> findByCategoria(CategoriaVehiculo categoria, Playa playa){
 	return getPromocionDao().findByCategoria(categoria, playa);
+    }
+    
+    @Override
+    public List<Promocion> findByTipoEstadiaAndPlaya(TipoEstadia tipoEstadia, Playa playa){
+	return getPromocionDao().findByTipoEstadiaAndPlaya(tipoEstadia, playa);
     }
 
     public IPromocionDao getPromocionDao() {
