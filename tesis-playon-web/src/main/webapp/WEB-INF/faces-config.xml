@@ -25,7 +25,7 @@
     
  	<navigation-rule>
     	<display-name>*</display-name>
-    	<from-view-id>*</from-view-id>
+    	<from-view-id>/*</from-view-id>
     	<navigation-case>
     		<from-action>#{loginMB.login}</from-action>
     		<from-outcome>SecuredAdmin</from-outcome>

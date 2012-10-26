@@ -12,7 +12,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.apache.commons.lang.time.DateUtils;
 
@@ -36,7 +36,7 @@ import tesis.playon.web.service.ITransaccionPlayaService;
  * 
  */
 @ManagedBean(name = "liquidacionMB")
-@ViewScoped
+@SessionScoped
 public class LiquidacionManagedBean implements Serializable {
 
     private static final long serialVersionUID = 3053005214323025897L;

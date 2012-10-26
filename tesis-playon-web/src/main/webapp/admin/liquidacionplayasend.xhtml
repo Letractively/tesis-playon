@@ -14,7 +14,7 @@
 		<p>Liquidado con éxito. A continuación verá un listado con todas
 			las liquidaciones.</p>
 
-		<p:dataTable var="liquidacion"
+		<p:dataTable id="liquidaciones" var="liquidacion"
 			value="#{liquidacionMB.liquidacionesList}" paginatorPosition="bottom"
 			paginator="true" rows="10" sortBy="#{liquidacion.estadia}"
 			sortOrder="ascending">
@@ -55,7 +55,28 @@
 				</p:commandLink>
 
 			</p:column>
+			<f:facet name="footer">
+				<div align="center">
+					<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+						<h:commandLink title="Exportar a excel">
+							<p:graphicImage
+								value="http://www.primefaces.org/showcase/images/excel.png" />
+							<p:dataExporter type="xls" target="liquidaciones"
+								fileName="Transacciones" />
+						</h:commandLink>
 
+						<h:commandLink title="Exportar a PDF">
+							<p:graphicImage
+								value="http://www.primefaces.org/showcase/images/pdf.png" />
+							<f:param name="titulo" value="Listado de playas liquidadas" />
+							<p:dataExporter type="pdf" target="liquidaciones"
+								preProcessor="#{documentExporterMB.preProcessPDF}"
+								fileName="Transacciones">
+							</p:dataExporter>
+						</h:commandLink>
+					</h:panelGrid>
+				</div>
+			</f:facet>
 		</p:dataTable>
 
 		<!-- DIALOG PARA VER LOS DATOS DE LA PLAYA SELECCIONADA -->
@@ -182,6 +203,29 @@
 				<p:column id="importeHeader" headerText="Importe">  
 	                $ #{transaccionPlaya.importe} 
 	            </p:column>
+
+				<f:facet name="footer">
+					<div align="center">
+						<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+							<h:commandLink title="Exportar a excel">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/excel.png" />
+								<p:dataExporter type="xls" target="transaccionesView"
+									fileName="Transacciones" />
+							</h:commandLink>
+
+							<h:commandLink title="Exportar a PDF">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/pdf.png" />
+								<p:dataExporter type="pdf" target="transaccionesView"
+									preProcessor="#{documentExporterMB.preProcessPDF}"
+									fileName="Transacciones">
+									<f:param name="titulo" value="Titulo del documento" />
+								</p:dataExporter>
+							</h:commandLink>
+						</h:panelGrid>
+					</div>
+				</f:facet>
 
 			</p:dataTable>
 

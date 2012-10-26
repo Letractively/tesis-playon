@@ -1,5 +1,6 @@
 package tesis.playon.web.managed.bean;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -13,6 +14,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import tesis.playon.web.model.Abono;
@@ -956,19 +958,23 @@ public class IngresoEgresoManagedBean implements Serializable {
     }
 
     public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+	String sep = File.separator;
 	Document pdf = (Document) document;
 	pdf.open();
 	pdf.setPageSize(PageSize.A4);
-	String logo = "/home/gonza/workspace2/tesis-playon-web/src/main/webapp/resources/images/transacciones.png";
+	ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
+	String logo = extContext.getRealPath("resources" + sep + "images" + sep + "transacciones.png");
 	pdf.addTitle("Historial de Transacciones");
 	pdf.add(Image.getInstance(logo));
     }	
 
     public void preProcesarPDFAbono(Object document) throws IOException, BadElementException, DocumentException {
+	String sep = File.separator;
 	Document pdf = (Document) document;
 	pdf.open();
 	pdf.setPageSize(PageSize.A4);
-	String logo = "/home/gonza/workspace2/tesis-playon-web/src/main/webapp/resources/images/transacciones.png";
+	ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
+	String logo = extContext.getRealPath("resources" + sep + "images" + sep + "transacciones.png");
 	pdf.addTitle("Abonos");
 	pdf.add(Image.getInstance(logo));
     }

@@ -13,7 +13,7 @@
 		<p:menubar style="font-size: 0.8em;">
 			<p:menuitem value="Inicio" url="#{request.contextPath}/../admin" />
 			<p:submenu label="Usuarios">
-				<p:menuitem value="Usuarios" 
+				<p:menuitem value="Usuarios"
 					url="#{request.contextPath}/../admin/usuariolist.html"
 					icon="ui-icon-person" />
 				<p:menuitem value="Clientes"
@@ -31,6 +31,9 @@
 				<p:menuitem value="Tarifas"
 					url="#{request.contextPath}/../admin/tarifalist.html"
 					icon="ui-icon-note" />
+				<p:menuitem value="Liquidación"
+					url="#{request.contextPath}/../admin/liquidacionplayas.html"
+					icon="ui-icon-bookmark" />
 			</p:submenu>
 
 			<p:submenu label="Auditoría">
@@ -44,7 +47,8 @@
 
 			<p:submenu label="Usuario">
 				<p:menuitem value="Cambiar Contraseña"
-					url="#{request.contextPath}/../admin/cambiarpassword.html" icon="ui-icon-key" />
+					url="#{request.contextPath}/../admin/cambiarpassword.html"
+					icon="ui-icon-key" />
 				<p:menuitem value="Cerrar sesión" icon="ui-icon-power"
 					action="#{loginMB.logout}" />
 			</p:submenu>
