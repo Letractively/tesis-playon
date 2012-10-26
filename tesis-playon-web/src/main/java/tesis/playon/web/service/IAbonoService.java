@@ -1,17 +1,11 @@
-package tesis.playon.web.dao;
+package tesis.playon.web.service;
 
 import java.util.List;
 
 import tesis.playon.web.model.Abono;
 import tesis.playon.web.model.Playa;
 
-/**
- * Interfaz DAO de Abono.
- * 
- * @author alejandro
- * 
- */
-public interface IAbonoDao {
+public interface IAbonoService {
 
     void save(Abono abono);
 
@@ -19,10 +13,7 @@ public interface IAbonoDao {
 
     void delete(Abono abono);
 
-    // no se que findBy... poner.
-
     List<Abono> findAll();
 
     List<Abono> findByPlaya(Playa playa);
-
 }

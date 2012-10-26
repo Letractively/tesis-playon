@@ -1,0 +1,99 @@
+<ui:composition template="../../template/templatePlaya.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="loadmenuadmin" value="true" />
+
+	<ui:define name="title">
+		Abonados
+    </ui:define>
+
+	<ui:define name="content">
+		<p:growl id="messages" />
+		<h1>Clientes con abonos</h1>
+
+		<!-- 		<h:form style="margin:0 0 0 20px;"> -->
+		<!-- 			<h:panelGrid columns="6" cellspacing="10"> -->
+		<!-- 				<h:outputText value="Desde:" /> -->
+		<!-- 				<p:calendar value="#{ingresoEgresoMB.fechaDesde}" id="calDesde" /> -->
+
+		<!-- 				<p:column> -->
+		<!-- 					<div align="right"> -->
+		<!-- 						<h:outputText value="Hasta: " /> -->
+		<!-- 					</div> -->
+		<!-- 				</p:column> -->
+		<!-- 				<p:calendar value="#{ingresoEgresoMB.fechaHasta}" id="calHasta" /> -->
+
+		<!-- 				<p:commandButton id="buscarButton" value="Buscar" -->
+		<!-- 					icon="ui-icon-search" ajax="true" update="transacciones" /> -->
+		<!-- 				<p:commandButton id="buscarButton2" style="width:130px;" -->
+		<!-- 					action="#{ingresoEgresoMB.updateListado}" value="Buscar Todas" -->
+		<!-- 					icon="ui-icon-search" ajax="true" update="transacciones" /> -->
+
+		<!-- 			</h:panelGrid> -->
+
+		<p:dataTable id="abonos" var="abonosClientes" paginator="false"
+			value="#{ingresoEgresoMB.listadoAbonos}"
+			emptyMessage="No existen clientes con abonos para su Playa"
+			paginatorPosition="bottom">
+
+			<p:column style="text-align:center">
+				<f:facet name="header">
+					<h:outputText value="Desde" />
+				</f:facet>
+				<h:outputText value="#{abono.fechaVigenciaDesde}">
+					<f:convertDateTime pattern="d - M - yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<p:column style="text-align:center">
+				<f:facet name="header">
+					<h:outputText value="Hasta" />
+				</f:facet>
+				<h:outputText value="#{abono.fechaVigenciaHasta}">
+					<f:convertDateTime pattern="d - M - yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<p:column style="text-align:center">
+				<f:facet name="header">
+					<h:outputText value="usuario" />
+				</f:facet>
+
+				<h:outputText value="#{abono.cliente.usuario.usuario}" />
+			</p:column>
+			<p:column style="text-align:center">
+				<f:facet name="header">
+					<h:outputText value="Patente" />
+				</f:facet>
+
+				<h:outputText value="#{abono.cliente.patente}" />
+			</p:column>
+
+
+			<f:facet name="footer">
+				<div align="center">
+					<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+						<h:commandLink title="Exportar a excel">
+							<p:graphicImage
+								value="http://www.primefaces.org/showcase/images/excel.png" />
+							<p:dataExporter type="xls" target="abonos" fileName="Abonos" />
+						</h:commandLink>
+
+						<h:commandLink title="Exportar a PDF">
+							<p:graphicImage
+								value="http://www.primefaces.org/showcase/images/pdf.png" />
+							<p:dataExporter type="pdf" target="abonos"
+								preProcessor="#{ingresoEgresoMB.preProcessAbonoPDF}"
+								fileName="Abonos" />
+						</h:commandLink>
+					</h:panelGrid>
+				</div>
+			</f:facet>
+		</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartSeries;
+import org.primefaces.model.chart.PieChartModel;
 import org.testng.annotations.Test;
 
 import tesis.playon.web.model.CargoEmpleado;
@@ -609,15 +610,19 @@ public class EstadisticaGerenteManagedBean {
     }
 
     /**************************************************************************************************/
-    private static CartesianChartModel linearModel;
+    private CartesianChartModel linearModel;
 
     public CartesianChartModel getLinearModel() {
 	return linearModel;
     }
 
     public void setLinearModel(CartesianChartModel linearModel) {
-	EstadisticaGerenteManagedBean.linearModel = linearModel;
+	this.linearModel = linearModel;
     }
+
+    /***********************************************************************************/
+
+    private CartesianChartModel categoryModel;
 
     public CartesianChartModel getCategoryModel() {
 	return categoryModel;
@@ -627,32 +632,7 @@ public class EstadisticaGerenteManagedBean {
 	this.categoryModel = categoryModel;
     }
 
-    private CartesianChartModel categoryModel;
-
-    private void createLinearModel() {
-	linearModel = new CartesianChartModel();
-
-	LineChartSeries series1 = new LineChartSeries();
-	series1.setLabel("Series 1");
-
-	series1.set(1, 2);
-	series1.set(2, 1);
-	series1.set(3, 3);
-	series1.set(4, 6);
-	series1.set(5, 8);
-
-	LineChartSeries series2 = new LineChartSeries();
-	series2.setLabel("Series 2");
-	series2.setMarkerStyle("diamond");
-	series2.set(1, 6);
-	series2.set(2, 3);
-	series2.set(3, 2);
-	series2.set(4, 7);
-	series2.set(5, 9);
-
-	linearModel.addSeries(series1);
-	linearModel.addSeries(series2);
-    }
+    /**************************************************************************************/
 
     private void createCategoryModel() {
 	categoryModel = new CartesianChartModel();
@@ -661,22 +641,99 @@ public class EstadisticaGerenteManagedBean {
 	ChartSeries motos = new ChartSeries();
 	ChartSeries utilitarios = new ChartSeries();
 	ChartSeries pickup = new ChartSeries();
-	ChartSeries blanco = new ChartSeries();
 
 	autos.setLabel("Autos");
 	motos.setLabel("Motos");
 	utilitarios.setLabel("Utilitarios");
 	pickup.setLabel("Pick-Up");
 
-	autos.set("Autos", cantAutos);
-	motos.set("Motos", cantMotos);
-	utilitarios.set("Utilitarios", cantUtilitarios);
-	pickup.set("PickUP", cantPickUp);
+	autos.set("2009", 1000000);
+	autos.set("2010", 941000);
+	autos.set("2011", 177700);
+	autos.set("2012", 1300000);
+
+	motos.set("2009", 250000);
+	motos.set("2010", 350000);
+	motos.set("2011", 320000);
+	motos.set("2012", 470000);
+
+	utilitarios.set("2009", 580000);
+	utilitarios.set("2010", 850000);
+	utilitarios.set("2011", 777000);
+	utilitarios.set("2012", 817000);
+
+	pickup.set("2009", 589000);
+	pickup.set("2010", 699000);
+	pickup.set("2011", 824000);
+	pickup.set("2012", 728000);
+
 	categoryModel.addSeries(autos);
 	categoryModel.addSeries(motos);
 	categoryModel.addSeries(utilitarios);
 	categoryModel.addSeries(pickup);
-	categoryModel.addSeries(blanco);
+
     }
+
+    private void createLinearModel() {
+
+	linearModel = new CartesianChartModel();
+
+	LineChartSeries autos = new LineChartSeries();
+	LineChartSeries motos = new LineChartSeries();
+	LineChartSeries utilitarios = new LineChartSeries();
+	LineChartSeries pickup = new LineChartSeries();
+
+	autos.setLabel("Autos");
+	motos.setLabel("Motos");
+	utilitarios.setLabel("Utilitarios");
+	pickup.setLabel("Pick-Up");
+
+	autos.set("2009", 1000000);
+	autos.set("2010", 941000);
+	autos.set("2011", 177700);
+	autos.set("2012", 1300000);
+
+	motos.set("2009", 250000);
+	motos.set("2010", 350000);
+	motos.set("2011", 320000);
+	motos.set("2012", 470000);
+
+	utilitarios.set("2009", 580000);
+	utilitarios.set("2010", 850000);
+	utilitarios.set("2011", 777000);
+	utilitarios.set("2012", 817000);
+
+	pickup.set("2009", 589000);
+	pickup.set("2010", 699000);
+	pickup.set("2011", 824000);
+	pickup.set("2012", 728000);
+
+	linearModel.addSeries(autos);
+	linearModel.addSeries(motos);
+	linearModel.addSeries(utilitarios);
+	linearModel.addSeries(pickup);
+    }
+
+    /***************************************************************************************/
+    private PieChartModel pieModel;
+
+    public PieChartModel getPieModel() {
+	return pieModel;
+    }
+
+    public void setPieModel(PieChartModel pieModel) {
+	this.pieModel = pieModel;
+    }
+
+    /***************************************************************************************/
+
+    // private void createPieModel() {
+    // pieModel = new PieChartModel();
+    //
+    // pieModel.set("Brand 1", 540);
+    // pieModel.set("Brand 2", 325);
+    // pieModel.set("Brand 3", 702);
+    // pieModel.set("Brand 4", 421);
+    // }
 
 }

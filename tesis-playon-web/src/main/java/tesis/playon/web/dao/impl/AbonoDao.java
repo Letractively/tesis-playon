@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 
 import tesis.playon.web.dao.IAbonoDao;
 import tesis.playon.web.model.Abono;
+import tesis.playon.web.model.Playa;
 
 /**
  * 
@@ -40,11 +41,24 @@ public class AbonoDao implements IAbonoDao {
     public List<Abono> findAll() {
 	List<Abono> abonos = new ArrayList<Abono>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Abono").list();
-	if(!list.isEmpty()){
+	if (!list.isEmpty()) {
 	    for (Object obj : list) {
-		    abonos.add((Abono) obj);
-		}
-		return abonos;
+		abonos.add((Abono) obj);
+	    }
+	    return abonos;
+	}
+	return null;
+    }
+
+    public List<Abono> findByPlaya(Playa playa) {
+	List<Abono> abonos = new ArrayList<Abono>();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Abono where Playa=?")
+		.setParameter(0, playa).list();
+	if (!list.isEmpty()) {
+	    for (Object obj : list) {
+		abonos.add((Abono) obj);
+	    }
+	    return abonos;
 	}
 	return null;
     }

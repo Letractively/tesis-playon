@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import tesis.playon.web.model.Abono;
 import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Cliente;
@@ -34,6 +35,7 @@ import tesis.playon.web.model.TransaccionCliente;
 import tesis.playon.web.model.TransaccionPlaya;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.model.Vehiculo;
+import tesis.playon.web.service.IAbonoService;
 import tesis.playon.web.service.ICargoEmpleadoService;
 import tesis.playon.web.service.ICuentaClienteService;
 import tesis.playon.web.service.ICuentaPlayaService;
@@ -107,6 +109,9 @@ public class IngresoEgresoManagedBean implements Serializable {
     @ManagedProperty(value = "#{TipoEstadiaService}")
     ITipoEstadiaService tipoEstadiaService;
 
+    @ManagedProperty(value = "#{AbonoService}")
+    IAbonoService abonoService;
+
     private List<Tarifa> tarifaPlayaList;
 
     private Usuario usuario;
@@ -168,6 +173,8 @@ public class IngresoEgresoManagedBean implements Serializable {
     private List<Promocion> promocionesDisponibles;
 
     private List<TransaccionPlaya> transaccionesPlayas;
+
+    private List<Abono> listadoAbonos;
 
     private Promocion promocion;
 
@@ -576,6 +583,14 @@ public class IngresoEgresoManagedBean implements Serializable {
 	return tipoPagoService;
     }
 
+    public IAbonoService getAbonoService() {
+	return abonoService;
+    }
+
+    public void setAbonoService(IAbonoService abonoService) {
+	this.abonoService = abonoService;
+    }
+
     public void setTipoPagoService(ITipoPagoService tipoPagoService) {
 	this.tipoPagoService = tipoPagoService;
     }
@@ -870,6 +885,16 @@ public class IngresoEgresoManagedBean implements Serializable {
 	this.promocion = promocion;
     }
 
+    public List<Abono> getListadoAbonos() {
+	listadoAbonos = getAbonoService().findByPlaya(playa);
+
+	return listadoAbonos;
+    }
+
+    public void setListadoAbonos(List<Abono> listadoAbonos) {
+	this.listadoAbonos = listadoAbonos;
+    }
+
     // método para cancelar la página.
     public String reset() {
 	usuarioCliente = null;
@@ -893,6 +918,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 	patente = null;
 	return "/playa/ingresoegresovehiculo";
     }
+
+    /***************************** LISTADOS E INFORMES *******************************************/
 
     public void updateListado() {
 
@@ -934,6 +961,15 @@ public class IngresoEgresoManagedBean implements Serializable {
 	pdf.setPageSize(PageSize.A4);
 	String logo = "/home/gonza/workspace2/tesis-playon-web/src/main/webapp/resources/images/transacciones.png";
 	pdf.addTitle("Historial de Transacciones");
+	pdf.add(Image.getInstance(logo));
+    }	
+
+    public void preProcesarPDFAbono(Object document) throws IOException, BadElementException, DocumentException {
+	Document pdf = (Document) document;
+	pdf.open();
+	pdf.setPageSize(PageSize.A4);
+	String logo = "/home/gonza/workspace2/tesis-playon-web/src/main/webapp/resources/images/transacciones.png";
+	pdf.addTitle("Abonos");
 	pdf.add(Image.getInstance(logo));
     }
 

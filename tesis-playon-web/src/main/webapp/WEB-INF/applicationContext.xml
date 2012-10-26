@@ -68,6 +68,9 @@
 
 
 	<!-- User Service Declaration -->
+	<bean id="AbonoService" class="tesis.playon.web.service.impl.AbonoService">
+		<property name="abonoDao" ref="AbonoDao" />
+	</bean>
 	<bean id="BarrioService" class="tesis.playon.web.service.impl.BarrioService">
 		<property name="barrioDao" ref="BarrioDao" />
 	</bean>
@@ -183,6 +186,9 @@
 	</bean>
 
 	<!-- User DAO Declaration -->
+	<bean id="AbonoDao" class="tesis.playon.web.dao.impl.AbonoDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
 	<bean id="BarrioDao" class="tesis.playon.web.dao.impl.BarrioDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
