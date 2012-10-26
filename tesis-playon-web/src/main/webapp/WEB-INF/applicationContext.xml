@@ -24,7 +24,8 @@
 
 	<context:component-scan base-package="tesis.playon.web" />
 
-	<!-- Beans Declaration -->
+
+	<bean id="Abono" class="tesis.playon.web.model.Abono" />
 	<bean id="Barrio" class="tesis.playon.web.model.Barrio" />
 	<bean id="CategoriaVehiculo" class="tesis.playon.web.model.CategoriaVehiculo" />
 	<bean id="CargoEmpleado" class="tesis.playon.web.model.CargoEmpleado" />

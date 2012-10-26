@@ -52,7 +52,7 @@ public class AbonoDao implements IAbonoDao {
 
     public List<Abono> findByPlaya(Playa playa) {
 	List<Abono> abonos = new ArrayList<Abono>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Abono where Playa=?")
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Abono where playa=?")
 		.setParameter(0, playa).list();
 	if (!list.isEmpty()) {
 	    for (Object obj : list) {

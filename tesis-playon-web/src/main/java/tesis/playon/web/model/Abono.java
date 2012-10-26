@@ -32,7 +32,7 @@ public class Abono implements Serializable {
     @Column(name = "fechaVigenciaDesde")
     private Date fechaVigenciaDesde;
 
-    @Column(name = "fechaVegenciaHasta")
+    @Column(name = "fechaVigenciaHasta")
     private Date fechaVigenciaHasta;
 
     @ManyToOne
