@@ -3,6 +3,7 @@ package tesis.playon.mobile;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 
 import tesis.playon.mobile.json.model.Playa;
 import tesis.playon.mobile.json.model.Playas;
@@ -26,8 +27,15 @@ public class BuscarPlayasActivity extends ListActivity {
 
     private Playas playas;
 
+    private ListView mListView;
+
+    private PlayaAdapter mPlayaAdapter;
+
+    // private List<Playa> listaPlayas = new ArrayList<Playa>();
+
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
+	setContentView(R.layout.lista_playas);
 	handleIntent(getIntent());
     }
 
@@ -53,6 +61,13 @@ public class BuscarPlayasActivity extends ListActivity {
 	// get a Cursor, prepare the ListAdapter and set it
     }
 
+    private void llenarLista(ArrayList<Playa> playas) {
+
+	mPlayaAdapter = new PlayaAdapter(this, R.layout.grid_item, playas);
+	mListView = getListView();
+	mListView.setAdapter(mPlayaAdapter);
+    }
+
     class BuscarPlayaService extends AsyncTask<Void, Void, String> {
 
 	@Override
@@ -75,8 +90,7 @@ public class BuscarPlayasActivity extends ListActivity {
 	    for (Playa playa : playas.getPlayas()) {
 		Log.d(LOG_TAG, "Playa: " + playa.getRazonSocial() + " Dirección: " + playa.getDomicilio());
 	    }
-	    // setResult(RESULT_OK, result);
-	    // finish();
+	    llenarLista((ArrayList<Playa>) playas.getPlayas());
 	}
     }
 }
