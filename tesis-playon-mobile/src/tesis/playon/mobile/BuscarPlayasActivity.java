@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.List;
 
 import tesis.playon.mobile.json.model.Playa;
 import tesis.playon.mobile.json.model.Playas;
@@ -15,7 +16,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -30,8 +34,8 @@ public class BuscarPlayasActivity extends ListActivity {
     private ListView mListView;
 
     private PlayaAdapter mPlayaAdapter;
-
-    // private List<Playa> listaPlayas = new ArrayList<Playa>();
+    
+    private List<Playa> mListaPlayas = new ArrayList<Playa>();
 
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
@@ -42,10 +46,6 @@ public class BuscarPlayasActivity extends ListActivity {
     public void onNewIntent(Intent intent) {
 	setIntent(intent);
 	handleIntent(intent);
-    }
-
-    public void onListItemClick(ListView l, View v, int position, long id) {
-	// call detail activity for clicked entry
     }
 
     private void handleIntent(Intent intent) {
@@ -63,9 +63,17 @@ public class BuscarPlayasActivity extends ListActivity {
 
     private void llenarLista(ArrayList<Playa> playas) {
 
+	mListaPlayas = playas;
 	mPlayaAdapter = new PlayaAdapter(this, R.layout.grid_item, playas);
 	mListView = getListView();
 	mListView.setAdapter(mPlayaAdapter);
+	mListView.setTextFilterEnabled(true);
+
+	mListView.setOnItemClickListener(new OnItemClickListener() {
+	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		Toast.makeText(getApplicationContext(), mListaPlayas.get(position).getNombreComercial(), Toast.LENGTH_SHORT).show();
+	    }
+	});
     }
 
     class BuscarPlayaService extends AsyncTask<Void, Void, String> {
