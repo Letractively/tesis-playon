@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -176,6 +178,8 @@ public class IngresoEgresoManagedBean implements Serializable {
 
     private List<TransaccionPlaya> transaccionesPlayas;
 
+    private List<DetalleEstadia> detalles;
+
     private List<Abono> listadoAbonos;
 
     private Promocion promocion;
@@ -207,6 +211,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 		    }
 
 		    this.cargoEmpleado = empleado.getCargoEmpleado();
+
 		}
 	    }
 	    tipoEstadiaList = getTipoEstadiaService().findAll();
@@ -214,80 +219,6 @@ public class IngresoEgresoManagedBean implements Serializable {
 	    ex.printStackTrace();
 	}
     }
-
-    // public void preRenderView() {
-    // FacesContext facesContext = FacesContext.getCurrentInstance();
-    // setNombreUsuario(facesContext.getExternalContext().getRemoteUser());
-    // if (null != nombreUsuario) {
-    // setUsuario(getUsuarioService().findByNombreUsuario(nombreUsuario));
-    // }
-    // if (null != usuario) {
-    // setEmpleado(getEmpleadoService().findByUsuario(usuario));
-    // setPlaya(usuario.getPlaya());
-    // }
-    // if (null != playa) {
-    // setCuentaPlaya(getCuentaPlayaService().findByPlaya(playa));
-    // setEstadia(getEstadiaService().findByPlaya(playa));
-    // }
-    // if (null == cuentaPlaya) {
-    // // la cuenta aun no existe y debe ser creada
-    // cuentaPlaya = new CuentaPlaya(playa);
-    // if (null != cuentaPlaya)
-    // getCuentaPlayaService().save(cuentaPlaya);
-    // }
-    // if (null == estadia) {
-    // // la estadia aun no existe y debe ser creada
-    // estadia = new Estadia(playa);
-    // if (null != cuentaPlaya)
-    // getEstadiaService().save(estadia);
-    // }
-    // setCargoEmpleado(empleado.getCargoEmpleado()); // tira error
-    // }
-
-    // public void searchVehiculo() {
-    // limpiar();
-    // String auxPatente = patente.trim();
-    // setVehiculo(getVehiculoService().findByPatenteVehiculo(auxPatente.toUpperCase()));
-    //
-    // if (null != vehiculo) {
-    // setCategoriaVehiculo(vehiculo.getModeloVehiculo().getCategoriaVehiculo());
-    // setModeloVehiculo(vehiculo.getModeloVehiculo());
-    // setMarcaVehiculo(modeloVehiculo.getMarcaVehiculo());
-    // setCliente(vehiculo.getCliente());
-    // setDetalleEstadia(getDetalleEstadiaService().findByVehiculoDetalleEstadia(vehiculo));
-    // } else {
-    // FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
-    // "No se encontró el vehículo con patente: ", auxPatente);
-    // FacesContext.getCurrentInstance().addMessage(null, message);
-    // }
-    // if (null != cliente) {
-    // setUsuarioCliente(cliente.getUsuario());
-    // setCuentaCliente(getCuentaClienteService()
-    // .findByNroCuentaCliente(cliente.getCuentaCliente().getNroCuenta()));
-    // }
-    // if (null != cuentaCliente) {
-    // if (cuentaCliente.getSaldo() > 0) {
-    // saldoPositvo = true;
-    // } else {
-    // saldoPositvo = false;
-    // }
-    // }
-    // if (null != detalleEstadia && !detalleEstadia.getCobrado()) {
-    // cobrado = false;
-    // Timestamp ts = detalleEstadia.getFechaHoraIngreso();
-    // fechaIngresoFormateada = new SimpleDateFormat("dd/MM/yyyy").format(ts);
-    // horaIngresoFormateada = new SimpleDateFormat("HH:mm aa").format(ts);
-    // }
-    // if (null != vehiculo && getTarifaPlayaList().isEmpty()) {
-    // setExisteTarifa(false);
-    // FacesContext.getCurrentInstance().addMessage(
-    // null,
-    // new FacesMessage(FacesMessage.SEVERITY_WARN, "Tarifas no encontradas", "Cargue tarifas para "
-    // + categoriaVehiculo.getNombre()));
-    // } else if (cliente != null && null != vehiculo && null != cuentaCliente) {
-    // setExisteVehiculo(true);
-    // }
-    // }
 
     public void searchVehiculo() {
 	limpiar();
@@ -887,16 +818,6 @@ public class IngresoEgresoManagedBean implements Serializable {
 	this.promocion = promocion;
     }
 
-    public List<Abono> getListadoAbonos() {
-	listadoAbonos = getAbonoService().findByPlaya(playa);
-
-	return listadoAbonos;
-    }
-
-    public void setListadoAbonos(List<Abono> listadoAbonos) {
-	this.listadoAbonos = listadoAbonos;
-    }
-
     // método para cancelar la página.
     public String reset() {
 	usuarioCliente = null;
@@ -922,6 +843,50 @@ public class IngresoEgresoManagedBean implements Serializable {
     }
 
     /***************************** LISTADOS E INFORMES *******************************************/
+    
+    
+    
+    
+    	public void buscarPorFecha() {
+
+	List<DetalleEstadia> detallesAux = new ArrayList<DetalleEstadia>();
+
+	estadia = getEstadiaService().findByPlaya(playa);
+	detalles = getDetalleEstadiaService().findByHorarios(getEstadia(), fechaDesde, fechaHasta);
+
+	for (DetalleEstadia detalleAux : detalles) {
+	    if (detalleAux.getFechaHoraIngreso().after(fechaDesde)
+		    && detalleAux.getFechaHoraEgreso().before(fechaHasta)) {
+		detallesAux.add(detalleAux);
+
+	    }
+	}
+	detalles = detallesAux;
+
+    }
+
+    public List<DetalleEstadia> getDetalles() {
+	Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012012));
+	Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta : Calendar.getInstance().getTime());
+	estadia = getEstadiaService().findByPlaya(playa);
+	detalles = getDetalleEstadiaService().findByHorarios(getEstadia(), fechaDesde, fechaHasta);
+
+	return detalles;
+    }
+
+    public void setDetalles(List<DetalleEstadia> detalles) {
+	this.detalles = detalles;
+    }
+
+    public List<Abono> getListadoAbonos() {
+	listadoAbonos = getAbonoService().findByPlaya(playa);
+
+	return listadoAbonos;
+    }
+
+    public void setListadoAbonos(List<Abono> listadoAbonos) {
+	this.listadoAbonos = listadoAbonos;
+    }
 
     public void updateListado() {
 
@@ -966,7 +931,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	String logo = extContext.getRealPath("resources" + sep + "images" + sep + "transacciones.png");
 	pdf.addTitle("Historial de Transacciones");
 	pdf.add(Image.getInstance(logo));
-    }	
+    }
 
     public void preProcesarPDFAbono(Object document) throws IOException, BadElementException, DocumentException {
 	String sep = File.separator;

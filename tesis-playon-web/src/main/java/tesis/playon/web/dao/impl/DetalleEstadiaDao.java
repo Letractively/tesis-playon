@@ -1,6 +1,7 @@
 package tesis.playon.web.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -48,7 +49,7 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
 	return null;
     }
 
-    public List<DetalleEstadia> findByEstadia(Estadia estadia){
+    public List<DetalleEstadia> findByEstadia(Estadia estadia) {
 	List<DetalleEstadia> detallesEstadia = new ArrayList<DetalleEstadia>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DetalleEstadia where estadia=?")
 		.setParameter(0, estadia).list();
@@ -59,6 +60,34 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
 	    return detallesEstadia;
 	}
 	return null;
+    }
+
+    public List<DetalleEstadia> findBy(Estadia estadia) {
+	List<DetalleEstadia> detallesEstadia = new ArrayList<DetalleEstadia>();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from DetalleEstadia where estadia=?")
+		.setParameter(0, estadia).list();
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		detallesEstadia.add((DetalleEstadia) object);
+	    }
+	    return detallesEstadia;
+	}
+	return null;
+    }
+
+    public List<DetalleEstadia> findByHorarios(Estadia estadia, Date horaInicio, Date horaFin) {
+	List<DetalleEstadia> detallesEstadia = new ArrayList<DetalleEstadia>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from DetalleEstadia where estadia=? and fechaHoraIngreso>=? and fechaHoraEgreso<=?")
+		.setParameter(0, estadia).setParameter(1, horaInicio).setParameter(2, horaFin).list();
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		detallesEstadia.add((DetalleEstadia) object);
+	    }
+	    return detallesEstadia;
+	}
+	return null;
+
     }
 
     @Override

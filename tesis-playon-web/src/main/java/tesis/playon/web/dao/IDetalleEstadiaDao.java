@@ -1,5 +1,7 @@
 package tesis.playon.web.dao;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import tesis.playon.web.model.DetalleEstadia;
@@ -24,5 +26,7 @@ public interface IDetalleEstadiaDao {
     DetalleEstadia findByVehiculoDetalleEstadia(Vehiculo vehiculo);
 
     List<DetalleEstadia> findByEstadia(Estadia estadia);
+
+    List<DetalleEstadia> findByHorarios(Estadia estadia, Date horaInicio, Date horaFin);
 
 }

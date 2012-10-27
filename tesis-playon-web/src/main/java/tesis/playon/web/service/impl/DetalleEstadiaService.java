@@ -1,5 +1,6 @@
 package tesis.playon.web.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +51,11 @@ public class DetalleEstadiaService implements IDetalleEstadiaService {
     @Override
     public DetalleEstadia findByVehiculoDetalleEstadia(Vehiculo vehiculo) {
 	return getDetalleEstadiaDao().findByVehiculoDetalleEstadia(vehiculo);
+    }
+
+    public List<DetalleEstadia> findByHorarios(Estadia estadia, Date fechaInicio, Date fechaFin) {
+	return getDetalleEstadiaDao().findByHorarios(estadia, fechaInicio, fechaFin);
+
     }
 
     public IDetalleEstadiaDao getDetalleEstadiaDao() {

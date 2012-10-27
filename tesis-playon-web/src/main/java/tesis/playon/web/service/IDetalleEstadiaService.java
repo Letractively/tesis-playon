@@ -1,5 +1,6 @@
 package tesis.playon.web.service;
 
+import java.util.Date;
 import java.util.List;
 
 import tesis.playon.web.model.DetalleEstadia;
@@ -22,6 +23,8 @@ public interface IDetalleEstadiaService {
     List<DetalleEstadia> findAll();
 
     List<DetalleEstadia> findByEstadia(Estadia estadia);
+
+    List<DetalleEstadia> findByHorarios(Estadia estadia, Date fechaInicio, Date fechaFin);
 
     DetalleEstadia findByVehiculoDetalleEstadia(Vehiculo vehiculo);
 
