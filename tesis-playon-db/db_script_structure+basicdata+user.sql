@@ -493,13 +493,15 @@ CREATE TABLE `abono` (
   `abonoID` int(11) NOT NULL auto_increment,
   `clienteID` int(11) NOT NULL,
   `playaID` int(11) NOT NULL,
+  `promocionID` int(11) DEFAULT NULL,
   PRIMARY KEY (`abonoID`),
   KEY `tarifaID` (`tarifaID`),
   KEY `clienteID` (`clienteID`),
   KEY `playaID` (`playaID`),
   CONSTRAINT `FK_abono_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
   CONSTRAINT `FK_abono_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
-  CONSTRAINT `FK_abono_tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `tarifa` (`tarifaID`)
+  CONSTRAINT `FK_abono_tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `tarifa` (`tarifaID`),
+  CONSTRAINT `FK_abono_promocion` FOREIGN KEY (`promocionID`) REFERENCES `promocion` (`promocionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1263,7 +1265,7 @@ UNLOCK TABLES;
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `tesis_playon`.`usuario` (`apellido`,`email`,`nombre`,`password`,`sesion`,`usuario`,`usuarioID`,`tipoDocID`,`nroDoc`,`enable`,`playaID`) 
-VALUES ('Moreno','pablo_la31@hotmail.com','Pablo','123456',NULL,'pablo_la31',1,1,'32987654',1,3),
+VALUES ('Moreno','pablo_la31@hotmail.com','Pablo','123456',NULL,'pablo',1,1,'32987654',1,3),
  ('Bostico','alebostico@hotmail.com','Alejandro','123456',NULL,'alejandro',2,1,'11111111',1,NULL),
  ('Arribere','gonzaloarribere@gmail.com','Gonzalo','123456',NULL,'gonzalo',3,1,'22222222',1,NULL),
  ('Morales Batovski','morales.batovski@gmail.com','Raúl Gustavo','123456',NULL,'gmorales',4,1,'29966905',1,NULL),
@@ -1283,7 +1285,7 @@ UNLOCK TABLES;
 LOCK TABLES `roles_por_usuario` WRITE;
 /*!40000 ALTER TABLE `roles_por_usuario` DISABLE KEYS */;
 INSERT INTO `tesis_playon`.`roles_por_usuario` (`rolesPorUsuarioID`,`usuario`,`rolUsuario`) 
-VALUES (1,'pablo_la31','ROLE_PLAYA_GERENTE'),
+VALUES (1,'pablo','ROLE_PLAYA_GERENTE'),
  (2,'alejandro','ROLE_AUDITOR'),
  (3,'gonzalo','ROLE_CLIENT'),
  (4,'gmorales','ROLE_ADMIN'),
@@ -1353,8 +1355,12 @@ UNLOCK TABLES;
 
 LOCK TABLES `cuenta_playa` WRITE;
 /*!40000 ALTER TABLE `cuenta_playa` DISABLE KEYS */;
-INSERT INTO `tesis_playon`.`cuenta_playa` (`fechaCreacion`,`nroCuenta`,`saldo`,`cuentaPlayaID`,`playaID`) VALUES 
- ('2012-08-22 00:00:00',1,40,1,3);
+INSERT INTO `tesis_playon`.`cuenta_playa` (`fechaCreacion`,`nroCuenta`,
+`saldo`,`cuentaPlayaID`,`playaID`) VALUES 
+ ('2012-08-22 00:00:00',1,40,1,3), ('2012-08-22 00:00:00',2,0,2,4),
+ ('2012-08-22 00:00:00',3,0,3,5), ('2012-08-22 00:00:00',4,0,4,6),
+ ('2012-08-22 00:00:00',5,0,5,7), ('2012-08-22 00:00:00',6,0,6,8),
+ ('2012-08-22 00:00:00',7,0,7,9), ('2012-08-22 00:00:00',8,0,8,10);
 /*!40000 ALTER TABLE `cuenta_playa` ENABLE KEYS */;
 UNLOCK TABLES;
 
