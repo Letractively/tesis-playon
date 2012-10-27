@@ -23,19 +23,27 @@
             	Listado de playas liquidadas  
         	</f:facet>
 
-			<p:column id="fechaId" headerText="Número" sortBy="#{liquidacion.id}">  
-	                #{liquidacion.id}  
-	            </p:column>
+			<p:column id="fechaId" sortBy="#{liquidacion.id}">
+				<f:facet name="header">
+					<h:outputText value="Número" />
+				</f:facet>
+				<h:outputText value="#{liquidacion.id}" />
+			</p:column>
 
-			<p:column id="playaHeader" headerText="Playa"
-				sortBy="#{liquidacion.estadia.playa.razonSocial}">  
-	                #{liquidacion.estadia.playa.razonSocial} 
-	            </p:column>
+			<p:column id="playaHeader"
+				sortBy="#{liquidacion.estadia.playa.razonSocial}">
+				<f:facet name="header">
+					<h:outputText value="Playa" />
+				</f:facet>
+				<h:outputText value="#{liquidacion.estadia.playa.razonSocial}" />
+			</p:column>
 
-			<p:column id="importeHeader" headerText="Importe"
-				sortBy="#{liquidacion.importeTotal}">  
-	                $ #{liquidacion.importeTotal} 
-	            </p:column>
+			<p:column id="importeHeader" sortBy="#{liquidacion.importeTotal}">
+				<f:facet name="header">
+					<h:outputText value="Importe" />
+				</f:facet>
+				<h:outputText value="$ #{liquidacion.importeTotal}" />
+			</p:column>
 
 			<p:column headerText="Opciones" styleClass="column-options"
 				style="text-align:center; width:95px;">
@@ -48,6 +56,7 @@
 				</p:commandLink>
 
 				<p:commandLink id="viewTrn" update=":mainForm:transaccionesView"
+					action="#{transaccionPlayaMB.updateTransaccionesList}"
 					oncomplete="trnDialog.show();" title="Ver Transacciones">
 					<f:setPropertyActionListener value="#{liquidacion}"
 						target="#{transaccionPlayaMB.liquidacionSelected}" />
@@ -188,21 +197,34 @@
             		"#{transaccionPlayaMB.liquidacionSelected.estadia.playa.razonSocial}"  
         		</f:facet>
 
-				<p:column id="playaHeader" headerText="Playa">  
-	                #{transaccionPlaya.cuentaPlaya.playa.razonSocial} 
-	            </p:column>
+				<p:column id="playaHeader">
+					<f:facet name="header">
+						<h:outputText value="Playa" />
+					</f:facet>
+					<h:outputText
+						value="#{transaccionPlaya.cuentaPlaya.playa.razonSocial}" />
+				</p:column>
 
-				<p:column id="fechaHeader" headerText="Fecha">  
-	                #{transaccionPlaya.fecha}  
-	            </p:column>
+				<p:column id="fechaHeader">
+					<f:facet name="header">
+						<h:outputText value="Fecha" />
+					</f:facet>
+					<h:outputText value="#{transaccionPlaya.fecha}" />
+				</p:column>
 
-				<p:column id="tipoPagoHeader" headerText="Tipo de Pago">  
-	                #{transaccionPlaya.tipoPago.nombre}  
-	            </p:column>
+				<p:column id="tipoPagoHeader">
+					<f:facet name="header">
+						<h:outputText value="Tipo de Pago" />
+					</f:facet>
+					<h:outputText value="#{transaccionPlaya.tipoPago.nombre}" />
+				</p:column>
 
-				<p:column id="importeHeader" headerText="Importe">  
-	                $ #{transaccionPlaya.importe} 
-	            </p:column>
+				<p:column id="importeHeader">
+					<f:facet name="header">
+						<h:outputText value="Importe" />
+					</f:facet>
+					<h:outputText value="$ #{transaccionPlaya.importe}" />
+				</p:column>
 
 				<f:facet name="footer">
 					<div align="center">
@@ -217,10 +239,10 @@
 							<h:commandLink title="Exportar a PDF">
 								<p:graphicImage
 									value="http://www.primefaces.org/showcase/images/pdf.png" />
+								<f:param name="titulo" value="Listado de transacciones" />
 								<p:dataExporter type="pdf" target="transaccionesView"
 									preProcessor="#{documentExporterMB.preProcessPDF}"
 									fileName="Transacciones">
-									<f:param name="titulo" value="Titulo del documento" />
 								</p:dataExporter>
 							</h:commandLink>
 						</h:panelGrid>

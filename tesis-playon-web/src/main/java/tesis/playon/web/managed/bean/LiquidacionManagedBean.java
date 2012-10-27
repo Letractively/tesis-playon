@@ -211,6 +211,11 @@ public class LiquidacionManagedBean implements Serializable {
 	    liquidacion.setImporteTotal(importeTotal(estadiaPlaya.getPlaya().getId()));
 	    getLiquidacionService().save(liquidacion);
 
+	    CuentaPlaya cuentaPlaya = getCuentaPlayaService().findByPlaya(playa);
+	    float nuevoSaldo = cuentaPlaya.getSaldo() - liquidacion.getImporteTotal();
+	    cuentaPlaya.setSaldo(nuevoSaldo);
+	    getCuentaPlayaService().update(cuentaPlaya);
+	    
 	    // Agregamos el ID de la liquidacion generada a
 	    // cada una de las transaciones liquidadas para esa playa.
 	    for (TransaccionPlaya transaccion : this.getTransaccionesALiquidar()) {

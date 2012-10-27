@@ -50,6 +50,27 @@ VALUES ('Pereyra','picante123@hotmail.com','Cesar','123456',NULL,'picante123',11
 ('Rube','richardparking@hotmail.com','Ricardo','123456',NULL,'richardparking',28,1,'123456777',1,14,NULL),
 ('Ricardo','ricardoempleado@hotmail.com','Ramirez','123456',NULL,'ricardoempleado',29,1,'34045824',1,14,NULL);
 
+
+--
+-- Dumping data for table `roles_por_usuario`
+--
+
+LOCK TABLES `roles_por_usuario` WRITE;
+/*!40000 ALTER TABLE `roles_por_usuario` DISABLE KEYS */;
+INSERT INTO `roles_por_usuario` (`rolesPorUsuarioID`,`usuario`,`rolUsuario`)
+VALUES (11,'picante123','ROLE_CLIENT'),(12,'lucas123','ROLE_CLIENT'),
+(13,'ladedonjose','ROLE_CLIENT'),(14,'cesar123','ROLE_CLIENT'),
+(15,'agustin123','ROLE_CLIENT'),(16,'ricardo123','ROLE_CLIENT'),
+(17,'oscar123','ROLE_CLIENT'),(18,'pelaes123','ROLE_CLIENT'),
+(19,'baigorri123','ROLE_CLIENT'),(20,'carignano123','ROLE_CLIENT'),
+(21,'sanchez123','ROLE_CLIENT'),(22,'quinteros123','ROLE_CLIENT'),
+(23,'muñoz123','ROLE_CLIENT'),(24,'martinez123','ROLE_CLIENT'),
+(25,'playinpepe','ROLE_PLAYA_GERENTE'),(26,'playinarmando','ROLE_PLAYA_GERENTE'),
+(27,'ladedonjose','ROLE_PLAYA_GERENTE'),(28,'richardparking','ROLE_PLAYA_GERENTE'),
+(29,'ricardoempleado','ROLE_PLAYA_EMPLEADO');
+/*!40000 ALTER TABLE `roles_por_usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Dumping data for table `cliente`
 --
@@ -381,3 +402,10 @@ VALUES ('2012-10-20 18:39:48',10,6,4,1,NULL,4),('2012-10-20 18:40:04',10,6,5,1,N
 ('2012-10-20 20:09:48',10,6,114,1,NULL,114),('2012-10-20 20:10:04',12,6,115,1,NULL,115),
 ('2012-10-20 20:10:11',12,6,116,1,NULL,116),('2012-10-20 20:10:19',12,6,117,1,NULL,117),
 ('2012-10-20 20:10:26',12,6,118,1,NULL,118),('2012-10-20 20:10:34',12,6,119,1,NULL,119);
+
+
+UPDATE `tesis_playon`.`cuenta_playa`
+SET `saldo` = (SELECT SUM(tp.`importe`) 
+                FROM `transaccion_playa` AS tp 
+                WHERE tp.`cuentaPlayaID` = 1)
+WHERE `cuentaPlayaID` = 1;

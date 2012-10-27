@@ -1,3 +1,5 @@
+USE `tesis_playon`;
+
 DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `tesis_playon`.`busquedaAvanzada` $$

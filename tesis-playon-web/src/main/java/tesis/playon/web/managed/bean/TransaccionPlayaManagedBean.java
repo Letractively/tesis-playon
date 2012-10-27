@@ -3,6 +3,7 @@ package tesis.playon.web.managed.bean;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -28,10 +29,24 @@ public class TransaccionPlayaManagedBean implements Serializable {
 
     private List<TransaccionPlaya> transaccionesList;
 
-    private Liquidacion liquidacionSelected;
+    private static Liquidacion liquidacionSelected;
+    
+    @PostConstruct
+    private void init(){
+	if (liquidacionSelected != null && transaccionesList == null){
+	    updateTransaccionesList();
+	}
+    }
+    
+    public void updateTransaccionesList() {
+	transaccionesList = getTransaccionPlayaService().findTransaccionesByLiquidacion(liquidacionSelected);
+    }
 
     public List<TransaccionPlaya> getTransaccionesList() {
-	transaccionesList = getTransaccionPlayaService().findTransaccionesByLiquidacion(liquidacionSelected);
+	//transaccionesList = getTransaccionPlayaService().findTransaccionesByLiquidacion(liquidacionSelected);
+	if (transaccionesList == null) {
+	    updateTransaccionesList();
+	}
 	return transaccionesList;
     }
 
@@ -44,7 +59,7 @@ public class TransaccionPlayaManagedBean implements Serializable {
     }
 
     public void setLiquidacionSelected(Liquidacion liquidacionSelected) {
-	this.liquidacionSelected = liquidacionSelected;
+	TransaccionPlayaManagedBean.liquidacionSelected = liquidacionSelected;
     }
 
     public ITransaccionPlayaService getTransaccionPlayaService() {
