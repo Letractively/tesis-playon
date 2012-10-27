@@ -16,7 +16,7 @@
 
 		<p:dataTable id="liquidaciones" var="liquidacion"
 			value="#{liquidacionMB.liquidacionesList}" paginatorPosition="bottom"
-			paginator="true" rows="10" sortBy="#{liquidacion.estadia}"
+			paginator="true" rows="10" sortBy="#{liquidacion.id}"
 			sortOrder="ascending">
 
 			<f:facet name="header">  
@@ -194,7 +194,7 @@
 
 				<f:facet name="header">  
             		Listado de transacciones de la playa 
-            		"#{transaccionPlayaMB.liquidacionSelected.estadia.playa.razonSocial}"  
+            		  
         		</f:facet>
 
 				<p:column id="playaHeader">
