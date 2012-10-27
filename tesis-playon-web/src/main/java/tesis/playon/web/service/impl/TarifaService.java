@@ -8,6 +8,7 @@ import tesis.playon.web.dao.ITarifaDao;
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Tarifa;
+import tesis.playon.web.model.TipoEstadia;
 import tesis.playon.web.service.ITarifaService;
 
 /**
@@ -62,6 +63,11 @@ public class TarifaService implements ITarifaService {
     @Override
     public List<Tarifa> findTarifaVigenteByPlayaAndCategoriaVehiculo(Playa playa, CategoriaVehiculo categoriaVehiculo) {
 	return getTarifaDao().findTarifaVigenteByPlayaAndCategoriaVehiculo(playa, categoriaVehiculo);
+    }
+    
+    @Override
+    public Tarifa findTarifaVigenteByPlayaAndCategoriaAndTipoEstadia(Playa playa, CategoriaVehiculo categoriaVehiculo, TipoEstadia tipoEstadia){
+	return getTarifaDao().findTarifaVigenteByPlayaAndCategoriaAndTipoEstadia(playa, categoriaVehiculo, tipoEstadia);
     }
 
     public ITarifaDao getTarifaDao() {

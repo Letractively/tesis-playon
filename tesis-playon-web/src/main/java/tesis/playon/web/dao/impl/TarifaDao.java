@@ -12,6 +12,7 @@ import tesis.playon.web.dao.ITarifaDao;
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Tarifa;
+import tesis.playon.web.model.TipoEstadia;
 
 /**
  * 
@@ -105,6 +106,19 @@ public class TarifaDao implements ITarifaDao {
 		tarifas.add((Tarifa) object);
 	    }
 	    return tarifas;
+	}
+	return null;
+    }
+    
+    @Override
+    public Tarifa findTarifaVigenteByPlayaAndCategoriaAndTipoEstadia(Playa playa, CategoriaVehiculo categoriaVehiculo, TipoEstadia tipoEstadia){
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Tarifa where playa=? and fechaBaja is null and tipoEstadia=? and categoriaVehiculo=?")
+			.setParameter(0, playa)
+			.setParameter(1, tipoEstadia)
+			.setParameter(2, categoriaVehiculo).list();
+	if (!list.isEmpty()) {
+	    return (Tarifa)list.get(0);
 	}
 	return null;
     }

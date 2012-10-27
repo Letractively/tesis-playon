@@ -5,8 +5,6 @@ import java.util.List;
 
 import tesis.playon.web.model.CuentaPlaya;
 import tesis.playon.web.model.Liquidacion;
-import tesis.playon.web.model.Playa;
-import tesis.playon.web.model.TransaccionCliente;
 import tesis.playon.web.model.TransaccionPlaya;
 
 public interface ITransaccionPlayaDao {

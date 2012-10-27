@@ -5,7 +5,6 @@ import java.util.List;
 
 import tesis.playon.web.model.CuentaCliente;
 import tesis.playon.web.model.TransaccionCliente;
-import tesis.playon.web.model.TransaccionPlaya;
 
 /**
  * @author Pablo

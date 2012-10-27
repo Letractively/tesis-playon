@@ -5,6 +5,7 @@ import java.util.List;
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Tarifa;
+import tesis.playon.web.model.TipoEstadia;
 
 public interface ITarifaDao {
 
@@ -24,4 +25,5 @@ public interface ITarifaDao {
 
     List<Tarifa> findTarifaVigenteByPlayaAndCategoriaVehiculo(Playa playa, CategoriaVehiculo categoriaVehiculo);
 
+    Tarifa findTarifaVigenteByPlayaAndCategoriaAndTipoEstadia(Playa playa, CategoriaVehiculo categoriaVehiculo, TipoEstadia tipoEstadia);
 }

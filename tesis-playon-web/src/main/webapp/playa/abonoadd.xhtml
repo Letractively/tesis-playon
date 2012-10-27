@@ -1,0 +1,62 @@
+<ui:composition template="../template/templatePlaya.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="loadmenuperfil" value="true" />
+
+
+	<ui:define name="title">
+		Solicitud de registro de vehículo
+    </ui:define>
+
+	<ui:define name="content">
+		<h1>Nueva estadía por mes</h1>
+
+		<h:form id="form" style="margin: 10px 0px 0px 30px;">
+			<p:growl id="messages" />
+
+			<h:panelGrid columns="3">
+
+				<h:outputLabel value="Patente: " />
+				<p:inputText id="patente" value="#{abonoMB.patente}"
+					style="width: 200px" required="true"
+					validator="#{abonoMB.validateVehiculo}"
+					requiredMessage="Campo obligatorio" minlength="6">
+					<f:validateLength minimum="6" />
+					<p:ajax event="blur" update="patenteMsg" />
+				</p:inputText>
+				<p:message id="patenteMsg" for="patente" display="text" />
+
+				<h:outputLabel value="Fecha de inicio: " />
+				<p:calendar value="#{abonoMB.fechaDesde}" required="true"
+					requiredMessage="Campo obligatorio" />
+				<p:message id="fechaMsg" for="patente" display="icon" />
+
+				<h:outputLabel value="Fecha de vencimiento: " />
+				<p:inputText value="#{abonoMB.fechaHasta}" />
+				<p:column />
+
+				<h:outputLabel value="Promoción: " />
+				<p:column style="text-align:right;">
+					<p:selectOneMenu id="promociones" value="#{abonoMB.promocion}"
+						effect="fade">
+						<f:selectItem itemLabel="&#160;Seleccione una promoción&#160;"
+							itemValue="" />
+						<f:selectItems value="#{abonoMB.promocionesDisponibles}"
+							var="promocion" itemValue="#{promocion}"
+							itemLabel="#{promocion.nombre}&#160;-&#160;
+												#{promocion.descuento}%&#160;desc" />
+						<f:converter converterId="promocionConverter" />
+					</p:selectOneMenu>
+				</p:column>
+				<p:column />
+
+
+
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

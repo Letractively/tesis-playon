@@ -46,6 +46,10 @@ public class Abono implements Serializable {
     @ManyToOne
     @JoinColumn(name = "playaID")
     private Playa playa;
+    
+    @ManyToOne
+    @JoinColumn(name = "promocionID")
+    private Promocion promocion;
 
     /**
      * Constructor por defecto.
@@ -114,6 +118,18 @@ public class Abono implements Serializable {
 
     public Integer getId() {
 	return id;
+    }
+
+    public Promocion getPromocion() {
+        return promocion;
+    }
+
+    public void setPromocion(Promocion promocion) {
+        this.promocion = promocion;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public boolean equals(Object object) {
