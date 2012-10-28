@@ -41,8 +41,8 @@
 
 					<p:menu style="width: 95%;" styleClass="side-menu">
 						<p:submenu label="Perfil">
-							<p:menuitem value="Ver perfil"
-								outcome="/playa/perfilplaya" icon="ui-icon-plus" />
+							<p:menuitem value="Ver perfil" outcome="/playa/perfilplaya"
+								icon="ui-icon-plus" />
 							<p:menuitem value="Editar perfil"
 								outcome="/playa/gerencia/perfilplayaedit" icon="ui-icon-person" />
 						</p:submenu>
@@ -57,18 +57,20 @@
 								outcome="/playa/gerencia/tarifaplayalist" icon="ui-icon-note" />
 						</p:submenu>
 						<p:submenu label="Promociones">
-							<p:menuitem value="Nueva promoción" outcome="/playa/gerencia/promocionadd"
-								icon="ui-icon-plus" />
-							<p:menuitem value="Ver promociones" outcome="/playa/gerencia/promocioneslist"
+							<p:menuitem value="Nueva promoción"
+								outcome="/playa/gerencia/promocionadd" icon="ui-icon-plus" />
+							<p:menuitem value="Ver promociones"
+								outcome="/playa/gerencia/promocioneslist"
 								icon="ui-icon-suitcase" />
 						</p:submenu>
-						<p:submenu label="Transacciones">
-							<p:menuitem value="Ver transacciones"
-								outcome="/playa/gerencia/transaccionplayalist" icon="ui-icon-calculator" />
-						</p:submenu>
 						<p:submenu label="Informes">
-							<p:menuitem value="Informes" outcome="/playa/gerencia/grafico"
-								icon="ui-icon-plus" />
+							<p:menuitem value="Ver transacciones"
+								outcome="/playa/gerencia/transaccionplayalist"
+								icon="ui-icon-calculator" />
+							<p:menuitem value="Abonados"
+								outcome="/playa/gerencia/abonolist" icon="ui-icon-plus" />
+							<p:menuitem value="Estadísticas"
+								outcome="/playa/gerencia/grafico" icon="ui-icon-plus" />
 						</p:submenu>
 					</p:menu>
 				</div>
@@ -81,17 +83,13 @@
 						<p:menuitem value="Perfil de playa" outcome="/playa/perfilplaya"
 							icon="ui-icon-script" />
 						<p:menuitem value="Ingreso / Egreso"
-							outcome="/playa/ingresoegresovehiculo"
-							icon="ui-icon-arrow-2-e-w" />
+							outcome="/playa/ingresoegresovehiculo" icon="ui-icon-arrow-2-e-w" />
 						<p:menuitem value="Consultar tarifas"
-							outcome="/playa/consultartarifas"
-							icon="ui-icon-note" />
+							outcome="/playa/consultartarifas" icon="ui-icon-note" />
 						<p:menuitem value="Consultar promociones"
-							outcome="/playa/consultarpromociones"
-							icon="ui-icon-suitcase" />
+							outcome="/playa/consultarpromociones" icon="ui-icon-suitcase" />
 						<p:menuitem value="Denunciar vehículo"
-							outcome="/playa/denunciarvehiculo"
-							icon="ui-icon-print" />
+							outcome="/playa/denunciarvehiculo" icon="ui-icon-print" />
 					</p:submenu>
 				</p:menu>
 			</div>

@@ -84,8 +84,13 @@ public class CuentaClienteManagedBean {
 	this.fechaDesde = new Date();
 	this.fechaHasta = new Date();
 	this.fechaDesde = DateUtils.setDays(this.fechaDesde, 1);
-	getCliente();
-
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	String userName = facesContext.getExternalContext().getRemoteUser();
+	Usuario usuario = getUsuarioService().findByNombreUsuario(userName);
+	if(usuario != null){
+	    cliente = getClienteService().findByUsuario(usuario);
+	    cuentaCliente =cliente.getCuentaCliente();
+	}
     }
 
     public void cargarSaldo() {
@@ -157,10 +162,6 @@ public class CuentaClienteManagedBean {
     }
 
     public Cliente getCliente() {
-	FacesContext facesContext = FacesContext.getCurrentInstance();
-	String userName = facesContext.getExternalContext().getRemoteUser();
-	Usuario usuario = getUsuarioService().findByNombreUsuario(userName);
-	cliente = getClienteService().findByUsuario(usuario);
 	return cliente;
     }
 

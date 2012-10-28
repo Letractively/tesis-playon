@@ -12,17 +12,6 @@
 
 		<p:menubar style="font-size: 0.8em;">
 			<p:menuitem value="Inicio" url="#{request.contextPath}/../admin" />
-			<p:submenu label="Usuarios">
-				<p:menuitem value="Usuarios"
-					url="#{request.contextPath}/../admin/usuariolist.html"
-					icon="ui-icon-person" />
-				<p:menuitem value="Clientes"
-					url="#{request.contextPath}/../admin/clientelist.html"
-					icon="ui-icon-star" />
-				<p:menuitem value="Roles de Usuarios"
-					url="#{request.contextPath}/../admin/rolusuariolist.html"
-					icon="ui-icon-tag" />
-			</p:submenu>
 
 			<p:submenu label="Playas">
 				<p:menuitem value="Playas"
@@ -37,12 +26,27 @@
 			</p:submenu>
 
 			<p:submenu label="Auditoría">
-				<p:menuitem value="Playas Pendientes"
+				<p:menuitem value="Playas"
 					url="#{request.contextPath}/../auditoria/playaspendienteslist.html"
 					icon="ui-icon-help" />
-				<p:menuitem value="Playas Rechazadas"
-					url="#{request.contextPath}/../auditoria/playasrechazadaslist.html"
+				<p:menuitem value="Denuncia a vehículo"
+					url="#{request.contextPath}/../auditoria/denunciasvehiculos.html"
+					icon="ui-icon-pin-w" />
+				<p:menuitem value="Denuncia a playa"
+					url="#{request.contextPath}/../auditoria/denunciasvehiculos.html"
 					icon="ui-icon-close" />
+			</p:submenu>
+			
+			<p:submenu label="Usuarios">
+				<p:menuitem value="Usuarios"
+					url="#{request.contextPath}/../admin/usuariolist.html"
+					icon="ui-icon-person" />
+				<p:menuitem value="Clientes"
+					url="#{request.contextPath}/../admin/clientelist.html"
+					icon="ui-icon-star" />
+				<p:menuitem value="Roles de Usuarios"
+					url="#{request.contextPath}/../admin/rolusuariolist.html"
+					icon="ui-icon-tag" />
 			</p:submenu>
 
 			<p:submenu label="Usuario">

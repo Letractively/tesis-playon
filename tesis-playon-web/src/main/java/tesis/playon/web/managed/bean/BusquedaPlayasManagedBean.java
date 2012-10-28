@@ -64,7 +64,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
     private TipoEstadia tipoEstadiaParameter;
     private int checkPromociones;
     private String nombrePlayaParameter;
-    
+
     private Double latitudCentro;
     private Double longitudCentro;
 
@@ -134,7 +134,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	    idCategoria = categoriaParameter.getId();
 	if (tipoEstadiaParameter != null)
 	    idTipoEstadia = tipoEstadiaParameter.getId();
-	if(!nombrePlayaParameter.isEmpty())
+	if (!nombrePlayaParameter.isEmpty())
 	    nombrePlaya = nombrePlayaParameter;
 
 	if (null != getDireccionBusqueda() && !getDireccionBusqueda().trim().isEmpty()) {
@@ -152,24 +152,30 @@ public class BusquedaPlayasManagedBean implements Serializable {
 		playasCercanas = getPlayaService().findByPlayasCercanas(respuesta.getLatitud(),
 			respuesta.getLongitud(), idCategoria, idTipoEstadia, nombrePlaya, checkPromociones);
 
-		for (Playa playaAux : playasCercanas) {
-		    Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
-		    if (comparacion < getDistancia()) {
-			playaResultadoBusqueda.add(playaAux);
-			LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
-			PerfilPlaya perfil = new PerfilPlaya();
-			perfil = getPerfilPlayaService().findByPlaya(playaAux);
-			WriteImage.getFotoPerfil(perfil);
-			advancedModel.addOverlay(new Marker(coord1, playaAux.getNombreComercial(), perfil,
-				"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
+		if (playasCercanas != null) {
+		    for (Playa playaAux : playasCercanas) {
+			Double comparacion = playaAux.getDistanceFrom(respuesta.getLatitud(), respuesta.getLongitud());
+			if (comparacion < getDistancia()) {
+			    playaResultadoBusqueda.add(playaAux);
+			    LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
+			    PerfilPlaya perfil = new PerfilPlaya();
+			    perfil = getPerfilPlayaService().findByPlaya(playaAux);
+			    WriteImage.getFotoPerfil(perfil);
+			    advancedModel.addOverlay(new Marker(coord1, playaAux.getNombreComercial(), perfil,
+				    "http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
+			}
+			LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
+
+			advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
+				"http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
+
 		    }
+		} else {
+
 		    LatLng coordenada = new LatLng(respuesta.getLatitud(), respuesta.getLongitud());
 
-		    advancedModel
-			    .addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
-				    "http://files.softicons.com/download/system-icons/web0.2ama-icons-by-chrfb/png/32x32/Maps%20-%20Car.png"));
-		    // http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg
-
+		    advancedModel.addOverlay(new Marker(coordenada, "¡Usted está aquí!", null,
+			    "http://s3.subirimagenes.com:81/otros/previo/thump_7896462autoicono.jpg"));
 		}
 		ordenar();
 	    } catch (Exception e) {
@@ -372,19 +378,19 @@ public class BusquedaPlayasManagedBean implements Serializable {
     }
 
     public int getCheckPromociones() {
-        return checkPromociones;
+	return checkPromociones;
     }
 
     public void setCheckPromociones(int checkPromociones) {
-        this.checkPromociones = checkPromociones;
+	this.checkPromociones = checkPromociones;
     }
 
     public String getNombrePlayaParameter() {
-        return nombrePlayaParameter;
+	return nombrePlayaParameter;
     }
 
     public void setNombrePlayaParameter(String nombrePlayaParameter) {
-        this.nombrePlayaParameter = nombrePlayaParameter;
+	this.nombrePlayaParameter = nombrePlayaParameter;
     }
 
 }

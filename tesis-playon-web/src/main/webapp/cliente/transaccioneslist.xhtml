@@ -35,9 +35,9 @@
 
 			<p:dataTable id="transacciones" var="transaccionCliente"
 				rowStyleClass="#{transaccionCliente.tipoPago.nombre eq 'Cuenta' ? 'old' :null}"
-				paginator="false" value="#{cuentaClienteMB.transacciones}"
+				paginator="true" value="#{cuentaClienteMB.transacciones}"
 				emptyMessage="No ha realizado transacciones"
-				paginatorPosition="bottom">
+				paginatorPosition="bottom" rows="6">
 
 				<p:column style="text-align:center">
 					<f:facet name="header">
@@ -63,6 +63,19 @@
 
 					<h:outputText value="#{transaccionCliente.importe}" />
 				</p:column>
+
+
+
+				<p:columnGroup type="footer">
+					<p:row>
+						<p:column colspan="2" footerText="Saldo"
+							style="text-align:right" />
+
+						<p:column footerText="$#{cuentaClienteMB.cuentaCliente.saldo}" />
+					</p:row>
+				</p:columnGroup>
+
+
 
 				<f:facet name="footer">
 					<div align="center">
