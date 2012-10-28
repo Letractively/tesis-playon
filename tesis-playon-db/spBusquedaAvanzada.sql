@@ -24,8 +24,8 @@ BEGIN
                                                         FROM promocion promo
                                                         WHERE pPromociones = 1
                                                                 AND promo.estadoPromocionID=2
-                                                                AND (promo.fechaInicio >= now())
-                                                                AND (promo.fechaFin <= now()))))
+                                                                AND (now() >= promo.fechaInicio )
+                                                                AND (now() <= promo.fechaFin ))))
             AND (p.estadoPlayaID = 2)
             AND (p.disponibilidad > 0));
 END $$
