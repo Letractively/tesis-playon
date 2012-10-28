@@ -199,6 +199,13 @@ VALUES
 ('2012-10-27 20:10:31',12,6,2,NULL,32,32);
 
 
+-- Dumping data for Denuncia a vehiculos
+
+INSERT INTO `tesis_playon`.`denuncia_vehiculo` (`asunto`, `fechaAlta`, `vehiculoID`, `denunciaVehiculoID`, `playaID`, `estadoID`) VALUES ('No corresponde el auto declarado con el real', '2012-08-01 00:00:00', 1, 1, 3, 1);
+INSERT INTO `tesis_playon`.`denuncia_vehiculo` (`asunto`, `fechaAlta`, `vehiculoID`, `denunciaVehiculoID`, `playaID`, `estadoID`) VALUES ('No corresponde el auto declarado con el real', '2012-08-01 00:00:00', 2, 2, 3, 1);
+INSERT INTO `tesis_playon`.`denuncia_vehiculo` (`asunto`, `fechaAlta`, `vehiculoID`, `denunciaVehiculoID`, `playaID`, `estadoID`) VALUES ('No corresponde el auto declarado con el real', '2012-08-01 00:00:00', 1, 3, 3, 1);
+
+
 -- Actualizar el saldo de la playa
 
 UPDATE `tesis_playon`.`cuenta_playa`
