@@ -649,7 +649,7 @@ public class EstadisticaGerenteManagedBean {
 
 	autos.set("2009", 1000000);
 	autos.set("2010", 941000);
-	autos.set("2011", 177700);
+	autos.set("2011", 877700);
 	autos.set("2012", 1300000);
 
 	motos.set("2009", 250000);
@@ -690,7 +690,7 @@ public class EstadisticaGerenteManagedBean {
 
 	autos.set("2009", 1000000);
 	autos.set("2010", 941000);
-	autos.set("2011", 177700);
+	autos.set("2011", 877700);
 	autos.set("2012", 1300000);
 
 	motos.set("2009", 250000);
