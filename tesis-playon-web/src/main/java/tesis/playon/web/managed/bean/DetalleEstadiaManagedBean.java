@@ -245,6 +245,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"No se encontró el vehículo con patente: " + auxPatente, null);
 		FacesContext.getCurrentInstance().addMessage(null, message);
+		setExisteVehiculo(false);
 	    }
 	} catch (Exception e) {
 	    e.printStackTrace();
