@@ -879,7 +879,7 @@ public class IngresoEgresoManagedBean implements Serializable {
     }
 
     public List<Abono> getListadoAbonos() {
-	listadoAbonos = getAbonoService().findByPlaya(playa);
+	listadoAbonos = getAbonoService().findByPlaya(getPlaya());
 
 	return listadoAbonos;
     }
