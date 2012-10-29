@@ -268,9 +268,9 @@ INSERT INTO `detalle_estadia` (`detalleEstadiaID`,`transaccionClienteID`,`emplea
 -- Dumping data for table `Abono`
 
 
-INSERT INTO `tesis_playon`.`abono` (`fechaVigenciaDesde`, `fechaVigenciaHasta`, `tarifaID`, `abonoID`, `clienteID`, `playaID`, `promocionID`) VALUES ('2012-10-02 00:00:00', '2012-11-02 00:00:00', 3, 1, 3, 3,null);
-INSERT INTO `tesis_playon`.`abono` (`fechaVigenciaDesde`, `fechaVigenciaHasta`, `tarifaID`, `abonoID`, `clienteID`, `playaID`, `promocionID`) VALUES ('2012-10-03 00:00:00', '2012-12-03 00:00:00', 3, 3, 1, 3,null);
 INSERT INTO `tesis_playon`.`abono` (`fechaVigenciaDesde`, `fechaVigenciaHasta`, `tarifaID`, `abonoID`, `clienteID`, `playaID`, `promocionID`) VALUES ('2012-10-04 00:00:00', '2012-11-04 00:00:00', 3, 2, 2, 3,null);
+INSERT INTO `tesis_playon`.`abono` (`fechaVigenciaDesde`, `fechaVigenciaHasta`, `tarifaID`, `abonoID`, `clienteID`, `playaID`, `promocionID`) VALUES ('2012-10-02 00:00:00', '2012-11-02 00:00:00', 3, 3, 3, 3,null);
+INSERT INTO `tesis_playon`.`abono` (`fechaVigenciaDesde`, `fechaVigenciaHasta`, `tarifaID`, `abonoID`, `clienteID`, `playaID`, `promocionID`) VALUES ('2012-10-03 00:00:00', '2012-11-03 00:00:00', 3, 4, 1, 3,null);
 
 
 
