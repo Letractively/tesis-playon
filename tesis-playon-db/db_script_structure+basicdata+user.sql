@@ -1317,7 +1317,7 @@ UNLOCK TABLES;
 LOCK TABLES `abono` WRITE;
 /*!40000 ALTER TABLE `abono` DISABLE KEYS */;
 INSERT INTO `tesis_playon`.`abono` (`fechaVigenciaDesde`,`fechaVigenciaHasta`,`tarifaID`,`abonoID`,`clienteID`,`playaID`) VALUES 
- ('2012-08-01 00:00:00','2013-12-31 00:00:00',3,1,3,3);
+ ('2012-10-05 00:00:00','2012-11-05 00:00:00',3,1,3,3);
 /*!40000 ALTER TABLE `abono` ENABLE KEYS */;
 UNLOCK TABLES;
 
