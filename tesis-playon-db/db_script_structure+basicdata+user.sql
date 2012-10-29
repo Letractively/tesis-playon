@@ -498,6 +498,7 @@ CREATE TABLE `abono` (
   KEY `tarifaID` (`tarifaID`),
   KEY `clienteID` (`clienteID`),
   KEY `playaID` (`playaID`),
+  KEY `promocionID` (`promocionID`),
   CONSTRAINT `FK_abono_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
   CONSTRAINT `FK_abono_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
   CONSTRAINT `FK_abono_tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `tarifa` (`tarifaID`),
