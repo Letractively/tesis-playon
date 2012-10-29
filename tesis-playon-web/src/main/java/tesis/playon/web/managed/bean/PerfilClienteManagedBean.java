@@ -84,11 +84,13 @@ public class PerfilClienteManagedBean implements Serializable {
 	try {
 	    this.cliente.getUsuario().setFotoPerfil(fotoPerfilFile.getContents());
 	    getUsuarioService().update(this.cliente.getUsuario());
+	    usuario = cliente.getUsuario();
+	    
+	    WriteImage.getFotoPerfilCliente(this.cliente.getUsuario());
+	    
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se modificó exitosamente su foto de perfil", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-
-	    WriteImage.getFotoPerfilCliente(this.cliente.getUsuario());
 
 	    return "perfilclienteedit";
 	} catch (Exception ex) {
