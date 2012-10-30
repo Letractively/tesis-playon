@@ -33,7 +33,7 @@ public class DocumentExporterManagedBean implements Serializable {
 	ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
 	Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 	
-	String logo = extContext.getRealPath("resources" + sep + "images" +sep + "transacciones.png");
+	String logo = extContext.getRealPath("resources" + sep + "images" +sep + "LogoEncabezadoLiquidacion2.png");
 	String titulo = params.get("titulo");
 	
 	pdf.open();

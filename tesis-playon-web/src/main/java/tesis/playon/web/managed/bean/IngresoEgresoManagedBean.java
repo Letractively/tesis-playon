@@ -928,7 +928,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	pdf.open();
 	pdf.setPageSize(PageSize.A4);
 	ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
-	String logo = extContext.getRealPath("resources" + sep + "images" + sep + "transacciones.png");
+	String logo = extContext.getRealPath("resources" + sep + "images" + sep + "LogoEncabezado3.png");
 	pdf.addTitle("Historial de Transacciones");
 	pdf.add(Image.getInstance(logo));
     }

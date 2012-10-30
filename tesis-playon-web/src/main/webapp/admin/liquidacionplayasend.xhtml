@@ -71,7 +71,7 @@
 							<p:graphicImage
 								value="http://www.primefaces.org/showcase/images/excel.png" />
 							<p:dataExporter type="xls" target="liquidaciones"
-								fileName="Transacciones" />
+								fileName="Liquidaciones" />
 						</h:commandLink>
 
 						<h:commandLink title="Exportar a PDF">
@@ -80,7 +80,7 @@
 							<f:param name="titulo" value="Listado de playas liquidadas" />
 							<p:dataExporter type="pdf" target="liquidaciones"
 								preProcessor="#{documentExporterMB.preProcessPDF}"
-								fileName="Transacciones">
+								fileName="Liquidaciones">
 							</p:dataExporter>
 						</h:commandLink>
 					</h:panelGrid>
@@ -233,7 +233,7 @@
 								<p:graphicImage
 									value="http://www.primefaces.org/showcase/images/excel.png" />
 								<p:dataExporter type="xls" target="transaccionesView"
-									fileName="Transacciones" />
+									fileName="Liquidaciones" />
 							</h:commandLink>
 
 							<h:commandLink title="Exportar a PDF">
@@ -242,7 +242,7 @@
 								<f:param name="titulo" value="Listado de transacciones" />
 								<p:dataExporter type="pdf" target="transaccionesView"
 									preProcessor="#{documentExporterMB.preProcessPDF}"
-									fileName="Transacciones">
+									fileName="Liquidaciones">
 								</p:dataExporter>
 							</h:commandLink>
 						</h:panelGrid>
