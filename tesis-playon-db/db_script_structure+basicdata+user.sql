@@ -1424,9 +1424,9 @@ LOCK TABLES `transaccion_cliente` WRITE;
 INSERT INTO `tesis_playon`.`transaccion_cliente` (`fecha`,`importe`,`tipoPagoID`,
 	`transaccionClienteID`,`cuentaClienteID`) VALUES 
  ('2012-08-03 13:23:45',100,4,1,1),
- ('2012-08-04 19:25:23',-20,4,2,1),
- ('2012-08-11 18:45:21',-10,4,3,1),
- ('2012-08-18 18:32:49',-10,4,4,1);
+ ('2012-08-04 19:25:23',20,6,2,1),
+ ('2012-08-11 18:45:21',10,6,3,1),
+ ('2012-08-18 18:32:49',10,6,4,1);
 /*!40000 ALTER TABLE `transaccion_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 

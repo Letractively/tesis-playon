@@ -41,28 +41,9 @@ VALUES
 
 
 
-
 -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
--- FALTA CARGAR SALDO EN LOS CLIENTES !!!!!!!!!!!!!!!!!!!!!!!!!
+-- Carga de crédito de los clientes al final !!!!!!!!!!!!!!!!!!
 -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
--- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
--- FALTA CARGAR SALDO EN LOS CLIENTES !!!!!!!!!!!!!!!!!!!!!!!!!
--- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
--- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
--- FALTA CARGAR SALDO EN LOS CLIENTES !!!!!!!!!!!!!!!!!!!!!!!!!
--- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
--- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
--- FALTA CARGAR SALDO EN LOS CLIENTES !!!!!!!!!!!!!!!!!!!!!!!!!
--- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
-
 
 
 -- ------------------------------------------------------------------
@@ -201,9 +182,18 @@ VALUES
 
 -- Dumping data for Denuncia a vehiculos
 
-INSERT INTO `tesis_playon`.`denuncia_vehiculo` (`asunto`, `fechaAlta`, `vehiculoID`, `denunciaVehiculoID`, `playaID`, `estadoID`) VALUES ('No corresponde el auto declarado con el real', '2012-08-01 00:00:00', 1, 1, 3, 1);
-INSERT INTO `tesis_playon`.`denuncia_vehiculo` (`asunto`, `fechaAlta`, `vehiculoID`, `denunciaVehiculoID`, `playaID`, `estadoID`) VALUES ('No corresponde el auto declarado con el real', '2012-08-01 00:00:00', 2, 2, 3, 1);
-INSERT INTO `tesis_playon`.`denuncia_vehiculo` (`asunto`, `fechaAlta`, `vehiculoID`, `denunciaVehiculoID`, `playaID`, `estadoID`) VALUES ('No corresponde el auto declarado con el real', '2012-08-01 00:00:00', 1, 3, 3, 1);
+INSERT INTO `tesis_playon`.`denuncia_vehiculo` 
+(`asunto`, `fechaAlta`, `vehiculoID`, `denunciaVehiculoID`, 
+`playaID`, `estadoID`) VALUES 
+('No corresponde el auto declarado con el real', '2012-08-01 00:00:00', 1, 1, 3, 1);
+INSERT INTO `tesis_playon`.`denuncia_vehiculo` 
+(`asunto`, `fechaAlta`, `vehiculoID`, `denunciaVehiculoID`, 
+`playaID`, `estadoID`) VALUES 
+('No corresponde el auto declarado con el real', '2012-08-01 00:00:00', 2, 2, 3, 1);
+INSERT INTO `tesis_playon`.`denuncia_vehiculo` 
+(`asunto`, `fechaAlta`, `vehiculoID`, `denunciaVehiculoID`, 
+`playaID`, `estadoID`) VALUES 
+('No corresponde el auto declarado con el real', '2012-08-01 00:00:00', 1, 3, 3, 1);
 
 
 -- Actualizar el saldo de la playa
@@ -213,15 +203,6 @@ SET `saldo` = (SELECT SUM(tp.`importe`)
                 FROM `transaccion_playa` AS tp 
                 WHERE tp.`cuentaPlayaID` = 2)
 WHERE `cuentaPlayaID` = 2;
-
-
-
-
--- HASTA ACA PROBADO Y FUNCIONA OK !!!!!!!!!!!
-
-
-
-
 
 -- ------------------------------------------------------------------
 -- Carga de datos de prueba para la Playa "Estacionamiento Colón"
@@ -265,12 +246,21 @@ INSERT INTO `detalle_estadia` (`detalleEstadiaID`,`transaccionClienteID`,`emplea
 (45,45,1008,'2012-10-19 20:00:00','2012-10-19 20:10:24',14,1,NULL,23,4,10),
 (46,46,1008,'2012-10-28 20:00:00','2012-10-28 20:10:31',14,1,NULL,23,4,10);
     
+
 -- Dumping data for table `Abono`
 
-
-INSERT INTO `tesis_playon`.`abono` (`fechaVigenciaDesde`, `fechaVigenciaHasta`, `tarifaID`, `abonoID`, `clienteID`, `playaID`, `promocionID`) VALUES ('2012-10-04 00:00:00', '2012-11-04 00:00:00', 3, 2, 2, 3,null);
-INSERT INTO `tesis_playon`.`abono` (`fechaVigenciaDesde`, `fechaVigenciaHasta`, `tarifaID`, `abonoID`, `clienteID`, `playaID`, `promocionID`) VALUES ('2012-10-02 00:00:00', '2012-11-02 00:00:00', 3, 3, 3, 3,null);
-INSERT INTO `tesis_playon`.`abono` (`fechaVigenciaDesde`, `fechaVigenciaHasta`, `tarifaID`, `abonoID`, `clienteID`, `playaID`, `promocionID`) VALUES ('2012-10-03 00:00:00', '2012-11-03 00:00:00', 3, 4, 1, 3,null);
+INSERT INTO `tesis_playon`.`abono` 
+(`fechaVigenciaDesde`, `fechaVigenciaHasta`, `tarifaID`, 
+`abonoID`, `clienteID`, `playaID`, `promocionID`) VALUES 
+('2012-10-04 00:00:00', '2012-11-04 00:00:00', 3, 2, 2, 3,null);
+INSERT INTO `tesis_playon`.`abono` 
+(`fechaVigenciaDesde`, `fechaVigenciaHasta`, `tarifaID`, 
+`abonoID`, `clienteID`, `playaID`, `promocionID`) VALUES 
+('2012-10-02 00:00:00', '2012-11-02 00:00:00', 3, 3, 3, 3,null);
+INSERT INTO `tesis_playon`.`abono` 
+(`fechaVigenciaDesde`, `fechaVigenciaHasta`, `tarifaID`, 
+`abonoID`, `clienteID`, `playaID`, `promocionID`) VALUES 
+('2012-10-03 00:00:00', '2012-11-03 00:00:00', 3, 4, 1, 3,null);
 
 
 
@@ -307,11 +297,55 @@ WHERE `cuentaPlayaID` = 8;
 
 
 -- -------------------------------------------------------------------------
--- Actualizar el saldo de los clientes
+-- Carga de crédito en lo clientes
+
+INSERT INTO `tesis_playon`.`transaccion_cliente` (`fecha`,`importe`,`tipoPagoID`,
+	`transaccionClienteID`,`cuentaClienteID`) VALUES 
+ ('2012-08-18 13:23:45',90,4,47,1),
+ ('2012-09-20 19:25:23',50,4,48,2),
+ ('2012-08-18 18:45:21',500,4,49,3),
+ ('2012-08-13 18:32:49',300,4,50,4);
 
 
 -- Actualizar el saldo de los clientes
 
+UPDATE `tesis_playon`.`cuenta_cliente`
+SET `saldo` = COALESCE((SELECT SUM(tc1.`importe`) 
+        FROM `transaccion_cliente` AS tc1 
+        WHERE tc1.`cuentaClienteID` = 1 and tipoPagoID = 4),0) -
+    COALESCE((SELECT SUM(tc2.`importe`) 
+        FROM `transaccion_cliente` AS tc2
+        WHERE tc2.`cuentaClienteID` = 1 and tipoPagoID = 6),0)
+WHERE `cuentaClienteID` = 1;
+
+UPDATE `tesis_playon`.`cuenta_cliente`
+SET `saldo` = COALESCE((SELECT SUM(tc1.`importe`) 
+        FROM `transaccion_cliente` AS tc1 
+        WHERE tc1.`cuentaClienteID` = 2 and tipoPagoID = 4),0) -
+    COALESCE((SELECT SUM(tc2.`importe`) 
+        FROM `transaccion_cliente` AS tc2
+        WHERE tc2.`cuentaClienteID` = 2 and tipoPagoID = 6),0)
+WHERE `cuentaClienteID` = 2;
+
+UPDATE `tesis_playon`.`cuenta_cliente`
+SET `saldo` = COALESCE((SELECT SUM(tc1.`importe`) 
+        FROM `transaccion_cliente` AS tc1 
+        WHERE tc1.`cuentaClienteID` = 3 and tipoPagoID = 4),0) -
+    COALESCE((SELECT SUM(tc2.`importe`) 
+        FROM `transaccion_cliente` AS tc2
+        WHERE tc2.`cuentaClienteID` = 3 and tipoPagoID = 6),0)
+WHERE `cuentaClienteID` = 3;
+
+UPDATE `tesis_playon`.`cuenta_cliente`
+SET `saldo` = COALESCE((SELECT SUM(tc1.`importe`) 
+        FROM `transaccion_cliente` AS tc1 
+        WHERE tc1.`cuentaClienteID` = 4 and tipoPagoID = 4),0) -
+    COALESCE((SELECT SUM(tc2.`importe`) 
+        FROM `transaccion_cliente` AS tc2
+        WHERE tc2.`cuentaClienteID` = 4 and tipoPagoID = 6),0)
+WHERE `cuentaClienteID` = 4;
+
+/*
 UPDATE `tesis_playon`.`cuenta_cliente`
 SET `saldo` = (SELECT SUM(tc.`importe`) 
                 FROM `transaccion_cliente` AS tc 
@@ -323,3 +357,4 @@ SET `saldo` = (SELECT SUM(tc.`importe`)
                 FROM `transaccion_cliente` AS tc 
                 WHERE tc.`cuentaClienteID` = 3)
 WHERE `cuentaClienteID` = 3;
+*/
