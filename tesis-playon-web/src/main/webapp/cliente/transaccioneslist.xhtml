@@ -35,9 +35,8 @@
 
 			<p:dataTable id="transacciones" var="transaccionCliente"
 				rowStyleClass="#{transaccionCliente.tipoPago.nombre eq 'Cuenta' ? 'old' :null}"
-				paginator="true" value="#{cuentaClienteMB.transacciones}"
+				paginator="false" value="#{cuentaClienteMB.transacciones}"
 				emptyMessage="No ha realizado transacciones"
-				paginatorPosition="bottom" rows="6"
 				sortBy="#{transaccionCliente.fecha}" sortOrder="ascending">
 
 				<p:column style="text-align:center">
