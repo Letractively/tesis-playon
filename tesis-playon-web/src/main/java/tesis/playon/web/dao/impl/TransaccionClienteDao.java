@@ -66,7 +66,10 @@ public class TransaccionClienteDao implements ITransaccionClienteDao {
     public List<TransaccionCliente> findTransaccionesByFecha(CuentaCliente cuentaCliente, Date fechaD, Date fechaH) {
 	List<TransaccionCliente> transaccionCliente = new ArrayList<TransaccionCliente>();
 	List<?> list = getSessionFactory()
-		.getCurrentSession().createQuery("from TransaccionCliente as tp where " + "tp.cuentaCliente=? and tp.fecha>=? and tp.fecha<=?")
+		.getCurrentSession()
+		.createQuery(
+			"from TransaccionCliente as tp where "
+				+ "tp.cuentaCliente=? and tp.fecha>=? and tp.fecha<=? order by tp.fecha")
 		.setParameter(0, cuentaCliente).setParameter(1, fechaD).setParameter(2, fechaH).list();
 
 	if (!list.isEmpty()) {

@@ -37,7 +37,8 @@
 				rowStyleClass="#{transaccionCliente.tipoPago.nombre eq 'Cuenta' ? 'old' :null}"
 				paginator="true" value="#{cuentaClienteMB.transacciones}"
 				emptyMessage="No ha realizado transacciones"
-				paginatorPosition="bottom" rows="6">
+				paginatorPosition="bottom" rows="6"
+				sortBy="#{transaccionCliente.fecha}" sortOrder="ascending">
 
 				<p:column style="text-align:center">
 					<f:facet name="header">
@@ -68,8 +69,7 @@
 
 				<p:columnGroup type="footer">
 					<p:row>
-						<p:column colspan="2" footerText="Saldo"
-							style="text-align:right" />
+						<p:column colspan="2" footerText="Saldo" style="text-align:right" />
 
 						<p:column footerText="$#{cuentaClienteMB.cuentaCliente.saldo}" />
 					</p:row>
