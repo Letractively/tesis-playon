@@ -4,6 +4,8 @@
 package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import tesis.playon.web.model.Abono;
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.Playa;
@@ -26,6 +29,7 @@ import tesis.playon.web.model.Usuario;
 import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.IAbonoService;
 import tesis.playon.web.service.IPlayaService;
+import tesis.playon.web.service.IPromocionService;
 import tesis.playon.web.service.ITarifaService;
 import tesis.playon.web.service.ITipoEstadiaService;
 import tesis.playon.web.service.IUsuarioService;
@@ -59,6 +63,9 @@ public class AbonoManagedBean implements Serializable {
     @ManagedProperty(value = "#{TarifaService}")
     ITarifaService tarifaService;
 
+    @ManagedProperty(value = "#{PromocionService}")
+    IPromocionService promocionService;
+
     private Date fechaDesde;
 
     private Date fechaHasta;
@@ -76,12 +83,16 @@ public class AbonoManagedBean implements Serializable {
     private Vehiculo vehiculo;
 
     private List<Promocion> promocionesDisponibles;
+    
+    private List<Abono> abonadosEnLaPlaya;
 
     private Usuario usuarioLoggeadoPlaya;
 
     private Usuario usuarioLoggeadoCliente;
 
     private Playa playaLoggeada;
+    
+    private Date today;
 
     @PostConstruct
     private void init() {
@@ -91,10 +102,36 @@ public class AbonoManagedBean implements Serializable {
 	if (user != null && user.getPlaya() != null) {
 	    usuarioLoggeadoPlaya = user;
 	    playaLoggeada = user.getPlaya();
+	    abonadosEnLaPlaya= getAbonoService().findByPlaya(playaLoggeada);
 	}
 	if (user != null && user.getPlaya() == null) {
 	    usuarioLoggeadoCliente = user;
 	}
+	today = new Date();
+    }
+    
+    public String abonoAddFromPlaya(){
+	Abono abono;
+	try{
+	    abono = new Abono(getFechaDesde(),getFechaHasta(),getTarifa(),playaLoggeada);
+	    abono.setVehiculo(getVehiculo());
+	    abono.setPromocion(getPromocion());
+	    
+	    getAbonoService().save(abono);
+	    
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "Se registró exitosamente el abono mensual", null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+
+	    return "abonoaddend";
+	    
+	}catch(Exception ex){
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo registrar el abono mensual, Disculpe las molestias ocacionadas.", null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    ex.printStackTrace();
+	}
+	return null;
     }
 
     public void validateVehiculo(FacesContext context, UIComponent component, Object value) {
@@ -108,16 +145,29 @@ public class AbonoManagedBean implements Serializable {
 			categoriaVehiculo, tipoEstadia);
 		if (tarifa == null) {
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "No existe tarifa mensual "
-			    +"para la categoría "+ tipoEstadia, null);
+			    + "para la categoría " + tipoEstadia, null);
 		    throw new ValidatorException(message);
+		} else {
+		    promocionesDisponibles = getPromocionService().findByPlayaAndTarifa(playaLoggeada, tarifa);
 		}
-	    }
-	    else{
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "No existe el vehiculo "
-			    + vehiculo.getPatente(), null);
-		    throw new ValidatorException(message);
+
+	    } else {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "No existe el vehiculo con patente: "
+			+ patente, null);
+		throw new ValidatorException(message);
 	    }
 	}
+    }
+
+    public void validateFechaVencimiento(FacesContext context, UIComponent component, Object value) {
+	
+	String fechaInicio = new SimpleDateFormat("dd/MM/yyyy").format(value);
+	String [] dataTemp = fechaInicio.split("/");
+	Calendar c = Calendar.getInstance();
+	c.set(Integer.parseInt(dataTemp[2]), Integer.parseInt(dataTemp[1])- 1, Integer.parseInt(dataTemp[0]));
+	c.add(Calendar.MONTH, 1);
+	fechaHasta = c.getTime();
+	//System.out.println(fechaHasta);
     }
 
     public Date getFechaDesde() {
@@ -216,6 +266,14 @@ public class AbonoManagedBean implements Serializable {
 	this.abonoService = abonoService;
     }
 
+    public IPromocionService getPromocionService() {
+	return promocionService;
+    }
+
+    public void setPromocionService(IPromocionService promocionService) {
+	this.promocionService = promocionService;
+    }
+
     public Promocion getPromocion() {
 	return promocion;
     }
@@ -230,6 +288,14 @@ public class AbonoManagedBean implements Serializable {
 
     public void setPromocionesDisponibles(List<Promocion> promocionesDisponibles) {
 	this.promocionesDisponibles = promocionesDisponibles;
+    }
+
+    public List<Abono> getAbonadosEnLaPlaya() {
+        return abonadosEnLaPlaya;
+    }
+
+    public void setAbonadosEnLaPlaya(List<Abono> abonadosEnLaPlaya) {
+        this.abonadosEnLaPlaya = abonadosEnLaPlaya;
     }
 
     public Vehiculo getVehiculo() {
@@ -262,6 +328,14 @@ public class AbonoManagedBean implements Serializable {
 
     public void setPlayaLoggeada(Playa playaLoggeada) {
 	this.playaLoggeada = playaLoggeada;
+    }
+
+    public Date getToday() {
+        return today;
+    }
+
+    public void setToday(Date today) {
+        this.today = today;
     }
 
 }

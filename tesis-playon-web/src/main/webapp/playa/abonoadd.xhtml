@@ -9,7 +9,7 @@
 
 
 	<ui:define name="title">
-		Solicitud de registro de vehículo
+		Registro de abono mensual
     </ui:define>
 
 	<ui:define name="content">
@@ -32,11 +32,19 @@
 
 				<h:outputLabel value="Fecha de inicio: " />
 				<p:calendar value="#{abonoMB.fechaDesde}" required="true"
-					requiredMessage="Campo obligatorio" />
+					requiredMessage="Campo obligatorio"
+					validator="#{abonoMB.validateFechaVencimiento}"
+					pattern="dd/MM/yyyy" mindate="#{abonoMB.today}">
+					<p:ajax event="blur" update="fechaMsg" />
+					<p:ajax event="dateSelect" update="fechaVencimiento" />
+				</p:calendar>
 				<p:message id="fechaMsg" for="patente" display="icon" />
 
 				<h:outputLabel value="Fecha de vencimiento: " />
-				<p:inputText value="#{abonoMB.fechaHasta}" />
+				<p:inputText id="fechaVencimiento" value="#{abonoMB.fechaHasta}"
+					readonly="true">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</p:inputText>
 				<p:column />
 
 				<h:outputLabel value="Promoción: " />
@@ -54,7 +62,16 @@
 				</p:column>
 				<p:column />
 
-
+				<p:column />
+				<p:column>
+					<div>
+						<p:commandButton id="registrar" value="Registrar"
+							action="#{abonoMB.abonoAddFromPlaya}" ajax="false" />
+						<p:commandButton id="cancelar" value="Cancelar" immediate="true"
+							ajax="false" style="margin-left:10px;"
+							action="/playa/panelcontrol.html?faces-redirect=true" />
+					</div>
+				</p:column>
 
 			</h:panelGrid>
 		</h:form>

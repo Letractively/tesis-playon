@@ -3,7 +3,7 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,8 +40,8 @@ public class Abono implements Serializable {
     private Tarifa tarifa;
 
     @ManyToOne
-    @JoinColumn(name = "clienteID")
-    private Cliente cliente;
+    @JoinColumn(name = "vehiculoID")
+    private Vehiculo vehiculo;
 
     @ManyToOne
     @JoinColumn(name = "playaID")
@@ -67,12 +67,11 @@ public class Abono implements Serializable {
      * @param cliente
      * @param playa
      */
-    public Abono(Date fechaVigenciaDesde, Date fechaVigenciaHasta, Tarifa tarifa, Cliente cliente, Playa playa) {
+    public Abono(Date fechaVigenciaDesde, Date fechaVigenciaHasta, Tarifa tarifa,  Playa playa) {
 	super();
 	this.fechaVigenciaDesde = fechaVigenciaDesde;
 	this.fechaVigenciaHasta = fechaVigenciaHasta;
 	this.tarifa = tarifa;
-	this.cliente = cliente;
 	this.playa = playa;
     }
 
@@ -100,16 +99,16 @@ public class Abono implements Serializable {
 	this.tarifa = tarifa;
     }
 
-    public Cliente getCliente() {
-	return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-	this.cliente = cliente;
-    }
-
     public Playa getPlaya() {
 	return playa;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
     }
 
     public void setPlaya(Playa playa) {
@@ -144,7 +143,7 @@ public class Abono implements Serializable {
     @Override
     public String toString() {
 	return "Abono:\t [abonoID=" + id + ", fechaVigenciaDesde=" + fechaVigenciaDesde.toString()
-		+ ", fechaVigenciaHasta=" + fechaVigenciaHasta.toString() + ", " + cliente.toString() + ", ="
+		+ ", fechaVigenciaHasta=" + fechaVigenciaHasta.toString() + ", " + vehiculo.toString() + ", ="
 		+ playa.toString() + "]";
     }
 }

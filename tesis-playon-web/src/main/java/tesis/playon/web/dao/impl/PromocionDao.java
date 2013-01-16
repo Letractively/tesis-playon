@@ -10,6 +10,7 @@ import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.EstadoPromocion;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Promocion;
+import tesis.playon.web.model.Tarifa;
 import tesis.playon.web.model.TipoEstadia;
 
 /**
@@ -133,6 +134,23 @@ public class PromocionDao implements IPromocionDao {
 		    promociones.add((Promocion) object);
 		}
 		return promociones;
+	}
+	return null;
+    }
+    
+    @Override
+    public List<Promocion> findByPlayaAndTarifa(Playa playa, Tarifa tarifa){
+	List<Promocion> promociones = new ArrayList<Promocion>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Promocion where tarifa=? and playa=? " +
+				"and now()>=fechaInicio and now()<=fechaFin " +
+				"and estadoPromocion.id=2")
+		.setParameter(0, tarifa).setParameter(1, playa).list();
+	if(!list.isEmpty()){
+	    for (Object object : list) {
+		promociones.add((Promocion) object);
+	    }
+	    return promociones;
 	}
 	return null;
     }

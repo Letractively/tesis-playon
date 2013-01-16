@@ -1,0 +1,57 @@
+<ui:composition template="../template/templatePlaya.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="loadmenuperfil" value="true" />
+
+	<ui:define name="title">
+		Abonados
+    </ui:define>
+
+	<ui:define name="content">
+		<p:growl id="messages" />
+		<h1>Clientes con abonos</h1>
+
+		<h:form style="margin:0 0 0 20px;">
+
+			<p:dataTable id="abonos" var="abono" paginator="true"
+				value="#{abonoMB.abonadosEnLaPlaya}" rows="8"
+				emptyMessage="No existen clientes con abonos para su Playa"
+				paginatorPosition="bottom">
+
+				<f:facet name="header">
+						Listado de abonados de la playa
+				</f:facet>
+
+				<p:column style="text-align:center" headerText="Cliente"
+					filterBy="#{abono.vehiculo.cliente.usuario.apellido}"
+					filterMatchMode="contains">
+					<h:outputText
+						value="#{abono.vehiculo.cliente.usuario.apellido}&#160;
+							#{abono.vehiculo.cliente.usuario.nombre}" />
+				</p:column>
+
+				<p:column style="text-align:center" headerText="Fecha desde">
+					<h:outputText value="#{abono.fechaVigenciaDesde}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column style="text-align:center" headerText="Fecha hasta">
+					<h:outputText value="#{abono.fechaVigenciaHasta}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column style="text-align:center" headerText="Patente"
+					filterBy="#{abono.vehiculo.patente}"
+					filterMatchMode="contains">
+					<h:outputText value="#{abono.vehiculo.patente}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

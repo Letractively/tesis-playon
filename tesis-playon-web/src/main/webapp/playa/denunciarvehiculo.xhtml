@@ -13,7 +13,7 @@
 
 	<ui:define name="content">
 		<h1>Denunciar vehículo</h1>
-		
+
 		<h:form style="margin:0 0 0 20px;">
 
 			<p:growl id="messages" />
@@ -23,8 +23,10 @@
 					cellspacing="10" styleClass="admin-input-text">
 
 					<p:column>
-						<h:outputLabel for="patente"
-							value="Patente del vehiculo a denunciar " />
+						<div align="right">
+							<h:outputLabel for="patente"
+								value="Patente del vehículo a denunciar" />
+						</div>
 					</p:column>
 					<p:column>
 						<p:inputText id="patente" style="width: 200px"
@@ -39,7 +41,9 @@
 					</p:column>
 
 					<p:column>
-						<h:outputLabel for="asunto" value="Causa de la denuncia " />
+						<div align="right">
+							<h:outputLabel for="asunto" value="Causa de la denuncia " />
+						</div>
 					</p:column>
 
 					<p:column styleClass="vert-align-top">
