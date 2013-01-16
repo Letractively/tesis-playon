@@ -491,16 +491,16 @@ CREATE TABLE `abono` (
   `fechaVigenciaHasta` datetime DEFAULT NULL,
   `tarifaID` int(11) NOT NULL,
   `abonoID` int(11) NOT NULL auto_increment,
-  `clienteID` int(11) NOT NULL,
+  `vehiculoID` int(11) NOT NULL,
   `playaID` int(11) NOT NULL,
   `promocionID` int(11) DEFAULT NULL,
   PRIMARY KEY (`abonoID`),
   KEY `tarifaID` (`tarifaID`),
-  KEY `clienteID` (`clienteID`),
+  KEY `vehiculoID` (`vehiculoID`),
   KEY `playaID` (`playaID`),
   KEY `promocionID` (`promocionID`),
   CONSTRAINT `FK_abono_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
-  CONSTRAINT `FK_abono_cliente` FOREIGN KEY (`clienteID`) REFERENCES `cliente` (`clienteID`),
+  CONSTRAINT `FK_abono_vehiculo` FOREIGN KEY (`vehiculoID`) REFERENCES `vehiculo` (`vehiculoID`),
   CONSTRAINT `FK_abono_tarifa` FOREIGN KEY (`tarifaID`) REFERENCES `tarifa` (`tarifaID`),
   CONSTRAINT `FK_abono_promocion` FOREIGN KEY (`promocionID`) REFERENCES `promocion` (`promocionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1310,16 +1310,7 @@ VALUES (1,1001,1001,1),(2,1002,1002,5),(1,1003,1003,10);
 /*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Dumping data for table `tesis_playon`.`abono`
---
 
-LOCK TABLES `abono` WRITE;
-/*!40000 ALTER TABLE `abono` DISABLE KEYS */;
-INSERT INTO `tesis_playon`.`abono` (`fechaVigenciaDesde`,`fechaVigenciaHasta`,`tarifaID`,`abonoID`,`clienteID`,`playaID`) VALUES 
- ('2012-10-05 00:00:00','2012-11-05 00:00:00',3,1,3,3);
-/*!40000 ALTER TABLE `abono` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 --
