@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import tesis.playon.mobile.json.model.Usuario;
+import tesis.playon.mobile.util.Constants;
 import tesis.playon.mobile.util.Utils;
 import android.app.Activity;
 import android.content.Intent;
@@ -23,7 +24,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
     private static final String LOG_TAG = "LoginActivity";
 
-    private static final String URL_USUARIO = "http://10.0.2.2:8080/tesis-playon-restful/usuario/";
+    private static final String URL_USUARIO = "http://" + Constants.SERVER_IP + ":8080/tesis-playon-restful/usuario/";
 
     private TextView txtUser;
 

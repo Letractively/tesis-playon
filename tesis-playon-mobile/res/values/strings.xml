@@ -1,9 +1,11 @@
 <resources>
 
-    <string name="app_name">Playón</string>
-    <string name="hello_world">Bienvenido a Playón</string>
+    <string name="app_name">Play&#243;n</string>
+    <string name="hello_world">Bienvenido a Play&#243;n</string>
     <string name="menu_settings">Settings</string>
     <string name="search_label">Dirección</string>
-    <string name="title_activity_main">Playón: Red de Playas</string>
+    <string name="search_hint">Dirección</string>
+    <string name="title_activity_main">Play&#243;n: Red de Playas</string>
+	<string name="loading">Cargando</string>
 
 </resources>

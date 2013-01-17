@@ -43,4 +43,9 @@ public class MainActivity extends Activity {
 	    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 	}
     }
+
+    @Override
+    public boolean onSearchRequested() {
+	return super.onSearchRequested();
+    }
 }
