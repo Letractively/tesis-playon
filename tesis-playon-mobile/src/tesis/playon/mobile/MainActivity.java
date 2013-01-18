@@ -6,9 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+
 public class MainActivity extends Activity {
 
     private final int LOGIN_ID = 50001;
+    
+    static final LatLng HAMBURG = new LatLng(53.558, 9.927);
+    static final LatLng KIEL = new LatLng(53.551, 9.993);
+    private GoogleMap map;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
