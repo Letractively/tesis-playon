@@ -30,7 +30,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,11 +39,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.activities.LoginActivity"
             android:label="@string/title_activity_main" >
         </activity>
         <activity
-            android:name=".BuscarPlayasActivity"
+            android:name=".ui.activities.BuscarPlayasActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -60,7 +60,7 @@
 
         <meta-data
             android:name="android.app.default_searchable"
-            android:value=".BuscarPlayasActivity" />
+            android:value=".ui.activities.BuscarPlayasActivity" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyB5ZCqiACpNPdYBljrrUjMeViBQR63xjqk" />
