@@ -33,7 +33,7 @@ public class MainActivity extends FragmentActivity {
 
 	Marker hamburg = map.addMarker(new MarkerOptions().position(HAMBURG).title("Hamburg"));
 	Marker kiel = map.addMarker(new MarkerOptions().position(KIEL).title("Kiel").snippet("Kiel is cool")
-		.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
+		.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
 	// Move the camera instantly to hamburg with a zoom of 15.
 	map.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 15));
 
