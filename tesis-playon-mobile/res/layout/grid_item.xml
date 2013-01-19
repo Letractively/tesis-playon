@@ -1,27 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="horizontal" >
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/nombrePlaya"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:textSize="24sp" >
+    </TextView>
 
-        <TextView
-            android:id="@+id/nombrePlaya"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24dip" >
-        </TextView>
-
-        <TextView
-            android:id="@+id/direccionPlaya"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16dip" >
-        </TextView>
-    </LinearLayout>
+    <TextView
+        android:id="@+id/direccionPlaya"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp" >
+    </TextView>
 
 </LinearLayout>
