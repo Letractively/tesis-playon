@@ -1,9 +1,11 @@
 package tesis.playon.web.service;
 
+import java.util.Date;
 import java.util.List;
 
 import tesis.playon.web.model.Abono;
 import tesis.playon.web.model.Playa;
+import tesis.playon.web.model.Vehiculo;
 
 public interface IAbonoService {
 
@@ -16,4 +18,6 @@ public interface IAbonoService {
     List<Abono> findAll();
 
     List<Abono> findByPlaya(Playa playa);
+    
+    boolean existeAbonoVehiculo(Vehiculo vehiculo, Playa playa, Date fechaDesde);
 }

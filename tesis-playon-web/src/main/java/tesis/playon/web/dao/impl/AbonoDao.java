@@ -1,6 +1,7 @@
 package tesis.playon.web.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -8,6 +9,7 @@ import org.hibernate.SessionFactory;
 import tesis.playon.web.dao.IAbonoDao;
 import tesis.playon.web.model.Abono;
 import tesis.playon.web.model.Playa;
+import tesis.playon.web.model.Vehiculo;
 
 /**
  * 
@@ -61,6 +63,18 @@ public class AbonoDao implements IAbonoDao {
 	    return abonos;
 	}
 	return null;
+    }
+    
+    public boolean existeAbonoVehiculo(Vehiculo vehiculo, Playa playa, Date fechaDesde){
+	//List<Abono> abonos = new ArrayList<Abono>();
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Abono where playa=? and vehiculo=? and fechaVigenciaHasta >=?")
+		.setParameter(0, playa)
+		.setParameter(1, vehiculo)
+		.setParameter(2, fechaDesde).list();
+	if (!list.isEmpty()) {
+	    return true;
+	}
+	return false;
     }
 
 }

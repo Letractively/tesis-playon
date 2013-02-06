@@ -1,5 +1,6 @@
 package tesis.playon.web.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -7,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tesis.playon.web.dao.IAbonoDao;
 import tesis.playon.web.model.Abono;
 import tesis.playon.web.model.Playa;
+import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.IAbonoService;
 
 @Transactional(readOnly = true)
@@ -44,6 +46,11 @@ public class AbonoService implements IAbonoService {
     public List<Abono> findByPlaya(Playa playa) {
 
 	return getAbonoDao().findByPlaya(playa);
+    }
+    
+    @Override
+    public boolean existeAbonoVehiculo(Vehiculo vehiculo, Playa playa, Date fechaDesde){
+	return getAbonoDao().existeAbonoVehiculo(vehiculo, playa, fechaDesde);
     }
 
     public IAbonoDao getAbonoDao() {

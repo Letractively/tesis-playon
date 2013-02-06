@@ -35,6 +35,7 @@ import tesis.playon.web.model.TransaccionCliente;
 import tesis.playon.web.model.TransaccionPlaya;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.model.Vehiculo;
+import tesis.playon.web.service.IAbonoService;
 import tesis.playon.web.service.ICargoEmpleadoService;
 import tesis.playon.web.service.ICuentaClienteService;
 import tesis.playon.web.service.ICuentaPlayaService;
@@ -105,6 +106,9 @@ public class DetalleEstadiaManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{TipoEstadiaService}")
     ITipoEstadiaService tipoEstadiaService;
+    
+    @ManagedProperty(value = "#{AbonoService}")
+    IAbonoService abonoService;
 
     private Usuario usuarioLoggeado;
 
@@ -152,6 +156,8 @@ public class DetalleEstadiaManagedBean implements Serializable {
     private boolean existeTarifa;
 
     private boolean existeVehiculo;
+    
+    private boolean existeAbonoVehiculo;
 
     private boolean importeCalculado = false;
 
@@ -200,6 +206,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 
 	    if (vehiculo != null) {
 		cliente = vehiculo.getCliente();
+		existeAbonoVehiculo = getAbonoService().existeAbonoVehiculo(vehiculo, playaLoggeada, new Date());
 
 		if (cliente != null) {
 		    usuarioCliente = cliente.getUsuario();
@@ -252,6 +259,58 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	}
     }
 
+    public String registrarIngresoAbono(){
+	try {
+	    // SAVE TO DETTALLEESTADIA
+	    Timestamp fechaHoraIngreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
+	    detalleEstadia = new DetalleEstadia(estadia, vehiculo, empleadoLoggeado, fechaHoraIngreso, false);
+	    detalleEstadia.setTarifa(null);
+	    detalleEstadia.setPromocion(null);
+	    getDetalleEstadiaService().save(detalleEstadia);
+
+	    // UPDATE DISPONIBILIDAD OF THE PLAYA.
+	    Integer disponibilidad = playaLoggeada.getDisponibilidad() - 1;
+	    playaLoggeada.setDisponibilidad(disponibilidad);
+	    getPlayaService().update(playaLoggeada);
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "Se registró el ingreso exitosamente del vehiculo con abono mensual con patente: " + patente, null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    
+	    existeAbonoVehiculo=false;
+	    
+	    return "/playa/ingresoegresovehiculo";
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+	return null;
+    }
+    
+    public String registrarEgresoAbonado(){
+	try{
+	Timestamp fechaHoraEgreso= new Timestamp(Calendar.getInstance().getTimeInMillis());
+	detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+	detalleEstadia.setCobrado(true);
+	getDetalleEstadiaService().update(detalleEstadia);
+	
+	Integer disponibilidad = playaLoggeada.getDisponibilidad() + 1;
+	    playaLoggeada.setDisponibilidad(disponibilidad);
+	    getPlayaService().update(playaLoggeada);
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "Se registró el egreso exitosamente del vehículo con abono patente: " + patente, null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    
+	    existeAbonoVehiculo=false;
+	    
+	    return "/playa/ingresoegresovehiculo";
+	    
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+	return null;
+    }
+    
     public String registrarIngresoVehiculo() {
 	try {
 	    // SAVE TO DETTALLEESTADIA
@@ -402,7 +461,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 		    txPlaya.setTipoPago(tipoPagoEfectivo);
 		    getTransaccionPlayaService().save(txPlaya);
 		    
-		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL,
 			    "Debe cobrar en efectivo $" + saldo, null);
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 
@@ -413,7 +472,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 		getCuentaClienteService().update(cuentaCliente);
 
 		// crear la transaccion del cliente con la cuenta playon
-		transaccionCliente = new TransaccionCliente(detalleEstadia.getFechaHoraEgreso(), importe,
+		transaccionCliente = new TransaccionCliente(detalleEstadia.getFechaHoraEgreso(), -importe,
 			tipoPagoCuenta, cuentaCliente);
 		getTransaccionClienteService().save(transaccionCliente);
 
@@ -580,6 +639,14 @@ public class DetalleEstadiaManagedBean implements Serializable {
     }
 
     // =============================== GETTER & SETTER =====================================
+
+    public IAbonoService getAbonoService() {
+        return abonoService;
+    }
+
+    public void setAbonoService(IAbonoService abonoService) {
+        this.abonoService = abonoService;
+    }
 
     public Usuario getUsuarioLoggeado() {
 	return usuarioLoggeado;
@@ -791,6 +858,14 @@ public class DetalleEstadiaManagedBean implements Serializable {
 
     public void setImporteCalculado(boolean importeCalculado) {
 	this.importeCalculado = importeCalculado;
+    }
+
+    public boolean isExisteAbonoVehiculo() {
+        return existeAbonoVehiculo;
+    }
+
+    public void setExisteAbonoVehiculo(boolean existeAbonoVehiculo) {
+        this.existeAbonoVehiculo = existeAbonoVehiculo;
     }
 
 }

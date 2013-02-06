@@ -39,7 +39,8 @@
 				</div>
 			</ui:fragment>
 
-			<ui:fragment rendered="#{detalleEstadiaMB.existeVehiculo}">
+			<ui:fragment id="vehiculoSinAbono" rendered="#{detalleEstadiaMB.existeVehiculo 
+					and detalleEstadiaMB.existeAbonoVehiculo == false}">
 				<div id="perfil-playa">
 
 					<p:panel style="text-align:left;" styleClass="fuente-outputtext">
@@ -129,7 +130,8 @@
 											action="#{detalleEstadiaMB.calcularImporte}"
 											update=":formEgreso:panelEgreso" />
 										<p:commandButton
-											rendered="#{detalleEstadiaMB.detalleEstadia == null and  detalleEstadiaMB.existeTarifa}"
+											rendered="#{detalleEstadiaMB.detalleEstadia == null
+												and  detalleEstadiaMB.existeTarifa}"
 											id="ingreso" value="Registrar ingreso"
 											onclick="dlgIngreso.show();" style="margin-right:10px"
 											type="button" />
@@ -143,6 +145,114 @@
 					</p:panel>
 				</div>
 			</ui:fragment>
+		
+		
+			<ui:fragment rendered="#{detalleEstadiaMB.existeVehiculo
+					and detalleEstadiaMB.existeAbonoVehiculo == true}">
+				<div id="perfil-playa">
+
+					<p:panel id="vehiculoAbonado" style="text-align:left;" styleClass="fuente-outputtext">
+
+						<f:facet name="header">
+							<h:outputText
+								value="Cliente abonado:&#160;#{detalleEstadiaMB.usuarioCliente.nombre}&#160;
+									#{detalleEstadiaMB.usuarioCliente.apellido}" />
+						</f:facet>
+						<div align="center">
+							<h:panelGrid columns="5" cellpadding="10" cellspacing="5">
+								
+								<p:column>
+									<div align="right">
+										<h:outputText value="Patente: " />
+									</div>
+								</p:column>
+								<h:outputText id="patenteVehiculo"
+									value="#{detalleEstadiaMB.vehiculo.patente}" />
+
+								<p:column>&#160;&#160;&#160;&#160;&#160;</p:column>
+								<p:column /><p:column />
+								
+								<p:column>
+									<div align="right">
+										<h:outputText value="Vehiculo: " />
+									</div>
+								</p:column>
+								<h:outputText id="modeloVehiculo"
+									value="#{detalleEstadiaMB.vehiculo.modeloVehiculo.marcaVehiculo.nombre}&#160;
+									#{detalleEstadiaMB.vehiculo.modeloVehiculo.nombre}" />							
+
+								<p:column>&#160;&#160;&#160;&#160;&#160;</p:column>
+								
+								<p:column>
+									<div align="right">
+										<h:outputText value="Categoría: " />
+									</div>
+								</p:column>
+								<h:outputText id="categoriaVehiculo"
+									value="#{detalleEstadiaMB.vehiculo.modeloVehiculo.categoriaVehiculo.nombre}" />
+
+
+								<h:outputText value="Fecha ingreso: "
+									rendered="#{detalleEstadiaMB.detalleEstadia != null}" />
+								<h:outputText id="fechaIngreso"
+									rendered="#{detalleEstadiaMB.detalleEstadia != null}"
+									value="#{detalleEstadiaMB.fechaIngreso}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+
+								<p:column rendered="#{detalleEstadiaMB.detalleEstadia != null}">
+								&#160;&#160;&#160;&#160;&#160;</p:column>
+
+								<h:outputText value="Hora ingreso: "
+									rendered="#{detalleEstadiaMB.detalleEstadia != null}" />
+								<h:outputText id="horaIngreso"
+									rendered="#{detalleEstadiaMB.detalleEstadia != null}"
+									value="#{detalleEstadiaMB.horaIngreso}" />
+
+								<p:column>
+									<div align="right">
+										<h:outputText value="Fecha actual: " />
+									</div>
+								</p:column>
+								<h:outputText id="FechaActual"
+									value="#{detalleEstadiaMB.fechaActual}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+
+								<p:column>&#160;&#160;&#160;&#160;&#160;</p:column>
+
+								<p:column>
+									<div align="right">
+										<h:outputText value="Hora actual: " />
+									</div>
+								</p:column>
+								<h:outputText id="horaActual"
+									value="#{detalleEstadiaMB.horaActual}">
+									<f:convertDateTime pattern="hh:mm:ss" />
+								</h:outputText>
+
+								<f:facet name="footer">
+									<div align="right">
+										<p:commandButton
+											rendered="#{detalleEstadiaMB.detalleEstadia == null
+												and  detalleEstadiaMB.existeTarifa and detalleEstadiaMB.existeAbonoVehiculo == true}"
+											id="ingresoAbono" value="Registrar ingreso" ajax="false"
+											action="#{detalleEstadiaMB.registrarIngresoAbono}" style="margin-right:10px" />
+										<p:commandButton id="egresoAbono" value="Registrar egreso"
+											rendered="#{detalleEstadiaMB.detalleEstadia != null}"
+											style="margin-right:15px" update="form"
+											action="#{detalleEstadiaMB.registrarEgresoAbonado}" />
+										<p:commandButton id="cancelarAbono" value="Cancelar"
+											immediate="true" ajax="false"
+											action="/playa/detalleestadia.html?faces-redirec=true" />
+									</div>
+								</f:facet>
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</div>
+			</ui:fragment>
+			
 		</h:form>
 
 		<h:form id="formIngreso">

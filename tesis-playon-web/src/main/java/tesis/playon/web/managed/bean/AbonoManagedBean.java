@@ -21,17 +21,27 @@ import javax.faces.validator.ValidatorException;
 import tesis.playon.web.model.Abono;
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Cliente;
+import tesis.playon.web.model.CuentaCliente;
+import tesis.playon.web.model.CuentaPlaya;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Promocion;
 import tesis.playon.web.model.Tarifa;
 import tesis.playon.web.model.TipoEstadia;
+import tesis.playon.web.model.TipoPago;
+import tesis.playon.web.model.TransaccionCliente;
+import tesis.playon.web.model.TransaccionPlaya;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.IAbonoService;
+import tesis.playon.web.service.ICuentaClienteService;
+import tesis.playon.web.service.ICuentaPlayaService;
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IPromocionService;
 import tesis.playon.web.service.ITarifaService;
 import tesis.playon.web.service.ITipoEstadiaService;
+import tesis.playon.web.service.ITipoPagoService;
+import tesis.playon.web.service.ITransaccionClienteService;
+import tesis.playon.web.service.ITransaccionPlayaService;
 import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.service.IVehiculoService;
 
@@ -66,6 +76,21 @@ public class AbonoManagedBean implements Serializable {
     @ManagedProperty(value = "#{PromocionService}")
     IPromocionService promocionService;
 
+    @ManagedProperty(value = "#{CuentaClienteService}")
+    ICuentaClienteService cuentaClienteService;
+
+    @ManagedProperty(value = "#{CuentaPlayaService}")
+    ICuentaPlayaService cuentaPlayaService;
+
+    @ManagedProperty(value = "#{TransaccionClienteService}")
+    ITransaccionClienteService transaccionClienteService;
+
+    @ManagedProperty(value = "#{TransaccionPlayaService}")
+    ITransaccionPlayaService transaccionPlayaService;
+
+    @ManagedProperty(value = "#{TipoPagoService}")
+    ITipoPagoService tipoPagoService;
+
     private Date fechaDesde;
 
     private Date fechaHasta;
@@ -83,7 +108,7 @@ public class AbonoManagedBean implements Serializable {
     private Vehiculo vehiculo;
 
     private List<Promocion> promocionesDisponibles;
-    
+
     private List<Abono> abonadosEnLaPlaya;
 
     private Usuario usuarioLoggeadoPlaya;
@@ -91,7 +116,7 @@ public class AbonoManagedBean implements Serializable {
     private Usuario usuarioLoggeadoCliente;
 
     private Playa playaLoggeada;
-    
+
     private Date today;
 
     @PostConstruct
@@ -102,30 +127,90 @@ public class AbonoManagedBean implements Serializable {
 	if (user != null && user.getPlaya() != null) {
 	    usuarioLoggeadoPlaya = user;
 	    playaLoggeada = user.getPlaya();
-	    abonadosEnLaPlaya= getAbonoService().findByPlaya(playaLoggeada);
+	    abonadosEnLaPlaya = getAbonoService().findByPlaya(playaLoggeada);
 	}
 	if (user != null && user.getPlaya() == null) {
 	    usuarioLoggeadoCliente = user;
 	}
 	today = new Date();
     }
-    
-    public String abonoAddFromPlaya(){
-	Abono abono;
-	try{
-	    abono = new Abono(getFechaDesde(),getFechaHasta(),getTarifa(),playaLoggeada);
-	    abono.setVehiculo(getVehiculo());
-	    abono.setPromocion(getPromocion());
-	    
-	    getAbonoService().save(abono);
-	    
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se registró exitosamente el abono mensual", null);
-	    FacesContext.getCurrentInstance().addMessage(null, message);
 
-	    return "abonoaddend";
-	    
-	}catch(Exception ex){
+    public String abonoAddFromPlaya() {
+	Abono abono;
+	try {
+
+	    if (getAbonoService().existeAbonoVehiculo(vehiculo, playaLoggeada, fechaDesde) == false) {
+
+		abono = new Abono(getFechaDesde(), getFechaHasta(), getTarifa(), playaLoggeada);
+		abono.setVehiculo(getVehiculo());
+		abono.setPromocion(getPromocion());
+
+		CuentaCliente cuentaCliente = vehiculo.getCliente().getCuentaCliente();
+		float nuevoSaldo;
+
+		if (cuentaCliente.getSaldo() >= getTarifa().getImporte()) {
+
+		    if (getPromocion() != null) {
+			nuevoSaldo = cuentaCliente.getSaldo()
+				- (getTarifa().getImporte() * ((getPromocion().getDescuento()) / 100 + 1));
+		    } else {
+			nuevoSaldo = cuentaCliente.getSaldo() - (getTarifa().getImporte());
+		    }
+
+		    // Grabo el abono
+		    getAbonoService().save(abono);
+
+		    // Actualizo la cuenta de cliente.
+		    cuentaCliente.setSaldo(nuevoSaldo);
+		    getCuentaClienteService().update(cuentaCliente);
+
+		    // Creo la transacción de la playa
+		    TransaccionPlaya txPlaya = new TransaccionPlaya();
+		    CuentaPlaya cuentaPlaya = getCuentaPlayaService().findByPlaya(playaLoggeada);
+		    txPlaya.setCuentaPlaya(cuentaPlaya);
+		    txPlaya.setFecha(new Date());
+
+		    float importe;
+		    if (getPromocion() != null) {
+			importe = cuentaCliente.getSaldo()
+				- (getTarifa().getImporte() * ((getPromocion().getDescuento()) / 100 + 1));
+		    } else {
+			importe = cuentaCliente.getSaldo() - (getTarifa().getImporte());
+		    }
+		    txPlaya.setImporte(importe);
+
+		    TipoPago tipoPagoCuenta = getTipoPagoService().findByNombreTipoPago("Cuenta");
+		    txPlaya.setTipoPago(tipoPagoCuenta);
+
+		    getTransaccionPlayaService().save(txPlaya);
+
+		    // Creo la transacción cliente
+		    TransaccionCliente transaccionCliente = new TransaccionCliente();
+		    transaccionCliente.setCuentaCliente(cuentaCliente);
+		    transaccionCliente.setFecha(new Date());
+		    transaccionCliente.setImporte(-importe);
+		    transaccionCliente.setTipoPago(tipoPagoCuenta);
+		    
+		    getTransaccionClienteService().save(transaccionCliente);
+
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			    "Se registró exitosamente el abono mensual", null);
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+
+		    return "abonoaddend";
+		} else {
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+			    "No posee saldo suficiente para efectuar el abono mensual.", null);
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+
+	    } else {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"Ya existe un abonado en el período indicado. ¡Verifique las fechas!", null);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	    }
+
+	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo registrar el abono mensual, Disculpe las molestias ocacionadas.", null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
@@ -152,22 +237,22 @@ public class AbonoManagedBean implements Serializable {
 		}
 
 	    } else {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "No existe el vehiculo con patente: "
-			+ patente, null);
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"No existe el vehiculo con patente: " + patente, null);
 		throw new ValidatorException(message);
 	    }
 	}
     }
 
     public void validateFechaVencimiento(FacesContext context, UIComponent component, Object value) {
-	
+
 	String fechaInicio = new SimpleDateFormat("dd/MM/yyyy").format(value);
-	String [] dataTemp = fechaInicio.split("/");
+	String[] dataTemp = fechaInicio.split("/");
 	Calendar c = Calendar.getInstance();
-	c.set(Integer.parseInt(dataTemp[2]), Integer.parseInt(dataTemp[1])- 1, Integer.parseInt(dataTemp[0]));
+	c.set(Integer.parseInt(dataTemp[2]), Integer.parseInt(dataTemp[1]) - 1, Integer.parseInt(dataTemp[0]));
 	c.add(Calendar.MONTH, 1);
 	fechaHasta = c.getTime();
-	//System.out.println(fechaHasta);
+	// System.out.println(fechaHasta);
     }
 
     public Date getFechaDesde() {
@@ -274,6 +359,46 @@ public class AbonoManagedBean implements Serializable {
 	this.promocionService = promocionService;
     }
 
+    public ICuentaClienteService getCuentaClienteService() {
+	return cuentaClienteService;
+    }
+
+    public void setCuentaClienteService(ICuentaClienteService cuentaClienteService) {
+	this.cuentaClienteService = cuentaClienteService;
+    }
+
+    public ITransaccionClienteService getTransaccionClienteService() {
+	return transaccionClienteService;
+    }
+
+    public void setTransaccionClienteService(ITransaccionClienteService transaccionClienteService) {
+	this.transaccionClienteService = transaccionClienteService;
+    }
+
+    public ITransaccionPlayaService getTransaccionPlayaService() {
+	return transaccionPlayaService;
+    }
+
+    public void setTransaccionPlayaService(ITransaccionPlayaService transaccionPlayaService) {
+	this.transaccionPlayaService = transaccionPlayaService;
+    }
+
+    public ICuentaPlayaService getCuentaPlayaService() {
+	return cuentaPlayaService;
+    }
+
+    public void setCuentaPlayaService(ICuentaPlayaService cuentaPlayaService) {
+	this.cuentaPlayaService = cuentaPlayaService;
+    }
+
+    public ITipoPagoService getTipoPagoService() {
+	return tipoPagoService;
+    }
+
+    public void setTipoPagoService(ITipoPagoService tipoPagoService) {
+	this.tipoPagoService = tipoPagoService;
+    }
+
     public Promocion getPromocion() {
 	return promocion;
     }
@@ -291,11 +416,11 @@ public class AbonoManagedBean implements Serializable {
     }
 
     public List<Abono> getAbonadosEnLaPlaya() {
-        return abonadosEnLaPlaya;
+	return abonadosEnLaPlaya;
     }
 
     public void setAbonadosEnLaPlaya(List<Abono> abonadosEnLaPlaya) {
-        this.abonadosEnLaPlaya = abonadosEnLaPlaya;
+	this.abonadosEnLaPlaya = abonadosEnLaPlaya;
     }
 
     public Vehiculo getVehiculo() {
@@ -331,11 +456,11 @@ public class AbonoManagedBean implements Serializable {
     }
 
     public Date getToday() {
-        return today;
+	return today;
     }
 
     public void setToday(Date today) {
-        this.today = today;
+	this.today = today;
     }
 
 }
