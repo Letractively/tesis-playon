@@ -1334,10 +1334,10 @@ UNLOCK TABLES;
 LOCK TABLES `cuenta_cliente` WRITE;
 /*!40000 ALTER TABLE `cuenta_cliente` DISABLE KEYS */;
 INSERT INTO `tesis_playon`.`cuenta_cliente` (`fechaCreacion`,`nroCuenta`,`saldo`,`cuentaClienteID`,`clienteID`) VALUES 
- ('2012-08-21 20:29:37',1001,150,1,1),
- ('2012-08-21 20:29:37',1002,50,2,2),
- ('2012-08-21 20:29:37',1003,500,3,3),
- ('2012-08-21 20:29:37',1004,100,4,4);
+ ('2012-08-21 20:29:37',1001,150,1,2),
+ ('2012-08-21 20:29:37',1002,50,2,3),
+ ('2012-08-21 20:29:37',1003,500,3,4),
+ ('2012-08-21 20:29:37',1004,100,4,1);
 /*!40000 ALTER TABLE `cuenta_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
