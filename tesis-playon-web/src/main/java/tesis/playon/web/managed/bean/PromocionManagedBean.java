@@ -105,6 +105,8 @@ public class PromocionManagedBean implements Serializable {
     private static Playa playaSelected;
 
     private List<Promocion> promocionListEmpleado;
+    
+    private Boolean activarRangoHorario;
 
     @PostConstruct
     private void init() {
@@ -545,6 +547,14 @@ public class PromocionManagedBean implements Serializable {
 	String horaCompleta = time.toString();
 	String toObject[] = horaCompleta.split(":");
 	return Integer.parseInt(toObject[2]);
+    }
+
+    public Boolean getActivarRangoHorario() {
+        return activarRangoHorario;
+    }
+
+    public void setActivarRangoHorario(Boolean activarRangoHorario) {
+        this.activarRangoHorario = activarRangoHorario;
     }
 
     public List<Promocion> getPromocionListEmpleado() {

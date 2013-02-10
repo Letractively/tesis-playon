@@ -148,6 +148,6 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
 	return "Cliente:\t [clienteID= " + id + ", nroCliente= " + nroCliente + ", Usuario= " + usuario.getNombreUser()
-		+ ", domicilio= " + domicilio + ", " + barrio + "]";
+		+ ", Cuenta Cliente= " + cuentaCliente + "]";
     }
 }

@@ -13,35 +13,6 @@
 
 	<ui:define name="content">
 		<h1>Nueva promoción</h1>
-		
-		<script type="text/javascript">
-        PrimeFaces.locales['es'] = {
-        	    closeText: 'Cerrar',
-        	    prevText: 'Anterior',
-        	    nextText: 'Siguiente',
-        	    monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        	    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
-        	    dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-        	    dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-        	    dayNamesMin: ['D','L','M','M','J','V','S'],
-        	    weekHeader: 'Semana',
-        	    firstDay: 1,
-        	    isRTL: false,
-        	    showMonthAfterYear: false,
-        	    yearSuffix: '',
-        	    timeOnlyTitle: 'Sólo hora',
-        	    timeText: 'Tiempo',
-        	    hourText: 'Hora',
-        	    minuteText: 'Minuto',
-        	    secondText: 'Segundo',
-        	    currentText: 'Fecha actual',
-        	    ampm: false,
-        	    month: 'Mes',
-        	    week: 'Semana',
-        	    day: 'Día',
-        	    allDayText : 'Todo el día'
-        	};
-        </script>
 
 		<p:growl id="messages" />
 		<h:form id="form">
@@ -73,6 +44,7 @@
 						requiredMessage="Campo obligatorio" locale="es"
 						validator="#{promocionMB.validateDateInicial}">
 						<p:ajax event="blur" update="fechaInicioMsg" />
+						<p:ajax event="dateSelect" update="fechaInicioMsg" />
 					</p:calendar>
 					<p:message id="fechaInicioMsg" for="fechaInicio" display="icon" />
 
@@ -83,37 +55,56 @@
 						requiredMessage="Campo obligatorio" locale="es"
 						validator="#{promocionMB.validateDate}">
 						<p:ajax event="blur" update="fechaFinMsg" />
+						<p:ajax event="dateSelect" update="fechaFinMsg" />
 					</p:calendar>
-					<p:column />
-					
+					<p:message id="fechaFinMsg" for="fechaFin" display="icon" />
+
 					<p:column />
 					<p:column>
-						<div style="width: 215px;">
-							<p:message id="fechaFinMsg" for="fechaFin" display="text" />
-						</div>
+						<p:selectBooleanCheckbox
+							value="#{promocionMB.activarRangoHorario}">
+							<p:ajax event="change"
+								update="lblHoraInicio, txtHoraInicio, lblHoraFin, txtHoraFin" />
+						</p:selectBooleanCheckbox>
+						<h:outputLabel value=" Activar rango horario" />
 					</p:column>
 					<p:column />
-					
-					<h:outputLabel for="horaInicio" value="Hora de inicio: " />
-					<p:calendar value="#{promocionMB.horaInicio}" pattern="HH:mm"
-						timeOnly="true" locale="es" />
-					<p:column />
 
-					<h:outputLabel for="horaFin" value="Hora de finalización: " />
-					<p:calendar value="#{promocionMB.horaFin}" pattern="HH:mm"
-						timeOnly="true" locale="es" />
-					<p:column />
-					
+					<h:panelGroup id="lblHoraInicio">
+						<h:outputLabel value="Hora de inicio: "
+							rendered="#{promocionMB.activarRangoHorario == true}" />
+					</h:panelGroup>
+
+					<h:panelGroup id="txtHoraInicio">
+						<p:calendar value="#{promocionMB.horaInicio}" pattern="HH:mm"
+							timeOnly="true" locale="es"
+							rendered="#{promocionMB.activarRangoHorario == true}" />
+					</h:panelGroup>
+					<p:column></p:column>
+
+					<h:panelGroup id="lblHoraFin">
+						<h:outputLabel value="Hora de finalización: "
+							rendered="#{promocionMB.activarRangoHorario == true}" />
+					</h:panelGroup>
+
+					<h:panelGroup id="txtHoraFin">
+						<p:calendar value="#{promocionMB.horaFin}" pattern="HH:mm"
+							timeOnly="true" locale="es"
+							rendered="#{promocionMB.activarRangoHorario == true}" />
+					</h:panelGroup>
+					<p:column></p:column>
 
 					<h:outputLabel for="tarifa" value="Tarifa: " />
 					<p:inputText id="tarifa" style="width: 200px" readonly="true"
 						value="#{promocionMB.tarifa.categoriaVehiculo.nombre} / #{promocionMB.tarifa.tipoEstadia.nombre}"
-						maxlength="25" required="true" requiredMessage="Campo obligatorio">
+						maxlength="25" required="true" requiredMessage="Campo obligatorio"
+						onclick="popupTarifas.show();">
 						<p:ajax event="blur" update="tarifaMsg" />
 					</p:inputText>
+					
 					<p:commandButton id="seleccionarTarifa" value="Seleccionar tarifa"
 						onclick="popupTarifas.show();" type="button" style="width: 150px" />
-					
+
 					<p:column />
 					<p:column>
 						<div style="width: 215px;">
@@ -121,7 +112,7 @@
 						</div>
 					</p:column>
 					<p:column />
-					
+
 					<h:outputLabel for="descuento" value="Descuento: (%)" />
 					<p:inputText id="descuento" style="width: 200px"
 						value="#{promocionMB.descuento}" required="true"
@@ -187,6 +178,36 @@
 				</p:dialog>
 			</div>
 		</h:form>
+
 		<h:outputScript name="js/i18n.js" />
+
+		<script type="text/javascript">
+        PrimeFaces.locales['es'] = {
+        	    closeText: 'Cerrar',
+        	    prevText: 'Anterior',
+        	    nextText: 'Siguiente',
+        	    monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        	    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+        	    dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+        	    dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+        	    dayNamesMin: ['D','L','M','M','J','V','S'],
+        	    weekHeader: 'Semana',
+        	    firstDay: 1,
+        	    isRTL: false,
+        	    showMonthAfterYear: false,
+        	    yearSuffix: '',
+        	    timeOnlyTitle: 'Sólo hora',
+        	    timeText: 'Tiempo',
+        	    hourText: 'Hora',
+        	    minuteText: 'Minuto',
+        	    secondText: 'Segundo',
+        	    currentText: 'Fecha actual',
+        	    ampm: false,
+        	    month: 'Mes',
+        	    week: 'Semana',
+        	    day: 'Día',
+        	    allDayText : 'Todo el día'
+        	};
+        </script>
 	</ui:define>
 </ui:composition>

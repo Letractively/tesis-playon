@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
@@ -50,7 +50,7 @@ import tesis.playon.web.service.IVehiculoService;
  * 
  */
 @ManagedBean(name = "abonoMB")
-@RequestScoped
+@ViewScoped
 public class AbonoManagedBean implements Serializable {
 
     private static final long serialVersionUID = 7775997635327144533L;
@@ -107,6 +107,8 @@ public class AbonoManagedBean implements Serializable {
 
     private Vehiculo vehiculo;
 
+    private Usuario usuario;
+
     private List<Promocion> promocionesDisponibles;
 
     private List<Abono> abonadosEnLaPlaya;
@@ -118,6 +120,8 @@ public class AbonoManagedBean implements Serializable {
     private Playa playaLoggeada;
 
     private Date today;
+
+    private Float importeConDescuento;
 
     @PostConstruct
     private void init() {
@@ -139,14 +143,23 @@ public class AbonoManagedBean implements Serializable {
 	Abono abono;
 	try {
 
+	    System.out.println(vehiculo.getCliente().getCuentaCliente());
+	    System.out.println(vehiculo.getCliente());
+	    System.out.println(vehiculo);
+
 	    if (getAbonoService().existeAbonoVehiculo(vehiculo, playaLoggeada, fechaDesde) == false) {
 
 		abono = new Abono(getFechaDesde(), getFechaHasta(), getTarifa(), playaLoggeada);
 		abono.setVehiculo(getVehiculo());
 		abono.setPromocion(getPromocion());
 
-		CuentaCliente cuentaCliente = vehiculo.getCliente().getCuentaCliente();
+		CuentaCliente cuentaCliente = new CuentaCliente();
+		System.out.println(vehiculo.getCliente().getCuentaCliente());
+		System.out.println(vehiculo);
+		cuentaCliente = vehiculo.getCliente().getCuentaCliente();
 		float nuevoSaldo;
+		System.out.println(vehiculo.getCliente().getCuentaCliente());
+		System.out.println(vehiculo);
 
 		if (cuentaCliente.getSaldo() >= getTarifa().getImporte()) {
 
@@ -190,7 +203,7 @@ public class AbonoManagedBean implements Serializable {
 		    transaccionCliente.setFecha(new Date());
 		    transaccionCliente.setImporte(-importe);
 		    transaccionCliente.setTipoPago(tipoPagoCuenta);
-		    
+
 		    getTransaccionClienteService().save(transaccionCliente);
 
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -224,6 +237,7 @@ public class AbonoManagedBean implements Serializable {
 	if (patente != null) {
 	    vehiculo = getVehiculoService().findByPatenteVehiculo(patente.toUpperCase());
 	    if (vehiculo != null) {
+		usuario = vehiculo.getCliente().getUsuario();
 		TipoEstadia tipoEstadia = getTipoEstadiaService().findByNombreTipoEstadia("Por Mes");
 		CategoriaVehiculo categoriaVehiculo = vehiculo.getModeloVehiculo().getCategoriaVehiculo();
 		tarifa = getTarifaService().findTarifaVigenteByPlayaAndCategoriaAndTipoEstadia(playaLoggeada,
@@ -461,6 +475,27 @@ public class AbonoManagedBean implements Serializable {
 
     public void setToday(Date today) {
 	this.today = today;
+    }
+
+    public Usuario getUsuario() {
+	return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+	this.usuario = usuario;
+    }
+
+    public Float getImporteConDescuento() {
+	if (promocion != null) {
+	    importeConDescuento = ((100 - promocion.getDescuento()) / 100) * tarifa.getImporte();
+	}
+	else
+	    importeConDescuento = null;
+	return importeConDescuento;
+    }
+
+    public void setImporteConDescuento(Float importeConDescuento) {
+	this.importeConDescuento = importeConDescuento;
     }
 
 }
