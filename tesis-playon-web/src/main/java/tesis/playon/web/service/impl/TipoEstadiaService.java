@@ -16,41 +16,47 @@ import tesis.playon.web.service.ITipoEstadiaService;
 @Transactional(readOnly = true)
 public class TipoEstadiaService implements ITipoEstadiaService {
 
-    ITipoEstadiaDao tipoEstadiaDao;
+	ITipoEstadiaDao tipoEstadiaDao;
 
-    @Transactional(readOnly = false)
-    @Override
-    public void save(TipoEstadia tipoEstadia) {
-	getTipoEstadiaDao().save(tipoEstadia);
-    }
+	@Transactional(readOnly = false)
+	@Override
+	public void save(TipoEstadia tipoEstadia) {
+		getTipoEstadiaDao().save(tipoEstadia);
+	}
 
-    @Transactional(readOnly = false)
-    @Override
-    public void update(TipoEstadia tipoEstadia) {
-	getTipoEstadiaDao().update(tipoEstadia);
-    }
+	@Transactional(readOnly = false)
+	@Override
+	public void update(TipoEstadia tipoEstadia) {
+		getTipoEstadiaDao().update(tipoEstadia);
+	}
 
-    @Transactional(readOnly = false)
-    @Override
-    public void delete(TipoEstadia tipoEstadia) {
-	getTipoEstadiaDao().delete(tipoEstadia);
-    }
+	@Transactional(readOnly = false)
+	@Override
+	public void delete(TipoEstadia tipoEstadia) {
+		getTipoEstadiaDao().delete(tipoEstadia);
+	}
 
-    @Override
-    public List<TipoEstadia> findAll() {
-	return getTipoEstadiaDao().findAll();
-    }
+	@Override
+	public List<TipoEstadia> findAll() {
+		return getTipoEstadiaDao().findAll();
+	}
 
-    @Override
-    public TipoEstadia findByNombreTipoEstadia(String nombreTipoEstadia) {
-	return getTipoEstadiaDao().findByNombreTipoEstadia(nombreTipoEstadia);
-    }
+	@Override
+	public TipoEstadia findByNombreTipoEstadia(String nombreTipoEstadia) {
+		return getTipoEstadiaDao().findByNombreTipoEstadia(nombreTipoEstadia);
+	}
 
-    public ITipoEstadiaDao getTipoEstadiaDao() {
-        return tipoEstadiaDao;
-    }
+	@Override
+	public TipoEstadia findByIdTipoEstadia(int idTipoEstadia) {
+		return getTipoEstadiaDao().findByIdTipoEstadia(idTipoEstadia);
+	}
 
-    public void setTipoEstadiaDao(ITipoEstadiaDao tipoEstadiaDao) {
-        this.tipoEstadiaDao = tipoEstadiaDao;
-    }
+	public ITipoEstadiaDao getTipoEstadiaDao() {
+		return tipoEstadiaDao;
+	}
+
+	public void setTipoEstadiaDao(ITipoEstadiaDao tipoEstadiaDao) {
+		this.tipoEstadiaDao = tipoEstadiaDao;
+	}
+
 }

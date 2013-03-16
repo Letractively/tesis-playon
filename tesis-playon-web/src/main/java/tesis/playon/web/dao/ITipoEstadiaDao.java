@@ -13,6 +13,8 @@ public interface ITipoEstadiaDao {
     void delete(TipoEstadia tipoEstadia);
 
     TipoEstadia findByNombreTipoEstadia(String nombreTipoEstadia);
+    
+    TipoEstadia findByIdTipoEstadia(int idTipoEstadia);
 
     List<TipoEstadia> findAll();
 

@@ -42,6 +42,12 @@ public class TipoEstadiaDao implements ITipoEstadiaDao {
 		.setParameter(0, nombreTipoEstadia).list();
 	return (TipoEstadia) list.get(0);
     }
+    
+    public TipoEstadia findByIdTipoEstadia(int idTipoEstadia) {
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoEstadia where id=?")
+		.setParameter(0, idTipoEstadia).list();
+	return (TipoEstadia) list.get(0);
+    }
 
     public List<TipoEstadia> findAll() {
 	List<TipoEstadia> tipos = new ArrayList<TipoEstadia>();

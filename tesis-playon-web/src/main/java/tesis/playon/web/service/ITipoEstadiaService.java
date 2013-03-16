@@ -20,5 +20,7 @@ public interface ITipoEstadiaService {
     List<TipoEstadia> findAll();
 
     TipoEstadia findByNombreTipoEstadia(String nombreTipoEstadia);
+    
+    TipoEstadia findByIdTipoEstadia(int idTipoEstadia);
 
 }
