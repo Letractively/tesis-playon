@@ -39,364 +39,382 @@ import tesis.playon.web.service.ITransaccionPlayaService;
 @ViewScoped
 public class LiquidacionManagedBean implements Serializable {
 
-    private static final long serialVersionUID = 3053005214323025897L;
+	private static final long serialVersionUID = 3053005214323025897L;
 
-    @ManagedProperty(value = "#{PlayaService}")
-    IPlayaService playaService;
+	@ManagedProperty(value = "#{PlayaService}")
+	IPlayaService playaService;
 
-    @ManagedProperty(value = "#{EstadoPlayaService}")
-    IEstadoPlayaService estadoPlayaService;
+	@ManagedProperty(value = "#{EstadoPlayaService}")
+	IEstadoPlayaService estadoPlayaService;
 
-    @ManagedProperty(value = "#{TransaccionPlayaService}")
-    ITransaccionPlayaService transaccionPlayaService;
+	@ManagedProperty(value = "#{TransaccionPlayaService}")
+	ITransaccionPlayaService transaccionPlayaService;
 
-    @ManagedProperty(value = "#{CuentaPlayaService}")
-    ICuentaPlayaService cuentaPlayaService;
+	@ManagedProperty(value = "#{CuentaPlayaService}")
+	ICuentaPlayaService cuentaPlayaService;
 
-    @ManagedProperty(value = "#{LiquidacionService}")
-    ILiquidacionService liquidacionService;
+	@ManagedProperty(value = "#{LiquidacionService}")
+	ILiquidacionService liquidacionService;
 
-    @ManagedProperty(value = "#{EstadiaService}")
-    IEstadiaService estadiaService;
+	@ManagedProperty(value = "#{EstadiaService}")
+	IEstadiaService estadiaService;
 
-    Playa playaSeleccionada;
+	Playa playaSeleccionada;
 
-    Playa[] playasSeleccionadas;
+	Playa[] playasSeleccionadas;
 
-    private PlayaDataModel playasModel;
+	private PlayaDataModel playasModel;
 
-    private String cuit;
+	private String cuit;
 
-    private Integer disponibilidad;
+	private Integer disponibilidad;
 
-    private String direccionBusqueda;
+	private String direccionBusqueda;
 
-    private String domicilio;
+	private String domicilio;
 
-    private String nombreComercial;
+	private String nombreComercial;
 
-    private String razonSocial;
+	private String razonSocial;
 
-    private Barrio barrio;
+	private Barrio barrio;
 
-    private String telefono;
+	private String telefono;
 
-    private String emailPlaya;
+	private String emailPlaya;
 
-    private Date fechaDesde;
+	private Date fechaDesde;
 
-    private Date fechaHasta;
+	private Date fechaHasta;
 
-    List<Playa> playasAprobadasList;
+	List<Playa> playasAprobadasList;
 
-    List<Playa> playasALiquidarList;
+	List<Playa> playasALiquidarList;
 
-    List<TransaccionPlaya> transaccionesALiquidar;
+	List<TransaccionPlaya> transaccionesALiquidar;
 
-    private List<Playa> filteredPlayas;
+	private List<Playa> filteredPlayas;
 
-    // private List<Playa> playasALiquidar;
-    
-    private List<Liquidacion> liquidacionesList;
+	// private List<Playa> playasALiquidar;
 
-    public IPlayaService getPlayaService() {
-	return playaService;
-    }
+	private List<Liquidacion> liquidacionesList;
 
-    public void setPlayaService(IPlayaService playaService) {
-	this.playaService = playaService;
-    }
-
-    public IEstadoPlayaService getEstadoPlayaService() {
-	return estadoPlayaService;
-    }
-
-    public void setEstadoPlayaService(IEstadoPlayaService estadoPlayaService) {
-	this.estadoPlayaService = estadoPlayaService;
-    }
-
-    public ITransaccionPlayaService getTransaccionPlayaService() {
-	return transaccionPlayaService;
-    }
-
-    public void setTransaccionPlayaService(ITransaccionPlayaService transaccionPlayaService) {
-	this.transaccionPlayaService = transaccionPlayaService;
-    }
-
-    public ICuentaPlayaService getCuentaPlayaService() {
-	return cuentaPlayaService;
-    }
-
-    public void setCuentaPlayaService(ICuentaPlayaService cuentaPlayaService) {
-	this.cuentaPlayaService = cuentaPlayaService;
-    }
-
-    public ILiquidacionService getLiquidacionService() {
-	return liquidacionService;
-    }
-
-    public void setLiquidacionService(ILiquidacionService liquidacionService) {
-	this.liquidacionService = liquidacionService;
-    }
-
-    public IEstadiaService getEstadiaService() {
-	return estadiaService;
-    }
-
-    public void setEstadiaService(IEstadiaService estadiaService) {
-	this.estadiaService = estadiaService;
-    }
-
-    @SuppressWarnings("unused")
-    @PostConstruct
-    private void init() {
-	this.fechaDesde = new Date();
-	this.fechaHasta = new Date();
-	this.fechaDesde = DateUtils.setDays(this.fechaDesde, 1);
-    }
-
-    private int cantTransacciones(CuentaPlaya cuentaPlaya) {
-	int contTransacciones = 0;
-	for (TransaccionPlaya transaccion : getTransaccionesALiquidar()) {
-	    if (transaccion.getCuentaPlaya().equals(cuentaPlaya)) {
-		contTransacciones++;
-	    }
+	public IPlayaService getPlayaService() {
+		return playaService;
 	}
-	return contTransacciones;
-    }
 
-    private int importeTotal(CuentaPlaya cuentaPlaya) {
-	int importe = 0;
-	for (TransaccionPlaya transaccion : getTransaccionesALiquidar()) {
-	    if (transaccion.getCuentaPlaya().equals(cuentaPlaya)) {
-		importe += transaccion.getImporte();
-	    }
+	public void setPlayaService(IPlayaService playaService) {
+		this.playaService = playaService;
 	}
-	return importe;
-    }
 
-    public int cantTransacciones(int idPlaya) {
-	Playa playa = this.getPlayaService().findById(idPlaya);
-	CuentaPlaya cuentaPlaya = this.getCuentaPlayaService().findByPlaya(playa);
-	return this.cantTransacciones(cuentaPlaya);
-    }
-
-    public int importeTotal(int idPlaya) {
-	Playa playa = this.getPlayaService().findById(idPlaya);
-	CuentaPlaya cuentaPlaya = this.getCuentaPlayaService().findByPlaya(playa);
-	return this.importeTotal(cuentaPlaya);
-    }
-
-    public List<Playa> getPlayasAprobadasList() {
-	if (playasAprobadasList == null) {
-	    playasAprobadasList = new ArrayList<Playa>();
-	    EstadoPlaya estado = new EstadoPlaya();
-	    estado = getEstadoPlayaService().findByNombreEstadoPlaya("Aprobada");
-	    playasAprobadasList = getPlayaService().findByEstado(estado);
+	public IEstadoPlayaService getEstadoPlayaService() {
+		return estadoPlayaService;
 	}
-	return playasAprobadasList;
-    }
 
-    public String liquidar() {
-	for (Playa playa : this.getPlayasAprobadasList()) {
-	    if (cantTransacciones(playa.getId()) <= 0)
-		continue;
-	    // Generamos la Liquidación con los datos
-	    Liquidacion liquidacion = new Liquidacion();
-	    Estadia estadiaPlaya = getEstadiaService().findByPlaya(playa);
-	    liquidacion.setEstadia(estadiaPlaya);
-	    liquidacion.setFecha(Calendar.getInstance().getTime());
-	    liquidacion.setFechaDesde(this.getFechaDesde());
-	    liquidacion.setFechaHasta(this.getFechaHasta());
-	    liquidacion.setImporteTotal(importeTotal(estadiaPlaya.getPlaya().getId()));
-	    getLiquidacionService().save(liquidacion);
-
-	    CuentaPlaya cuentaPlaya = getCuentaPlayaService().findByPlaya(playa);
-	    float nuevoSaldo = cuentaPlaya.getSaldo() - liquidacion.getImporteTotal();
-	    cuentaPlaya.setSaldo(nuevoSaldo);
-	    getCuentaPlayaService().update(cuentaPlaya);
-	    
-	    // Agregamos el ID de la liquidacion generada a
-	    // cada una de las transaciones liquidadas para esa playa.
-	    for (TransaccionPlaya transaccion : this.getTransaccionesALiquidar()) {
-		if (transaccion.getCuentaPlaya().getPlaya().getId() != playa.getId())
-		    continue;
-		transaccion.setLiquidacion(liquidacion);
-		getTransaccionPlayaService().update(transaccion);
-	    }
-
+	public void setEstadoPlayaService(IEstadoPlayaService estadoPlayaService) {
+		this.estadoPlayaService = estadoPlayaService;
 	}
-	return "/admin/liquidacionplayasend.html?faces-redirect=true";
-    }
 
-    public List<TransaccionPlaya> getTransaccionesALiquidar() {
-	if (transaccionesALiquidar == null) {
-	    Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012012));
-	    Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta : Calendar.getInstance().getTime());
-	    //transaccionesALiquidar = new ArrayList<TransaccionPlaya>();
-	    transaccionesALiquidar = getTransaccionPlayaService().findNoLiquidadasByFechaDesdeHasta(fechaDesde,
-		    fechaHasta);
+	public ITransaccionPlayaService getTransaccionPlayaService() {
+		return transaccionPlayaService;
 	}
-	return transaccionesALiquidar;
-    }
 
-    public void setTransaccionesALiquidar(List<TransaccionPlaya> transaccionesALiquidar) {
-	this.transaccionesALiquidar = transaccionesALiquidar;
-    }
-
-    public PlayaDataModel getPlayasModel() {
-	playasModel = new PlayaDataModel(getPlayasAprobadasList());
-	return playasModel;
-    }
-
-    public void setPlayasAprobadasList(List<Playa> playasAceptadasList) {
-	this.playasAprobadasList = playasAceptadasList;
-    }
-
-    public void updatePlayasALiquidar() {
-	Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012012));
-	Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta : Calendar.getInstance().getTime());
-	// transaccionesALiquidar = new ArrayList<TransaccionPlaya>();
-	setPlayasALiquidarList(getPlayaService().findByFechaDesdeHasta(fechaDesde, fechaHasta));
-	setTransaccionesALiquidar(getTransaccionPlayaService()
-		.findNoLiquidadasByFechaDesdeHasta(fechaDesde, fechaHasta));
-    }
-
-    public List<Playa> getPlayasALiquidarList() {
-	if (playasALiquidarList == null) {
-	    Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012012));
-	    Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta : Calendar.getInstance().getTime());
-	    playasALiquidarList = getPlayaService().findByFechaDesdeHasta(fechaDesde, fechaHasta);
+	public void setTransaccionPlayaService(
+			ITransaccionPlayaService transaccionPlayaService) {
+		this.transaccionPlayaService = transaccionPlayaService;
 	}
-	return playasALiquidarList;
-    }
 
-    public void setPlayasALiquidarList(List<Playa> playasALiquidarList) {
-	this.playasALiquidarList = playasALiquidarList;
-    }
+	public ICuentaPlayaService getCuentaPlayaService() {
+		return cuentaPlayaService;
+	}
 
-    public List<Liquidacion> getLiquidacionesList() {
-        if (liquidacionesList == null){
-            Date fecha = DateUtils.truncate(new Date(), Calendar.DATE);
-            liquidacionesList = getLiquidacionService().findByFecha(fecha);
-        }
-	return liquidacionesList;
-    }
+	public void setCuentaPlayaService(ICuentaPlayaService cuentaPlayaService) {
+		this.cuentaPlayaService = cuentaPlayaService;
+	}
 
-    public void setLiquidacionesList(List<Liquidacion> liquidacionesList) {
-        this.liquidacionesList = liquidacionesList;
-    }
+	public ILiquidacionService getLiquidacionService() {
+		return liquidacionService;
+	}
 
-    public List<Playa> getFilteredPlayas() {
-	return filteredPlayas;
-    }
+	public void setLiquidacionService(ILiquidacionService liquidacionService) {
+		this.liquidacionService = liquidacionService;
+	}
 
-    public void setFilteredPlayas(List<Playa> filteredPlayas) {
-	this.filteredPlayas = filteredPlayas;
-    }
+	public IEstadiaService getEstadiaService() {
+		return estadiaService;
+	}
 
-    public Playa getPlayaSeleccionada() {
-	return playaSeleccionada;
-    }
+	public void setEstadiaService(IEstadiaService estadiaService) {
+		this.estadiaService = estadiaService;
+	}
 
-    public void setPlayaSeleccionada(Playa playaSeleccionada) {
-	this.playaSeleccionada = playaSeleccionada;
-    }
+	@PostConstruct
+	private void init() {
+		this.fechaDesde = new Date();
+		this.fechaHasta = new Date();
+		this.fechaDesde = DateUtils.setDays(this.fechaDesde, 1);
+	}
 
-    public Playa[] getPlayasSeleccionadas() {
-	return playasSeleccionadas;
-    }
+	private int cantTransacciones(CuentaPlaya cuentaPlaya) {
+		int contTransacciones = 0;
+		for (TransaccionPlaya transaccion : getTransaccionesALiquidar()) {
+			if (transaccion.getCuentaPlaya().equals(cuentaPlaya)) {
+				contTransacciones++;
+			}
+		}
+		return contTransacciones;
+	}
 
-    public void setPlayasSeleccionadas(Playa[] playasSeleccionadas) {
-	this.playasSeleccionadas = playasSeleccionadas;
-    }
+	private int importeTotal(CuentaPlaya cuentaPlaya) {
+		int importe = 0;
+		for (TransaccionPlaya transaccion : getTransaccionesALiquidar()) {
+			if (transaccion.getCuentaPlaya().equals(cuentaPlaya)) {
+				importe += transaccion.getImporte();
+			}
+		}
+		return importe;
+	}
 
-    public String getCuit() {
-	return cuit;
-    }
+	public int cantTransacciones(int idPlaya) {
+		Playa playa = this.getPlayaService().findById(idPlaya);
+		CuentaPlaya cuentaPlaya = this.getCuentaPlayaService().findByPlaya(
+				playa);
+		return this.cantTransacciones(cuentaPlaya);
+	}
 
-    public void setCuit(String cuit) {
-	this.cuit = cuit;
-    }
+	public int importeTotal(int idPlaya) {
+		Playa playa = this.getPlayaService().findById(idPlaya);
+		CuentaPlaya cuentaPlaya = this.getCuentaPlayaService().findByPlaya(
+				playa);
+		return this.importeTotal(cuentaPlaya);
+	}
 
-    public Integer getDisponibilidad() {
-	return disponibilidad;
-    }
+	public List<Playa> getPlayasAprobadasList() {
+		if (playasAprobadasList == null) {
+			playasAprobadasList = new ArrayList<Playa>();
+			EstadoPlaya estado = new EstadoPlaya();
+			estado = getEstadoPlayaService()
+					.findByNombreEstadoPlaya("Aprobada");
+			playasAprobadasList = getPlayaService().findByEstado(estado);
+		}
+		return playasAprobadasList;
+	}
 
-    public void setDisponibilidad(Integer disponibilidad) {
-	this.disponibilidad = disponibilidad;
-    }
+	public String liquidar() {
+		for (Playa playa : this.getPlayasSeleccionadas()) {
+			if (cantTransacciones(playa.getId()) <= 0)
+				continue;
+			// Generamos la Liquidación con los datos
+			Liquidacion liquidacion = new Liquidacion();
+			Estadia estadiaPlaya = getEstadiaService().findByPlaya(playa);
+			liquidacion.setEstadia(estadiaPlaya);
+			liquidacion.setFecha(Calendar.getInstance().getTime());
+			liquidacion.setFechaDesde(this.getFechaDesde());
+			liquidacion.setFechaHasta(this.getFechaHasta());
+			liquidacion.setImporteTotal(importeTotal(estadiaPlaya.getPlaya()
+					.getId()));
+			getLiquidacionService().save(liquidacion);
 
-    public String getDireccionBusqueda() {
-	return direccionBusqueda;
-    }
+			CuentaPlaya cuentaPlaya = getCuentaPlayaService()
+					.findByPlaya(playa);
+			float nuevoSaldo = cuentaPlaya.getSaldo()
+					- liquidacion.getImporteTotal();
+			cuentaPlaya.setSaldo(nuevoSaldo);
+			getCuentaPlayaService().update(cuentaPlaya);
 
-    public void setDireccionBusqueda(String direccionBusqueda) {
-	this.direccionBusqueda = direccionBusqueda;
-    }
+			// Agregamos el ID de la liquidacion generada a
+			// cada una de las transaciones liquidadas para esa playa.
+			for (TransaccionPlaya transaccion : this
+					.getTransaccionesALiquidar()) {
+				if (transaccion.getCuentaPlaya().getPlaya().getId() != playa
+						.getId())
+					continue;
+				transaccion.setLiquidacion(liquidacion);
+				getTransaccionPlayaService().update(transaccion);
+			}
 
-    public String getDomicilio() {
-	return domicilio;
-    }
+		}
+		return "/admin/liquidacionplayasend.html?faces-redirect=true";
+	}
 
-    public void setDomicilio(String domicilio) {
-	this.domicilio = domicilio;
-    }
+	public List<TransaccionPlaya> getTransaccionesALiquidar() {
+		if (transaccionesALiquidar == null) {
+			Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde
+					: new Date(01012012));
+			Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta
+					: Calendar.getInstance().getTime());
+			// transaccionesALiquidar = new ArrayList<TransaccionPlaya>();
+			transaccionesALiquidar = getTransaccionPlayaService()
+					.findNoLiquidadasByFechaDesdeHasta(fechaDesde, fechaHasta);
+		}
+		return transaccionesALiquidar;
+	}
 
-    public String getNombreComercial() {
-	return nombreComercial;
-    }
+	public void setTransaccionesALiquidar(
+			List<TransaccionPlaya> transaccionesALiquidar) {
+		this.transaccionesALiquidar = transaccionesALiquidar;
+	}
 
-    public void setNombreComercial(String nombreComercial) {
-	this.nombreComercial = nombreComercial;
-    }
+	public PlayaDataModel getPlayasModel() {
+		// playasModel = new PlayaDataModel(getPlayasAprobadasList());
+		playasModel = new PlayaDataModel(this.getPlayasALiquidarList());
+		return playasModel;
+	}
 
-    public String getRazonSocial() {
-	return razonSocial;
-    }
+	public void setPlayasAprobadasList(List<Playa> playasAceptadasList) {
+		this.playasAprobadasList = playasAceptadasList;
+	}
 
-    public void setRazonSocial(String razonSocial) {
-	this.razonSocial = razonSocial;
-    }
+	public void updatePlayasALiquidar() {
+		Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde
+				: new Date(01012012));
+		Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta : Calendar
+				.getInstance().getTime());
+		// transaccionesALiquidar = new ArrayList<TransaccionPlaya>();
+		setPlayasALiquidarList(getPlayaService().findByFechaDesdeHasta(
+				fechaDesde, fechaHasta));
+		setTransaccionesALiquidar(getTransaccionPlayaService()
+				.findNoLiquidadasByFechaDesdeHasta(fechaDesde, fechaHasta));
+	}
 
-    public Barrio getBarrio() {
-	return barrio;
-    }
+	public List<Playa> getPlayasALiquidarList() {
+		if (playasALiquidarList == null) {
+			Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde
+					: new Date(01012012));
+			Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta
+					: Calendar.getInstance().getTime());
+			playasALiquidarList = getPlayaService().findByFechaDesdeHasta(
+					fechaDesde, fechaHasta);
+		}
+		return playasALiquidarList;
+	}
 
-    public void setBarrio(Barrio barrio) {
-	this.barrio = barrio;
-    }
+	public void setPlayasALiquidarList(List<Playa> playasALiquidarList) {
+		this.playasALiquidarList = playasALiquidarList;
+	}
 
-    public String getTelefono() {
-	return telefono;
-    }
+	public List<Liquidacion> getLiquidacionesList() {
+		if (liquidacionesList == null) {
+			Date fecha = DateUtils.truncate(new Date(), Calendar.DATE);
+			liquidacionesList = getLiquidacionService().findByFecha(fecha);
+		}
+		return liquidacionesList;
+	}
 
-    public void setTelefono(String telefono) {
-	this.telefono = telefono;
-    }
+	public void setLiquidacionesList(List<Liquidacion> liquidacionesList) {
+		this.liquidacionesList = liquidacionesList;
+	}
 
-    public String getEmailPlaya() {
-	return emailPlaya;
-    }
+	public List<Playa> getFilteredPlayas() {
+		return filteredPlayas;
+	}
 
-    public void setEmailPlaya(String emailPlaya) {
-	this.emailPlaya = emailPlaya;
-    }
+	public void setFilteredPlayas(List<Playa> filteredPlayas) {
+		this.filteredPlayas = filteredPlayas;
+	}
 
-    public Date getFechaDesde() {
-	return fechaDesde;
-    }
+	public Playa getPlayaSeleccionada() {
+		return playaSeleccionada;
+	}
 
-    public void setFechaDesde(Date fechaDesde) {
-	this.fechaDesde = fechaDesde;
-    }
+	public void setPlayaSeleccionada(Playa playaSeleccionada) {
+		this.playaSeleccionada = playaSeleccionada;
+	}
 
-    public Date getFechaHasta() {
-	return fechaHasta;
-    }
+	public Playa[] getPlayasSeleccionadas() {
+		return playasSeleccionadas;
+	}
 
-    public void setFechaHasta(Date fechaHasta) {
-	this.fechaHasta = fechaHasta;
-    }
+	public void setPlayasSeleccionadas(Playa[] playasSeleccionadas) {
+		this.playasSeleccionadas = playasSeleccionadas;
+	}
+
+	public String getCuit() {
+		return cuit;
+	}
+
+	public void setCuit(String cuit) {
+		this.cuit = cuit;
+	}
+
+	public Integer getDisponibilidad() {
+		return disponibilidad;
+	}
+
+	public void setDisponibilidad(Integer disponibilidad) {
+		this.disponibilidad = disponibilidad;
+	}
+
+	public String getDireccionBusqueda() {
+		return direccionBusqueda;
+	}
+
+	public void setDireccionBusqueda(String direccionBusqueda) {
+		this.direccionBusqueda = direccionBusqueda;
+	}
+
+	public String getDomicilio() {
+		return domicilio;
+	}
+
+	public void setDomicilio(String domicilio) {
+		this.domicilio = domicilio;
+	}
+
+	public String getNombreComercial() {
+		return nombreComercial;
+	}
+
+	public void setNombreComercial(String nombreComercial) {
+		this.nombreComercial = nombreComercial;
+	}
+
+	public String getRazonSocial() {
+		return razonSocial;
+	}
+
+	public void setRazonSocial(String razonSocial) {
+		this.razonSocial = razonSocial;
+	}
+
+	public Barrio getBarrio() {
+		return barrio;
+	}
+
+	public void setBarrio(Barrio barrio) {
+		this.barrio = barrio;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getEmailPlaya() {
+		return emailPlaya;
+	}
+
+	public void setEmailPlaya(String emailPlaya) {
+		this.emailPlaya = emailPlaya;
+	}
+
+	public Date getFechaDesde() {
+		return fechaDesde;
+	}
+
+	public void setFechaDesde(Date fechaDesde) {
+		this.fechaDesde = fechaDesde;
+	}
+
+	public Date getFechaHasta() {
+		return fechaHasta;
+	}
+
+	public void setFechaHasta(Date fechaHasta) {
+		this.fechaHasta = fechaHasta;
+	}
 
 }

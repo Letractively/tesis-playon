@@ -11,28 +11,24 @@
 	<ui:define name="panelContent" class="admin-font">
 		<p:growl id="messages" />
 
-		<p>Seleccione el período a liquidar.</p>
-
-		<table class="ui-datatable liquidacion-table">
+		<table class="ui-datatable liquidacion-table"
+			style="text-align: right;">
 			<tr>
-				<th colspan="2" class="ui-widget-header ui-state-default"
+				<th colspan="3" class="ui-widget-header ui-state-default"
 					scope="col">Período a liquidar</th>
 			</tr>
 			<tr>
-				<td style="text-align: right;" class="ui-widget-content"><h:outputText
-						value="Desde:" /></td>
-				<td class="ui-widget-content"><p:calendar
-						value="#{liquidacionMB.fechaDesde}" id="calDesde" /></td>
-			</tr>
-			<tr>
-				<td style="text-align: right;" class="ui-widget-content"><h:outputText
-						value="Hasta:" /></td>
-				<td class="ui-widget-content"><p:calendar
-						value="#{liquidacionMB.fechaHasta}" id="calHasta" /></td>
-			</tr>
-			<tr>
-				<td colspan="2" style="text-align: right;" class="ui-widget-content"><p:commandButton
-						id="buscarButton" value="Buscar" icon="ui-icon-search"
+				<td style="text-align: center; width: 300px;"
+					class="ui-widget-content"><h:outputText value="Desde:   " />
+					<p:calendar value="#{liquidacionMB.fechaDesde}" id="calDesde" /></td>
+
+				<td style="text-align: center; width: 300px;"
+					class="ui-widget-content"><h:outputText value="Hasta:   " />
+					<p:calendar value="#{liquidacionMB.fechaHasta}" id="calHasta" /></td>
+
+				<td style="text-align: center; width: 150px;"
+					class="ui-widget-content"><p:commandButton id="buscarButton"
+						value="Buscar" icon="ui-icon-search"
 						action="#{liquidacionMB.updatePlayasALiquidar}" ajax="true"
 						update="playas" /></td>
 			</tr>
@@ -40,7 +36,7 @@
 
 		<br />
 		<p:dataTable id="playas" var="playa"
-			value="#{liquidacionMB.playasALiquidarList}"
+			value="#{liquidacionMB.playasModel}"
 			filteredValue="#{liquidacionMB.filteredPlayas}"
 			widgetVar="playasTable" paginatorPosition="bottom" paginator="true"
 			rows="20" emptyMessage="No existen playas para liquidar"
@@ -50,6 +46,8 @@
             		Listado de transacciones Playas con transacciones  
         		</f:facet>
 
+			<p:column selectionMode="multiple" style="width:18px" />
+			
 			<p:column headerText="Razon Social" styleClass="column-font"
 				filterBy="#{playa.razonSocial}" filterMatchMode="contains">
 				<h:outputText value="#{playa.razonSocial}" />
@@ -91,9 +89,9 @@
 						action="/admin/liquidacionplayas.html?faces-redirect=true"
 						ajax="false" />
 				</h:panelGroup>
-				<!--<p:commandButton id="multiViewButton" value="View" -->
-				<!--icon="ui-icon-search" update=":mainForm:displayMulti" -->
-				<!--oncomplete="multiPlayasDialog.show()" /> -->
+				<p:commandButton id="multiViewButton" value="View"
+				icon="ui-icon-search" update=":mainForm:displayMulti"
+				oncomplete="multiPlayasDialog.show()" />
 			</f:facet>
 		</p:dataTable>
 		<div align="right">

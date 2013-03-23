@@ -13,14 +13,14 @@ public class PlayaDataModel extends ListDataModel<Playa> implements SelectableDa
   
     public PlayaDataModel(List<Playa> data) {  
         super(data);  
-    }  
+    } 
       
     @Override  
     public Playa getRowData(String rowKey) {  
         //In a real app, a more efficient way like a query by rowKey should be implemented to deal with huge data  
           
         @SuppressWarnings("unchecked")
-	List<Playa> playas = (List<Playa>) getWrappedData();  
+        List<Playa> playas = (List<Playa>) getWrappedData();  
           
         for(Playa playa : playas) {  
             if((String.valueOf(playa.getId())).equals(rowKey))  
