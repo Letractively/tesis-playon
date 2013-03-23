@@ -13,10 +13,4 @@
         android:contentDescription="@string/desc"
         android:src="@drawable/logo_playon" />
 
-    <fragment
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.google.android.gms.maps.SupportMapFragment" />
-
 </RelativeLayout>

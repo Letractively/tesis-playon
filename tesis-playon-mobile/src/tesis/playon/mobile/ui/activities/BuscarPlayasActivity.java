@@ -6,7 +6,6 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import tesis.playon.mobile.Const;
 import tesis.playon.mobile.R;
 import tesis.playon.mobile.json.model.Playa;
 import tesis.playon.mobile.json.model.Playas;
@@ -29,21 +28,19 @@ public class BuscarPlayasActivity extends ListActivity {
 
     private final static String LOG_TAG = "BuscarPlayasActivity";
 
-    private static final String URL_PLAYAS = "http://" + Const.SERVER_IP + ":8080/tesis-playon-restful/playas";
+    private static final String URL_PLAYAS = "http://10.0.2.2:8080/tesis-playon-restful/playas";
 
     private Playas playas;
 
     private ListView mListView;
 
     private PlayaAdapter mPlayaAdapter;
-
+    
     private List<Playa> mListaPlayas = new ArrayList<Playa>();
 
-    @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.lista_playas);
-
 	handleIntent(getIntent());
     }
 
@@ -75,8 +72,7 @@ public class BuscarPlayasActivity extends ListActivity {
 
 	mListView.setOnItemClickListener(new OnItemClickListener() {
 	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		Toast.makeText(getApplicationContext(), mListaPlayas.get(position).getNombreComercial(),
-			Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), mListaPlayas.get(position).getNombreComercial(), Toast.LENGTH_SHORT).show();
 	    }
 	});
     }
@@ -99,6 +95,7 @@ public class BuscarPlayasActivity extends ListActivity {
 	    Bundle bundle = new Bundle();
 	    bundle.putSerializable("json.model.playas", playas);
 	    result.putExtras(bundle);
+	    // List<Playa> listaPlayas = playas.getPlayas();
 	    for (Playa playa : playas.getPlayas()) {
 		Log.d(LOG_TAG, "Playa: " + playa.getRazonSocial() + " Dirección: " + playa.getDomicilio());
 	    }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tesis.playon.mobile.R;
+import tesis.playon.mobile.R.id;
 import tesis.playon.mobile.json.model.Playa;
 import android.app.Activity;
 import android.content.Context;
