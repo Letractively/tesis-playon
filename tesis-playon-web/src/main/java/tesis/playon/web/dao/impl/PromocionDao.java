@@ -124,9 +124,10 @@ public class PromocionDao implements IPromocionDao {
     public List<Promocion> findByTipoEstadiaAndPlaya(TipoEstadia tipoEstadia, Playa playa){
 	List<Promocion> promociones = new ArrayList<Promocion>();
 	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from Promocion where tarifa.tipoEstadia=? and playa=? " +
-				"and now()>=fechaInicio and now()<=fechaFin " +
-				"and estadoPromocion.id=2")
+		.createQuery("from Promocion where (tarifa.tipoEstadia=? and playa=?) " +
+				"and (now()>=fechaInicio and now()<=fechaFin) " +
+				"and estadoPromocion.id=2 and " +
+				"((horaInicio=null and horaFin=null) or (CURTIME() >= horaInicio  and CURTIME() <= horaFin))")
 		.setParameter(0, tipoEstadia).setParameter(1, playa).list();
 	if(!list.isEmpty()){
 	    for (Object object : list) {
