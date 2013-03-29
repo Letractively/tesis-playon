@@ -92,6 +92,27 @@
 
 				</p:column>
 
+				<f:facet name="footer">
+
+					<div align="center">
+						<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+							<h:commandLink title="Exportar a excel">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/excel.png" />
+								<p:dataExporter type="xls" target="tarifas"
+									fileName="Listado de tarifas" />
+							</h:commandLink>
+
+							<h:commandLink title="Exportar a PDF">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/pdf.png" />
+								<p:dataExporter type="pdf" target="tarifas"
+									preProcessor="#{empleadoMB.listadoTarifasPDF}"
+									fileName="Listado tarifas" />
+							</h:commandLink>
+						</h:panelGrid>
+					</div>
+				</f:facet>
 			</p:dataTable>
 		</h:form>
 

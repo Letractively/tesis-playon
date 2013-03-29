@@ -5,6 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+	<ui:param name="loadmenuadmin" value="true" />
+
 	<ui:define name="title">
 		Nuevo empleado
     </ui:define>
@@ -23,39 +25,32 @@
 						Listado de empleados de la playa
 					</f:facet>
 
-				<p:column headerText="Legajo" filterBy="#{empleado.legajo}"
-					filterMatchMode="contains">
+				<p:column headerText="Legajo">
 					<h:outputText value="#{empleado.legajo}" />
 				</p:column>
 
-				<p:column headerText="Apellido"
-					filterBy="#{empleado.usuario.apellido}" filterMatchMode="contains">
+				<p:column headerText="Apellido">
 					<h:outputText value="#{empleado.usuario.apellido}" />
 				</p:column>
 
-				<p:column headerText="Nombre" filterBy="#{empleado.usuario.nombre}"
-					filterMatchMode="contains">
+				<p:column headerText="Nombre">
 					<h:outputText value="#{empleado.usuario.nombre}" />
 				</p:column>
 
-				<p:column headerText="Usuario"
-					filterBy="#{empleado.usuario.nombreUser}"
-					filterMatchMode="contains">
+				<p:column headerText="Usuario">
 					<h:outputText value="#{empleado.usuario.nombreUser}" />
 				</p:column>
 
-				<p:column headerText="Cargo"
-					filterBy="#{empleado.cargoEmpleado.nombre}" filterMatchMode="exact"
-					filterOptions="#{empleadoMB.cargosOptions}">
+				<p:column headerText="Cargo">
 					<h:outputText value="#{empleado.cargoEmpleado.nombre}" />
 				</p:column>
 
 				<p:column headerText="Habilitado" style="text-align:center;">
-					<h:outputText value="#{empleado.usuario.enable == true ? 'Si' : 'No'}" />
+					<h:outputText
+						value="#{empleado.usuario.enable == true ? 'Si' : 'No'}" />
 				</p:column>
 
-				<p:column headerText="Opciones"
-					styleClass="column-options">
+				<p:column headerText="Opciones" styleClass="column-options">
 
 					<p:commandLink id="view" title="Ver Empleado"
 						oncomplete="viewDialog.show();" update=":displayView">
@@ -82,20 +77,38 @@
 					</p:commandLink>
 				</p:column>
 				<f:facet name="footer">
-					<h:panelGroup id="quitarfiltro" layout="block"
-						style="text-align: right;">
-						<p:commandLink id="removeFilter" value="Quitar Filtro"
-							action="/playa/gerencia/empleadolist.html?faces-redirect=true"
-							ajax="false" />
-					</h:panelGroup>
+
+					<div align="center">
+						<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+							<h:commandLink title="Exportar a excel">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/excel.png" />
+								<p:dataExporter type="xls" target="empleados"
+									fileName="Empleados" />
+							</h:commandLink>
+
+							<h:commandLink title="Exportar a PDF">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/pdf.png" />
+								<p:dataExporter type="pdf" target="empleados"
+									preProcessor="#{empleadoMB.listadoEmpleadosPDF}"
+									fileName="Empleados" />
+							</h:commandLink>
+						</h:panelGrid>
+					</div>
 				</f:facet>
+
 			</p:dataTable>
+
 		</h:form>
 		<div align="right">
 			<br />
 			<h:link value="volver a administración"
 				outcome="/playa/gerencia/administracion" />
 		</div>
+
+
+
 
 		<!-- DIALOG PARA VER LOS DATOS DEL USUARIO SELECCIONADO -->
 		<p:dialog header="Datos del Empleado" widgetVar="viewDialog"
@@ -190,6 +203,8 @@
 							style="padding:4px" onclick="viewDialog.hide();" type="button" />
 					</div>
 				</p:column>
+
+
 
 			</h:panelGrid>
 		</p:dialog>
