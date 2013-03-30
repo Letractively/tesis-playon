@@ -585,8 +585,8 @@ public class EmpleadoManagedBean implements Serializable {
 				Color.BLACK);
 
 		Paragraph titulo = new Paragraph();
-		titulo.add(new Paragraph(
-				"Listado de Tarifas del día: " + fechaActual(), fuenteNegra18));
+		titulo.add(new Paragraph("Listado de Tarifas emitido el: "
+				+ fechaActual(), fuenteNegra18));
 		agregarLineasEnBlanco(titulo, 1);
 		titulo.setAlignment(Element.ALIGN_CENTER);
 		String sep = File.separator;

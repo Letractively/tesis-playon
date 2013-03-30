@@ -19,12 +19,18 @@
 
 			<p:column headerText="Nombre Comercial" styleClass="column-font"
 				filterBy="#{playa.razonSocial}" filterMatchMode="contains">
+				<f:facet name="header">
+					<h:outputText value="Nombre" />
+				</f:facet>
 				<h:outputText value="#{playa.nombreComercial}" />
 			</p:column>
 
 			<p:column headerText="Domicilio" styleClass="column-font"
 				filterBy="#{playa.domicilio}" filterMatchMode="contains">
 				<h:outputText value="#{playa.domicilio}" />
+				<f:facet name="header">
+					<h:outputText value="Domicilio" />
+				</f:facet>
 			</p:column>
 
 			<p:column headerText="Barrio" styleClass="column-font"
@@ -32,16 +38,25 @@
 				filterOptions="#{auditoriaMB.barriosOptions}"
 				filterMatchMode="exact">
 				<h:outputText value="#{playa.barrio.nombre}" />
+				<f:facet name="header">
+					<h:outputText value="Barrio" />
+				</f:facet>
 			</p:column>
 
 			<p:column headerText="Teléfono" styleClass="column-font"
 				filterBy="#{playa.telefono}" filterMatchMode="contains">
 				<h:outputText value="#{playa.telefono}" />
+				<f:facet name="header">
+					<h:outputText value="Telefono" />
+				</f:facet>
 			</p:column>
 
 			<p:column headerText="E-mail" styleClass="column-font"
 				filterBy="#{playa.email}" filterMatchMode="contains">
 				<h:outputText value="#{playa.email}" />
+				<f:facet name="header">
+					<h:outputText value="E-mail" />
+				</f:facet>
 			</p:column>
 
 			<p:column headerText="Estado" styleClass="column-font"
@@ -49,10 +64,13 @@
 				filterOptions="#{auditoriaMB.estadosOptions}"
 				filterMatchMode="exact">
 				<h:outputText value="#{playa.estado.nombre}" />
+				<f:facet name="header">
+					<h:outputText value="Estado" />
+				</f:facet>
 			</p:column>
 
 			<p:column headerText="Opciones" styleClass="column-options"
-				style="text-align:center; width:95px;">
+				style="text-align:center; width:95px;" exportable="false">
 
 				<p:commandLink id="view" update=":mainForm:displayView"
 					oncomplete="carDialog.show();" title="Ver Datos">
@@ -74,14 +92,34 @@
 					<h:graphicImage library="images/icons" name="trash.png" />
 				</p:commandLink>
 			</p:column>
-			
+
 			<f:facet name="footer">
-				<h:panelGroup id="removeFilter"  layout="block"
-					style="text-align: right;">
-					<p:commandLink id="addPlayaNueva" value="Quitar Filtro"
-						action="/admin/playalist.html?faces-redirect=true"
-						ajax="false" />
-				</h:panelGroup>
+
+				<div align="center">
+					<h:panelGrid columns="3" header="Exportar" style="width:100px;">
+						<h:commandLink title="Exportar a excel">
+							<p:graphicImage
+								value="http://www.primefaces.org/showcase/images/excel.png" />
+							<p:dataExporter type="xls" target="playas"
+								fileName="Transacciones" />
+						</h:commandLink>
+
+						<h:commandLink title="Exportar a PDF">
+							<p:graphicImage
+								value="http://www.primefaces.org/showcase/images/pdf.png" />
+							<p:dataExporter type="pdf" target="playas"
+								preProcessor="#{playaMB.listadoPlayasPDF}"
+								fileName="Transacciones" />
+						</h:commandLink>
+
+						<h:commandLink id="removeFilter" layout="block"
+							style="text-align: right;">
+							<p:commandLink id="addPlayaNueva" value="Quitar Filtro"
+								action="/admin/playalist.html?faces-redirect=true" ajax="false" />
+						</h:commandLink>
+					</h:panelGrid>
+				</div>
+
 			</f:facet>
 		</p:dataTable>
 

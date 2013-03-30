@@ -22,56 +22,49 @@
 				Tarifas
             	</f:facet>
 
-				<p:column headerText="Tipo Estadía" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{tarifa.tipoEstadia.nombre}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{tarifa.tipoEstadia.nombre}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
+				<p:column headerText="Tipo Estadía" styleClass="column-font"
+					style="text-align:center">
+					<f:facet name="header">
+						<h:outputText value="Tipo Estadia" />
+
+					</f:facet>
+					<h:outputText value="#{tarifa.tipoEstadia.nombre}" />
+
 				</p:column>
 
-				<p:column headerText="Categoría" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{tarifa.categoriaVehiculo.nombre}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{tarifa.categoriaVehiculo.nombre}"
-								styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
+				<p:column headerText="Categoría" styleClass="column-font"
+					style="text-align:center">
+
+					<f:facet name="header">
+						<h:outputText value="Categoria" />
+					</f:facet>
+
+					<h:outputText value="#{tarifa.categoriaVehiculo.nombre}" />
 				</p:column>
 
-				<p:column headerText="Importe" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">$
-							<h:outputText value="#{tarifa.importe}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{tarifa.importe}" styleClass="input-font" />
-						</f:facet>
-					</p:cellEditor>
+				<p:column headerText="Importe" styleClass="column-font"
+					style="text-align:center">
+					<f:facet name="header">
+						<h:outputText value="Importe" />
+					</f:facet>
+
+					<h:outputText value="#{tarifa.importe}" styleClass="input-font" />
+
 				</p:column>
 
-				<p:column headerText="Vigente" styleClass="column-font">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{tarifa.vigente == true ? 'Si' : 'No'}" />
+				<p:column headerText="Vigente" styleClass="column-font"
+					style="text-align:center">
 
-						</f:facet>
-						<f:facet name="input">
-							<h:selectBooleanCheckbox value="#{tarifa.vigente}"
-								style="font-weight:bold" />
-						</f:facet>
-					</p:cellEditor>
+					<f:facet name="header">
+						<h:outputText value="Vigente" />
+
+					</f:facet>
+					<h:outputText value="#{tarifa.vigente == true ? 'Si' : 'No'}" />
+
 				</p:column>
 
 				<p:column headerText="Opciones"
-					style="text-align:center; width:100px;">
+					style="text-align:center; width:100px;" exportable="false">
 
 					<p:commandLink id="view" title="Ver Tarifa"
 						oncomplete="viewDialog.show();" update=":displayView">
@@ -91,6 +84,26 @@
 					</p:commandLink>
 
 				</p:column>
+				<f:facet name="footer">
+
+					<div align="center">
+						<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+							<h:commandLink title="Exportar a excel">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/excel.png" />
+								<p:dataExporter type="xls" target="tarifas" fileName="Empleados" />
+							</h:commandLink>
+
+							<h:commandLink title="Exportar a PDF">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/pdf.png" />
+								<p:dataExporter type="pdf" target="tarifas"
+									preProcessor="#{empleadoMB.listadoTarifasPDF}"
+									fileName="Empleados" />
+							</h:commandLink>
+						</h:panelGrid>
+					</div>
+				</f:facet>
 
 			</p:dataTable>
 		</h:form>

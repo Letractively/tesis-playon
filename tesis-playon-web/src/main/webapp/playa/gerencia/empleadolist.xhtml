@@ -25,7 +25,7 @@
 						Listado de empleados de la playa
 					</f:facet>
 
-				<p:column headerText="Legajo">
+				<p:column headerText="Legajo" style="text-align:center">
 
 					<f:facet name="header">
 						<h:outputText value="Legajo" />
@@ -34,21 +34,21 @@
 
 				</p:column>
 
-				<p:column headerText="Apellido">
+				<p:column headerText="Apellido" style="text-align:center">
 					<f:facet name="header">
 						<h:outputText value="apellido" />
 					</f:facet>
 					<h:outputText value="#{empleado.usuario.apellido}" />
 				</p:column>
 
-				<p:column headerText="Nombre">
+				<p:column headerText="Nombre" style="text-align:center">
 					<f:facet name="header">
 						<h:outputText value="Nombre" />
 					</f:facet>
 					<h:outputText value="#{empleado.usuario.nombre}" />
 				</p:column>
 
-				<p:column headerText="Usuario">
+				<p:column headerText="Usuario" style="text-align:center">
 
 					<f:facet name="header">
 						<h:outputText value="Usuario" />
@@ -56,7 +56,7 @@
 					<h:outputText value="#{empleado.usuario.nombreUser}" />
 				</p:column>
 
-				<p:column headerText="Cargo">
+				<p:column headerText="Cargo" style="text-align:center">
 					<f:facet name="header">
 						<h:outputText value="Cargo" />
 					</f:facet>
@@ -72,7 +72,7 @@
 				</p:column>
 
 				<p:column headerText="Opciones" styleClass="column-options"
-					exportable="false">
+					style="text-align:center" exportable="false">
 
 					<p:commandLink id="view" title="Ver Empleado"
 						oncomplete="viewDialog.show();" update=":displayView">
