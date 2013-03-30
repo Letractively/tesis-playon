@@ -530,6 +530,54 @@ public class EmpleadoManagedBean implements Serializable {
 		pdf.add(titulo);
 	}
 
+	public void listadoAbonadosPDF(Object document) throws IOException,
+			BadElementException, DocumentException {
+
+		Font fuenteNegra18 = new Font(Font.TIMES_ROMAN, 18, Font.BOLD,
+				Color.BLACK);
+
+		Paragraph titulo = new Paragraph();
+		titulo.add(new Paragraph("Listado de abonados al día " + fechaActual(),
+				fuenteNegra18));
+		agregarLineasEnBlanco(titulo, 1);
+		titulo.setAlignment(Element.ALIGN_CENTER);
+		String sep = File.separator;
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+		ExternalContext extContext = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		String logo = extContext.getRealPath("resources" + sep + "images" + sep
+				+ "transacciones.png");
+		pdf.addTitle("Listado de empleados");
+		pdf.add(Image.getInstance(logo));
+		pdf.add(titulo);
+	}
+
+	public void listadoTransaccionesPDF(Object document) throws IOException,
+			BadElementException, DocumentException {
+
+		Font fuenteNegra18 = new Font(Font.TIMES_ROMAN, 18, Font.BOLD,
+				Color.BLACK);
+
+		Paragraph titulo = new Paragraph();
+		titulo.add(new Paragraph("Listado de transacciones emitido el "
+				+ fechaActual(), fuenteNegra18));
+		agregarLineasEnBlanco(titulo, 1);
+		titulo.setAlignment(Element.ALIGN_CENTER);
+		String sep = File.separator;
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+		ExternalContext extContext = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		String logo = extContext.getRealPath("resources" + sep + "images" + sep
+				+ "transacciones.png");
+		pdf.addTitle("Listado de transacciones");
+		pdf.add(Image.getInstance(logo));
+		pdf.add(titulo);
+	}
+
 	public void listadoTarifasPDF(Object document) throws IOException,
 			BadElementException, DocumentException {
 

@@ -26,31 +26,53 @@
 					</f:facet>
 
 				<p:column headerText="Legajo">
+
+					<f:facet name="header">
+						<h:outputText value="Legajo" />
+					</f:facet>
 					<h:outputText value="#{empleado.legajo}" />
+
 				</p:column>
 
 				<p:column headerText="Apellido">
+					<f:facet name="header">
+						<h:outputText value="apellido" />
+					</f:facet>
 					<h:outputText value="#{empleado.usuario.apellido}" />
 				</p:column>
 
 				<p:column headerText="Nombre">
+					<f:facet name="header">
+						<h:outputText value="Nombre" />
+					</f:facet>
 					<h:outputText value="#{empleado.usuario.nombre}" />
 				</p:column>
 
 				<p:column headerText="Usuario">
+
+					<f:facet name="header">
+						<h:outputText value="Usuario" />
+					</f:facet>
 					<h:outputText value="#{empleado.usuario.nombreUser}" />
 				</p:column>
 
 				<p:column headerText="Cargo">
+					<f:facet name="header">
+						<h:outputText value="Cargo" />
+					</f:facet>
 					<h:outputText value="#{empleado.cargoEmpleado.nombre}" />
 				</p:column>
 
 				<p:column headerText="Habilitado" style="text-align:center;">
+					<f:facet name="header">
+						<h:outputText value="Habilitado" />
+					</f:facet>
 					<h:outputText
 						value="#{empleado.usuario.enable == true ? 'Si' : 'No'}" />
 				</p:column>
 
-				<p:column headerText="Opciones" styleClass="column-options">
+				<p:column headerText="Opciones" styleClass="column-options"
+					exportable="false">
 
 					<p:commandLink id="view" title="Ver Empleado"
 						oncomplete="viewDialog.show();" update=":displayView">

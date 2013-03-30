@@ -29,28 +29,64 @@
 				<p:column style="text-align:center" headerText="Cliente"
 					filterBy="#{abono.vehiculo.cliente.usuario.apellido}"
 					filterMatchMode="contains">
+
+					<f:facet name="header">
+						<h:outputText value="Cliente" />
+					</f:facet>
 					<h:outputText
 						value="#{abono.vehiculo.cliente.usuario.apellido}&#160;
 							#{abono.vehiculo.cliente.usuario.nombre}" />
 				</p:column>
 
 				<p:column style="text-align:center" headerText="Fecha desde">
+
+					<f:facet name="header">
+						<h:outputText value="Fecha desde" />
+					</f:facet>
 					<h:outputText value="#{abono.fechaVigenciaDesde}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
 
 				<p:column style="text-align:center" headerText="Fecha hasta">
+
+					<f:facet name="header">
+						<h:outputText value="Fecha hasta" />
+					</f:facet>
 					<h:outputText value="#{abono.fechaVigenciaHasta}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
 
 				<p:column style="text-align:center" headerText="Patente"
-					filterBy="#{abono.vehiculo.patente}"
-					filterMatchMode="contains">
+					filterBy="#{abono.vehiculo.patente}" filterMatchMode="contains">
+
+					<f:facet name="header">
+						<h:outputText value="patente" />
+					</f:facet>
 					<h:outputText value="#{abono.vehiculo.patente}" />
 				</p:column>
+				<f:facet name="footer">
+
+					<div align="center">
+						<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+							<h:commandLink title="Exportar a excel">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/excel.png" />
+								<p:dataExporter type="xls" target="abonos" fileName="Abonados" />
+							</h:commandLink>
+
+							<h:commandLink title="Exportar a PDF">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/pdf.png" />
+								<p:dataExporter type="pdf" target="abonos"
+									preProcessor="#{empleadoMB.listadoAbonadosPDF}"
+									fileName="Abonados" />
+							</h:commandLink>
+						</h:panelGrid>
+					</div>
+				</f:facet>
+
 			</p:dataTable>
 		</h:form>
 	</ui:define>

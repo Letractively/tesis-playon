@@ -15,66 +15,82 @@
 		<p:growl id="messages" />
 		<h1>Clientes con abonos</h1>
 
-		<h:form style="margin:0 0 0 20px;">
+		<h:form>
 
-			<p:dataTable id="abonos" var="abonosClientes" paginator="false"
-				value="#{ingresoEgresoMB.listadoAbonos}"
+			<p:dataTable id="abonos" var="abono" paginator="true"
+				value="#{abonoMB.abonadosEnLaPlaya}" rows="5"
 				emptyMessage="No existen clientes con abonos para su Playa"
 				paginatorPosition="bottom">
 
-				<p:column style="text-align:center">
+				<f:facet name="header">
+						Listado de abonados de la playa
+				</f:facet>
+
+				<p:column headerText="Nombre">
+
 					<f:facet name="header">
-						<h:outputText value="Desde" />
+						<h:outputText value="Nombre" />
 					</f:facet>
-					<h:outputText value="#{abonosClientes.fechaVigenciaDesde}">
-						<f:convertDateTime pattern="d - M - yyyy" />
+					<h:outputText value="#{abono.vehiculo.cliente.usuario.nombre}" />
+				</p:column>
+
+				<p:column headerText="Apellido">
+
+					<f:facet name="header">
+						<h:outputText value="Apellido" />
+					</f:facet>
+					<h:outputText value="#{abono.vehiculo.cliente.usuario.apellido}" />
+				</p:column>
+
+				<p:column headerText="Fecha desde">
+
+					<f:facet name="header">
+						<h:outputText value="Fecha desde" />
+					</f:facet>
+					<h:outputText value="#{abono.fechaVigenciaDesde}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
 
-				<p:column style="text-align:center">
+				<p:column headerText="Fecha hasta">
+
 					<f:facet name="header">
-						<h:outputText value="Hasta" />
+						<h:outputText value="Fecha hasta" />
 					</f:facet>
-					<h:outputText value="#{abonosClientes.fechaVigenciaHasta}">
-						<f:convertDateTime pattern="d - M - yyyy" />
+					<h:outputText value="#{abono.fechaVigenciaHasta}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
 
-				<p:column style="text-align:center">
-					<f:facet name="header">
-						<h:outputText value="usuario" />
-					</f:facet>
+				<p:column headerText="Patente">
 
-					<h:outputText value="#{abonosClientes.cliente.usuario.nombre}" />
-				</p:column>
-				<p:column style="text-align:center">
 					<f:facet name="header">
 						<h:outputText value="Patente" />
 					</f:facet>
-
-					<h:outputText value="#{abonosClientes.cliente.usuario.apellido}" />
+					<h:outputText value="#{abono.vehiculo.patente}" />
 				</p:column>
 
-
 				<f:facet name="footer">
+
 					<div align="center">
 						<h:panelGrid columns="2" header="Exportar" style="width:100px;">
 							<h:commandLink title="Exportar a excel">
 								<p:graphicImage
 									value="http://www.primefaces.org/showcase/images/excel.png" />
-								<p:dataExporter type="xls" target="abonos" fileName="Abonos" />
+								<p:dataExporter type="xls" target="abonos" fileName="Abonados" />
 							</h:commandLink>
 
 							<h:commandLink title="Exportar a PDF">
 								<p:graphicImage
 									value="http://www.primefaces.org/showcase/images/pdf.png" />
 								<p:dataExporter type="pdf" target="abonos"
-									preProcessor="#{ingresoEgresoMB.preProcessPDF}"
-									fileName="Abonos" />
+									preProcessor="#{empleadoMB.listadoAbonadosPDF}"
+									fileName="Abonados" />
 							</h:commandLink>
 						</h:panelGrid>
 					</div>
 				</f:facet>
+
 			</p:dataTable>
 		</h:form>
 	</ui:define>
