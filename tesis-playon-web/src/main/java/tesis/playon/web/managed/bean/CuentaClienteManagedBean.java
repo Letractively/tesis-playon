@@ -261,7 +261,7 @@ public class CuentaClienteManagedBean {
 		Paragraph titulo = new Paragraph();
 		titulo.add(new Paragraph("Listado de Transacciones entre el  "
 				+ rangoFechas(), fuenteNegra18));
-		agregarLineasEnBlanco(titulo, 1);
+		agregarLineasEnBlanco(titulo, 2);
 		titulo.setAlignment(Element.ALIGN_CENTER);
 		String sep = File.separator;
 		Document pdf = (Document) document;
@@ -292,6 +292,7 @@ public class CuentaClienteManagedBean {
 
 	}
 
+	@SuppressWarnings("unused")
 	private String fechaActual() {
 		Date hoy = new Date();
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");

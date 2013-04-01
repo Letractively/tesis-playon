@@ -22,15 +22,6 @@ import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 import org.springframework.dao.DataAccessException;
 
-import com.lowagie.text.BadElementException;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.Image;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-
 import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.model.Empleado;
@@ -53,6 +44,15 @@ import tesis.playon.web.service.IRolUsuarioService;
 import tesis.playon.web.service.IRolesPorUsuarioService;
 import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.util.NotificadorUtil;
+
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
 
 /**
  * @author pablo
@@ -698,7 +698,7 @@ public class PlayaManagedBean implements Serializable {
 		titulo.add(new Paragraph(
 				"Listado de playas de estacionamiento registradas  ",
 				fuenteNegra18));
-		agregarLineasEnBlanco(titulo, 1);
+		agregarLineasEnBlanco(titulo, 2);
 		titulo.setAlignment(Element.ALIGN_CENTER);
 		String sep = File.separator;
 		Document pdf = (Document) document;
@@ -718,6 +718,7 @@ public class PlayaManagedBean implements Serializable {
 			parrafo.add(new Paragraph(" "));
 	}
 
+	@SuppressWarnings("unused")
 	private String fechaActual() {
 		Date hoy = new Date();
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");

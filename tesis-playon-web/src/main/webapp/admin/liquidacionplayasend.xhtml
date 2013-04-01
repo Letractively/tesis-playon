@@ -23,7 +23,8 @@
             	Listado de playas liquidadas  
         	</f:facet>
 
-			<p:column id="fechaId" sortBy="#{liquidacion.id}">
+			<p:column id="fechaId" sortBy="#{liquidacion.id}"
+				style="text-align:center">
 				<f:facet name="header">
 					<h:outputText value="Número" />
 				</f:facet>
@@ -31,14 +32,16 @@
 			</p:column>
 
 			<p:column id="playaHeader"
-				sortBy="#{liquidacion.estadia.playa.razonSocial}">
+				sortBy="#{liquidacion.estadia.playa.razonSocial}"
+				style="text-align:center">
 				<f:facet name="header">
 					<h:outputText value="Playa" />
 				</f:facet>
 				<h:outputText value="#{liquidacion.estadia.playa.razonSocial}" />
 			</p:column>
 
-			<p:column id="importeHeader" sortBy="#{liquidacion.importeTotal}">
+			<p:column id="importeHeader" sortBy="#{liquidacion.importeTotal}"
+				style="text-align:center">
 				<f:facet name="header">
 					<h:outputText value="Importe" />
 				</f:facet>
@@ -46,7 +49,7 @@
 			</p:column>
 
 			<p:column headerText="Opciones" styleClass="column-options"
-				style="text-align:center; width:95px;">
+				exportable="false" style="text-align:center; width:95px;">
 
 				<p:commandLink id="view" update=":mainForm:displayView"
 					oncomplete="playasDialog.show();" title="Ver Datos">
@@ -71,7 +74,7 @@
 							<p:graphicImage
 								value="http://www.primefaces.org/showcase/images/excel.png" />
 							<p:dataExporter type="xls" target="liquidaciones"
-								fileName="Liquidaciones" />
+								adminfileName="Liquidaciones" />
 						</h:commandLink>
 
 						<h:commandLink title="Exportar a PDF">
@@ -79,7 +82,7 @@
 								value="http://www.primefaces.org/showcase/images/pdf.png" />
 							<f:param name="titulo" value="Listado de playas liquidadas" />
 							<p:dataExporter type="pdf" target="liquidaciones"
-								preProcessor="#{documentExporterMB.preProcessPDF}"
+								preProcessor="#{transaccionPlayaMB.listadoGeneralTransaccionPDF}"
 								fileName="Liquidaciones">
 							</p:dataExporter>
 						</h:commandLink>
@@ -197,7 +200,7 @@
             		  
         		</f:facet>
 
-				<p:column id="playaHeader">
+				<p:column id="playaHeader" style="text-align:center">
 					<f:facet name="header">
 						<h:outputText value="Playa" />
 					</f:facet>
@@ -205,21 +208,21 @@
 						value="#{transaccionPlaya.cuentaPlaya.playa.razonSocial}" />
 				</p:column>
 
-				<p:column id="fechaHeader">
+				<p:column id="fechaHeader" style="text-align:center">
 					<f:facet name="header">
 						<h:outputText value="Fecha" />
 					</f:facet>
 					<h:outputText value="#{transaccionPlaya.fecha}" />
 				</p:column>
 
-				<p:column id="tipoPagoHeader">
+				<p:column id="tipoPagoHeader" style="text-align:center">
 					<f:facet name="header">
 						<h:outputText value="Tipo de Pago" />
 					</f:facet>
 					<h:outputText value="#{transaccionPlaya.tipoPago.nombre}" />
 				</p:column>
 
-				<p:column id="importeHeader">
+				<p:column id="importeHeader" style="text-align:center">
 					<f:facet name="header">
 						<h:outputText value="Importe" />
 					</f:facet>
@@ -241,8 +244,8 @@
 									value="http://www.primefaces.org/showcase/images/pdf.png" />
 								<f:param name="titulo" value="Listado de transacciones" />
 								<p:dataExporter type="pdf" target="transaccionesView"
-									preProcessor="#{documentExporterMB.preProcessPDF}"
-									fileName="Liquidaciones">
+									preProcessor="#{transaccionPlayaMB.listadoDetalleTransaccionPDF}"
+									fileName="Detalle Liquidacion">
 								</p:dataExporter>
 							</h:commandLink>
 						</h:panelGrid>

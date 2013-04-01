@@ -20,7 +20,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
-import org.omg.CORBA.TIMEOUT;
 import org.springframework.dao.DataAccessException;
 
 import tesis.playon.web.model.CargoEmpleado;
@@ -111,6 +110,7 @@ public class EmpleadoManagedBean implements Serializable {
 	@SuppressWarnings("unused")
 	private SelectItem[] cargosOptions;
 
+	@SuppressWarnings("unused")
 	private Date fechaActual = new Date();
 
 	public String addEmpleado() {
@@ -539,7 +539,7 @@ public class EmpleadoManagedBean implements Serializable {
 		Paragraph titulo = new Paragraph();
 		titulo.add(new Paragraph("Listado de abonados al día " + fechaActual(),
 				fuenteNegra18));
-		agregarLineasEnBlanco(titulo, 1);
+		agregarLineasEnBlanco(titulo, 2);
 		titulo.setAlignment(Element.ALIGN_CENTER);
 		String sep = File.separator;
 		Document pdf = (Document) document;
@@ -563,7 +563,7 @@ public class EmpleadoManagedBean implements Serializable {
 		Paragraph titulo = new Paragraph();
 		titulo.add(new Paragraph("Listado de transacciones emitido el "
 				+ fechaActual(), fuenteNegra18));
-		agregarLineasEnBlanco(titulo, 1);
+		agregarLineasEnBlanco(titulo, 2);
 		titulo.setAlignment(Element.ALIGN_CENTER);
 		String sep = File.separator;
 		Document pdf = (Document) document;
@@ -587,7 +587,7 @@ public class EmpleadoManagedBean implements Serializable {
 		Paragraph titulo = new Paragraph();
 		titulo.add(new Paragraph("Listado de Tarifas emitido el: "
 				+ fechaActual(), fuenteNegra18));
-		agregarLineasEnBlanco(titulo, 1);
+		agregarLineasEnBlanco(titulo, 2);
 		titulo.setAlignment(Element.ALIGN_CENTER);
 		String sep = File.separator;
 		Document pdf = (Document) document;

@@ -20,24 +20,33 @@
 					text-align="center">
 
 					<p:column headerText="Denunciante" styleClass="column-font">
+						<f:facet name="header">
+							<h:outputText value="Nombre" />
+						</f:facet>
 						<h:outputText value="#{denuncias.playa.nombreComercial}"
 							text-align="center" />
 					</p:column>
 
 					<p:column headerText="Fecha " styleClass="column-font"
 						style="width:105px">
+						<f:facet name="header">
+							<h:outputText value="fecha alta" />
+						</f:facet>
 						<h:outputText value="#{denuncias.fechaAlta}">
 							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Patente " styleClass="column-font">
+						<f:facet name="header">
+							<h:outputText value="Patente" />
+						</f:facet>
 						<h:outputText value="#{denuncias.vehiculo.patente}"
 							text-align="center" />
 					</p:column>
 
 					<p:column headerText="Opciones" styleClass="column-options"
-						style="text-align:center; width:120px;">
+						exportable="false" style="text-align:center; width:120px;">
 
 						<p:commandLink id="view" update=":mainForm:carDlg3"
 							oncomplete="carDialog.show();" title="Ver Datos">
@@ -70,6 +79,24 @@
 					</p:column>
 					<f:facet name="footer">
 
+						<div align="center">
+							<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+								<h:commandLink title="Exportar a excel">
+									<p:graphicImage
+										value="http://www.primefaces.org/showcase/images/excel.png" />
+									<p:dataExporter type="xls" target="denunciaPendiente"
+										fileName="Denuncias pendientes" />
+								</h:commandLink>
+
+								<h:commandLink title="Exportar a PDF">
+									<p:graphicImage
+										value="http://www.primefaces.org/showcase/images/pdf.png" />
+									<p:dataExporter type="pdf" target="denunciaPendiente"
+										preProcessor="#{documentExporterMB.listadoDenunciasPendientesPDF}"
+										fileName="Denuncias pendientes" />
+								</h:commandLink>
+							</h:panelGrid>
+						</div>
 					</f:facet>
 
 
@@ -78,18 +105,24 @@
 
 			</p:tab>
 			<p:tab id="tab2" title="Proceso">
-				<p:dataTable id="denunciaproceso" var="denuncias"
+				<p:dataTable id="denunciaProceso" var="denuncias"
 					value="#{auditoriaMB.denunciasEnProcesoVehiculosList}"
-					paginatorPosition="bottom" paginator="false" 
+					paginatorPosition="bottom" paginator="false"
 					emptyMessage="No existen denuncias finalizadas" text-align="center">
 
 					<p:column headerText="Denunciante" styleClass="column-font">
+						<f:facet name="header">
+							<h:outputText value="Nombre" />
+						</f:facet>
 						<h:outputText value="#{denuncias.playa.nombreComercial}"
 							text-align="center" />
 					</p:column>
 
 					<p:column headerText="Fecha " styleClass="column-font"
 						style="width:105px">
+						<f:facet name="header">
+							<h:outputText value="Fecha alta" />
+						</f:facet>
 						<h:outputText value="#{denuncias.fechaAlta}">
 							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 						</h:outputText>
@@ -97,11 +130,14 @@
 
 					<p:column headerText="Patente " styleClass="column-font"
 						text-align="center">
+						<f:facet name="header">
+							<h:outputText value="Patente" />
+						</f:facet>
 						<h:outputText value="#{denuncias.vehiculo.patente}" align="center" />
 					</p:column>
 
 					<p:column headerText="Opciones" styleClass="column-options"
-						style="text-align:center; width:120px;">
+						exportable="false" style="text-align:center; width:120px;">
 
 						<p:commandLink id="view2" update=":mainForm:carDlg3"
 							oncomplete="carDialog.show();" title="Ver Datos">
@@ -117,35 +153,65 @@
 							<h:graphicImage library="images/icons" name="check.png" />
 						</p:commandLink>
 					</p:column>
+					<f:facet name="footer">
+
+						<div align="center">
+							<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+								<h:commandLink title="Exportar a excel">
+									<p:graphicImage
+										value="http://www.primefaces.org/showcase/images/excel.png" />
+									<p:dataExporter type="xls" target="denunciaProceso"
+										fileName="Denuncias en proceso" />
+								</h:commandLink>
+
+								<h:commandLink title="Exportar a PDF">
+									<p:graphicImage
+										value="http://www.primefaces.org/showcase/images/pdf.png" />
+									<p:dataExporter type="pdf" target="denunciaProceso"
+										preProcessor="#{documentExporterMB.listadoDenunciasProcesoPDF}"
+										fileName="Denuncias en proceso" />
+								</h:commandLink>
+							</h:panelGrid>
+						</div>
+					</f:facet>
 				</p:dataTable>
 
 
 			</p:tab>
 
 			<p:tab id="tab3" title="Finalizadas">
-				<p:dataTable id="denuncia2" var="denuncias"
+				<p:dataTable id="denunciaFinalizada" var="denuncias"
 					value="#{auditoriaMB.denunciasFinalizadasVehiculosList}"
 					paginatorPosition="bottom" paginator="true" rows="8"
 					emptyMessage="No existen denuncias finalizadas" text-align="center">
 
 					<p:column headerText="Denunciante" styleClass="column-font">
+						<f:facet name="header">
+							<h:outputText value="Nombre" />
+						</f:facet>
 						<h:outputText value="#{denuncias.playa.nombreComercial}"
 							text-align="center" />
 					</p:column>
 
 					<p:column headerText="Fecha " styleClass="column-font"
 						style="width:105px">
+						<f:facet name="header">
+							<h:outputText value="Fecha alta" />
+						</f:facet>
 						<h:outputText value="#{denuncias.fechaAlta}">
 							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Patente " styleClass="column-font">
+						<f:facet name="header">
+							<h:outputText value="Patente" />
+						</f:facet>
 						<h:outputText value="#{denuncias.vehiculo.patente}" align="center" />
 					</p:column>
 
 					<p:column headerText="Opciones" styleClass="column-options"
-						style="text-align:center; width:120px;">
+						exportable="false" style="text-align:center; width:120px;">
 
 						<p:commandLink id="view3" update=":mainForm:carDlg3"
 							oncomplete="carDialog.show();" title="Ver Datos">
@@ -154,6 +220,27 @@
 							<h:graphicImage library="images/icons" name="search.png" />
 						</p:commandLink>
 					</p:column>
+					<f:facet name="footer">
+
+						<div align="center">
+							<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+								<h:commandLink title="Exportar a excel">
+									<p:graphicImage
+										value="http://www.primefaces.org/showcase/images/excel.png" />
+									<p:dataExporter type="xls" target="denunciaFinalizada"
+										fileName="Denuncias finalizadas" />
+								</h:commandLink>
+
+								<h:commandLink title="Exportar a PDF">
+									<p:graphicImage
+										value="http://www.primefaces.org/showcase/images/pdf.png" />
+									<p:dataExporter type="pdf" target="denunciaFinalizada"
+										preProcessor="#{documentExporterMB.listadoDenunciasFinalizadasPDF}"
+										fileName="Denuncias finalizadas" />
+								</h:commandLink>
+							</h:panelGrid>
+						</div>
+					</f:facet>
 				</p:dataTable>
 
 
