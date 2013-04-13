@@ -59,39 +59,20 @@
 					</p:calendar>
 					<p:message id="fechaFinMsg" for="fechaFin" display="icon" />
 
-					<p:column />
-					<p:column>
-						<p:selectBooleanCheckbox
-							value="#{promocionMB.activarRangoHorario}">
-							<p:ajax event="change"
-								update="lblHoraInicio, txtHoraInicio, lblHoraFin, txtHoraFin" />
-						</p:selectBooleanCheckbox>
-						<h:outputLabel value=" Activar rango horario" />
-					</p:column>
-					<p:column />
+					<h:outputLabel value="Hora de inicio: " />
 
-					<h:panelGroup id="lblHoraInicio">
-						<h:outputLabel value="Hora de inicio: "
-							rendered="#{promocionMB.activarRangoHorario == true}" />
-					</h:panelGroup>
-
-					<h:panelGroup id="txtHoraInicio">
-						<p:calendar value="#{promocionMB.horaInicio}" pattern="HH:mm"
-							timeOnly="true" locale="es"
-							rendered="#{promocionMB.activarRangoHorario == true}" />
-					</h:panelGroup>
+					<p:calendar id="txtHoraInicio" value="#{promocionMB.horaInicio}"
+						pattern="HH:mm" timeOnly="true" locale="es">
+						<p:ajax event="dateSelect" update="#{promocionMB.horaInicio}"/>
+						</p:calendar>
 					<p:column></p:column>
 
-					<h:panelGroup id="lblHoraFin">
-						<h:outputLabel value="Hora de finalización: "
-							rendered="#{promocionMB.activarRangoHorario == true}" />
-					</h:panelGroup>
+					<h:outputLabel value="Hora de finalización: " />
 
-					<h:panelGroup id="txtHoraFin">
-						<p:calendar value="#{promocionMB.horaFin}" pattern="HH:mm"
-							timeOnly="true" locale="es"
-							rendered="#{promocionMB.activarRangoHorario == true}" />
-					</h:panelGroup>
+					<p:calendar value="#{promocionMB.horaFin}" pattern="HH:mm"
+						timeOnly="true" locale="es" id="txtHoraFin">
+						<p:ajax event="dateSelect" update="#{promocionMB.horaFin}"/>
+						</p:calendar>
 					<p:column></p:column>
 
 					<h:outputLabel for="tarifa" value="Tarifa: " />
@@ -101,7 +82,7 @@
 						onclick="popupTarifas.show();">
 						<p:ajax event="blur" update="tarifaMsg" />
 					</p:inputText>
-					
+
 					<p:commandButton id="seleccionarTarifa" value="Seleccionar tarifa"
 						onclick="popupTarifas.show();" type="button" style="width: 150px" />
 

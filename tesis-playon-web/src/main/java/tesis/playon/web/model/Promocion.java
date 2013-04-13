@@ -6,7 +6,6 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -46,12 +45,12 @@ public class Promocion implements Serializable {
 
     @Column(name = "fechaInicio")
     private Date fechaInicio;
-    
+
     @Column(name = "horaFin")
-    private Time horaFin;
+    private Date horaFin;
 
     @Column(name = "horaInicio")
-    private Time horaInicio;
+    private Date horaInicio;
 
     @Column(name = "nombre")
     private String nombre;
@@ -62,7 +61,7 @@ public class Promocion implements Serializable {
     @ManyToOne
     @JoinColumn(name = "playaID")
     private Playa playa;
-    
+
     @ManyToOne
     @JoinColumn(name = "tarifaID")
     private Tarifa tarifa;
@@ -86,6 +85,8 @@ public class Promocion implements Serializable {
     }
 
     public Promocion() {
+	this.horaFin = null;
+	this.horaInicio = null;
     }
 
     public String getDescripcion() {
@@ -173,23 +174,23 @@ public class Promocion implements Serializable {
     }
 
     public void setId(int id) {
-        this.id = id;
+	this.id = id;
     }
 
-    public Time getHoraFin() {
-        return horaFin;
+    public Date getHoraFin() {
+	return horaFin;
     }
 
-    public void setHoraFin(Time horaFin) {
-        this.horaFin = horaFin;
+    public void setHoraFin(Date horaFin) {
+	this.horaFin = horaFin;
     }
 
-    public Time getHoraInicio() {
-        return horaInicio;
+    public Date getHoraInicio() {
+	return horaInicio;
     }
 
-    public void setHoraInicio(Time horaInicio) {
-        this.horaInicio = horaInicio;
+    public void setHoraInicio(Date horaInicio) {
+	this.horaInicio = horaInicio;
     }
 
     public boolean equals(Object object) {

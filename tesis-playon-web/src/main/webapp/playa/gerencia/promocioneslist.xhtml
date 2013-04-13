@@ -39,10 +39,14 @@
 						</h:outputText>
 
 						<h:outputText value="Hora de inicio: " />
-						<h:outputText value="#{promocion.horaInicio}" />
+						<h:outputText value="#{promocion.horaInicio}">
+							<f:convertDateTime pattern="HH:mm" />
+						</h:outputText>
 
 						<h:outputText value="Hora de finalización: " />
-						<h:outputText value="#{promocion.horaFin}" />
+						<h:outputText value="#{promocion.horaFin}">
+							<f:convertDateTime pattern="HH:mm" />
+						</h:outputText>
 
 						<h:outputText value="Tipo de estadía: " />
 						<h:outputText value="#{promocion.tarifa.tipoEstadia.nombre}" />

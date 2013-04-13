@@ -1,9 +1,7 @@
 package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -55,7 +53,7 @@ public class PromocionManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{UsuarioService}")
     IUsuarioService usuarioService;
-    
+
     @ManagedProperty(value = "#{TipoEstadiaService}")
     ITipoEstadiaService tipoEstadiaService;
 
@@ -105,8 +103,6 @@ public class PromocionManagedBean implements Serializable {
     private static Playa playaSelected;
 
     private List<Promocion> promocionListEmpleado;
-    
-    private Boolean activarRangoHorario;
 
     @PostConstruct
     private void init() {
@@ -133,32 +129,32 @@ public class PromocionManagedBean implements Serializable {
 	    promocion.setFechaFin(getFechaFin());
 	    promocion.setFechaInicio(getFechaInicio());
 
-	    Calendar calendario;
-	    int hora;
-	    int minutos;
-	    int segundos;
-	    String sHora;
+//	    Calendar calendario;
+//	    int hora;
+//	    int minutos;
+//	    int segundos;
+//	    String sHora;
 
-	    if (getHoraInicio() != null) {
-		calendario = Calendar.getInstance();
-		calendario.setTime(getHoraInicio());
-		hora = calendario.get(Calendar.HOUR_OF_DAY);
-		minutos = calendario.get(Calendar.MINUTE);
-		segundos = calendario.get(Calendar.SECOND);
+	    if (horaInicio != null && horaFin != null) {
 
-		sHora = hora + ":" + minutos + ":" + segundos;
+//		calendario = Calendar.getInstance();
+//		calendario.setTime(getHoraInicio());
+//		hora = calendario.get(Calendar.HOUR_OF_DAY);
+//		minutos = calendario.get(Calendar.MINUTE);
+//		segundos = calendario.get(Calendar.SECOND);
+//
+//		sHora = hora + ":" + minutos + ":" + segundos;
+//
+		promocion.setHoraInicio(horaInicio);
+//
+//		calendario = Calendar.getInstance();
+//		calendario.setTime(getHoraFin());
+//		hora = calendario.get(Calendar.HOUR_OF_DAY);
+//		minutos = calendario.get(Calendar.MINUTE);
+//		segundos = calendario.get(Calendar.SECOND);
+//		sHora = hora + ":" + minutos + ":" + segundos;
 
-		promocion.setHoraInicio(Time.valueOf(sHora));
-	    }
-	    if (getHoraFin() != null) {
-		calendario = Calendar.getInstance();
-		calendario.setTime(getHoraFin());
-		hora = calendario.get(Calendar.HOUR_OF_DAY);
-		minutos = calendario.get(Calendar.MINUTE);
-		segundos = calendario.get(Calendar.SECOND);
-		sHora = hora + ":" + minutos + ":" + segundos;
-
-		promocion.setHoraFin(Time.valueOf(sHora));
+		promocion.setHoraFin(horaFin);
 	    }
 	    promocion.setMontoFijo(getTarifa().getImporte());
 	    promocion.setNombre(getNombre());
@@ -187,24 +183,6 @@ public class PromocionManagedBean implements Serializable {
 	try {
 	    Promocion promo = new Promocion();
 	    promo = promocionSelected;
-
-	    Calendar calendario = Calendar.getInstance();
-	    calendario.setTime(horaInicioSelected);
-	    int hora = calendario.get(Calendar.HOUR_OF_DAY);
-	    int minutos = calendario.get(Calendar.MINUTE);
-	    int segundos = calendario.get(Calendar.SECOND);
-
-	    String sHora = hora + ":" + minutos + ":" + segundos;
-
-	    promo.setHoraInicio(Time.valueOf(sHora));
-
-	    calendario.setTime(horaFinSelected);
-	    hora = calendario.get(Calendar.HOUR_OF_DAY);
-	    minutos = calendario.get(Calendar.MINUTE);
-	    segundos = calendario.get(Calendar.SECOND);
-	    sHora = hora + ":" + minutos + ":" + segundos;
-
-	    promo.setHoraFin(Time.valueOf(sHora));
 
 	    getPromocionService().update(promo);
 
@@ -316,19 +294,19 @@ public class PromocionManagedBean implements Serializable {
     }
 
     public ITipoEstadiaService getTipoEstadiaService() {
-        return tipoEstadiaService;
+	return tipoEstadiaService;
     }
 
     public void setTipoEstadiaService(ITipoEstadiaService tipoEstadiaService) {
-        this.tipoEstadiaService = tipoEstadiaService;
+	this.tipoEstadiaService = tipoEstadiaService;
     }
 
     public ICategoriaVehiculoService getCategoriaVehiculoService() {
-        return categoriaVehiculoService;
+	return categoriaVehiculoService;
     }
 
     public void setCategoriaVehiculoService(ICategoriaVehiculoService categoriaVehiculoService) {
-        this.categoriaVehiculoService = categoriaVehiculoService;
+	this.categoriaVehiculoService = categoriaVehiculoService;
     }
 
     public IPromocionService getPromocionService() {
@@ -462,28 +440,6 @@ public class PromocionManagedBean implements Serializable {
     }
 
     public Promocion getPromocionSelected() {
-	if (promocionSelected != null) {
-	    Calendar calendario = Calendar.getInstance();
-	    int hora;
-	    int minute;
-	    int second;
-
-	    if (promocionSelected.getHoraInicio() != null) {
-		hora = getHora(promocionSelected.getHoraInicio());
-		minute = getMinutos(promocionSelected.getHoraInicio());
-		second = getSegundos(promocionSelected.getHoraInicio());
-		calendario.set(2012, 01, 01, hora, minute, second);
-		horaInicioSelected = calendario.getTime();
-	    }
-
-	    if (promocionSelected.getHoraFin() != null) {
-		hora = getHora(promocionSelected.getHoraFin());
-		minute = getMinutos(promocionSelected.getHoraFin());
-		second = getSegundos(promocionSelected.getHoraFin());
-		calendario.set(2012, 01, 01, hora, minute, second);
-		horaFinSelected = calendario.getTime();
-	    }
-	}
 	return promocionSelected;
     }
 
@@ -531,31 +487,23 @@ public class PromocionManagedBean implements Serializable {
 	PromocionManagedBean.horaFinSelected = horaFinSelected;
     }
 
-    private int getHora(Time time) {
-	String horaCompleta = time.toString();
-	String toObject[] = horaCompleta.split(":");
-	return Integer.parseInt(toObject[0]);
-    }
-
-    private int getMinutos(Time time) {
-	String horaCompleta = time.toString();
-	String toObject[] = horaCompleta.split(":");
-	return Integer.parseInt(toObject[1]);
-    }
-
-    private int getSegundos(Time time) {
-	String horaCompleta = time.toString();
-	String toObject[] = horaCompleta.split(":");
-	return Integer.parseInt(toObject[2]);
-    }
-
-    public Boolean getActivarRangoHorario() {
-        return activarRangoHorario;
-    }
-
-    public void setActivarRangoHorario(Boolean activarRangoHorario) {
-        this.activarRangoHorario = activarRangoHorario;
-    }
+//    private int getHora(Time time) {
+//	String horaCompleta = time.toString();
+//	String toObject[] = horaCompleta.split(":");
+//	return Integer.parseInt(toObject[0]);
+//    }
+//
+//    private int getMinutos(Time time) {
+//	String horaCompleta = time.toString();
+//	String toObject[] = horaCompleta.split(":");
+//	return Integer.parseInt(toObject[1]);
+//    }
+//
+//    private int getSegundos(Time time) {
+//	String horaCompleta = time.toString();
+//	String toObject[] = horaCompleta.split(":");
+//	return Integer.parseInt(toObject[2]);
+//    }
 
     public List<Promocion> getPromocionListEmpleado() {
 	return promocionListEmpleado;
@@ -573,13 +521,12 @@ public class PromocionManagedBean implements Serializable {
     @SuppressWarnings("unused")
     private SelectItem[] tipoEstadiaOptions;
 
-
     public List<Tarifa> getFilteredPromociones() {
-        return filteredPromociones;
+	return filteredPromociones;
     }
 
     public void setFilteredPromociones(List<Tarifa> filteredPromociones) {
-        this.filteredPromociones = filteredPromociones;
+	this.filteredPromociones = filteredPromociones;
     }
 
     public SelectItem[] getCategoriaOptions() {

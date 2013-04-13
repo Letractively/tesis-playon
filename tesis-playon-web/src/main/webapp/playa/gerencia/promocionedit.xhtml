@@ -95,12 +95,12 @@
 					<p:column />
 
 					<h:outputLabel for="horaInicio" value="Hora de inicio: " />
-					<p:calendar value="#{promocionMB.horaInicioSelected}"
+					<p:calendar value="#{promocionMB.promocionSelected.horaInicio}"
 						pattern="HH:mm" timeOnly="true" locale="es" />
 					<p:column />
 
 					<h:outputLabel for="horaFin" value="Hora de finalización: " />
-					<p:calendar value="#{promocionMB.horaFinSelected}" pattern="HH:mm"
+					<p:calendar value="#{promocionMB.promocionSelected.horaFin}" pattern="HH:mm"
 						timeOnly="true" locale="es" />
 					<p:column />
 
