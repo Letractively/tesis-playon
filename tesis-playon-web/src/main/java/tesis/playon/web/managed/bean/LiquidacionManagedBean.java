@@ -23,12 +23,14 @@ import tesis.playon.web.model.Estadia;
 import tesis.playon.web.model.EstadoPlaya;
 import tesis.playon.web.model.Liquidacion;
 import tesis.playon.web.model.Playa;
+import tesis.playon.web.model.TipoPago;
 import tesis.playon.web.model.TransaccionPlaya;
 import tesis.playon.web.service.ICuentaPlayaService;
 import tesis.playon.web.service.IEstadiaService;
 import tesis.playon.web.service.IEstadoPlayaService;
 import tesis.playon.web.service.ILiquidacionService;
 import tesis.playon.web.service.IPlayaService;
+import tesis.playon.web.service.ITipoPagoService;
 import tesis.playon.web.service.ITransaccionPlayaService;
 
 /**
@@ -58,6 +60,9 @@ public class LiquidacionManagedBean implements Serializable {
 
 	@ManagedProperty(value = "#{EstadiaService}")
 	IEstadiaService estadiaService;
+
+	@ManagedProperty(value = "#{TipoPagoService}")
+	ITipoPagoService tipoPagoService;
 
 	Playa playaSeleccionada;
 
@@ -92,6 +97,8 @@ public class LiquidacionManagedBean implements Serializable {
 	List<Playa> playasALiquidarList;
 
 	List<TransaccionPlaya> transaccionesALiquidar;
+
+	List<TransaccionPlaya> transaccionesDePlayaALiquidar;
 
 	private List<Playa> filteredPlayas;
 
@@ -146,6 +153,14 @@ public class LiquidacionManagedBean implements Serializable {
 
 	public void setEstadiaService(IEstadiaService estadiaService) {
 		this.estadiaService = estadiaService;
+	}
+
+	public ITipoPagoService getTipoPagoService() {
+		return tipoPagoService;
+	}
+
+	public void setTipoPagoService(ITipoPagoService tipoPagoService) {
+		this.tipoPagoService = tipoPagoService;
 	}
 
 	@PostConstruct
@@ -204,7 +219,9 @@ public class LiquidacionManagedBean implements Serializable {
 		for (Playa playa : this.getPlayasSeleccionadas()) {
 			if (cantTransacciones(playa.getId()) <= 0)
 				continue;
-			// Generamos la Liquidación con los datos
+
+			// Generamos la Liquidación con los datos y la guardamos. Hay que
+			// actualizar el importe más adelante.
 			Liquidacion liquidacion = new Liquidacion();
 			Estadia estadiaPlaya = getEstadiaService().findByPlaya(playa);
 			liquidacion.setEstadia(estadiaPlaya);
@@ -215,8 +232,43 @@ public class LiquidacionManagedBean implements Serializable {
 					.getId()));
 			getLiquidacionService().save(liquidacion);
 
+			// Traemos la cuenta de la playa para actualizar el saldo
 			CuentaPlaya cuentaPlaya = getCuentaPlayaService()
 					.findByPlaya(playa);
+
+			// Creamos un tipo de pago nuevo para asignar a la transacción de
+			// la comisión
+			TipoPago tipoPago = getTipoPagoService().findByNombreTipoPago(
+					"Cuenta");
+
+			/*
+			 * Calculamos el importe del descuento, por ahora fijo en el 10%.
+			 * TODO: Modificar para que el porcentaje que se le cobra a la playa
+			 * varíe de acuerdo a la cantidad de transacciones que tenga o al
+			 * importe total de la transacción. Por ahora queda fijo al 10%.
+			 */
+			float importeComision = (float) (liquidacion.getImporteTotal() * (-0.10));
+
+			// Creamos la transacción de la playa para la comisión de Playon.
+			TransaccionPlaya txComisionPlaya = new TransaccionPlaya();
+			txComisionPlaya.setFecha(new Date());
+			// txDescuentoPlaya.setDetalleEstadia(detalleEstadia);
+			txComisionPlaya.setCuentaPlaya(cuentaPlaya);
+			txComisionPlaya.setImporte(importeComision);
+			txComisionPlaya.setTipoPago(tipoPago);
+			txComisionPlaya.setLiquidacion(liquidacion);
+			getTransaccionPlayaService().save(txComisionPlaya);
+
+			// Actualizamos el monto total de la transacción restando el monto
+			// de la comisión. (La variable importeComision tiene monto negativo
+			// por lo que la suma queda en realidad en una resta)
+			liquidacion.setImporteTotal(liquidacion.getImporteTotal()
+					+ importeComision);
+
+			// Actualizamos el monto total de la liquidacion
+			getLiquidacionService().update(liquidacion);
+
+			// Actualizamos el saldo de la cuenta según lo liquidado
 			float nuevoSaldo = cuentaPlaya.getSaldo()
 					- liquidacion.getImporteTotal();
 			cuentaPlaya.setSaldo(nuevoSaldo);
@@ -235,6 +287,31 @@ public class LiquidacionManagedBean implements Serializable {
 
 		}
 		return "/admin/liquidacionplayasend.html?faces-redirect=true";
+	}
+
+	public List<TransaccionPlaya> getTransaccionesDePlayaALiquidar() {
+
+		transaccionesDePlayaALiquidar = new ArrayList<TransaccionPlaya>();
+
+		Playa playa = this.getPlayaSeleccionada();
+
+		if (playa == null)
+			return null;
+
+		for (TransaccionPlaya transaccion : this.getTransaccionesALiquidar()) {
+			if (transaccion.getCuentaPlaya().getPlaya().getId() != playa
+					.getId())
+				continue;
+			transaccionesDePlayaALiquidar.add(transaccion);
+		}
+
+		return transaccionesDePlayaALiquidar;
+
+	}
+
+	public void setTransaccionesDePlayaALiquidar(
+			List<TransaccionPlaya> transaccionesDePlayaALiquidar) {
+		this.transaccionesDePlayaALiquidar = transaccionesDePlayaALiquidar;
 	}
 
 	public List<TransaccionPlaya> getTransaccionesALiquidar() {

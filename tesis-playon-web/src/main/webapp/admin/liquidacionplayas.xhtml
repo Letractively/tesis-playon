@@ -79,6 +79,13 @@
 						target="#{playaMB.playaSelected}" />
 					<h:graphicImage library="images/icons" name="search.png" />
 				</p:commandLink>
+				
+				<p:commandLink id="viewTrn" update=":mainForm:transaccionesView"
+					oncomplete="trnDialog.show();" title="Ver Transacciones">
+					<f:setPropertyActionListener value="#{playa}"
+						target="#{liquidacionMB.playaSeleccionada}" />
+					<h:graphicImage library="images/icons" name="list.png" />
+				</p:commandLink>
 
 			</p:column>
 
@@ -89,9 +96,6 @@
 						action="/admin/liquidacionplayas.html?faces-redirect=true"
 						ajax="false" />
 				</h:panelGroup>
-				<p:commandButton id="multiViewButton" value="View"
-				icon="ui-icon-search" update=":mainForm:displayMulti"
-				oncomplete="multiPlayasDialog.show()" />
 			</f:facet>
 		</p:dataTable>
 		<div align="right">
@@ -205,5 +209,83 @@
         		</p:dataList>
 
 		</p:dialog>
+		
+		<!-- DIALOG PARA VER LOS DATOS DE LAS TRANSACCIONES DE LA PLAYA SELECCIONADA -->
+		<p:dialog header="Datos de las transacciones" widgetVar="trnDialog"
+			resizable="false" id="trnDlg" showEffect="fade" modal="true"
+			draggable="false" style="width:600px;">
+
+			<p:dataTable id="transaccionesView" var="transaccionPlaya"
+				paginatorPosition="bottom"
+				value="#{liquidacionMB.transaccionesDePlayaALiquidar}" paginator="true"
+				rows="10">
+
+				<f:facet name="header">  
+            		Listado de transacciones de la playa 
+            		  
+        		</f:facet>
+
+				<p:column id="playaHeader">
+					<f:facet name="header">
+						<h:outputText value="Playa" />
+					</f:facet>
+					<h:outputText
+						value="#{transaccionPlaya.cuentaPlaya.playa.razonSocial}" />
+				</p:column>
+
+				<p:column id="fechaHeader">
+					<f:facet name="header">
+						<h:outputText value="Fecha" />
+					</f:facet>
+					<h:outputText value="#{transaccionPlaya.fecha}" />
+				</p:column>
+
+				<p:column id="tipoPagoHeader">
+					<f:facet name="header">
+						<h:outputText value="Tipo de Pago" />
+					</f:facet>
+					<h:outputText value="#{transaccionPlaya.tipoPago.nombre}" />
+				</p:column>
+
+				<p:column id="importeHeader">
+					<f:facet name="header">
+						<h:outputText value="Importe" />
+					</f:facet>
+					<h:outputText value="$ #{transaccionPlaya.importe}" />
+				</p:column>
+
+				<f:facet name="footer">
+					<div align="center">
+						<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+							<h:commandLink title="Exportar a excel">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/excel.png" />
+								<p:dataExporter type="xls" target="transaccionesView"
+									fileName="Transacciones" />
+							</h:commandLink>
+
+							<h:commandLink title="Exportar a PDF">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/pdf.png" />
+								<f:param name="titulo" value="Listado de transacciones" />
+								<p:dataExporter type="pdf" target="transaccionesView"
+									preProcessor="#{documentExporterMB.preProcessPDF}"
+									fileName="Transacciones">
+								</p:dataExporter>
+							</h:commandLink>
+						</h:panelGrid>
+					</div>
+				</f:facet>
+
+			</p:dataTable>
+
+			<div align="right">
+				<p>
+					<p:commandButton id="btnAceptarTrn" value="Aceptar"
+						onclick="trnDialog.hide()" type="button" />
+				</p>
+			</div>
+		</p:dialog>
+		
 	</ui:define>
 </ui:composition>
