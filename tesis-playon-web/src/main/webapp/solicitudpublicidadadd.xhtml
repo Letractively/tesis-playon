@@ -1,0 +1,197 @@
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+		Solicitud de alta de cliente
+    </ui:define>
+
+	<ui:define name="content">
+		<h1>Solicitud de alta de publicidad</h1>
+		<p>Con el siguiente formulario usted puede publicitar su empresa
+			en nuestro sistema, aprovechando todos nuestros beneficios.</p>
+
+		<h:form id="form" style="margin-left:30px"
+			enctype="multipart/form-data">
+			<p:growl id="messages" />
+
+			<div align="left" style="margin-top: 10px">
+
+				<p:panel header="Datos del Responsable">
+					<h:panelGrid id="displayViewResponsable" columns="3"
+						cellspacing="10" styleClass="admin-input-text">
+
+						<p:column>
+							<h:outputLabel for="apellido" value="Apellido: " />
+						</p:column>
+						<p:column>
+							<p:inputText id="apellido" style="width: 200px"
+								value="#{publicidadMB.apellidoResponsable}" required="true"
+								requiredMessage="Campo apellido obligatorio" maxlength="40">
+								<f:validateLength minimum="3" />
+								<p:ajax event="blur" update="apellidoMsg" />
+							</p:inputText>
+						</p:column>
+						<p:column>
+							<p:message id="apellidoMsg" for="apellido" display="icon" />
+						</p:column>
+
+						<p:column>
+							<h:outputLabel for="nombre" value="Nombre: " />
+						</p:column>
+						<p:column>
+							<p:inputText id="nombre" style="width: 200px"
+								value="#{publicidadMB.nombreResponsable}" required="true"
+								requiredMessage="Campo nombre obligatorio" maxlength="40">
+								<f:validateLength minimum="3" />
+								<p:ajax event="blur" update="nombreMsg" />
+							</p:inputText>
+						</p:column>
+						<p:column>
+							<p:message id="nombreMsg" for="nombre" display="icon" />
+						</p:column>
+
+						<p:column>
+							<h:outputLabel for="email" value="E-mail: " />
+						</p:column>
+						<p:column>
+							<p:inputText id="email" value="#{publicidadMB.emailResponsable}"
+								style="width: 200px" required="true"
+								requiredMessage="Campo e-mail obligatorio" type="email"
+								maxlength="100" validator="#{validatorMB.isValidEmailUsuario}">
+								<f:validateLength minimum="5" />
+								<p:ajax event="blur" update="emailMsg" />
+							</p:inputText>
+						</p:column>
+						<p:column>
+							<p:message id="emailMsg" for="email" display="icon" />
+						</p:column>
+
+						<p:column>
+							<h:outputLabel for="telefono" value="Telefono: " />
+						</p:column>
+						<p:column>
+							<p:inputText id="telefono"
+								value="#{publicidadMB.telefonoResponsable}" style="width: 200px"
+								maxlength="25">
+							</p:inputText>
+						</p:column>
+						<p:column />
+					</h:panelGrid>
+				</p:panel>
+
+				<p:panel header="Datos de la Empresa" style="margin-top: 10px">
+					<h:panelGrid id="displayViewEmpresa" columns="3" cellspacing="10"
+						styleClass="admin-input-text">
+
+						<p:column>
+							<h:outputLabel for="nombreEmpresa" value="Nombre Empresa: " />
+						</p:column>
+						<p:column>
+							<p:inputText id="nombreEmpresa" style="width: 200px"
+								value="#{publicidadMB.nombreEmpresa}" required="true"
+								requiredMessage="Campo nombre empresa obligatorio"
+								maxlength="25">
+								<f:validateLength minimum="5" />
+								<p:ajax event="blur" update="nombreEmpresaMsg" />
+							</p:inputText>
+						</p:column>
+						<p:column>
+							<p:message id="nombreEmpresaMsg" for="nombreEmpresa"
+								display="icon" />
+						</p:column>
+
+						<p:column>
+							<h:outputLabel for="url" value="Dirección web de la Empresa: " />
+						</p:column>
+						<p:column>
+							<p:inputText id="url" style="width: 200px"
+								value="#{publicidadMB.url}" required="true"
+								requiredMessage="Campo dirección web obligatorio" maxlength="25"
+								type="url">
+								<f:validateLength minimum="5" />
+								<p:ajax event="blur" update="urlMsg" />
+							</p:inputText>
+						</p:column>
+						<p:column>
+							<p:message id="urlMsg" for="url" display="icon" />
+						</p:column>
+
+						<h:outputLabel for="fechaInicio" value="Fecha inicio publicidad: " />
+						<p:calendar showButtonPanel="true" navigator="true"
+							mindate="#{publicidadMB.today}" id="fechaInicio"
+							value="#{publicidadMB.fechaDesde}" required="true"
+							requiredMessage="Campo fecha inicio obligatorio" locale="es"
+							validator="#{publicidadMB.validateDateInicial}">
+							<p:ajax event="blur" update="fechaInicioMsg" />
+							<p:ajax event="dateSelect"
+								listener="#{publicidadMB.calcularCostoTotal}"
+								update="fechaInicioMsg, costoTotal" />
+						</p:calendar>
+						<p:message id="fechaInicioMsg" for="fechaInicio" display="icon" />
+
+						<h:outputLabel for="fechaFin"
+							value="Fecha finalización publicidad: " />
+						<p:calendar showButtonPanel="true" navigator="true"
+							mindate="#{publicidadMB.today}" id="fechaFin"
+							value="#{publicidadMB.fechaHasta}" required="true"
+							requiredMessage="Campo fecha finalización obligatorio"
+							locale="es" validator="#{publicidadMB.validateDate}">
+							<p:ajax event="blur" update="fechaFinMsg" />
+							<p:ajax event="dateSelect"
+								listener="#{publicidadMB.calcularCostoTotal}"
+								update="fechaFinMsg, costoTotal" />
+						</p:calendar>
+						<p:message id="fechaFinMsg" for="fechaFin" display="icon" />
+
+						<p:column>
+							<h:outputLabel for="precio" value="Precio por día: " />
+						</p:column>
+						<p:column>
+							<p:inputText id="precio" style="width: 12	0px"
+								value="$#{publicidadMB.precio}" readonly="true">
+							</p:inputText>
+						</p:column>
+						<p:column />
+
+						<p:column>
+							<h:outputLabel for="costoTotal"
+								value="Costo de la  publicación: " />
+						</p:column>
+						<p:column>
+							<p:inputText id="costoTotal" style="width: 120px"
+								value="$#{publicidadMB.costoTotal}" readonly="true">
+							</p:inputText>
+						</p:column>
+						<p:column />
+
+						<p:column>
+							<h:outputLabel for="foto" value="Imagen a publicar: " />
+						</p:column>
+						<p:column>
+							<p:fileUpload value="#{publicidadMB.foto}" mode="simple"
+								update="messages" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+						</p:column>
+						<p:column>
+							<h:commandButton id="upload" value="Subir imagen"
+								actionListener="#{publicidadMB.upload}" ajax="false"
+								style="margin:0 10px 0 0; padding: 0 5px 0 5px" update="messages"
+								oncomplete="document.location.reload(true)" />
+						</p:column>
+
+					</h:panelGrid>
+				</p:panel>
+				<div align="center" style="margin-top: 10px">
+					<p:commandButton id="addCliente" value="Registrar Publicidad"
+						action="#{clienteMB.addSolicitudCliente}" ajax="false" />
+					<p:commandButton id="reset" value="Cancelar" immediate="true"
+						action="/index.html?faces-redirect=true" ajax="false"
+						style="margin-left:10px" />
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.model.UploadedFile;
@@ -27,7 +27,7 @@ import tesis.playon.web.util.WriteImage;
  * 
  */
 @ManagedBean(name = "perfilClienteMB")
-@RequestScoped
+@ViewScoped
 public class PerfilClienteManagedBean implements Serializable {
 
     private static final long serialVersionUID = 1L;

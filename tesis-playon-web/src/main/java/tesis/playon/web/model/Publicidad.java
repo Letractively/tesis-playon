@@ -3,6 +3,7 @@ package tesis.playon.web.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -29,20 +31,191 @@ public class Publicidad implements Serializable {
     @Column(name = "publicidadID")
     private Integer id;
 
-    @Column(name = "urlImagen")
-    private String urlImagen;
-
-    @ManyToOne
-    @JoinColumn(name = "posicionID")
-    private Posicion posicion;
-
     @ManyToOne
     @JoinColumn(name = "estadoPublicidadID")
     private EstadoPublicidad estado;
 
-    @ManyToOne
-    @JoinColumn(name = "playaID")
-    private Playa playa;
+    @Column(name = "nombreEmpresa")
+    private String nombreEmpresa;
+    
+    @Column(name = "nombre")
+    private String nombreResponsable;
+    
+    @Column(name = "apellido")
+    private String apellidoResponsable;
+    
+    @Column(name = "email")
+    private String emailRespondable;
+    
+    @Column(name = "telefono")
+    private String telefonoResponsable;
+    
+    @Column(name = "fechaDesde")
+    private Date fechaDesde;
+    
+    @Column(name = "fechaHasta")
+    private Date fechaHasta;
+    
+    @OneToOne
+    @JoinColumn(name = "fotoPublicidadID")
+    private FotoPublicidad fotoPublicidad;
+    
+    @Column(name = "precio")
+    private Float precio;
+    
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the estado
+     */
+    public EstadoPublicidad getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(EstadoPublicidad estado) {
+        this.estado = estado;
+    }
+
+    /**
+     * @return the nombreEmpresa
+     */
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    /**
+     * @param nombreEmpresa the nombreEmpresa to set
+     */
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
+    }
+
+    /**
+     * @return the nombreResponsable
+     */
+    public String getNombreResponsable() {
+        return nombreResponsable;
+    }
+
+    /**
+     * @param nombreResponsable the nombreResponsable to set
+     */
+    public void setNombreResponsable(String nombreResponsable) {
+        this.nombreResponsable = nombreResponsable;
+    }
+
+    /**
+     * @return the apellidoResponsable
+     */
+    public String getApellidoResponsable() {
+        return apellidoResponsable;
+    }
+
+    /**
+     * @param apellidoResponsable the apellidoResponsable to set
+     */
+    public void setApellidoResponsable(String apellidoResponsable) {
+        this.apellidoResponsable = apellidoResponsable;
+    }
+
+    /**
+     * @return the emailRespondable
+     */
+    public String getEmailRespondable() {
+        return emailRespondable;
+    }
+
+    /**
+     * @param emailRespondable the emailRespondable to set
+     */
+    public void setEmailRespondable(String emailRespondable) {
+        this.emailRespondable = emailRespondable;
+    }
+
+    /**
+     * @return the telefonoResponsable
+     */
+    public String getTelefonoResponsable() {
+        return telefonoResponsable;
+    }
+
+    /**
+     * @param telefonoResponsable the telefonoResponsable to set
+     */
+    public void setTelefonoResponsable(String telefonoResponsable) {
+        this.telefonoResponsable = telefonoResponsable;
+    }
+
+    /**
+     * @return the fechaDesde
+     */
+    public Date getFechaDesde() {
+        return fechaDesde;
+    }
+
+    /**
+     * @param fechaDesde the fechaDesde to set
+     */
+    public void setFechaDesde(Date fechaDesde) {
+        this.fechaDesde = fechaDesde;
+    }
+
+    /**
+     * @return the fechaHasta
+     */
+    public Date getFechaHasta() {
+        return fechaHasta;
+    }
+
+    /**
+     * @param fechaHasta the fechaHasta to set
+     */
+    public void setFechaHasta(Date fechaHasta) {
+        this.fechaHasta = fechaHasta;
+    }
+
+    /**
+     * @return the foto
+     */
+    public FotoPublicidad getFotoPublicidad() {
+        return fotoPublicidad;
+    }
+
+    /**
+     * @param foto the foto to set
+     */
+    public void setFotoPublicidad(FotoPublicidad foto) {
+        this.fotoPublicidad = foto;
+    }
+
+    /**
+     * @return the precio
+     */
+    public Float getPrecio() {
+        return precio;
+    }
+
+    /**
+     * @param precio the precio to set
+     */
+    public void setPrecio(Float precio) {
+        this.precio = precio;
+    }
 
     /**
      * Constructor por defecto.
@@ -50,61 +223,33 @@ public class Publicidad implements Serializable {
     public Publicidad() {
 	super();
     }
-
+    
     /**
-     * Constructor con parámetros
-     * 
-     * @param urlImagen
-     *            El URL de la imagen de la publicidad.
-     * @param posicion
-     *            La posición de la publicidad en el sitio.
-     * @param estado
-     *            El estado actual de la publicidad.
-     * @param playa
-     *            La playa a la que pertenece la publicidad.
+     * @param nombreEmpresa
+     * @param nombreResponsable
+     * @param apellidoResponsable
+     * @param fechaDesde
+     * @param fechaHasta
      */
-    public Publicidad(String urlImagen, Posicion posicion, EstadoPublicidad estado, Playa playa) {
+    public Publicidad(String nombreEmpresa, String nombreResponsable, String apellidoResponsable, Date fechaDesde,
+	    Date fechaHasta) {
 	super();
-	this.urlImagen = urlImagen;
-	this.posicion = posicion;
-	this.estado = estado;
-	this.playa = playa;
+	this.nombreEmpresa = nombreEmpresa;
+	this.nombreResponsable = nombreResponsable;
+	this.apellidoResponsable = apellidoResponsable;
+	this.fechaDesde = fechaDesde;
+	this.fechaHasta = fechaHasta;
     }
 
-    public String getUrlImagen() {
-	return urlImagen;
-    }
-
-    public void setUrlImagen(String urlImagen) {
-	this.urlImagen = urlImagen;
-    }
-
-    public Posicion getPosicion() {
-	return posicion;
-    }
-
-    public void setPosicion(Posicion posicion) {
-	this.posicion = posicion;
-    }
-
-    public EstadoPublicidad getEstado() {
-	return estado;
-    }
-
-    public void setEstado(EstadoPublicidad estado) {
-	this.estado = estado;
-    }
-
-    public Playa getPlaya() {
-	return playa;
-    }
-
-    public void setPlaya(Playa playa) {
-	this.playa = playa;
-    }
-
-    public Integer getId() {
-	return id;
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+	return "Publicidad [id=" + id + ", estado=" + estado + ", nombreEmpresa=" + nombreEmpresa
+		+ ", nombreResponsable=" + nombreResponsable + ", apellidoResponsable=" + apellidoResponsable
+		+ ", emailRespondable=" + emailRespondable + ", telefonoResponsable=" + telefonoResponsable
+		+ ", fechaDesde=" + fechaDesde + ", fechaHasta=" + fechaHasta + ", precio=" + precio + "]";
     }
 
     public boolean equals(Object object) {
@@ -118,11 +263,5 @@ public class Publicidad implements Serializable {
 	    return false;
 
 	return true;
-    }
-
-    @Override
-    public String toString() {
-	return "Publicidad:\t [publicidadID=" + id + ", urlImagen=" + urlImagen + ", " + posicion.toString() + ", "
-		+ estado.toString() + "]";
     }
 }
