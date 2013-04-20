@@ -93,6 +93,26 @@ ul h4 {
 	margin-bottom: 0.35em;
 }
 
+table{
+	width:100%; 
+}
+
+th {
+	text-align: center;
+	background-color: #eaf0fc;
+	color: #697da2;
+}
+
+table, tr, td, th {
+	border:1px solid rgb(166, 201, 226);
+	border-collapse:collapse;
+	padding: 5px;
+}
+
+td {
+	padding-left: 15px;
+}
+
 .box {
 	overflow: hidden;
 	margin-bottom: 1em;
@@ -436,3 +456,4 @@ gif.dropotron-level-1 {
 	border-radius: 6px;
 	box-shadow: 0px 5px 20px 2px rgba(0, 0, 0, 0.1);
 }
+

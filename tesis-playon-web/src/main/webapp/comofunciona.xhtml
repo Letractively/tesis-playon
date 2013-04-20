@@ -14,7 +14,8 @@
 	<ui:define name="content">
 		<h1>¿Cómo funciona Playón?</h1>
 		<p>Conocé los beneficios para tu negocio.</p>
-		<h:graphicImage styleClass="content-image" library="images" name="paraPlayas.jpg" />
+		<h:graphicImage styleClass="content-image" library="images"
+			name="paraPlayas.jpg" />
 		<h4>¿Qué es Playón?</h4>
 		<p>
 			<i>Playón</i> es una red de playas de estacionamiento que permite
@@ -24,9 +25,33 @@
 			estacionamiento y al mismo tiempo, ofrecer un lugar en donde
 			centralizar la información.
 		</p>
-
+		<h4>¿Cuanto cuesta?</h4>
+		<p>
+			<i>Playón</i> cobra mensualmente un porcentaje de las transacciones
+			que tengas en tu playa. El porcentaje depende del monto total de
+			todas las transacciones del més. Los monotos y porcentajes asocioados
+			son los siguientes:
+		</p>
+		<table>
+			<tr>
+				<th>Intervalo</th>
+				<th>Porcentaje</th>
+			</tr>
+			<tr>
+				<td>menos de <b>$50.000</b></td>
+				<td><b>10%</b> del total de las transacciones del més</td>
+			</tr>
+			<tr>
+				<td>entre <b>$50.000</b> y <b>$500.000</b></td>
+				<td><b>7.5%</b> del total de las transacciones del més</td>
+			</tr>
+			<tr>
+				<td>más de <b>$500.000</b></td>
+				<td><b>5%</b> del total de las transacciones del més</td>
+			</tr>
+		</table>
+		<br />
 		<h:button value="¡Asociate a Playón!" outcome="solicitudplayaadd" />
-
 	</ui:define>
 
 </ui:composition>
