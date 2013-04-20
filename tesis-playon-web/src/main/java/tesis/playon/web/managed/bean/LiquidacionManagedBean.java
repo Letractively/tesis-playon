@@ -242,12 +242,24 @@ public class LiquidacionManagedBean implements Serializable {
 					"Cuenta");
 
 			/*
-			 * Calculamos el importe del descuento, por ahora fijo en el 10%.
-			 * TODO: Modificar para que el porcentaje que se le cobra a la playa
-			 * varíe de acuerdo a la cantidad de transacciones que tenga o al
-			 * importe total de la transacción. Por ahora queda fijo al 10%.
+			 * Calculamos el importe del descuento de acuerdo al importe total
+			 * de la liquidación y de acuerdo a los siquientes rangos: de 0 a
+			 * 50.000 = 10%, de 50.000 a 500.000 = 7,5%, más de 500.000 = 5%
 			 */
-			float importeComision = (float) (liquidacion.getImporteTotal() * (-0.10));
+			double porcDescuento = 0.10;
+
+			if (liquidacion.getImporteTotal() <= 50000)
+				porcDescuento = 0.10;
+			else if (liquidacion.getImporteTotal() > 50000
+					&& liquidacion.getImporteTotal() <= 500000)
+				porcDescuento = 0.075;
+			else if (liquidacion.getImporteTotal() > 500000)
+				porcDescuento = 0.05;
+
+			// Multiplicamos por -1 porque es una transacción que resta importe
+			// de la cuenta de la playa
+			float importeComision = (float) (liquidacion.getImporteTotal()
+					* (-1) * porcDescuento);
 
 			// Creamos la transacción de la playa para la comisión de Playon.
 			TransaccionPlaya txComisionPlaya = new TransaccionPlaya();
@@ -269,8 +281,10 @@ public class LiquidacionManagedBean implements Serializable {
 			getLiquidacionService().update(liquidacion);
 
 			// Actualizamos el saldo de la cuenta según lo liquidado
-			float nuevoSaldo = cuentaPlaya.getSaldo()
-					- liquidacion.getImporteTotal();
+			// y según el descuento (recordar que el descuento es en negativo
+			// por lo que la suma en realidad ressta)
+			float nuevoSaldo = (int) (cuentaPlaya.getSaldo()
+					- liquidacion.getImporteTotal() + importeComision);
 			cuentaPlaya.setSaldo(nuevoSaldo);
 			getCuentaPlayaService().update(cuentaPlaya);
 
