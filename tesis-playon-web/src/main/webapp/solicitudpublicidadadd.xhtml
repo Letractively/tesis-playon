@@ -61,7 +61,7 @@
 							<p:inputText id="email" value="#{publicidadMB.emailResponsable}"
 								style="width: 200px" required="true"
 								requiredMessage="Campo e-mail obligatorio" type="email"
-								maxlength="100" validator="#{validatorMB.isValidEmailUsuario}">
+								maxlength="100">
 								<f:validateLength minimum="5" />
 								<p:ajax event="blur" update="emailMsg" />
 							</p:inputText>
@@ -96,7 +96,8 @@
 								requiredMessage="Campo nombre empresa obligatorio"
 								maxlength="25">
 								<f:validateLength minimum="5" />
-								<p:ajax event="blur" update="nombreEmpresaMsg" />
+								<p:ajax event="blur" 
+									update="nombreEmpresaMsg" />
 							</p:inputText>
 						</p:column>
 						<p:column>
@@ -105,19 +106,22 @@
 						</p:column>
 
 						<p:column>
-							<h:outputLabel for="url" value="Dirección web de la Empresa: " />
+							<h:outputLabel for="urlText"
+								value="Dirección web de la Empresa: " />
 						</p:column>
 						<p:column>
-							<p:inputText id="url" style="width: 200px"
+							<p:inputText id="urlText" style="width: 200px"
 								value="#{publicidadMB.url}" required="true"
 								requiredMessage="Campo dirección web obligatorio" maxlength="25"
-								type="url">
+								type="url" onchange="addUrl('#{publicidadMB.url}');">
 								<f:validateLength minimum="5" />
-								<p:ajax event="blur" update="urlMsg" />
+								<p:ajax event="blur" listener="#{publicidadMB.addHttp}"
+									update="urlMsg,urlText" />
 							</p:inputText>
+
 						</p:column>
 						<p:column>
-							<p:message id="urlMsg" for="url" display="icon" />
+							<p:message id="urlMsg" for="urlText" display="icon" />
 						</p:column>
 
 						<h:outputLabel for="fechaInicio" value="Fecha inicio publicidad: " />
@@ -178,20 +182,55 @@
 						<p:column>
 							<h:commandButton id="upload" value="Subir imagen"
 								actionListener="#{publicidadMB.upload}" ajax="false"
-								style="margin:0 10px 0 0; padding: 0 5px 0 5px" update="messages"
-								oncomplete="document.location.reload(true)" />
+								style="margin:0 10px 0 0; padding: 0 5px 0 5px"
+								update="messages" oncomplete="document.location.reload(true)" />
 						</p:column>
 
 					</h:panelGrid>
 				</p:panel>
 				<div align="center" style="margin-top: 10px">
-					<p:commandButton id="addCliente" value="Registrar Publicidad"
-						action="#{clienteMB.addSolicitudCliente}" ajax="false" />
+					<p:commandButton id="addPublicidad" value="Registrar Publicidad"
+						action="#{publicidadMB.addSolicitudPublicidad}" ajax="false" />
 					<p:commandButton id="reset" value="Cancelar" immediate="true"
 						action="/index.html?faces-redirect=true" ajax="false"
 						style="margin-left:10px" />
 				</div>
 			</div>
 		</h:form>
+		<h:outputScript name="js/i18n.js" />
+
+		<script type="text/javascript">
+			PrimeFaces.locales['es'] = {
+				closeText : 'Cerrar',
+				prevText : 'Anterior',
+				nextText : 'Siguiente',
+				monthNames : [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+						'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
+						'Noviembre', 'Diciembre' ],
+				monthNamesShort : [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+						'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+				dayNames : [ 'Domingo', 'Lunes', 'Martes', 'Miércoles',
+						'Jueves', 'Viernes', 'Sábado' ],
+				dayNamesShort : [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie',
+						'Sab' ],
+				dayNamesMin : [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
+				weekHeader : 'Semana',
+				firstDay : 1,
+				isRTL : false,
+				showMonthAfterYear : false,
+				yearSuffix : '',
+				timeOnlyTitle : 'Sólo hora',
+				timeText : 'Tiempo',
+				hourText : 'Hora',
+				minuteText : 'Minuto',
+				secondText : 'Segundo',
+				currentText : 'Fecha actual',
+				ampm : false,
+				month : 'Mes',
+				week : 'Semana',
+				day : 'Día',
+				allDayText : 'Todo el día'
+			};
+		</script>
 	</ui:define>
 </ui:composition>

@@ -21,4 +21,6 @@ public interface IPublicidadService {
     
     List<Publicidad> findAll();
     
+    List<Publicidad> findAllByEstadoVigente();
+    
 }

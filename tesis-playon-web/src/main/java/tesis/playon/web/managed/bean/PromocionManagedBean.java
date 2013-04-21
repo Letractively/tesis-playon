@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
@@ -36,7 +36,7 @@ import tesis.playon.web.service.IUsuarioService;
  * 
  */
 @ManagedBean(name = "promocionMB")
-@RequestScoped
+@ViewScoped
 public class PromocionManagedBean implements Serializable {
 
     private static final long serialVersionUID = 6826797453747733748L;

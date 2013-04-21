@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
@@ -20,6 +20,7 @@ import org.primefaces.model.UploadedFile;
 
 import tesis.playon.web.model.EstadoPublicidad;
 import tesis.playon.web.model.FotoPublicidad;
+import tesis.playon.web.model.Publicidad;
 import tesis.playon.web.service.IEstadoPublicidadService;
 import tesis.playon.web.service.IFotoPublicidadService;
 import tesis.playon.web.service.IPublicidadService;
@@ -29,11 +30,11 @@ import tesis.playon.web.service.IPublicidadService;
  * 
  */
 @ManagedBean(name = "publicidadMB")
-@RequestScoped
+@ViewScoped
 public class PublicidadManagedBean implements Serializable {
 
     private static final long serialVersionUID = 2077607983768560556L;
-    
+
     private final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
 
     @ManagedProperty(value = "#{EstadoPublicidadService}")
@@ -44,8 +45,6 @@ public class PublicidadManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{FotoPublicidadService}")
     IFotoPublicidadService fotoPublicidadService;
-
-    private EstadoPublicidad estado;
 
     private String nombreEmpresa;
 
@@ -68,15 +67,45 @@ public class PublicidadManagedBean implements Serializable {
     private Date today;
 
     private Float costoTotal;
-    
+
     private String url;
-    
+
     private UploadedFile foto;
 
     @PostConstruct
     private void init() {
-	precio = 50.0f;
+
+	precio = 20.0f;
 	today = new Date();
+    }
+
+    public String addSolicitudPublicidad() {
+	try {
+	    fotoPublicidad.setUrl(url);
+	    Publicidad publicidad = new Publicidad(nombreEmpresa, nombreResponsable, apellidoResponsable, fechaDesde,
+		    fechaHasta);
+	    publicidad.setPrecio(precio);
+	    publicidad.setTelefonoResponsable(telefonoResponsable);
+	    publicidad.setEmailRespondable(emailResponsable);
+	    EstadoPublicidad estado = getEstadoPublicidadService().findByNombreEstadoPublicidad("Pendiente");
+	    publicidad.setEstado(estado);
+
+	    getFotoPublicidadService().save(fotoPublicidad);
+
+	    publicidad.setFotoPublicidad(fotoPublicidad);
+	    getPublicidadService().save(publicidad);
+
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "Se registró la publicidad exitosamente.", null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return "solicitudpublicidadend";
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "No se ha podido completar la solicitud. Intente más tarde. Disculpe las molestias ocacionadas.",
+		    null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	return null;
     }
 
     public void validateDateInicial(FacesContext context, UIComponent component, Object value) {
@@ -96,19 +125,24 @@ public class PublicidadManagedBean implements Serializable {
 	    }
 	}
     }
-    
-    public void calcularCostoTotal(DateSelectEvent event){
-	if(fechaDesde != null && fechaHasta != null){
-	    costoTotal= ((fechaHasta.getTime() - fechaDesde.getTime())/ MILLSECS_PER_DAY) * precio;
+
+    public void calcularCostoTotal(DateSelectEvent event) {
+	if (fechaDesde != null && fechaHasta != null) {
+	    costoTotal = ((fechaHasta.getTime() - fechaDesde.getTime()) / MILLSECS_PER_DAY) * precio;
 	}
     }
-    
+
     public void upload() {
-        if(foto != null) {
-            fotoPublicidad = new FotoPublicidad(foto.getFileName(), foto.getContents(), url);
-            FacesMessage msg = new FacesMessage("La imagen: ", foto.getFileName() + " se guardó correctamente.");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-        }
+	if (foto != null) {
+	    fotoPublicidad = new FotoPublicidad(foto.getFileName(), foto.getContents(), url);
+	    FacesMessage msg = new FacesMessage("La imagen: " + foto.getFileName() + " se guardó correctamente.", null);
+	    FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+    }
+
+    public void addHttp() {
+	if (this.url.indexOf("http://") == -1)
+	    this.url = "http://" + this.url;
     }
 
     /**
@@ -154,21 +188,6 @@ public class PublicidadManagedBean implements Serializable {
      */
     public void setFotoPublicidadService(IFotoPublicidadService fotoPublicidadService) {
 	this.fotoPublicidadService = fotoPublicidadService;
-    }
-
-    /**
-     * @return the estado
-     */
-    public EstadoPublicidad getEstado() {
-	return estado;
-    }
-
-    /**
-     * @param estado
-     *            the estado to set
-     */
-    public void setEstado(EstadoPublicidad estado) {
-	this.estado = estado;
     }
 
     /**
@@ -340,28 +359,30 @@ public class PublicidadManagedBean implements Serializable {
      * @return the url
      */
     public String getUrl() {
-        return url;
+	return url;
     }
 
     /**
-     * @param url the url to set
+     * @param url
+     *            the url to set
      */
     public void setUrl(String url) {
-        this.url = url;
+	this.url = url;
     }
 
     /**
      * @return the foto
      */
     public UploadedFile getFoto() {
-        return foto;
+	return foto;
     }
 
     /**
-     * @param foto the foto to set
+     * @param foto
+     *            the foto to set
      */
     public void setFoto(UploadedFile foto) {
-        this.foto = foto;
+	this.foto = foto;
     }
 
 }

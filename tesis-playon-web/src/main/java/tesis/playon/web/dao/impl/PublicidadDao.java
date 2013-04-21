@@ -26,21 +26,37 @@ public class PublicidadDao implements IPublicidadDao {
 	this.sessionFactory = sessionFactory;
     }
 
+    @Override
     public void save(Publicidad publicidad) {
 	getSessionFactory().getCurrentSession().save(publicidad);
     }
 
+    @Override
     public void update(Publicidad publicidad) {
 	getSessionFactory().getCurrentSession().update(publicidad);
     }
 
+    @Override
     public void delete(Publicidad publicidad) {
 	getSessionFactory().getCurrentSession().delete(publicidad);
     }
 
+    @Override
     public List<Publicidad> findAll() {
 	List<Publicidad> publicidades = new ArrayList<Publicidad>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Publicidad").list();
+	for (Object object : list) {
+	    publicidades.add((Publicidad) object);
+	}
+	return publicidades;
+    }
+
+    @Override
+    public List<Publicidad> findAllByEstadoVigente() {
+	List<Publicidad> publicidades = new ArrayList<Publicidad>();
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Publicidad WHERE estado.id=2 and now()>=fechaDesde and now()<=fechaHasta")
+		.list();
 	for (Object object : list) {
 	    publicidades.add((Publicidad) object);
 	}

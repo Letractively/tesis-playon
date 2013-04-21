@@ -18,7 +18,7 @@
 		<h:form id="form">
 			<div align="left" style="margin: 10px 0 0 30px">
 				<h:panelGrid id="addPromocion" columns="3" cellspacing="5"
-					cellpadding="5">
+					cellpadding="5" update="@this">
 
 					<h:outputLabel for="nombre" value="Nombre: " />
 					<p:inputText id="nombre" style="width: 200px"
@@ -63,16 +63,16 @@
 
 					<p:calendar id="txtHoraInicio" value="#{promocionMB.horaInicio}"
 						pattern="HH:mm" timeOnly="true" locale="es">
-						<p:ajax event="dateSelect" update="#{promocionMB.horaInicio}"/>
-						</p:calendar>
+						<p:ajax event="dateSelect" update="#{promocionMB.horaInicio}" />
+					</p:calendar>
 					<p:column></p:column>
 
 					<h:outputLabel value="Hora de finalización: " />
 
 					<p:calendar value="#{promocionMB.horaFin}" pattern="HH:mm"
 						timeOnly="true" locale="es" id="txtHoraFin">
-						<p:ajax event="dateSelect" update="#{promocionMB.horaFin}"/>
-						</p:calendar>
+						<p:ajax event="dateSelect" update="#{promocionMB.horaFin}" />
+					</p:calendar>
 					<p:column></p:column>
 
 					<h:outputLabel for="tarifa" value="Tarifa: " />
@@ -163,32 +163,37 @@
 		<h:outputScript name="js/i18n.js" />
 
 		<script type="text/javascript">
-        PrimeFaces.locales['es'] = {
-        	    closeText: 'Cerrar',
-        	    prevText: 'Anterior',
-        	    nextText: 'Siguiente',
-        	    monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        	    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
-        	    dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-        	    dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-        	    dayNamesMin: ['D','L','M','M','J','V','S'],
-        	    weekHeader: 'Semana',
-        	    firstDay: 1,
-        	    isRTL: false,
-        	    showMonthAfterYear: false,
-        	    yearSuffix: '',
-        	    timeOnlyTitle: 'Sólo hora',
-        	    timeText: 'Tiempo',
-        	    hourText: 'Hora',
-        	    minuteText: 'Minuto',
-        	    secondText: 'Segundo',
-        	    currentText: 'Fecha actual',
-        	    ampm: false,
-        	    month: 'Mes',
-        	    week: 'Semana',
-        	    day: 'Día',
-        	    allDayText : 'Todo el día'
-        	};
-        </script>
+			PrimeFaces.locales['es'] = {
+				closeText : 'Cerrar',
+				prevText : 'Anterior',
+				nextText : 'Siguiente',
+				monthNames : [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+						'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
+						'Noviembre', 'Diciembre' ],
+				monthNamesShort : [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+						'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+				dayNames : [ 'Domingo', 'Lunes', 'Martes', 'Miércoles',
+						'Jueves', 'Viernes', 'Sábado' ],
+				dayNamesShort : [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie',
+						'Sab' ],
+				dayNamesMin : [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
+				weekHeader : 'Semana',
+				firstDay : 1,
+				isRTL : false,
+				showMonthAfterYear : false,
+				yearSuffix : '',
+				timeOnlyTitle : 'Sólo hora',
+				timeText : 'Tiempo',
+				hourText : 'Hora',
+				minuteText : 'Minuto',
+				secondText : 'Segundo',
+				currentText : 'Fecha actual',
+				ampm : false,
+				month : 'Mes',
+				week : 'Semana',
+				day : 'Día',
+				allDayText : 'Todo el día'
+			};
+		</script>
 	</ui:define>
 </ui:composition>

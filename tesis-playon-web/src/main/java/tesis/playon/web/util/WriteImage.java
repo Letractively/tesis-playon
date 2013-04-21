@@ -12,6 +12,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import tesis.playon.web.model.Foto;
+import tesis.playon.web.model.FotoPublicidad;
 import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.model.Usuario;
 
@@ -55,6 +56,28 @@ public class WriteImage implements Serializable {
 		extContext = FacesContext.getCurrentInstance().getExternalContext();
 
 		String path = extContext.getRealPath("resources" + sep + "fotos_playas") + sep;
+
+		File file = new File(path + foto.getNombre());
+
+		// FileOutputStream fos = new FileOutputStream("images\\output.jpg"); //windows
+		FileOutputStream fos = new FileOutputStream(file);
+
+		fos.write(foto.getImage());
+		fos.close();
+	    }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
+    
+    public static void writeFotosPublicidad(List<FotoPublicidad> fotosList) {
+	ExternalContext extContext = null;
+	try {
+	    for (FotoPublicidad foto : fotosList) {
+		String sep = File.separator;
+		extContext = FacesContext.getCurrentInstance().getExternalContext();
+
+		String path = extContext.getRealPath("resources" + sep + "fotos_publicidad") + sep;
 
 		File file = new File(path + foto.getNombre());
 

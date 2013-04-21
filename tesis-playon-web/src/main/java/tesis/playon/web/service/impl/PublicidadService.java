@@ -58,6 +58,11 @@ public class PublicidadService implements IPublicidadService {
 	// TODO Auto-generated method stub
 	return getPublicidadDao().findAll();
     }
+    
+    @Override
+    public List<Publicidad> findAllByEstadoVigente() {
+	return getPublicidadDao().findAllByEstadoVigente();
+    }
 
     /**
      * @return the publicidadDao

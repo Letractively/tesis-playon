@@ -18,4 +18,6 @@ public interface IPublicidadDao {
     void delete(Publicidad publicidad);
     
     List<Publicidad> findAll();
+    
+    List<Publicidad> findAllByEstadoVigente();
 }
