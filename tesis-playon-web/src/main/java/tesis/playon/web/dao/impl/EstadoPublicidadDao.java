@@ -35,7 +35,9 @@ public class EstadoPublicidadDao implements IEstadoPublicidadDao {
     public EstadoPublicidad findByNombreEstadoPublicidad(String nombreEstadoPublicidad) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from EstadoPublicidad where nombre=?")
 		.setParameter(0, nombreEstadoPublicidad).list();
-	return (EstadoPublicidad) list.get(0);
+	if(!list.isEmpty())
+	    return (EstadoPublicidad) list.get(0);
+	return null;
     }
 
     public List<EstadoPublicidad> findAll() {

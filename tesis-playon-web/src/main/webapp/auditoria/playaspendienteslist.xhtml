@@ -110,8 +110,6 @@
 					paginator="false" rows="6"
 					emptyMessage="No existen playas rechazadas">
 
-
-
 					<p:column headerText="Razón Social" styleClass="column-font"
 						filterBy="#{playa.razonSocial}" filterMatchMode="contains">
 						<h:outputText value="#{playa.razonSocial}" />
@@ -148,10 +146,8 @@
 					</p:column>
 
 					<p:column headerText="Opciones" styleClass="column-options">
-						<p:commandLink id="view"
-							update=":mainForm:carDlg"
-						 oncomplete="carDialog.show()"
-							title="Ver Datos">
+						<p:commandLink id="view" update=":mainForm:carDlg"
+							oncomplete="carDialog.show()" title="Ver Datos">
 							<f:setPropertyActionListener value="#{playa}"
 								target="#{auditoriaMB.playaSeleccionada}" />
 							<h:graphicImage library="images/icons" name="search.png" />

@@ -194,7 +194,7 @@ public class AuditoriaManagedBean implements Serializable {
 	    mail = new Mail();
 	    notificador = new NotificadorUtil();
 	    asunto = " PLAYON - RED DE PLAYAS DE ESTACIONAMIENTO ";
-	    mensaje = "�Felicitaciones la playa de estacionamiento "
+	    mensaje = "¡Felicitaciones la playa de estacionamiento "
 		    + playaSeleccionada.getNombreComercial().toUpperCase() + " ha sido aprobada"
 		    + " para formar parte nuestro sistema!";
 	    mail.setAsunto(asunto);

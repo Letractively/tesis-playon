@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IPublicidadDao;
+import tesis.playon.web.model.EstadoPublicidad;
 import tesis.playon.web.model.Publicidad;
 import tesis.playon.web.service.IPublicidadService;
 
@@ -62,6 +63,11 @@ public class PublicidadService implements IPublicidadService {
     @Override
     public List<Publicidad> findAllByEstadoVigente() {
 	return getPublicidadDao().findAllByEstadoVigente();
+    }
+    
+    @Override
+    public List<Publicidad> findByEstado(EstadoPublicidad estado){
+	return getPublicidadDao().findByEstado(estado);
     }
 
     /**

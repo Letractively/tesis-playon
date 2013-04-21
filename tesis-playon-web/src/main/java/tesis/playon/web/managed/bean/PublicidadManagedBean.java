@@ -5,6 +5,7 @@ package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -71,12 +72,15 @@ public class PublicidadManagedBean implements Serializable {
     private String url;
 
     private UploadedFile foto;
+    
+    private static List<Publicidad> publicidadList;
 
     @PostConstruct
     private void init() {
-
 	precio = 20.0f;
 	today = new Date();
+	
+	publicidadList = getPublicidadService().findAllByEstadoVigente();
     }
 
     public String addSolicitudPublicidad() {
@@ -383,6 +387,20 @@ public class PublicidadManagedBean implements Serializable {
      */
     public void setFoto(UploadedFile foto) {
 	this.foto = foto;
+    }
+
+    /**
+     * @return the publicidadList
+     */
+    public List<Publicidad> getPublicidadList() {
+        return publicidadList;
+    }
+
+    /**
+     * @param publicidadList the publicidadList to set
+     */
+    public void setPublicidadList(List<Publicidad> publicidadList) {
+        PublicidadManagedBean.publicidadList = publicidadList;
     }
 
 }

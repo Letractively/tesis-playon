@@ -6,24 +6,27 @@
 
 	<div id="sidebar">
 		<div class="box" align="right">
+			<h:link title="Publicite aquí" outcome="/solicitudpublicidadadd">
 				<h:graphicImage library="images" name="publique_aqui.png"
 					style="opacity:0.55;" width="200px" height="360px"
 					rendered="#{empty fotoPublicidadMB.publicidadList}" />
+			</h:link>
 
 			<p:galleria value="#{fotoPublicidadMB.fotoPublicidadList}"
 				var="image" panelWidth="200" panelHeight="360"
 				rendered="#{fotoPublicidadMB.fotoPublicidadList != null}">
-				<a href="#{image.url}"> <h:graphicImage
+				<a href="#{image.url}"><h:graphicImage
 						library="fotos_publicidad" name="#{image.nombre}" width="200px"
-						height="360px" />
-				</a>
+						height="360px" /></a>
 			</p:galleria>
 
 		</div>
 		<div class="box" align="right">
-			<h:graphicImage library="images" name="publique_aqui.png"
-				style="opacity:0.55;" width="200px" height="360px"
-				rendered="#{empty fotoPublicidadMB.publicidadList}" />
+			<h:link title="Publicite aquí" outcome="/solicitudpublicidadadd">
+				<h:graphicImage library="images" name="publique_aqui.png"
+					style="opacity:0.55;" width="200px" height="360px"
+					rendered="#{empty fotoPublicidadMB.publicidadList}" />
+			</h:link>
 			<p:galleria value="#{fotoPublicidadMB.fotoPublicidadList}"
 				var="image" panelWidth="200" panelHeight="360" showCaption="true"
 				rendered="#{fotoPublicidadMB.fotoPublicidadList != null}">
@@ -33,6 +36,9 @@
 				</a>
 			</p:galleria>
 
+		</div>
+		<div align="center">
+			<h:link value="Publicite aquí" outcome="/solicitudpublicidadadd" />
 		</div>
 	</div>
 

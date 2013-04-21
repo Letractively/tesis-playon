@@ -34,9 +34,9 @@ public class FotoPublicidadManagedBean implements Serializable {
     @ManagedProperty(value = "#{PublicidadService}")
     IPublicidadService publicidadService;
 
-    private List<FotoPublicidad> fotoPublicidadList;
+    private static List<FotoPublicidad> fotoPublicidadList;
     
-    private List<Publicidad> publicidadList;
+    private static List<Publicidad> publicidadList;
 
     @PostConstruct
     private void init() {
@@ -96,7 +96,7 @@ public class FotoPublicidadManagedBean implements Serializable {
      *            the fotoPublicidadList to set
      */
     public void setFotoPublicidadList(List<FotoPublicidad> fotoPublicidadList) {
-	this.fotoPublicidadList = fotoPublicidadList;
+	FotoPublicidadManagedBean.fotoPublicidadList = fotoPublicidadList;
     }
 
     /**
@@ -110,6 +110,6 @@ public class FotoPublicidadManagedBean implements Serializable {
      * @param publicidadList the publicidadList to set
      */
     public void setPublicidadList(List<Publicidad> publicidadList) {
-        this.publicidadList = publicidadList;
+	FotoPublicidadManagedBean.publicidadList = publicidadList;
     }
 }

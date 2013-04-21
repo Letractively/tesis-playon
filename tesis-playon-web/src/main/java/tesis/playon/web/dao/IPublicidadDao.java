@@ -2,6 +2,7 @@ package tesis.playon.web.dao;
 
 import java.util.List;
 
+import tesis.playon.web.model.EstadoPublicidad;
 import tesis.playon.web.model.Publicidad;
 
 /**
@@ -20,4 +21,6 @@ public interface IPublicidadDao {
     List<Publicidad> findAll();
     
     List<Publicidad> findAllByEstadoVigente();
+    
+    List<Publicidad> findByEstado(EstadoPublicidad estado);
 }

@@ -5,6 +5,7 @@ package tesis.playon.web.service;
 
 import java.util.List;
 
+import tesis.playon.web.model.EstadoPublicidad;
 import tesis.playon.web.model.Publicidad;
 
 /**
@@ -22,5 +23,6 @@ public interface IPublicidadService {
     List<Publicidad> findAll();
     
     List<Publicidad> findAllByEstadoVigente();
-    
+
+    List<Publicidad> findByEstado(EstadoPublicidad estado);
 }

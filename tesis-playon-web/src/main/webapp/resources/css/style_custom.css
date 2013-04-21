@@ -90,6 +90,7 @@
 
 #content h2,#content h3,#content h4 {
 	border-bottom: 1px dotted rgb(166, 201, 226);
+	color: white;
 }
 
 #content ul {
