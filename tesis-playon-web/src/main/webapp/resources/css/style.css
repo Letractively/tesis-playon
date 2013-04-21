@@ -93,24 +93,26 @@ ul h4 {
 	margin-bottom: 0.35em;
 }
 
-table{
-	width:100%; 
+.table-front-info table {
+	margin: 5px 15px 20px 15px;
+	/* 	width: 98%; */
 }
 
-th {
+.table-front-info th {
 	text-align: center;
 	background-color: #eaf0fc;
 	color: #697da2;
 }
 
-table, tr, td, th {
-	border:1px solid rgb(166, 201, 226);
-	border-collapse:collapse;
-	padding: 5px;
+.table-front-info table,.table-front-info tr,.table-front-info td,.table-front-info th
+	{
+	border: 1px solid rgb(166, 201, 226);
+	border-collapse: collapse;
+	padding: 5px 15px 5px 15px;
 }
 
-td {
-	padding-left: 15px;
+.table-front-info td { /* 	padding-left: 15px; */
+	
 }
 
 .box {
@@ -132,7 +134,7 @@ td {
 	text-align: center;
 	color: #8C8B8B;
 	text-shadow: 0 1px 0 #FFFFFF;
-	height:20px;
+	height: 20px;
 }
 
 #footer a {
@@ -456,4 +458,3 @@ gif.dropotron-level-1 {
 	border-radius: 6px;
 	box-shadow: 0px 5px 20px 2px rgba(0, 0, 0, 0.1);
 }
-
