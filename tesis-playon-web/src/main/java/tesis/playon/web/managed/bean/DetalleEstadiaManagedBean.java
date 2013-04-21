@@ -3,6 +3,11 @@
  */
 package tesis.playon.web.managed.bean;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -18,6 +23,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.model.Cliente;
@@ -51,6 +59,11 @@ import tesis.playon.web.service.ITransaccionClienteService;
 import tesis.playon.web.service.ITransaccionPlayaService;
 import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.service.IVehiculoService;
+
+import com.lowagie.text.Document;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
 
 /**
  * @author pablo
@@ -106,7 +119,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{TipoEstadiaService}")
     ITipoEstadiaService tipoEstadiaService;
-    
+
     @ManagedProperty(value = "#{AbonoService}")
     IAbonoService abonoService;
 
@@ -156,7 +169,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
     private boolean existeTarifa;
 
     private boolean existeVehiculo;
-    
+
     private boolean existeAbonoVehiculo;
 
     private boolean importeCalculado = false;
@@ -259,7 +272,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	}
     }
 
-    public String registrarIngresoAbono(){
+    public String registrarIngresoAbono() {
 	try {
 	    // SAVE TO DETTALLEESTADIA
 	    Timestamp fechaHoraIngreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
@@ -276,41 +289,41 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se registró el ingreso exitosamente del vehiculo con abono mensual con patente: " + patente, null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    
-	    existeAbonoVehiculo=false;
-	    
+
+	    existeAbonoVehiculo = false;
+
 	    return "/playa/ingresoegresovehiculo";
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
 	return null;
     }
-    
-    public String registrarEgresoAbonado(){
-	try{
-	Timestamp fechaHoraEgreso= new Timestamp(Calendar.getInstance().getTimeInMillis());
-	detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
-	detalleEstadia.setCobrado(true);
-	getDetalleEstadiaService().update(detalleEstadia);
-	
-	Integer disponibilidad = playaLoggeada.getDisponibilidad() + 1;
+
+    public String registrarEgresoAbonado() {
+	try {
+	    Timestamp fechaHoraEgreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
+	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+	    detalleEstadia.setCobrado(true);
+	    getDetalleEstadiaService().update(detalleEstadia);
+
+	    Integer disponibilidad = playaLoggeada.getDisponibilidad() + 1;
 	    playaLoggeada.setDisponibilidad(disponibilidad);
 	    getPlayaService().update(playaLoggeada);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se registró el egreso exitosamente del vehículo con abono patente: " + patente, null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    
-	    existeAbonoVehiculo=false;
-	    
+
+	    existeAbonoVehiculo = false;
+
 	    return "/playa/ingresoegresovehiculo";
-	    
+
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
 	return null;
     }
-    
+
     public String registrarIngresoVehiculo() {
 	try {
 	    // SAVE TO DETTALLEESTADIA
@@ -437,33 +450,33 @@ public class DetalleEstadiaManagedBean implements Serializable {
 		transaccionCliente = new TransaccionCliente(detalleEstadia.getFechaHoraEgreso(), saldo,
 			tipoPagoEfectivo, cuentaCliente);
 		getTransaccionClienteService().save(transaccionCliente);
-		
+
 		TransaccionPlaya txPlaya;
-		
+
 		// Registrar la transacción playa con cuenta playon.
-		    txPlaya = new TransaccionPlaya();
-		    txPlaya.setFecha(detalleEstadia.getFechaHoraEgreso());
-		    txPlaya.setDetalleEstadia(detalleEstadia);
-		    txPlaya.setCuentaPlaya(cuentaPlaya);
-		    txPlaya.setImporte(saldoActual);
-		    txPlaya.setTipoPago(tipoPagoCuenta);
-		    getTransaccionPlayaService().save(txPlaya);
-		    
-		    DetalleEstadia detalleEstadiaEfectivo = detalleEstadia;
-		    detalleEstadiaEfectivo.setImporteTotal(saldo);
-		    
-		 // Registrar la transacción playa con efectivo.
-		    txPlaya = new TransaccionPlaya();
-		    txPlaya.setFecha(detalleEstadiaEfectivo.getFechaHoraEgreso());
-		    txPlaya.setDetalleEstadia(detalleEstadiaEfectivo);
-		    txPlaya.setCuentaPlaya(cuentaPlaya);
-		    txPlaya.setImporte(saldo);
-		    txPlaya.setTipoPago(tipoPagoEfectivo);
-		    getTransaccionPlayaService().save(txPlaya);
-		    
-		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL,
-			    "Debe cobrar en efectivo $" + saldo, null);
-		    FacesContext.getCurrentInstance().addMessage(null, message);
+		txPlaya = new TransaccionPlaya();
+		txPlaya.setFecha(detalleEstadia.getFechaHoraEgreso());
+		txPlaya.setDetalleEstadia(detalleEstadia);
+		txPlaya.setCuentaPlaya(cuentaPlaya);
+		txPlaya.setImporte(saldoActual);
+		txPlaya.setTipoPago(tipoPagoCuenta);
+		getTransaccionPlayaService().save(txPlaya);
+
+		DetalleEstadia detalleEstadiaEfectivo = detalleEstadia;
+		detalleEstadiaEfectivo.setImporteTotal(saldo);
+
+		// Registrar la transacción playa con efectivo.
+		txPlaya = new TransaccionPlaya();
+		txPlaya.setFecha(detalleEstadiaEfectivo.getFechaHoraEgreso());
+		txPlaya.setDetalleEstadia(detalleEstadiaEfectivo);
+		txPlaya.setCuentaPlaya(cuentaPlaya);
+		txPlaya.setImporte(saldo);
+		txPlaya.setTipoPago(tipoPagoEfectivo);
+		getTransaccionPlayaService().save(txPlaya);
+
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Debe cobrar en efectivo $"
+			+ saldo, null);
+		FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    } else {
 		// actualizar saldo de la playa
@@ -479,15 +492,15 @@ public class DetalleEstadiaManagedBean implements Serializable {
 		// actualizar y cerrar detalle estadia
 		detalleEstadia.setTransaccionCliente(transaccionCliente);
 		getDetalleEstadiaService().update(detalleEstadia);
-		
+
 		// Registrar la transacción playa.
-		    TransaccionPlaya txPlaya = new TransaccionPlaya();
-		    txPlaya.setFecha(detalleEstadia.getFechaHoraIngreso());
-		    txPlaya.setDetalleEstadia(detalleEstadia);
-		    txPlaya.setCuentaPlaya(cuentaPlaya);
-		    txPlaya.setImporte(importe);
-		    txPlaya.setTipoPago(tipoPagoCuenta);
-		    getTransaccionPlayaService().save(txPlaya);
+		TransaccionPlaya txPlaya = new TransaccionPlaya();
+		txPlaya.setFecha(detalleEstadia.getFechaHoraIngreso());
+		txPlaya.setDetalleEstadia(detalleEstadia);
+		txPlaya.setCuentaPlaya(cuentaPlaya);
+		txPlaya.setImporte(importe);
+		txPlaya.setTipoPago(tipoPagoCuenta);
+		getTransaccionPlayaService().save(txPlaya);
 	    }
 
 	    // actualizar lugares en una playa
@@ -496,11 +509,11 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	    getPlayaService().update(playaLoggeada);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se registró el egreso exitosamente del vehículo patente: "+ patente, null);
+		    "Se registró el egreso exitosamente del vehículo patente: " + patente, null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    
+
 	    return "/playa/ingresoegresovehiculo";
-	    
+
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
@@ -641,11 +654,11 @@ public class DetalleEstadiaManagedBean implements Serializable {
     // =============================== GETTER & SETTER =====================================
 
     public IAbonoService getAbonoService() {
-        return abonoService;
+	return abonoService;
     }
 
     public void setAbonoService(IAbonoService abonoService) {
-        this.abonoService = abonoService;
+	this.abonoService = abonoService;
     }
 
     public Usuario getUsuarioLoggeado() {
@@ -861,11 +874,52 @@ public class DetalleEstadiaManagedBean implements Serializable {
     }
 
     public boolean isExisteAbonoVehiculo() {
-        return existeAbonoVehiculo;
+	return existeAbonoVehiculo;
     }
 
     public void setExisteAbonoVehiculo(boolean existeAbonoVehiculo) {
-        this.existeAbonoVehiculo = existeAbonoVehiculo;
+	this.existeAbonoVehiculo = existeAbonoVehiculo;
+    }
+
+    // -------------------- DESCARGAR PDF
+    private StreamedContent file;
+
+    /**
+     * @return the file
+     */
+    public StreamedContent getFile() {
+	try {
+
+	    Document doc = new Document(PageSize.A4, 50, 50, 100, 72);
+
+	    File filePDF = new File("/tmp/pdf.pdf");
+
+	    OutputStream os = new FileOutputStream(filePDF);
+	    
+	    @SuppressWarnings("unused")
+	    PdfWriter writer = PdfWriter.getInstance(doc,os);
+	    
+	    doc.open();
+	    doc.add(new Paragraph("Hola Mundo!"));
+	    doc.add(new Paragraph("SoloInformaticaYAlgoMas.blogspot.com"));
+	    doc.close();
+	    
+	    InputStream stream = new FileInputStream(filePDF);
+	    
+	    file = new DefaultStreamedContent(stream, "application/pdf", "downloaded_primefaces.pdf");
+	    return file;
+	} catch (Exception e) {
+	    
+	}
+	return null;
+    }
+
+    /**
+     * @param file
+     *            the file to set
+     */
+    public void setFile(StreamedContent file) {
+	this.file = file;
     }
 
 }

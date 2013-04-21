@@ -318,7 +318,11 @@
 							<div align="right">
 								<p:commandButton id="registrarIngreso" value="Registrar ingreso"
 									action="#{detalleEstadiaMB.registrarIngresoVehiculo}"
-									ajax="false" style="margin-right:10px" />
+									ajax="false" style="margin-right:10px">
+									<p:fileDownload value="#{detalleEstadiaMB.file}"
+									contentDisposition="attachment" />
+									<p:ajax event="click" onstart="dlgIngreso.hide();"/>
+								</p:commandButton>
 								<p:commandButton id="cancelar" value="Cancelar" immediate="true"
 									oncomplete="dlgIngreso.hide();" />
 							</div>
