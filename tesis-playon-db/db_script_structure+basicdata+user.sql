@@ -764,18 +764,39 @@ DROP TABLE IF EXISTS `publicidad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `publicidad` (
-  `estadoPublicidadID` int(11) NOT NULL,
-  `posicionID` int(11) NOT NULL,
-  `urlImagen` varchar(50) DEFAULT NULL,
   `publicidadID` int(11) NOT NULL auto_increment,
-  `playaID` int(11) NOT NULL,
+  `estadoPublicidadID` int(11) DEFAULT NULL,
+  `nombreEmpresa` varchar(45) DEFAULT NULL,
+  `nombre` varchar(45) DEFAULT NULL,
+  `apellido` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `telefono` varchar(45) DEFAULT NULL,
+  `fechaDesde` date DEFAULT NULL,
+  `fechaHasta` date DEFAULT NULL,
+  `fotoPublicidadID` int(11) DEFAULT NULL,
+  `precio` float DEFAULT NULL,
   PRIMARY KEY (`publicidadID`),
-  KEY `estadoPublicidadID` (`estadoPublicidadID`),
-  KEY `posicionID` (`posicionID`),
-  KEY `playaID` (`playaID`),
-  CONSTRAINT `FK_publicidad_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`),
-  CONSTRAINT `FK_publicidad_estado_publicidad` FOREIGN KEY (`estadoPublicidadID`) REFERENCES `estado_publicidad` (`estadoPublicidadID`),
-  CONSTRAINT `FK_publicidad_posicion` FOREIGN KEY (`posicionID`) REFERENCES `posicion` (`posicionID`)
+  KEY `fk_publicidad_foto_publicidad` (`fotoPublicidadID`),
+  KEY `fk_publicidad_estado_publicidad` (`estadoPublicidadID`),
+  CONSTRAINT `fk_publicidad_estado_publicidad` FOREIGN KEY (`estadoPublicidadID`) REFERENCES `estado_publicidad` (`estadoPublicidadID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_publicidad_foto_publicidad` FOREIGN KEY (`fotoPublicidadID`) REFERENCES `foto_publicidad` (`fotoPublicidadID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+--
+-- Table structure for table `foto_publicidad`
+--
+
+DROP TABLE IF EXISTS `foto_publicidad`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `foto_publicidad` (
+  `fotoPublicidadID` int(11) NOT NULL auto_increment,
+  `nombre` varchar(75) DEFAULT NULL,
+  `image` mediumblob,
+  `url` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`fotoPublicidadID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -955,8 +976,7 @@ LOCK TABLES `estado_publicidad` WRITE;
 INSERT INTO `estado_publicidad` (`descripcion`, `nombre`, `estadoPublicidadID`) 
 VALUES ('Pendiente de Aprobación','Pendiente',1),
 	('Aprobada y pendiente de publicación','Aprobada',2),
-	('No Aprobada','Rechazada',3),('Aprobada y publicandose','Vigente',4),
-	('Perí­odo de publicación vencido','Vencida',5);
+	('No Aprobada','Rechazada',3);
 /*!40000 ALTER TABLE `estado_publicidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
