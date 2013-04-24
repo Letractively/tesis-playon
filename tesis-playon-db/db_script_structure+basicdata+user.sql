@@ -235,6 +235,7 @@ CREATE TABLE `playa` (
   `domicilio` varchar(50) DEFAULT NULL,
   `telefono` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
+  `url` varchar(50) DEFAULT NULL,
   `estadoPlayaID` int(11) NOT NULL,
   `nombreComercial` varchar(100) NOT NULL,
   `latitud` DOUBLE DEFAULT NULL,
