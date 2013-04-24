@@ -13,13 +13,13 @@
 
 			<h:panelGrid id="displayView" columns="3" cellpadding="8"
 				styleClass="admin-input-text">
-				
+
 				<p:column>
 					<h:outputLabel for="razonSocial" value="Razon Social: " />
 				</p:column>
 				<p:column>
 					<p:inputText id="razonSocial"
-						value="#{auditoriaMB.playaSeleccionada.razonSocial}"
+						value="#{auditoriaPlayaMB.playaSeleccionada.razonSocial}"
 						required="true" requiredMessage="Campo obligatorio">
 						<f:validateLength minimum="4" />
 						<p:ajax event="blur" update="razonSocialMsg" />
@@ -34,7 +34,7 @@
 				</p:column>
 				<p:column>
 					<p:inputText id="nombreComercial"
-						value="#{auditoriaMB.playaSeleccionada.nombreComercial}"
+						value="#{auditoriaPlayaMB.playaSeleccionada.nombreComercial}"
 						required="true" requiredMessage="Campo obligatorio">
 						<f:validateLength minimum="2" />
 						<p:ajax event="blur" update="nombreComercialMsg" />
@@ -50,7 +50,7 @@
 				</p:column>
 				<p:column>
 					<p:inputText id="cuit"
-						value="#{auditoriaMB.playaSeleccionada.cuit}" required="true"
+						value="#{auditoriaPlayaMB.playaSeleccionada.cuit}" required="true"
 						requiredMessage="Campo obligatorio">
 						<f:validateLength minimum="5" />
 						<p:ajax event="blur" update="cuitMsg" />
@@ -65,7 +65,7 @@
 				</p:column>
 				<p:column>
 					<p:selectOneMenu style="width: 293px"
-						value="#{auditoriaMB.playaSeleccionada.barrio}" effect="fade">
+						value="#{auditoriaPlayaMB.playaSeleccionada.barrio}" effect="fade">
 						<f:selectItems value="#{barrioMB.barrioList}" var="barrio"
 							itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
 						<f:converter converterId="barrioConverter" />
@@ -78,8 +78,8 @@
 				</p:column>
 				<p:column>
 					<p:inputText id="domicilio"
-						value="#{auditoriaMB.playaSeleccionada.domicilio}" required="true"
-						requiredMessage="Campo obligatorio">
+						value="#{auditoriaPlayaMB.playaSeleccionada.domicilio}"
+						required="true" requiredMessage="Campo obligatorio">
 						<f:validateLength minimum="5" />
 						<p:ajax event="blur" update="domicilioMsg" />
 					</p:inputText>
@@ -93,7 +93,7 @@
 				</p:column>
 				<p:column>
 					<p:inputText id="telefono"
-						value="#{auditoriaMB.playaSeleccionada.telefono}">
+						value="#{auditoriaPlayaMB.playaSeleccionada.telefono}">
 						<p:ajax event="blur" update="telefonoMsg" />
 					</p:inputText>
 				</p:column>
@@ -106,7 +106,7 @@
 				</p:column>
 				<p:column>
 					<p:inputText id="emailPlaya"
-						value="#{auditoriaMB.playaSeleccionada.email}">
+						value="#{auditoriaPlayaMB.playaSeleccionada.email}">
 						<p:ajax event="blur" update="emailPlayaMsg" />
 					</p:inputText>
 				</p:column>
@@ -115,11 +115,21 @@
 				</p:column>
 
 				<p:column>
+					<h:outputLabel for="url" value="Dirección web: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="url"
+						value="#{auditoriaPlayaMB.playaSeleccionada.url}">
+					</p:inputText>
+				</p:column>
+				<p:column />
+
+				<p:column>
 					<h:outputLabel for="disponibilidad" value="Disponibilidad: " />
 				</p:column>
 				<p:column>
 					<p:inputText id="disponibilidad"
-						value="#{auditoriaMB.playaSeleccionada.disponibilidad}">
+						value="#{auditoriaPlayaMB.playaSeleccionada.disponibilidad}">
 						<p:ajax event="blur" update="disponibilidadMsg" />
 					</p:inputText>
 				</p:column>
@@ -133,7 +143,7 @@
 				</p:column>
 				<p:column>
 					<p:selectOneMenu style="width: 293px"
-						value="#{auditoriaMB.playaSeleccionada.estado}" effect="fade">
+						value="#{auditoriaPlayaMB.playaSeleccionada.estado}" effect="fade">
 						<f:selectItems value="#{estadoPlayaMB.estadoPlayaList}"
 							var="estado" itemValue="#{estado}" itemLabel="#{estado.nombre}" />
 						<f:converter converterId="estadoPlayaConverter" />
@@ -145,10 +155,10 @@
 				<p:column>
 					<div align="right">
 						<p:commandButton id="reset" value="Cancelar"
-							action="#{auditoriaMB.returnPage}" ajax="false"
-							style="margin-right:15px" />
+							action="/auditoria/playaslist.html?faces-redirect=true"
+							ajax="false" style="margin-right:15px" />
 						<p:commandButton id="addCliente" value="Modificar"
-							action="#{auditoriaMB.updatePlayaAuditor}" ajax="false" />
+							action="#{auditoriaPlayaMB.updatePlayaAuditor}" ajax="false" />
 					</div>
 				</p:column>
 				<p:column></p:column>

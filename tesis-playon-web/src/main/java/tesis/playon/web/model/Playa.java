@@ -63,6 +63,9 @@ public class Playa implements Serializable {
 
     @Column(name = "email")
     private String email;
+    
+    @Column(name = "url")
+    private String url;
 
     @ManyToOne
     @JoinColumn(name = "barrioID", nullable = true)
@@ -202,6 +205,20 @@ public class Playa implements Serializable {
 
     public Integer getId() {
 	return id;
+    }
+    
+    /**
+     * @return the url
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * @param url the url to set
+     */
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public boolean equals(Object object) {

@@ -87,6 +87,15 @@
 								<h:outputText value="#{perfilPlayaMB.playaSelected.email}"
 									styleClass="fuente-perfil" />
 
+								<h:outputText value="Dirección web: "
+									styleClass="fuente-outputtext" />
+								<p:column>
+									<a href="#{perfilPlayaMB.playaSelected.url}"> <h:outputText
+											value="#{perfilPlayaMB.playaSelected.url}"
+											styleClass="fuente-perfil" /></a>
+								</p:column>
+								<p:column />
+
 								<h:outputText value="Disponibilidad: "
 									styleClass="fuente-outputtext" />
 								<h:outputText

@@ -40,16 +40,21 @@ public class RolUsuarioDao implements IRolUsuarioDao {
     public List<RolUsuario> findAll() {
 	List<RolUsuario> listaRolUsuario = new ArrayList<RolUsuario>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from RolUsuario order by nombre").list();
-	for (Object obj : list) {
-	    listaRolUsuario.add((RolUsuario) obj);
+	if (!list.isEmpty()) {
+	    for (Object obj : list) {
+		listaRolUsuario.add((RolUsuario) obj);
+	    }
+	    return listaRolUsuario;
 	}
-	return listaRolUsuario;
+	return null;
     }
 
     public RolUsuario findByNombreRolUsuario(String nombreRolUsuario) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from RolUsuario where nombre=?")
 		.setParameter(0, nombreRolUsuario).list();
-	return (RolUsuario) list.get(0);
+	if (!list.isEmpty())
+	    return (RolUsuario) list.get(0);
+	return null;
     }
 
 }

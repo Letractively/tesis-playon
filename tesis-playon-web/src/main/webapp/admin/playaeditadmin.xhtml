@@ -113,6 +113,17 @@
 				</p:column>
 
 				<p:column>
+					<h:outputLabel for="url" value="Dirección web: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="url" feedback="true" value="#{playaMB.playaSelected.url}"
+						type="url">
+						<p:ajax event="blur" update="url" listener="#{playaMB.addHttpEdit}" />
+					</p:inputText>
+				</p:column>
+				<p:column />
+
+				<p:column>
 					<h:outputLabel for="disponibilidad" value="Disponibilidad: " />
 				</p:column>
 				<p:column>

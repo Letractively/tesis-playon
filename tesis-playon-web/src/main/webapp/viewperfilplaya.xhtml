@@ -82,21 +82,34 @@
 								<h:outputText value="Barrio: " styleClass="fuente-outputtext" />
 								<h:outputText
 									value="#{perfilPlayaMB.playaSelected.barrio.nombre}"
-									styleClass="fuente-perfil" /><p:column />
+									styleClass="fuente-perfil" />
+								<p:column />
 
 								<h:outputText value="Teléfono: " styleClass="fuente-outputtext" />
 								<h:outputText value="#{perfilPlayaMB.playaSelected.telefono}"
-									styleClass="fuente-perfil" /><p:column />
+									styleClass="fuente-perfil" />
+								<p:column />
 
 								<h:outputText value="E-mail: " styleClass="fuente-outputtext" />
 								<h:outputText value="#{perfilPlayaMB.playaSelected.email}"
-									styleClass="fuente-perfil" /><p:column />
+									styleClass="fuente-perfil" />
+								<p:column />
+
+								<h:outputText value="Dirección web: "
+									styleClass="fuente-outputtext" />
+								<p:column>
+									<a href="#{perfilPlayaMB.playaSelected.url}"> <h:outputText
+											value="#{perfilPlayaMB.playaSelected.url}"
+											styleClass="fuente-perfil" /></a>
+								</p:column>
+								<p:column />
 
 								<h:outputText value="Disponibilidad: "
 									styleClass="fuente-outputtext" />
 								<h:outputText
 									value="#{perfilPlayaMB.playaSelected.disponibilidad}"
-									styleClass="fuente-perfil" /><p:column />
+									styleClass="fuente-perfil" />
+								<p:column />
 							</h:panelGrid>
 						</div>
 					</p:tab>

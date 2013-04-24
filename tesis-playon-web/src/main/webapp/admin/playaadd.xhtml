@@ -23,9 +23,8 @@
 						<h:outputLabel for="razonSocial" value="Razon Social: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="razonSocial"
-							value="#{playaMB.razonSocial}" required="true"
-							requiredMessage="Campo obligatorio">
+						<p:inputText id="razonSocial" value="#{playaMB.razonSocial}"
+							required="true" requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="4" />
 							<p:ajax event="blur" update="razonSocialMsg" />
 						</p:inputText>
@@ -54,8 +53,8 @@
 						<h:outputLabel for="cuit" value="C.U.I.T.: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="cuit" value="#{playaMB.cuit}"
-							required="true" requiredMessage="Campo obligatorio" maxlength="20">
+						<p:inputText id="cuit" value="#{playaMB.cuit}" required="true"
+							requiredMessage="Campo obligatorio" maxlength="20">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="cuitMsg" />
 						</p:inputText>
@@ -68,8 +67,8 @@
 						<h:outputText for="barrio" value="Barrio: " />
 					</p:column>
 					<p:column>
-						<p:selectOneMenu style="width: 293px"
-							value="#{playaMB.barrio}" effect="fade">
+						<p:selectOneMenu style="width: 293px" value="#{playaMB.barrio}"
+							effect="fade">
 							<f:selectItems value="#{barrioMB.barrioList}" var="barrio"
 								itemValue="#{barrio}" itemLabel="#{barrio.nombre}" />
 							<f:converter converterId="barrioConverter" />
@@ -81,9 +80,8 @@
 						<h:outputText for="domicilio" value="Domicilio: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="domicilio"
-							value="#{playaMB.domicilio}" required="true"
-							requiredMessage="Campo obligatorio">
+						<p:inputText id="domicilio" value="#{playaMB.domicilio}"
+							required="true" requiredMessage="Campo obligatorio">
 							<f:validateLength minimum="5" />
 							<p:ajax event="blur" update="domicilioMsg" />
 						</p:inputText>
@@ -96,8 +94,7 @@
 						<h:outputLabel for="telefono" value="Teléfono: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="telefono"
-							value="#{playaMB.telefono}">
+						<p:inputText id="telefono" value="#{playaMB.telefono}">
 							<p:ajax event="blur" update="telefonoMsg" />
 						</p:inputText>
 					</p:column>
@@ -120,11 +117,21 @@
 					</p:column>
 
 					<p:column>
+						<h:outputLabel for="url" value="Dirección web: " />
+					</p:column>
+					<p:column>
+						<p:inputText id="url" feedback="true" value="#{playaMB.url}"
+							type="url">
+							<p:ajax event="blur" update="url" listener="#{playaMB.addHttp}" />
+						</p:inputText>
+					</p:column>
+					<p:column />
+
+					<p:column>
 						<h:outputLabel for="disponibilidad" value="Disponibilidad: " />
 					</p:column>
 					<p:column>
-						<p:inputText id="disponibilidad"
-							value="#{playaMB.disponibilidad}">
+						<p:inputText id="disponibilidad" value="#{playaMB.disponibilidad}">
 							<p:ajax event="blur" update="disponibilidadMsg" />
 						</p:inputText>
 					</p:column>
@@ -137,8 +144,8 @@
 						<h:outputText for="estado" value="Estado: " />
 					</p:column>
 					<p:column>
-						<p:selectOneMenu style="width: 293px"
-							value="#{playaMB.estado}" effect="fade">
+						<p:selectOneMenu style="width: 293px" value="#{playaMB.estado}"
+							effect="fade">
 							<f:selectItems value="#{estadoPlayaMB.estadoPlayaList}"
 								var="estado" itemValue="#{estado}" itemLabel="#{estado.nombre}" />
 							<f:converter converterId="estadoPlayaConverter" />

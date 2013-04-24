@@ -45,7 +45,8 @@
 						<p:column>
 							<p:inputText id="nombreComercial" style="width: 200px"
 								value="#{playaMB.nombreComercial}" required="true"
-								requiredMessage="Campo nombre comercial obligatorio" maxlength="40">
+								requiredMessage="Campo nombre comercial obligatorio"
+								maxlength="40">
 								<f:validateLength minimum="4" />
 								<p:ajax event="blur" update="nombreComercialMsg" />
 							</p:inputText>
@@ -116,8 +117,8 @@
 						<p:column>
 							<p:inputText id="emailPlaya" value="#{playaMB.emailPlaya}"
 								style="width: 200px" required="true"
-								requiredMessage="Campo e-mail de playa obligatorio" type="email" maxlength="100"
-								validator="#{validatorMB.isValidEmailPlaya}">
+								requiredMessage="Campo e-mail de playa obligatorio" type="email"
+								maxlength="100" validator="#{validatorMB.isValidEmailPlaya}">
 								<f:validateLength minimum="5" />
 								<p:ajax event="blur" update="emailPlayaMsg" />
 							</p:inputText>
@@ -127,13 +128,25 @@
 						</p:column>
 
 						<p:column>
+							<h:outputLabel for="url" value="Dirección web: " />
+						</p:column>
+						<p:column>
+							<p:inputText id="url" feedback="true" value="#{playaMB.url}"
+								type="url" style="width: 200px" required="true">
+								<p:ajax event="blur" update="url" listener="#{playaMB.addHttp}" />
+							</p:inputText>
+						</p:column>
+						<p:column />
+
+						<p:column>
 							<h:outputLabel for="disponibilidad" value="Disponibilidad: " />
 						</p:column>
 						<p:column>
 							<p:inputText id="disponibilidad"
 								value="#{playaMB.disponibilidad}" style="width: 70px"
-								required="true" requiredMessage="Campo disponibilidad obligatorio"
-								maxlength="5" type="numeric">
+								required="true"
+								requiredMessage="Campo disponibilidad obligatorio" maxlength="5"
+								type="numeric">
 								<f:validateLength minimum="1" />
 								<p:ajax event="blur" update="disponibilidadMsg" />
 							</p:inputText>
@@ -145,8 +158,9 @@
 
 					</h:panelGrid>
 				</p:panel>
-				
-				<p:panel header="Datos del Encargado de Playa" style="margin-top: 10px">
+
+				<p:panel header="Datos del Encargado de Playa"
+					style="margin-top: 10px">
 					<h:panelGrid id="displayViewEncargado" columns="3" cellpadding="5"
 						cellspacing="5">
 						<p:column>
@@ -198,7 +212,8 @@
 						</p:column>
 						<p:column>
 							<p:inputText id="nroDoc" value="#{playaMB.nroDoc}"
-								required="true" requiredMessage="Campo nro. documento obligatorio"
+								required="true"
+								requiredMessage="Campo nro. documento obligatorio"
 								type="numeric" maxlength="10">
 								<f:validateLength minimum="6" />
 								<p:ajax event="blur" update="nroDocMsg" />
@@ -214,7 +229,8 @@
 						<p:column>
 							<p:inputText id="email" value="#{playaMB.email}"
 								style="width: 200px" required="true"
-								requiredMessage="Campo e-mail encargado obligatorio" type="email" maxlength="100"
+								requiredMessage="Campo e-mail encargado obligatorio"
+								type="email" maxlength="100"
 								validator="#{validatorMB.isValidEmailUsuario}">
 								<f:validateLength minimum="5" />
 								<p:ajax event="blur" update="emailMsg" />
@@ -230,8 +246,8 @@
 						<p:column>
 							<p:inputText id="nombreUser" style="width: 200px"
 								value="#{playaMB.nombreUser}" required="true"
-								requiredMessage="Campo nombre usuario obligatorio" maxlength="25"
-								validator="#{validatorMB.isValidUserName}">
+								requiredMessage="Campo nombre usuario obligatorio"
+								maxlength="25" validator="#{validatorMB.isValidUserName}">
 								<f:validateLength minimum="5" />
 								<p:ajax event="blur" update="nombreUserMsg" />
 							</p:inputText>
