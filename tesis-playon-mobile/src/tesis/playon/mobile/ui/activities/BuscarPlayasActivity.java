@@ -28,14 +28,16 @@ public class BuscarPlayasActivity extends ListActivity {
 
     private final static String LOG_TAG = "BuscarPlayasActivity";
 
-    private static final String URL_PLAYAS = "http://10.0.2.2:8080/tesis-playon-restful/playas";
+    // private static final String URL_PLAYAS = "http://10.0.2.2:8080/tesis-playon-restful/playas";
+
+    private static final String URL_PLAYAS = "http://192.168.5.61:8080/tesis-playon-restful/playas";
 
     private Playas playas;
 
     private ListView mListView;
 
     private PlayaAdapter mPlayaAdapter;
-    
+
     private List<Playa> mListaPlayas = new ArrayList<Playa>();
 
     public void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,8 @@ public class BuscarPlayasActivity extends ListActivity {
 
 	mListView.setOnItemClickListener(new OnItemClickListener() {
 	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		Toast.makeText(getApplicationContext(), mListaPlayas.get(position).getNombreComercial(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), mListaPlayas.get(position).getNombreComercial(),
+			Toast.LENGTH_SHORT).show();
 	    }
 	});
     }
@@ -97,7 +100,7 @@ public class BuscarPlayasActivity extends ListActivity {
 	    result.putExtras(bundle);
 	    // List<Playa> listaPlayas = playas.getPlayas();
 	    for (Playa playa : playas.getPlayas()) {
-		Log.d(LOG_TAG, "Playa: " + playa.getRazonSocial() + " Dirección: " + playa.getDomicilio());
+		Log.d(LOG_TAG, "Playa: " + playa.getRazonSocial() + " Direcciï¿½n: " + playa.getDomicilio());
 	    }
 	    llenarLista((ArrayList<Playa>) playas.getPlayas());
 	}
