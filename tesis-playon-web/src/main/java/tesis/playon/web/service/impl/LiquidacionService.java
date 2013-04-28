@@ -12,42 +12,47 @@ import tesis.playon.web.service.ILiquidacionService;
 @Transactional(readOnly = true)
 public class LiquidacionService implements ILiquidacionService {
 
-    ILiquidacionDao liquidacionDao;
-    
-    @Transactional(readOnly = false)
-    @Override
-    public void save(Liquidacion liquidacion) {
-	getLiquidacionDao().save(liquidacion);
-    }
+	ILiquidacionDao liquidacionDao;
 
-    @Transactional(readOnly = false)
-    @Override
-    public void update(Liquidacion liquidacion) {
-	getLiquidacionDao().update(liquidacion);
-    }
+	@Transactional(readOnly = false)
+	@Override
+	public void save(Liquidacion liquidacion) {
+		getLiquidacionDao().save(liquidacion);
+	}
 
-    @Transactional(readOnly = false)
-    @Override
-    public void delete(Liquidacion liquidacion) {
-	getLiquidacionDao().delete(liquidacion);
-    }
+	@Transactional(readOnly = false)
+	@Override
+	public void update(Liquidacion liquidacion) {
+		getLiquidacionDao().update(liquidacion);
+	}
 
-    @Override
-    public List<Liquidacion> findAll() {
-	return getLiquidacionDao().findAll();
-    }
+	@Transactional(readOnly = false)
+	@Override
+	public void delete(Liquidacion liquidacion) {
+		getLiquidacionDao().delete(liquidacion);
+	}
 
-    public ILiquidacionDao getLiquidacionDao() {
-        return liquidacionDao;
-    }
+	@Override
+	public List<Liquidacion> findAll() {
+		return getLiquidacionDao().findAll();
+	}
 
-    public void setLiquidacionDao(ILiquidacionDao liquidacionDao) {
-        this.liquidacionDao = liquidacionDao;
-    }
+	public ILiquidacionDao getLiquidacionDao() {
+		return liquidacionDao;
+	}
 
-    @Override
-    public List<Liquidacion> findByFecha(Date fecha) {
-	return getLiquidacionDao().findByFecha(fecha);
-    }
+	public void setLiquidacionDao(ILiquidacionDao liquidacionDao) {
+		this.liquidacionDao = liquidacionDao;
+	}
+
+	@Override
+	public List<Liquidacion> findByFecha(Date fecha) {
+		return getLiquidacionDao().findByFecha(fecha);
+	}
+
+	@Override
+	public List<Liquidacion> findByFecha(Date fechaDesde, Date fechaHasta) {
+		return getLiquidacionDao().findByFecha(fechaDesde, fechaHasta);
+	}
 
 }

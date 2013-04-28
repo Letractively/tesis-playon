@@ -18,129 +18,147 @@ import tesis.playon.web.model.TransaccionPlaya;
  */
 public class TransaccionPlayaDao implements ITransaccionPlayaDao {
 
-    private SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
-    public SessionFactory getSessionFactory() {
-	return sessionFactory;
-    }
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-	this.sessionFactory = sessionFactory;
-    }
-
-    public void save(TransaccionPlaya transaccionPlaya) {
-	getSessionFactory().getCurrentSession().save(transaccionPlaya);
-    }
-
-    public void update(TransaccionPlaya transaccionPlaya) {
-	getSessionFactory().getCurrentSession().update(transaccionPlaya);
-    }
-
-    public void delete(TransaccionPlaya transaccionPlaya) {
-	getSessionFactory().getCurrentSession().delete(transaccionPlaya);
-    }
-
-    public List<TransaccionPlaya> findAll() {
-	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TransaccionPlaya").list();
-	for (Object object : list) {
-	    transaccionPlaya.add((TransaccionPlaya) object);
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
 	}
-	return transaccionPlaya;
-    }
 
-    public TransaccionPlaya findByTransaccionPlayaID(int transaccionPlayaID) {
-	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from TransaccionPlaya where transaccionPlayaID=?").setParameter(0, transaccionPlayaID)
-		.list();
-	return (TransaccionPlaya) list.get(0);
-    }
-
-    @Override
-    public List<TransaccionPlaya> findTransaccionesNoLiquidadas() {
-	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
-	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from TransaccionPlaya where liquidacion is null").list();
-	for (Object object : list) {
-	    transaccionPlaya.add((TransaccionPlaya) object);
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
-	return transaccionPlaya;
-    }
 
-    public List<TransaccionPlaya> findNoLiquidadasByFechaDesdeHasta(Date fechaDesde, Date fechaHasta) {
-	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
-	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from TransaccionPlaya where liquidacion is null and fecha>=? and fecha<=?")
-		.setParameter(0, fechaDesde).setParameter(1, fechaHasta)
-		.list();
-	for (Object object : list) {
-	    transaccionPlaya.add((TransaccionPlaya) object);
+	public void save(TransaccionPlaya transaccionPlaya) {
+		getSessionFactory().getCurrentSession().save(transaccionPlaya);
 	}
-	return transaccionPlaya;
-    }
-    
-    @Override
-    public List<TransaccionPlaya> findByCuentaPlaya(CuentaPlaya cuentaPlaya) {
-	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
-	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from TransaccionPlaya where cuentaPlaya = ?").setParameter(0, cuentaPlaya).list();
-	for (Object object : list) {
-	    transaccionPlaya.add((TransaccionPlaya) object);
+
+	public void update(TransaccionPlaya transaccionPlaya) {
+		getSessionFactory().getCurrentSession().update(transaccionPlaya);
 	}
-	return transaccionPlaya;
-    }
 
-    @Override
-    public List<TransaccionPlaya> findNoLiquidadasByCuentaPlaya(CuentaPlaya cuentaPlaya) {
-	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
-	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from TransaccionPlaya where cuentaPlaya = ? and liquidacion is null")
-		.setParameter(0, cuentaPlaya).list();
-	for (Object object : list) {
-	    transaccionPlaya.add((TransaccionPlaya) object);
+	public void delete(TransaccionPlaya transaccionPlaya) {
+		getSessionFactory().getCurrentSession().delete(transaccionPlaya);
 	}
-	return transaccionPlaya;
-    }
 
-    @Override
-    public List<TransaccionPlaya> findTransaccionesByCuentaPlaya(CuentaPlaya cuentaPlaya) {
-
-	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
-	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from TransaccionPlaya where cuentaPlaya = ?").setParameter(0, cuentaPlaya).list();
-	for (Object object : list) {
-	    transaccionPlaya.add((TransaccionPlaya) object);
+	public List<TransaccionPlaya> findAll() {
+		List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+		List<?> list = getSessionFactory().getCurrentSession()
+				.createQuery("from TransaccionPlaya").list();
+		for (Object object : list) {
+			transaccionPlaya.add((TransaccionPlaya) object);
+		}
+		return transaccionPlaya;
 	}
-	return transaccionPlaya;
 
-    }
-    
-    @Override
-    public List<TransaccionPlaya> findTransaccionesByLiquidacion(Liquidacion liquidacion) {
-
-	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
-	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from TransaccionPlaya where liquidacion = ?").setParameter(0, liquidacion).list();
-	for (Object object : list) {
-	    transaccionPlaya.add((TransaccionPlaya) object);
+	public TransaccionPlaya findByTransaccionPlayaID(int transaccionPlayaID) {
+		List<?> list = getSessionFactory()
+				.getCurrentSession()
+				.createQuery("from TransaccionPlaya where transaccionPlayaID=?")
+				.setParameter(0, transaccionPlayaID).list();
+		return (TransaccionPlaya) list.get(0);
 	}
-	return transaccionPlaya;
 
-    }
-
-    public List<TransaccionPlaya> findTransaccionesByFecha(CuentaPlaya cuentaPlaya, Date fechaD, Date fechaH) {
-	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
-	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from TransaccionPlaya as tp where " + "tp.cuentaPlaya=? and tp.fecha>=? and tp.fecha<=?")
-		.setParameter(0, cuentaPlaya).setParameter(1, fechaD).setParameter(2, fechaH).list();
-
-	if (!list.isEmpty()) {
-	    for (Object object : list) {
-		transaccionPlaya.add(((TransaccionPlaya) object));
-	    }
-	    return transaccionPlaya;
+	@Override
+	public List<TransaccionPlaya> findTransaccionesNoLiquidadas() {
+		List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+		List<?> list = getSessionFactory().getCurrentSession()
+				.createQuery("from TransaccionPlaya where liquidacion is null")
+				.list();
+		for (Object object : list) {
+			transaccionPlaya.add((TransaccionPlaya) object);
+		}
+		return transaccionPlaya;
 	}
-	return null;
-    }
+
+	public List<TransaccionPlaya> findNoLiquidadasByFechaDesdeHasta(
+			Date fechaDesde, Date fechaHasta) {
+		List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+		List<?> list = getSessionFactory()
+				.getCurrentSession()
+				.createQuery(
+						"from TransaccionPlaya where liquidacion is null and fecha>=? and fecha<=?")
+				.setParameter(0, fechaDesde).setParameter(1, fechaHasta).list();
+		for (Object object : list) {
+			transaccionPlaya.add((TransaccionPlaya) object);
+		}
+		return transaccionPlaya;
+	}
+
+	@Override
+	public List<TransaccionPlaya> findByCuentaPlaya(CuentaPlaya cuentaPlaya) {
+		List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+		List<?> list = getSessionFactory().getCurrentSession()
+				.createQuery("from TransaccionPlaya where cuentaPlaya = ?")
+				.setParameter(0, cuentaPlaya).list();
+		for (Object object : list) {
+			transaccionPlaya.add((TransaccionPlaya) object);
+		}
+		return transaccionPlaya;
+	}
+
+	@Override
+	public List<TransaccionPlaya> findNoLiquidadasByCuentaPlaya(
+			CuentaPlaya cuentaPlaya) {
+		List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+		List<?> list = getSessionFactory()
+				.getCurrentSession()
+				.createQuery(
+						"from TransaccionPlaya where cuentaPlaya = ? and liquidacion is null")
+				.setParameter(0, cuentaPlaya).list();
+		for (Object object : list) {
+			transaccionPlaya.add((TransaccionPlaya) object);
+		}
+		return transaccionPlaya;
+	}
+
+	@Override
+	public List<TransaccionPlaya> findTransaccionesByCuentaPlaya(
+			CuentaPlaya cuentaPlaya) {
+
+		List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+		List<?> list = getSessionFactory().getCurrentSession()
+				.createQuery("from TransaccionPlaya where cuentaPlaya = ?")
+				.setParameter(0, cuentaPlaya).list();
+		for (Object object : list) {
+			transaccionPlaya.add((TransaccionPlaya) object);
+		}
+		return transaccionPlaya;
+
+	}
+
+	@Override
+	public List<TransaccionPlaya> findTransaccionesByLiquidacion(
+			Liquidacion liquidacion) {
+
+		List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+		List<?> list = getSessionFactory().getCurrentSession()
+				.createQuery("from TransaccionPlaya where liquidacion = ?")
+				.setParameter(0, liquidacion).list();
+		for (Object object : list) {
+			transaccionPlaya.add((TransaccionPlaya) object);
+		}
+		return transaccionPlaya;
+
+	}
+
+	public List<TransaccionPlaya> findTransaccionesByFecha(
+			CuentaPlaya cuentaPlaya, Date fechaD, Date fechaH) {
+		List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
+		List<?> list = getSessionFactory()
+				.getCurrentSession()
+				.createQuery(
+						"from TransaccionPlaya as tp where "
+								+ "tp.cuentaPlaya=? and tp.fecha>=? and tp.fecha<=?")
+				.setParameter(0, cuentaPlaya).setParameter(1, fechaD)
+				.setParameter(2, fechaH).list();
+
+		if (!list.isEmpty()) {
+			for (Object object : list) {
+				transaccionPlaya.add(((TransaccionPlaya) object));
+			}
+			return transaccionPlaya;
+		}
+		return null;
+	}
 
 }

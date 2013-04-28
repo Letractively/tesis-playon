@@ -106,6 +106,8 @@ public class LiquidacionManagedBean implements Serializable {
 
 	private List<Liquidacion> liquidacionesList;
 
+	private List<Liquidacion> liquidacionesListPorFecha;
+
 	public IPlayaService getPlayaService() {
 		return playaService;
 	}
@@ -394,6 +396,22 @@ public class LiquidacionManagedBean implements Serializable {
 
 	public void setLiquidacionesList(List<Liquidacion> liquidacionesList) {
 		this.liquidacionesList = liquidacionesList;
+	}
+
+	public List<Liquidacion> getLiquidacionesListPorFecha() {
+		if (liquidacionesListPorFecha == null) {
+			Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde
+					: new Date(01012012));
+			Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta
+					: Calendar.getInstance().getTime());
+			liquidacionesListPorFecha = getLiquidacionService().findByFecha(
+					fechaDesde, fechaHasta);
+		}
+		return liquidacionesListPorFecha;
+	}
+
+	public void setLiquidacionesListPorFecha(List<Liquidacion> liquidacionesList) {
+		this.liquidacionesList = liquidacionesListPorFecha;
 	}
 
 	public List<Playa> getFilteredPlayas() {

@@ -16,4 +16,6 @@ public interface ILiquidacionDao {
     List<Liquidacion> findAll();
     
     List<Liquidacion> findByFecha(Date fecha);
+
+	List<Liquidacion> findByFecha(Date fechaDesde, Date fechaHasta);
 }
