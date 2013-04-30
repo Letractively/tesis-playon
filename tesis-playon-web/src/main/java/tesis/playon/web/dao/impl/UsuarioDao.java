@@ -103,4 +103,15 @@ public class UsuarioDao implements IUsuarioDao {
 	}
 	return true;
     }
+    
+    @Override
+    public boolean existeEmail(String email,String userName){
+	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario where email=? and nombreUser !=?")
+		.setParameter(0, email)
+		.setParameter(1, userName).list();
+	if (list.isEmpty()) {
+	    return false;
+	}
+	return true;
+    }
 }

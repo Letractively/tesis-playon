@@ -8,12 +8,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.faces.validator.ValidatorException;
 
 import org.springframework.dao.DataAccessException;
 
@@ -37,7 +40,7 @@ import tesis.playon.web.util.NotificadorUtil;
  * 
  */
 @ManagedBean(name = "clienteMB")
-@RequestScoped
+@ViewScoped
 public class ClienteManagedBean implements Serializable {
 
     private static final long serialVersionUID = -1085389423375986168L;
@@ -117,6 +120,19 @@ public class ClienteManagedBean implements Serializable {
 
     private NotificadorUtil notificador;
 
+    @PostConstruct
+    private void init() {
+	clienteList = new ArrayList<Cliente>();
+	clienteList.addAll(getClienteService().findAll());
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	String userName = facesContext.getExternalContext().getRemoteUser();
+	if (userName != null) {
+	    Usuario usuario = getUsuarioService().findByNombreUsuario(userName);
+	    Cliente cliente = getClienteService().findByUsuario(usuario);
+	    cuentaClienteSelected = cliente != null ? cliente.getCuentaCliente() : null;
+	}
+    }
+
     public String addClienteAdmin() {
 	try {
 	    Cliente cliente = new Cliente();
@@ -136,18 +152,18 @@ public class ClienteManagedBean implements Serializable {
 	    getCuentaClienteService().update(cuenta);
 
 	    mail = new Mail();
-	    mail.setAsunto("Felicitaciones " + getNombreUser() + "ya sos usuario de PLAYON!");
+	    mail.setAsunto("Felicitaciones " + getNombreUser() + " ya sos usuario de PLAYÓN!");
 	    mail.setDestinatario(getEmail());
 	    mail.setMensaje("Estimado: "
 		    + getNombre()
-		    + " usted ya es usuario de PLAYON RED DE PLAYAS.\n\n Acceda desde aquí y busque su playa de estacionamiento! \n\n http://localhost:8080/tesis-playon-web/ \n\n ¡Muchas gracias!");
+		    + " usted ya es usuario de PLAYÓN RED DE PLAYAS.\n\n Acceda desde aquí y busque su playa de estacionamiento! \n\n http://localhost:8080/tesis-playon-web/ \n\n ¡Muchas gracias!");
 	    notificador = new NotificadorUtil();
 	    notificador.enviar(mail);
 	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
 	    getRolesPorUsuarioService().save(rp);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el cliente: "
-		    + cliente.getUsuario().getApellido() + " " + cliente.getUsuario().getNombre(), "");
+		    + cliente.getUsuario().getApellido() + " " + cliente.getUsuario().getNombre(), null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_CLIENTES;
 	} catch (DataAccessException e) {
@@ -178,8 +194,8 @@ public class ClienteManagedBean implements Serializable {
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
 	} catch (Exception e) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados", "Usuario duplicado");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+		    "No se pudo cargar credito en su cuenta. Disculpe las molestias ocacionadas.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
     }
@@ -206,17 +222,18 @@ public class ClienteManagedBean implements Serializable {
 	    getRolesPorUsuarioService().save(rp);
 
 	    mail = new Mail();
-	    mail.setAsunto("Felicitaciones " + getNombreUser() + "ya sos usuario de PLAYON!");
+	    mail.setAsunto("Felicitaciones " + getNombreUser() + " ya sos usuario de PLAYÓN!");
 	    mail.setDestinatario(getEmail());
 	    mail.setMensaje("Estimado: "
 		    + getNombre()
 		    + " usted ya es usuario de PLAYON RED DE PLAYAS.\n\n Acceda desde aquí y busque su playa de estacionamiento! \n\n http://localhost:8080/tesis-playon-web/ \n\n ¡Muchas gracias!");
 	    notificador = new NotificadorUtil();
 	    notificador.enviar(mail);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el cliente: "
-		    + cliente.getUsuario().getApellido() + " " + cliente.getUsuario().getNombre(), "");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "Se registró correctamente el cliente: " + cliente.getUsuario().getApellido() + " "
+			    + cliente.getUsuario().getNombre(), null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return "solicitudclienteend.html?faces-redirect=true";
+	    return "solicitudclienteend";
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo agregar el cliente: " + cliente.getUsuario().getApellido() + " "
@@ -249,8 +266,7 @@ public class ClienteManagedBean implements Serializable {
 	    e.printStackTrace();
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo crear la Cuenta del Cliente. Nombre de usuario o mail Duplicados",
-		    "Usuario duplicado");
+		    "Error, no se pudo crear la Cuenta del Cliente. Nombre de usuario o mail Duplicados", null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	return null;
@@ -285,21 +301,16 @@ public class ClienteManagedBean implements Serializable {
 
 	    getUsuarioService().update(usuario);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se borró el cliente: "
-		    + clienteSelected.getUsuario().getApellido() + " " + clienteSelected.getUsuario().getNombre(), "");
+		    + clienteSelected.getUsuario().getApellido() + " " + clienteSelected.getUsuario().getNombre(), null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_CLIENTES;
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo borrar el cliente: " + clienteSelected.getUsuario().getApellido() + " "
-			    + clienteSelected.getUsuario().getNombre(), "Por favor, intentelo mas tarde.");
+			    + clienteSelected.getUsuario().getNombre(), "Por favor, inténtelo más tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	return ERROR;
-    }
-
-    public String updateClienteAdmin(Cliente cliente) {
-	clienteSelected = cliente;
-	return "clienteeditadmin";
     }
 
     public String updateClienteAdmin() {
@@ -307,8 +318,8 @@ public class ClienteManagedBean implements Serializable {
 	    Usuario usuario = clienteSelected.getUsuario();
 	    getUsuarioService().update(usuario);
 	    getClienteService().update(clienteSelected);
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La cliente se modificó correctamente",
-		    "");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "El cliente se actualizó correctamente", null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_CLIENTES;
 	} catch (DataAccessException e) {
@@ -318,32 +329,65 @@ public class ClienteManagedBean implements Serializable {
 	    e.printStackTrace();
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados", "Usuario duplicado");
+		    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados", null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
 	}
 	return ERROR;
     }
 
-    public void updateCliente(Cliente cliente) {
-	getClienteService().update(cliente);
+    public void generarNuevaContraseñaCliente() {
+	try {
+	    if (clienteSelected != null) {
+		char[] elementos = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
+			'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+			'y', 'z' };
+
+		char[] conjunto = new char[8];
+		for (int i = 0; i < 8; i++) {
+		    int el = (int) (Math.random() * 37);
+		    conjunto[i] = (char) elementos[el];
+		}
+		String pass = new String(conjunto);
+		
+		mail = new Mail();
+		    mail.setAsunto("Nueva clave de acceso");
+		    mail.setDestinatario(clienteSelected.getUsuario().getEmail());
+		    mail.setMensaje("Estimado: "
+			    + clienteSelected.getUsuario().getNombre()
+			    + " se ha generado una nueva clave para que acceda a nuestro sistema.\n\nLa nueva clave es: "
+			    + pass + " \n\n ¡Muchas gracias!");
+		    notificador = new NotificadorUtil();
+		    notificador.enviar(mail);
+		    
+		    clienteSelected.getUsuario().setPassword(pass);
+		    getUsuarioService().update(clienteSelected.getUsuario());
+		    
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			    "Se generó correctamente la nueva clave del cliente: "
+				    + clienteSelected.getUsuario().getApellido() + " "
+				    + clienteSelected.getUsuario().getNombre(), null);
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+		
+	    }
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo generar la clave de acceso del cliente.", null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
+	}
+
     }
 
-    public void reset() {
-	this.setBarrio(null);
-	this.setCuentaCliente(null);
-	this.setDomicilio("");
-	this.setNroCliente(0);
-	this.setTelefono("");
-	this.setUsuario(null);
-	this.setNombre("");
-	this.setApellido("");
-	this.setEmail("");
-	this.setNroDoc(0);
-	this.setPassword("");
-	this.setNombreUser("");
-	ClienteManagedBean.clienteSelected = null;
+    public void isValidEmailUsuario(FacesContext context, UIComponent component, Object value) {
+	String email = (String) value;
+	if (getUsuarioService().existeEmail(email,clienteSelected.getUsuario().getNombreUser())) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "El email " + email
+		    + " ya se encuentra registrado por otro cliente.", null);
+	    throw new ValidatorException(message);
+	}
     }
-
+    
     public IUsuarioService getUsuarioService() {
 	return usuarioService;
     }
@@ -385,8 +429,6 @@ public class ClienteManagedBean implements Serializable {
     }
 
     public List<Cliente> getClienteList() {
-	clienteList = new ArrayList<Cliente>();
-	clienteList.addAll(getClienteService().findAll());
 	return clienteList;
     }
 
@@ -560,11 +602,6 @@ public class ClienteManagedBean implements Serializable {
     }
 
     public CuentaCliente getCuentaClienteSelected() {
-	FacesContext facesContext = FacesContext.getCurrentInstance();
-	String userName = facesContext.getExternalContext().getRemoteUser();
-	Usuario usuario = getUsuarioService().findByNombreUsuario(userName);
-	Cliente cliente = getClienteService().findByUsuario(usuario);
-	cuentaClienteSelected = cliente.getCuentaCliente();
 	return cuentaClienteSelected;
     }
 

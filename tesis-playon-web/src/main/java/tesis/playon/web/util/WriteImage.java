@@ -70,6 +70,28 @@ public class WriteImage implements Serializable {
 	}
     }
     
+    public static void writeFotoTemporal(FotoPublicidad fotoPublicidad) {
+	ExternalContext extContext = null;
+	try {
+	    if(fotoPublicidad != null){
+		String sep = File.separator;
+		extContext = FacesContext.getCurrentInstance().getExternalContext();
+
+		String path = extContext.getRealPath("resources" + sep + "tmp") + sep;
+
+		File file = new File(path + fotoPublicidad.getNombre());
+
+		// FileOutputStream fos = new FileOutputStream("images\\output.jpg"); //windows
+		FileOutputStream fos = new FileOutputStream(file);
+
+		fos.write(fotoPublicidad.getImage());
+		fos.close();
+	    }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
+    
     public static void writeFotosPublicidad(List<FotoPublicidad> fotosList) {
 	ExternalContext extContext = null;
 	try {

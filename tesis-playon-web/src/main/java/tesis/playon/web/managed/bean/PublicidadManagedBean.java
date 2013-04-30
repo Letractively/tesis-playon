@@ -25,6 +25,7 @@ import tesis.playon.web.model.Publicidad;
 import tesis.playon.web.service.IEstadoPublicidadService;
 import tesis.playon.web.service.IFotoPublicidadService;
 import tesis.playon.web.service.IPublicidadService;
+import tesis.playon.web.util.WriteImage;
 
 /**
  * @author pablo
@@ -74,6 +75,8 @@ public class PublicidadManagedBean implements Serializable {
     private UploadedFile foto;
     
     private static List<Publicidad> publicidadList;
+    
+    private boolean upload;
 
     @PostConstruct
     private void init() {
@@ -81,6 +84,8 @@ public class PublicidadManagedBean implements Serializable {
 	today = new Date();
 	
 	publicidadList = getPublicidadService().findAllByEstadoVigente();
+	
+	upload=false;
     }
 
     public String addSolicitudPublicidad() {
@@ -139,6 +144,8 @@ public class PublicidadManagedBean implements Serializable {
     public void upload() {
 	if (foto != null) {
 	    fotoPublicidad = new FotoPublicidad(foto.getFileName(), foto.getContents(), url);
+	    upload=true;
+	    WriteImage.writeFotoTemporal(fotoPublicidad);
 	    FacesMessage msg = new FacesMessage("La imagen: " + foto.getFileName() + " se guardó correctamente.", null);
 	    FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
@@ -401,6 +408,20 @@ public class PublicidadManagedBean implements Serializable {
      */
     public void setPublicidadList(List<Publicidad> publicidadList) {
         PublicidadManagedBean.publicidadList = publicidadList;
+    }
+
+    /**
+     * @return the upload
+     */
+    public boolean isUpload() {
+        return upload;
+    }
+
+    /**
+     * @param upload the upload to set
+     */
+    public void setUpload(boolean upload) {
+        this.upload = upload;
     }
 
 }

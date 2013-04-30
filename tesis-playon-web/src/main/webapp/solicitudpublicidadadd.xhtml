@@ -96,8 +96,7 @@
 								requiredMessage="Campo nombre empresa obligatorio"
 								maxlength="25">
 								<f:validateLength minimum="5" />
-								<p:ajax event="blur" 
-									update="nombreEmpresaMsg" />
+								<p:ajax event="blur" update="nombreEmpresaMsg" />
 							</p:inputText>
 						</p:column>
 						<p:column>
@@ -171,21 +170,39 @@
 							</p:inputText>
 						</p:column>
 						<p:column />
-
 						<p:column>
-							<h:outputLabel for="foto" value="Imagen a publicar: " />
+							<h:outputLabel value="Vista previa de la imagen: " />
 						</p:column>
-						<p:column>
-							<p:fileUpload value="#{publicidadMB.foto}" mode="simple"
-								update="messages" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+						<p:column id="images">
+							<ui:fragment rendered="#{publicidadMB.upload == false}">
+								<h:graphicImage library="fotos_publicidad"
+									name="colocar_imagen.png" width="130px" height="200px" />
+							</ui:fragment>
+							<ui:fragment rendered="#{publicidadMB.upload == true}">
+								<h:graphicImage library="tmp"
+									name="#{publicidadMB.fotoPublicidad.nombre}" width="130px"
+									height="200px" />
+							</ui:fragment>
 						</p:column>
-						<p:column>
-							<h:commandButton id="upload" value="Subir imagen"
-								actionListener="#{publicidadMB.upload}" ajax="false"
-								style="margin:0 10px 0 0; padding: 0 5px 0 5px"
-								update="messages" oncomplete="document.location.reload(true)" />
-						</p:column>
-
+						<p:column />
+						<f:facet name="footer">
+							<h:panelGrid columns="1"
+								styleClass="admin-input-text" style="display:block;">
+								<h:panelGrid columns="3" cellspacing="10"
+									styleClass="admin-input-text" style="display:block;">
+									<h:outputLabel value="Imagen a subir: " />
+									<p:fileUpload value="#{publicidadMB.foto}" mode="simple"
+										update="messages" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+									<h:commandButton id="upload" value="Subir imagen"
+										actionListener="#{publicidadMB.upload}" ajax="false"
+										style="margin:0 10px 0 0; padding: 0 5px 0 5px"
+										update="messages, images"
+										oncomplete="document.location.reload(true)" />
+								</h:panelGrid>
+								<h:outputLabel
+									value="* Tamaño de imagen recomendado: 200px de ancho - 360px de alto." />
+							</h:panelGrid>
+						</f:facet>
 					</h:panelGrid>
 				</p:panel>
 				<div align="center" style="margin-top: 10px">

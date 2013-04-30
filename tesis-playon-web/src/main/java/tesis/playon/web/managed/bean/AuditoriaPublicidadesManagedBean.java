@@ -6,6 +6,7 @@ package tesis.playon.web.managed.bean;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -47,17 +48,17 @@ public class AuditoriaPublicidadesManagedBean implements Serializable {
 
     private static Publicidad publicidadSelected;
 
-//    @PostConstruct
-//    private void init() {
-//	estadoPendiente = getEstadoPublicidadService().findByNombreEstadoPublicidad("Pendiente");
-//	publicidadesPendientesList = getPublicidadService().findByEstado(estadoPendiente);
-//	
-//	estadoAprobado = getEstadoPublicidadService().findByNombreEstadoPublicidad("Aprobada");
-//	publicidadesAprobadasList = getPublicidadService().findByEstado(estadoAprobado);
-//	
-//	estadoRechazado = getEstadoPublicidadService().findByNombreEstadoPublicidad("Rechazada");
-//	publicidadRechazadasList = getPublicidadService().findByEstado(estadoRechazado);
-//    }
+    @PostConstruct
+    private void init() {
+	estadoPendiente = getEstadoPublicidadService().findByNombreEstadoPublicidad("Pendiente");
+	publicidadesPendientesList = getPublicidadService().findByEstado(estadoPendiente);
+	
+	estadoAprobado = getEstadoPublicidadService().findByNombreEstadoPublicidad("Aprobada");
+	publicidadesAprobadasList = getPublicidadService().findByEstado(estadoAprobado);
+	
+	estadoRechazado = getEstadoPublicidadService().findByNombreEstadoPublicidad("Rechazada");
+	publicidadRechazadasList = getPublicidadService().findByEstado(estadoRechazado);
+    }
 
     public void approvePublicidad() {
 	try {
@@ -144,8 +145,6 @@ public class AuditoriaPublicidadesManagedBean implements Serializable {
      * @return the publicidadesPendientesList
      */
     public List<Publicidad> getPublicidadesPendientesList() {
-	estadoPendiente = getEstadoPublicidadService().findByNombreEstadoPublicidad("Pendiente");
-	publicidadesPendientesList = getPublicidadService().findByEstado(estadoPendiente);
 	return publicidadesPendientesList;
     }
 
@@ -161,8 +160,6 @@ public class AuditoriaPublicidadesManagedBean implements Serializable {
      * @return the publicidadesAprobadasList
      */
     public List<Publicidad> getPublicidadesAprobadasList() {
-	estadoAprobado = getEstadoPublicidadService().findByNombreEstadoPublicidad("Aprobada");
-	publicidadesAprobadasList = getPublicidadService().findByEstado(estadoAprobado);
 	return publicidadesAprobadasList;
     }
 
@@ -178,8 +175,6 @@ public class AuditoriaPublicidadesManagedBean implements Serializable {
      * @return the publicidadRechazadasList
      */
     public List<Publicidad> getPublicidadRechazadasList() {
-	estadoRechazado = getEstadoPublicidadService().findByNombreEstadoPublicidad("Rechazada");
-	publicidadRechazadasList = getPublicidadService().findByEstado(estadoRechazado);
 	return publicidadRechazadasList;
     }
 

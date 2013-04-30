@@ -11,11 +11,17 @@
 	<h:form>
 
 		<p:menubar style="font-size: 0.8em;">
+		
 			<p:menuitem value="Inicio" url="#{request.contextPath}/../admin" />
+			
+<!-- 			<p:menuitem value="Principal" url="#{request.contextPath}/../index.html" /> -->
 
-			<p:submenu label="Playas">
+			<p:submenu label="Gestión de Playas">
 				<p:menuitem value="Playas"
 					url="#{request.contextPath}/../admin/playalist.html"
+					icon="ui-icon-home" />
+				<p:menuitem value="Cuentas Playas"
+					url="#"
 					icon="ui-icon-home" />
 				<p:menuitem value="Tarifas"
 					url="#{request.contextPath}/../admin/tarifalist.html"
@@ -26,6 +32,16 @@
 				<p:menuitem value="Liquidación"
 					url="#{request.contextPath}/../admin/liquidacionplayas.html"
 					icon="ui-icon-bookmark" />
+			</p:submenu>
+			
+			<p:submenu label="Gestión de Clientes">
+				<p:menuitem value="Clientes"
+					url="#{request.contextPath}/../admin/clientelist.html"
+					icon="ui-icon-star" />
+				<p:menuitem value="Cuentas Clientes"
+					url="#{request.contextPath}/../admin/clientelist.html"
+					icon="ui-icon-star" />
+				
 			</p:submenu>
 
 			<p:submenu label="Auditoría">
@@ -40,19 +56,16 @@
 					icon="ui-icon-close" />
 			</p:submenu>
 
-			<p:submenu label="Usuarios">
+			<p:submenu label="Gestión de Usuarios">
 				<p:menuitem value="Usuarios"
 					url="#{request.contextPath}/../admin/usuariolist.html"
 					icon="ui-icon-person" />
-				<p:menuitem value="Clientes"
-					url="#{request.contextPath}/../admin/clientelist.html"
-					icon="ui-icon-star" />
 				<p:menuitem value="Roles de Usuarios"
 					url="#{request.contextPath}/../admin/rolusuariolist.html"
 					icon="ui-icon-tag" />
 			</p:submenu>
 
-			<p:submenu label="Usuario">
+			<p:submenu label="Configuración de Cuenta">
 				<p:menuitem value="Cambiar Contraseña"
 					url="#{request.contextPath}/../admin/cambiarpassword.html"
 					icon="ui-icon-key" />

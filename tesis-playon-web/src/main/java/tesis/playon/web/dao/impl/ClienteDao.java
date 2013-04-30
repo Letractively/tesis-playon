@@ -40,7 +40,9 @@ public class ClienteDao implements IClienteDao {
     public Cliente findByNumeroCliente(Integer numeroCliente) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Cliente where nroCliente=?")
 		.setParameter(0, numeroCliente).list();
-	return (Cliente) list.get(0);
+	if (!list.isEmpty())
+	    return (Cliente) list.get(0);
+	return null;
     }
 
     public Cliente findByNombreUsuario(String nombreUser) {
@@ -49,22 +51,27 @@ public class ClienteDao implements IClienteDao {
 	Usuario usuario = (Usuario) list.get(0);
 	List<?> usuarioList = getSessionFactory().getCurrentSession().createQuery("from Cliente where usuario=?")
 		.setParameter(0, usuario).list();
-	return (Cliente) usuarioList.get(0);
+	if (!list.isEmpty())
+	    return (Cliente) usuarioList.get(0);
+	return null;
     }
 
     public List<Cliente> findAll() {
 	List<Cliente> clientes = new ArrayList<Cliente>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Cliente").list();
-	for (Object object : list) {
-	    clientes.add((Cliente) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		clientes.add((Cliente) object);
+	    }
+	    return clientes;
 	}
-	return clientes;
+	return null;
     }
 
     public Cliente findByIdUsuario(Usuario usuario) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Cliente where usuario=?")
 		.setParameter(0, usuario).list();
-	if(!list.isEmpty())
+	if (!list.isEmpty())
 	    return (Cliente) list.get(0);
 	return null;
     }

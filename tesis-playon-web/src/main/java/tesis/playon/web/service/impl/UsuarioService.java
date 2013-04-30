@@ -74,4 +74,9 @@ public class UsuarioService implements IUsuarioService {
     public boolean existeUserName(String userName){
 	return getUsuarioDao().existeUserName(userName);
     }
+    
+    @Override
+    public boolean existeEmail(String email,String userName){
+	return getUsuarioDao().existeEmail(email, userName);
+    }
 }
