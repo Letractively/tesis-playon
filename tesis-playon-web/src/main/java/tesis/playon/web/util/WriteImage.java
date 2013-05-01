@@ -117,7 +117,7 @@ public class WriteImage implements Serializable {
     public static void getFotoPerfilCliente(Usuario usuario) {
 	ExternalContext extContext = null;
 	try {
-	    if (usuario.getFotoPerfil() != null) {
+	    if (usuario.getFotoUsuario() != null) {
 		String sep = File.separator;
 		extContext = FacesContext.getCurrentInstance().getExternalContext();
 
@@ -129,7 +129,7 @@ public class WriteImage implements Serializable {
 		// FileOutputStream fos = new FileOutputStream("images\\output.jpg"); //windows
 		FileOutputStream fos = new FileOutputStream(file);
 
-		fos.write(usuario.getFotoPerfil());
+		fos.write(usuario.getFotoUsuario().getFotoUsuario());
 		fos.close();
 
 	    }

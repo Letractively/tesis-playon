@@ -82,7 +82,7 @@
 				</p:confirmDialog>
 
 				<p:commandLink id="keys" title="Resetear clave de acceso"
-					 type="button" onclick="confirmationClave.show();">
+					type="button" onclick="confirmationClave.show();">
 					<f:setPropertyActionListener value="#{cliente}"
 						target="#{clienteMB.clienteSelected}" />
 					<h:graphicImage library="images/icons" name="keys.png" width="32"
@@ -93,8 +93,8 @@
 					header="Nueva contraseña" severity="alert"
 					widgetVar="confirmationClave">
 					<div align="right">
-						<p:commandButton id="confirmClave" value="Aceptar" update="messages"
-							oncomplete="confirmationClave.hide();"
+						<p:commandButton id="confirmClave" value="Aceptar"
+							update="messages" oncomplete="confirmationClave.hide();"
 							action="#{clienteMB.generarNuevaContraseñaCliente}" ajax="false">
 						</p:commandButton>
 						<p:commandButton id="declineClave" value="Cancelar"
@@ -125,93 +125,102 @@
 		<p:dialog header="Datos del Cliente" widgetVar="popupClienteDatos"
 			resizable="false" id="carDlg" showEffect="fade" modal="true"
 			draggable="false">
+			<h:panelGrid columns="1">
+				<h:panelGrid id="displayView" columns="2" cellpadding="8"
+					style="margin:0 auto;">
 
-			<h:panelGrid id="displayView" columns="2" cellpadding="8"
-				style="margin:0 auto;">
+					<p:column>
+						<h:outputText value="Usuario: " />
+					</p:column>
+					<p:column>
+						<h:outputText
+							value="#{clienteMB.clienteSelected.usuario.nombreUser}"
+							style="font-weight:bold" />
+					</p:column>
 
-				<p:column>
-					<h:outputText value="Usuario: " />
-				</p:column>
-				<p:column>
-					<h:outputText
-						value="#{clienteMB.clienteSelected.usuario.nombreUser}"
-						style="font-weight:bold" />
-				</p:column>
+					<p:column>
+						<h:outputText value="Nombre: " />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{clienteMB.clienteSelected.usuario.nombre}"
+							style="font-weight:bold" />
+					</p:column>
 
-				<p:column>
-					<h:outputText value="Nombre: " />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{clienteMB.clienteSelected.usuario.nombre}"
-						style="font-weight:bold" />
-				</p:column>
+					<p:column>
+						<h:outputText value="Apellido: " />
+					</p:column>
+					<p:column>
+						<h:outputText
+							value="#{clienteMB.clienteSelected.usuario.apellido}"
+							style="font-weight:bold" />
+					</p:column>
 
-				<p:column>
-					<h:outputText value="Apellido: " />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{clienteMB.clienteSelected.usuario.apellido}"
-						style="font-weight:bold" />
-				</p:column>
+					<p:column>
+						<h:outputText value="Tipo Doc.: " />
+					</p:column>
+					<p:column>
+						<h:outputText
+							value="#{clienteMB.clienteSelected.usuario.tipoDoc.nombre}"
+							style="font-weight:bold" />
+					</p:column>
 
-				<p:column>
-					<h:outputText value="Tipo Doc.: " />
-				</p:column>
-				<p:column>
-					<h:outputText
-						value="#{clienteMB.clienteSelected.usuario.tipoDoc.nombre}"
-						style="font-weight:bold" />
-				</p:column>
+					<p:column>
+						<h:outputText value="Nro. Documento: " />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{clienteMB.clienteSelected.usuario.nroDoc}"
+							style="font-weight:bold" />
+					</p:column>
 
-				<p:column>
-					<h:outputText value="Nro. Documento: " />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{clienteMB.clienteSelected.usuario.nroDoc}"
-						style="font-weight:bold" />
-				</p:column>
+					<p:column>
+						<h:outputText value="E-mail: " />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{clienteMB.clienteSelected.usuario.email}"
+							style="font-weight:bold" />
+					</p:column>
 
-				<p:column>
-					<h:outputText value="E-mail: " />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{clienteMB.clienteSelected.usuario.email}"
-						style="font-weight:bold" />
-				</p:column>
+					<p:column>
+						<h:outputText value="Domicilio: " />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{clienteMB.clienteSelected.domicilio}"
+							style="font-weight:bold" />
+					</p:column>
 
-				<p:column>
-					<h:outputText value="Domicilio: " />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{clienteMB.clienteSelected.domicilio}"
-						style="font-weight:bold" />
-				</p:column>
+					<p:column>
+						<h:outputText value="Barrio: " />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{clienteMB.clienteSelected.barrio.nombre}"
+							style="font-weight:bold" />
+					</p:column>
 
-				<p:column>
-					<h:outputText value="Barrio: " />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{clienteMB.clienteSelected.barrio.nombre}"
-						style="font-weight:bold" />
-				</p:column>
+					<p:column>
+						<h:outputText value="Telefono: " />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{clienteMB.clienteSelected.telefono}"
+							style="font-weight:bold" />
+					</p:column>
 
-				<p:column>
-					<h:outputText value="Telefono: " />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{clienteMB.clienteSelected.telefono}"
-						style="font-weight:bold" />
-				</p:column>
+					<p:column>
+						<h:outputText value="Habilitado: " />
+					</p:column>
+					<p:column>
+						<h:outputText
+							value="#{clienteMB.clienteSelected.usuario.enable ? 'Si' : 'No'}"
+							style="font-weight:bold" />
+					</p:column>
 
-				<p:column>
-					<h:outputText value="Habilitado: " />
+				</h:panelGrid>
+				
+				<p:column style="text-align:right">
+					<div align="right">
+						<p:commandButton id="btnAceptarPlayas" value="Aceptar"
+							onclick="popupClienteDatos.hide()" type="button" />
+					</div>
 				</p:column>
-				<p:column>
-					<h:outputText
-						value="#{clienteMB.clienteSelected.usuario.enable ? 'Si' : 'No'}"
-						style="font-weight:bold" />
-				</p:column>
-
 			</h:panelGrid>
 		</p:dialog>
 

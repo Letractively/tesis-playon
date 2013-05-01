@@ -16,6 +16,7 @@ import org.primefaces.model.UploadedFile;
 
 import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Cliente;
+import tesis.playon.web.model.FotoUsuario;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IClienteService;
@@ -82,7 +83,11 @@ public class PerfilClienteManagedBean implements Serializable {
 
     public String upload() {
 	try {
-	    this.cliente.getUsuario().setFotoPerfil(fotoPerfilFile.getContents());
+	    
+	    FotoUsuario foto = new FotoUsuario(fotoPerfilFile.getContents());
+	    // realizar el save.
+	    
+	    this.cliente.getUsuario().setFotoUsuario(foto);
 	    getUsuarioService().update(this.cliente.getUsuario());
 	    usuario = cliente.getUsuario();
 	    

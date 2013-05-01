@@ -5,7 +5,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,14 +46,12 @@ public class CuentaCliente implements Serializable{
 
     public CuentaCliente() {
 	super();
-	this.nroCuenta = (int) (Math.random() * 1000) + 1;
 	this.fechaCreacion = new Timestamp(Calendar.getInstance().getTimeInMillis());
     }
 
-    public CuentaCliente(float saldo, Date fechaCreacion, Cliente cliente) {
+    public CuentaCliente(Cliente cliente) {
 	super();
-	this.nroCuenta = (int) (Math.random() * 1000) + 1;
-	this.saldo = saldo;
+	this.saldo = 0.0f;
 	this.fechaCreacion = new Timestamp(Calendar.getInstance().getTimeInMillis());
 	this.cliente = cliente;
     }

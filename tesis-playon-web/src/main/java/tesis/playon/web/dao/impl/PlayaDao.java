@@ -39,7 +39,9 @@ public class PlayaDao implements IPlayaDao {
 	List<?> list = getSessionFactory().getCurrentSession()
 		.createQuery("from Playa where nombreComercial=?  order by razonSocial")
 		.setParameter(0, nombreComercial).list();
-	return (Playa) list.get(0);
+	if (!list.isEmpty())
+	    return (Playa) list.get(0);
+	return null;
     }
 
     public Playa findByRazonSocial(String razonSocial) {

@@ -130,7 +130,7 @@ public class AuditoriaPlayaManagedBean implements Serializable {
 	    }
 	    getPlayaService().update(playaSeleccionada);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, playaSeleccionada.getNombreComercial()
-		    + " se modificó correctamente", "");
+		    + " se actualizó correctamente", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return "playaslist";
 

@@ -61,6 +61,7 @@
 						</p:column>
 						<p:column>
 							<p:inputText id="cuit" value="#{playaMB.cuit}" required="true"
+								style="width: 200px"
 								requiredMessage="Campo C.U.I.T. obligatorio" maxlength="14">
 								<f:validateLength minimum="12" />
 								<p:ajax event="blur" update="cuitMsg" />
@@ -103,7 +104,7 @@
 						</p:column>
 						<p:column>
 							<p:inputText id="telefono" value="#{playaMB.telefono}"
-								maxlength="25">
+								maxlength="25" style="width: 200px">
 								<p:ajax event="blur" update="telefonoMsg" />
 							</p:inputText>
 						</p:column>
@@ -132,7 +133,7 @@
 						</p:column>
 						<p:column>
 							<p:inputText id="url" feedback="true" value="#{playaMB.url}"
-								type="url" style="width: 200px" required="true">
+								type="url" style="width: 200px">
 								<p:ajax event="blur" update="url" listener="#{playaMB.addHttp}" />
 							</p:inputText>
 						</p:column>
@@ -212,7 +213,7 @@
 						</p:column>
 						<p:column>
 							<p:inputText id="nroDoc" value="#{playaMB.nroDoc}"
-								required="true"
+								required="true" style="width: 200px"
 								requiredMessage="Campo nro. documento obligatorio"
 								type="numeric" maxlength="10">
 								<f:validateLength minimum="6" />

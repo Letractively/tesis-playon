@@ -42,14 +42,11 @@
 	<bean id="EstadoDenuncia" class="tesis.playon.web.model.EstadoDenuncia" />
 	<bean id="EstadoPlaya" class="tesis.playon.web.model.EstadoPlaya" />
 	<bean id="EstadoPromocion" class="tesis.playon.web.model.EstadoPromocion" />
-
 	<bean id="EstadoPublicidad" class="tesis.playon.web.model.EstadoPublicidad" />
-
 	<bean id="Favorito" class="tesis.playon.web.model.Favorito" />
 	<bean id="Foto" class="tesis.playon.web.model.Foto" />
-	
 	<bean id="FotoPublicidad" class="tesis.playon.web.model.FotoPublicidad" />
-	
+	<bean id="FotoUsuario" class="tesis.playon.web.model.FotoUsuario" />
 	<bean id="Localidad" class="tesis.playon.web.model.Localidad" />
 	<bean id="MarcaVehiculo" class="tesis.playon.web.model.MarcaVehiculo" />
 	<bean id="ModeloVehiculo" class="tesis.playon.web.model.ModeloVehiculo" />
@@ -59,9 +56,7 @@
 	<!-- <bean id="Posicion" class="tesis.playon.web.model.Posicion" /> -->
 	<bean id="Promocion" class="tesis.playon.web.model.Promocion" />
 	<bean id="Provincia" class="tesis.playon.web.model.Provincia" />
-	
 	<bean id="Publicidad" class="tesis.playon.web.model.Publicidad" />
-	
 	<bean id="RolesPorUsuario" class="tesis.playon.web.model.RolesPorUsuario" />
 	<bean id="RolUsuario" class="tesis.playon.web.model.RolUsuario" />
 	<bean id="Tarifa" class="tesis.playon.web.model.Tarifa" />
@@ -124,11 +119,9 @@
 	<bean id="EstadoPromocionService" class="tesis.playon.web.service.impl.EstadoPromocionService">
 		<property name="estadoPromocionDao" ref="EstadoPromocionDao" />
 	</bean>
-	
 	<bean id="EstadoPublicidadService" class="tesis.playon.web.service.impl.EstadoPublicidadService">
 		<property name="estadoPublicidadDao" ref="EstadoPublicidadDao" />
 	</bean>
-	
 	<bean id="EmpleadoService" class="tesis.playon.web.service.impl.EmpleadoService">
 		<property name="empleadoDao" ref="EmpleadoDao" />
 	</bean>
@@ -138,9 +131,12 @@
 	<bean id="FotoService" class="tesis.playon.web.service.impl.FotoService">
 		<property name="fotoDao" ref="FotoDao" />
 	</bean>
-	
 	<bean id="FotoPublicidadService" class="tesis.playon.web.service.impl.FotoPublicidadService">
 		<property name="fotoPublicidadDao" ref="FotoPublicidadDao" />
+	</bean>
+	
+	<bean id="FotoUsuarioService" class="tesis.playon.web.service.impl.FotoUsuarioService">
+		<property name="fotoUsuarioDao" ref="FotoUsuarioDao" />
 	</bean>
 	
 	<bean id="LocalidadService" class="tesis.playon.web.service.impl.LocalidadService">
@@ -238,11 +234,9 @@
 	<bean id="CuentaPlayaDao" class="tesis.playon.web.dao.impl.CuentaPlayaDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
-
 	<bean id="DenunciaVehiculoDao" class="tesis.playon.web.dao.impl.DenunciaVehiculoDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
-
 	<bean id="DetalleEstadiaDao" class="tesis.playon.web.dao.impl.DetalleEstadiaDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
@@ -258,11 +252,9 @@
 	<bean id="EstadoDenunciaDao" class="tesis.playon.web.dao.impl.EstadoDenunciaDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
-	
 	<bean id="EstadoPublicidadDao" class="tesis.playon.web.dao.impl.EstadoPublicidadDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
-	
 	<bean id="EmpleadoDao" class="tesis.playon.web.dao.impl.EmpleadoDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
@@ -274,6 +266,9 @@
 	</bean>
 	
 	<bean id="FotoPublicidadDao" class="tesis.playon.web.dao.impl.FotoPublicidadDao">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
+	<bean id="FotoUsuarioDao" class="tesis.playon.web.dao.impl.FotoUsuarioDao">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
 	
@@ -419,6 +414,7 @@
 				<value>tesis.playon.web.model.Favorito</value>
 				<value>tesis.playon.web.model.Foto</value>
 				<value>tesis.playon.web.model.FotoPublicidad</value>
+				<value>tesis.playon.web.model.FotoUsuario</value>
 				<value>tesis.playon.web.model.HistorialDeCambio</value>
 				<value>tesis.playon.web.model.Liquidacion</value>
 				<value>tesis.playon.web.model.Localidad</value>

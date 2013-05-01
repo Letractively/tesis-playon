@@ -147,8 +147,8 @@ public class ClienteManagedBean implements Serializable {
 	    cliente.setNroCliente(cliente.getNroCliente());
 
 	    getClienteService().save(cliente);
-	    cliente = getClienteService().findByNumeroCliente(cliente.getNroCliente());
 	    cuenta.setCliente(cliente);
+	    cuenta.setNroCuenta(cliente.getId() + 1000);
 	    getCuentaClienteService().update(cuenta);
 
 	    mail = new Mail();
@@ -180,26 +180,6 @@ public class ClienteManagedBean implements Serializable {
 	return ERROR;
     }
 
-    public void cargarSaldo() {
-	try {
-	    float saldoCliente = cliente.getCuentaCliente().getSaldo();
-	    cliente.getCuentaCliente().setSaldo(saldoCliente + saldo);
-	    getCuentaClienteService().update(cliente.getCuentaCliente());
-
-	    FacesContext.getCurrentInstance().addMessage(
-		    null,
-		    new FacesMessage(FacesMessage.SEVERITY_INFO, "Transacción exitosa", "Se agregó a su cuenta $"
-			    + getSaldo() + " argentinos. ¡Muchas Gracias!"));
-
-	} catch (DataAccessException e) {
-	    e.printStackTrace();
-	} catch (Exception e) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-		    "No se pudo cargar credito en su cuenta. Disculpe las molestias ocacionadas.");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-    }
-
     public String addSolicitudCliente() {
 	try {
 	    Cliente cliente = new Cliente();
@@ -214,8 +194,8 @@ public class ClienteManagedBean implements Serializable {
 	    cliente.setNroCliente(cliente.getNroCliente());
 
 	    getClienteService().save(cliente);
-	    cliente = getClienteService().findByNumeroCliente(cliente.getNroCliente());
 	    cuenta.setCliente(cliente);
+	    cuenta.setNroCuenta(cliente.getId() + 1000);
 	    getCuentaClienteService().update(cuenta);
 
 	    RolesPorUsuario rp = new RolesPorUsuario(usuario.getNombreUser(), "ROLE_CLIENT");
@@ -275,10 +255,7 @@ public class ClienteManagedBean implements Serializable {
     public CuentaCliente addCuentaCliente() {
 	try {
 	    CuentaCliente cuenta = new CuentaCliente();
-	    cuenta.setFechaCreacion(cuenta.getFechaCreacion());
-	    cuenta.setNroCuenta(cuenta.getNroCuenta());
-	    cuenta.setSaldo(getSaldo());
-	    cuenta.setCliente(getCliente());
+	    cuenta.setSaldo(0.0f);
 	    getCuentaClienteService().save(cuenta);
 	    return cuenta;
 	} catch (DataAccessException e) {
@@ -321,12 +298,15 @@ public class ClienteManagedBean implements Serializable {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "El cliente se actualizó correctamente", null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    
 	    return LISTA_CLIENTES;
+	    
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error,el cliente no se pudo modificar", "Por favor, intentelo mas tarde.");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
+	    
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados", null);
@@ -334,6 +314,26 @@ public class ClienteManagedBean implements Serializable {
 	    e.printStackTrace();
 	}
 	return ERROR;
+    }
+
+    public void cargarSaldo() {
+	try {
+	    float saldoCliente = cliente.getCuentaCliente().getSaldo();
+	    cliente.getCuentaCliente().setSaldo(saldoCliente + saldo);
+	    getCuentaClienteService().update(cliente.getCuentaCliente());
+
+	    FacesContext.getCurrentInstance().addMessage(
+		    null,
+		    new FacesMessage(FacesMessage.SEVERITY_INFO, "Transacción exitosa", "Se agregó a su cuenta $"
+			    + getSaldo() + " argentinos. ¡Muchas Gracias!"));
+
+	} catch (DataAccessException e) {
+	    e.printStackTrace();
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+		    "No se pudo cargar credito en su cuenta. Disculpe las molestias ocacionadas.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
     }
 
     public void generarNuevaContraseñaCliente() {
@@ -349,26 +349,25 @@ public class ClienteManagedBean implements Serializable {
 		    conjunto[i] = (char) elementos[el];
 		}
 		String pass = new String(conjunto);
-		
+
 		mail = new Mail();
-		    mail.setAsunto("Nueva clave de acceso");
-		    mail.setDestinatario(clienteSelected.getUsuario().getEmail());
-		    mail.setMensaje("Estimado: "
-			    + clienteSelected.getUsuario().getNombre()
-			    + " se ha generado una nueva clave para que acceda a nuestro sistema.\n\nLa nueva clave es: "
-			    + pass + " \n\n ¡Muchas gracias!");
-		    notificador = new NotificadorUtil();
-		    notificador.enviar(mail);
-		    
-		    clienteSelected.getUsuario().setPassword(pass);
-		    getUsuarioService().update(clienteSelected.getUsuario());
-		    
-		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-			    "Se generó correctamente la nueva clave del cliente: "
-				    + clienteSelected.getUsuario().getApellido() + " "
-				    + clienteSelected.getUsuario().getNombre(), null);
-		    FacesContext.getCurrentInstance().addMessage(null, message);
-		
+		mail.setAsunto("Nueva clave de acceso");
+		mail.setDestinatario(clienteSelected.getUsuario().getEmail());
+		mail.setMensaje("Estimado: " + clienteSelected.getUsuario().getNombre()
+			+ " se ha generado una nueva clave para que acceda a nuestro sistema.\n\nLa nueva clave es: "
+			+ pass + " \n\n ¡Muchas gracias!");
+		notificador = new NotificadorUtil();
+		notificador.enviar(mail);
+
+		clienteSelected.getUsuario().setPassword(pass);
+		getUsuarioService().update(clienteSelected.getUsuario());
+
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			"Se generó correctamente la nueva clave del cliente: "
+				+ clienteSelected.getUsuario().getApellido() + " "
+				+ clienteSelected.getUsuario().getNombre(), null);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+
 	    }
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -381,13 +380,13 @@ public class ClienteManagedBean implements Serializable {
 
     public void isValidEmailUsuario(FacesContext context, UIComponent component, Object value) {
 	String email = (String) value;
-	if (getUsuarioService().existeEmail(email,clienteSelected.getUsuario().getNombreUser())) {
+	if (getUsuarioService().existeEmail(email, clienteSelected.getUsuario().getNombreUser())) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "El email " + email
 		    + " ya se encuentra registrado por otro cliente.", null);
 	    throw new ValidatorException(message);
 	}
     }
-    
+
     public IUsuarioService getUsuarioService() {
 	return usuarioService;
     }

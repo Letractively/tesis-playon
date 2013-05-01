@@ -35,10 +35,13 @@ public class CuentaClienteDao implements ICuentaClienteDao {
     public List<CuentaCliente> findAll() {
 	List<CuentaCliente> colores = new ArrayList<CuentaCliente>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from CuentaCliente").list();
-	for (Object object : list) {
-	    colores.add((CuentaCliente) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		colores.add((CuentaCliente) object);
+	    }
+	    return colores;
 	}
-	return colores;
+	return null;
     }
 
     public CuentaCliente findByNroCuenta(Integer nroCuenta) {
