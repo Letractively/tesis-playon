@@ -14,7 +14,7 @@ IN pPromociones TINYINT
 BEGIN
     SELECT p.barrioID, p.cuit, p.disponibilidad, p.domicilio, p.telefono, p.email,
         p.estadoPlayaID, p.nombreComercial, p.latitud, p.longitud, p.razonSocial,
-        p.playaID
+        p.playaID, p.url
     FROM playa p
     WHERE ((p.playaID IN (SELECT DISTINCT t.playaID
                             FROM tarifa t
