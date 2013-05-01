@@ -38,4 +38,6 @@ public interface IPlayaService {
     boolean existeEmail(String email);
     
     List<Playa> findByFechaDesdeHasta(Date fechaDesde, Date fechaHasta);
+
+	List<Playa> findByLikeNombreComercial(String nombreComercial);
 }

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -146,6 +147,8 @@ public class PlayaManagedBean implements Serializable {
     private TipoDoc tipoDoc;
 
     private Playa playa;
+
+    private String acTxtPlaya;
 
     // para modificar una playa
     private static Playa playaSelected;
@@ -373,6 +376,18 @@ public class PlayaManagedBean implements Serializable {
 	    e.printStackTrace();
 	}
 	return ERROR;
+    }
+
+    public List<String> complete(String query) {
+	List<String> results = new ArrayList<String>();
+
+	List<Playa> playas = this.getPlayaService().findByLikeNombreComercial(query);
+
+	for (Playa nombrePlaya : playas) {
+	    results.add(nombrePlaya.getNombreComercial());
+	}
+
+	return results;
     }
 
     public void addHttp() {
@@ -670,6 +685,14 @@ public class PlayaManagedBean implements Serializable {
 
     public Marker getMarker() {
 	return marker;
+    }
+
+    public String getAcTxtPlaya() {
+	return acTxtPlaya;
+    }
+
+    public void setAcTxtPlaya(String acTxtPlaya) {
+	this.acTxtPlaya = acTxtPlaya;
     }
 
     public void listadoPlayasPDF(Object document) throws IOException, BadElementException, DocumentException {

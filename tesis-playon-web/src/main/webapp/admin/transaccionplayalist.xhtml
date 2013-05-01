@@ -1,0 +1,224 @@
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="panelTitle" value="Listado de transacciones de playas" />
+
+	<ui:define name="panelContent" class="admin-font">
+
+		<p:panel header="Buscar Transacciones" id="panel">
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<h:outputLabel value="Playa:" for="autoCompletePlaya" />
+				<p:autoComplete id="autoCompletePlaya" dropdown="true" size="30"
+					value="#{transaccionPlayaMB.acTxtPlaya}"
+					completeMethod="#{transaccionPlayaMB.complete}" />
+
+				<h:outputText value="Desde:   " />
+				<p:calendar value="#{transaccionPlayaMB.fechaDesde}" id="calDesde" />
+
+				<h:outputText value="Hasta:   " />
+				<p:calendar value="#{transaccionPlayaMB.fechaHasta}" id="calHasta" />
+
+
+				<p:commandButton id="buscarButton" value="Buscar"
+					icon="ui-icon-search" ajax="true" update="transacciones" />
+
+			</h:panelGrid>
+		</p:panel>
+
+		<br />
+
+		<p:dataTable id="transacciones" var="transaccionPlaya"
+			value="#{transaccionPlayaMB.transaccionesPorFechaList}"
+			widgetVar="transaccionesTable" paginatorPosition="bottom"
+			paginator="true" rows="20" emptyMessage="No existen transacciones">
+
+			<f:facet name="header">  
+            		Listado de transacciones  
+        		</f:facet>
+
+			<p:column headerText="Fecha" styleClass="column-font"
+				filterBy="#{transaccionPlaya.fecha}" filterMatchMode="contains">
+				<f:facet name="header">
+					<h:outputText value="Fecha" />
+				</f:facet>
+				<h:outputText value="#{transaccionPlaya.fecha}" />
+			</p:column>
+
+			<p:column headerText="Tipo Pago" styleClass="column-font"
+				filterBy="#{transaccionPlaya.tipoPago.nombre}"
+				filterMatchMode="contains">
+				<f:facet name="header">
+					<h:outputText value="Tipo Pago" />
+				</f:facet>
+				<h:outputText value="#{transaccionPlaya.tipoPago.nombre}" />
+			</p:column>
+
+			<p:column headerText="Importe" styleClass="column-font"
+				filterBy="#{transaccionPlaya.importe}" filterMatchMode="contains">
+				<f:facet name="header">
+					<h:outputText value="Importe" />
+				</f:facet>
+				<h:outputText value="#{transaccionPlaya.importe}" />
+			</p:column>
+
+			<p:column headerText="Cobrado" styleClass="column-font"
+				filterBy="#{transaccionPlaya.detalleEstadia.cobrado}"
+				filterMatchMode="contains">
+				<f:facet name="header">
+					<h:outputText value="Cobrado" />
+				</f:facet>
+				<h:outputText
+					value="#{transaccionPlaya.detalleEstadia.cobrado ? 'Si' : 'No'}" />
+			</p:column>
+
+			<p:column headerText="Empleado" styleClass="column-font"
+				filterBy="#{transaccionPlaya.detalleEstadia.empleado.nombre}"
+				filterMatchMode="contains">
+				<f:facet name="header">
+					<h:outputText value="Empleado" />
+				</f:facet>
+				<h:outputText
+					value="#{transaccionPlaya.detalleEstadia.empleado.usuario.nombre} 
+					#{transaccionPlaya.detalleEstadia.empleado.usuario.apellido}" />
+			</p:column>
+
+			<p:column headerText="Vehículo" styleClass="column-font"
+				filterBy="#{transaccionPlaya.detalleEstadia.vehiculo.patente}"
+				filterMatchMode="contains">
+				<f:facet name="header">
+					<h:outputText value="Vehículo" />
+				</f:facet>
+				<h:outputText
+					value="#{transaccionPlaya.detalleEstadia.vehiculo.patente}" />
+			</p:column>
+
+			<f:facet name="footer">
+
+				<div align="center">
+					<h:panelGrid columns="2" header="Exportar" width="100%"
+						style="display:block;">
+						<p:column>
+							<div align="right" style="width: 485px;">
+								<h:commandLink title="Exportar a excel">
+									<p:graphicImage
+										value="http://www.primefaces.org/showcase/images/excel.png" />
+									<p:dataExporter type="xls" target="transacciones"
+										fileName="Listado de transacciones" />
+								</h:commandLink>
+
+								<h:commandLink title="Exportar a PDF">
+									<p:graphicImage
+										value="http://www.primefaces.org/showcase/images/pdf.png" />
+									<p:dataExporter type="pdf" target="transacciones"
+										preProcessor="#{transaccionPlayaMB.listadoTransaccionesPDF}"
+										fileName="Listado de transacciones" />
+								</h:commandLink>
+							</div>
+						</p:column>
+
+						<p:column>
+							<div align="right">
+								<h:commandLink id="removeFilter">
+									<p:commandLink id="addPlayaNueva" value="Quitar Filtro"
+										action="/admin/playalist.html?faces-redirect=true"
+										ajax="false" />
+								</h:commandLink>
+							</div>
+						</p:column>
+					</h:panelGrid>
+				</div>
+
+			</f:facet>
+		</p:dataTable>
+
+		<!-- DIALOG PARA VER LOS DATOS DE LA ESTADIA DE LA TRANSACCION SELECCIONADA -->
+		<p:dialog header="Datos de la Estadía" widgetVar="estadiasDialog"
+			resizable="false" id="estadiasDlg" showEffect="fade" modal="true"
+			draggable="false">
+
+			<h:panelGrid id="displayView" columns="2" cellpadding="8"
+				style="margin:0 auto;">
+
+				<p:column>
+					<h:outputText value="Ingreso: " />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{transaccionPlayaMB.estadiaSelected.fechaHoraIngreso}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Egreso: " />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{transaccionPlayaMB.estadiaSelected.fechaHoraEgreso}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Importe total: " />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{transaccionPlayaMB.estadiaSelected.importeTotal}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Cobrado: " />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{transaccionPlayaMB.estadiaSelected.cobrado}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Promoción: " />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{transaccionPlayaMB.estadiaSelected.promocion.descripcion}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Empleado: " />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{transaccionPlayaMB.estadiaSelected.empleado.usuario.nombre} 
+						#{transaccionPlayaMB.estadiaSelected.empleado.usuario.apellido}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Vehículo: " />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{transaccionPlayaMB.estadiaSelected.vehiculo.patente}"
+						style="font-weight:bold" />
+				</p:column>
+
+				<p:column>
+				</p:column>
+
+				<p:column style="text-align:right">
+					<div align="right">
+						<p:commandButton id="btnAceptar" value="Aceptar"
+							onclick="estadiasDialog.hide()" type="button" />
+					</div>
+				</p:column>
+
+			</h:panelGrid>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

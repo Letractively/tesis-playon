@@ -11,10 +11,10 @@
 	<h:form>
 
 		<p:menubar style="font-size: 0.8em;">
-		
+
 			<p:menuitem value="Inicio" url="#{request.contextPath}/../admin" />
-			
-<!-- 			<p:menuitem value="Principal" url="#{request.contextPath}/../index.html" /> -->
+
+			<!-- <p:menuitem value="Principal" url="#{request.contextPath}/../index.html" /> -->
 
 			<p:submenu label="Gestión de Playas">
 				<p:menuitem value="Playas"
@@ -23,6 +23,9 @@
 				<p:menuitem value="Cuentas Playas"
 					url="#{request.contextPath}/../admin/cuentaplayalist.html"
 					icon="ui-icon-home" />
+				<p:menuitem value="Transacciones"
+					url="#{request.contextPath}/../admin/transaccionplayalist.html"
+					icon="ui-icon-tag" />
 				<p:menuitem value="Tarifas"
 					url="#{request.contextPath}/../admin/tarifalist.html"
 					icon="ui-icon-note" />
@@ -33,7 +36,7 @@
 					url="#{request.contextPath}/../admin/liquidacionplayas.html"
 					icon="ui-icon-bookmark" />
 			</p:submenu>
-			
+
 			<p:submenu label="Gestión de Clientes">
 				<p:menuitem value="Clientes"
 					url="#{request.contextPath}/../admin/clientelist.html"
@@ -41,7 +44,7 @@
 				<p:menuitem value="Cuentas Clientes"
 					url="#{request.contextPath}/../admin/cuentaclientelist.html"
 					icon="ui-icon-star" />
-				
+
 			</p:submenu>
 
 			<p:submenu label="Auditoría">
