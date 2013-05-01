@@ -10,8 +10,13 @@ import tesis.playon.mobile.R;
 import tesis.playon.mobile.json.model.Playa;
 import tesis.playon.mobile.json.model.Playas;
 import tesis.playon.mobile.utils.Utils;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ListActivity;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,6 +40,8 @@ public class BuscarPlayasActivity extends ListActivity {
 
     // private static final String URL_PLAYAS = "http://192.168.5.61:8080/tesis-playon-restful/playas";
 
+    public static Context appContext;
+
     private Playas playas;
 
     private ListView mListView;
@@ -46,17 +53,26 @@ public class BuscarPlayasActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.playas);
-
-	// ActionBar actionBar = getActionBar();
-	// actionBar.show();
+	appContext = getApplicationContext();
 
 	// handleIntent(getIntent());
 
-	// Create the list fragment and add it as our sole content.
-	// if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
-	// ListaPlayasFragment list = new ListaPlayasFragment();
-	// getFragmentManager().beginTransaction().add(android.R.id.content, list).commit();
-	// }
+	// ActionBar
+	ActionBar actionbar = getActionBar();
+	actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+	ActionBar.Tab listaTab = actionbar.newTab().setText("Lista");
+	ActionBar.Tab mapaTab = actionbar.newTab().setText("Mapa");
+
+	Fragment listaFragment = new ListaPlayasFragment();
+	Fragment mapaFragment = new MapaPlayasFragment();
+
+	listaTab.setTabListener(new MyTabsListener(listaFragment));
+	mapaTab.setTabListener(new MyTabsListener(mapaFragment));
+
+	actionbar.addTab(listaTab);
+	actionbar.addTab(mapaTab);
+
     }
 
     @Override
@@ -70,26 +86,22 @@ public class BuscarPlayasActivity extends ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 	switch (item.getItemId()) {
 	    case R.id.action_list:
-		if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
-		    MapaPlayasFragment list = new MapaPlayasFragment();
-		    getFragmentManager().beginTransaction().add(android.R.id.content, list).commit();
-		}
 		Toast.makeText(this, "Lista de playas", Toast.LENGTH_SHORT).show();
-		break;
+		return true;
 	    case R.id.action_map:
-		if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
-		    MapaPlayasFragment list = new MapaPlayasFragment();
-		    getFragmentManager().beginTransaction().add(android.R.id.content, list).commit();
-		}
 		Toast.makeText(this, "Mapa de playas", Toast.LENGTH_SHORT).show();
-		break;
-
-	    default:
-		break;
+		return true;
 	}
-
-	return true;
+	return false;
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+	super.onSaveInstanceState(outState);
+	outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
+    }
+
+    // TODO: do not delete this code for future implementation
 
     public void onNewIntent(Intent intent) {
 	setIntent(intent);
@@ -145,10 +157,35 @@ public class BuscarPlayasActivity extends ListActivity {
 	    result.putExtras(bundle);
 	    // List<Playa> listaPlayas = playas.getPlayas();
 	    for (Playa playa : playas.getPlayas()) {
-		Log.d(LOG_TAG, "Playa: " + playa.getRazonSocial() + " Direcciï¿½n: " + playa.getDomicilio());
+		Log.d(LOG_TAG, "Playa: " + playa.getRazonSocial() + " Dirección: " + playa.getDomicilio());
 	    }
 	    llenarLista((ArrayList<Playa>) playas.getPlayas());
 	}
+    }
+
+}
+
+class MyTabsListener implements ActionBar.TabListener {
+
+    public Fragment fragment;
+
+    public MyTabsListener(Fragment fragment) {
+	this.fragment = fragment;
+    }
+
+    @Override
+    public void onTabReselected(Tab tab, FragmentTransaction ft) {
+	Toast.makeText(BuscarPlayasActivity.appContext, "Reselected!", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onTabSelected(Tab tab, FragmentTransaction ft) {
+	ft.replace(R.id.listFragment, fragment);
+    }
+
+    @Override
+    public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+	ft.remove(fragment);
     }
 
 }
