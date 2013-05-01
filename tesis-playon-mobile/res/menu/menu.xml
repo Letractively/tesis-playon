@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/ic_list"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:showAsAction="ifRoom|withText"
-        android:title="List"/>
-
+        android:id="@+id/action_list"
+        android:icon="@drawable/ic_action_search"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="Lista"/>
     <item
-        android:id="@+id/ic_map"
-        android:icon="@android:drawable/ic_menu_mapmode"
-        android:showAsAction="ifRoom|withText"
-        android:title="Map"/>
+        android:id="@+id/action_map"
+        android:showAsAction="always"
+        android:title="Mapa">
+    </item>
 
 </menu>

@@ -1,10 +1,11 @@
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tesis.playon.mobile"
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="11" />
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="11" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -39,7 +40,8 @@
         <activity
             android:name=".ui.activities.BuscarPlayasActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop"
+            android:theme="@style/ListViewAppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
