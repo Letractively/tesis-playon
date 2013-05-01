@@ -53,7 +53,7 @@ DROP TABLE IF EXISTS `cuenta_playa`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cuenta_playa` (
   `fechaCreacion` datetime NOT NULL,
-  `nroCuenta` int(11) NOT NULL,
+  `nroCuenta` int(11) NULL,
   `saldo` float NOT NULL DEFAULT 0,
   `cuentaPlayaID` int(11) NOT NULL auto_increment,
   `playaID` int(11) DEFAULT NULL,
@@ -173,7 +173,7 @@ DROP TABLE IF EXISTS `cuenta_cliente`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cuenta_cliente` (
   `fechaCreacion` datetime NOT NULL,
-  `nroCuenta` int(11) NOT NULL UNIQUE,
+  `nroCuenta` int(11) NULL UNIQUE,
   `saldo` float NOT NULL DEFAULT 0,
   `cuentaClienteID` int(11) NOT NULL auto_increment,
   `clienteID` int(11) DEFAULT NULL,
@@ -601,11 +601,28 @@ CREATE TABLE `usuario` (
   `nroDoc` varchar(50) DEFAULT NULL,
   `enable` tinyint(1) DEFAULT 1,
   `playaID` int(11) DEFAULT NULL,
-  `fotoPerfil` MEDIUMBLOB DEFAULT NULL,
+  `fotoUsuarioID` int(11) DEFAULT NULL,
   PRIMARY KEY (`usuarioID`),
   KEY `tipoDocID` (`tipoDocID`),
+  KEY `fotoUsuarioID` (`fotoUsuarioID`),
   CONSTRAINT `FK_usuario_tipo_doc` FOREIGN KEY (`tipoDocID`) REFERENCES `tipo_doc` (`tipoDocID`),
+  CONSTRAINT `FK_usuario_foto_usuario` FOREIGN KEY (`fotoUsuarioID`) REFERENCES `foto_usuario` (`fotoUsuarioID`),
   CONSTRAINT `FK_usuario_playa` FOREIGN KEY (`playaID`) REFERENCES `playa` (`playaID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+--
+-- Table structure for table `foto_usuario`
+--
+
+DROP TABLE IF EXISTS `foto_usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `foto_usuario` (
+  `fotoUsuarioID` int(11) NOT NULL auto_increment,
+  `fotoUsuario` MEDIUMBLOB DEFAULT NULL,
+  PRIMARY KEY (`fotoUsuarioID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
