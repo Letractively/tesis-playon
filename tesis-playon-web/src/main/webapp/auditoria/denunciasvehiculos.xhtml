@@ -16,28 +16,33 @@
 				<p:dataTable id="denunciaPendiente" var="denuncias"
 					value="#{auditoriaMB.denunciasPendientesVehiculosList}"
 					paginatorPosition="bottom" paginator="false" rows="4"
-					emptyMessage="No existen denuncias para auditar"
+					emptyMessage="¡No existen denuncias para auditar!"
 					text-align="center">
+
+					<f:facet name="header">
+						<h:outputText
+							value="Denuncias a vehículos en estado pendientes de auditoría" />
+					</f:facet>
 
 					<p:column headerText="Denunciante" styleClass="column-font">
 						<f:facet name="header">
-							<h:outputText value="Nombre" />
+							<h:outputText value="Denunciante" />
 						</f:facet>
 						<h:outputText value="#{denuncias.playa.nombreComercial}"
 							text-align="center" />
 					</p:column>
 
-					<p:column headerText="Fecha " styleClass="column-font"
+					<p:column headerText="Fecha" styleClass="column-font"
 						style="width:105px">
 						<f:facet name="header">
-							<h:outputText value="fecha alta" />
+							<h:outputText value="Fecha alta" />
 						</f:facet>
 						<h:outputText value="#{denuncias.fechaAlta}">
 							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Patente " styleClass="column-font">
+					<p:column headerText="Patente" styleClass="column-font">
 						<f:facet name="header">
 							<h:outputText value="Patente" />
 						</f:facet>
@@ -45,8 +50,34 @@
 							text-align="center" />
 					</p:column>
 
+					<p:column headerText="Modelo" styleClass="column-font">
+						<f:facet name="header">
+							<h:outputText value="Modelo" />
+						</f:facet>
+						<h:outputText value="#{denuncias.vehiculo.modeloVehiculo.nombre}"
+							text-align="center" />
+					</p:column>
+
+					<p:column headerText="Marca" styleClass="column-font">
+						<f:facet name="header">
+							<h:outputText value="Marca" />
+						</f:facet>
+						<h:outputText
+							value="#{denuncias.vehiculo.modeloVehiculo.marcaVehiculo.nombre}"
+							text-align="center" />
+					</p:column>
+
+					<p:column headerText="Categoría" styleClass="column-font">
+						<f:facet name="header">
+							<h:outputText value="Categoria" />
+						</f:facet>
+						<h:outputText
+							value="#{denuncias.vehiculo.modeloVehiculo.categoriaVehiculo.nombre}"
+							text-align="center" />
+					</p:column>
+
 					<p:column headerText="Opciones" styleClass="column-options"
-						exportable="false" style="text-align:center; width:120px;">
+						exportable="false" style="text-align:center; width:130px;">
 
 						<p:commandLink id="view" update=":mainForm:carDlg3"
 							oncomplete="carDialog.show();" title="Ver Datos">
@@ -60,7 +91,8 @@
 							action="#{auditoriaMB.procesarDenunciaVehiculo}" ajax="false">
 							<f:setPropertyActionListener value="#{denuncias}"
 								target="#{auditoriaMB.denunciaVehiculoSeleccionada}" />
-							<h:graphicImage library="images/icons" name="pencil.png" />
+							<h:graphicImage library="images/icons" name="process_accept.png"
+								width="25" heigth="25" />
 						</p:commandLink>
 
 						<p:commandLink id="rechazar" title="Rechazar denuncia"
@@ -98,17 +130,19 @@
 							</h:panelGrid>
 						</div>
 					</f:facet>
-
-
 				</p:dataTable>
-
-
 			</p:tab>
 			<p:tab id="tab2" title="Proceso">
 				<p:dataTable id="denunciaProceso" var="denuncias"
 					value="#{auditoriaMB.denunciasEnProcesoVehiculosList}"
 					paginatorPosition="bottom" paginator="false"
-					emptyMessage="No existen denuncias finalizadas" text-align="center">
+					emptyMessage="¡No existen denuncias en proceso de invertigación!"
+					text-align="center">
+
+					<f:facet name="header">
+						<h:outputText
+							value="Denuncias a vehículos en proceso de invertigación" />
+					</f:facet>
 
 					<p:column headerText="Denunciante" styleClass="column-font">
 						<f:facet name="header">
@@ -134,6 +168,32 @@
 							<h:outputText value="Patente" />
 						</f:facet>
 						<h:outputText value="#{denuncias.vehiculo.patente}" align="center" />
+					</p:column>
+
+					<p:column headerText="Modelo" styleClass="column-font">
+						<f:facet name="header">
+							<h:outputText value="Modelo" />
+						</f:facet>
+						<h:outputText value="#{denuncias.vehiculo.modeloVehiculo.nombre}"
+							text-align="center" />
+					</p:column>
+
+					<p:column headerText="Marca" styleClass="column-font">
+						<f:facet name="header">
+							<h:outputText value="Marca" />
+						</f:facet>
+						<h:outputText
+							value="#{denuncias.vehiculo.modeloVehiculo.marcaVehiculo.nombre}"
+							text-align="center" />
+					</p:column>
+
+					<p:column headerText="Categoría" styleClass="column-font">
+						<f:facet name="header">
+							<h:outputText value="Categoria" />
+						</f:facet>
+						<h:outputText
+							value="#{denuncias.vehiculo.modeloVehiculo.categoriaVehiculo.nombre}"
+							text-align="center" />
 					</p:column>
 
 					<p:column headerText="Opciones" styleClass="column-options"
@@ -178,13 +238,17 @@
 
 
 			</p:tab>
-
 			<p:tab id="tab3" title="Finalizadas">
 				<p:dataTable id="denunciaFinalizada" var="denuncias"
 					value="#{auditoriaMB.denunciasFinalizadasVehiculosList}"
 					paginatorPosition="bottom" paginator="true" rows="8"
-					emptyMessage="No existen denuncias finalizadas" text-align="center">
-
+					emptyMessage="¡No existen denuncias finalizadas!" text-align="center">
+					
+					<f:facet name="header">
+						<h:outputText
+							value="Denuncias a vehículos finalizadas" />
+					</f:facet>
+					
 					<p:column headerText="Denunciante" styleClass="column-font">
 						<f:facet name="header">
 							<h:outputText value="Nombre" />
@@ -208,6 +272,32 @@
 							<h:outputText value="Patente" />
 						</f:facet>
 						<h:outputText value="#{denuncias.vehiculo.patente}" align="center" />
+					</p:column>
+
+					<p:column headerText="Modelo" styleClass="column-font">
+						<f:facet name="header">
+							<h:outputText value="Modelo" />
+						</f:facet>
+						<h:outputText value="#{denuncias.vehiculo.modeloVehiculo.nombre}"
+							text-align="center" />
+					</p:column>
+
+					<p:column headerText="Marca" styleClass="column-font">
+						<f:facet name="header">
+							<h:outputText value="Marca" />
+						</f:facet>
+						<h:outputText
+							value="#{denuncias.vehiculo.modeloVehiculo.marcaVehiculo.nombre}"
+							text-align="center" />
+					</p:column>
+
+					<p:column headerText="Categoría" styleClass="column-font">
+						<f:facet name="header">
+							<h:outputText value="Categoria" />
+						</f:facet>
+						<h:outputText
+							value="#{denuncias.vehiculo.modeloVehiculo.categoriaVehiculo.nombre}"
+							text-align="center" />
 					</p:column>
 
 					<p:column headerText="Opciones" styleClass="column-options"
@@ -246,80 +336,65 @@
 
 			</p:tab>
 		</p:tabView>
+
 		<!-- DIALOG PARA VER LOS DATOS DE LA Denuncia SELECCIONADA -->
 		<p:dialog header="Datos de la Denuncia" widgetVar="carDialog"
 			resizable="false" id="carDlg3" showEffect="fade" modal="true"
 			draggable="false">
+			<h:panelGrid columns="1">
+				<h:panelGrid id="displayView3" columns="2" cellpadding="8"
+					style="margin:0 auto;">
 
-			<h:panelGrid id="displayView3" columns="2" cellpadding="8"
-				style="margin:0 auto;">
-
-				<p:column>
 					<h:outputText value="Denunciante: " />
-				</p:column>
-				<p:column>
 					<h:outputText
 						value="#{auditoriaMB.denunciaVehiculoSeleccionada.playa.nombreComercial}"
 						style="font-weight:bold" />
-				</p:column>
 
-				<p:column>
 					<h:outputText value="Fecha: " />
-				</p:column>
-				<p:column>
 					<h:outputText
 						value="#{auditoriaMB.denunciaVehiculoSeleccionada.fechaAlta}"
 						style="font-weight:bold">
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</h:outputText>
-				</p:column>
 
-				<p:column>
-					<h:outputText value="Vehiculo: " />
-				</p:column>
-				<p:column>
+					<h:outputText value="Vehículo: " />
 					<h:outputText
 						value="#{auditoriaMB.denunciaVehiculoSeleccionada.vehiculo.patente}"
 						style="font-weight:bold" />
-				</p:column>
 
-				<p:column>
+					<h:outputText value="Modelo - Marca: " />
+					<h:outputText
+						value="#{auditoriaMB.denunciaVehiculoSeleccionada.vehiculo.modeloVehiculo.nombre}&#160;-&#160;#{auditoriaMB.denunciaVehiculoSeleccionada.vehiculo.modeloVehiculo.marcaVehiculo.nombre}"
+						style="font-weight:bold" />
+
+					<h:outputText value="Categoría vehículo: " />
+					<h:outputText
+						value="#{auditoriaMB.denunciaVehiculoSeleccionada.vehiculo.patente}"
+						style="font-weight:bold" />
+
 					<h:outputText value="Apellido del Propietario " />
-				</p:column>
-				<p:column>
 					<h:outputText
 						value="#{auditoriaMB.denunciaVehiculoSeleccionada.vehiculo.cliente.usuario.apellido}"
 						style="font-weight:bold" />
-				</p:column>
 
-				<p:column>
 					<h:outputText value="Teléfono del propietario: " />
-				</p:column>
-				<p:column>
 					<h:outputText
 						value="#{auditoriaMB.denunciaVehiculoSeleccionada.vehiculo.cliente.telefono}"
 						style="font-weight:bold" />
-				</p:column>
 
-				<p:column>
 					<h:outputText value="Asunto de la denuncia " />
-				</p:column>
-				<p:column>
 					<h:outputText
 						value="#{auditoriaMB.denunciaVehiculoSeleccionada.asunto}"
 						style="font-weight:bold">
-
 					</h:outputText>
 
-				</p:column>
-
-				<p:column style="text-align:right">
+				</h:panelGrid>
+				<p:column>
 					<div align="right">
-						<h:commandButton id="btnAceptar3" value="Aceptar"
+						<p:commandButton id="btnAceptar3" value="Aceptar"
 							oncomplete="carDialog.hide();" />
 					</div>
 				</p:column>
-
 			</h:panelGrid>
 		</p:dialog>
 	</ui:define>

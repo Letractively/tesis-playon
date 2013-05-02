@@ -21,7 +21,7 @@
 
 							<h:outputLabel for="nombreUser" value="Nombre usuario: " />
 							<p:inputText id="nombreUser" value="#{clienteMB.nombreUser}"
-								required="true" requiredMessage="Campo obligatorio"
+								required="true" requiredMessage="Campo nombre usuario obligatorio"
 								maxlength="25" validator="#{validatorMB.isValidUserName}">
 								<f:validateLength minimum="5" />
 								<p:ajax event="blur" update="nombreUserMsg" />
@@ -31,7 +31,7 @@
 							<h:outputLabel for="password" value="Contraseña: " />
 							<p:password id="password" value="#{clienteMB.password}"
 								required="true" feedback="true" match="passwordRepeat"
-								requiredMessage="Campo obligatorio">
+								requiredMessage="Campo contraseña obligatorio">
 								<f:validateLength minimum="5" />
 								<p:ajax event="blur" update="passwordRepeatMsg" />
 							</p:password>
@@ -40,7 +40,7 @@
 							<h:outputLabel for="passwordRepeat" value="Repetir Contraseña: " />
 							<p:password id="passwordRepeat" value="#{clienteMB.password}"
 								required="true" feedback="true"
-								requiredMessage="Campo obligatorio">
+								requiredMessage="Campo repetir contraseña obligatorio">
 								<f:validateLength minimum="5" />
 								<p:ajax event="blur" update="passwordRepeatMsg" />
 							</p:password>
@@ -56,7 +56,7 @@
 
 							<h:outputLabel for="nombre" value="Nombre: " />
 							<p:inputText id="nombre" value="#{clienteMB.nombre}"
-								required="true" requiredMessage="Campo obligatorio"
+								required="true" requiredMessage="Campo nombre obligatorio"
 								maxlength="40">
 								<f:validateLength minimum="2" />
 								<p:ajax event="blur" update="nombreMsg" />
@@ -65,7 +65,7 @@
 
 							<h:outputLabel for="apellido" value="Apellido: " />
 							<p:inputText id="apellido" value="#{clienteMB.apellido}"
-								required="true" requiredMessage="Campo obligatorio"
+								required="true" requiredMessage="Campo apellido obligatorio"
 								maxlength="40">
 								<f:validateLength minimum="2" />
 								<p:ajax event="blur" update="apellidoMsg" />
@@ -83,7 +83,7 @@
 
 							<h:outputLabel for="nroDoc" value="Nro. Documento: " />
 							<p:inputText id="nroDoc" value="#{clienteMB.nroDoc}"
-								required="true" requiredMessage="Campo obligatorio"
+								required="true" requiredMessage="Campo nro. documento obligatorio"
 								type="numeric" maxlength="10">
 								<f:validateLength minimum="6" />
 								<p:ajax event="blur" update="nroDocMsg" />
@@ -110,7 +110,7 @@
 
 							<h:outputLabel for="domicilio" value="Domicilio: " />
 							<p:inputText id="domicilio" value="#{clienteMB.domicilio}"
-								required="true" requiredMessage="Campo obligatorio"
+								required="true" requiredMessage="Campo domicilio obligatorio"
 								maxlength="150">
 								<f:validateLength minimum="5" />
 								<p:ajax event="blur" update="domicilioMsg" />

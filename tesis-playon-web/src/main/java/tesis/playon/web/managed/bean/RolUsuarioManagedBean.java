@@ -1,13 +1,13 @@
 package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.springframework.dao.DataAccessException;
@@ -16,7 +16,7 @@ import tesis.playon.web.model.RolUsuario;
 import tesis.playon.web.service.IRolUsuarioService;
 
 @ManagedBean(name = "rolUsuarioMB")
-@RequestScoped
+@ViewScoped
 public class RolUsuarioManagedBean implements Serializable {
 
     private static final long serialVersionUID = -1085389423375986168L;
@@ -28,67 +28,74 @@ public class RolUsuarioManagedBean implements Serializable {
     @ManagedProperty(value = "#{RolUsuarioService}")
     IRolUsuarioService rolUsuarioService;
 
-    List<RolUsuario> rolUsuarioList;
+    private static List<RolUsuario> rolUsuarioList;
+
+    private List<RolUsuario> filteredRolesUsuario;
 
     private String nombre;
-    
+
     private static RolUsuario rolUsuarioSelected;
 
     private String descripcion;
 
+    @PostConstruct
+    private void init() {
+	rolUsuarioList = getRolUsuarioService().findAll();
+    }
+
     public String addRolUsuario() {
-    	RolUsuario rolUsuario = new RolUsuario();
-	    try {
-		    
-		    rolUsuario.setNombre(getNombre());
-		    rolUsuario.setDescripcion(getDescripcion());
-		    getRolUsuarioService().save(rolUsuario);
-		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el Rol: "
-				 + rolUsuario.getNombre(), "");
-			FacesContext.getCurrentInstance().addMessage(null, message);
-			    
-		    return LISTA_ROL_USUARIOS;
-		} catch (DataAccessException e) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-				    "Error, no se pudo agregar el rol: " + rolUsuario.getNombre(),
-				    "Por favor, intentelo mas tarde.");
-			    FacesContext.getCurrentInstance().addMessage(null, message);
-			e.printStackTrace();
-		}
-		return ERROR;
+	RolUsuario rolUsuario = new RolUsuario();
+	try {
+
+	    rolUsuario.setNombre(getNombre());
+	    rolUsuario.setDescripcion(getDescripcion());
+	    getRolUsuarioService().save(rolUsuario);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el Rol: "
+		    + rolUsuario.getNombre(), null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+
+	    return LISTA_ROL_USUARIOS;
+	} catch (DataAccessException e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, no se pudo agregar el rol: "
+		    + rolUsuario.getNombre(), "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    e.printStackTrace();
+	}
+	return ERROR;
     }
-    
+
     public String deleteRolUsuarioAdmin() {
-    	RolUsuario rolUsuario = rolUsuarioSelected;
-    	try {
-    	    
-    		getRolUsuarioService().delete(rolUsuario);
-    	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se dió de baja el Rol: "
-    		    + rolUsuario.getNombre(), "");
-    	    FacesContext.getCurrentInstance().addMessage(null, message);
-    	    return LISTA_ROL_USUARIOS;
-    	} catch (Exception e) {
-    	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-    		    "Error, no se pudo dar de baja el Rol: " + rolUsuario.getNombre(),
-    		    "Por favor, inténtelo más tarde.");
-    	    FacesContext.getCurrentInstance().addMessage(null, message);
-    	}
-    	return ERROR;
-        }
-    
-    
+	RolUsuario rolUsuario = rolUsuarioSelected;
+	try {
 
-    public void deleteRolUsuario(RolUsuario rolUsuario) {
-	getRolUsuarioService().delete(rolUsuario);
+	    getRolUsuarioService().delete(rolUsuario);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se dió de baja el Rol: "
+		    + rolUsuario.getNombre(), null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    return LISTA_ROL_USUARIOS;
+	} catch (Exception e) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo dar de baja el Rol: " + rolUsuarioSelected.getNombre(),
+		    "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	return ERROR;
     }
 
-    public void updateRolusuario(RolUsuario rolUsuario) {
-	getRolUsuarioService().update(rolUsuario);
-    }
-
-    public void reset() {
-	this.setNombre("");
-	this.setDescripcion("");
+    public void updateRolusuario() {
+	try {
+	    if (rolUsuarioSelected != null) {
+		getRolUsuarioService().update(rolUsuarioSelected);
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			"Se actualizó correctamente el Rol: " + rolUsuarioSelected.getNombre(), null);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	    }
+	} catch (Exception ex) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "Error, no se pudo actualizar el Rol: " + rolUsuarioSelected.getNombre(),
+		    "Por favor, inténtelo más tarde.");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	}
     }
 
     public IRolUsuarioService getRolUsuarioService() {
@@ -100,13 +107,11 @@ public class RolUsuarioManagedBean implements Serializable {
     }
 
     public List<RolUsuario> getRolUsuarioList() {
-	rolUsuarioList = new ArrayList<RolUsuario>();
-	rolUsuarioList.addAll(getRolUsuarioService().findAll());
 	return rolUsuarioList;
     }
 
     public void setRolUsuarioList(List<RolUsuario> rolUsuarioList) {
-	this.rolUsuarioList = rolUsuarioList;
+	RolUsuarioManagedBean.rolUsuarioList = rolUsuarioList;
     }
 
     public String getNombre() {
@@ -124,14 +129,28 @@ public class RolUsuarioManagedBean implements Serializable {
     public void setDescripcion(String descripcion) {
 	this.descripcion = descripcion;
     }
-    
+
     public RolUsuario getRolUsuarioSelected() {
-    	return rolUsuarioSelected;
+	return rolUsuarioSelected;
     }
 
     public void setRolUsuarioSelected(RolUsuario rolUsuarioSelected) {
-    	RolUsuarioManagedBean.rolUsuarioSelected = rolUsuarioSelected;
+	RolUsuarioManagedBean.rolUsuarioSelected = rolUsuarioSelected;
     }
-          
+
+    /**
+     * @return the filteredRolesUsuario
+     */
+    public List<RolUsuario> getFilteredRolesUsuario() {
+	return filteredRolesUsuario;
+    }
+
+    /**
+     * @param filteredRolesUsuario
+     *            the filteredRolesUsuario to set
+     */
+    public void setFilteredRolesUsuario(List<RolUsuario> filteredRolesUsuario) {
+	this.filteredRolesUsuario = filteredRolesUsuario;
+    }
 
 }

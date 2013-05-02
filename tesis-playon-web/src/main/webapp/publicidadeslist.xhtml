@@ -30,7 +30,7 @@
 						<h:panelGrid columns="2" cellspacing="0" cellpadding="0"
 							style="width:100%;">
 							<p:columns>
-								<a href="#{publicidad.fotoPublicidad.url}"><h:graphicImage
+								<a href="#{publicidad.fotoPublicidad.url}" target="_blank"><h:graphicImage
 										library="fotos_publicidad"
 										name="#{publicidad.fotoPublicidad.nombre}" width="80"
 										height="100" /> </a>
@@ -38,7 +38,7 @@
 							<p:columns>
 								<h:panelGrid columns="1" style="width:100%">
 								<h:outputText value="#{publicidad.nombreEmpresa}" />
-								<a href="#{publicidad.fotoPublicidad.url}"><h:outputText
+								<a href="#{publicidad.fotoPublicidad.url}" target="_blank"><h:outputText
 										value="#{publicidad.fotoPublicidad.url}" /></a>
 								<h:outputText value="#{publicidad.telefonoResponsable}" />
 								</h:panelGrid>

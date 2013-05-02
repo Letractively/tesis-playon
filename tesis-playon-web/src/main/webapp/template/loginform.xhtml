@@ -18,8 +18,22 @@
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{loginMB.logueado}">
-			<td>Bienvenido "#{loginMB.usuario}"</td>
-			<td><h:commandLink action="#{loginMB.logout}">Cerrar sesi&#243;n</h:commandLink></td>
+			<td>Bienvenido "#{loginMB.usuario}"<h:commandLink
+					action="#{loginMB.logout}">Cerrar sesi&#243;n</h:commandLink></td>
+			<h:panelGrid column="1" width="100%">
+				<p:columns>
+					<div align="right">
+						<ui:fragment rendered="#{loginMB.rol eq '[ROLE_ADMIN]'}">
+							<h:link value="Panel de administración" outcome="/admin/index" />
+						</ui:fragment>
+					</div>
+					<div align="right">
+						<ui:fragment rendered="#{loginMB.rol eq '[ROLE_AUDITOR]'}">
+							<h:link value="Panel de auditoría" outcome="/auditoria/index" />
+						</ui:fragment>
+					</div>
+				</p:columns>
+			</h:panelGrid>
 		</h:panelGroup>
 	</h:form>
 
@@ -52,11 +66,11 @@
 						<p:commandButton id="btnLoginId" value="Login" update=":growl"
 							action="#{loginMB.login}"
 							oncomplete="handleLoginRequest(xhr, status, args)">
-							</p:commandButton>
+						</p:commandButton>
 						<p:commandButton id="btnCancelar" value="Cancelar"
 							oncomplete="handleLoginRequest(xhr, status, args)"
 							onclick="dlg.hide()">
-							</p:commandButton>
+						</p:commandButton>
 					</div>
 
 				</f:facet>
@@ -80,5 +94,4 @@
 			}
 		}
 	</script>
-
 </ui:composition>

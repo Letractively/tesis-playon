@@ -1,3 +1,4 @@
+
 <ui:composition template="template/template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -11,13 +12,14 @@
 
 		<p:growl id="messages" />
 
-		<p:dataTable id="usuarios" var="usuario" paginator="true" rows="8"
+		<p:dataTable id="usuarios" var="usuario" paginator="true" rows="6"
 			paginatorPosition="bottom" value="#{usuarioMB.usuarioList}"
-			emptyMessage="No existen usuarios en el sistema" style="width: 100%">
+			emptyMessage="¡No existen usuarios en el sistema!"
+			style="width: 100%" filteredValue="#{usuarioMB.filteredUsuario}">
 
 			<f:facet name="header">
 				Usuarios
-            	</f:facet>
+	        </f:facet>
 
 			<p:column headerText="Usuario" styleClass="column-font"
 				filterBy="#{usuario.nombreUser}" filterMatchMode="contains">
@@ -40,11 +42,13 @@
 			</p:column>
 
 			<p:column headerText="Habilitado" styleClass="column-font">
-				<h:outputText value="#{usuario.enable ? 'Si' : 'No'}" />
+				<div align="center">
+					<h:outputText value="#{usuario.enable ? 'Si' : 'No'}" />
+				</div>
 			</p:column>
 
 			<p:column headerText="Opciones" styleClass="column-options"
-				style="text-align:center; width:95px;">
+				style="text-align:center; width:140px;">
 
 				<p:commandLink id="view" update=":mainForm:displayView"
 					oncomplete="popupUsuarioDatos.show();" title="Datos Usuario">
@@ -63,19 +67,42 @@
 				<p:commandLink id="darBaja" title="Dar de baja"
 					onclick="confirmation.show();" type="button">
 					<f:setPropertyActionListener value="#{usuario}"
-							target="#{usuarioMB.usuarioSelected}" />
+						target="#{usuarioMB.usuarioSelected}" />
 					<h:graphicImage library="images/icons" name="trash.png" />
 				</p:commandLink>
-				
 				<p:confirmDialog id="confirmDialog"
-					message="Seguro que desea dar de baja este usuario"
-					header="Dar de baja usuario" severity="alert" widgetVar="confirmation">
-					<p:commandButton id="confirm" value="Aceptar" update="messages"
-						oncomplete="confirmation.hide();"
-						action="#{usuarioMB.deleteUsuarioAdmin}" ajax="false">
-							</p:commandButton>
+					message="¿Está seguro que desea dar de baja este usuario?"
+					header="Dar de baja usuario" severity="alert"
+					widgetVar="confirmation">
+					<div align="right">
+						<p:commandButton id="confirm" value="Aceptar" update="messages"
+							oncomplete="confirmation.hide();"
+							action="#{usuarioMB.deleteUsuarioAdmin}" ajax="false">
+						</p:commandButton>
 						<p:commandButton id="decline" value="Cancelar"
 							onclick="confirmation.hide();" type="button" />
+					</div>
+				</p:confirmDialog>
+
+				<p:commandLink id="keys" title="Resetear clave de acceso"
+					type="button" onclick="confirmationClave.show();">
+					<f:setPropertyActionListener value="#{usuario}"
+						target="#{usuarioMB.usuarioSelected}" />
+					<h:graphicImage library="images/icons" name="keys.png" width="32"
+						height="24" />
+				</p:commandLink>
+				<p:confirmDialog id="confirmDialogClave"
+					message="¿Está seguro que desea generar una nueva clave de acceso para este cliente?"
+					header="Nueva contraseña" severity="alert"
+					widgetVar="confirmationClave">
+					<div align="right">
+						<p:commandButton id="confirmClave" value="Aceptar"
+							update="messages" oncomplete="confirmationClave.hide();"
+							action="#{usuarioMB.generarNuevaContraseñaUsuario}" ajax="false">
+						</p:commandButton>
+						<p:commandButton id="declineClave" value="Cancelar"
+							onclick="confirmationClave.hide();" type="button" />
+					</div>
 				</p:confirmDialog>
 			</p:column>
 
@@ -103,68 +130,40 @@
 			<h:panelGrid id="displayView" columns="2" cellpadding="8"
 				style="margin:0 auto;">
 
-				<p:column>
-					<h:outputText value="Usuario: " />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{usuarioMB.usuarioSelected.nombreUser}"
-						style="font-weight:bold" />
-				</p:column>
+				<h:outputText value="Usuario: " />
+				<h:outputText value="#{usuarioMB.usuarioSelected.nombreUser}"
+					style="font-weight:bold" />
 
-				<p:column>
-					<h:outputText value="Nombre: " />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{usuarioMB.usuarioSelected.nombre}"
-						style="font-weight:bold" />
-				</p:column>
+				<h:outputText value="Nombre: " />
+				<h:outputText value="#{usuarioMB.usuarioSelected.nombre}"
+					style="font-weight:bold" />
 
-				<p:column>
-					<h:outputText value="Apellido: " />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{usuarioMB.usuarioSelected.apellido}"
-						style="font-weight:bold" />
-				</p:column>
+				<h:outputText value="Apellido: " />
+				<h:outputText value="#{usuarioMB.usuarioSelected.apellido}"
+					style="font-weight:bold" />
 
-				<p:column>
-					<h:outputText value="E-mail: " />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{usuarioMB.usuarioSelected.email}"
-						style="font-weight:bold" />
-				</p:column>
+				<h:outputText value="E-mail: " />
+				<h:outputText value="#{usuarioMB.usuarioSelected.email}"
+					style="font-weight:bold" />
 
-				<p:column>
-					<h:outputText value="Tipo Doc.: " />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{usuarioMB.usuarioSelected.tipoDoc.nombre}"
-						style="font-weight:bold" />
-				</p:column>
+				<h:outputText value="Tipo Doc.: " />
+				<h:outputText value="#{usuarioMB.usuarioSelected.tipoDoc.nombre}"
+					style="font-weight:bold" />
 
-				<p:column>
-					<h:outputText value="Nro. Documento: " />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{usuarioMB.usuarioSelected.nroDoc}"
-						style="font-weight:bold" />
-				</p:column>
+				<h:outputText value="Nro. Documento: " />
+				<h:outputText value="#{usuarioMB.usuarioSelected.nroDoc}"
+					style="font-weight:bold" />
 
-				<p:column>
-					<h:outputText value="Habilitado: " />
-				</p:column>
-				<p:column>
-					<h:outputText
-						value="#{usuarioMB.usuarioSelected.enable ? 'Si' : 'No'}"
-						style="font-weight:bold" />
-				</p:column>
+				<h:outputText value="Habilitado: " />
+				<h:outputText
+					value="#{usuarioMB.usuarioSelected.enable ? 'Si' : 'No'}"
+					style="font-weight:bold" />
 
 				<p:column>
 				</p:column>
 				<p:column style="text-align:right">
 					<div align="right">
-						<h:commandButton id="btnAceptar" value="Aceptar"
+						<p:commandButton id="btnAceptar" value="Aceptar"
 							onclick="popupUsuarioDatos.hide();" type="button" />
 					</div>
 				</p:column>

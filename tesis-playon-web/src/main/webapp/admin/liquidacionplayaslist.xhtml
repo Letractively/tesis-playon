@@ -37,6 +37,7 @@
 		<p:dataTable id="liquidaciones" var="liquidacion"
 			value="#{liquidacionMB.liquidacionesListPorFecha}" paginatorPosition="bottom"
 			paginator="true" rows="10" sortBy="#{liquidacion.id}"
+			emptyMessage="¡No existen playas de estacionamiento liquidadas!"
 			sortOrder="ascending">
 
 			<f:facet name="header">  
