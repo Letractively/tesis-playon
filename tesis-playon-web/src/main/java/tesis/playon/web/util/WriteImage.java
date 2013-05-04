@@ -24,7 +24,7 @@ public class WriteImage implements Serializable {
 
     private static final long serialVersionUID = -1085389423375986168L;
 
-    public static void getFotoPerfil(PerfilPlaya perfil) {
+    public static void getFotoPerfilPlaya(PerfilPlaya perfil) {
 	ExternalContext extContext = null;
 	try {
 	    if (perfil.getFotoPerfil() != null) {
@@ -32,16 +32,13 @@ public class WriteImage implements Serializable {
 		extContext = FacesContext.getCurrentInstance().getExternalContext();
 
 		String path = extContext.getRealPath("resources" + sep + "fotos_perfil_playas") + sep;
-		System.out.println(extContext.getRealPath("resources" + sep + "fotos_perfil_playas"));
+		File file = new File(path + perfil.getId() + "_" + perfil.getNombreFoto());
 
-		File file = new File(path + perfil.getNombreFoto());
-
-		// FileOutputStream fos = new FileOutputStream("images\\output.jpg"); //windows
-		FileOutputStream fos = new FileOutputStream(file);
-
-		fos.write(perfil.getFotoPerfil());
-		fos.close();
-
+		if (!file.exists()) {
+		    FileOutputStream fos = new FileOutputStream(file);
+		    fos.write(perfil.getFotoPerfil());
+		    fos.close();
+		}
 	    }
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -57,7 +54,7 @@ public class WriteImage implements Serializable {
 
 		String path = extContext.getRealPath("resources" + sep + "fotos_playas") + sep;
 
-		File file = new File(path + foto.getNombre());
+		File file = new File(path + foto.getId() + "_" + foto.getNombre());
 
 		// FileOutputStream fos = new FileOutputStream("images\\output.jpg"); //windows
 		FileOutputStream fos = new FileOutputStream(file);
@@ -69,21 +66,18 @@ public class WriteImage implements Serializable {
 	    e.printStackTrace();
 	}
     }
-    
+
     public static void writeFotoTemporal(FotoPublicidad fotoPublicidad) {
 	ExternalContext extContext = null;
 	try {
-	    if(fotoPublicidad != null){
+	    if (fotoPublicidad != null) {
 		String sep = File.separator;
 		extContext = FacesContext.getCurrentInstance().getExternalContext();
 
 		String path = extContext.getRealPath("resources" + sep + "tmp") + sep;
-
 		File file = new File(path + fotoPublicidad.getNombre());
 
-		// FileOutputStream fos = new FileOutputStream("images\\output.jpg"); //windows
 		FileOutputStream fos = new FileOutputStream(file);
-
 		fos.write(fotoPublicidad.getImage());
 		fos.close();
 	    }
@@ -91,7 +85,7 @@ public class WriteImage implements Serializable {
 	    e.printStackTrace();
 	}
     }
-    
+
     public static void writeFotosPublicidad(List<FotoPublicidad> fotosList) {
 	ExternalContext extContext = null;
 	try {
@@ -100,38 +94,36 @@ public class WriteImage implements Serializable {
 		extContext = FacesContext.getCurrentInstance().getExternalContext();
 
 		String path = extContext.getRealPath("resources" + sep + "fotos_publicidad") + sep;
+		File file = new File(path + foto.getId() + "_" + foto.getNombre());
 
-		File file = new File(path + foto.getNombre());
+		if (!file.exists()) {
+		    FileOutputStream fos = new FileOutputStream(file);
 
-		// FileOutputStream fos = new FileOutputStream("images\\output.jpg"); //windows
-		FileOutputStream fos = new FileOutputStream(file);
-
-		fos.write(foto.getImage());
-		fos.close();
+		    fos.write(foto.getImage());
+		    fos.close();
+		}
 	    }
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
     }
 
-    public static void getFotoPerfilCliente(Usuario usuario) {
+    public static void getFotoPerfilUsuario(Usuario usuario) {
 	ExternalContext extContext = null;
 	try {
 	    if (usuario.getFotoUsuario() != null) {
 		String sep = File.separator;
 		extContext = FacesContext.getCurrentInstance().getExternalContext();
 
-		String path = extContext.getRealPath("resources" + sep + "fotos_perfil_clientes") + sep;
-		System.out.println(extContext.getRealPath("resources" + sep + "fotos_perfil_playas"));
-
+		String path = extContext.getRealPath("resources" + sep + "fotos_perfil_usuarios") + sep;
 		File file = new File(path + usuario.getNombreUser() + ".jpg");
 
-		// FileOutputStream fos = new FileOutputStream("images\\output.jpg"); //windows
-		FileOutputStream fos = new FileOutputStream(file);
+		if (!file.exists()) {
+		    FileOutputStream fos = new FileOutputStream(file);
 
-		fos.write(usuario.getFotoUsuario().getFotoUsuario());
-		fos.close();
-
+		    fos.write(usuario.getFotoUsuario().getFotoUsuario());
+		    fos.close();
+		}
 	    }
 	} catch (Exception e) {
 	    e.printStackTrace();

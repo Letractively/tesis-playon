@@ -52,6 +52,11 @@ public class TransaccionClienteService implements ITransaccionClienteService {
 	return getTransaccionClienteDao().findByCuentaCliente(cuentaCliente);
     }
 
+    @Override
+    public TransaccionCliente getUltimaTransaccion(CuentaCliente cuentaCliente) {
+	return getTransaccionClienteDao().getUltimaTransaccion(cuentaCliente);
+    }
+
     public ITransaccionClienteDao getTransaccionClienteDao() {
 	return transaccionClienteDao;
     }

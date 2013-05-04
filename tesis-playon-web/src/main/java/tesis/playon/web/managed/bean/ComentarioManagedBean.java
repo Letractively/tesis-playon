@@ -200,7 +200,7 @@ public class ComentarioManagedBean implements Serializable {
 	    comentariosListPerfil = getComentarioService().findByPlaya(playaSelected);
 	    if (comentariosListPerfil != null) {
 		for (Comentario comentario : comentariosListPerfil) {
-		    WriteImage.getFotoPerfilCliente(comentario.getUsuario());
+		    WriteImage.getFotoPerfilUsuario(comentario.getUsuario());
 		}
 	    }
 	}
@@ -225,7 +225,7 @@ public class ComentarioManagedBean implements Serializable {
 	    comentariosListPerfil = getComentarioService().findByPlaya(playaSelected);
 	    if (comentariosListPerfil != null) {
 		for (Comentario comentario : comentariosListPerfil) {
-		    WriteImage.getFotoPerfilCliente(comentario.getUsuario());
+		    WriteImage.getFotoPerfilUsuario(comentario.getUsuario());
 		}
 	    }
 	}

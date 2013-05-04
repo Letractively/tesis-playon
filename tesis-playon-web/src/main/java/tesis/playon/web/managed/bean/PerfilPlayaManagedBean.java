@@ -97,7 +97,7 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    this.telefono = perfil.getPlaya().getTelefono();
 	    this.email = perfil.getPlaya().getEmail();
 	    this.disponibilidad = perfil.getPlaya().getDisponibilidad();
-	    WriteImage.getFotoPerfil(perfil);
+	    WriteImage.getFotoPerfilPlaya(perfil);
 	    this.coordenadas = initCoordenadas(perfil);
 	}
     }
@@ -148,7 +148,7 @@ public class PerfilPlayaManagedBean implements Serializable {
 		    "Se modificó exitosamente su foto de perfil", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
-	    WriteImage.getFotoPerfil(this.perfil);
+	    WriteImage.getFotoPerfilPlaya(this.perfil);
 
 	    return "perfilplayaedit";
 	} catch (Exception ex) {

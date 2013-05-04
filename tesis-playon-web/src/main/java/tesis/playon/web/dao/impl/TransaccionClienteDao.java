@@ -26,43 +26,59 @@ public class TransaccionClienteDao implements ITransaccionClienteDao {
 	this.sessionFactory = sessionFactory;
     }
 
+    @Override
     public void save(TransaccionCliente transaccionCliente) {
 	getSessionFactory().getCurrentSession().save(transaccionCliente);
     }
 
+    @Override
     public void update(TransaccionCliente transaccionCliente) {
 	getSessionFactory().getCurrentSession().update(transaccionCliente);
     }
 
+    @Override
     public void delete(TransaccionCliente transaccionCliente) {
 	getSessionFactory().getCurrentSession().delete(transaccionCliente);
     }
 
+    @Override
     public TransaccionCliente findByCuentaCliente(CuentaCliente cuentaCliente) {
 	List<?> list = getSessionFactory().getCurrentSession()
 		.createQuery("from TransaccionCliente where cuentaCliente=?").setParameter(0, cuentaCliente).list();
-	return (TransaccionCliente) list.get(0);
+	if (!list.isEmpty()) {
+	    return (TransaccionCliente) list.get(0);
+	}
+	return null;
     }
 
+    @Override
     public List<TransaccionCliente> findAll() {
 	List<TransaccionCliente> transaccionesCliente = new ArrayList<TransaccionCliente>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TransaccionCliente").list();
-	for (Object object : list) {
-	    transaccionesCliente.add((TransaccionCliente) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		transaccionesCliente.add((TransaccionCliente) object);
+	    }
+	    return transaccionesCliente;
 	}
-	return transaccionesCliente;
+	return null;
     }
 
+    @Override
     public List<TransaccionCliente> findTransaccionesByCuentaCliente(CuentaCliente cuentaCliente) {
 	List<TransaccionCliente> transaccionesCliente = new ArrayList<TransaccionCliente>();
 	List<?> list = getSessionFactory().getCurrentSession()
 		.createQuery("from TransaccionCliente where cuentaCliente=?").setParameter(0, cuentaCliente).list();
-	for (Object object : list) {
-	    transaccionesCliente.add((TransaccionCliente) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		transaccionesCliente.add((TransaccionCliente) object);
+	    }
+	    return transaccionesCliente;
 	}
-	return transaccionesCliente;
+	return null;
     }
 
+    @Override
     public List<TransaccionCliente> findTransaccionesByFecha(CuentaCliente cuentaCliente, Date fechaD, Date fechaH) {
 	List<TransaccionCliente> transaccionCliente = new ArrayList<TransaccionCliente>();
 	List<?> list = getSessionFactory()
@@ -81,4 +97,22 @@ public class TransaccionClienteDao implements ITransaccionClienteDao {
 	return null;
     }
 
+    @Override
+    public TransaccionCliente getUltimaTransaccion(CuentaCliente cuentaCliente) {
+	List<TransaccionCliente> transaccionCliente = new ArrayList<TransaccionCliente>();
+	List<?> list = getSessionFactory()
+		.getCurrentSession()
+		.createQuery(
+			"FROM TransaccionCliente WHERE "
+				+ "cuentaCliente=? ORDER BY fecha")
+		.setParameter(0, cuentaCliente).list();
+
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		transaccionCliente.add(((TransaccionCliente) object));
+	    }
+	    return transaccionCliente.get(0);
+	}
+	return null;
+    }
 }

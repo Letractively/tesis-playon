@@ -18,8 +18,11 @@ import tesis.playon.web.model.Barrio;
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.FotoUsuario;
 import tesis.playon.web.model.TipoDoc;
+import tesis.playon.web.model.TransaccionCliente;
 import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IClienteService;
+import tesis.playon.web.service.IFotoUsuarioService;
+import tesis.playon.web.service.ITransaccionClienteService;
 import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.util.WriteImage;
 
@@ -38,6 +41,12 @@ public class PerfilClienteManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{UsuarioService}")
     IUsuarioService usuarioService;
+    
+    @ManagedProperty(value = "#{FotoUsuarioService}")
+    IFotoUsuarioService fotoUsuarioService;
+    
+    @ManagedProperty(value = "#{TransaccionClienteService}")
+    ITransaccionClienteService transaccionClienteService;
 
     private String apellido;
 
@@ -60,6 +69,8 @@ public class PerfilClienteManagedBean implements Serializable {
     private Usuario usuario;
 
     private UploadedFile fotoPerfilFile;
+    
+    private TransaccionCliente ultimaRecarga;
 
     @PostConstruct
     private void init() {
@@ -69,7 +80,7 @@ public class PerfilClienteManagedBean implements Serializable {
 	if (user != null) {
 	    this.usuario = user;
 	    this.cliente = getClienteService().findByUsuario(user);
-	    WriteImage.getFotoPerfilCliente(user);
+	    WriteImage.getFotoPerfilUsuario(user);
 	    this.apellido = user.getApellido();
 	    this.nombre = user.getNombre();
 	    this.email = user.getEmail();
@@ -78,6 +89,7 @@ public class PerfilClienteManagedBean implements Serializable {
 	    this.domicilio = cliente.getDomicilio();
 	    this.telefono = cliente.getTelefono();
 	    this.barrio = cliente.getBarrio();
+	    ultimaRecarga = getTransaccionClienteService().getUltimaTransaccion(cliente.getCuentaCliente());
 	}
     }
 
@@ -85,13 +97,13 @@ public class PerfilClienteManagedBean implements Serializable {
 	try {
 	    
 	    FotoUsuario foto = new FotoUsuario(fotoPerfilFile.getContents());
-	    // realizar el save.
+	    getFotoUsuarioService().save(foto);
 	    
 	    this.cliente.getUsuario().setFotoUsuario(foto);
 	    getUsuarioService().update(this.cliente.getUsuario());
 	    usuario = cliente.getUsuario();
 	    
-	    WriteImage.getFotoPerfilCliente(this.cliente.getUsuario());
+	    WriteImage.getFotoPerfilUsuario(this.cliente.getUsuario());
 	    
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se modificó exitosamente su foto de perfil", "");
@@ -121,13 +133,15 @@ public class PerfilClienteManagedBean implements Serializable {
 	    getUsuarioService().update(this.cliente.getUsuario());
 	    getClienteService().update(this.cliente);
 
-	    return "perfilcliente";
-
-	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "ERROR, No se pudo modificar el perfil, Disculpe las molestias ocacionadas", "");
+		    "Se actualizó exitosamente su perfil.", null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    ex.printStackTrace();
+	    
+	    return "perfilcliente";
+	} catch (Exception ex) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "ERROR, No se pudo modificar el perfil, Disculpe las molestias ocacionadas", null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}
 	return "/error";
@@ -147,6 +161,34 @@ public class PerfilClienteManagedBean implements Serializable {
 
     public void setUsuarioService(IUsuarioService usuarioService) {
 	this.usuarioService = usuarioService;
+    }
+
+    /**
+     * @return the fotoUsuarioService
+     */
+    public IFotoUsuarioService getFotoUsuarioService() {
+        return fotoUsuarioService;
+    }
+
+    /**
+     * @param fotoUsuarioService the fotoUsuarioService to set
+     */
+    public void setFotoUsuarioService(IFotoUsuarioService fotoUsuarioService) {
+        this.fotoUsuarioService = fotoUsuarioService;
+    }
+
+    /**
+     * @return the transaccionClienteService
+     */
+    public ITransaccionClienteService getTransaccionClienteService() {
+        return transaccionClienteService;
+    }
+
+    /**
+     * @param transaccionClienteService the transaccionClienteService to set
+     */
+    public void setTransaccionClienteService(ITransaccionClienteService transaccionClienteService) {
+        this.transaccionClienteService = transaccionClienteService;
     }
 
     public Cliente getCliente() {
@@ -227,6 +269,20 @@ public class PerfilClienteManagedBean implements Serializable {
 
     public void setNroDocumento(Integer nroDocumento) {
 	this.nroDocumento = nroDocumento;
+    }
+
+    /**
+     * @return the ultimaRecarga
+     */
+    public TransaccionCliente getUltimaRecarga() {
+        return ultimaRecarga;
+    }
+
+    /**
+     * @param ultimaRecarga the ultimaRecarga to set
+     */
+    public void setUltimaRecarga(TransaccionCliente ultimaRecarga) {
+        this.ultimaRecarga = ultimaRecarga;
     }
 
     public UploadedFile getFotoPerfilFile() {

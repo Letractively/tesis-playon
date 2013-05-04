@@ -108,7 +108,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
 			LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
 			PerfilPlaya perfil = new PerfilPlaya();
 			perfil = getPerfilPlayaService().findByPlaya(playaAux);
-			WriteImage.getFotoPerfil(perfil);
+			WriteImage.getFotoPerfilPlaya(perfil);
 			advancedModel.addOverlay(new Marker(coord1, playaAux.getNombreComercial(), perfil,
 				"http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
 		    }
@@ -160,7 +160,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
 			    LatLng coord1 = new LatLng(playaAux.getLatitud(), playaAux.getLongitud());
 			    PerfilPlaya perfil = new PerfilPlaya();
 			    perfil = getPerfilPlayaService().findByPlaya(playaAux);
-			    WriteImage.getFotoPerfil(perfil);
+			    WriteImage.getFotoPerfilPlaya(perfil);
 			    advancedModel.addOverlay(new Marker(coord1, playaAux.getNombreComercial(), perfil,
 				    "http://s2.subirimagenes.com/imagen/previo/thump_7891124iconoe.png"));
 			}

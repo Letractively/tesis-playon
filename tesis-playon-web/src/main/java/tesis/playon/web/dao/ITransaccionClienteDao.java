@@ -26,4 +26,5 @@ public interface ITransaccionClienteDao {
 
     List<TransaccionCliente> findTransaccionesByFecha(CuentaCliente cuentacliente, Date fechaD, Date fechaH);
 
+    TransaccionCliente getUltimaTransaccion(CuentaCliente cuentaCliente);
 }

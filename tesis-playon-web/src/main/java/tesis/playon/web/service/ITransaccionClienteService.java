@@ -28,4 +28,6 @@ public interface ITransaccionClienteService {
     public List<TransaccionCliente> findTransaccionesByCuentaCliente(CuentaCliente cuentaCliente);
 
     public List<TransaccionCliente> findTransaccionesByFecha(CuentaCliente cuentaCliente, Date fechaD, Date fechaH);
+    
+    TransaccionCliente getUltimaTransaccion(CuentaCliente cuentaCliente);
 }
