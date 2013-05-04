@@ -45,18 +45,18 @@ public class AuditoriaPlayaManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{EstadoPlayaService}")
     IEstadoPlayaService estadoPlayaService;
-    
+
     @ManagedProperty(value = "#{UsuarioService}")
     IUsuarioService usuarioService;
-    
+
     @ManagedProperty(value = "#{RolesPorUsuarioService}")
     IRolesPorUsuarioService rolesPorUsuarioService;
-    
+
     @ManagedProperty(value = "#{BarrioService}")
     IBarrioService barrioService;
 
     private EstadoPlaya estadoPendiente, estadoAprobada, estadoRechazada, estadoDeBaja;
-    
+
     private static List<Playa> playasPendientesList;
 
     private static List<Playa> playasAprobadasList;
@@ -66,24 +66,22 @@ public class AuditoriaPlayaManagedBean implements Serializable {
     private static List<Playa> playasDeBajaList;
 
     public static Playa playaSeleccionada;
-    
+
     private NotificadorUtil notificador;
 
     private Mail mail;
 
     private String asunto;
 
-    private String mensaje;    
-    
+    private String mensaje;
+
     private List<Playa> filteredPlayas;
 
-    @SuppressWarnings("unused")
     private SelectItem[] barriosOptions;
 
-    @SuppressWarnings("unused")
     private SelectItem[] estadosOptions;
-    
-    //atributos para la edición
+
+    // atributos para la edición
     private String cuit;
 
     private Integer disponibilidad;
@@ -101,24 +99,24 @@ public class AuditoriaPlayaManagedBean implements Serializable {
     private String telefono;
 
     private String emailPlaya;
-    
+
     private String url;
 
     @PostConstruct
-    private void init(){
+    private void init() {
 	estadoPendiente = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
 	playasPendientesList = getPlayaService().findByEstado(estadoPendiente);
-	
+
 	estadoAprobada = getEstadoPlayaService().findByNombreEstadoPlaya("Aprobada");
 	playasAprobadasList = getPlayaService().findByEstado(estadoAprobada);
-	
+
 	estadoRechazada = getEstadoPlayaService().findByNombreEstadoPlaya("Rechazada");
 	playasRechazadasList = getPlayaService().findByEstado(estadoRechazada);
-	
+
 	estadoDeBaja = getEstadoPlayaService().findByNombreEstadoPlaya("De Baja");
 	playasDeBajaList = getPlayaService().findByEstado(estadoDeBaja);
     }
-    
+
     public String updatePlayaAuditor() {
 	try {
 	    if (playaSeleccionada.getEstado().getNombre().equals("De Baja")) {
@@ -159,7 +157,7 @@ public class AuditoriaPlayaManagedBean implements Serializable {
 	    mail.setMensaje(mensaje);
 
 	    notificador.enviarMailAuditor(mail);
-	    
+
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se rechazó la playa: "
 		    + playaSeleccionada.getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
@@ -212,451 +210,485 @@ public class AuditoriaPlayaManagedBean implements Serializable {
      * @return the playaService
      */
     public IPlayaService getPlayaService() {
-        return playaService;
+	return playaService;
     }
 
     /**
-     * @param playaService the playaService to set
+     * @param playaService
+     *            the playaService to set
      */
     public void setPlayaService(IPlayaService playaService) {
-        this.playaService = playaService;
+	this.playaService = playaService;
     }
 
     /**
      * @return the estadoPlayaService
      */
     public IEstadoPlayaService getEstadoPlayaService() {
-        return estadoPlayaService;
+	return estadoPlayaService;
     }
 
     /**
-     * @param estadoPlayaService the estadoPlayaService to set
+     * @param estadoPlayaService
+     *            the estadoPlayaService to set
      */
     public void setEstadoPlayaService(IEstadoPlayaService estadoPlayaService) {
-        this.estadoPlayaService = estadoPlayaService;
+	this.estadoPlayaService = estadoPlayaService;
     }
 
     /**
      * @return the usuarioService
      */
     public IUsuarioService getUsuarioService() {
-        return usuarioService;
+	return usuarioService;
     }
 
     /**
-     * @param usuarioService the usuarioService to set
+     * @param usuarioService
+     *            the usuarioService to set
      */
     public void setUsuarioService(IUsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
+	this.usuarioService = usuarioService;
     }
 
     /**
      * @return the rolesPorUsuarioService
      */
     public IRolesPorUsuarioService getRolesPorUsuarioService() {
-        return rolesPorUsuarioService;
+	return rolesPorUsuarioService;
     }
 
     /**
-     * @param rolesPorUsuarioService the rolesPorUsuarioService to set
+     * @param rolesPorUsuarioService
+     *            the rolesPorUsuarioService to set
      */
     public void setRolesPorUsuarioService(IRolesPorUsuarioService rolesPorUsuarioService) {
-        this.rolesPorUsuarioService = rolesPorUsuarioService;
+	this.rolesPorUsuarioService = rolesPorUsuarioService;
     }
 
     /**
      * @return the barrioService
      */
     public IBarrioService getBarrioService() {
-        return barrioService;
+	return barrioService;
     }
 
     /**
-     * @param barrioService the barrioService to set
+     * @param barrioService
+     *            the barrioService to set
      */
     public void setBarrioService(IBarrioService barrioService) {
-        this.barrioService = barrioService;
+	this.barrioService = barrioService;
     }
 
     /**
      * @return the playasPendientesList
      */
     public List<Playa> getPlayasPendientesList() {
-        return playasPendientesList;
+	return playasPendientesList;
     }
 
     /**
-     * @param pPlayasPendientesList the playasPendientesList to set
+     * @param pPlayasPendientesList
+     *            the playasPendientesList to set
      */
     public void setPlayasPendientesList(List<Playa> pPlayasPendientesList) {
-        playasPendientesList = pPlayasPendientesList;
+	playasPendientesList = pPlayasPendientesList;
     }
 
     /**
      * @return the playasApobadasList
      */
     public List<Playa> getPlayasAprobadasList() {
-        return playasAprobadasList;
+	return playasAprobadasList;
     }
 
     /**
-     * @param playasApobadasList the playasApobadasList to set
+     * @param playasApobadasList
+     *            the playasApobadasList to set
      */
     public void setPlayasAprobadasList(List<Playa> pPlayasAprobadasList) {
-        playasAprobadasList = pPlayasAprobadasList;
+	playasAprobadasList = pPlayasAprobadasList;
     }
 
     /**
      * @return the playasRechazadasList
      */
     public List<Playa> getPlayasRechazadasList() {
-        return playasRechazadasList;
+	return playasRechazadasList;
     }
 
     /**
-     * @param pPlayasRechazadasList the playasRechazadasList to set
+     * @param pPlayasRechazadasList
+     *            the playasRechazadasList to set
      */
     public void setPlayasRechazadasList(List<Playa> pPlayasRechazadasList) {
-        playasRechazadasList = pPlayasRechazadasList;
+	playasRechazadasList = pPlayasRechazadasList;
     }
 
     /**
      * @return the playasDeBajaList
      */
     public List<Playa> getPlayasDeBajaList() {
-        return playasDeBajaList;
+	return playasDeBajaList;
     }
 
     /**
-     * @param pPlayasDeBajaList the playasDeBajaList to set
+     * @param pPlayasDeBajaList
+     *            the playasDeBajaList to set
      */
     public void setPlayasDeBajaList(List<Playa> pPlayasDeBajaList) {
-        playasDeBajaList = pPlayasDeBajaList;
+	playasDeBajaList = pPlayasDeBajaList;
     }
 
     /**
      * @return the estadoPendiente
      */
     public EstadoPlaya getEstadoPendiente() {
-        return estadoPendiente;
+	return estadoPendiente;
     }
 
     /**
-     * @param estadoPendiente the estadoPendiente to set
+     * @param estadoPendiente
+     *            the estadoPendiente to set
      */
     public void setEstadoPendiente(EstadoPlaya estadoPendiente) {
-        this.estadoPendiente = estadoPendiente;
+	this.estadoPendiente = estadoPendiente;
     }
 
     /**
      * @return the estadoAprobada
      */
     public EstadoPlaya getEstadoAprobada() {
-        return estadoAprobada;
+	return estadoAprobada;
     }
 
     /**
-     * @param estadoAprobada the estadoAprobada to set
+     * @param estadoAprobada
+     *            the estadoAprobada to set
      */
     public void setEstadoAprobada(EstadoPlaya estadoAprobada) {
-        this.estadoAprobada = estadoAprobada;
+	this.estadoAprobada = estadoAprobada;
     }
 
     /**
      * @return the estadoRechazada
      */
     public EstadoPlaya getEstadoRechazada() {
-        return estadoRechazada;
+	return estadoRechazada;
     }
 
     /**
-     * @param estadoRechazada the estadoRechazada to set
+     * @param estadoRechazada
+     *            the estadoRechazada to set
      */
     public void setEstadoRechazada(EstadoPlaya estadoRechazada) {
-        this.estadoRechazada = estadoRechazada;
+	this.estadoRechazada = estadoRechazada;
     }
 
     /**
      * @return the estadoDeBaja
      */
     public EstadoPlaya getEstadoDeBaja() {
-        return estadoDeBaja;
+	return estadoDeBaja;
     }
 
     /**
-     * @param estadoDeBaja the estadoDeBaja to set
+     * @param estadoDeBaja
+     *            the estadoDeBaja to set
      */
     public void setEstadoDeBaja(EstadoPlaya estadoDeBaja) {
-        this.estadoDeBaja = estadoDeBaja;
+	this.estadoDeBaja = estadoDeBaja;
     }
 
     /**
      * @return the playaSeleccionada
      */
     public Playa getPlayaSeleccionada() {
-        return playaSeleccionada;
+	return playaSeleccionada;
     }
 
     /**
-     * @param pPlayaSeleccionada the playaSeleccionada to set
+     * @param pPlayaSeleccionada
+     *            the playaSeleccionada to set
      */
     public void setPlayaSeleccionada(Playa pPlayaSeleccionada) {
-        playaSeleccionada = pPlayaSeleccionada;
+	playaSeleccionada = pPlayaSeleccionada;
     }
 
     /**
      * @return the filteredPlayas
      */
     public List<Playa> getFilteredPlayas() {
-        return filteredPlayas;
+	return filteredPlayas;
     }
 
     /**
-     * @param filteredPlayas the filteredPlayas to set
+     * @param filteredPlayas
+     *            the filteredPlayas to set
      */
     public void setFilteredPlayas(List<Playa> filteredPlayas) {
-        this.filteredPlayas = filteredPlayas;
+	this.filteredPlayas = filteredPlayas;
     }
 
     /**
      * @return the barriosOptions
      */
     public SelectItem[] getBarriosOptions() {
-	List<Barrio> barrios = new ArrayList<Barrio>();
-	barrios.addAll(getBarrioService().findAll());
-	barriosOptions = new SelectItem[barrios.size() + 1];
-	SelectItem[] options = new SelectItem[barrios.size() + 1];
-	options[0] = new SelectItem("", "Todos");
+	if (barriosOptions == null) {
+	    List<Barrio> barrios = new ArrayList<Barrio>();
+	    barrios.addAll(getBarrioService().findAll());
+	    barriosOptions = new SelectItem[barrios.size() + 1];
+	    barriosOptions[0] = new SelectItem("", "Todos");
 
-	for (int i = 0; i < barrios.size(); i++) {
-	    options[i + 1] = new SelectItem(barrios.get(i), barrios.get(i).getNombre());
+	    for (int i = 0; i < barrios.size(); i++) {
+		barriosOptions[i + 1] = new SelectItem(barrios.get(i), barrios.get(i).getNombre());
+	    }
 	}
-	return options;
+
+	return barriosOptions;
     }
 
     /**
-     * @param barriosOptions the barriosOptions to set
+     * @param barriosOptions
+     *            the barriosOptions to set
      */
     public void setBarriosOptions(SelectItem[] barriosOptions) {
-        this.barriosOptions = barriosOptions;
+	this.barriosOptions = barriosOptions;
     }
 
     /**
      * @return the estadosOptions
      */
     public SelectItem[] getEstadosOptions() {
-	List<EstadoPlaya> estados = new ArrayList<EstadoPlaya>();
-	estados.addAll(getEstadoPlayaService().findAll());
-	estadosOptions = new SelectItem[estados.size() + 1];
-	SelectItem[] options = new SelectItem[estados.size() + 1];
-	options[0] = new SelectItem("", "Todos");
+	if (estadosOptions == null) {
+	    List<EstadoPlaya> estados = new ArrayList<EstadoPlaya>();
+	    estados.addAll(getEstadoPlayaService().findAll());
+	    estadosOptions = new SelectItem[estados.size() + 1];
+	    estadosOptions[0] = new SelectItem("", "Todos");
 
-	for (int i = 0; i < estados.size(); i++) {
-	    options[i + 1] = new SelectItem(estados.get(i), estados.get(i).getNombre());
+	    for (int i = 0; i < estados.size(); i++) {
+		estadosOptions[i + 1] = new SelectItem(estados.get(i), estados.get(i).getNombre());
+	    }
 	}
-	return options;
+	return estadosOptions;
     }
 
     /**
-     * @param estadosOptions the estadosOptions to set
+     * @param estadosOptions
+     *            the estadosOptions to set
      */
     public void setEstadosOptions(SelectItem[] estadosOptions) {
-        this.estadosOptions = estadosOptions;
+	this.estadosOptions = estadosOptions;
     }
 
     /**
      * @return the notificador
      */
     public NotificadorUtil getNotificador() {
-        return notificador;
+	return notificador;
     }
 
     /**
-     * @param notificador the notificador to set
+     * @param notificador
+     *            the notificador to set
      */
     public void setNotificador(NotificadorUtil notificador) {
-        this.notificador = notificador;
+	this.notificador = notificador;
     }
 
     /**
      * @return the mail
      */
     public Mail getMail() {
-        return mail;
+	return mail;
     }
 
     /**
-     * @param mail the mail to set
+     * @param mail
+     *            the mail to set
      */
     public void setMail(Mail mail) {
-        this.mail = mail;
+	this.mail = mail;
     }
 
     /**
      * @return the asunto
      */
     public String getAsunto() {
-        return asunto;
+	return asunto;
     }
 
     /**
-     * @param asunto the asunto to set
+     * @param asunto
+     *            the asunto to set
      */
     public void setAsunto(String asunto) {
-        this.asunto = asunto;
+	this.asunto = asunto;
     }
 
     /**
      * @return the mensaje
      */
     public String getMensaje() {
-        return mensaje;
+	return mensaje;
     }
 
     /**
-     * @param mensaje the mensaje to set
+     * @param mensaje
+     *            the mensaje to set
      */
     public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
+	this.mensaje = mensaje;
     }
 
     /**
      * @return the cuit
      */
     public String getCuit() {
-        return cuit;
+	return cuit;
     }
 
     /**
-     * @param cuit the cuit to set
+     * @param cuit
+     *            the cuit to set
      */
     public void setCuit(String cuit) {
-        this.cuit = cuit;
+	this.cuit = cuit;
     }
 
     /**
      * @return the disponibilidad
      */
     public Integer getDisponibilidad() {
-        return disponibilidad;
+	return disponibilidad;
     }
 
     /**
-     * @param disponibilidad the disponibilidad to set
+     * @param disponibilidad
+     *            the disponibilidad to set
      */
     public void setDisponibilidad(Integer disponibilidad) {
-        this.disponibilidad = disponibilidad;
+	this.disponibilidad = disponibilidad;
     }
 
     /**
      * @return the direccionBusqueda
      */
     public String getDireccionBusqueda() {
-        return direccionBusqueda;
+	return direccionBusqueda;
     }
 
     /**
-     * @param direccionBusqueda the direccionBusqueda to set
+     * @param direccionBusqueda
+     *            the direccionBusqueda to set
      */
     public void setDireccionBusqueda(String direccionBusqueda) {
-        this.direccionBusqueda = direccionBusqueda;
+	this.direccionBusqueda = direccionBusqueda;
     }
 
     /**
      * @return the domicilio
      */
     public String getDomicilio() {
-        return domicilio;
+	return domicilio;
     }
 
     /**
-     * @param domicilio the domicilio to set
+     * @param domicilio
+     *            the domicilio to set
      */
     public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
+	this.domicilio = domicilio;
     }
 
     /**
      * @return the nombreComercial
      */
     public String getNombreComercial() {
-        return nombreComercial;
+	return nombreComercial;
     }
 
     /**
-     * @param nombreComercial the nombreComercial to set
+     * @param nombreComercial
+     *            the nombreComercial to set
      */
     public void setNombreComercial(String nombreComercial) {
-        this.nombreComercial = nombreComercial;
+	this.nombreComercial = nombreComercial;
     }
 
     /**
      * @return the razonSocial
      */
     public String getRazonSocial() {
-        return razonSocial;
+	return razonSocial;
     }
 
     /**
-     * @param razonSocial the razonSocial to set
+     * @param razonSocial
+     *            the razonSocial to set
      */
     public void setRazonSocial(String razonSocial) {
-        this.razonSocial = razonSocial;
+	this.razonSocial = razonSocial;
     }
 
     /**
      * @return the barrio
      */
     public Barrio getBarrio() {
-        return barrio;
+	return barrio;
     }
 
     /**
-     * @param barrio the barrio to set
+     * @param barrio
+     *            the barrio to set
      */
     public void setBarrio(Barrio barrio) {
-        this.barrio = barrio;
+	this.barrio = barrio;
     }
 
     /**
      * @return the telefono
      */
     public String getTelefono() {
-        return telefono;
+	return telefono;
     }
 
     /**
-     * @param telefono the telefono to set
+     * @param telefono
+     *            the telefono to set
      */
     public void setTelefono(String telefono) {
-        this.telefono = telefono;
+	this.telefono = telefono;
     }
 
     /**
      * @return the emailPlaya
      */
     public String getEmailPlaya() {
-        return emailPlaya;
+	return emailPlaya;
     }
 
     /**
-     * @param emailPlaya the emailPlaya to set
+     * @param emailPlaya
+     *            the emailPlaya to set
      */
     public void setEmailPlaya(String emailPlaya) {
-        this.emailPlaya = emailPlaya;
+	this.emailPlaya = emailPlaya;
     }
 
     /**
      * @return the url
      */
     public String getUrl() {
-        return url;
+	return url;
     }
 
     /**
-     * @param url the url to set
+     * @param url
+     *            the url to set
      */
     public void setUrl(String url) {
-        this.url = url;
+	this.url = url;
     }
 }

@@ -25,7 +25,9 @@
 
 
 				<p:commandButton id="buscarButton" value="Buscar"
-					icon="ui-icon-search" ajax="true" update="transacciones" />
+					icon="ui-icon-search"
+					action="#{transaccionPlayaMB.updateTransaccionesPorFechaList}"
+					ajax="true" update="transacciones" />
 
 			</h:panelGrid>
 		</p:panel>
@@ -53,7 +55,8 @@
 
 			<p:column headerText="Tipo Pago" styleClass="column-font"
 				filterBy="#{transaccionPlaya.tipoPago.nombre}"
-				filterMatchMode="contains">
+				filterOptions="#{transaccionPlayaMB.tipoPagoOptions}"
+				filterMatchMode="exact">
 				<f:facet name="header">
 					<h:outputText value="Tipo Pago" />
 				</f:facet>

@@ -13,9 +13,10 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
 import org.apache.commons.lang.time.DateUtils;
 
@@ -23,9 +24,11 @@ import tesis.playon.web.model.CuentaPlaya;
 import tesis.playon.web.model.DetalleEstadia;
 import tesis.playon.web.model.Liquidacion;
 import tesis.playon.web.model.Playa;
+import tesis.playon.web.model.TipoPago;
 import tesis.playon.web.model.TransaccionPlaya;
 import tesis.playon.web.service.ICuentaPlayaService;
 import tesis.playon.web.service.IPlayaService;
+import tesis.playon.web.service.ITipoPagoService;
 import tesis.playon.web.service.ITransaccionPlayaService;
 
 import com.lowagie.text.BadElementException;
@@ -42,9 +45,8 @@ import com.lowagie.text.Paragraph;
  * @author alejandro
  * 
  */
-
 @ManagedBean(name = "transaccionPlayaMB")
-@RequestScoped
+@ViewScoped
 public class TransaccionPlayaManagedBean implements Serializable {
 
     private static final long serialVersionUID = 3260243859983118685L;
@@ -58,9 +60,12 @@ public class TransaccionPlayaManagedBean implements Serializable {
     @ManagedProperty(value = "#{CuentaPlayaService}")
     private ICuentaPlayaService cuentaPlayaService;
 
-    private List<TransaccionPlaya> transaccionesList;
+    @ManagedProperty(value = "#{TipoPagoService}")
+    private ITipoPagoService tipoPagoService;
 
-    private List<TransaccionPlaya> transaccionesPorFechaList;
+    private static List<TransaccionPlaya> transaccionesList;
+
+    private static List<TransaccionPlaya> transaccionesPorFechaList;
 
     private static Liquidacion liquidacionSelected;
 
@@ -71,6 +76,8 @@ public class TransaccionPlayaManagedBean implements Serializable {
     private Date fechaDesde;
 
     private Date fechaHasta;
+
+    private SelectItem[] tipoPagoOptions;
 
     @PostConstruct
     private void init() {
@@ -101,8 +108,7 @@ public class TransaccionPlayaManagedBean implements Serializable {
 	return playas;
     }
 
-    public List<TransaccionPlaya> getTransaccionesPorFechaList() {
-
+    public List<TransaccionPlaya> updateTransaccionesPorFechaList() {
 	Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012012));
 	Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta : Calendar.getInstance().getTime());
 
@@ -111,13 +117,16 @@ public class TransaccionPlayaManagedBean implements Serializable {
 
 	transaccionesPorFechaList = getTransaccionPlayaService().findTransaccionesByFecha(cuentaPlaya, fechaDesde,
 		fechaHasta);
+	return transaccionesPorFechaList;
+    }
 
-	// ((TransaccionPlaya)transaccionesPorFechaList.get(0)).getDetalleEstadia().getVehiculo().getPatente().
+    public List<TransaccionPlaya> getTransaccionesPorFechaList() {
+
 	return transaccionesPorFechaList;
     }
 
     public void setTransaccionesPorFechaList(List<TransaccionPlaya> transaccionesPorFechaList) {
-	this.transaccionesPorFechaList = transaccionesPorFechaList;
+	TransaccionPlayaManagedBean.transaccionesPorFechaList = transaccionesPorFechaList;
     }
 
     public void updateTransaccionesList() {
@@ -134,7 +143,7 @@ public class TransaccionPlayaManagedBean implements Serializable {
     }
 
     public void setTransaccionesList(List<TransaccionPlaya> transaccionesList) {
-	this.transaccionesList = transaccionesList;
+	TransaccionPlayaManagedBean.transaccionesList = transaccionesList;
     }
 
     public Liquidacion getLiquidacionSelected() {
@@ -169,6 +178,14 @@ public class TransaccionPlayaManagedBean implements Serializable {
 	this.cuentaPlayaService = cuentaPlayaService;
     }
 
+    public ITipoPagoService getTipoPagoService() {
+	return tipoPagoService;
+    }
+
+    public void setTipoPagoService(ITipoPagoService tipoPagoService) {
+	this.tipoPagoService = tipoPagoService;
+    }
+
     public String getAcTxtPlaya() {
 	return acTxtPlaya;
     }
@@ -199,6 +216,25 @@ public class TransaccionPlayaManagedBean implements Serializable {
 
     public void setEstadiaSelected(DetalleEstadia estadiaSelected) {
 	TransaccionPlayaManagedBean.estadiaSelected = estadiaSelected;
+    }
+
+    public SelectItem[] getTipoPagoOptions() {
+	if (tipoPagoOptions == null) {
+	    List<TipoPago> tiposPago = new ArrayList<TipoPago>();
+	    tiposPago.addAll(getTipoPagoService().findAll());
+	    this.tipoPagoOptions = new SelectItem[tiposPago.size() + 1];
+	    tipoPagoOptions[0] = new SelectItem("", "Todos");
+
+	    for (int i = 0; i < tiposPago.size(); i++) {
+		tipoPagoOptions[i + 1] = new SelectItem(tiposPago.get(i), tiposPago.get(i).getNombre());
+	    }
+	}
+
+	return tipoPagoOptions;
+    }
+
+    public void setTipoPagoOptions(SelectItem[] tipoPagoOptions) {
+	this.tipoPagoOptions = tipoPagoOptions;
     }
 
     public void listadoDetalleTransaccionPDF(Object document) throws IOException, BadElementException,
@@ -243,8 +279,7 @@ public class TransaccionPlayaManagedBean implements Serializable {
 	pdf.add(titulo);
     }
 
-    public void listadoTransaccionesPDF(Object document) throws IOException, BadElementException,
-	    DocumentException {
+    public void listadoTransaccionesPDF(Object document) throws IOException, BadElementException, DocumentException {
 
 	Font fuenteNegra18 = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, Color.BLACK);
 
