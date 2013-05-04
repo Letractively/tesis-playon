@@ -8,9 +8,9 @@ USE `tesis_playon`;
 
 INSERT INTO `usuario` (`apellido`,`email`,`nombre`,
   `password`,`sesion`,`usuario`,`usuarioID`,
-  `tipoDocID`,`nroDoc`,`enable`,`playaID`,`fotoPerfil`)
-VALUES ('Rube','richardparking@hotmail.com','Ricardo','123456',NULL,'richardparking',11,1,'123456777',1,4,NULL),
-('Ricardo','ricardoempleado@hotmail.com','Ramirez','123456',NULL,'ricardoempleado',12,1,'34045824',1,10,NULL);
+  `tipoDocID`,`nroDoc`,`enable`,`playaID`)
+VALUES ('Rube','richardparking@hotmail.com','Ricardo','123456',NULL,'richardparking',11,1,'123456777',1,4),
+('Ricardo','ricardoempleado@hotmail.com','Ramirez','123456',NULL,'ricardoempleado',12,1,'34045824',1,10);
 
 INSERT INTO `roles_por_usuario` (`rolesPorUsuarioID`,`usuario`,`rolUsuario`)
 VALUES (11,'richardparking','ROLE_PLAYA_GERENTE'),
