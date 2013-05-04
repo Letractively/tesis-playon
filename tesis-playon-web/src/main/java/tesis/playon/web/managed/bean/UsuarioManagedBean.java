@@ -215,7 +215,7 @@ public class UsuarioManagedBean implements Serializable {
 
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "No se pudo modificar su contrase�a, Por favor, inténtelo más tarde.", "");
+		    "No se pudo modificar su contraseña, Por favor, inténtelo más tarde.", null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	    return "ERROR";

@@ -50,9 +50,8 @@ import com.lowagie.text.Paragraph;
  */
 @ManagedBean(name = "cuentaClienteMB")
 @RequestScoped
-public class CuentaClienteManagedBean implements Serializable{
-    
-    
+public class CuentaClienteManagedBean implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @ManagedProperty(value = "#{ClienteService}")
@@ -78,7 +77,7 @@ public class CuentaClienteManagedBean implements Serializable{
 
     private TransaccionCliente transaccionCliente;
 
-    private static Float saldo = 0.f;
+    private static Float saldo = 0.0f;
 
     private List<TransaccionCliente> transacciones;
 
@@ -87,11 +86,11 @@ public class CuentaClienteManagedBean implements Serializable{
     private Date fechaDesde;
 
     private Date fechaHasta;
-    
+
     private static List<CuentaCliente> cuentaClienteList;
-    
+
     private List<CuentaCliente> filteredCuentaClientes;
-    
+
     private static CuentaCliente cuentaSelected;
 
     @PostConstruct
@@ -104,7 +103,7 @@ public class CuentaClienteManagedBean implements Serializable{
 	Usuario usuario = getUsuarioService().findByNombreUsuario(userName);
 	if (usuario != null) {
 	    cliente = getClienteService().findByUsuario(usuario);
-	    cuentaCliente = cliente != null ? cliente.getCuentaCliente() : null ;
+	    cuentaCliente = cliente != null ? cliente.getCuentaCliente() : null;
 	}
 	cuentaClienteList = getCuentaClienteService().findAll();
     }
@@ -113,6 +112,7 @@ public class CuentaClienteManagedBean implements Serializable{
 	try {
 	    float saldoCliente = cliente.getCuentaCliente().getSaldo();
 	    cliente.getCuentaCliente().setSaldo(saldoCliente + saldo);
+	    getCuentaClienteService().update(cliente.getCuentaCliente());
 
 	    transaccionCliente = new TransaccionCliente();
 	    Timestamp fecha = new Timestamp(Calendar.getInstance().getTimeInMillis());
@@ -126,7 +126,7 @@ public class CuentaClienteManagedBean implements Serializable{
 	    FacesContext.getCurrentInstance().addMessage(
 		    null,
 		    new FacesMessage(FacesMessage.SEVERITY_INFO, "Transacción exitosa. Se agregó a su cuenta $"
-			    + getSaldo() + " argentinos. ¡Muchas Gracias!", ""));
+			    + getSaldo() + " ARG. ¡Muchas Gracias!", null));
 
 	} catch (DataAccessException e) {
 	    e.printStackTrace();
@@ -302,42 +302,45 @@ public class CuentaClienteManagedBean implements Serializable{
      * @return the cuentaClienteList
      */
     public List<CuentaCliente> getCuentaClienteList() {
-        return cuentaClienteList;
+	return cuentaClienteList;
     }
 
     /**
-     * @param cuentaClienteList the cuentaClienteList to set
+     * @param cuentaClienteList
+     *            the cuentaClienteList to set
      */
     public void setCuentaClienteList(List<CuentaCliente> cuentaClienteList) {
-        CuentaClienteManagedBean.cuentaClienteList = cuentaClienteList;
+	CuentaClienteManagedBean.cuentaClienteList = cuentaClienteList;
     }
 
     /**
      * @return the filteredCuentaClientes
      */
     public List<CuentaCliente> getFilteredCuentaClientes() {
-        return filteredCuentaClientes;
+	return filteredCuentaClientes;
     }
 
     /**
-     * @param filteredCuentaClientes the filteredCuentaClientes to set
+     * @param filteredCuentaClientes
+     *            the filteredCuentaClientes to set
      */
     public void setFilteredCuentaClientes(List<CuentaCliente> filteredCuentaClientes) {
-        this.filteredCuentaClientes = filteredCuentaClientes;
+	this.filteredCuentaClientes = filteredCuentaClientes;
     }
 
     /**
      * @return the cuentaSelected
      */
     public CuentaCliente getCuentaSelected() {
-        return cuentaSelected;
+	return cuentaSelected;
     }
 
     /**
-     * @param cuentaSelected the cuentaSelected to set
+     * @param cuentaSelected
+     *            the cuentaSelected to set
      */
     public void setCuentaSelected(CuentaCliente cuentaSelected) {
-        CuentaClienteManagedBean.cuentaSelected = cuentaSelected;
+	CuentaClienteManagedBean.cuentaSelected = cuentaSelected;
     }
 
 }

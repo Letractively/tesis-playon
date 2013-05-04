@@ -7,12 +7,18 @@
 
 	<ui:param name="dontloadsidebar" value="true" />
 
-	<ui:define name="content">
+	<ui:define name="title">
+		Carga saldo de cliente
+    </ui:define>
 
-		<p>Felicitaciones por utilizar los servicios de Playon!</p>
-		
+	<ui:define name="content">
+		<h1>Resultado de la operación de cargar saldo</h1>
+
+		<p>Felicitaciones por utilizar los servicios de Playón!</p>
+
 		<h:form>
-			<f:event type="preRenderView" listener="#{cuentaClienteMB.cargarSaldo}" />
+			<f:event type="preRenderView"
+				listener="#{cuentaClienteMB.cargarSaldo}" />
 			<p:messages id="messages" />
 		</h:form>
 
