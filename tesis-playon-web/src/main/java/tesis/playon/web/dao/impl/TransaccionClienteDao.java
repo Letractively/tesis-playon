@@ -85,7 +85,7 @@ public class TransaccionClienteDao implements ITransaccionClienteDao {
 		.getCurrentSession()
 		.createQuery(
 			"from TransaccionCliente as tp where "
-				+ "tp.cuentaCliente=? and tp.fecha>=? and tp.fecha<=? order by tp.fecha")
+				+ "tp.cuentaCliente = ? and tp.fecha >= ? and tp.fecha <= ? order by tp.fecha DESC")
 		.setParameter(0, cuentaCliente).setParameter(1, fechaD).setParameter(2, fechaH).list();
 
 	if (!list.isEmpty()) {
@@ -104,7 +104,7 @@ public class TransaccionClienteDao implements ITransaccionClienteDao {
 		.getCurrentSession()
 		.createQuery(
 			"FROM TransaccionCliente WHERE "
-				+ "cuentaCliente=? ORDER BY fecha")
+				+ "cuentaCliente=? and tipoPago.nombre='Cuenta' ORDER BY fecha DESC")
 		.setParameter(0, cuentaCliente).list();
 
 	if (!list.isEmpty()) {

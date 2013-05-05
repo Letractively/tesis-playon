@@ -17,7 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
@@ -49,7 +49,7 @@ import com.lowagie.text.Paragraph;
  * 
  */
 @ManagedBean(name = "cuentaClienteMB")
-@RequestScoped
+@ViewScoped
 public class CuentaClienteManagedBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -79,7 +79,7 @@ public class CuentaClienteManagedBean implements Serializable {
 
     private static Float saldo = 0.0f;
 
-    private List<TransaccionCliente> transacciones;
+    private static List<TransaccionCliente> transacciones;
 
     private TipoPago tipoPago;
 
@@ -142,7 +142,7 @@ public class CuentaClienteManagedBean implements Serializable {
     }
 
     public void setTransacciones(List<TransaccionCliente> transacciones) {
-	this.transacciones = transacciones;
+	CuentaClienteManagedBean.transacciones = transacciones;
     }
 
     public IClienteService getClienteService() {

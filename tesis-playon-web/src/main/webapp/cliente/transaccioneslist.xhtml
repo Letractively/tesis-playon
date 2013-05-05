@@ -35,16 +35,15 @@
 
 			<p:dataTable id="transacciones" var="transaccionCliente"
 				rowStyleClass="#{transaccionCliente.tipoPago.nombre eq 'Cuenta' ? 'old' :null}"
-				paginator="false" value="#{cuentaClienteMB.transacciones}"
-				emptyMessage="No ha realizado transacciones"
-				sortBy="#{transaccionCliente.fecha}" sortOrder="ascending">
+				paginator="true" rows="10" value="#{cuentaClienteMB.transacciones}"
+				emptyMessage="No ha realizado transacciones" paginatorPosition="bottom">
 
 				<p:column style="text-align:center">
 					<f:facet name="header">
 						<h:outputText value="Fecha" />
 					</f:facet>
 					<h:outputText value="#{transaccionCliente.fecha}">
-						<f:convertDateTime pattern="d - M - yyyy " timeStyle="short"
+						<f:convertDateTime pattern="dd/MM/yyyy" timeStyle="short"
 							type="both" />
 					</h:outputText>
 				</p:column>

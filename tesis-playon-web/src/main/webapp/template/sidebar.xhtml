@@ -16,7 +16,7 @@
 				var="image" panelWidth="200" panelHeight="360"
 				rendered="#{fotoPublicidadMB.fotoPublicidadList != null}">
 				<a href="#{image.url}" target="_blank"><h:graphicImage
-						library="fotos_publicidad" name="#{image.nombre}" width="200px"
+						library="fotos_publicidad" name="#{image.id}_#{image.nombre}" width="200px"
 						height="360px" /></a>
 			</p:galleria>
 
@@ -31,7 +31,7 @@
 				var="image" panelWidth="200" panelHeight="360" showCaption="true"
 				rendered="#{fotoPublicidadMB.fotoPublicidadList != null}">
 				<a href="#{image.url}" target="_blank"> <p:graphicImage
-						library="fotos_publicidad" name="#{image.nombre}" width="200px"
+						library="fotos_publicidad" name="#{image.id}_#{image.nombre}" width="200px"
 						height="360px" url="#{image.url}" />
 				</a>
 			</p:galleria>
