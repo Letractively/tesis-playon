@@ -19,7 +19,7 @@
 			<div align="center">
 				<p:galleria id="galeria" value="#{perfilPlayaMB.fotosList}"
 					var="image" effect="slide" effectSpeed="1000" showOverlays="true">
-					<h:graphicImage library="fotos_playas" name="#{image.nombre}"
+					<h:graphicImage library="fotos_playas" name="#{image.id}_#{image.nombre}"
 						style="width:190px; height:140px" />
 					<p:galleriaOverlay>
 						<div align="right">

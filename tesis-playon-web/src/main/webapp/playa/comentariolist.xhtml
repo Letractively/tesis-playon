@@ -22,11 +22,11 @@
 
 					<p:column headerText="Usuario" style="width:90px;">
 						<div align="center">
-							<h:graphicImage library="fotos_perfil_clientes"
+							<h:graphicImage library="fotos_perfil_usuarios"
 								name="#{comentario.usuario.nombreUser}.jpg"
 								styleClass="bordes-foto-perfil-comentario"
 								rendered="#{comentario.usuario.fotoPerfil != null}" />
-							<h:graphicImage library="fotos_perfil_clientes"
+							<h:graphicImage library="fotos_perfil_usuarios"
 								name="sinfoto.jpg" styleClass="bordes-foto-perfil-comentario"
 								rendered="#{comentario.usuario.fotoPerfil == null}" />
 						</div>
@@ -52,7 +52,7 @@
 						<h:panelGrid columns="2">
 							<p:column>
 								<div align="left" style="width: 100px;">
-									<h:graphicImage library="fotos_perfil_clientes"
+									<h:graphicImage library="fotos_perfil_usuarios"
 										name="sinfoto.jpg" styleClass="bordes-foto-perfil-comentario" />
 								</div>
 							</p:column>
