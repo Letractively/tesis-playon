@@ -1,5 +1,6 @@
 package tesis.playon.web.managed.bean;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,7 +49,10 @@ import tesis.playon.web.service.IVehiculoService;
 
 @ManagedBean(name = "estadisticaGerenteMB")
 @ViewScoped
-public class EstadisticaGerenteManagedBean {
+public class EstadisticaGerenteManagedBean implements Serializable{
+
+    private static final long serialVersionUID = 8192168088851565609L;
+
     @ManagedProperty(value = "#{EmpleadoService}")
     IEmpleadoService empleadoService;
 

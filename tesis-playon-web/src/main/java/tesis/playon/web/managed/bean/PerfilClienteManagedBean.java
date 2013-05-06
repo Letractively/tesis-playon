@@ -100,13 +100,14 @@ public class PerfilClienteManagedBean implements Serializable {
 	    getFotoUsuarioService().save(foto);
 	    
 	    FotoUsuario fotoAntigua = cliente.getUsuario().getFotoUsuario();
-	    if(fotoAntigua != null){
-		getFotoUsuarioService().delete(fotoAntigua);
-	    }
-	    
+	    WriteImage.borrarFotoPerfilUsuarioAntigua(cliente.getUsuario());
 	    this.cliente.getUsuario().setFotoUsuario(foto);
 	    getUsuarioService().update(this.cliente.getUsuario());
 	    usuario = cliente.getUsuario();
+	    
+	    if(fotoAntigua != null){
+		getFotoUsuarioService().delete(fotoAntigua);
+	    }
 	    
 	    WriteImage.getFotoPerfilUsuario(this.cliente.getUsuario());
 	    

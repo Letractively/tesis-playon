@@ -17,7 +17,7 @@
 				<div id="perfil-playa">
 					<h:panelGrid columns="2">
 						<p:column>
-							<h:graphicImage library="fotos_perfil_usuarios"
+							<h:graphicImage id="fotoPerfil" library="fotos_perfil_usuarios"
 								name="#{perfilClienteMB.usuario.nombreUser}.jpg"
 								styleClass="bordes-foto-perfil"
 								rendered="#{perfilClienteMB.usuario.fotoUsuario != null}" />
@@ -38,6 +38,7 @@
 									allowTypes="*.jpg;" />
 								<h:commandButton value="Subir foto" ajax="false"
 									actionListener="#{perfilClienteMB.upload}"
+									update="fotoPerfil"
 									style="margin:0 0 0 10px; padding: 0 5px 0 5px; width:100px;"
 									oncomplete="document.location.reload(true)" />
 							</h:form>

@@ -129,4 +129,23 @@ public class WriteImage implements Serializable {
 	    e.printStackTrace();
 	}
     }
+    
+    public static void borrarFotoPerfilUsuarioAntigua(Usuario usuario) {
+	ExternalContext extContext = null;
+	try {
+	    if (usuario.getFotoUsuario() != null) {
+		String sep = File.separator;
+		extContext = FacesContext.getCurrentInstance().getExternalContext();
+
+		String path = extContext.getRealPath("resources" + sep + "fotos_perfil_usuarios") + sep;
+		File file = new File(path + usuario.getNombreUser() + ".jpg");
+		
+		if (file.exists()) {
+		    file.delete();
+		}
+	    }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
 }
