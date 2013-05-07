@@ -242,13 +242,13 @@
 				<p:dataTable id="denunciaFinalizada" var="denuncias"
 					value="#{auditoriaMB.denunciasFinalizadasVehiculosList}"
 					paginatorPosition="bottom" paginator="true" rows="8"
-					emptyMessage="¡No existen denuncias finalizadas!" text-align="center">
-					
+					emptyMessage="¡No existen denuncias finalizadas!"
+					text-align="center">
+
 					<f:facet name="header">
-						<h:outputText
-							value="Denuncias a vehículos finalizadas" />
+						<h:outputText value="Denuncias a vehículos finalizadas" />
 					</f:facet>
-					
+
 					<p:column headerText="Denunciante" styleClass="column-font">
 						<f:facet name="header">
 							<h:outputText value="Nombre" />

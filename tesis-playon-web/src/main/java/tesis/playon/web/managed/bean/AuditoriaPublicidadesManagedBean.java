@@ -46,7 +46,7 @@ public class AuditoriaPublicidadesManagedBean implements Serializable {
 
     private static List<Publicidad> publicidadRechazadasList;
 
-    private static Publicidad publicidadSelected;
+    public static Publicidad publicidadSelected;
 
     @PostConstruct
     private void init() {
