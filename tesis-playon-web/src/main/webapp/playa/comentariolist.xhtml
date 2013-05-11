@@ -25,10 +25,10 @@
 							<h:graphicImage library="fotos_perfil_usuarios"
 								name="#{comentario.usuario.nombreUser}.jpg"
 								styleClass="bordes-foto-perfil-comentario"
-								rendered="#{comentario.usuario.fotoPerfil != null}" />
+								rendered="#{comentario.usuario.fotoUsuario != null}" />
 							<h:graphicImage library="fotos_perfil_usuarios"
 								name="sinfoto.jpg" styleClass="bordes-foto-perfil-comentario"
-								rendered="#{comentario.usuario.fotoPerfil == null}" />
+								rendered="#{comentario.usuario.fotoUsuario == null}" />
 						</div>
 					</p:column>
 
