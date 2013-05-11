@@ -390,7 +390,7 @@ DROP TABLE IF EXISTS `vehiculo`;
 CREATE TABLE `vehiculo` (
   `anio` int(11) DEFAULT NULL,
   `codigoBarra` varchar(50) DEFAULT NULL,
-  `colorVehiculoID` int(11) NOT NULL,
+  `colorVehiculoID` int(11) NULL,
   `habilitado` tinyint(1) DEFAULT 1,
   `modeloVehiculoID` int(11) NOT NULL,
   `patente` varchar(50) NOT NULL,
