@@ -24,7 +24,7 @@
 			<div id="perfil-playa">
 				<h:panelGrid columns="2">
 					<h:graphicImage library="fotos_perfil_playas"
-						name="#{perfilPlayaMB.perfil.id}_#{perfilPlayaMB.perfilSelected.nombreFoto}"
+						name="#{perfilPlayaMB.perfilSelected.id}_#{perfilPlayaMB.perfilSelected.nombreFoto}"
 						styleClass="bordes-foto-perfil"
 						rendered="#{perfilPlayaMB.perfilSelected.nombreFoto != null}" />
 					<h:graphicImage library="fotos_perfil_playas" name="sinfoto.jpg"
@@ -287,7 +287,7 @@
 					<p:galleria value="#{perfilPlayaMB.fotosListSelected}" var="image"
 						effect="slide" effectSpeed="1000" showOverlays="true"
 						panelWidth="500" panelHeight="350">
-						<h:graphicImage library="fotos_playas" name="#{image.nombre}"
+						<h:graphicImage library="fotos_playas" name="#{image.id}_#{image.nombre}"
 							style="width:500px; height:350px" />
 						<p:galleriaOverlay>
 							<div align="right">
