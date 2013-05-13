@@ -15,6 +15,7 @@ import javax.faces.validator.ValidatorException;
 
 import tesis.playon.web.service.IPlayaService;
 import tesis.playon.web.service.IUsuarioService;
+import tesis.playon.web.service.IVehiculoService;
 
 /**
  * @author pablo
@@ -31,6 +32,9 @@ public class ValidatorManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{PlayaService}")
     IPlayaService playaService;
+    
+    @ManagedProperty(value = "#{VehiculoService}")
+    IVehiculoService vehiculoService;
 
     public void isValidEmailUsuario(FacesContext context, UIComponent component, Object value) {
 	String email = (String) value;
@@ -58,6 +62,16 @@ public class ValidatorManagedBean implements Serializable {
 	    throw new ValidatorException(message);
 	}
     }
+    
+    public void isValidPatente(FacesContext context, UIComponent component, Object value) {
+	String patente = (String) value;
+	if (getVehiculoService().findByPatenteVehiculo(patente) != null) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+		    "La patente del vehículo " + patente
+		    + " ya se encuentra registrada.", null);
+	    throw new ValidatorException(message);
+	}
+    }
 
     public IUsuarioService getUsuarioService() {
 	return usuarioService;
@@ -73,5 +87,19 @@ public class ValidatorManagedBean implements Serializable {
 
     public void setPlayaService(IPlayaService playaService) {
 	this.playaService = playaService;
+    }
+
+    /**
+     * @return the vehiculoService
+     */
+    public IVehiculoService getVehiculoService() {
+        return vehiculoService;
+    }
+
+    /**
+     * @param vehiculoService the vehiculoService to set
+     */
+    public void setVehiculoService(IVehiculoService vehiculoService) {
+        this.vehiculoService = vehiculoService;
     }
 }

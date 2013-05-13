@@ -5,14 +5,17 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="title">
-		vehiculo agregado
+	<ui:define name="Registro de Vehículo">
+		vehiculo Registrado
     </ui:define>
 
 	<ui:define name="content">
-		<h1>Vehículo agregado</h1>
+		<h1>Vehículo registrado</h1>
 		<p:growl id="messagesGrowl" />
-		<p>¡Su vehículo fue agregado correctamente!</p>
-		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<div style="margin: 10px 50px 0 20px">
+			<p>¡Su vehículo fue registrado correctamente!</p>
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+		</div>
 	</ui:define>
 </ui:composition>

@@ -10,8 +10,8 @@
 	<ui:param name="title" value="Listado de Tarifas y Promociones" />
 
 	<ui:define name="content" class="admin-font">
+		<h1>Tarifas de la Playa</h1>
 		<h:form>
-
 			<p:growl id="messages" />
 
 			<p:dataTable id="tarifas" var="tarifa" paginator="true" rows="5"
@@ -19,7 +19,7 @@
 				emptyMessage="No existen tarifas en la playa seleccionada">
 
 				<f:facet name="header">
-				Tarifas
+					Tarifas
             	</f:facet>
 
 				<p:column headerText="Tipo Estadía" styleClass="column-font"
