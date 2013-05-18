@@ -57,6 +57,11 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	private GeoposicionDePlaya respuesta;
 
 	private String coordenadas;
+	
+	private String direccionDesde;
+	private String direccionHasta;
+	
+	public static Playa playaselected;
 
 	// Atributos para los filtros.
 	private boolean opcionesAvanzadas;
@@ -447,5 +452,47 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	public void setNombrePlayaParameter(String nombrePlayaParameter) {
 		this.nombrePlayaParameter = nombrePlayaParameter;
 	}
+
+	public String getDireccionDesde() {
+		return direccionDesde;
+	}
+
+	public void setDireccionDesde(String direccionDesde) {
+		this.direccionDesde = direccionDesde;
+	}
+
+	public  Playa getPlayaselected() {
+		return playaselected;
+	}
+
+	public  void setPlayaselected(Playa playaselected) {
+		BusquedaPlayasManagedBean.playaselected = playaselected;
+	}
+
+	public String getDireccionHasta() {
+		return direccionHasta=playaselected.getDomicilio();
+	}
+
+	public void setDireccionHasta(String direccionHasta) {
+		this.direccionHasta = direccionHasta;
+	}
+	
+	public void settearDireccionHasta()
+	{
+		this.direccionHasta=playaselected.getDomicilio();
+		
+	}
+	
+	public void tomarDomicilioHasta (String domicilio)
+	{
+		direccionHasta=domicilio;
+	}
+	
+	public void tomarDomicilioDesde(){
+		
+	}
+	
+	
+	
 
 }
