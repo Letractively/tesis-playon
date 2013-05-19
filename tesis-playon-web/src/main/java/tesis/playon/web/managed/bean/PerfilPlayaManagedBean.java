@@ -70,6 +70,8 @@ public class PerfilPlayaManagedBean implements Serializable {
 
     private Integer disponibilidad;
 
+    private String url;
+
     // DATOS DE LA FOTO
     private static String title;
 
@@ -100,6 +102,13 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    WriteImage.getFotoPerfilPlaya(perfil);
 	    this.coordenadas = initCoordenadas(perfil);
 	}
+	if (playaSelected != null) {
+	    PerfilPlayaManagedBean.perfilSelected = getPerfilPlayaService().findByPlaya(playaSelected);
+	    coordenadas = initCoordenadas(perfilSelected);
+	    fotosListSelected = getFotoService().findByPlaya(perfilSelected);
+	    if (fotosListSelected != null)
+		WriteImage.writeFotos(fotosListSelected);
+	}
     }
 
     public void findPlayaById() {
@@ -121,21 +130,22 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    playa.setTelefono(getTelefono());
 	    playa.setEmail(getEmail());
 	    playa.setDisponibilidad(getDisponibilidad());
+	    playa.setUrl(url);
 	    getPerfilPlayaService().update(perfil);
 	    getPlayaService().update(playa);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se modificó correctamente el perfil de la playa", "");
+		    "Se actualizó correctamente el perfil de la playa", null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return "/playa/perfilplaya";
 	} catch (Exception ex) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "No se pudo modificar el perfil de la playa", "");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		    "No se pudo actualizar el perfil de la playa", null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}
-	return "error";
+	return null;
     }
 
     public String upload() {
@@ -145,15 +155,15 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    getPerfilPlayaService().update(this.perfil);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se modificó exitosamente su foto de perfil", "");
+		    "Se actualizó exitosamente su foto de perfil", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    WriteImage.getFotoPerfilPlaya(this.perfil);
 
 	    return "perfilplayaedit";
 	} catch (Exception ex) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se pudo cargar su foto de perfil",
-		    "");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudo cargar su foto de perfil",
+		    null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}
@@ -178,12 +188,12 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    fotosList = getFotoService().findByPlaya(perfil);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se guardó exitosamente la foto "
-		    + file.getFileName(), "");
+		    + file.getFileName(), null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	} catch (Exception ex) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No se pudo cargar su foto de perfil",
-		    "");
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "No se pudo cargar su foto de perfil",
+		    null);
 	    FacesContext.getCurrentInstance().addMessage("Error", message);
 	    ex.printStackTrace();
 	}
@@ -199,7 +209,7 @@ public class PerfilPlayaManagedBean implements Serializable {
 
 	    String path = extContext.getRealPath("resources" + sep + "fotos_playas") + sep;
 
-	    File file = new File(path + fotoSelected.getNombre());
+	    File file = new File(path + fotoSelected.getId() + "_" + fotoSelected.getNombre());
 
 	    file.delete();
 
@@ -226,7 +236,7 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    latLonUtil = new LatitudlongitudUtil();
 	    // GeoposicionDePlaya
 	    respuesta = latLonUtil.getLocationFromAddress(perfil.getPlaya().getDomicilio()
-		    + ", Cordoba, CBA, Argentina");
+		    + ", Córdoba, CBA, Argentina");
 	    coordenadas = respuesta.toString();
 	    LatLng coord1 = new LatLng(perfil.getPlaya().getLatitud(), perfil.getPlaya().getLongitud());
 	    advancedModel.addOverlay(new Marker(coord1, perfil.getPlaya().toString2(), null,
@@ -352,14 +362,22 @@ public class PerfilPlayaManagedBean implements Serializable {
 	this.fotoSelected = fotoSelected;
     }
 
+    /**
+     * @return the url
+     */
+    public String getUrl() {
+	return url;
+    }
+
+    /**
+     * @param url
+     *            the url to set
+     */
+    public void setUrl(String url) {
+	this.url = url;
+    }
+
     public Playa getPlayaSelected() {
-	if (playaSelected != null) {
-	    PerfilPlayaManagedBean.perfilSelected = getPerfilPlayaService().findByPlaya(playaSelected);
-	    coordenadas = initCoordenadas(perfilSelected);
-	    fotosListSelected = getFotoService().findByPlaya(perfilSelected);
-	    if (fotosListSelected != null)
-		WriteImage.writeFotos(fotosListSelected);
-	}
 	return playaSelected;
     }
 

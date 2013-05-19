@@ -48,13 +48,11 @@ public class CuentaPlaya implements Serializable {
 
     public CuentaPlaya() {
 	super();
-	this.nroCuenta = (int) (Math.random() * 10000) + 1;
 	this.fechaCreacion = new Timestamp(Calendar.getInstance().getTimeInMillis());
     }
 
     public CuentaPlaya(Playa playa) {
 	super();
-	this.nroCuenta = (int) (Math.random() * 10000) + 1;
 	this.fechaCreacion = new Timestamp(Calendar.getInstance().getTimeInMillis());
 	this.saldo = 0.0f;
 	this.playa = playa;

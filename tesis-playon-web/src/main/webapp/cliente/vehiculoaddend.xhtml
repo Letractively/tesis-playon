@@ -6,16 +6,21 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="Registro de Vehículo">
-		vehiculo Registrado
+		Nuevo vehículo
     </ui:define>
 
 	<ui:define name="content">
 		<h1>Vehículo registrado</h1>
 		<p:growl id="messagesGrowl" />
-		<div style="margin: 10px 50px 0 20px">
+		<div style="margin: 0 50px 0 50px;">
 			<p>¡Su vehículo fue registrado correctamente!</p>
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
+		</div>
+		<div align="right">
+			<p>
+				El equipo de <i>Playón, Red de Playas.</i>
+			</p>
 		</div>
 	</ui:define>
 </ui:composition>

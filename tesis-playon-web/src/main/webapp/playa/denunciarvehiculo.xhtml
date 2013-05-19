@@ -31,9 +31,11 @@
 					<p:column>
 						<p:inputText id="patente" style="width: 200px"
 							value="#{denunciaVehiculoMB.patente}" required="true"
-							requiredMessage="Campo obligatorio" maxlength="6">
-							<f:validateLength minimum="6" />
-
+							requiredMessage="Campo patente obligatorio" maxlength="6"
+							validator="#{abonoMB.validateVehiculo}">
+							<f:validateLength minimum="6" update="patenteMsg" />
+							<p:ajax event="blur"
+									update="patenteMsg" />
 						</p:inputText>
 					</p:column>
 					<p:column>
@@ -49,7 +51,7 @@
 					<p:column styleClass="vert-align-top">
 						<p:inputTextarea id="asunto" rows="7" cols="33"
 							style="width: 300px" value="#{denunciaVehiculoMB.asunto}"
-							required="true" requiredMessage="Campo obligatorio"
+							required="true" requiredMessage="Campo asunto obligatorio"
 							maxlength="500">
 							<f:validateLength minimum="3" />
 							<p:ajax event="blur" update="mensajeMsg" />
