@@ -3,7 +3,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:t="http://myfaces.apache.org/extensions">
 
 	<ui:define name="title">
 		Solicitud de registro de vehículo
@@ -16,8 +17,9 @@
 			<p:growl id="messages" />
 			<div style="margin: 0 50px 0 50px">
 				<h:panelGrid columns="1" width="80%">
-					<p:panel header="Nuevo Vehículo">
-						<h:panelGrid columns="3" cellpadding="8" cellspacing="10" width="90%">
+					<p:panel header="Nuevo Vehículo" styleClass="fuente-outputtext">
+						<h:panelGrid columns="3" cellpadding="8" cellspacing="10"
+							width="90%">
 							<h:outputLabel for="patente" value="Patente: " />
 							<p:inputText id="patente" style="width:197px"
 								value="#{vehiculoMB.patente}" required="true"
@@ -31,7 +33,8 @@
 							<h:outputText for="marcaVehiculo" value="Marca: " />
 							<p:selectOneMenu id="marcas" style="width:200px"
 								value="#{vehiculoMB.marca}" effect="fade">
-								<f:selectItem itemLabel="Seleccione una marca" itemValue="" />
+								<f:selectItem itemLabel="Seleccione una marca"
+									itemValue="#{null}" />
 								<f:selectItems value="#{vehiculoMB.marcasList}" var="marca"
 									itemValue="#{marca}" itemLabel="#{marca.nombre}" />
 								<f:converter converterId="marcaVehiculoConverter" />
@@ -43,10 +46,11 @@
 							<h:outputText for="modelo" value="Modelo: " />
 							<p:selectOneMenu id="modelos" style="width:200px"
 								value="#{vehiculoMB.modeloVehiculo}" effect="fade">
-								<f:selectItem itemLabel="Seleccione un modelo" itemValue=""/>
+								<f:selectItem itemLabel="Seleccione un modelo"
+									itemValue="#{null}" />
 								<f:selectItems value="#{vehiculoMB.modelosList}" var="modelo"
 									itemValue="#{modelo}" itemLabel="#{modelo.nombre}" />
-									<p:ajax event="change" update="@this" process="@this" />
+								<p:ajax event="change" update="modeloMsg, @this" process="@this" /> 
 								<f:converter converterId="modeloVehiculoConverter" />
 							</p:selectOneMenu>
 							<p:message id="modeloMsg" for="modelos" display="icon" />
@@ -54,18 +58,20 @@
 							<h:outputText for="colorVehiculo" value="Color: " />
 							<p:selectOneMenu id="colores" style="width:200px" var="colour"
 								value="#{vehiculoMB.colorVehiculo}" effect="fade">
-								<f:selectItem itemLabel="Seleccione un color" itemValue="-1" />
+								<f:selectItem itemLabel="Seleccione un color"
+									itemValue="-1" />
 								<f:selectItems value="#{vehiculoMB.colorVehiculoList}"
 									var="color" itemValue="#{color}" itemLabel="#{color.nombre}" />
+								
+									<p:column>
+										<h:panelGrid
+											style="width:43px; background-color:##{colour.valorHexadecimal};">
+										</h:panelGrid>
+									</p:column>
+									<p:column>
+										#{colour.nombre}
+									</p:column>
 								<f:converter converterId="colorVehiculoConverter" />
-								<p:column>
-									<h:panelGrid
-										style="width:43px; background-color:##{colour.valorHexadecimal};">
-									</h:panelGrid>
-								</p:column>
-								<p:column>
-						#{colour.nombre}
-					</p:column>
 							</p:selectOneMenu>
 							<p:column />
 

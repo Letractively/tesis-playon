@@ -53,8 +53,10 @@
 
 						<h:outputText value="Saldo: " styleClass="fuente-outputtext" />
 						<h:outputText
-							value="$#{perfilClienteMB.cliente.cuentaCliente.saldo}"
-							styleClass="fuente-perfil" />
+							value="#{perfilClienteMB.cliente.cuentaCliente.saldo}"
+							styleClass="fuente-perfil">
+							<f:convertNumber type="currency" currencySymbol="$"/>
+						</h:outputText>
 
 						<h:outputText value="Última recarga: "
 							styleClass="fuente-outputtext" />

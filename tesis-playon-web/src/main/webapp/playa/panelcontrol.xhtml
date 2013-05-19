@@ -13,57 +13,78 @@
 
 	<ui:define name="content">
 		<h:form style="margin: 0 0 0 30px;">
-			<h1>Panel de control</h1>
-			<div id="perfil-playa">
-				<h:panelGrid columns="2">
-					<h:graphicImage library="fotos_perfil_playas"
-						name="#{perfilPlayaMB.perfil.nombreFoto}"
-						styleClass="bordes-foto-perfil"
-						rendered="#{perfilPlayaMB.perfil.nombreFoto != null}" />
-					<h:graphicImage library="fotos_perfil_playas" name="sinfoto.jpg"
-						styleClass="bordes-foto-perfil"
-						rendered="#{perfilPlayaMB.perfil.nombreFoto == null}" />
-					<h1 style="width: 400px">#{perfilPlayaMB.perfil.playa.nombreComercial}</h1>
-				</h:panelGrid>
-			</div>
-
 			<p:growl id="messages" />
-			<div id="perfil-playa">
-				<h:panelGrid columns="2" cellpadding="8" cellspacing="10">
-					<h:outputText value="Playa: " styleClass="fuente-outputtext" />
-					<h:outputText id="txt_playa"
-						value="#{ingresoEgresoMB.playa.nombreComercial}"
-						styleClass="fuente-perfil" />
-
-					<h:outputText value="Cargo: " styleClass="fuente-outputtext" />
-					<h:outputText id="txt_cargo"
-						value="#{ingresoEgresoMB.cargoEmpleado.nombre}"
-						styleClass="fuente-perfil" />
-
-					<h:outputText value="Apellido: " styleClass="fuente-outputtext" />
-					<h:outputText id="txt_apellido"
-						value="#{ingresoEgresoMB.usuario.apellido}"
-						styleClass="fuente-perfil" />
-
-					<h:outputText value="Nombre: " styleClass="fuente-outputtext" />
-					<h:outputText id="txt_nombre"
-						value="#{ingresoEgresoMB.usuario.nombre}"
-						styleClass="fuente-perfil" />
-				</h:panelGrid>
+			<h1>Panel de control</h1>
+			<div style="margin: 0 20px 0 20px;">
+				<p:panel>
+					<div id="perfil-playa" style="margin: 0 20px 0 20px;">
+						<h:panelGrid columns="2">
+							<p:column>
+								<h:graphicImage library="fotos_perfil_playas"
+									name="#{perfilPlayaMB.perfil.id}_#{perfilPlayaMB.perfil.nombreFoto}"
+									styleClass="bordes-foto-perfil"
+									rendered="#{perfilPlayaMB.perfil.nombreFoto != null}" />
+								<h:graphicImage library="fotos_perfil_playas" name="sinfoto.jpg"
+									styleClass="bordes-foto-perfil"
+									rendered="#{perfilPlayaMB.perfil.nombreFoto == null}" />
+							</p:column>
+							<p:column>
+								<h1 style="width: 400px">
+									<h:outputText
+										value="#{perfilPlayaMB.perfil.playa.nombreComercial}" />
+								</h1>
+							</p:column>
+						</h:panelGrid>
+					</div>
+				</p:panel>
 			</div>
 
-			<div style="width: 100%;">
-				Tareas
-				<p:separator id="separator" />
+			<div id="perfil-playa" style="margin: 20px 50px 0 50px;">
+				<p:panel header="Datos de Usuario" styleClass="fuente-outputtext">
+					<h:panelGrid columns="2" cellpadding="8" cellspacing="10">
+						<h:outputText value="Trabaja en la playa: "
+							styleClass="fuente-outputtext" />
+						<h:outputText id="txt_playa"
+							value="#{ingresoEgresoMB.playa.nombreComercial}"
+							styleClass="fuente-perfil" />
 
-				<h:link outcome="/playa/perfilplaya.xhtml">
-					<f:verbatim>Perfil de Playa</f:verbatim>
-				</h:link>
-				<br />
-				<h:link outcome="/playa/ingresoegresovehiculo.xhtml">
-					<f:verbatim>Ingreso/Egreso de Cliente</f:verbatim>
-				</h:link>
+						<h:outputText value="Cargo que desempeña: "
+							styleClass="fuente-outputtext" />
+						<h:outputText id="txt_cargo"
+							value="#{ingresoEgresoMB.cargoEmpleado.nombre}"
+							styleClass="fuente-perfil" />
+
+						<h:outputText value="Nombre de usuario: "
+							styleClass="fuente-outputtext" />
+						<h:outputText value="#{ingresoEgresoMB.usuario.nombreUser}"
+							styleClass="fuente-perfil" />
+
+						<h:outputText value="Apellido: " styleClass="fuente-outputtext" />
+						<h:outputText id="txt_apellido"
+							value="#{ingresoEgresoMB.usuario.apellido}"
+							styleClass="fuente-perfil" />
+
+						<h:outputText value="Nombre: " styleClass="fuente-outputtext" />
+						<h:outputText id="txt_nombre"
+							value="#{ingresoEgresoMB.usuario.nombre}"
+							styleClass="fuente-perfil" />
+					</h:panelGrid>
+				</p:panel>
+
 			</div>
+
+			<!-- 			<div style="width: 100%;"> -->
+			<!-- 				Tareas -->
+			<!-- 				<p:separator id="separator" /> -->
+
+			<!-- 				<h:link outcome="/playa/perfilplaya.xhtml"> -->
+			<!-- 					<f:verbatim>Perfil de Playa</f:verbatim> -->
+			<!-- 				</h:link> -->
+			<!-- 				<br /> -->
+			<!-- 				<h:link outcome="/playa/ingresoegresovehiculo.xhtml"> -->
+			<!-- 					<f:verbatim>Ingreso/Egreso de Cliente</f:verbatim> -->
+			<!-- 				</h:link> -->
+			<!-- 			</div> -->
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -105,12 +105,13 @@ public class VehiculoManagedBean implements Serializable {
 	this.cliente = getClienteService().findByNombreUsuario(userName);
 	marcasList = getMarcaVehiculoService().findAll();
 	colorVehiculoList = getColorVehiculoService().findAll();
+
 	if (vehiculoSelected != null) {
-	    anioSeleccionado = vehiculoSelected.getAnio();
-	    patenteSeleccionada = vehiculoSelected.getPatente();
-	    colorSeleccionado = vehiculoSelected.getColorVehiculo();
-	    modeloSeleccionado = vehiculoSelected.getModeloVehiculo();
 	    marcaSeleccionada = vehiculoSelected.getModeloVehiculo().getMarcaVehiculo();
+	    modeloSeleccionado = vehiculoSelected.getModeloVehiculo();
+	    if (!facesContext.isPostback()) {
+		modelosList = getModeloVehiculoService().findByMarca(marcaSeleccionada);
+	    }
 	}
     }
 
@@ -124,26 +125,26 @@ public class VehiculoManagedBean implements Serializable {
 		    vehiculo.setCodigoBarra(getCodigoBarra());
 		    vehiculo.setColorVehiculo(getColorVehiculo());
 		    vehiculo.setModeloVehiculo(getModeloVehiculo());
-		    vehiculo.setPatente(getPatente());
+		    vehiculo.setPatente(getPatente().toUpperCase());
 		    vehiculo.setHabilitado(true);
 
 		    getVehiculoService().save(vehiculo);
 
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-			    "Se agregó correctamente el vehículo con patente: " + getPatente(), "");
+			    "Se registró correctamente el vehículo con patente: " + getPatente(), null);
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 
 		    return "vehiculoaddend";
 		} else {
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "El vehículo con patente :"
-			    + getPatente() + " ya está registrado", "");
+			    + getPatente() + " ya está registrado", null);
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 	    }
 	    return null;
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, Ya éxiste un vehículo con patente: " + getPatente(), "");
+		    "Error, Ya éxiste un vehículo con patente: " + getPatente(), null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}
@@ -153,44 +154,44 @@ public class VehiculoManagedBean implements Serializable {
     public String updateVehiculo() {
 	try {
 	    if (cliente != null && vehiculoSelected != null) {
-		if (getVehiculoService().isPropietario(patenteSeleccionada, cliente)) {
-		    vehiculoSelected.setAnio(anioSeleccionado);
-		    vehiculoSelected.setColorVehiculo(colorSeleccionado);
+		if (getVehiculoService().isPropietario(vehiculoSelected.getPatente(), cliente)) {
+		    // vehiculoSelected.setAnio(anioSeleccionado);
+		    // vehiculoSelected.setColorVehiculo(colorSeleccionado);
 		    vehiculoSelected.setModeloVehiculo(modeloSeleccionado);
-		    vehiculoSelected.setPatente(patenteSeleccionada);
+		    vehiculoSelected.setPatente(vehiculoSelected.getPatente().toUpperCase());
 
 		    getVehiculoService().update(vehiculoSelected);
 
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-			    "Se modificó correctamente el vehículo con patente: " + patenteSeleccionada, "");
+			    "Se actualizó correctamente el vehículo con patente: " + vehiculoSelected.getPatente(),
+			    null);
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 
 		    return "vehiculolist";
 		} else {
-		    if (!getVehiculoService().isHabilitado(patenteSeleccionada)) {
-			vehiculoSelected.setAnio(anioSeleccionado);
-			vehiculoSelected.setColorVehiculo(colorSeleccionado);
-			vehiculoSelected.setModeloVehiculo(modeloSeleccionado);
-			vehiculoSelected.setPatente(patenteSeleccionada);
+		    if (!getVehiculoService().isHabilitado(vehiculoSelected.getPatente())) {
 
+			vehiculoSelected.setModeloVehiculo(modeloSeleccionado);
+			vehiculoSelected.setPatente(vehiculoSelected.getPatente().toUpperCase());
 			getVehiculoService().update(vehiculoSelected);
 
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Se modificó correctamente el vehículo con patente: " + patenteSeleccionada, "");
+				"Se actualizó correctamente el vehículo con patente: " + vehiculoSelected.getPatente(),
+				null);
 			FacesContext.getCurrentInstance().addMessage(null, message);
-			
+
 			return "vehiculolist";
 		    } else {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
-				"Ya se encuentra registrado el vehículo con patente: " + patenteSeleccionada,
-				"");
+				"Ya se encuentra registrado el vehículo con patente: " + vehiculoSelected.getPatente(),
+				null);
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		    }
 		}
 	    }
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, Ya éxiste un vehículo con patente: " + getPatente(), "");
+		    "Error, Ya éxiste un vehículo con patente: " + getPatente(), null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -205,10 +206,13 @@ public class VehiculoManagedBean implements Serializable {
     }
 
     public void handleMarcaSelectedChange() {
-	if (marcaSeleccionada != null && !marcaSeleccionada.equals(""))
+	if (marcaSeleccionada != null 
+		&& !marcaSeleccionada.equals(""))
 	    modelosList = getModeloVehiculoService().findByMarca(marcaSeleccionada);
 	else
-	    modelosList.add(vehiculoSelected.getModeloVehiculo());
+	{
+	    modelosList=getModeloVehiculoService().findByMarca(vehiculoSelected.getModeloVehiculo().getMarcaVehiculo());
+	}
     }
 
     public IVehiculoService getVehiculoService() {

@@ -14,11 +14,13 @@ public class ColorVehiculoConverter implements Converter {
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
 	if (!value.equals("-1")) {
 	    String toObject[] = value.split(":");
-	    ColorVehiculo color = new ColorVehiculo();
-	    color.setId(Integer.parseInt(toObject[0]));
-	    color.setNombre(toObject[1]);
-	    color.setValorHexadecimal(toObject[2]);
-	    return color;
+	    if (toObject.length == 3) {
+		ColorVehiculo color = new ColorVehiculo();
+		color.setId(Integer.parseInt(toObject[0]));
+		color.setNombre(toObject[1]);
+		color.setValorHexadecimal(toObject[2]);
+		return color;
+	    }
 	}
 	return null;
     }
@@ -33,7 +35,7 @@ public class ColorVehiculoConverter implements Converter {
 	    String toString = idColor + ":" + nombreBarrio + ":" + hexa;
 	    return toString;
 	} else {
-	    //return "No se pudo parsear el objeto.";
+	    // return "No se pudo parsear el objeto.";
 	    return "-1";
 	}
     }

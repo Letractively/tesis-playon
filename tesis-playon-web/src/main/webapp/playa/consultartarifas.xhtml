@@ -36,7 +36,8 @@
 				</p:column>
 
 				<p:column headerText="Categoría" styleClass="column-font"
-					filterMatchMode="exact" filterOptions="#{tarifaMB.categoriaOptions}"
+					filterMatchMode="exact"
+					filterOptions="#{tarifaMB.categoriaOptions}"
 					filterBy="#{tarifa.categoriaVehiculo}">
 					<div align="center">
 						<h:outputText value="#{tarifa.categoriaVehiculo.nombre}" />
@@ -44,8 +45,12 @@
 				</p:column>
 
 				<p:column headerText="Importe" filterBy="#{tarifa.importe}"
-					filterMatchMode="contains"><div align="center">
-					<h:outputText value="#{tarifa.importe}" /></div>
+					filterMatchMode="contains">
+					<div align="center">
+						<h:outputText value="#{tarifa.importe}">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</div>
 				</p:column>
 
 				<p:column headerText="Vigente" styleClass="column-font">

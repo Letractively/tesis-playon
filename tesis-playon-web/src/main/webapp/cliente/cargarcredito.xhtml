@@ -30,7 +30,10 @@
 				<p:column>
 					<h:outputText value="Su saldo actual es de: " />
 					<h:outputText id="txt_cuenta"
-						value="$ #{cuentaClienteMB.cliente.cuentaCliente.saldo} argentinos." />
+						value="#{cuentaClienteMB.cliente.cuentaCliente.saldo}">
+						<f:convertNumber type="currency" currencySymbol="$"/>	
+					</h:outputText>
+					<h:outputText value=" argentinos." />
 				</p:column>
 				<p:column>
 
@@ -45,6 +48,7 @@
 					<p:inputText id="saldo" value="#{cuentaClienteMB.saldo}"
 						inmediate="true">
 						<p:ajax event="blur" update="saldoMsg" />
+						<f:convertNumber type="currency" currencySymbol="$"/>	
 					</p:inputText>
 				</p:column>
 				<p:column>

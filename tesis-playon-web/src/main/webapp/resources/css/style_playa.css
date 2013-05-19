@@ -30,6 +30,12 @@
 	margin-right: 10px;
 }
 
+.fuente-encabezado-panel{
+	font-size: larger;
+	color: black;
+	margin-right: 10px;
+}
+
 .fuente-subtitle {
 	font-size: 20px;
 	font-style: italic;
