@@ -13,7 +13,7 @@
 		<p:growl id="messages" />
 
 		<p:dataTable id="playas" var="playa" value="#{playaMB.playaList}"
-			filteredValue="#{auditoriaMB.filteredPlayas}" widgetVar="playasTable"
+			filteredValue="#{filtrosMB.filteredPlayas}" widgetVar="playasTable"
 			paginatorPosition="bottom" paginator="true" rows="6"
 			emptyMessage="¡No existen playas de estacionamiento!">
 
@@ -35,7 +35,7 @@
 
 			<p:column headerText="Barrio" styleClass="column-font"
 				filterBy="#{playa.barrio}"
-				filterOptions="#{auditoriaMB.barriosOptions}"
+				filterOptions="#{filtrosMB.barriosOptions}"
 				filterMatchMode="exact">
 				<h:outputText value="#{playa.barrio.nombre}" />
 				<f:facet name="header">
@@ -61,7 +61,7 @@
 
 			<p:column headerText="Estado" styleClass="column-font"
 				filterBy="#{playa.estado}"
-				filterOptions="#{auditoriaMB.estadosOptions}"
+				filterOptions="#{filtrosMB.estadosOptions}"
 				filterMatchMode="exact">
 				<h:outputText value="#{playa.estado.nombre}" />
 				<f:facet name="header">

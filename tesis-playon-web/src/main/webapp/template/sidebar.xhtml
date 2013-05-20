@@ -13,11 +13,11 @@
 			</h:link>
 
 			<p:galleria value="#{fotoPublicidadMB.fotoPublicidadList}"
-				var="image" panelWidth="200" panelHeight="360"
+				id="boxPub1" var="image" panelWidth="200" panelHeight="360"
 				rendered="#{fotoPublicidadMB.fotoPublicidadList != null}">
 				<a href="#{image.url}" target="_blank"><h:graphicImage
-						library="fotos_publicidad" name="#{image.id}_#{image.nombre}" width="200px"
-						height="360px" /></a>
+						id="imgPub1" library="fotos_publicidad"
+						name="#{image.id}_#{image.nombre}" width="200px" height="360px" /></a>
 			</p:galleria>
 
 		</div>
@@ -27,19 +27,28 @@
 					style="opacity:0.55;" width="200px" height="360px"
 					rendered="#{empty fotoPublicidadMB.publicidadList}" />
 			</h:link>
+
 			<p:galleria value="#{fotoPublicidadMB.fotoPublicidadList}"
-				var="image" panelWidth="200" panelHeight="360" showCaption="true"
+				id="boxPub2" var="image" panelWidth="200" panelHeight="360"
+				showCaption="true"
 				rendered="#{fotoPublicidadMB.fotoPublicidadList != null}">
 				<a href="#{image.url}" target="_blank"> <p:graphicImage
-						library="fotos_publicidad" name="#{image.id}_#{image.nombre}" width="200px"
-						height="360px" url="#{image.url}" />
+						id="imgPub2" library="fotos_publicidad"
+						name="#{image.id}_#{image.nombre}" width="200px" height="360px"
+						url="#{image.url}" />
 				</a>
 			</p:galleria>
 
 		</div>
+		<div class="box" align="right">
+			<p:galleria id="boxPubAux" var="image" panelWidth="500"
+				showCaption="false"></p:galleria>
+		</div>
+		<!-- 
 		<div align="center">
 			<h:link value="Publicite aquí" outcome="/solicitudpublicidadadd" />
 		</div>
+		 -->
 	</div>
 
 </ui:composition>

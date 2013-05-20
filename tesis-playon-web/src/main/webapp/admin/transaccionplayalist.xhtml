@@ -36,6 +36,7 @@
 
 		<p:dataTable id="transacciones" var="transaccionPlaya"
 			value="#{transaccionPlayaMB.transaccionesPorFechaList}"
+			filteredValue="#{filtrosMB.filteredTransaccionesPlaya}"
 			widgetVar="transaccionesTable" paginatorPosition="bottom"
 			paginator="true" rows="20" emptyMessage="No existen transacciones">
 
@@ -54,8 +55,8 @@
 			</p:column>
 
 			<p:column headerText="Tipo Pago" styleClass="column-font"
-				filterBy="#{transaccionPlaya.tipoPago.nombre}"
-				filterOptions="#{transaccionPlayaMB.tipoPagoOptions}"
+				filterBy="#{transaccionPlaya.tipoPago}"
+				filterOptions="#{filtrosMB.tipoPagoOptions}"
 				filterMatchMode="exact">
 				<f:facet name="header">
 					<h:outputText value="Tipo Pago" />
@@ -66,14 +67,12 @@
 			<p:column headerText="Importe" styleClass="column-font"
 				filterBy="#{transaccionPlaya.importe}" filterMatchMode="contains">
 				<f:facet name="header">
-					<h:outputText value="Importe" />
+					$<h:outputText value="Importe" />
 				</f:facet>
 				<h:outputText value="#{transaccionPlaya.importe}" />
 			</p:column>
 
-			<p:column headerText="Cobrado" styleClass="column-font"
-				filterBy="#{transaccionPlaya.detalleEstadia.cobrado}"
-				filterMatchMode="contains">
+			<p:column headerText="Cobrado" styleClass="column-font">
 				<f:facet name="header">
 					<h:outputText value="Cobrado" />
 				</f:facet>
@@ -82,7 +81,7 @@
 			</p:column>
 
 			<p:column headerText="Empleado" styleClass="column-font"
-				filterBy="#{transaccionPlaya.detalleEstadia.empleado.nombre}"
+				filterBy="#{transaccionPlaya.detalleEstadia.empleado.usuario.nombre}"
 				filterMatchMode="contains">
 				<f:facet name="header">
 					<h:outputText value="Empleado" />

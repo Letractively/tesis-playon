@@ -41,8 +41,10 @@ public class TipoPagoDao implements ITipoPagoDao {
     public List<TipoPago> findAll() {
 	List<TipoPago> tipos = new ArrayList<TipoPago>();
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from TipoPago order by nombre").list();
-	for (Object object : list) {
-	    tipos.add((TipoPago) object);
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		tipos.add((TipoPago) object);
+	    }
 	}
 	return tipos;
     }
