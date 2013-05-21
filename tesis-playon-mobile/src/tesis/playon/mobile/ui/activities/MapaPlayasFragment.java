@@ -9,16 +9,14 @@ import android.widget.ArrayAdapter;
 
 public class MapaPlayasFragment extends ListFragment {
 
-    String[] countries = new String[] { "India", "Pakistan", "Sri Lanka", "China", "Bangladesh", "Nepal",
-	    "Afghanistan", "North Korea", "South Korea", "Japan" };
+    String[] countries = new String[] { "1111", "2222", "3333", "4444", "5555", "6666", "7777", "8888", "9999", "0000" };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	/** Creating an array adapter to store the list of countries **/
+
 	ArrayAdapter<String> adapter = new ArrayAdapter<String>(inflater.getContext(),
 		android.R.layout.simple_list_item_1, countries);
 
-	/** Setting the list adapter for the ListFragment */
 	setListAdapter(adapter);
 
 	return super.onCreateView(inflater, container, savedInstanceState);

@@ -1,7 +1,6 @@
 package tesis.playon.mobile.ui.activities;
 
 import tesis.playon.mobile.R;
-import tesis.playon.mobile.R.layout;
 import tesis.playon.mobile.json.model.Usuario;
 import android.app.Activity;
 import android.content.Intent;
