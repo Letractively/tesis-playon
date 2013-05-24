@@ -5,14 +5,57 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/locinfo"
+        android:id="@+id/nombreLbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre:" />
+
+    <TextView
+        android:id="@+id/nombreTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!-- <fragment -->
-    <!-- android:id="@+id/map" -->
-    <!-- android:layout_width="match_parent" -->
-    <!-- android:layout_height="match_parent" -->
-    <!-- class="com.google.android.gms.maps.MapFragment" /> -->
+    <TextView
+        android:id="@+id/direccLbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dirección:" />
+
+    <TextView
+        android:id="@+id/direccTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/disponLbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Disponibilidad:" />
+
+    <TextView
+        android:id="@+id/disponTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/telLbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Teléfono:" />
+
+    <TextView
+        android:id="@+id/telTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/emailLbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email:" />
+
+    <TextView
+        android:id="@+id/emailTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

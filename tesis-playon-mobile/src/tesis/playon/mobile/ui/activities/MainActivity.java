@@ -5,6 +5,9 @@ import tesis.playon.mobile.json.model.Usuario;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -42,6 +45,38 @@ public class MainActivity extends Activity {
 	    }
 	} catch (Exception e) {
 	    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+	}
+    }
+
+    // Initiating Menu XML file
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+	MenuInflater menuInflater = getMenuInflater();
+	menuInflater.inflate(R.layout.menu, menu);
+	return true;
+    }
+
+    /**
+     * Event Handling for Individual menu item selected Identify single menu item by it's id
+     * */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+	switch (item.getItemId()) {
+	    case R.id.menu_login:
+		Toast.makeText(MainActivity.this, "Login", Toast.LENGTH_SHORT).show();
+		return true;
+
+	    case R.id.menu_perfil:
+		Toast.makeText(MainActivity.this, "Perfil del cliente", Toast.LENGTH_SHORT).show();
+		return true;
+
+	    case R.id.menu_buscar:
+		Toast.makeText(MainActivity.this, "Buscar", Toast.LENGTH_SHORT).show();
+		return true;
+
+	    default:
+		return super.onOptionsItemSelected(item);
 	}
     }
 }

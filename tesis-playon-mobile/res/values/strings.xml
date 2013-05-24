@@ -84,7 +84,6 @@
 
 
     <!-- About -->
-    <string name="logo_open_data">@drawable/logo_open_data_en</string>
     <string name="about_project_version">Version %s</string>
     <string name="about_project_url"><a href="http://www.parkcatcher.com/">parkcatcher.com</a></string>
     <string name="about_intro_1">Stop driving in circles, avoid parking tickets, head directly to the right street!</string>

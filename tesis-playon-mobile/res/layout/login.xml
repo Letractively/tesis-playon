@@ -27,6 +27,8 @@
         android:layout_x="130dp"
         android:layout_y="130dp"
         android:ems="10"
+        android:imeOptions="actionNext"
+        android:inputType="text"
         android:textSize="18sp" >
 
         <requestFocus />
@@ -39,7 +41,8 @@
         android:layout_x="130dp"
         android:layout_y="186dp"
         android:ems="10"
-        android:password="true"
+        android:imeOptions="actionGo"
+        android:inputType="textPassword"
         android:textSize="18sp" />
 
     <TextView

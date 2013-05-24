@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
+import tesis.playon.mobile.Const;
 import tesis.playon.mobile.R;
 import tesis.playon.mobile.json.model.Usuario;
 import tesis.playon.mobile.utils.Utils;
@@ -24,9 +25,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
     private static final String LOG_TAG = "LoginActivity";
 
-    private static final String URL_USUARIO = "http://10.0.2.2:8080/tesis-playon-restful/usuario/";
-
-    // private static final String URL_USUARIO = "http://192.168.5.61:8080/tesis-playon-restful/usuario/";
+    private static final String URL_USUARIO = "http://" + Const.SERVER_IP + ":8080/tesis-playon-restful/usuario/";
 
     private TextView txtUser;
 
@@ -58,8 +57,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 	    b.setClickable(false);
 	    new LoginService().execute();
 	} else {
-	    Toast.makeText(getApplicationContext(), "Ingrese el nombre de usuario y la contrase�a",
-		    Toast.LENGTH_SHORT).show();
+	    Toast.makeText(getApplicationContext(), "Ingrese el nombre de usuario y la contrase�a", Toast.LENGTH_SHORT)
+		    .show();
 	}
     }
 

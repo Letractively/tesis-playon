@@ -1,11 +1,6 @@
 package tesis.playon.mobile.ui.activities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import tesis.playon.mobile.R;
-import tesis.playon.mobile.json.model.Playa;
-import tesis.playon.mobile.json.model.Playas;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
@@ -14,34 +9,34 @@ import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 public class BuscarPlayasActivity extends Activity {
 
-    private final static String LOG_TAG = "BuscarPlayasActivity";
-
-    private static final String URL_PLAYAS = "http://10.0.2.2:8080/tesis-playon-restful/playas";
-
-    // private static final String URL_PLAYAS = "http://192.168.5.61:8080/tesis-playon-restful/playas";
+    private final static String TAG = "BuscarPlayasActivity";
 
     public static Context appContext;
 
-    private Playas playas;
-
-    private ListView mListView;
-
-    private PlayaAdapter mPlayaAdapter;
-
-    private List<Playa> mListaPlayas = new ArrayList<Playa>();
+    private GoogleMap map;
 
     public void onCreate(Bundle savedInstanceState) {
 
+	Log.d(TAG, "onCreate");
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.playas);
 
@@ -53,8 +48,10 @@ public class BuscarPlayasActivity extends Activity {
 
 	Fragment listaFragment = new ListaPlayasFragment();
 	listaFragment.setArguments(args);
-	Fragment mapaFragment = new MapaPlayasFragment();
-	Fragment playaFragment = new PlayaFragment();
+
+	Fragment mapaFragment = new MapFragment();
+
+	Fragment playaFragment = new DetallePlayaFragment();
 
 	// ActionBar
 	final ActionBar actionbar = getActionBar();
@@ -72,10 +69,50 @@ public class BuscarPlayasActivity extends Activity {
 	actionbar.addTab(mapaTab);
 	actionbar.addTab(playaTab);
 
+	if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(appContext)) {
+	    map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment_container)).getMap();
+	    map.setMyLocationEnabled(true);
+
+	    // Getting LocationManager object from System Service LOCATION_SERVICE
+	    LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+	    // Creating a criteria object to retrieve provider
+	    Criteria criteria = new Criteria();
+
+	    // Getting the name of the best provider
+	    String provider = locationManager.getBestProvider(criteria, true);
+
+	    // Getting Current Location
+	    Location location = locationManager.getLastKnownLocation(provider);
+
+	    if (location != null) {
+		onLocationChanged(location);
+	    }
+	}
+    }
+
+    // @Override
+    public void onLocationChanged(Location location) {
+
+	// Getting latitude of the current location
+	double latitude = location.getLatitude();
+
+	// Getting longitude of the current location
+	double longitude = location.getLongitude();
+
+	// Creating a LatLng object for the current location
+	LatLng latLng = new LatLng(latitude, longitude);
+
+	// Showing the current location in Google Map
+	map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+	// Zoom in the Google Map
+	map.animateCamera(CameraUpdateFactory.zoomTo(15));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+	Log.d(TAG, "onCreateOptionsMenu");
 	MenuInflater inflater = getMenuInflater();
 	inflater.inflate(R.menu.menu, menu);
 	return true;
@@ -83,6 +120,7 @@ public class BuscarPlayasActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+	Log.d(TAG, "onOptionsItemSelected");
 	if (item.getItemId() == R.id.action_list) {
 	    Toast.makeText(this, "Lista de playas", Toast.LENGTH_SHORT).show();
 	    return true;
@@ -95,74 +133,20 @@ public class BuscarPlayasActivity extends Activity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+	Log.d(TAG, "onSaveInstanceState");
 	super.onSaveInstanceState(outState);
 	outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
     }
 
-    // TODO: do not delete this code for future implementation
-
-    // public void onNewIntent(Intent intent) {
-    // setIntent(intent);
-    // handleIntent(intent);
-    // }
-
     private String handleIntent(Intent intent) {
+	Log.d(TAG, "handleIntent");
 	if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 	    String query = intent.getStringExtra(SearchManager.QUERY);
-	    Log.d(LOG_TAG, "Direccion ingresada: " + query);
-	    // doSearch(query);
-	    // new BuscarPlayaService().execute();
+	    Log.d(TAG, "Direccion ingresada: " + query);
 	    return query;
 	}
 	return null;
     }
-
-    // private void doSearch(String queryStr) {
-    // // get a Cursor, prepare the ListAdapter and set it
-    // }
-
-    // private void llenarLista(ArrayList<Playa> playas) {
-    //
-    // mListaPlayas = playas;
-    // mPlayaAdapter = new PlayaAdapter(this, R.layout.grid_item, playas);
-    // mListView = getListView();
-    // mListView.setAdapter(mPlayaAdapter);
-    // mListView.setTextFilterEnabled(true);
-    //
-    // mListView.setOnItemClickListener(new OnItemClickListener() {
-    // public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-    // Toast.makeText(getApplicationContext(), mListaPlayas.get(position).getNombreComercial(),
-    // Toast.LENGTH_SHORT).show();
-    // }
-    // });
-    // }
-
-    // class BuscarPlayaService extends AsyncTask<Void, Void, String> {
-    //
-    // @Override
-    // protected String doInBackground(Void... params) {
-    // String url = URL_PLAYAS;
-    // InputStream source = new Utils().retrieveStream(url);
-    // Gson gson = new Gson();
-    // Reader reader = new InputStreamReader(source);
-    // playas = gson.fromJson(reader, Playas.class);
-    // return playas.toString();
-    // }
-    //
-    // protected void onPostExecute(String results) {
-    // Log.d(LOG_TAG, "onPostExecute");
-    // Intent result = new Intent();
-    // Bundle bundle = new Bundle();
-    // bundle.putSerializable("json.model.playas", playas);
-    // result.putExtras(bundle);
-    // // List<Playa> listaPlayas = playas.getPlayas();
-    // for (Playa playa : playas.getPlayas()) {
-    // Log.d(LOG_TAG, "Playa: " + playa.getRazonSocial() + " Dirección: " + playa.getDomicilio());
-    // }
-    // llenarLista((ArrayList<Playa>) playas.getPlayas());
-    // }
-    // }
-
 }
 
 class MyTabsListener implements ActionBar.TabListener {
@@ -175,17 +159,17 @@ class MyTabsListener implements ActionBar.TabListener {
 
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
-	ft.replace(R.id.mapFragment, fragment);
+	ft.replace(R.id.fragment_container, fragment);
     }
 
     @Override
     public void onTabReselected(Tab tab, FragmentTransaction ft) {
-	// Toast.makeText(BuscarPlayasActivity.appContext, "Reselected!", Toast.LENGTH_LONG).show();
+
     }
 
     @Override
     public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-	// ft.remove(fragment);
+
     }
 
 }
