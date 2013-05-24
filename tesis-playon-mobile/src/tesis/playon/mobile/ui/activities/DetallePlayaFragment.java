@@ -46,6 +46,23 @@ public class DetallePlayaFragment extends Fragment {
 	return mView;
     }
 
+    private void cargarDetallePlaya(Playa playa) {
+
+	Log.d(TAG, "cargarDetallePlaya");
+
+	TextView nombre = (TextView) mView.findViewById(R.id.nombreTxt);
+	TextView direccion = (TextView) mView.findViewById(R.id.direccTxt);
+	TextView disponibilidad = (TextView) mView.findViewById(R.id.disponTxt);
+	TextView telefono = (TextView) mView.findViewById(R.id.telTxt);
+	TextView email = (TextView) mView.findViewById(R.id.emailTxt);
+
+	nombre.setText(playa.getNombreComercial());
+	direccion.setText(playa.getDomicilio());
+	disponibilidad.setText(playa.getDisponibilidad().toString());
+	telefono.setText(playa.getTelefono());
+	email.setText(playa.getEmail());
+    }
+
     class BuscarDetallePlayaService extends AsyncTask<Void, Void, String> {
 
 	@Override
@@ -69,22 +86,5 @@ public class DetallePlayaFragment extends Fragment {
 	    result.putExtras(bundle);
 	    cargarDetallePlaya(playa);
 	}
-    }
-
-    private void cargarDetallePlaya(Playa playa) {
-
-	Log.d(TAG, "cargarDetallePlaya");
-
-	TextView nombre = (TextView) mView.findViewById(R.id.nombreTxt);
-	TextView direccion = (TextView) mView.findViewById(R.id.direccTxt);
-	TextView disponibilidad = (TextView) mView.findViewById(R.id.disponTxt);
-	TextView telefono = (TextView) mView.findViewById(R.id.telTxt);
-	TextView email = (TextView) mView.findViewById(R.id.emailTxt);
-
-	nombre.setText(playa.getNombreComercial());
-	direccion.setText(playa.getDomicilio());
-	disponibilidad.setText(playa.getDisponibilidad().toString());
-	telefono.setText(playa.getTelefono());
-	email.setText(playa.getEmail());
     }
 }

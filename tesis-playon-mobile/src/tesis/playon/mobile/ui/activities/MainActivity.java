@@ -64,15 +64,17 @@ public class MainActivity extends Activity {
 
 	switch (item.getItemId()) {
 	    case R.id.menu_login:
-		Toast.makeText(MainActivity.this, "Login", Toast.LENGTH_SHORT).show();
+		Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+		startActivityForResult(loginIntent, LOGIN_ID);
 		return true;
 
 	    case R.id.menu_perfil:
-		Toast.makeText(MainActivity.this, "Perfil del cliente", Toast.LENGTH_SHORT).show();
+		Intent perfilClienteIntent = new Intent(MainActivity.this, PerfilClienteActivity.class);
+		startActivityForResult(perfilClienteIntent, LOGIN_ID);
 		return true;
 
 	    case R.id.menu_buscar:
-		Toast.makeText(MainActivity.this, "Buscar", Toast.LENGTH_SHORT).show();
+		onSearchRequested();
 		return true;
 
 	    default:

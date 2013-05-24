@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 
 public class LoginActivity extends Activity implements OnClickListener {
 
-    private static final String LOG_TAG = "LoginActivity";
+    private static final String TAG = "LoginActivity";
 
     private static final String URL_USUARIO = "http://" + Const.SERVER_IP + ":8080/tesis-playon-restful/usuario/";
 
@@ -39,7 +39,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-	Log.d(LOG_TAG, "onCreate");
+	Log.d(TAG, "onCreate");
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.login);
 	findViewById(R.id.btn_login).setOnClickListener(this);
@@ -49,7 +49,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
     @Override
     public void onClick(View arg0) {
-	Log.d(LOG_TAG, "onClick");
+	Log.d(TAG, "onClick");
 	username = txtUser.getText().toString().trim();
 	password = txtPass.getText().toString().trim();
 	if (!username.equals("") && !password.equals("")) {
@@ -75,7 +75,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	}
 
 	protected void onPostExecute(String results) {
-	    Log.d(LOG_TAG, "onPostExecute");
+	    Log.d(TAG, "onPostExecute");
 	    if (username.equals(usuario.getNombreUser()) && password.equals(usuario.getPassword())
 		    && usuario.getEnable()) {
 		Intent result = new Intent();
