@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import tesis.playon.restful.domain.Cliente;
+import tesis.playon.restful.domain.Usuario;
 import tesis.playon.restful.service.IClienteService;
 
 @Controller("clienteController")
@@ -28,9 +29,11 @@ public class ClienteController {
 	return result;
     }
 
-    @RequestMapping(value = "/cliente/{nroCliente}", method = RequestMethod.GET, headers = "Accept=application/json")
+    @RequestMapping(value = "/cliente/{nroUsuario}", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
-    Cliente getCliente(@PathVariable("nroCliente") Integer nroCliente) {
-	return clienteService.findByNumeroCliente(nroCliente);
+    Cliente getCliente(@PathVariable("nroUsuario") Integer nroUsuario) {
+	Usuario usuario = new Usuario();
+	usuario.setId(nroUsuario);
+	return clienteService.findByIdUsuario(usuario);
     }
 }
