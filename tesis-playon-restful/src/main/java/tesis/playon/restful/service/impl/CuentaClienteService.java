@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import tesis.playon.restful.domain.Cliente;
 import tesis.playon.restful.domain.CuentaCliente;
 import tesis.playon.restful.service.ICuentaClienteService;
 
@@ -52,11 +53,19 @@ public class CuentaClienteService implements ICuentaClienteService {
     @Override
     public CuentaCliente findByNroCuenta(Integer nroCuenta) {
 	Session session = sessionFactory.getCurrentSession();
-	List<?> list = session.createQuery("from CuentaCliente where nroCuenta=?")
-		.setParameter(0, nroCuenta).list();
+	List<?> list = session.createQuery("from CuentaCliente where nroCuenta=?").setParameter(0, nroCuenta).list();
 	if (!list.isEmpty()) {
 	    return (CuentaCliente) list.get(0);
 	}
+	return null;
+    }
+
+    @Override
+    public CuentaCliente findByNroCliente(Cliente cliente) {
+	Session session = sessionFactory.getCurrentSession();
+	List<?> list = session.createQuery("from CuentaCliente where cliente=?").setParameter(0, cliente).list();
+	if (!list.isEmpty())
+	    return (CuentaCliente) list.get(0);
 	return null;
     }
 }
