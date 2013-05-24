@@ -5,19 +5,19 @@
 
     <TextView
         android:id="@+id/lbl_username"
-        android:layout_width="148dp"
+        android:layout_width="79dp"
         android:layout_height="wrap_content"
-        android:layout_x="6dp"
-        android:layout_y="150dip"
-        android:text="Nombre de usuario" >
+        android:layout_x="76dp"
+        android:layout_y="150dp"
+        android:text="@string/usuario" >
     </TextView>
 
     <TextView
         android:id="@+id/lbl_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="50dip"
-        android:layout_y="312dip" >
+        android:layout_x="50dp"
+        android:layout_y="312dp" >
     </TextView>
 
     <EditText
@@ -41,7 +41,7 @@
         android:layout_x="130dp"
         android:layout_y="186dp"
         android:ems="10"
-        android:imeOptions="actionGo"
+        android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:textSize="18sp" />
 
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_x="54dp"
         android:layout_y="208dp"
-        android:text="Contraseña" />
+        android:text="@string/contrasena" />
 
     <TextView
         android:id="@+id/lbl_top"
@@ -59,7 +59,18 @@
         android:layout_height="wrap_content"
         android:layout_x="63dp"
         android:layout_y="52dp"
-        android:text="Por favor ingrese primero"
+        android:text="@string/ingrese_primero"
+        android:textSize="16sp"
+        android:typeface="sans" />
+
+    <CheckBox
+        android:id="@+id/chk_recordar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="107dp"
+        android:layout_y="247dp"
+        android:checked="false"
+        android:text="@string/recordar"
         android:textSize="16sp"
         android:typeface="sans" />
 
@@ -68,7 +79,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_x="97dp"
-        android:layout_y="266dp"
-        android:text="Iniciar sesión" />
+        android:layout_y="320dp"
+        android:text="@string/iniciar_sesion" />
 
 </AbsoluteLayout>

@@ -2,6 +2,7 @@ package tesis.playon.mobile.ui.activities;
 
 import tesis.playon.mobile.R;
 import tesis.playon.mobile.json.model.Usuario;
+import tesis.playon.mobile.preferences.PreferenceHelper;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ public class MainActivity extends Activity {
 			Usuario usuario = (Usuario) bundle.getSerializable("json.model.usuario");
 			Toast.makeText(getBaseContext(), "Logueado correctamente: " + usuario.getNombreUser(),
 				Toast.LENGTH_SHORT).show();
+			PreferenceHelper mPreferences = new PreferenceHelper(getApplicationContext());
+			mPreferences.updateNroUsuario(usuario.getId());
 			onSearchRequested();
 		    } else if (resultCode == Activity.RESULT_CANCELED) {
 			Toast.makeText(getBaseContext(), "El usuario no existe o los datos eran incorrectos!",

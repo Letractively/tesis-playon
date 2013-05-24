@@ -1,61 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/nombreLbl"
-        android:layout_width="match_parent"
+        android:id="@+id/lbl_cliente"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre:" />
+        android:text="@string/cliente"
+        android:textColor="#4682B4"
+        android:textSize="25sp" />
 
     <TextView
-        android:id="@+id/nombreTxt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/direccLbl"
-        android:layout_width="match_parent"
+        android:id="@+id/txt_cliente"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dirección:" />
+        android:layout_toRightOf="@+id/lbl_cliente"
+        android:textSize="25sp" />
 
     <TextView
-        android:id="@+id/direccTxt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/disponLbl"
-        android:layout_width="match_parent"
+        android:id="@+id/lbl_documento"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Disponibilidad:" />
+        android:layout_below="@id/txt_cliente"
+        android:text="@string/documento"
+        android:textColor="#4682B4"
+        android:textSize="25sp" />
 
     <TextView
-        android:id="@+id/disponTxt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/telLbl"
-        android:layout_width="match_parent"
+        android:id="@+id/txt_documento"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Teléfono:" />
+        android:layout_below="@id/txt_cliente"
+        android:layout_toRightOf="@+id/lbl_documento"
+        android:textSize="25sp" />
 
     <TextView
-        android:id="@+id/telTxt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/emailLbl"
-        android:layout_width="match_parent"
+        android:id="@+id/lbl_domicilio"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email:" />
+        android:layout_below="@id/txt_documento"
+        android:text="@string/domicilio"
+        android:textColor="#4682B4"
+        android:textSize="25sp" />
 
     <TextView
-        android:id="@+id/emailTxt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:id="@+id/txt_domicilio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_documento"
+        android:layout_toRightOf="@+id/lbl_domicilio"
+        android:textSize="25sp" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/lbl_nro_cuenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_domicilio"
+        android:text="@string/nro_cuenta"
+        android:textColor="#4682B4"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/txt_nro_cuenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_domicilio"
+        android:layout_toRightOf="@+id/lbl_nro_cuenta"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/lbl_saldo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_nro_cuenta"
+        android:text="@string/saldo"
+        android:textColor="#4682B4"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/txt_saldo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_nro_cuenta"
+        android:layout_toRightOf="@+id/lbl_saldo"
+        android:textColor="#FF0000"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/lbl_telefono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_saldo"
+        android:text="@string/telefono"
+        android:textColor="#4682B4"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/txt_telefono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_saldo"
+        android:layout_toRightOf="@+id/lbl_telefono"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/lbl_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_telefono"
+        android:text="@string/email"
+        android:textColor="#4682B4"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/txt_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_telefono"
+        android:layout_toRightOf="@+id/lbl_email"
+        android:textSize="25sp" />
+
+</RelativeLayout>

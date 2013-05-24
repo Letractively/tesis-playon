@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.gson.Gson;
 
 public class DetallePlayaFragment extends Fragment {
@@ -26,41 +28,71 @@ public class DetallePlayaFragment extends Fragment {
 
     private static final String URL_DETALLE_PLAYA = "http://" + Const.SERVER_IP + ":8080/tesis-playon-restful/playa/";
 
+    private Bundle mBundle;
+
     private View mView;
 
     private Playa playa;
 
     private String nomPlaya;
 
+    // private MapView mMapView;
+    //
+    // private GoogleMap mMap;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-	Bundle mBundle = getArguments();
+	mBundle = getArguments();
+
 	if (null != mBundle) {
 	    nomPlaya = mBundle.getString(Const.NOMBRE_PLAYA);
 	    Log.d(TAG, "Nombre de la playa: " + nomPlaya);
 	    new BuscarDetallePlayaService().execute();
-	}
+	    mView = inflater.inflate(R.layout.playa_desc, container, false);
 
-	mView = inflater.inflate(R.layout.playa_desc, container, false);
+	    try {
+		MapsInitializer.initialize(getActivity());
+	    } catch (GooglePlayServicesNotAvailableException e) {
+		Log.d(TAG, "Google Play Store no instalado.");
+	    }
+	    // mMapView = (MapView) mView.findViewById(R.id.map_playa);
+	    // mMapView.onCreate(mBundle);
+	    // setUpMapIfNeeded(mView);
+	} else {
+	    mView = inflater.inflate(R.layout.playa_desc_vacia, container, false);
+	}
 	return mView;
     }
+
+    // private void setUpMapIfNeeded(View inflatedView) {
+    // if (mMap == null) {
+    // mMap = ((MapView) inflatedView.findViewById(R.id.map)).getMap();
+    // if (mMap != null) {
+    // setUpMap();
+    // }
+    // }
+    // }
+
+    // private void setUpMap() {
+    // mMap.addMarker(new MarkerOptions().position(new LatLng(54, 32)).title("Marker"));
+    // }
 
     private void cargarDetallePlaya(Playa playa) {
 
 	Log.d(TAG, "cargarDetallePlaya");
 
-	TextView nombre = (TextView) mView.findViewById(R.id.nombreTxt);
-	TextView direccion = (TextView) mView.findViewById(R.id.direccTxt);
-	TextView disponibilidad = (TextView) mView.findViewById(R.id.disponTxt);
-	TextView telefono = (TextView) mView.findViewById(R.id.telTxt);
-	TextView email = (TextView) mView.findViewById(R.id.emailTxt);
+	TextView nombre = (TextView) mView.findViewById(R.id.txt_nombre);
+	TextView direccion = (TextView) mView.findViewById(R.id.txt_direccion);
+	TextView disponibilidad = (TextView) mView.findViewById(R.id.txt_disponibilidad);
+	TextView telefono = (TextView) mView.findViewById(R.id.txt_telefono);
+	TextView email = (TextView) mView.findViewById(R.id.txt_email);
 
 	nombre.setText(playa.getNombreComercial());
 	direccion.setText(playa.getDomicilio());
 	disponibilidad.setText(playa.getDisponibilidad().toString());
-	telefono.setText(playa.getTelefono());
-	email.setText(playa.getEmail());
+	telefono.setText((null != playa.getTelefono()) ? playa.getTelefono() : Const.SIN_DATOS);
+	email.setText((null != playa.getEmail()) ? playa.getEmail() : Const.SIN_DATOS);
     }
 
     class BuscarDetallePlayaService extends AsyncTask<Void, Void, String> {

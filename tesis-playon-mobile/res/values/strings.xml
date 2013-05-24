@@ -1,135 +1,31 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="app_version">0.1 beta</string>
-    
     <string name="hello_world">Bienvenido a Playón</string>
     <string name="search_label">Dirección</string>
     <string name="title_activity_main">Playón: Red de Playas</string>
-    <string name="desc">Imagen</string>
-
-    <!-- Activities -->
     <string name="app_name">Playón</string>
-    <string name="activity_about">Acerca de</string>
-    <string name="activity_help">Ayuda</string>
-    <string name="activity_preferences">Settings</string>
-    <string name="activity_eula">EULA</string>
-
-    <!-- Menus -->
     <string name="menu_search">Search</string>
     <string name="menu_help">Help</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_about">About</string>
-
-    <!-- UI -->
-    <string name="tab_map">Map</string>
-    <string name="tab_favorites">Favorites</string>
-
-    <!-- EULA -->
-    <string name="eula_title">GNU General Public License v3.0</string>
-    <string name="eula_accept_btn">Accepter</string>
-    <string name="eula_decline_btn">Refuser</string>
-
-    <!-- Search -->
     <string name="search_hint">Dirección</string>
-
-    <!-- Dialogs -->
-    <string name="dialog_title_duration">Duration</string>
-    <string name="dialog_value_duration">1&#160;hour</string>
-    <string name="dialog_value_duration_plural">%s&#160;hours</string>
-    <string name="dialog_set">Set</string>
-    <string name="dialog_cancel">Cancel</string>
-    <string name="dialog_done">Done</string>
-
-    <!-- Toast -->
-    <string name="toast_postal_code_processing">Processing…</string>
-    <string name="toast_search_error">Location %1$s not found</string>
-    <string name="toast_sync_error">Sync error: %s</string>
-    <string name="toast_sync_finished">Update completed successfully</string>
-    <string name="toast_network_connection_error">Network connection is unavailable…</string>
-    <string name="toast_map_not_ready">Loading Map…</string>
-    <string name="toast_map_zoom_to_update">Please zoom in to update map information</string>
-    <string name="toast_playservices_restart">Restarting Park Catcher… Google Play services successfully update!</string>
-
-    <!-- Map -->
-    <string name="map_marker_snippet_title">Parking Allowed</string>
-    <string name="map_marker_snippet_subtitle">Next forbidden periods:</string>
-    <string name="map_no_connection">Network connection is&#160;unavailable…</string>
-    <string name="map_retry_btn">Retry</string>
-    <string name="map_no_connection_restart">Restarting Park Catcher…</string>
-
-    <!-- Playservices -->
-    <string name="playservices_title">What is this about?</string>
-    <string name="playservices_1">Google Play services lets Android apps from the Google Play Store integrate with Google+, Google Maps, and other Google services. To work correctly, some apps may require Google Play services to be present and up to date.</string>
-    <string name="playservices_2">Google Play services is usually updated automatically on Android devices. In the event you use an app that requires the latest Google Play services, you will be redirected to install or update it manually from the Google Play Store.</string>
-
-    <!-- Drawer -->
-    <string name="drawer_time_title"><xliff:g id="string">%s</xliff:g> at&#160;<xliff:g id="string">%s</xliff:g> for&#160;1&#160;hour</string>
-    <string name="drawer_time_title_plural"><xliff:g id="string">%s</xliff:g> at&#160;<xliff:g id="string">%s</xliff:g> for&#160;<xliff:g id="string">%s</xliff:g>&#160;hours</string>
-    <string name="drawer_title_day">EEEE</string>
-    <string name="drawer_date_btn">EEEE, MMMM d</string>
-    <string name="drawer_time_btn">kk:mm</string>
-    <string name="drawer_duration_btn">1&#160;hour</string>
-    <string name="drawer_duration_plural_btn">%s&#160;hours</string>
-    <string name="drawer_label_date">Date</string>
-    <string name="drawer_label_time">Time</string>
-    <string name="drawer_label_duration">Duration</string>
-
-    <!-- Favorites -->
-    <string name="todo_favorites_1">Coming Soon!</string>
-    <string name="todo_favorites_2">This section is still under construction, please be patient… The next version will allow you to save locations into a list of Favorites.</string>
-    <string name="todo_favorites_3">Other upcoming features:\r\n- Offline mode support.\r\n- Address search history and auto-complete.\r\n- Integration with Google Navigation and Street View.\r\n- Tutorial demystifying Montreal’s parking rules!</string>
-    <string name="favorites_empty_list">Empty list…</string>
-
-    <!-- PostDetails -->
-
-
-    <!-- About -->
-    <string name="about_project_version">Version %s</string>
-    <string name="about_project_url"><a href="http://www.parkcatcher.com/">parkcatcher.com</a></string>
-    <string name="about_intro_1">Stop driving in circles, avoid parking tickets, head directly to the right street!</string>
-    <string name="about_intro_2">Park Catcher Montréal is your guide to easy parking. An Open Data project.</string>
-    <string name="about_credits_1">Android app developed by <a href="http://www.mudar.ca/">Mudar Noufal</a>. Source code is released under the GPLv3 license from the Free Software Foundation.</string>
-    <string name="about_credits_2">Art Direction and Graphic Design by <a href="http://cargocollective.com/emmadumesnil/">Emma Dumesnil</a>.</string>
-    <string name="about_credits_3">Project done in collaboration with <a href="http://montrealouvert.net/donnees-ouvertes-questions-frequemment-demandees/?lang=en">Montréal ouvert</a>. Many thanks to everyone at the The City and The Plateau borough who made this project possible.</string>
-    <string name="about_open_data">This app is powered by The City of Montréal Open Data <a href="http://donnees.ville.montreal.qc.ca/fiche/stationnement-rue/">Portal</a>, in compliance with its Open Data <a href="http://donnees.ville.montreal.qc.ca/licence-texte-complet">license</a>.</string>
-
-    <!-- Help -->
-    <string name="help_1">The interactive map and the search engine allow you to find spots where parking is allowed for the time period you need.</string>
-    <string name="help_2">Tap on a parking post, displayed in <b>green</b>, to display the next no-parking period in that area.</string>
-    <string name="help_3">The zones where parking is <b>not allowed</b> are not displayed on the map.</string>
-    <string name="help_4">Tap the <b>date</b> at the screen bottom to enter the time period for which you need a parking spot.</string>
-    <string name="help_5"><b>Long press</b> on the map to change your geographic location.</string>
-    <string name="help_6"><b>Press twice</b> on the “Map” tab title to reset the search time period and your geographic location.</string>
-
-    <!-- Prefrences -->
-    <string name="prefs_breadcrumb">Settings and Preferences</string>
-    <string name="prefs_category_general">General Settings</string>
-    <string name="prefs_category_performance">Performance</string>
-    <string name="prefs_language_title">Language</string>
-    <string name="prefs_language_summary">Change the interface language</string>
-    <string name="prefs_language_dialog_title">Set language</string>
-    <string name="prefs_language_spanish">Espanol</string>
-    <string name="prefs_language_english">English</string>
-    <string name="prefs_units_title">Distance Units System</string>
-    <string name="prefs_units_summary">Calculate distances using km or mi</string>
-    <string name="prefs_units_dialog_title">Set units system</string>
-    <string name="prefs_units_iso">Metric (km)</string>
-    <string name="prefs_units_imperial">Imperial (mile)</string>
-    <string name="prefs_follow_location_title">Enhanced measurements</string>
-    <string name="prefs_follow_location_summary">Recommended: Background location updates. Useful if on the move.</string>
-
-    <!-- Offline -->
-
-
-    <!-- Accessibility -->
-    <string name="logo_open_data_content_desc">Montréal Ouvert [Logo]</string>
-    <string name="logo_about_content_desc">Park Catcher [Logo]</string>
-
-    <!-- TEMP -->
-    <string name="park_distance_iso">%.1f km</string>
-    <string name="park_distance_iso_min">&lt; 100 m</string>
-    <string name="park_distance_imp">%.1f mi</string>
-    <string name="park_distance_imp_feet">%s ft</string>
-    <string name="park_distance_imp_min">&lt; 200 ft</string>
+    <string name="seleccione_una_playa">Por favor seleccione una playa</string>
+    <string name="seleccione_un_cliente">Por favor regístrese como cliente</string>
+    <string name="usuario">Usuario:</string>
+    <string name="contrasena">Contraseña:</string>
+    <string name="ingrese_primero">Por favor ingrese primero</string>
+    <string name="recordar">Recordar</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="nombre">Nombre:</string>
+    <string name="direccion">Dirección:</string>
+    <string name="disponibilidad">Disponibilidad:</string>
+    <string name="telefono">Teléfono:</string>
+    <string name="email">Email:</string>
+    <string name="desc">Imagen</string>
+    <string name="cliente">Cliente:</string>
+    <string name="domicilio">Domicilio:</string>
+    <string name="nro_cuenta">Cuenta:</string>
+    <string name="saldo">Saldo:</string>
+    <string name="documento">Documento:</string>
 
 </resources>
