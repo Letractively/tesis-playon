@@ -1,7 +1,19 @@
 package tesis.playon.mobile.ui.activities;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.ArrayList;
+
+import tesis.playon.mobile.Const;
 import tesis.playon.mobile.R;
+import tesis.playon.mobile.json.model.Playa;
+import tesis.playon.mobile.json.model.Playas;
+import tesis.playon.mobile.preferences.PreferenceHelper;
+import tesis.playon.mobile.utils.Utils;
 import android.app.Fragment;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,30 +21,35 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
 public class MapaPlayasFragment extends Fragment {
 
     private final static String TAG = "MapaPlayasFragment";
 
+    private static final String URL_PLAYAS = "http://" + Const.SERVER_IP + ":8080/tesis-playon-restful/playas";
+
+    private Playas playas;
+
     private MapView mMapView;
 
     private GoogleMap mMap;
 
-    private Bundle mBundle;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
-	mBundle = savedInstanceState;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+	Log.d(TAG, "onCreateView");
+
+	// busco lista de playas
+	PreferenceHelper mPreference = new PreferenceHelper(getActivity().getApplicationContext());
+	String query = mPreference.getQuery();
+	handleQuery(query);
 
 	View inflatedView = inflater.inflate(R.layout.mapa_playas, container, false);
 
@@ -43,63 +60,9 @@ public class MapaPlayasFragment extends Fragment {
 	}
 
 	mMapView = (MapView) inflatedView.findViewById(R.id.map);
-	mMapView.onCreate(mBundle);
-	setUpMapIfNeeded(inflatedView);
+	mMapView.onCreate(savedInstanceState);
 
 	return inflatedView;
-
-	// if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(appContext)) {
-	// map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-	// map.setMyLocationEnabled(true);
-	//
-	// // Getting LocationManager object from System Service LOCATION_SERVICE
-	// LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-	//
-	// // Creating a criteria object to retrieve provider
-	// Criteria criteria = new Criteria();
-	//
-	// // Getting the name of the best provider
-	// String provider = locationManager.getBestProvider(criteria, true);
-	//
-	// // Getting Current Location
-	// Location location = locationManager.getLastKnownLocation(provider);
-	//
-	// if (location != null) {
-	// onLocationChanged(location);
-	// }
-	// }
-    }
-
-    // @Override
-    // public void onLocationChanged(Location location) {
-    //
-    // // Getting latitude of the current location
-    // double latitude = location.getLatitude();
-    //
-    // // Getting longitude of the current location
-    // double longitude = location.getLongitude();
-    //
-    // // Creating a LatLng object for the current location
-    // LatLng latLng = new LatLng(latitude, longitude);
-    //
-    // // Showing the current location in Google Map
-    // map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-    //
-    // // Zoom in the Google Map
-    // map.animateCamera(CameraUpdateFactory.zoomTo(15));
-    // }
-
-    private void setUpMapIfNeeded(View inflatedView) {
-	if (mMap == null) {
-	    mMap = ((MapView) inflatedView.findViewById(R.id.map)).getMap();
-	    if (mMap != null) {
-		setUpMap();
-	    }
-	}
-    }
-
-    private void setUpMap() {
-	mMap.addMarker(new MarkerOptions().position(new LatLng(54, 32)).title("Marker"));
     }
 
     @Override
@@ -119,4 +82,55 @@ public class MapaPlayasFragment extends Fragment {
 	mMapView.onDestroy();
 	super.onDestroy();
     }
+
+    private void handleQuery(String query) {
+
+	Log.d(TAG, "handleQuery");
+	doSearch(query);
+	new BuscarPlayaService().execute();
+    }
+
+    private void doSearch(String queryStr) {
+	// get a Cursor, prepare the ListAdapter and set it
+    }
+
+    private void llenarMapa(ArrayList<Playa> playas) {
+
+	Log.d(TAG, "llenarLista");
+	mMap = mMapView.getMap();
+	for (Playa playa : playas) {
+	    mMap.addMarker(new MarkerOptions().position(new LatLng(playa.getLatitud(), playa.getLongitud()))
+		    .title(playa.getNombreComercial()).snippet("Disponibilidad: " + playa.getDisponibilidad()));
+	    LatLng latLng = new LatLng(playa.getLatitud(), playa.getLongitud());
+	    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+	    mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+	}
+    }
+
+    class BuscarPlayaService extends AsyncTask<Void, Void, String> {
+
+	@Override
+	protected String doInBackground(Void... params) {
+	    Log.d(TAG, "doInBackground");
+	    String url = URL_PLAYAS;
+	    InputStream source = new Utils().retrieveStream(url);
+	    Gson gson = new Gson();
+	    Reader reader = new InputStreamReader(source);
+	    playas = gson.fromJson(reader, Playas.class);
+	    return playas.toString();
+	}
+
+	protected void onPostExecute(String results) {
+	    Log.d(TAG, "onPostExecute");
+	    Intent result = new Intent();
+	    Bundle bundle = new Bundle();
+	    bundle.putSerializable("json.model.playas", playas);
+	    result.putExtras(bundle);
+	    for (Playa playa : playas.getPlayas()) {
+		Log.d(TAG, "Playa: " + playa.getRazonSocial() + " Dirección: " + playa.getDomicilio());
+	    }
+	    llenarMapa((ArrayList<Playa>) playas.getPlayas());
+	}
+    }
+
 }

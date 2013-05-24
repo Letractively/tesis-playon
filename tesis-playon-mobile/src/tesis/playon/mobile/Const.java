@@ -11,7 +11,7 @@ public class Const {
     // shared preferences
     public static String USUARIO = "USUARIO";
     public static String PASSWORD = "PASSWORD";
-
+    public static String QUERY = "QUERY";
     public static String NOMBRE_PLAYA = "NOMBRE_PLAYA";
     public static String ID_USUARIO = "ID_USUARIO";
 

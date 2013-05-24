@@ -26,6 +26,12 @@ public class PreferenceHelper {
 	editor.commit();
     }
 
+    public void updateQuery(String query) {
+	SharedPreferences.Editor editor = mPreferences.edit();
+	editor.putString(Const.QUERY, query);
+	editor.commit();
+    }
+
     public int getIdUsuario() {
 	return mPreferences.getInt(Const.ID_USUARIO, 0);
     }
@@ -36,6 +42,10 @@ public class PreferenceHelper {
 
     public String getPassword() {
 	return mPreferences.getString(Const.PASSWORD, null);
+    }
+
+    public String getQuery() {
+	return mPreferences.getString(Const.QUERY, null);
     }
 
 }

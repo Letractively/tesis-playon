@@ -16,8 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.MapFragment;
-
 public class BuscarPlayasActivity extends Activity {
 
     private final static String TAG = "BuscarPlayasActivity";
@@ -39,7 +37,7 @@ public class BuscarPlayasActivity extends Activity {
 	Fragment listaFragment = new ListaPlayasFragment();
 	listaFragment.setArguments(args);
 
-	Fragment mapaFragment = new MapFragment();
+	Fragment mapaFragment = new MapaPlayasFragment();
 
 	Fragment playaFragment = new DetallePlayaFragment();
 
@@ -97,6 +95,7 @@ public class BuscarPlayasActivity extends Activity {
 	}
 	return null;
     }
+
 }
 
 class MyTabsListener implements ActionBar.TabListener {
