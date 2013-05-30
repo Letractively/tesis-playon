@@ -19,7 +19,7 @@ public class PromocionService implements IPromocionService {
 
     @Resource(name = "sessionFactory")
     private SessionFactory sessionFactory;
-    
+
     @Override
     public void save(Promocion promocion) {
 	Session session = sessionFactory.getCurrentSession();
@@ -41,9 +41,23 @@ public class PromocionService implements IPromocionService {
     @Override
     public Promocion findByNombrePromocion(String nombrePromocion) {
 	Session session = sessionFactory.getCurrentSession();
-	List<?> list = session.createQuery("from Promocion where nombre=?")
-		.setParameter(0, nombrePromocion).list();
+	List<?> list = session.createQuery("from Promocion where nombre=?").setParameter(0, nombrePromocion).list();
 	return (Promocion) list.get(0);
+    }
+
+    @Override
+    public List<Promocion> findPromocionVigenteByPlaya(String nombreComercialPlaya) {
+	Session session = sessionFactory.getCurrentSession();
+	List<Promocion> promociones = new ArrayList<Promocion>();
+	List<?> list = session.createQuery("from Promocion where playa.nombreComercial=? and estadoPromocion.nombre = 'Vigente'")
+		.setParameter(0, nombreComercialPlaya).list();
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		promociones.add((Promocion) object);
+	    }
+	    return promociones;
+	}
+	return null;
     }
 
     @Override

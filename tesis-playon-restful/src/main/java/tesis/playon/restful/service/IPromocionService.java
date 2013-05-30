@@ -13,6 +13,8 @@ public interface IPromocionService {
     void delete(Promocion promocion);
 
     Promocion findByNombrePromocion(String nombrePromocion);
+    
+    List<Promocion> findPromocionVigenteByPlaya(String nombreComercialPlaya);
 
     List<Promocion> findAll();
 }
