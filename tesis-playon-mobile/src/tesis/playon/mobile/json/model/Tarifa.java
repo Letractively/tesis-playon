@@ -1,7 +1,6 @@
 package tesis.playon.mobile.json.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -17,12 +16,6 @@ public class Tarifa implements Serializable {
 
     @SerializedName("vigente")
     private Boolean vigente;
-
-    @SerializedName("fechaAlta")
-    private Date fechaAlta;
-
-    @SerializedName("fechaBaja")
-    private Date fechaBaja;
 
     private Playa playa;
 
@@ -52,22 +45,6 @@ public class Tarifa implements Serializable {
 
     public void setVigente(Boolean vigente) {
 	this.vigente = vigente;
-    }
-
-    public Date getFechaAlta() {
-	return fechaAlta;
-    }
-
-    public void setFechaAlta(Date fechaAlta) {
-	this.fechaAlta = fechaAlta;
-    }
-
-    public Date getFechaBaja() {
-	return fechaBaja;
-    }
-
-    public void setFechaBaja(Date fechaBaja) {
-	this.fechaBaja = fechaBaja;
     }
 
     public Playa getPlaya() {

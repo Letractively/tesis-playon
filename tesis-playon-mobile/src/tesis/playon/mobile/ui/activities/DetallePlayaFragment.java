@@ -6,7 +6,10 @@ import java.io.Reader;
 
 import tesis.playon.mobile.Const;
 import tesis.playon.mobile.R;
+import tesis.playon.mobile.json.model.Comentarios;
+import tesis.playon.mobile.json.model.PerfilPlaya;
 import tesis.playon.mobile.json.model.Playa;
+import tesis.playon.mobile.json.model.Promociones;
 import tesis.playon.mobile.json.model.Tarifas;
 import tesis.playon.mobile.utils.Utils;
 import android.app.Fragment;
@@ -27,22 +30,32 @@ public class DetallePlayaFragment extends Fragment {
 
     private static final String URL_DETALLE_PLAYA = "http://" + Const.SERVER_IP + ":8080/tesis-playon-restful/playa/";
 
-    private static final String URL_TARIFAS_VIGENTES_PLAYA = "http://" + Const.SERVER_IP
-	    + ":8080/tesis-playon-restful/tarifas/";
+    private static final String URL_PERFIL_PLAYA = "http://" + Const.SERVER_IP
+	    + ":8080/tesis-playon-restful/perfilplaya/";
+
+    private static final String URL_TARIFAS_PLAYA = "http://" + Const.SERVER_IP + ":8080/tesis-playon-restful/tarifas/";
+
+    private static final String URL_PROMOCIONES_PLAYA = "http://" + Const.SERVER_IP
+	    + ":8080/tesis-playon-restful/promociones/";
+
+    private static final String URL_COMENTARIOS_PLAYA = "http://" + Const.SERVER_IP
+	    + ":8080/tesis-playon-restful/comentarios/";
 
     private Bundle mBundle;
 
     private View mView;
 
+    private String nomPlaya;
+
     private Playa playa;
 
-    private String nomPlaya;
+    private PerfilPlaya perfilPlaya;
 
     private Tarifas tarifas;
 
-    // private MapView mMapView;
-    //
-    // private GoogleMap mMap;
+    private Promociones promociones;
+
+    private Comentarios comentarios;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,34 +68,13 @@ public class DetallePlayaFragment extends Fragment {
 	    new BuscarDetallePlayaService().execute();
 	    mView = inflater.inflate(R.layout.playa_desc, container, false);
 
-	    // try {
-	    // MapsInitializer.initialize(getActivity());
-	    // } catch (GooglePlayServicesNotAvailableException e) {
-	    // Log.d(TAG, "Google Play Store no instalado.");
-	    // }
-	    // mMapView = (MapView) mView.findViewById(R.id.map_playa);
-	    // mMapView.onCreate(mBundle);
-	    // setUpMapIfNeeded(mView);
 	} else {
 	    mView = inflater.inflate(R.layout.playa_desc_vacia, container, false);
 	}
 	return mView;
     }
 
-    // private void setUpMapIfNeeded(View inflatedView) {
-    // if (mMap == null) {
-    // mMap = ((MapView) inflatedView.findViewById(R.id.map)).getMap();
-    // if (mMap != null) {
-    // setUpMap();
-    // }
-    // }
-    // }
-
-    // private void setUpMap() {
-    // mMap.addMarker(new MarkerOptions().position(new LatLng(54, 32)).title("Marker"));
-    // }
-
-    private void cargarDetallePlaya(Playa playa, Tarifas tarifas) {
+    private void cargarDetallePlaya(Playa playa, PerfilPlaya perfilPlaya, Tarifas tarifas, Promociones promociones, Comentarios comentarios) {
 
 	Log.d(TAG, "cargarDetallePlaya");
 
@@ -120,7 +112,31 @@ public class DetallePlayaFragment extends Fragment {
 	    Bundle bundle = new Bundle();
 	    bundle.putSerializable("json.model.playa", playa);
 	    result.putExtras(bundle);
-	    // cargarDetallePlaya(playa);
+	    new BuscarPerfilPlayaService().execute();
+	}
+    }
+
+    class BuscarPerfilPlayaService extends AsyncTask<Void, Void, String> {
+
+	@Override
+	protected String doInBackground(Void... params) {
+	    Log.d(TAG, "doInBackground");
+	    String url = URL_PERFIL_PLAYA
+		    + nomPlaya.replace(" ", "%20").replace("á", "a").replace("é", "e").replace("í", "i")
+			    .replace("ó", "o").replace("ú", "u").replace("ñ", "n");
+	    InputStream source = new Utils().retrieveStream(url);
+	    Gson gson = new Gson();
+	    Reader reader = new InputStreamReader(source);
+	    perfilPlaya = gson.fromJson(reader, PerfilPlaya.class);
+	    return perfilPlaya.toString();
+	}
+
+	protected void onPostExecute(String results) {
+	    Log.d(TAG, "onPostExecute");
+	    Intent result = new Intent();
+	    Bundle bundle = new Bundle();
+	    bundle.putSerializable("json.model.perfilplaya", perfilPlaya);
+	    result.putExtras(bundle);
 	    new BuscarTarifasVigentesPlayaService().execute();
 	}
     }
@@ -130,7 +146,7 @@ public class DetallePlayaFragment extends Fragment {
 	@Override
 	protected String doInBackground(Void... params) {
 	    Log.d(TAG, "doInBackground");
-	    String url = URL_TARIFAS_VIGENTES_PLAYA
+	    String url = URL_TARIFAS_PLAYA
 		    + nomPlaya.replace(" ", "%20").replace("á", "a").replace("é", "e").replace("í", "i")
 			    .replace("ó", "o").replace("ú", "u").replace("ñ", "n");
 	    InputStream source = new Utils().retrieveStream(url);
@@ -146,7 +162,57 @@ public class DetallePlayaFragment extends Fragment {
 	    Bundle bundle = new Bundle();
 	    bundle.putSerializable("json.model.tarifas", tarifas);
 	    result.putExtras(bundle);
-	    cargarDetallePlaya(playa, tarifas);
+	    new BuscarPromocionesVigentesPlayaService().execute();
+	}
+    }
+
+    class BuscarPromocionesVigentesPlayaService extends AsyncTask<Void, Void, String> {
+
+	@Override
+	protected String doInBackground(Void... params) {
+	    Log.d(TAG, "doInBackground");
+	    String url = URL_PROMOCIONES_PLAYA
+		    + nomPlaya.replace(" ", "%20").replace("á", "a").replace("é", "e").replace("í", "i")
+			    .replace("ó", "o").replace("ú", "u").replace("ñ", "n");
+	    InputStream source = new Utils().retrieveStream(url);
+	    Gson gson = new Gson();
+	    Reader reader = new InputStreamReader(source);
+	    promociones = gson.fromJson(reader, Promociones.class);
+	    return promociones.toString();
+	}
+
+	protected void onPostExecute(String results) {
+	    Log.d(TAG, "onPostExecute");
+	    Intent result = new Intent();
+	    Bundle bundle = new Bundle();
+	    bundle.putSerializable("json.model.promociones", promociones);
+	    result.putExtras(bundle);
+	    new BuscarComentariosPlayaService().execute();
+	}
+    }
+
+    class BuscarComentariosPlayaService extends AsyncTask<Void, Void, String> {
+
+	@Override
+	protected String doInBackground(Void... params) {
+	    Log.d(TAG, "doInBackground");
+	    String url = URL_COMENTARIOS_PLAYA
+		    + nomPlaya.replace(" ", "%20").replace("á", "a").replace("é", "e").replace("í", "i")
+			    .replace("ó", "o").replace("ú", "u").replace("ñ", "n");
+	    InputStream source = new Utils().retrieveStream(url);
+	    Gson gson = new Gson();
+	    Reader reader = new InputStreamReader(source);
+	    comentarios = gson.fromJson(reader, Comentarios.class);
+	    return comentarios.toString();
+	}
+
+	protected void onPostExecute(String results) {
+	    Log.d(TAG, "onPostExecute");
+	    Intent result = new Intent();
+	    Bundle bundle = new Bundle();
+	    bundle.putSerializable("json.model.comentarios", comentarios);
+	    result.putExtras(bundle);
+	    cargarDetallePlaya(playa, perfilPlaya, tarifas, promociones, comentarios);
 	}
     }
 }
