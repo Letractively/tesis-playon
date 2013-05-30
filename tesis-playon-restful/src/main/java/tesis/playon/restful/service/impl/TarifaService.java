@@ -48,8 +48,8 @@ public class TarifaService implements ITarifaService {
     @Override
     public int deleteTarifasPlaya(Playa playa) {
 	Session session = sessionFactory.getCurrentSession();
-	Query query = session.createQuery(
-		"update Tarifa set fechaBaja = :fechaBaja, vigente = 0 " + " where playa = :playa");
+	Query query = session.createQuery("update Tarifa set fechaBaja = :fechaBaja, vigente = 0 "
+		+ " where playa = :playa");
 	query.setParameter("fechaBaja", new Timestamp(Calendar.getInstance().getTimeInMillis()));
 	query.setParameter("playa", playa);
 	int result = query.executeUpdate();
@@ -60,8 +60,7 @@ public class TarifaService implements ITarifaService {
     public List<Tarifa> findAll() {
 	Session session = sessionFactory.getCurrentSession();
 	List<Tarifa> tarifas = new ArrayList<Tarifa>();
-	List<?> list = session.createQuery("from Tarifa where fechaBaja is null")
-		.list();
+	List<?> list = session.createQuery("from Tarifa where fechaBaja is null").list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
 		tarifas.add((Tarifa) object);
@@ -72,11 +71,11 @@ public class TarifaService implements ITarifaService {
     }
 
     @Override
-    public List<Tarifa> findTarifaVigenteByPlaya(Playa playa) {
+    public List<Tarifa> findTarifaVigenteByPlaya(String nombreComercialPlaya) {
 	Session session = sessionFactory.getCurrentSession();
 	List<Tarifa> tarifas = new ArrayList<Tarifa>();
-	List<?> list = session
-		.createQuery("from Tarifa where playa=? and vigente = '1'").setParameter(0, playa).list();
+	List<?> list = session.createQuery("from Tarifa where playa.nombreComercial=? and vigente = '1'")
+		.setParameter(0, nombreComercialPlaya).list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
 		tarifas.add((Tarifa) object);
@@ -90,8 +89,7 @@ public class TarifaService implements ITarifaService {
     public List<Tarifa> findTarifaVigenteByPlayaAndCategoriaVehiculo(Playa playa, CategoriaVehiculo categoriaVehiculo) {
 	Session session = sessionFactory.getCurrentSession();
 	List<Tarifa> tarifas = new ArrayList<Tarifa>();
-	List<?> list = session
-		.createQuery("from Tarifa where playa=? and categoriaVehiculo=? and vigente = 1")
+	List<?> list = session.createQuery("from Tarifa where playa=? and categoriaVehiculo=? and vigente = 1")
 		.setParameter(0, playa).setParameter(1, categoriaVehiculo).list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
@@ -106,8 +104,8 @@ public class TarifaService implements ITarifaService {
     public List<Tarifa> findByPlaya(Playa playa) {
 	Session session = sessionFactory.getCurrentSession();
 	List<Tarifa> tarifas = new ArrayList<Tarifa>();
-	List<?> list = session
-		.createQuery("from Tarifa where playa=? and fechaBaja is null").setParameter(0, playa).list();
+	List<?> list = session.createQuery("from Tarifa where playa=? and fechaBaja is null").setParameter(0, playa)
+		.list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
 		tarifas.add((Tarifa) object);

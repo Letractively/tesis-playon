@@ -1,6 +1,7 @@
 package tesis.playon.mobile.ui.activities;
 
 import tesis.playon.mobile.R;
+import tesis.playon.mobile.preferences.PreferenceHelper;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
@@ -31,6 +32,8 @@ public class BuscarPlayasActivity extends Activity {
 	appContext = getApplicationContext();
 
 	String query = handleIntent(getIntent());
+	PreferenceHelper mPreference = new PreferenceHelper(appContext);
+	mPreference.updateQuery(query);
 	Bundle args = new Bundle();
 	args.putString(SearchManager.QUERY, query);
 

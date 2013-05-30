@@ -23,13 +23,15 @@ import android.view.ViewGroup;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
-public class MapaPlayasFragment extends Fragment {
+public class MapaPlayasFragment extends Fragment implements OnMarkerClickListener {
 
     private final static String TAG = "MapaPlayasFragment";
 
@@ -62,6 +64,8 @@ public class MapaPlayasFragment extends Fragment {
 	mMapView = (MapView) inflatedView.findViewById(R.id.map);
 	mMapView.onCreate(savedInstanceState);
 
+	mMap = mMapView.getMap();
+	// mMap.setOnMarkerClickListener(this);
 	return inflatedView;
     }
 
@@ -81,6 +85,23 @@ public class MapaPlayasFragment extends Fragment {
     public void onDestroy() {
 	mMapView.onDestroy();
 	super.onDestroy();
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker arg0) {
+
+	String nomPlaya = arg0.getTitle();
+
+	Bundle playa = new Bundle();
+	playa.putString(Const.NOMBRE_PLAYA, nomPlaya);
+
+	Fragment fragment = new DetallePlayaFragment();
+	fragment.setArguments(playa);
+
+	getActivity().getActionBar().getTabAt(2).setTabListener(new MyTabsListener(fragment));
+	getActivity().getActionBar().selectTab(getActivity().getActionBar().getTabAt(2));
+
+	return true;
     }
 
     private void handleQuery(String query) {

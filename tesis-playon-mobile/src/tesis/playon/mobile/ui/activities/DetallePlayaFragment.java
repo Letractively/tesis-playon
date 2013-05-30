@@ -7,6 +7,7 @@ import java.io.Reader;
 import tesis.playon.mobile.Const;
 import tesis.playon.mobile.R;
 import tesis.playon.mobile.json.model.Playa;
+import tesis.playon.mobile.json.model.Tarifas;
 import tesis.playon.mobile.utils.Utils;
 import android.app.Fragment;
 import android.content.Intent;
@@ -18,8 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.gson.Gson;
 
 public class DetallePlayaFragment extends Fragment {
@@ -28,6 +27,9 @@ public class DetallePlayaFragment extends Fragment {
 
     private static final String URL_DETALLE_PLAYA = "http://" + Const.SERVER_IP + ":8080/tesis-playon-restful/playa/";
 
+    private static final String URL_TARIFAS_VIGENTES_PLAYA = "http://" + Const.SERVER_IP
+	    + ":8080/tesis-playon-restful/tarifas/";
+
     private Bundle mBundle;
 
     private View mView;
@@ -35,6 +37,8 @@ public class DetallePlayaFragment extends Fragment {
     private Playa playa;
 
     private String nomPlaya;
+
+    private Tarifas tarifas;
 
     // private MapView mMapView;
     //
@@ -51,11 +55,11 @@ public class DetallePlayaFragment extends Fragment {
 	    new BuscarDetallePlayaService().execute();
 	    mView = inflater.inflate(R.layout.playa_desc, container, false);
 
-	    try {
-		MapsInitializer.initialize(getActivity());
-	    } catch (GooglePlayServicesNotAvailableException e) {
-		Log.d(TAG, "Google Play Store no instalado.");
-	    }
+	    // try {
+	    // MapsInitializer.initialize(getActivity());
+	    // } catch (GooglePlayServicesNotAvailableException e) {
+	    // Log.d(TAG, "Google Play Store no instalado.");
+	    // }
 	    // mMapView = (MapView) mView.findViewById(R.id.map_playa);
 	    // mMapView.onCreate(mBundle);
 	    // setUpMapIfNeeded(mView);
@@ -78,7 +82,7 @@ public class DetallePlayaFragment extends Fragment {
     // mMap.addMarker(new MarkerOptions().position(new LatLng(54, 32)).title("Marker"));
     // }
 
-    private void cargarDetallePlaya(Playa playa) {
+    private void cargarDetallePlaya(Playa playa, Tarifas tarifas) {
 
 	Log.d(TAG, "cargarDetallePlaya");
 
@@ -116,7 +120,33 @@ public class DetallePlayaFragment extends Fragment {
 	    Bundle bundle = new Bundle();
 	    bundle.putSerializable("json.model.playa", playa);
 	    result.putExtras(bundle);
-	    cargarDetallePlaya(playa);
+	    // cargarDetallePlaya(playa);
+	    new BuscarTarifasVigentesPlayaService().execute();
+	}
+    }
+
+    class BuscarTarifasVigentesPlayaService extends AsyncTask<Void, Void, String> {
+
+	@Override
+	protected String doInBackground(Void... params) {
+	    Log.d(TAG, "doInBackground");
+	    String url = URL_TARIFAS_VIGENTES_PLAYA
+		    + nomPlaya.replace(" ", "%20").replace("á", "a").replace("é", "e").replace("í", "i")
+			    .replace("ó", "o").replace("ú", "u").replace("ñ", "n");
+	    InputStream source = new Utils().retrieveStream(url);
+	    Gson gson = new Gson();
+	    Reader reader = new InputStreamReader(source);
+	    tarifas = gson.fromJson(reader, Tarifas.class);
+	    return tarifas.toString();
+	}
+
+	protected void onPostExecute(String results) {
+	    Log.d(TAG, "onPostExecute");
+	    Intent result = new Intent();
+	    Bundle bundle = new Bundle();
+	    bundle.putSerializable("json.model.tarifas", tarifas);
+	    result.putExtras(bundle);
+	    cargarDetallePlaya(playa, tarifas);
 	}
     }
 }

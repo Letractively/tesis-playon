@@ -4,17 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <fragment
-        android:id="@+id/map_playa"
-        android:layout_width="match_parent"
-        android:layout_height="200sp"
-        class="com.google.android.gms.maps.MapFragment" />
+    <!-- <fragment -->
+    <!-- android:id="@+id/map_playa" -->
+    <!-- android:layout_width="match_parent" -->
+    <!-- android:layout_height="200sp" -->
+    <!-- class="com.google.android.gms.maps.MapFragment" /> -->
 
     <TextView
         android:id="@+id/lbl_nombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/map_playa"
         android:text="@string/nombre"
         android:textColor="#4682B4"
         android:textSize="25sp" />
@@ -23,7 +22,6 @@
         android:id="@+id/txt_nombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/map_playa"
         android:layout_toRightOf="@+id/lbl_nombre"
         android:textSize="25sp" />
 

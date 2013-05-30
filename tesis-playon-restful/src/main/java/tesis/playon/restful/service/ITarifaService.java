@@ -15,12 +15,12 @@ public interface ITarifaService {
     void delete(Tarifa tarifa);
 
     int deleteTarifasPlaya(Playa playa);
-    
+
     List<Tarifa> findByPlaya(Playa playa);
 
     List<Tarifa> findAll();
 
-    List<Tarifa> findTarifaVigenteByPlaya(Playa playa);
+    List<Tarifa> findTarifaVigenteByPlaya(String nombreComercialPlaya);
 
     List<Tarifa> findTarifaVigenteByPlayaAndCategoriaVehiculo(Playa playa, CategoriaVehiculo categoriaVehiculo);
 
