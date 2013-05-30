@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.restful.domain.Comentario;
-import tesis.playon.restful.domain.Playa;
 import tesis.playon.restful.service.IComentarioService;
 
 @Service("comentarioService")
@@ -20,7 +19,7 @@ public class ComentarioService implements IComentarioService {
 
     @Resource(name = "sessionFactory")
     private SessionFactory sessionFactory;
-    
+
     @Override
     public void save(Comentario comentario) {
 	Session session = sessionFactory.getCurrentSession();
@@ -40,11 +39,11 @@ public class ComentarioService implements IComentarioService {
     }
 
     @Override
-    public List<Comentario> findByPlaya(Playa playa) {
+    public List<Comentario> findByPlaya(String nombreComercialPlaya) {
 	Session session = sessionFactory.getCurrentSession();
 	List<Comentario> comentarios = new ArrayList<Comentario>();
-	List<?> list = session
-		.createQuery("from Comentario where playa=? and habilitado=1").setParameter(0, playa).list();
+	List<?> list = session.createQuery("from Comentario where playa.nombreComercial=? and habilitado=1")
+		.setParameter(0, nombreComercialPlaya).list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
 		comentarios.add((Comentario) object);

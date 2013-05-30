@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.restful.domain.PerfilPlaya;
-import tesis.playon.restful.domain.Playa;
 import tesis.playon.restful.service.IPerfilPlayaService;
 
 @Service("perfilPlayaService")
@@ -54,9 +53,10 @@ public class PerfilPlayaService implements IPerfilPlayaService {
     }
 
     @Override
-    public PerfilPlaya findByPlaya(Playa playa) {
+    public PerfilPlaya findByPlaya(String nombreComercialPlaya) {
 	Session session = sessionFactory.getCurrentSession();
-	List<?> list = session.createQuery("from PerfilPlaya where playa=?").setParameter(0, playa).list();
+	List<?> list = session.createQuery("from PerfilPlaya where playa.nombreComercial=?")
+		.setParameter(0, nombreComercialPlaya).list();
 	if (!list.isEmpty())
 	    return (PerfilPlaya) list.get(0);
 	return null;

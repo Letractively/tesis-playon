@@ -1,8 +1,5 @@
 package tesis.playon.restful.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -12,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import tesis.playon.restful.domain.PerfilPlaya;
-import tesis.playon.restful.domain.Playa;
+import tesis.playon.restful.domain.PerfilesPlayas;
 import tesis.playon.restful.service.IPerfilPlayaService;
 
 @Controller("perfilPlayaController")
@@ -23,15 +20,15 @@ public class PerfilPlayaController {
 
     @RequestMapping(value = "/perfilesplayas", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
-    List<PerfilPlaya> getPerfilesPlayas() {
-	List<PerfilPlaya> result = new ArrayList<PerfilPlaya>();
-	result = perfilPlayaService.findAll();
+    PerfilesPlayas getPerfilesPlayas() {
+	PerfilesPlayas result = new PerfilesPlayas();
+	result.setLista(perfilPlayaService.findAll());
 	return result;
     }
 
-    @RequestMapping(value = "/perfilplaya/{playa}", method = RequestMethod.GET, headers = "Accept=application/json")
+    @RequestMapping(value = "/perfilplaya/{nombreComercialPlaya}", method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
-    PerfilPlaya getPerfilPlaya(@PathVariable("playa") Playa playa) {
-	return perfilPlayaService.findByPlaya(playa);
+    PerfilPlaya getPerfilPlaya(@PathVariable("nombreComercialPlaya") String nombreComercialPlaya) {
+	return perfilPlayaService.findByPlaya(nombreComercialPlaya);
     }
 }

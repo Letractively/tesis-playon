@@ -3,7 +3,6 @@ package tesis.playon.restful.service;
 import java.util.List;
 
 import tesis.playon.restful.domain.Comentario;
-import tesis.playon.restful.domain.Playa;
 
 public interface IComentarioService {
 
@@ -13,7 +12,7 @@ public interface IComentarioService {
 
     void delete(Comentario comentario);
 
-    List<Comentario> findByPlaya(Playa playa);
+    List<Comentario> findByPlaya(String nombreComercialPlaya);
 
     List<Comentario> findAll();
 }

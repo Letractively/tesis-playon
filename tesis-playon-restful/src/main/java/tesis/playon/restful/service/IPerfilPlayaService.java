@@ -3,7 +3,6 @@ package tesis.playon.restful.service;
 import java.util.List;
 
 import tesis.playon.restful.domain.PerfilPlaya;
-import tesis.playon.restful.domain.Playa;
 
 public interface IPerfilPlayaService {
 
@@ -13,8 +12,8 @@ public interface IPerfilPlayaService {
 
     void delete(PerfilPlaya perfilPlaya);
 
-    PerfilPlaya findByPlaya(Playa playa);
-    
+    PerfilPlaya findByPlaya(String nombreComercialPlaya);
+
     List<PerfilPlaya> findAll();
 
 }
