@@ -58,7 +58,7 @@ public class ListaPlayasFragment extends ListFragment {
 
 	Bundle mBundle = getArguments();
 
-	query = mBundle.getString(SearchManager.QUERY);
+	query = mBundle.getString(SearchManager.QUERY) + ", Córdoba, Argentina";
 
 	new BuscarPlayaService().execute();
 
@@ -155,7 +155,7 @@ public class ListaPlayasFragment extends ListFragment {
 
 	protected void onPostExecute(String results) {
 	    Log.d(TAG, "onPostExecute");
-	    playas = new Utils().buscarPlaya(playas, result, 25);
+	    playas = new Utils().buscarPlaya(playas, result, 10);
 	    llenarLista(playas);
 	}
     }
