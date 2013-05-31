@@ -138,4 +138,26 @@ public class Playa implements Serializable {
 	this.razonSocial = razonSocial;
     }
 
+    public double getDistanceFrom(double latitud, double longitud) {
+
+	double earthRadius = 6371;
+
+	double dLat = Math.toRadians(this.latitud - latitud);
+
+	double dLng = Math.toRadians(this.longitud - longitud);
+
+	double sindLat = Math.sin(dLat / 2);
+
+	double sindLng = Math.sin(dLng / 2);
+
+	double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2) * Math.cos(this.latitud) * Math.cos(latitud);
+
+	double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+	double dist = earthRadius * c;
+
+	return dist * 10;
+
+    }
+
 }

@@ -1,13 +1,18 @@
 package tesis.playon.mobile.ui.activities;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 
 import tesis.playon.mobile.Const;
 import tesis.playon.mobile.R;
-import tesis.playon.mobile.json.model.Playa;
+import tesis.playon.mobile.json.model.GoogleGeoCodeResponse;
 import tesis.playon.mobile.json.model.Playas;
 import tesis.playon.mobile.utils.Utils;
 import android.app.Fragment;
@@ -26,6 +31,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 public class ListaPlayasFragment extends ListFragment {
 
@@ -35,13 +41,15 @@ public class ListaPlayasFragment extends ListFragment {
 
     private Playas playas;
 
-    private ArrayList<Playa> mListaPlayas = new ArrayList<Playa>();
-
     private PlayaAdapter mPlayaAdapter;
 
     private LayoutInflater mInflater;
 
     private ListView mListView;
+
+    private String query;
+
+    private GoogleGeoCodeResponse result;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,8 +58,10 @@ public class ListaPlayasFragment extends ListFragment {
 
 	Bundle mBundle = getArguments();
 
-	String query = mBundle.getString(SearchManager.QUERY);
-	handleQuery(query);
+	query = mBundle.getString(SearchManager.QUERY);
+
+	new BuscarPlayaService().execute();
+
 	mInflater = inflater;
 
 	return super.onCreateView(inflater, container, savedInstanceState);
@@ -60,17 +70,6 @@ public class ListaPlayasFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
 	Log.i("FragmentList", "Item clicked: " + id);
-    }
-
-    private void handleQuery(String query) {
-
-	Log.d(TAG, "handleQuery");
-	doSearch(query);
-	new BuscarPlayaService().execute();
-    }
-
-    private void doSearch(String queryStr) {
-	// get a Cursor, prepare the ListAdapter and set it
     }
 
     class BuscarPlayaService extends AsyncTask<Void, Void, String> {
@@ -92,18 +91,14 @@ public class ListaPlayasFragment extends ListFragment {
 	    Bundle bundle = new Bundle();
 	    bundle.putSerializable("json.model.playas", playas);
 	    result.putExtras(bundle);
-	    for (Playa playa : playas.getPlayas()) {
-		Log.d(TAG, "Playa: " + playa.getRazonSocial() + " Dirección: " + playa.getDomicilio());
-	    }
-	    llenarLista((ArrayList<Playa>) playas.getPlayas());
+	    new BuscarCoordenadasService().execute();
 	}
     }
 
-    private void llenarLista(ArrayList<Playa> playas) {
+    private void llenarLista(final Playas playas) {
 
 	Log.d(TAG, "llenarLista");
-	mListaPlayas = playas;
-	mPlayaAdapter = new PlayaAdapter(mInflater.getContext(), R.layout.grid_item, mListaPlayas);
+	mPlayaAdapter = new PlayaAdapter(mInflater.getContext(), R.layout.grid_item, playas.getPlayas());
 	setListAdapter(mPlayaAdapter);
 	mListView = getListView();
 	mListView.setAdapter(mPlayaAdapter);
@@ -111,9 +106,9 @@ public class ListaPlayasFragment extends ListFragment {
 
 	mListView.setOnItemClickListener(new OnItemClickListener() {
 	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		Toast.makeText(getActivity().getApplicationContext(), mListaPlayas.get(position).getNombreComercial(),
-			Toast.LENGTH_SHORT).show();
-		String nomPlaya = mListaPlayas.get(position).getNombreComercial();
+		Toast.makeText(getActivity().getApplicationContext(),
+			playas.getPlayas().get(position).getNombreComercial(), Toast.LENGTH_SHORT).show();
+		String nomPlaya = playas.getPlayas().get(position).getNombreComercial();
 		Bundle playa = new Bundle();
 		playa.putString(Const.NOMBRE_PLAYA, nomPlaya);
 
@@ -124,5 +119,44 @@ public class ListaPlayasFragment extends ListFragment {
 		getActivity().getActionBar().selectTab(getActivity().getActionBar().getTabAt(2));
 	    }
 	});
+    }
+
+    private String jsonCoord(String address) throws IOException {
+	URL url = new URL("http://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&sensor=false");
+	URLConnection connection = url.openConnection();
+	BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+	String inputLine;
+	String jsonResult = "";
+	while ((inputLine = in.readLine()) != null) {
+	    jsonResult += inputLine;
+	}
+	in.close();
+	return jsonResult;
+    }
+
+    class BuscarCoordenadasService extends AsyncTask<Void, Void, String> {
+
+	@Override
+	protected String doInBackground(Void... params) {
+	    Log.d(TAG, "doInBackground");
+	    Gson gson = new Gson();
+	    result = null;
+	    try {
+		result = gson.fromJson(jsonCoord(URLEncoder.encode(query, "UTF-8")), GoogleGeoCodeResponse.class);
+	    } catch (JsonSyntaxException e) {
+		e.printStackTrace();
+	    } catch (UnsupportedEncodingException e) {
+		e.printStackTrace();
+	    } catch (IOException e) {
+		e.printStackTrace();
+	    }
+	    return null;
+	}
+
+	protected void onPostExecute(String results) {
+	    Log.d(TAG, "onPostExecute");
+	    playas = new Utils().buscarPlaya(playas, result, 25);
+	    llenarLista(playas);
+	}
     }
 }

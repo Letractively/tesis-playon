@@ -1,6 +1,5 @@
 package tesis.playon.mobile.ui.activities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import tesis.playon.mobile.R;
@@ -19,7 +18,7 @@ public class PlayaAdapter extends ArrayAdapter<Playa> {
     int layoutResourceId;
     List<Playa> listaPlayas = null;
 
-    public PlayaAdapter(Context context, int layoutResourceId, ArrayList<Playa> listaPlayas) {
+    public PlayaAdapter(Context context, int layoutResourceId, List<Playa> listaPlayas) {
 	super(context, layoutResourceId, listaPlayas);
 	this.layoutResourceId = layoutResourceId;
 	this.context = context;
