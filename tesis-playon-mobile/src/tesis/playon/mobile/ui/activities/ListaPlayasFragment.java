@@ -112,7 +112,7 @@ public class ListaPlayasFragment extends ListFragment {
     private void llenarLista(final Playas playas) {
 
 	Log.d(TAG, "llenarLista");
-	mPlayaAdapter = new PlayaAdapter(mInflater.getContext(), R.layout.grid_item, playas.getPlayas());
+	mPlayaAdapter = new PlayaAdapter(mInflater.getContext(), R.layout.playa_grid_item, playas.getPlayas());
 	setListAdapter(mPlayaAdapter);
 	mListView = getListView();
 	mListView.setAdapter(mPlayaAdapter);

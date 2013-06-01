@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/txt_comentario"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#4682B4"
+        android:textSize="24sp" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/txt_usuario"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp" >
+    </TextView>
+
+</LinearLayout>
