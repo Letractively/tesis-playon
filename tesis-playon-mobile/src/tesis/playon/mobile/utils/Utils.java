@@ -71,6 +71,31 @@ public class Utils {
 	return playas;
     }
 
+    public Playas buscarPlaya(Playas playas, String latitud, String longitud, Integer distancia) {
+
+	List<Playa> playaResultadoBusqueda = new ArrayList<Playa>();
+	if (null != playas && null != latitud && null != longitud) {
+	    try {
+		for (Playa playaAux : playas.getPlayas()) {
+
+		    lat = Double.parseDouble(latitud);
+		    lng = Double.parseDouble(longitud);
+
+		    Double comparacion = playaAux.getDistanceFrom(lat, lng);
+		    if (comparacion < distancia) {
+			playaResultadoBusqueda.add(playaAux);
+		    }
+		}
+		Collections.sort(playaResultadoBusqueda, new Comparar());
+	    } catch (Exception e) {
+		e.printStackTrace();
+	    }
+	}
+	playas.setPlayas(playaResultadoBusqueda);
+
+	return playas;
+    }
+
     class Comparar implements Comparator<Playa> {
 	public int compare(Playa p1, Playa p2) {
 	    Double comparacion1 = p1.getDistanceFrom(lat, lng);

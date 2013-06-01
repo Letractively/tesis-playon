@@ -10,6 +10,11 @@
         android:id="@+id/menu_perfil"
         android:icon="@drawable/perfil_icon"
         android:title="Perfil"/>
+    
+     <item
+        android:id="@+id/menu_gps"
+        android:icon="@drawable/pin_map_icon"
+        android:title="Playas Cercanas"/>
 
     <item
         android:id="@+id/menu_buscar"

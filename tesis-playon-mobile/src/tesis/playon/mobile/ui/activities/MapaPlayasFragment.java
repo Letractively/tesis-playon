@@ -1,12 +1,18 @@
 package tesis.playon.mobile.ui.activities;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 
 import tesis.playon.mobile.Const;
 import tesis.playon.mobile.R;
+import tesis.playon.mobile.json.model.GoogleGeoCodeResponse;
 import tesis.playon.mobile.json.model.Playa;
 import tesis.playon.mobile.json.model.Playas;
 import tesis.playon.mobile.preferences.PreferenceHelper;
@@ -30,6 +36,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 public class MapaPlayasFragment extends Fragment implements OnMarkerClickListener {
 
@@ -43,15 +50,26 @@ public class MapaPlayasFragment extends Fragment implements OnMarkerClickListene
 
     private GoogleMap mMap;
 
+    private String query;
+
+    private GoogleGeoCodeResponse result;
+
+    private PreferenceHelper mPreference;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 	Log.d(TAG, "onCreateView");
 
 	// busco lista de playas
-	PreferenceHelper mPreference = new PreferenceHelper(getActivity().getApplicationContext());
-	String query = mPreference.getQuery();
-	handleQuery(query);
+	mPreference = new PreferenceHelper(getActivity());
+	query = mPreference.getQuery();
+
+	if (null != query) {
+	    query = query + ", Córdoba, Argentina";
+	}
+
+	new BuscarPlayaService().execute();
 
 	View inflatedView = inflater.inflate(R.layout.mapa_playas, container, false);
 
@@ -104,22 +122,11 @@ public class MapaPlayasFragment extends Fragment implements OnMarkerClickListene
 	return true;
     }
 
-    private void handleQuery(String query) {
-
-	Log.d(TAG, "handleQuery");
-	doSearch(query);
-	new BuscarPlayaService().execute();
-    }
-
-    private void doSearch(String queryStr) {
-	// get a Cursor, prepare the ListAdapter and set it
-    }
-
-    private void llenarMapa(ArrayList<Playa> playas) {
+    private void llenarMapa(Playas playas) {
 
 	Log.d(TAG, "llenarLista");
 	mMap = mMapView.getMap();
-	for (Playa playa : playas) {
+	for (Playa playa : playas.getPlayas()) {
 	    mMap.addMarker(new MarkerOptions().position(new LatLng(playa.getLatitud(), playa.getLongitud()))
 		    .title(playa.getNombreComercial()).snippet("Disponibilidad: " + playa.getDisponibilidad()));
 	    LatLng latLng = new LatLng(playa.getLatitud(), playa.getLongitud());
@@ -147,10 +154,51 @@ public class MapaPlayasFragment extends Fragment implements OnMarkerClickListene
 	    Bundle bundle = new Bundle();
 	    bundle.putSerializable("json.model.playas", playas);
 	    result.putExtras(bundle);
-	    for (Playa playa : playas.getPlayas()) {
-		Log.d(TAG, "Playa: " + playa.getRazonSocial() + " Dirección: " + playa.getDomicilio());
+	    if (null != query)
+		new BuscarCoordenadasService().execute();
+	    else {
+		playas = new Utils().buscarPlaya(playas, mPreference.getLat(), mPreference.getLng(), 10);
+		llenarMapa(playas);
 	    }
-	    llenarMapa((ArrayList<Playa>) playas.getPlayas());
+	}
+    }
+
+    private String jsonCoord(String address) throws IOException {
+	URL url = new URL("http://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&sensor=false");
+	URLConnection connection = url.openConnection();
+	BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+	String inputLine;
+	String jsonResult = "";
+	while ((inputLine = in.readLine()) != null) {
+	    jsonResult += inputLine;
+	}
+	in.close();
+	return jsonResult;
+    }
+
+    class BuscarCoordenadasService extends AsyncTask<Void, Void, String> {
+
+	@Override
+	protected String doInBackground(Void... params) {
+	    Log.d(TAG, "doInBackground");
+	    Gson gson = new Gson();
+	    result = null;
+	    try {
+		result = gson.fromJson(jsonCoord(URLEncoder.encode(query, "UTF-8")), GoogleGeoCodeResponse.class);
+	    } catch (JsonSyntaxException e) {
+		e.printStackTrace();
+	    } catch (UnsupportedEncodingException e) {
+		e.printStackTrace();
+	    } catch (IOException e) {
+		e.printStackTrace();
+	    }
+	    return null;
+	}
+
+	protected void onPostExecute(String results) {
+	    Log.d(TAG, "onPostExecute");
+	    playas = new Utils().buscarPlaya(playas, result, 10);
+	    llenarMapa(playas);
 	}
     }
 

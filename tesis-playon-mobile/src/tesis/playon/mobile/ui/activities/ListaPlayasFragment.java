@@ -14,6 +14,7 @@ import tesis.playon.mobile.Const;
 import tesis.playon.mobile.R;
 import tesis.playon.mobile.json.model.GoogleGeoCodeResponse;
 import tesis.playon.mobile.json.model.Playas;
+import tesis.playon.mobile.preferences.PreferenceHelper;
 import tesis.playon.mobile.utils.Utils;
 import android.app.Fragment;
 import android.app.ListFragment;
@@ -51,6 +52,8 @@ public class ListaPlayasFragment extends ListFragment {
 
     private GoogleGeoCodeResponse result;
 
+    private PreferenceHelper mPreference;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -58,7 +61,13 @@ public class ListaPlayasFragment extends ListFragment {
 
 	Bundle mBundle = getArguments();
 
-	query = mBundle.getString(SearchManager.QUERY) + ", Córdoba, Argentina";
+	mPreference = new PreferenceHelper(getActivity());
+
+	query = mBundle.getString(SearchManager.QUERY);
+
+	if (null != query) {
+	    query = query + ", Córdoba, Argentina";
+	}
 
 	new BuscarPlayaService().execute();
 
@@ -87,11 +96,16 @@ public class ListaPlayasFragment extends ListFragment {
 
 	protected void onPostExecute(String results) {
 	    Log.d(TAG, "onPostExecute");
-	    Intent result = new Intent();
+	    Intent iResult = new Intent();
 	    Bundle bundle = new Bundle();
 	    bundle.putSerializable("json.model.playas", playas);
-	    result.putExtras(bundle);
-	    new BuscarCoordenadasService().execute();
+	    iResult.putExtras(bundle);
+	    if (null != query)
+		new BuscarCoordenadasService().execute();
+	    else {
+		playas = new Utils().buscarPlaya(playas, mPreference.getLat(), mPreference.getLng(), 10);
+		llenarLista(playas);
+	    }
 	}
     }
 

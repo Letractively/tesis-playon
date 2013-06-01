@@ -76,6 +76,13 @@ public class MainActivity extends Activity {
 		startActivityForResult(perfilClienteIntent, LOGIN_ID);
 		return true;
 
+	    case R.id.menu_gps:
+		PreferenceHelper mPreference = new PreferenceHelper(getApplicationContext());
+		mPreference.updateQuery(null);
+		Intent buscarPlayasIntent = new Intent(MainActivity.this, BuscarPlayasActivity.class);
+		startActivityForResult(buscarPlayasIntent, LOGIN_ID);
+		return true;
+
 	    case R.id.menu_buscar:
 		onSearchRequested();
 		return true;

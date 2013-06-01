@@ -10,6 +10,10 @@ import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,11 +21,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class BuscarPlayasActivity extends Activity {
+public class BuscarPlayasActivity extends Activity implements LocationListener {
 
     private final static String TAG = "BuscarPlayasActivity";
 
     public static Context appContext;
+
+    private LocationManager locationManager;
+
+    private String provider;
+
+    private PreferenceHelper mPreference;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -31,8 +41,10 @@ public class BuscarPlayasActivity extends Activity {
 
 	appContext = getApplicationContext();
 
+	saveUserLocation();
+
 	String query = handleIntent(getIntent());
-	PreferenceHelper mPreference = new PreferenceHelper(appContext);
+	mPreference = new PreferenceHelper(appContext);
 	mPreference.updateQuery(query);
 	Bundle args = new Bundle();
 	args.putString(SearchManager.QUERY, query);
@@ -97,6 +109,44 @@ public class BuscarPlayasActivity extends Activity {
 	    return query;
 	}
 	return null;
+    }
+
+    public void saveUserLocation() {
+	// Get the location manager
+	locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+	// Define the criteria how to select the location provider
+	Criteria criteria = new Criteria();
+	provider = locationManager.getBestProvider(criteria, false);
+	Location location = locationManager.getLastKnownLocation(provider);
+
+	// Initialize the location fields
+	if (location != null) {
+	    System.out.println("Provider " + provider + " has been selected.");
+	    onLocationChanged(location);
+	}
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+	String lat = Double.toString((Double) (location.getLatitude()));
+	String lng = Double.toString((Double) (location.getLongitude()));
+	mPreference = new PreferenceHelper(appContext);
+	mPreference.updateLatLng(lat, lng);
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
     }
 
 }

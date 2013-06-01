@@ -32,6 +32,13 @@ public class PreferenceHelper {
 	editor.commit();
     }
 
+    public void updateLatLng(String lat, String lng) {
+	SharedPreferences.Editor editor = mPreferences.edit();
+	editor.putString(Const.LAT, lat);
+	editor.putString(Const.LNG, lng);
+	editor.commit();
+    }
+
     public int getIdUsuario() {
 	return mPreferences.getInt(Const.ID_USUARIO, 0);
     }
@@ -46,6 +53,14 @@ public class PreferenceHelper {
 
     public String getQuery() {
 	return mPreferences.getString(Const.QUERY, null);
+    }
+
+    public String getLat() {
+	return mPreferences.getString(Const.LAT, null);
+    }
+
+    public String getLng() {
+	return mPreferences.getString(Const.LNG, null);
     }
 
 }
