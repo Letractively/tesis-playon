@@ -10,5 +10,12 @@
         android:showAsAction="ifRoom"
         android:title="Mapa">
     </item>
+    <item
+        android:id="@+id/menu_item_search"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@drawable/search_icon"
+        android:showAsAction="always"
+        android:title="Buscar">
+    </item>
 
 </menu>

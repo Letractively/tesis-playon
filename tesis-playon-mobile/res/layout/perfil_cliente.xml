@@ -4,10 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <ImageView
+        android:id="@+id/photo_cliente"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/foto_de_playa"
+        android:src="@drawable/logo_playon" />
+
     <TextView
         android:id="@+id/lbl_cliente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/photo_cliente"
         android:text="@string/cliente"
         android:textColor="#4682B4"
         android:textSize="25sp" />

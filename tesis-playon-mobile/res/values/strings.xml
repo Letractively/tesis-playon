@@ -27,5 +27,12 @@
     <string name="nro_cuenta">Cuenta:</string>
     <string name="saldo">Saldo:</string>
     <string name="documento">Documento:</string>
+    <string name="ver_comentarios">Ver comentarios</string>
+    <string name="ver_tarifas">Ver tarifas</string>
+    <string name="ver_promociones">Ver promociones</string>
+    <string name="promociones">Promociones</string>
+    <string name="tarifas">Tarifas</string>
+    <string name="comentarios">Comentarios</string>
+    <string name="foto_de_playa">Foto de playa</string>
 
 </resources>

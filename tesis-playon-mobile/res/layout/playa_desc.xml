@@ -4,32 +4,50 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <!-- <fragment -->
-    <!-- android:id="@+id/map_playa" -->
-    <!-- android:layout_width="match_parent" -->
-    <!-- android:layout_height="200sp" -->
-    <!-- class="com.google.android.gms.maps.MapFragment" /> -->
+    <ImageView
+        android:id="@+id/photo_playa"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/foto_de_playa"
+        android:src="@drawable/logo_playon" />
 
-    <TextView
-        android:id="@+id/lbl_nombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nombre"
-        android:textColor="#4682B4"
-        android:textSize="25sp" />
+    <!-- <TextView -->
+    <!-- android:id="@+id/lbl_nombre" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:text="@string/nombre" -->
+    <!-- android:textColor="#4682B4" -->
+    <!-- android:textSize="25sp" /> -->
 
     <TextView
         android:id="@+id/txt_nombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/lbl_nombre"
+        android:layout_below="@id/photo_playa"
+        android:textColor="#4682B4"
+        android:textSize="25sp" />
+
+    <!-- <TextView -->
+    <!-- android:id="@+id/lbl_desc" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_below="@id/txt_nombre" -->
+    <!-- android:text="@string/direccion" -->
+    <!-- android:textColor="#4682B4" -->
+    <!-- android:textSize="25sp" /> -->
+
+    <TextView
+        android:id="@+id/txt_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_nombre"
         android:textSize="25sp" />
 
     <TextView
         android:id="@+id/lbl_direccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_nombre"
+        android:layout_below="@id/txt_desc"
         android:text="@string/direccion"
         android:textColor="#4682B4"
         android:textSize="25sp" />
@@ -38,7 +56,7 @@
         android:id="@+id/txt_direccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_nombre"
+        android:layout_below="@id/txt_desc"
         android:layout_toRightOf="@+id/lbl_direccion"
         android:textSize="25sp" />
 
@@ -59,38 +77,62 @@
         android:layout_toRightOf="@+id/lbl_disponibilidad"
         android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/lbl_telefono"
+    <!-- <TextView -->
+    <!-- android:id="@+id/lbl_telefono" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_below="@id/txt_disponibilidad" -->
+    <!-- android:text="@string/telefono" -->
+    <!-- android:textColor="#4682B4" -->
+    <!-- android:textSize="25sp" /> -->
+
+
+    <!-- <TextView -->
+    <!-- android:id="@+id/txt_telefono" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_below="@id/txt_disponibilidad" -->
+    <!-- android:layout_toRightOf="@+id/lbl_telefono" -->
+    <!-- android:textSize="25sp" /> -->
+
+
+    <!-- <TextView -->
+    <!-- android:id="@+id/lbl_email" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_below="@id/txt_telefono" -->
+    <!-- android:text="@string/email" -->
+    <!-- android:textColor="#4682B4" -->
+    <!-- android:textSize="25sp" /> -->
+
+
+    <!-- <TextView -->
+    <!-- android:id="@+id/txt_email" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_below="@id/txt_telefono" -->
+    <!-- android:layout_toRightOf="@+id/lbl_email" -->
+    <!-- android:textSize="25sp" /> -->
+
+    <Button
+        android:id="@+id/btn_tarifas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/txt_disponibilidad"
-        android:text="@string/telefono"
-        android:textColor="#4682B4"
-        android:textSize="25sp" />
+        android:text="@string/ver_tarifas" />
 
-    <TextView
-        android:id="@+id/txt_telefono"
+    <Button
+        android:id="@+id/btn_promociones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_disponibilidad"
-        android:layout_toRightOf="@+id/lbl_telefono"
-        android:textSize="25sp" />
+        android:layout_below="@id/btn_tarifas"
+        android:text="@string/ver_promociones" />
 
-    <TextView
-        android:id="@+id/lbl_email"
+    <Button
+        android:id="@+id/btn_comentarios"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_telefono"
-        android:text="@string/email"
-        android:textColor="#4682B4"
-        android:textSize="25sp" />
-
-    <TextView
-        android:id="@+id/txt_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_telefono"
-        android:layout_toRightOf="@+id/lbl_email"
-        android:textSize="25sp" />
+        android:layout_below="@id/btn_promociones"
+        android:text="@string/ver_comentarios" />
 
 </RelativeLayout>

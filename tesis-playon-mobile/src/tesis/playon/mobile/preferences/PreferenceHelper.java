@@ -39,6 +39,12 @@ public class PreferenceHelper {
 	editor.commit();
     }
 
+    public void updateNomPlaya(String nomPlaya) {
+	SharedPreferences.Editor editor = mPreferences.edit();
+	editor.putString(Const.NOMBRE_PLAYA, nomPlaya);
+	editor.commit();
+    }
+
     public int getIdUsuario() {
 	return mPreferences.getInt(Const.ID_USUARIO, 0);
     }
@@ -61,6 +67,10 @@ public class PreferenceHelper {
 
     public String getLng() {
 	return mPreferences.getString(Const.LNG, null);
+    }
+
+    public String getNomPlaya() {
+	return mPreferences.getString(Const.NOMBRE_PLAYA, null);
     }
 
 }

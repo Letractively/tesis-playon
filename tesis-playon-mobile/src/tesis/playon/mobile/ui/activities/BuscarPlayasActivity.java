@@ -16,10 +16,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 public class BuscarPlayasActivity extends Activity implements LocationListener {
 
@@ -71,27 +67,6 @@ public class BuscarPlayasActivity extends Activity implements LocationListener {
 	actionbar.addTab(listaTab);
 	actionbar.addTab(mapaTab);
 	actionbar.addTab(playaTab);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-	Log.d(TAG, "onCreateOptionsMenu");
-	MenuInflater inflater = getMenuInflater();
-	inflater.inflate(R.menu.menu, menu);
-	return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-	Log.d(TAG, "onOptionsItemSelected");
-	if (item.getItemId() == R.id.action_list) {
-	    Toast.makeText(this, "Lista de playas", Toast.LENGTH_SHORT).show();
-	    return true;
-	} else if (item.getItemId() == R.id.action_map) {
-	    Toast.makeText(this, "Mapa de playas", Toast.LENGTH_SHORT).show();
-	    return true;
-	}
-	return false;
     }
 
     @Override
