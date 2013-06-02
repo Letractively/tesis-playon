@@ -78,6 +78,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
 		playaResultadoBusqueda = new ArrayList<Playa>();
 		distancia = 25;
 		opcionesAvanzadas = false;
+		this.direccionDesde = " ";
 	}
 
 	public void preRenderView() {
@@ -489,7 +490,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	}
 	
 	public void tomarDomicilioDesde(){
-		
+	    this.setDireccionDesde(this.getDireccionDesde());
 	}
 	
 	
