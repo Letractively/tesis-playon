@@ -72,6 +72,21 @@
 							<p:menuitem value="Estadísticas"
 								outcome="/playa/gerencia/grafico" icon="ui-icon-plus" />
 						</p:submenu>
+						<p:submenu label="Informes">
+							<p:menuitem value="Ver transacciones"
+								outcome="/playa/gerencia/transaccionplayalist"
+								icon="ui-icon-calculator" />
+							<p:menuitem value="Abonados"
+								outcome="/playa/gerencia/listadoabonados" icon="ui-icon-plus" />
+							<p:menuitem value="Estadísticas"
+								outcome="/playa/gerencia/grafico" icon="ui-icon-plus" />
+						</p:submenu>
+						<p:submenu label="Configuración de Cuenta">
+							<p:menuitem value="Cambiar Password"
+								outcome="/playa/gerencia/cambiarpassword" icon="ui-icon-key" />
+							<p:menuitem value="Cambiar mi foto"
+								outcome="/playa/cambiarfotoperfil" icon="ui-icon-image" />
+						</p:submenu>
 					</p:menu>
 				</div>
 			</ui:fragment>
@@ -84,16 +99,24 @@
 							icon="ui-icon-script" />
 						<p:menuitem value="Ingreso / Egreso"
 							outcome="/playa/ingresoegresovehiculo" icon="ui-icon-arrow-2-e-w" />
-						<p:menuitem value="Nuevo abono mensual"
-							outcome="/playa/abonoadd" icon="ui-icon-tag" />
+						<p:menuitem value="Nuevo abono mensual" outcome="/playa/abonoadd"
+							icon="ui-icon-tag" />
 						<p:menuitem value="Consultar tarifas"
 							outcome="/playa/consultartarifas" icon="ui-icon-note" />
 						<p:menuitem value="Consultar promociones"
 							outcome="/playa/consultarpromociones" icon="ui-icon-suitcase" />
-						<p:menuitem value="Consultar abonados"
-							outcome="/playa/abonolist" icon="ui-icon-contact" />
+						<p:menuitem value="Consultar abonados" outcome="/playa/abonolist"
+							icon="ui-icon-contact" />
 						<p:menuitem value="Denunciar vehículo"
 							outcome="/playa/denunciarvehiculo" icon="ui-icon-print" />
+					</p:submenu>
+					</p:menu>
+					<p:menu style="width: 95%; margin-top:5px;" styleClass="side-menu">
+					<p:submenu label="Configuración de Cuenta">
+						<p:menuitem value="Cambiar Password"
+							outcome="/playa/cambiarpassword" icon="ui-icon-key" />
+						<p:menuitem value="Cambiar mi foto"
+							outcome="/playa/cambiarfotoperfil" icon="ui-icon-image" />
 					</p:submenu>
 				</p:menu>
 			</div>

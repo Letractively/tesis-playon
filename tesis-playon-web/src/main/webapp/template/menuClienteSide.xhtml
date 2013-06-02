@@ -15,8 +15,6 @@
 								icon="ui-icon-script" />
 							<p:menuitem value="Editar perfil"
 								outcome="/cliente/perfilclienteedit" icon="ui-icon-pencil" />
-							<p:menuitem value="Cambiar Password"
-								outcome="/cliente/cambiarpassword" icon="ui-icon-key" />
 						</p:submenu>
 						<p:submenu label="Cuenta">
 							<p:menuitem value="Ver Cuenta" outcome="/cliente/cuentacliente"
@@ -32,7 +30,12 @@
 							<p:menuitem value="Mis Vehículos" outcome="/cliente/vehiculolist"
 								icon="ui-icon-radio-on" />
 						</p:submenu>
+						<p:submenu label="Configuración de Cuenta">
+							<p:menuitem value="Cambiar Password"
+								outcome="/cliente/cambiarpassword" icon="ui-icon-key" />
+						</p:submenu>
 					</p:menu>
+
 				</div>
 				<div class="box">
 					<p:menu style="width: 95%;" styleClass="side-menu"

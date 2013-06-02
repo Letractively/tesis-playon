@@ -12,7 +12,6 @@
     </ui:define>
 
 	<ui:define name="content">
-		<p:growl id="messages" />
 		<h1>Empleados de la playa</h1>
 		<h:form>
 			<p:dataTable id="empleados" var="empleado" paginator="true" rows="5"
@@ -65,20 +64,21 @@
 
 				<p:column headerText="Habilitado" style="text-align:center;">
 					<f:facet name="header">
-						<h:outputText value="Habilitado" />
+						<h:outputText value="Hab." />
 					</f:facet>
 					<h:outputText
 						value="#{empleado.usuario.enable == true ? 'Si' : 'No'}" />
 				</p:column>
 
 				<p:column headerText="Opciones" styleClass="column-options"
-					style="text-align:center" exportable="false">
+					style="text-align:center;width:120px;" exportable="false">
 
 					<p:commandLink id="view" title="Ver Empleado"
 						oncomplete="viewDialog.show();" update=":displayView">
 						<f:setPropertyActionListener value="#{empleado}"
 							target="#{empleadoMB.empleadoSelected}" />
-						<h:graphicImage library="images/icons" name="search.png" />
+						<h:graphicImage library="images/icons" name="search.png"
+							width="20" height="20" />
 					</p:commandLink>
 
 					<p:commandLink id="edit" title="Editar Empleado"
@@ -87,7 +87,7 @@
 						<f:setPropertyActionListener value="#{empleado}"
 							target="#{empleadoMB.empleadoSelected}" />
 						<h:graphicImage library="images/icons" name="pencil.png"
-							style="width:25px; height:25px;" />
+							width="20" height="20" />
 					</p:commandLink>
 
 					<p:commandLink id="darBaja" title="Dar de baja"
@@ -95,8 +95,29 @@
 						<f:setPropertyActionListener value="#{empleado}"
 							target="#{empleadoMB.empleadoSelected}" />
 						<h:graphicImage library="images/icons" name="trash.png"
-							style="width:25px; height:25px;" />
+							width="20" height="20" />
 					</p:commandLink>
+
+					<p:commandLink id="keys" title="Resetear clave de acceso"
+						type="button" onclick="confirmationClave.show();">
+						<f:setPropertyActionListener value="#{empleado.usuario}"
+							target="#{usuarioMB.usuarioSelected}" />
+						<h:graphicImage library="images/icons" name="keys.png"
+							width="24" height="24" />
+					</p:commandLink>
+					<p:confirmDialog id="confirmDialogClave"
+						message="¿Está seguro que desea generar una nueva clave de acceso para este cliente?"
+						header="Nueva contraseña" severity="alert"
+						widgetVar="confirmationClave">
+						<div align="right">
+							<p:commandButton id="confirmClave" value="Aceptar"
+								update="messages" oncomplete="confirmationClave.hide();"
+								action="#{usuarioMB.generarNuevaContraseñaUsuario}" ajax="false">
+							</p:commandButton>
+							<p:commandButton id="declineClave" value="Cancelar"
+								onclick="confirmationClave.hide();" type="button" />
+						</div>
+					</p:confirmDialog>
 				</p:column>
 				<f:facet name="footer">
 
@@ -119,7 +140,6 @@
 						</h:panelGrid>
 					</div>
 				</f:facet>
-
 			</p:dataTable>
 
 		</h:form>
@@ -128,9 +148,6 @@
 			<h:link value="volver a administración"
 				outcome="/playa/gerencia/administracion" />
 		</div>
-
-
-
 
 		<!-- DIALOG PARA VER LOS DATOS DEL USUARIO SELECCIONADO -->
 		<p:dialog header="Datos del Empleado" widgetVar="viewDialog"
@@ -225,8 +242,6 @@
 							style="padding:4px" onclick="viewDialog.hide();" type="button" />
 					</div>
 				</p:column>
-
-
 
 			</h:panelGrid>
 		</p:dialog>

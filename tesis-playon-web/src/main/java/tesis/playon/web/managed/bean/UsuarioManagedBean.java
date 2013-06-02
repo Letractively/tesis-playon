@@ -10,14 +10,18 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.model.UploadedFile;
 import org.springframework.dao.DataAccessException;
 
+import tesis.playon.web.model.FotoUsuario;
 import tesis.playon.web.model.Mail;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.TipoDoc;
 import tesis.playon.web.model.Usuario;
+import tesis.playon.web.service.IFotoUsuarioService;
 import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.util.NotificadorUtil;
+import tesis.playon.web.util.WriteImage;
 
 @ManagedBean(name = "usuarioMB")
 @ViewScoped
@@ -31,9 +35,12 @@ public class UsuarioManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{UsuarioService}")
     IUsuarioService usuarioService;
+    
+    @ManagedProperty(value = "#{FotoUsuarioService}")
+    IFotoUsuarioService fotoUsuarioService;
 
     private static List<Usuario> usuarioList;
-    
+
     private List<Usuario> filteredUsuario;
 
     private String passViejo;
@@ -57,8 +64,12 @@ public class UsuarioManagedBean implements Serializable {
     private Playa playa;
 
     private static Usuario usuarioSelected;
-    
+
     private Usuario usuarioLoggeado;
+
+    private String passwordActual;
+    
+    private UploadedFile fotoPerfilFile;
 
     @PostConstruct
     private void init() {
@@ -201,18 +212,26 @@ public class UsuarioManagedBean implements Serializable {
 
     public String modificarPassword() {
 	try {
+	    if (usuarioLoggeado != null) {
+		if (usuarioLoggeado.getPassword().equals(passwordActual)) {
+		    usuarioLoggeado.setPassword(getPassword());
 
-	    usuarioLoggeado.setPassword(getPassword());
+		    getUsuarioService().update(usuarioLoggeado);
 
-	    getUsuarioService().update(usuarioLoggeado);
-
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se actualizó correctamente la contraseña del usuario: " + usuarioLoggeado.getApellido() + " "
-			    + usuarioLoggeado.getNombre(), null);
-	    FacesContext.getCurrentInstance().addMessage(null, message);
-
-	    return "cambiarpasswordend";
-
+		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			    "Se actualizó correctamente la contraseña del usuario: " + usuarioLoggeado.getApellido()
+				    + " " + usuarioLoggeado.getNombre(), null);
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+		    return "cambiarpasswordend";
+		} else {
+		    FacesMessage message = new FacesMessage(
+			    FacesMessage.SEVERITY_WARN,
+			    "Por favor, ingrese correctamente su contraseña actual para actualizar su nueva contraseña",
+			    null);
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+	    }
+	    return "";
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "No se pudo modificar su contraseña, Por favor, inténtelo más tarde.", null);
@@ -249,8 +268,7 @@ public class UsuarioManagedBean implements Serializable {
 		getUsuarioService().update(usuarioSelected);
 
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-			"Se generó correctamente la nueva clave del cliente: "
-				+ usuarioSelected.getApellido() + " "
+			"Se generó correctamente la nueva clave del cliente: " + usuarioSelected.getApellido() + " "
 				+ usuarioSelected.getNombre(), null);
 		FacesContext.getCurrentInstance().addMessage(null, message);
 
@@ -264,12 +282,54 @@ public class UsuarioManagedBean implements Serializable {
 
     }
     
+    public void upload() {
+	try {
+	    
+	    FotoUsuario foto = new FotoUsuario(fotoPerfilFile.getContents());
+	    getFotoUsuarioService().save(foto);
+	    
+	    FotoUsuario fotoAntigua = usuarioLoggeado.getFotoUsuario();
+	    WriteImage.borrarFotoPerfilUsuarioAntigua(usuarioLoggeado);
+	    this.usuarioLoggeado.setFotoUsuario(foto);
+	    getUsuarioService().update(usuarioLoggeado);
+	    
+	    if(fotoAntigua != null){
+		getFotoUsuarioService().delete(fotoAntigua);
+	    }
+	    
+	    WriteImage.getFotoPerfilUsuario(usuarioLoggeado);
+	    
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "Se actualizó exitosamente su foto de perfil", null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	} catch (Exception ex) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudo cargar su foto de perfil",
+		    null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    ex.printStackTrace();
+	}
+    }
+
     public IUsuarioService getUsuarioService() {
 	return usuarioService;
     }
 
     public void setUsuarioService(IUsuarioService usuarioService) {
 	this.usuarioService = usuarioService;
+    }
+
+    /**
+     * @return the fotoUsuarioService
+     */
+    public IFotoUsuarioService getFotoUsuarioService() {
+        return fotoUsuarioService;
+    }
+
+    /**
+     * @param fotoUsuarioService the fotoUsuarioService to set
+     */
+    public void setFotoUsuarioService(IFotoUsuarioService fotoUsuarioService) {
+        this.fotoUsuarioService = fotoUsuarioService;
     }
 
     public List<Usuario> getUsuarioList() {
@@ -388,13 +448,43 @@ public class UsuarioManagedBean implements Serializable {
      * @return the filteredUsuario
      */
     public List<Usuario> getFilteredUsuario() {
-        return filteredUsuario;
+	return filteredUsuario;
     }
 
     /**
-     * @param filteredUsuario the filteredUsuario to set
+     * @param filteredUsuario
+     *            the filteredUsuario to set
      */
     public void setFilteredUsuario(List<Usuario> filteredUsuario) {
-        this.filteredUsuario = filteredUsuario;
+	this.filteredUsuario = filteredUsuario;
+    }
+
+    /**
+     * @return the passwordActual
+     */
+    public String getPasswordActual() {
+	return passwordActual;
+    }
+
+    /**
+     * @param passwordActual
+     *            the passwordActual to set
+     */
+    public void setPasswordActual(String passwordActual) {
+	this.passwordActual = passwordActual;
+    }
+
+    /**
+     * @return the fotoPerfilFile
+     */
+    public UploadedFile getFotoPerfilFile() {
+        return fotoPerfilFile;
+    }
+
+    /**
+     * @param fotoPerfilFile the fotoPerfilFile to set
+     */
+    public void setFotoPerfilFile(UploadedFile fotoPerfilFile) {
+        this.fotoPerfilFile = fotoPerfilFile;
     }
 }
