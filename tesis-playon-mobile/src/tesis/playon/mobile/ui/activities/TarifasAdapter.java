@@ -4,7 +4,6 @@ import java.util.List;
 
 import tesis.playon.mobile.R;
 import tesis.playon.mobile.json.model.Tarifa;
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +36,7 @@ public class TarifasAdapter extends ArrayAdapter<Tarifa> {
 	ViewHolder holder = null;
 
 	if (row == null) {
-	    LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+	    LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    row = inflater.inflate(layoutResourceId, parent, false);
 
 	    holder = new ViewHolder();

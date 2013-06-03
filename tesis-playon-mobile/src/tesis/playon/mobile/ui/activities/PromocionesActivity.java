@@ -9,21 +9,26 @@ import tesis.playon.mobile.R;
 import tesis.playon.mobile.json.model.Promociones;
 import tesis.playon.mobile.preferences.PreferenceHelper;
 import tesis.playon.mobile.utils.Utils;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.google.gson.Gson;
 
-public class PromocionesActivity extends Activity {
+public class PromocionesActivity extends ListActivity {
 
     private static final String TAG = "PromocionesActivity";
 
     private static final String URL_PROMOCIONES_PLAYA = "http://" + Const.SERVER_IP
 	    + ":8080/tesis-playon-restful/promociones/";
+
+    private PromocionesAdapter mPromocionesAdapter;
+
+    private ListView mListView;
 
     private Context mContext;
 
@@ -35,7 +40,7 @@ public class PromocionesActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 	Log.d(TAG, "onCreate");
 	super.onCreate(savedInstanceState);
-	setContentView(R.layout.playa_promociones);
+	setContentView(R.layout.lista_promociones);
 	mContext = getApplicationContext();
 
 	PreferenceHelper mPreferences = new PreferenceHelper(mContext);
@@ -47,6 +52,11 @@ public class PromocionesActivity extends Activity {
     private void cargarPromocionesPlaya(Promociones promociones) {
 
 	Log.d(TAG, "cargarPromocionesPlaya");
+	mPromocionesAdapter = new PromocionesAdapter(mContext, R.layout.promocion_grid_item, promociones.getPromociones());
+	setListAdapter(mPromocionesAdapter);
+	mListView = getListView();
+	mListView.setAdapter(mPromocionesAdapter);
+	mListView.setTextFilterEnabled(true);
 
     }
 

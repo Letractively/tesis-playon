@@ -9,21 +9,26 @@ import tesis.playon.mobile.R;
 import tesis.playon.mobile.json.model.Comentarios;
 import tesis.playon.mobile.preferences.PreferenceHelper;
 import tesis.playon.mobile.utils.Utils;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.google.gson.Gson;
 
-public class ComentariosActivity extends Activity {
+public class ComentariosActivity extends ListActivity {
 
     private static final String TAG = "ComentariosActivity";
 
     private static final String URL_COMENTARIOS_PLAYA = "http://" + Const.SERVER_IP
 	    + ":8080/tesis-playon-restful/comentarios/";
+
+    private ComentariosAdapter mComentariosAdapter;
+
+    private ListView mListView;
 
     private Context mContext;
 
@@ -35,7 +40,7 @@ public class ComentariosActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 	Log.d(TAG, "onCreate");
 	super.onCreate(savedInstanceState);
-	setContentView(R.layout.playa_comentarios);
+	setContentView(R.layout.lista_comentarios);
 	mContext = getApplicationContext();
 
 	PreferenceHelper mPreferences = new PreferenceHelper(mContext);
@@ -47,6 +52,12 @@ public class ComentariosActivity extends Activity {
     private void cargarComentariosPlaya(Comentarios comentarios) {
 
 	Log.d(TAG, "cargarComentariosPlaya");
+	mComentariosAdapter = new ComentariosAdapter(mContext, R.layout.comentario_grid_item,
+		comentarios.getComentarios());
+	setListAdapter(mComentariosAdapter);
+	mListView = getListView();
+	mListView.setAdapter(mComentariosAdapter);
+	mListView.setTextFilterEnabled(true);
 
     }
 
