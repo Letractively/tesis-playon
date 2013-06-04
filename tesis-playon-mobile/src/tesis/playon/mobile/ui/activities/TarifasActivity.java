@@ -3,9 +3,11 @@ package tesis.playon.mobile.ui.activities;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 
 import tesis.playon.mobile.Const;
 import tesis.playon.mobile.R;
+import tesis.playon.mobile.json.model.Tarifa;
 import tesis.playon.mobile.json.model.Tarifas;
 import tesis.playon.mobile.preferences.PreferenceHelper;
 import tesis.playon.mobile.utils.Utils;
@@ -51,6 +53,9 @@ public class TarifasActivity extends ListActivity {
     private void cargarTarifasPlaya(Tarifas tarifas) {
 
 	Log.d(TAG, "cargarTarifasPlaya");
+	if (null == tarifas.getTarifas()) {
+	    tarifas.setTarifas(new ArrayList<Tarifa>());
+	}
 	mTarifaAdapter = new TarifasAdapter(mContext, R.layout.tarifa_grid_item, tarifas.getTarifas());
 	setListAdapter(mTarifaAdapter);
 	mListView = getListView();
