@@ -27,6 +27,6 @@ public interface IAbonoDao {
 
     List<Abono> findByPlaya(Playa playa);
     
-    boolean existeAbonoVehiculo(Vehiculo vehiculo, Playa playa, Date fechaDesde);
+    boolean existeAbonoVehiculo(Vehiculo vehiculo, Playa playa);
 
 }

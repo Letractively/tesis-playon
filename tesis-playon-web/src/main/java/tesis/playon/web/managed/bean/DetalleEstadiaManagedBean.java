@@ -199,7 +199,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 							playaLoggeada);
 					if (cuentaPlaya == null) {
 						cuentaPlaya = new CuentaPlaya(playaLoggeada);
-						cuentaPlaya.setNroCuenta(playaLoggeada.getId() +1000);
+						cuentaPlaya.setNroCuenta(playaLoggeada.getId() + 1000);
 						getCuentaPlayaService().save(cuentaPlaya);
 					}
 
@@ -227,7 +227,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 			if (vehiculo != null) {
 				cliente = vehiculo.getCliente();
 				existeAbonoVehiculo = getAbonoService().existeAbonoVehiculo(
-						vehiculo, playaLoggeada, new Date());
+						vehiculo, playaLoggeada);
 
 				if (cliente != null) {
 					usuarioCliente = cliente.getUsuario();
@@ -963,7 +963,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 			Font fuenteCuerpo = new Font(Font.TIMES_ROMAN, 14, Font.NORMAL,
 					Color.BLACK);
 
-			//Paragraph cuerpo = new Paragraph();
+			// Paragraph cuerpo = new Paragraph();
 			agregarLineasEnBlanco(titulo, 2);
 			titulo.add(new Paragraph("Hora de ingreso: "
 					+ getDetalleEstadia().getFechaHoraIngreso(), fuenteCuerpo));

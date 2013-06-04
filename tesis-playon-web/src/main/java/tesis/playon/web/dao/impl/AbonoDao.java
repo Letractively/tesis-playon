@@ -18,63 +18,66 @@ import tesis.playon.web.model.Vehiculo;
  */
 public class AbonoDao implements IAbonoDao {
 
-    private SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
-    public SessionFactory getSessionFactory() {
-	return sessionFactory;
-    }
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-	this.sessionFactory = sessionFactory;
-    }
-
-    public void save(Abono abono) {
-	getSessionFactory().getCurrentSession().save(abono);
-    }
-
-    public void update(Abono abono) {
-	getSessionFactory().getCurrentSession().update(abono);
-    }
-
-    public void delete(Abono abono) {
-	getSessionFactory().getCurrentSession().delete(abono);
-    }
-
-    public List<Abono> findAll() {
-	List<Abono> abonos = new ArrayList<Abono>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Abono").list();
-	if (!list.isEmpty()) {
-	    for (Object obj : list) {
-		abonos.add((Abono) obj);
-	    }
-	    return abonos;
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
 	}
-	return null;
-    }
 
-    public List<Abono> findByPlaya(Playa playa) {
-	List<Abono> abonos = new ArrayList<Abono>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Abono where playa=?")
-		.setParameter(0, playa).list();
-	if (!list.isEmpty()) {
-	    for (Object obj : list) {
-		abonos.add((Abono) obj);
-	    }
-	    return abonos;
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
-	return null;
-    }
-    
-    public boolean existeAbonoVehiculo(Vehiculo vehiculo, Playa playa, Date fechaDesde){
-	//List<Abono> abonos = new ArrayList<Abono>();
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Abono where playa=? and vehiculo=? and fechaVigenciaHasta >=?")
-		.setParameter(0, playa)
-		.setParameter(1, vehiculo)
-		.setParameter(2, fechaDesde).list();
-	if (!list.isEmpty()) {
-	    return true;
+
+	public void save(Abono abono) {
+		getSessionFactory().getCurrentSession().save(abono);
 	}
-	return false;
-    }
+
+	public void update(Abono abono) {
+		getSessionFactory().getCurrentSession().update(abono);
+	}
+
+	public void delete(Abono abono) {
+		getSessionFactory().getCurrentSession().delete(abono);
+	}
+
+	public List<Abono> findAll() {
+		List<Abono> abonos = new ArrayList<Abono>();
+		List<?> list = getSessionFactory().getCurrentSession()
+				.createQuery("from Abono").list();
+		if (!list.isEmpty()) {
+			for (Object obj : list) {
+				abonos.add((Abono) obj);
+			}
+			return abonos;
+		}
+		return null;
+	}
+
+	public List<Abono> findByPlaya(Playa playa) {
+		List<Abono> abonos = new ArrayList<Abono>();
+		List<?> list = getSessionFactory().getCurrentSession()
+				.createQuery("from Abono where playa=?").setParameter(0, playa)
+				.list();
+		if (!list.isEmpty()) {
+			for (Object obj : list) {
+				abonos.add((Abono) obj);
+			}
+			return abonos;
+		}
+		return null;
+	}
+
+	public boolean existeAbonoVehiculo(Vehiculo vehiculo, Playa playa) {
+		// List<Abono> abonos = new ArrayList<Abono>();
+		List<?> list = getSessionFactory()
+				.getCurrentSession()
+				.createQuery(
+						"from Abono where (playa=? and vehiculo=?) and (now() >= fechaVigenciaDesde and now() <= fechaVigenciaHasta)")
+				.setParameter(0, playa).setParameter(1, vehiculo).list();
+		if (!list.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
 
 }

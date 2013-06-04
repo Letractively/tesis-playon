@@ -49,8 +49,8 @@ public class AbonoService implements IAbonoService {
     }
     
     @Override
-    public boolean existeAbonoVehiculo(Vehiculo vehiculo, Playa playa, Date fechaDesde){
-	return getAbonoDao().existeAbonoVehiculo(vehiculo, playa, fechaDesde);
+    public boolean existeAbonoVehiculo(Vehiculo vehiculo, Playa playa){
+	return getAbonoDao().existeAbonoVehiculo(vehiculo, playa);
     }
 
     public IAbonoDao getAbonoDao() {
