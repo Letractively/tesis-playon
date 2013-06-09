@@ -19,6 +19,7 @@
 		#{favoritoMB.findPlayaById()}
 		#{promocionMB.findPlayaById()}
 		
+		
 		<h:form id="form" style="margin: 0 0 0 40px;">
 			<p:growl id="messages" />
 			<div id="perfil-playa">
@@ -211,20 +212,29 @@
 								</p:column>
 
 								<p:column headerText="Comentario">
-									<table style="border: 0px solid transparent">
-										<tr>
-											<td style="text-align: left; border-style: none;"><h:outputText
-													value="#{comentario.fecha}" /></td>
-											<td style="text-align: right; border-style: none;"><h:commandLink
-													id="denunciaComentario" value="Denunciar" action="#"
-													styleClass="fuente-link-denuncia" /></td>
-										</tr>
-										<tr>
-											<td colspan="2" id="perfil-playa-frente"
-												style="border-style: none;"><p>#{comentario.comentario}</p></td>
-										</tr>
-									</table>
-								</p:column>
+										<table style="border: 0px solid transparent;">
+											<tr>
+												<td style="text-align: left; border-style: none;"><h:outputText
+														value="#{comentario.fecha}">
+														<f:convertDateTime pattern="dd/MM/yyyy hh:mm" 
+															timeStyle="short" type="both"/>
+													</h:outputText></td>
+												<td style="text-align: right; border-style: none;">
+													<h:commandLink
+														id="denunciaComentario" value="Denunciar" update="comentarios"
+														action="#{comentarioMB.denunciarComentario}"
+														immediate="true" styleClass="fuente-link-denuncia">
+														<f:setPropertyActionListener value="#{comentario}"
+															target="#{comentarioMB.comentarioDenunciado}" />
+													</h:commandLink>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="2" id="perfil-playa-frente"
+													style="border-style: none;"><p>#{comentario.comentario}</p></td>
+											</tr>
+										</table>
+									</p:column>
 								<f:facet name="footer">
 									<h:panelGrid columns="2">
 										<p:column>

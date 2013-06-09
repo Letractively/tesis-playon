@@ -29,14 +29,15 @@
 						</div>
 					</p:column>
 					<p:column>
-						<p:inputText id="patente" style="width: 200px"
+						<p:inputMask id="patente" style="width: 200px"
 							value="#{denunciaVehiculoMB.patente}" required="true"
 							requiredMessage="Campo patente obligatorio" maxlength="6"
-							validator="#{abonoMB.validateVehiculo}">
+							validator="#{abonoMB.validateVehiculo}"
+							mask="aaa999">
 							<f:validateLength minimum="6" update="patenteMsg" />
 							<p:ajax event="blur"
 									update="patenteMsg" />
-						</p:inputText>
+						</p:inputMask>
 					</p:column>
 					<p:column>
 						<p:message id="patenteMsg" for="patente" display="icon" />

@@ -52,6 +52,8 @@ public class ComentarioManagedBean implements Serializable {
 
     // ATRIBUTOS PARA LA CREACION DE UN COMENTARIO
     private String comentario;
+    
+    private Comentario comentarioDenunciado;
 
     @PostConstruct
     public void init() {
@@ -60,7 +62,7 @@ public class ComentarioManagedBean implements Serializable {
 	Usuario user = getUsuarioService().findByNombreUsuario(userName);
 	if (user != null && user.getPlaya() != null) {
 	    comentariosList = getComentarioService().findByPlaya(user.getPlaya());
-	}
+	}	
     }
 
     public String addComentario() {
@@ -161,6 +163,26 @@ public class ComentarioManagedBean implements Serializable {
 	    }
 	}
     }
+    
+    public void denunciarComentario(){
+	try{
+	    if(comentarioDenunciado != null){
+		comentarioDenunciado.setHabilitado(new Boolean(false));
+		getComentarioService().update(comentarioDenunciado);
+		
+		FacesMessage message = new FacesMessage(
+			FacesMessage.SEVERITY_INFO,
+			"Se denunció correctamente el comentario", null);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	    }
+	}catch(Exception ex){
+	    FacesContext.getCurrentInstance().addMessage(
+		    "messageComentario",
+		    new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudó denunciar el comentario",
+			    "Disculpe las molestias ocacionadas"));
+	    ex.printStackTrace();
+	}
+    }
 
     public IPlayaService getPlayaService() {
 	return playaService;
@@ -250,5 +272,19 @@ public class ComentarioManagedBean implements Serializable {
 
     public void setPreviusPage(String previusPage) {
 	ComentarioManagedBean.previusPage = previusPage;
+    }
+
+    /**
+     * @return the comentarioDenunciado
+     */
+    public Comentario getComentarioDenunciado() {
+        return comentarioDenunciado;
+    }
+
+    /**
+     * @param comentarioDenunciado the comentarioDenunciado to set
+     */
+    public void setComentarioDenunciado(Comentario comentarioDenunciado) {
+        this.comentarioDenunciado = comentarioDenunciado;
     }
 }

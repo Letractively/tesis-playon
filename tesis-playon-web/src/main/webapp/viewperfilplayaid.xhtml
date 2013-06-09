@@ -170,11 +170,15 @@
 										value="#{promocion.tarifa.categoriaVehiculo.nombre}" />
 
 									<h:outputText value="Monto fijo: " />
-									<h:outputText value="#{promocion.montoFijo}" />
+									<h:outputText value="#{promocion.montoFijo}">
+										<f:convertNumber type="currency" currencySymbol="$" />
+									</h:outputText>
 
 									<h:outputText value="Monto con descuento: " />
 									<h:outputText
-										value="#{promocion.montoFijo * (1- promocion.descuento/100)}" />
+										value="#{promocion.montoFijo * (1- promocion.descuento/100)}">
+										<f:convertNumber type="currency" currencySymbol="$" />
+									</h:outputText>
 
 									<p:column>
 										<h:outputText value="Descuento: " />
@@ -209,12 +213,18 @@
 											<tr>
 												<td style="text-align: left; border-style: none;"><h:outputText
 														value="#{comentario.fecha}">
-														<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
-															timeStyle="short" type="both" />
+														<f:convertDateTime pattern="dd/MM/yyyy hh:mm" 
+															timeStyle="short" type="both"/>
 													</h:outputText></td>
-												<td style="text-align: right; border-style: none;"><h:commandLink
-														id="denunciaComentario" value="Denunciar" action="#"
-														immediate="true" styleClass="fuente-link-denuncia" /></td>
+												<td style="text-align: right; border-style: none;">
+													<h:commandLink
+														id="denunciaComentario" value="Denunciar" update="comentarios"
+														action="#{comentarioMB.denunciarComentario}"
+														immediate="true" styleClass="fuente-link-denuncia">
+														<f:setPropertyActionListener value="#{comentario}"
+															target="#{comentarioMB.comentarioDenunciado}" />
+													</h:commandLink>
+												</td>
 											</tr>
 											<tr>
 												<td colspan="2" id="perfil-playa-frente"
