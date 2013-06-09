@@ -44,8 +44,13 @@
 												timeStyle="short" type="both" />
 										</h:outputText></td>
 									<td style="text-align: right; border-style: none;"><h:commandLink
-											id="denunciaComentario" value="Denunciar" action="#"
-											immediate="true" styleClass="fuente-link-denuncia" /></td>
+											id="denunciaComentario" value="Denunciar"
+											update="comentarios" ajax="true"
+											action="#{comentarioMB.denunciarComentarioGerente}" immediate="true"
+											styleClass="fuente-link-denuncia">
+											<f:setPropertyActionListener value="#{comentario}"
+												target="#{comentarioMB.comentarioDenunciado}" />
+										</h:commandLink></td>
 								</tr>
 								<tr>
 									<td colspan="2" id="perfil-playa-frente"

@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import tesis.playon.web.model.Comentario;
@@ -25,7 +25,7 @@ import tesis.playon.web.util.WriteImage;
  * 
  */
 @ManagedBean(name = "comentarioMB")
-@RequestScoped
+@ViewScoped
 public class ComentarioManagedBean implements Serializable {
 
     private static final long serialVersionUID = 6773490680356877684L;
@@ -182,6 +182,29 @@ public class ComentarioManagedBean implements Serializable {
 			    "Disculpe las molestias ocacionadas"));
 	    ex.printStackTrace();
 	}
+    }
+    
+    public String denunciarComentarioGerente(){
+	try{
+	    if(comentarioDenunciado != null){
+		comentarioDenunciado.setHabilitado(new Boolean(false));
+		getComentarioService().update(comentarioDenunciado);
+		
+		FacesMessage message = new FacesMessage(
+			FacesMessage.SEVERITY_INFO,
+			"Se denunció correctamente el comentario", null);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+		
+		return "comentariolist";
+	    }
+	}catch(Exception ex){
+	    FacesContext.getCurrentInstance().addMessage(
+		    "messageComentario",
+		    new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudó denunciar el comentario",
+			    "Disculpe las molestias ocacionadas"));
+	    ex.printStackTrace();
+	}
+	return null;
     }
 
     public IPlayaService getPlayaService() {
