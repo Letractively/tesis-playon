@@ -148,8 +148,7 @@ public class AbonoManagedBean implements Serializable {
 			System.out.println(vehiculo.getCliente());
 			System.out.println(vehiculo);
 
-			if (getAbonoService().existeAbonoVehiculo(vehiculo, playaLoggeada,
-					fechaDesde) == false) {
+			if (getAbonoService().existeAbonoVehiculo(vehiculo, playaLoggeada) == false) {
 
 				abono = new Abono(getFechaDesde(), getFechaHasta(),
 						getTarifa(), playaLoggeada);
