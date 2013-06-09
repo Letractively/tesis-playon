@@ -18,7 +18,7 @@
 		<h:form id="form">
 			<div align="left" style="margin: 10px 0 0 30px">
 				<h:panelGrid id="addPromocion" columns="3" cellspacing="5"
-					cellpadding="5" update="@this">
+					cellpadding="5">
 
 					<h:outputLabel for="nombre" value="Nombre: " />
 					<p:inputText id="nombre" style="width: 200px"
@@ -59,20 +59,41 @@
 					</p:calendar>
 					<p:message id="fechaFinMsg" for="fechaFin" display="icon" />
 
-					<h:outputLabel value="Hora de inicio: " />
+					<h:outputText value="Incluye rango horario: " />
+					<p:selectBooleanCheckbox value="#{promocionMB.incluyeHorario}">
+						<p:ajax event="change"
+							update="lblHoraInicio, txtHoraInicio, lblHoraFin, txtHoraFin" />
+					</p:selectBooleanCheckbox>
+					<p:column />
 
-					<p:calendar id="txtHoraInicio" value="#{promocionMB.horaInicio}"
-						pattern="HH:mm" timeOnly="true" locale="es">
-						<p:ajax event="dateSelect" update="#{promocionMB.horaInicio}" />
-					</p:calendar>
+					<h:panelGroup id="lblHoraInicio">
+						<h:outputLabel value="Hora de inicio: "
+							rendered="#{promocionMB.incluyeHorario == true}" />
+					</h:panelGroup>
+
+					<h:panelGroup id="txtHoraInicio">
+						<p:calendar value="#{promocionMB.horaInicio}" pattern="HH:mm"
+							timeOnly="true" locale="es"
+							rendered="#{promocionMB.incluyeHorario == true}">
+							<p:ajax event="dateSelect" update="@this" />
+							<f:convertDateTime pattern="HH:mm" />
+						</p:calendar>
+					</h:panelGroup>
 					<p:column></p:column>
 
-					<h:outputLabel value="Hora de finalización: " />
+					<h:panelGroup id="lblHoraFin">
+						<h:outputLabel value="Hora de finalización: "
+							rendered="#{promocionMB.incluyeHorario == true}" />
+					</h:panelGroup>
 
-					<p:calendar value="#{promocionMB.horaFin}" pattern="HH:mm"
-						timeOnly="true" locale="es" id="txtHoraFin">
-						<p:ajax event="dateSelect" update="#{promocionMB.horaFin}" />
-					</p:calendar>
+					<h:panelGroup id="txtHoraFin">
+						<p:calendar value="#{promocionMB.horaFin}" pattern="HH:mm"
+							timeOnly="true" locale="es"
+							rendered="#{promocionMB.incluyeHorario == true}">
+							<p:ajax event="dateSelect" update="@this" />
+							<f:convertDateTime pattern="HH:mm" />
+						</p:calendar>
+					</h:panelGroup>
 					<p:column></p:column>
 
 					<h:outputLabel for="tarifa" value="Tarifa: " />

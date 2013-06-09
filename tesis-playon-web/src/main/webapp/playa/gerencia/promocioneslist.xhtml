@@ -24,8 +24,8 @@
 					</f:facet>
 
 				<p:panel header="#{promocion.nombre}" style="text-align:left">
-					<h:outputText value="Descripción: " />
-					<h:outputText value="#{promocion.descripcion}" />
+					<h:outputText value="Descripción: " style="font-weight:bold;" />
+					<h:outputText value="#{promocion.descripcion}" style="font-weight:bold;" />
 					<h:panelGrid columns="4" style="width:100%" cellpadding="2"
 						cellspacing="2">
 						<h:outputText value="Fecha de inicio: " />
@@ -55,11 +55,15 @@
 						<h:outputText value="#{promocion.tarifa.categoriaVehiculo.nombre}" />
 
 						<h:outputText value="Monto fijo: " />
-						<h:outputText value="#{promocion.montoFijo}" />
+						<h:outputText value="#{promocion.montoFijo}">
+							<f:convertNumber type="currency" currencySymbol="$ "/>
+						</h:outputText>
 
 						<h:outputText value="Monto con descuento: " />
 						<h:outputText
-							value="#{promocion.montoFijo * (1- promocion.descuento/100)}" />
+							value="#{(promocion.montoFijo * (1- promocion.descuento/100))}">
+							<f:convertNumber type="currency" currencySymbol="$ "/>	
+						</h:outputText>
 
 						<p:column>
 							<h:outputText value="Descuento: " />

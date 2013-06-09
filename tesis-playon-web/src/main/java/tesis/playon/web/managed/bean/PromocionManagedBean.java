@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 
@@ -105,6 +106,8 @@ public class PromocionManagedBean implements Serializable {
     private static Playa playaSelected;
 
     private List<Promocion> promocionListEmpleado;
+    
+    private boolean incluyeHorario = false;
 
     @PostConstruct
     private void init() {
@@ -189,7 +192,7 @@ public class PromocionManagedBean implements Serializable {
 	    getPromocionService().update(promo);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se modificó exitosamente la promoción: " + promocionSelected.getNombre(), null);
+		    "Se actualizó exitosamente la promoción: " + promocionSelected.getNombre(), null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return "promocioneslist";
@@ -261,6 +264,11 @@ public class PromocionManagedBean implements Serializable {
 		playaSelected = getPlayaService().findById(idPlayaSelected);
 	    }
 	}
+    }
+    
+    public void toggleTypes(ValueChangeEvent event) {
+        incluyeHorario = !incluyeHorario;
+        FacesContext.getCurrentInstance( ).renderResponse( );
     }
 
     public IUsuarioService getUsuarioService() {
@@ -563,5 +571,19 @@ public class PromocionManagedBean implements Serializable {
 
     public void setTipoEstadiaOptions(SelectItem[] tipoEstadiaOptions) {
 	this.tipoEstadiaOptions = tipoEstadiaOptions;
+    }
+
+    /**
+     * @return the incluyeHorario
+     */
+    public boolean isIncluyeHorario() {
+        return incluyeHorario;
+    }
+
+    /**
+     * @param incluyeHorario the incluyeHorario to set
+     */
+    public void setIncluyeHorario(boolean incluyeHorario) {
+        this.incluyeHorario = incluyeHorario;
     }
 }
