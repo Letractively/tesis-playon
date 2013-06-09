@@ -1,6 +1,7 @@
 package tesis.playon.web.managed.bean;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -106,7 +107,7 @@ public class PromocionManagedBean implements Serializable {
     private static Playa playaSelected;
 
     private List<Promocion> promocionListEmpleado;
-    
+
     private boolean incluyeHorario = false;
 
     @PostConstruct
@@ -134,32 +135,12 @@ public class PromocionManagedBean implements Serializable {
 	    promocion.setFechaFin(getFechaFin());
 	    promocion.setFechaInicio(getFechaInicio());
 
-//	    Calendar calendario;
-//	    int hora;
-//	    int minutos;
-//	    int segundos;
-//	    String sHora;
-
 	    if (horaInicio != null && horaFin != null) {
-
-//		calendario = Calendar.getInstance();
-//		calendario.setTime(getHoraInicio());
-//		hora = calendario.get(Calendar.HOUR_OF_DAY);
-//		minutos = calendario.get(Calendar.MINUTE);
-//		segundos = calendario.get(Calendar.SECOND);
-//
-//		sHora = hora + ":" + minutos + ":" + segundos;
-//
-		promocion.setHoraInicio(horaInicio);
-//
-//		calendario = Calendar.getInstance();
-//		calendario.setTime(getHoraFin());
-//		hora = calendario.get(Calendar.HOUR_OF_DAY);
-//		minutos = calendario.get(Calendar.MINUTE);
-//		segundos = calendario.get(Calendar.SECOND);
-//		sHora = hora + ":" + minutos + ":" + segundos;
-
-		promocion.setHoraFin(horaFin);
+		SimpleDateFormat formateador = new SimpleDateFormat("hh:mm a");
+		if (!formateador.format(horaInicio).equals("12:00 AM") && !formateador.format(horaFin).equals("12:00 AM")) {
+		    promocion.setHoraInicio(horaInicio);
+		    promocion.setHoraFin(horaFin);
+		}
 	    }
 	    promocion.setMontoFijo(getTarifa().getImporte());
 	    promocion.setNombre(getNombre());
@@ -265,10 +246,10 @@ public class PromocionManagedBean implements Serializable {
 	    }
 	}
     }
-    
+
     public void toggleTypes(ValueChangeEvent event) {
-        incluyeHorario = !incluyeHorario;
-        FacesContext.getCurrentInstance( ).renderResponse( );
+	incluyeHorario = !incluyeHorario;
+	FacesContext.getCurrentInstance().renderResponse();
     }
 
     public IUsuarioService getUsuarioService() {
@@ -497,23 +478,23 @@ public class PromocionManagedBean implements Serializable {
 	PromocionManagedBean.horaFinSelected = horaFinSelected;
     }
 
-//    private int getHora(Time time) {
-//	String horaCompleta = time.toString();
-//	String toObject[] = horaCompleta.split(":");
-//	return Integer.parseInt(toObject[0]);
-//    }
-//
-//    private int getMinutos(Time time) {
-//	String horaCompleta = time.toString();
-//	String toObject[] = horaCompleta.split(":");
-//	return Integer.parseInt(toObject[1]);
-//    }
-//
-//    private int getSegundos(Time time) {
-//	String horaCompleta = time.toString();
-//	String toObject[] = horaCompleta.split(":");
-//	return Integer.parseInt(toObject[2]);
-//    }
+    // private int getHora(Time time) {
+    // String horaCompleta = time.toString();
+    // String toObject[] = horaCompleta.split(":");
+    // return Integer.parseInt(toObject[0]);
+    // }
+    //
+    // private int getMinutos(Time time) {
+    // String horaCompleta = time.toString();
+    // String toObject[] = horaCompleta.split(":");
+    // return Integer.parseInt(toObject[1]);
+    // }
+    //
+    // private int getSegundos(Time time) {
+    // String horaCompleta = time.toString();
+    // String toObject[] = horaCompleta.split(":");
+    // return Integer.parseInt(toObject[2]);
+    // }
 
     public List<Promocion> getPromocionListEmpleado() {
 	return promocionListEmpleado;
@@ -577,13 +558,14 @@ public class PromocionManagedBean implements Serializable {
      * @return the incluyeHorario
      */
     public boolean isIncluyeHorario() {
-        return incluyeHorario;
+	return incluyeHorario;
     }
 
     /**
-     * @param incluyeHorario the incluyeHorario to set
+     * @param incluyeHorario
+     *            the incluyeHorario to set
      */
     public void setIncluyeHorario(boolean incluyeHorario) {
-        this.incluyeHorario = incluyeHorario;
+	this.incluyeHorario = incluyeHorario;
     }
 }

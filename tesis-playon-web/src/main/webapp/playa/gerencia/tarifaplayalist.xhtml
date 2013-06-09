@@ -48,7 +48,9 @@
 						<h:outputText value="Importe" />
 					</f:facet>
 
-					<h:outputText value="#{tarifa.importe}" styleClass="input-font" />
+					<h:outputText value="#{tarifa.importe}" styleClass="input-font">
+						<f:convertNumber type="currency" currencySymbol="$" />
+					</h:outputText>
 
 				</p:column>
 
@@ -148,7 +150,9 @@
 				</p:column>
 				<p:column>
 					<h:outputText value="#{tarifaMB.tarifaSelected.importe}"
-						style="font-weight:bold; font-style:italic;" />
+						style="font-weight:bold; font-style:italic;">
+						<f:convertNumber type="currency" currencySymbol="$" />
+					</h:outputText>
 				</p:column>
 
 				<p:column>
@@ -280,11 +284,12 @@
 						</tr>
 					</table>
 				</div>
-				<br></br>
+				<br></br><div align="right">
 				<p:commandButton id="tarifasAceptar" value="Aceptar"
-					action="#{tarifaMB.addTarifas}" ajax="false" />
+					action="#{tarifaMB.addTarifas}" ajax="false"
+					style="margin-right:10px;" />
 				<p:commandButton id="tarifasCancelar" value="Cancelar"
-					onclick="popupTarifas.hide();" />
+					onclick="popupTarifas.hide();" /></div>
 			</h:form>
 		</p:dialog>
 

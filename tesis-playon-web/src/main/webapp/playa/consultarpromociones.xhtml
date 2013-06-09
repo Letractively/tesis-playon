@@ -51,7 +51,9 @@
 
 				<p:column headerText="Descuento" filterBy="#{promocion.descuento}"
 					filterMatchMode="contains">
-					<h:outputText value="#{promocion.descuento}%" />
+					<div align="center">
+						<h:outputText value="#{promocion.descuento}%" />
+					</div>
 				</p:column>
 
 				<p:column headerText="Opciones" style="text-align:center;">
@@ -101,30 +103,33 @@
 							value="#{promocionMB.promocionSelected.tarifa.categoriaVehiculo.nombre}" />
 
 						<h:outputText value="Monto fijo: " />
-						<h:outputText value="$#{promocionMB.promocionSelected.montoFijo}"
-							type="currency" />
+						<h:outputText value="#{promocionMB.promocionSelected.montoFijo}"
+							type="currency">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
 
 						<h:outputText value="Monto con descuento: " />
 						<h:outputText type="currency"
-							value="$#{promocionMB.promocionSelected.montoFijo * (1- promocionMB.promocionSelected.descuento/100)}" />
+							value="#{promocionMB.promocionSelected.montoFijo * (1- promocionMB.promocionSelected.descuento/100)}">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
 
 						<h:outputText value="Descuento: " />
-						<h:outputText
-							value="&#160;#{promocionMB.promocionSelected.descuento}%" />
+						<h:outputText type="currency"
+							value="&#160;#{promocionMB.promocionSelected.descuento}%">
+							<f:convertNumber type="currency" />
+						</h:outputText>
 						<h:outputText value="Estado: " />
 						<h:outputText
 							value="&#160;#{promocionMB.promocionSelected.estadoPromocion.nombre eq 'Vigente' and
 							promocion.fechaFin ge promocionMB.today ? 'Vigente' : 'De Baja'}" />
 
-						<p:column /><p:column /><p:column />
-						<p:column style="text-align:right">
-							<div align="right">
-								<p:commandButton id="btnAceptar" value="Aceptar"
-									style="padding:4px" onclick="viewDialog.hide();" type="button" />
-							</div>
-						</p:column>
 					</h:panelGrid>
 				</p:panel>
+				<div align="right" style="margin-top: 5px">
+					<p:commandButton id="btnAceptar" value="Aceptar"
+						style="padding:4px" onclick="viewDialog.hide();" type="button" />
+				</div>
 			</p:dialog>
 		</h:form>
 	</ui:define>

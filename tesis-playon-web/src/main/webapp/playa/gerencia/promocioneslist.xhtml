@@ -25,7 +25,8 @@
 
 				<p:panel header="#{promocion.nombre}" style="text-align:left">
 					<h:outputText value="Descripción: " style="font-weight:bold;" />
-					<h:outputText value="#{promocion.descripcion}" style="font-weight:bold;" />
+					<h:outputText value="#{promocion.descripcion}"
+						style="font-weight:bold;" />
 					<h:panelGrid columns="4" style="width:100%" cellpadding="2"
 						cellspacing="2">
 						<h:outputText value="Fecha de inicio: " />
@@ -44,7 +45,7 @@
 						</h:outputText>
 
 						<h:outputText value="Hora de finalización: " />
-						<h:outputText value="#{promocion.horaFin}">
+						<h:outputText value="#{promocion.horaFin}" >
 							<f:convertDateTime pattern="HH:mm" />
 						</h:outputText>
 
@@ -56,13 +57,13 @@
 
 						<h:outputText value="Monto fijo: " />
 						<h:outputText value="#{promocion.montoFijo}">
-							<f:convertNumber type="currency" currencySymbol="$ "/>
+							<f:convertNumber type="currency" currencySymbol="$ " />
 						</h:outputText>
 
 						<h:outputText value="Monto con descuento: " />
 						<h:outputText
 							value="#{(promocion.montoFijo * (1- promocion.descuento/100))}">
-							<f:convertNumber type="currency" currencySymbol="$ "/>	
+							<f:convertNumber type="currency" currencySymbol="$ " />
 						</h:outputText>
 
 						<p:column>
