@@ -3,7 +3,7 @@ package tesis.playon.mobile;
 public class Const {
 
     // IP address for mobile device
-    public final static String SERVER_IP = "192.168.1.104";
+    public final static String SERVER_IP = "192.168.5.73";
 
     // IP address for emulator
     // public final static String SERVER_IP = "10.0.2.2";

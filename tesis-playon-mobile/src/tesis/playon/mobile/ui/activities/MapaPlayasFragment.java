@@ -32,6 +32,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -55,6 +56,10 @@ public class MapaPlayasFragment extends Fragment implements OnMarkerClickListene
     private GoogleGeoCodeResponse result;
 
     private PreferenceHelper mPreference;
+
+    private Double latActual;
+
+    private Double lngActual;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -129,14 +134,26 @@ public class MapaPlayasFragment extends Fragment implements OnMarkerClickListene
 
 	Log.d(TAG, "llenarLista");
 	mMap = mMapView.getMap();
+	// draw current position of user
+	if (null != query) {
+	    latActual = Double.parseDouble(result.results[0].geometry.location.lat);
+	    lngActual = Double.parseDouble(result.results[0].geometry.location.lng);
+	} else {
+	    latActual = Double.parseDouble(mPreference.getLat());
+	    lngActual = Double.parseDouble(mPreference.getLng());
+	}
+	LatLng latLng = new LatLng(latActual, lngActual);
+	mMap.addMarker(
+		new MarkerOptions().position(latLng).title("Usted esta aquí")
+			.icon(BitmapDescriptorFactory.fromResource(R.drawable.mapa_auto))).showInfoWindow();
+	mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+	mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+	// draw search results
 	for (Playa playa : playas.getPlayas()) {
-	    mMap.addMarker(
-		    new MarkerOptions().position(new LatLng(playa.getLatitud(), playa.getLongitud()))
-			    .title(playa.getNombreComercial()).snippet("Disponibilidad: " + playa.getDisponibilidad()))
-		    .showInfoWindow();
-	    LatLng latLng = new LatLng(playa.getLatitud(), playa.getLongitud());
-	    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-	    mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+	    mMap.addMarker(new MarkerOptions().position(new LatLng(playa.getLatitud(), playa.getLongitud()))
+		    .title(playa.getNombreComercial()).snippet("Disponibilidad: " + playa.getDisponibilidad())
+		    .icon(BitmapDescriptorFactory.fromResource(R.drawable.mapa_playa_48)));
 	}
     }
 
