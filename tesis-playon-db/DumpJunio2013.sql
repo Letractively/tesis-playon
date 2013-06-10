@@ -1375,6 +1375,47 @@ CREATE TABLE `marca_vehiculo` (
 -- Dumping data for table `marca_vehiculo`
 --
 
+-- =================================================================== --
+
+/**
+ * Creación del procedure
+ */
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `tesis_playon`.`busquedaAvanzada` $$
+CREATE PROCEDURE `tesis_playon`.`busquedaAvanzada` (
+IN platitud DOUBLE,
+IN plongitud DOUBLE,
+IN pTipoEstadia INT,
+IN pCategoriaVehiculo INT,
+IN pNombreComercial MEDIUMTEXT,
+IN pPromociones TINYINT
+)
+BEGIN
+    SELECT p.barrioID, p.cuit, p.disponibilidad, p.domicilio, p.telefono, p.email,
+        p.estadoPlayaID, p.nombreComercial, p.latitud, p.longitud, p.razonSocial,
+        p.playaID, p.url
+    FROM playa p
+    WHERE ((p.playaID IN (SELECT DISTINCT t.playaID
+                            FROM tarifa t
+                            WHERE (pTipoEstadia = 0 OR t.tipoEstadiaID = pTipoEstadia)
+                                AND (pCategoriaVehiculo = 0 OR t.categoriaVehiculoID = pCategoriaVehiculo)))
+            AND( pPromociones = 0 OR (p.playaID IN (SELECT DISTINCT promo.playaID
+                                                        FROM promocion promo
+                                                        WHERE pPromociones = 1
+                                                                AND promo.estadoPromocionID=2
+                                                                AND (now() >= promo.fechaInicio )
+                                                                AND (now() <= promo.fechaFin ))))
+            AND (p.estadoPlayaID = 2)
+            AND (p.disponibilidad > 0));
+END $$
+
+DELIMITER ;
+
+-- =================================================================== --
+
+
 LOCK TABLES `marca_vehiculo` WRITE;
 /*!40000 ALTER TABLE `marca_vehiculo` DISABLE KEYS */;
 INSERT INTO `marca_vehiculo` VALUES (NULL,'Renault',1),(NULL,'Ford',2),(NULL,'Volkswagen',3),(NULL,'Mercedes Benz',4),(NULL,'Peugeot',5),(NULL,'Citroen',6),(NULL,'BMW',7),(NULL,'Audi',8),(NULL,'Seat',9),(NULL,'Opel',10),(NULL,'Fiat',11),(NULL,'Nissan',12),(NULL,'Toyota',13),(NULL,'Hyundai',14),(NULL,'Volvo',15),(NULL,'Kia',16),(NULL,'Mitsubishi',17),(NULL,'Land Rover',18),(NULL,'Suzuki',19),(NULL,'Porche',20),(NULL,'Chevrolet',21),(NULL,'Mini',22),(NULL,'Alfa Romeo',23),(NULL,'Honda',24),(NULL,'Jeep',25),(NULL,'Chrysler',26),(NULL,'Mazda',27);
