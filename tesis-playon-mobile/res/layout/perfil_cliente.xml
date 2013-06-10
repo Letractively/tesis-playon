@@ -1,133 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <ImageView
-        android:id="@+id/photo_cliente"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:contentDescription="@string/foto_de_playa"
-        android:src="@drawable/logo_playon" />
-
-    <TextView
-        android:id="@+id/lbl_cliente"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/photo_cliente"
-        android:text="@string/cliente"
-        android:textColor="#4682B4"
-        android:textSize="25sp" />
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/txt_cliente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/lbl_cliente"
-        android:textSize="25sp" />
+        <ImageView
+            android:id="@+id/photo_cliente"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/foto_de_playa"
+            android:src="@drawable/logo_playon" />
 
-    <TextView
-        android:id="@+id/lbl_documento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_cliente"
-        android:text="@string/documento"
-        android:textColor="#4682B4"
-        android:textSize="25sp" />
+        <TextView
+            android:id="@+id/lbl_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/photo_cliente"
+            android:text="@string/cliente"
+            android:textColor="#4682B4"
+            android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/txt_documento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_cliente"
-        android:layout_toRightOf="@+id/lbl_documento"
-        android:textSize="25sp" />
+        <TextView
+            android:id="@+id/txt_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/photo_cliente"
+            android:layout_toRightOf="@+id/lbl_cliente"
+            android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/lbl_domicilio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_documento"
-        android:text="@string/domicilio"
-        android:textColor="#4682B4"
-        android:textSize="25sp" />
+        <TextView
+            android:id="@+id/lbl_documento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_cliente"
+            android:text="@string/documento"
+            android:textColor="#4682B4"
+            android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/txt_domicilio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_documento"
-        android:layout_toRightOf="@+id/lbl_domicilio"
-        android:textSize="25sp" />
+        <TextView
+            android:id="@+id/txt_documento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_cliente"
+            android:layout_toRightOf="@+id/lbl_documento"
+            android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/lbl_nro_cuenta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_domicilio"
-        android:text="@string/nro_cuenta"
-        android:textColor="#4682B4"
-        android:textSize="25sp" />
+        <TextView
+            android:id="@+id/lbl_domicilio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_documento"
+            android:text="@string/domicilio"
+            android:textColor="#4682B4"
+            android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/txt_nro_cuenta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_domicilio"
-        android:layout_toRightOf="@+id/lbl_nro_cuenta"
-        android:textSize="25sp" />
+        <TextView
+            android:id="@+id/txt_domicilio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_documento"
+            android:layout_toRightOf="@+id/lbl_domicilio"
+            android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/lbl_saldo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_nro_cuenta"
-        android:text="@string/saldo"
-        android:textColor="#4682B4"
-        android:textSize="25sp" />
+        <TextView
+            android:id="@+id/lbl_nro_cuenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_domicilio"
+            android:text="@string/nro_cuenta"
+            android:textColor="#4682B4"
+            android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/txt_saldo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_nro_cuenta"
-        android:layout_toRightOf="@+id/lbl_saldo"
-        android:textColor="#FF0000"
-        android:textSize="25sp" />
+        <TextView
+            android:id="@+id/txt_nro_cuenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_domicilio"
+            android:layout_toRightOf="@+id/lbl_nro_cuenta"
+            android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/lbl_telefono"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_saldo"
-        android:text="@string/telefono"
-        android:textColor="#4682B4"
-        android:textSize="25sp" />
+        <TextView
+            android:id="@+id/lbl_saldo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_nro_cuenta"
+            android:text="@string/saldo"
+            android:textColor="#4682B4"
+            android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/txt_telefono"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_saldo"
-        android:layout_toRightOf="@+id/lbl_telefono"
-        android:textSize="25sp" />
+        <TextView
+            android:id="@+id/txt_saldo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_nro_cuenta"
+            android:layout_toRightOf="@+id/lbl_saldo"
+            android:textColor="#FF0000"
+            android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/lbl_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_telefono"
-        android:text="@string/email"
-        android:textColor="#4682B4"
-        android:textSize="25sp" />
+        <TextView
+            android:id="@+id/lbl_telefono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_saldo"
+            android:text="@string/telefono"
+            android:textColor="#4682B4"
+            android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/txt_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_telefono"
-        android:layout_toRightOf="@+id/lbl_email"
-        android:textSize="25sp" />
+        <TextView
+            android:id="@+id/txt_telefono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_saldo"
+            android:layout_toRightOf="@+id/lbl_telefono"
+            android:textSize="25sp" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/lbl_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_telefono"
+            android:text="@string/email"
+            android:textColor="#4682B4"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/txt_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_telefono"
+            android:layout_toRightOf="@+id/lbl_email"
+            android:textSize="25sp" />
+    </RelativeLayout>
+
+</ScrollView>

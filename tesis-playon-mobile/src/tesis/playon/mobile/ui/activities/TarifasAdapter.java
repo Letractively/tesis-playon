@@ -52,7 +52,7 @@ public class TarifasAdapter extends ArrayAdapter<Tarifa> {
 	Tarifa tarifa = listaTarifas.get(position);
 	holder.txtVehiculo.setText(tarifa.getCategoriaVehiculo().getNombre());
 	holder.txtTarifa.setText(tarifa.getTipoEstadia().getNombre());
-	holder.txtTarifa.setText(tarifa.getImporte().toString());
+	holder.txtImporte.setText("$" + tarifa.getImporte().toString());
 
 	return row;
     }

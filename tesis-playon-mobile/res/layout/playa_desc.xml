@@ -10,8 +10,8 @@
 
         <ImageView
             android:id="@+id/photo_playa"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:contentDescription="@string/foto_de_playa"
             android:src="@drawable/logo_playon" />
 

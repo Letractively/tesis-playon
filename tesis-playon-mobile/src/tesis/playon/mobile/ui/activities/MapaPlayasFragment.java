@@ -83,7 +83,7 @@ public class MapaPlayasFragment extends Fragment implements OnMarkerClickListene
 	mMapView.onCreate(savedInstanceState);
 
 	mMap = mMapView.getMap();
-	// mMap.setOnMarkerClickListener(this);
+	mMap.setOnMarkerClickListener(this);
 	return inflatedView;
     }
 
@@ -108,18 +108,21 @@ public class MapaPlayasFragment extends Fragment implements OnMarkerClickListene
     @Override
     public boolean onMarkerClick(Marker arg0) {
 
-	String nomPlaya = arg0.getTitle();
+	if (arg0.isInfoWindowShown()) {
+	    String nomPlaya = arg0.getTitle();
 
-	Bundle playa = new Bundle();
-	playa.putString(Const.NOMBRE_PLAYA, nomPlaya);
+	    Bundle playa = new Bundle();
+	    playa.putString(Const.NOMBRE_PLAYA, nomPlaya);
 
-	Fragment fragment = new DetallePlayaFragment();
-	fragment.setArguments(playa);
+	    Fragment fragment = new DetallePlayaFragment();
+	    fragment.setArguments(playa);
 
-	getActivity().getActionBar().getTabAt(2).setTabListener(new MyTabsListener(fragment));
-	getActivity().getActionBar().selectTab(getActivity().getActionBar().getTabAt(2));
+	    getActivity().getActionBar().getTabAt(2).setTabListener(new MyTabsListener(fragment));
+	    getActivity().getActionBar().selectTab(getActivity().getActionBar().getTabAt(2));
 
-	return true;
+	    return true;
+	}
+	return false;
     }
 
     private void llenarMapa(Playas playas) {
@@ -127,8 +130,10 @@ public class MapaPlayasFragment extends Fragment implements OnMarkerClickListene
 	Log.d(TAG, "llenarLista");
 	mMap = mMapView.getMap();
 	for (Playa playa : playas.getPlayas()) {
-	    mMap.addMarker(new MarkerOptions().position(new LatLng(playa.getLatitud(), playa.getLongitud()))
-		    .title(playa.getNombreComercial()).snippet("Disponibilidad: " + playa.getDisponibilidad()));
+	    mMap.addMarker(
+		    new MarkerOptions().position(new LatLng(playa.getLatitud(), playa.getLongitud()))
+			    .title(playa.getNombreComercial()).snippet("Disponibilidad: " + playa.getDisponibilidad()))
+		    .showInfoWindow();
 	    LatLng latLng = new LatLng(playa.getLatitud(), playa.getLongitud());
 	    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 	    mMap.animateCamera(CameraUpdateFactory.zoomTo(15));

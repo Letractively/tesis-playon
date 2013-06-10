@@ -52,7 +52,7 @@ public class PromocionesAdapter extends ArrayAdapter<Promocion> {
 	Promocion promocion = listaPromociones.get(position);
 	holder.txtDescripcion.setText(promocion.getDescripcion());
 	holder.txtVehiculo.setText(promocion.getTarifa().getCategoriaVehiculo().getNombre());
-	holder.txtPrecio.setText(promocion.getTarifa().getImporte().toString());
+	holder.txtPrecio.setText("$" + promocion.getTarifa().getImporte().toString());
 
 	return row;
     }

@@ -4,21 +4,34 @@ import tesis.playon.mobile.R;
 import tesis.playon.mobile.json.model.Usuario;
 import tesis.playon.mobile.preferences.PreferenceHelper;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements LocationListener {
 
     private final int LOGIN_ID = 50001;
+
+    private LocationManager locationManager;
+
+    private String provider;
+
+    private PreferenceHelper mPreference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_main);
+
+	mPreference = new PreferenceHelper(getApplicationContext());
 
 	// llamo a la actividad para loguearse
 	Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
@@ -31,6 +44,7 @@ public class MainActivity extends Activity {
 	try {
 	    switch (requestCode) {
 		case LOGIN_ID: {
+		    saveUserLocation();
 		    if (resultCode == Activity.RESULT_OK) {
 			Bundle bundle = data.getExtras();
 			Usuario usuario = (Usuario) bundle.getSerializable("json.model.usuario");
@@ -90,5 +104,48 @@ public class MainActivity extends Activity {
 	    default:
 		return super.onOptionsItemSelected(item);
 	}
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+	String lat = Double.toString((Double) (location.getLatitude()));
+	String lng = Double.toString((Double) (location.getLongitude()));
+	mPreference = new PreferenceHelper(getApplicationContext());
+	mPreference.updateLatLng(lat, lng);
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    public void saveUserLocation() {
+	// Get the location manager
+	locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+	// Define the criteria how to select the location provider
+	Criteria criteria = new Criteria();
+	provider = locationManager.getBestProvider(criteria, false);
+	Location location = locationManager.getLastKnownLocation(provider);
+
+	// Initialize the location fields
+	if (location != null) {
+	    System.out.println("Provider " + provider + " has been selected.");
+	    // onLocationChanged(location);
+	} else {
+	    location = new Location("Manual");
+	    location.setLatitude(-33.503588);
+	    location.setLongitude(-70.757669);
+	}
+	onLocationChanged(location);
     }
 }
