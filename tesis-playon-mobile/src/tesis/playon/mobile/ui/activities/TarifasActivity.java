@@ -3,11 +3,9 @@ package tesis.playon.mobile.ui.activities;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
 
 import tesis.playon.mobile.Const;
 import tesis.playon.mobile.R;
-import tesis.playon.mobile.json.model.Tarifa;
 import tesis.playon.mobile.json.model.Tarifas;
 import tesis.playon.mobile.preferences.PreferenceHelper;
 import tesis.playon.mobile.utils.Utils;
@@ -23,7 +21,7 @@ import com.google.gson.Gson;
 
 public class TarifasActivity extends ListActivity {
 
-    private static final String TAG = "TarifasActivity";
+    private static final String TAG = "TarifasActi vity";
 
     private static final String URL_TARIFAS_PLAYA = "http://" + Const.SERVER_IP + ":8080/tesis-playon-restful/tarifas/";
 
@@ -53,14 +51,16 @@ public class TarifasActivity extends ListActivity {
     private void cargarTarifasPlaya(Tarifas tarifas) {
 
 	Log.d(TAG, "cargarTarifasPlaya");
-	if (null == tarifas.getTarifas()) {
-	    tarifas.setTarifas(new ArrayList<Tarifa>());
-	}
-	mTarifaAdapter = new TarifasAdapter(mContext, R.layout.tarifa_grid_item, tarifas.getTarifas());
-	setListAdapter(mTarifaAdapter);
 	mListView = getListView();
-	mListView.setAdapter(mTarifaAdapter);
-	mListView.setTextFilterEnabled(true);
+	if (null != tarifas.getTarifas()) {
+	    mTarifaAdapter = new TarifasAdapter(mContext, R.layout.tarifa_grid_item, tarifas.getTarifas());
+	    setListAdapter(mTarifaAdapter);
+	    mListView.setAdapter(mTarifaAdapter);
+	    mListView.setTextFilterEnabled(true);
+	} else {
+	    mListView.setEmptyView(findViewById(R.id.empty_view_tarifas));
+	}
+
     }
 
     class BuscarTarifasVigentesPlayaService extends AsyncTask<Void, Void, String> {

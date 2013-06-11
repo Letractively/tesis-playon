@@ -81,7 +81,7 @@
         </activity>
         <activity
             android:name=".ui.activities.TarifasActivity"
-            android:label="@string/app_name"
+            android:label="@string/app_name_tarifas"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/ListViewAppTheme" >
@@ -91,7 +91,7 @@
         </activity>
         <activity
             android:name=".ui.activities.PromocionesActivity"
-            android:label="@string/app_name"
+            android:label="@string/app_name_promociones"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/ListViewAppTheme" >
@@ -101,7 +101,7 @@
         </activity>
         <activity
             android:name=".ui.activities.ComentariosActivity"
-            android:label="@string/app_name"
+            android:label="@string/app_name_comentarios"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/ListViewAppTheme" >

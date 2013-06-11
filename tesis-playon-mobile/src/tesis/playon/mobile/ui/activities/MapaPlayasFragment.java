@@ -29,7 +29,7 @@ import android.view.ViewGroup;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -39,7 +39,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-public class MapaPlayasFragment extends Fragment implements OnMarkerClickListener {
+public class MapaPlayasFragment extends Fragment implements OnInfoWindowClickListener {
 
     private final static String TAG = "MapaPlayasFragment";
 
@@ -88,7 +88,7 @@ public class MapaPlayasFragment extends Fragment implements OnMarkerClickListene
 	mMapView.onCreate(savedInstanceState);
 
 	mMap = mMapView.getMap();
-	mMap.setOnMarkerClickListener(this);
+	mMap.setOnInfoWindowClickListener(this);
 	return inflatedView;
     }
 
@@ -111,11 +111,10 @@ public class MapaPlayasFragment extends Fragment implements OnMarkerClickListene
     }
 
     @Override
-    public boolean onMarkerClick(Marker arg0) {
+    public void onInfoWindowClick(Marker arg0) {
 
-	if (arg0.isInfoWindowShown()) {
+	if (!arg0.getTitle().equalsIgnoreCase("Usted esta aquí")) {
 	    String nomPlaya = arg0.getTitle();
-
 	    Bundle playa = new Bundle();
 	    playa.putString(Const.NOMBRE_PLAYA, nomPlaya);
 
@@ -124,10 +123,7 @@ public class MapaPlayasFragment extends Fragment implements OnMarkerClickListene
 
 	    getActivity().getActionBar().getTabAt(2).setTabListener(new MyTabsListener(fragment));
 	    getActivity().getActionBar().selectTab(getActivity().getActionBar().getTabAt(2));
-
-	    return true;
 	}
-	return false;
     }
 
     private void llenarMapa(Playas playas) {

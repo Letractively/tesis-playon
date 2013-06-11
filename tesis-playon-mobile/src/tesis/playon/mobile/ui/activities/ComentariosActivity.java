@@ -3,11 +3,9 @@ package tesis.playon.mobile.ui.activities;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
 
 import tesis.playon.mobile.Const;
 import tesis.playon.mobile.R;
-import tesis.playon.mobile.json.model.Comentario;
 import tesis.playon.mobile.json.model.Comentarios;
 import tesis.playon.mobile.preferences.PreferenceHelper;
 import tesis.playon.mobile.utils.Utils;
@@ -54,16 +52,16 @@ public class ComentariosActivity extends ListActivity {
     private void cargarComentariosPlaya(Comentarios comentarios) {
 
 	Log.d(TAG, "cargarComentariosPlaya");
-
-	if (null == comentarios.getComentarios()) {
-	    comentarios.setComentarios(new ArrayList<Comentario>());
-	}
-	mComentariosAdapter = new ComentariosAdapter(mContext, R.layout.comentario_grid_item,
-		comentarios.getComentarios());
-	setListAdapter(mComentariosAdapter);
 	mListView = getListView();
-	mListView.setAdapter(mComentariosAdapter);
-	mListView.setTextFilterEnabled(true);
+	if (null != comentarios.getComentarios()) {
+	    mComentariosAdapter = new ComentariosAdapter(mContext, R.layout.comentario_grid_item,
+		    comentarios.getComentarios());
+	    setListAdapter(mComentariosAdapter);
+	    mListView.setAdapter(mComentariosAdapter);
+	    mListView.setTextFilterEnabled(true);
+	} else {
+	    mListView.setEmptyView(findViewById(R.id.empty_view_comentarios));
+	}
     }
 
     class BuscarComentariosPlayaService extends AsyncTask<Void, Void, String> {

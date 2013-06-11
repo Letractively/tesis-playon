@@ -3,11 +3,9 @@ package tesis.playon.mobile.ui.activities;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
 
 import tesis.playon.mobile.Const;
 import tesis.playon.mobile.R;
-import tesis.playon.mobile.json.model.Promocion;
 import tesis.playon.mobile.json.model.Promociones;
 import tesis.playon.mobile.preferences.PreferenceHelper;
 import tesis.playon.mobile.utils.Utils;
@@ -54,15 +52,16 @@ public class PromocionesActivity extends ListActivity {
     private void cargarPromocionesPlaya(Promociones promociones) {
 
 	Log.d(TAG, "cargarPromocionesPlaya");
-	if (null == promociones.getPromociones()) {
-	    promociones.setPromociones(new ArrayList<Promocion>());
-	}
-	mPromocionesAdapter = new PromocionesAdapter(mContext, R.layout.promocion_grid_item,
-		promociones.getPromociones());
-	setListAdapter(mPromocionesAdapter);
 	mListView = getListView();
-	mListView.setAdapter(mPromocionesAdapter);
-	mListView.setTextFilterEnabled(true);
+	if (null != promociones.getPromociones()) {
+	    mPromocionesAdapter = new PromocionesAdapter(mContext, R.layout.promocion_grid_item,
+		    promociones.getPromociones());
+	    setListAdapter(mPromocionesAdapter);
+	    mListView.setAdapter(mPromocionesAdapter);
+	    mListView.setTextFilterEnabled(true);
+	} else {
+	    mListView.setEmptyView(findViewById(R.id.empty_view_promociones));
+	}
 
     }
 

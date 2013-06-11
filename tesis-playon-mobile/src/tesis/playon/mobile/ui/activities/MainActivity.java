@@ -48,14 +48,14 @@ public class MainActivity extends Activity implements LocationListener {
 		    if (resultCode == Activity.RESULT_OK) {
 			Bundle bundle = data.getExtras();
 			Usuario usuario = (Usuario) bundle.getSerializable("json.model.usuario");
-			Toast.makeText(getBaseContext(), "Logueado correctamente: " + usuario.getNombreUser(),
-				Toast.LENGTH_SHORT).show();
+			// Toast.makeText(getBaseContext(), "Logueado correctamente: " + usuario.getNombreUser(),
+			// Toast.LENGTH_SHORT).show();
 			PreferenceHelper mPreferences = new PreferenceHelper(getApplicationContext());
 			mPreferences.updateNroUsuario(usuario.getId());
 			onSearchRequested();
 		    } else if (resultCode == Activity.RESULT_CANCELED) {
-			Toast.makeText(getBaseContext(), "El usuario no existe o los datos eran incorrectos!",
-				Toast.LENGTH_SHORT).show();
+			// Toast.makeText(getBaseContext(), "El usuario no existe o los datos eran incorrectos!",
+			// Toast.LENGTH_SHORT).show();
 		    }
 		    break;
 		}
@@ -143,8 +143,10 @@ public class MainActivity extends Activity implements LocationListener {
 	    // onLocationChanged(location);
 	} else {
 	    location = new Location("Manual");
-	    location.setLatitude(-33.503588);
-	    location.setLongitude(-70.757669);
+	    location.setLatitude(-31.440990);
+	    location.setLongitude(-64.193305);
+	    // location.setLatitude(-33.503588);
+	    // location.setLongitude(-70.757669);
 	}
 	onLocationChanged(location);
     }

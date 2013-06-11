@@ -29,7 +29,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -112,27 +111,32 @@ public class ListaPlayasFragment extends ListFragment {
     private void llenarLista(final Playas playas) {
 
 	Log.d(TAG, "llenarLista");
-	mPlayaAdapter = new PlayaAdapter(mInflater.getContext(), R.layout.playa_grid_item, playas.getPlayas());
-	setListAdapter(mPlayaAdapter);
 	mListView = getListView();
-	mListView.setAdapter(mPlayaAdapter);
-	mListView.setTextFilterEnabled(true);
+	if (!playas.getPlayas().isEmpty()) {
+	    mPlayaAdapter = new PlayaAdapter(mInflater.getContext(), R.layout.playa_grid_item, playas.getPlayas());
+	    setListAdapter(mPlayaAdapter);
 
-	mListView.setOnItemClickListener(new OnItemClickListener() {
-	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		Toast.makeText(getActivity().getApplicationContext(),
-			playas.getPlayas().get(position).getNombreComercial(), Toast.LENGTH_SHORT).show();
-		String nomPlaya = playas.getPlayas().get(position).getNombreComercial();
-		Bundle playa = new Bundle();
-		playa.putString(Const.NOMBRE_PLAYA, nomPlaya);
+	    mListView.setAdapter(mPlayaAdapter);
+	    mListView.setTextFilterEnabled(true);
 
-		Fragment fragment = new DetallePlayaFragment();
-		fragment.setArguments(playa);
+	    mListView.setOnItemClickListener(new OnItemClickListener() {
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		    // Toast.makeText(getActivity().getApplicationContext(),
+		    // playas.getPlayas().get(position).getNombreComercial(), Toast.LENGTH_SHORT).show();
+		    String nomPlaya = playas.getPlayas().get(position).getNombreComercial();
+		    Bundle playa = new Bundle();
+		    playa.putString(Const.NOMBRE_PLAYA, nomPlaya);
 
-		getActivity().getActionBar().getTabAt(2).setTabListener(new MyTabsListener(fragment));
-		getActivity().getActionBar().selectTab(getActivity().getActionBar().getTabAt(2));
-	    }
-	});
+		    Fragment fragment = new DetallePlayaFragment();
+		    fragment.setArguments(playa);
+
+		    getActivity().getActionBar().getTabAt(2).setTabListener(new MyTabsListener(fragment));
+		    getActivity().getActionBar().selectTab(getActivity().getActionBar().getTabAt(2));
+		}
+	    });
+	} else {
+	    mListView.setEmptyView(getActivity().findViewById(R.id.empty_view_playas));
+	}
     }
 
     private String jsonCoord(String address) throws IOException {
