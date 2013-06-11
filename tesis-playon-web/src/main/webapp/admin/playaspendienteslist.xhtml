@@ -10,96 +10,97 @@
 
 	<ui:define name="panelContent" class="admin-font">
 
+
 		<p:tabView id="tabView">
-
 			<p:tab id="tab1" title="Pendientes">
-				<p:growl id="messages" />
-				<p:dataTable id="playas" var="playa"
-					value="#{auditoriaMB.playasPendientesList}"
-					filteredValue="#{auditoriaMB.filteredPlayas}"
-					widgetVar="playasTable" paginatorPosition="bottom"
-					paginator="false" rows="5"
-					emptyMessage="No existen playas para auditar">
+				<h:form id="formTab1">
+					<p:growl id="messages" />
+					<p:dataTable id="playas" var="playa"
+						value="#{auditoriaMB.playasPendientesList}"
+						filteredValue="#{auditoriaMB.filteredPlayas}"
+						widgetVar="playasTable" paginatorPosition="bottom"
+						paginator="false" rows="5"
+						emptyMessage="No existen playas para auditar">
 
-					<p:column headerText="Razón Social" styleClass="column-font"
-						filterBy="#{playa.razonSocial}" filterMatchMode="contains">
-						<h:outputText value="#{playa.razonSocial}" />
-					</p:column>
+						<p:column headerText="Razón Social" styleClass="column-font"
+							filterBy="#{playa.razonSocial}" filterMatchMode="contains">
+							<h:outputText value="#{playa.razonSocial}" />
+						</p:column>
 
-					<p:column headerText="C.U.I.T." styleClass="column-font"
-						style="width:105px" filterBy="#{playa.cuit}"
-						filterMatchMode="contains">
-						<h:outputText value="#{playa.cuit}" />
-					</p:column>
+						<p:column headerText="C.U.I.T." styleClass="column-font"
+							style="width:105px" filterBy="#{playa.cuit}"
+							filterMatchMode="contains">
+							<h:outputText value="#{playa.cuit}" />
+						</p:column>
 
-					<p:column headerText="Domicilio" styleClass="column-font"
-						filterBy="#{playa.domicilio}" filterMatchMode="contains">
-						<h:outputText value="#{playa.domicilio}" />
-					</p:column>
+						<p:column headerText="Domicilio" styleClass="column-font"
+							filterBy="#{playa.domicilio}" filterMatchMode="contains">
+							<h:outputText value="#{playa.domicilio}" />
+						</p:column>
 
-					<p:column headerText="Barrio" styleClass="column-font"
-						filterBy="#{playa.barrio}"
-						filterOptions="#{auditoriaMB.barriosOptions}"
-						filterMatchMode="exact">
-						<h:outputText value="#{playa.barrio.nombre}" />
-					</p:column>
+						<p:column headerText="Barrio" styleClass="column-font"
+							filterBy="#{playa.barrio}"
+							filterOptions="#{auditoriaMB.barriosOptions}"
+							filterMatchMode="exact">
+							<h:outputText value="#{playa.barrio.nombre}" />
+						</p:column>
 
-					<p:column headerText="Teléfono" styleClass="column-font"
-						filterBy="#{playa.telefono}" filterMatchMode="contains">
-						<h:outputText value="#{playa.telefono}" />
-					</p:column>
+						<p:column headerText="Teléfono" styleClass="column-font"
+							filterBy="#{playa.telefono}" filterMatchMode="contains">
+							<h:outputText value="#{playa.telefono}" />
+						</p:column>
 
-					<p:column headerText="Estado" styleClass="column-font"
-						filterBy="#{playa.estado}"
-						filterOptions="#{auditoriaMB.estadosOptions}"
-						filterMatchMode="exact">
-						<h:outputText value="#{playa.estado.nombre}" />
-					</p:column>
+						<p:column headerText="Estado" styleClass="column-font"
+							filterBy="#{playa.estado}"
+							filterOptions="#{auditoriaMB.estadosOptions}"
+							filterMatchMode="exact">
+							<h:outputText value="#{playa.estado.nombre}" />
+						</p:column>
 
-					<p:column headerText="Opciones" styleClass="column-options"
-						style="text-align:center; width:120px;">
+						<p:column headerText="Opciones" styleClass="column-options"
+							style="text-align:center; width:120px;">
 
-						<p:commandLink id="view" update=":mainForm:carDlg"
-							oncomplete="carDialog.show();" title="Ver Datos">
-							<f:setPropertyActionListener value="#{playa}"
-								target="#{auditoriaMB.playaSeleccionada}" />
-							<h:graphicImage library="images/icons" name="search.png" />
-						</p:commandLink>
+							<p:commandLink id="view" update=":mainForm:carDlg"
+								oncomplete="carDialog.show();" title="Ver Datos">
+								<f:setPropertyActionListener value="#{playa}"
+									target="#{auditoriaMB.playaSeleccionada}" />
+								<h:graphicImage library="images/icons" name="search.png" />
+							</p:commandLink>
 
-						<p:commandLink id="edit" title="Editar Datos"
-							action="/auditoria/playaedit.html?faces-redirect=true"
-							ajax="false">
-							<f:setPropertyActionListener value="#{playa}"
-								target="#{auditoriaMB.playaSeleccionada}" />
-							<f:setPropertyActionListener value="playaspendienteslist"
-								target="#{auditoriaMB.previusPage}" />
-							<h:graphicImage library="images/icons" name="pencil.png" />
-						</p:commandLink>
+							<p:commandLink id="edit" title="Editar Datos"
+								action="/auditoria/playaedit.html?faces-redirect=true"
+								ajax="false">
+								<f:setPropertyActionListener value="#{playa}"
+									target="#{auditoriaMB.playaSeleccionada}" />
+								<f:setPropertyActionListener value="playaspendienteslist"
+									target="#{auditoriaMB.previusPage}" />
+								<h:graphicImage library="images/icons" name="pencil.png" />
+							</p:commandLink>
 
-						<p:commandLink id="aprobar" title="Aprobar Playa"
-							action="#{auditoriaMB.approvePlayaAuditoria}" ajax="false">
-							<f:setPropertyActionListener value="#{playa}"
-								target="#{auditoriaMB.playaSeleccionada}" />
-							<h:graphicImage library="images/icons" name="check.png" />
-						</p:commandLink>
+							<p:commandLink id="aprobar" title="Aprobar Playa" update=":mainForm:form:playas"
+								action="#{auditoriaMB.approvePlayaAuditoria}">
+								<f:setPropertyActionListener value="#{playa}"  update="playas"
+									target="#{auditoriaMB.playaSeleccionada}" />
+								<h:graphicImage library="images/icons" name="check.png" />
+							</p:commandLink>
 
-						<p:commandLink id="rechazar" title="Rechazar Playa"
-							action="#{auditoriaMB.rejectPlayaAuditoria}" ajax="false">
-							<f:setPropertyActionListener value="#{playa}"
-								target="#{auditoriaMB.playaSeleccionada}" />
-							<h:graphicImage library="images/icons" name="rejected.png" />
-						</p:commandLink>
-					</p:column>
-					<f:facet name="footer">
-						<h:panelGroup id="quitarFiltro" layout="block"
-							style="text-align: right;">
-							<p:commandLink id="removeFilter" value="Quitar Filtro"
-								action="/auditoria/playaspendienteslist.html?faces-redirect=true"
-								ajax="false" />
-						</h:panelGroup>
-					</f:facet>
-				</p:dataTable>
-
+							<p:commandLink id="rechazar" title="Rechazar Playa"
+								update="playas" action="#{auditoriaMB.rejectPlayaAuditoria}">
+								<f:setPropertyActionListener value="#{playa}"  update="playas"
+									target="#{auditoriaMB.playaSeleccionada}" />
+								<h:graphicImage library="images/icons" name="rejected.png" />
+							</p:commandLink>
+						</p:column>
+						<f:facet name="footer">
+							<h:panelGroup id="quitarFiltro" layout="block"
+								style="text-align: right;">
+								<p:commandLink id="removeFilter" value="Quitar Filtro"
+									action="/auditoria/playaspendienteslist.html?faces-redirect=true"
+									ajax="false" />
+							</h:panelGroup>
+						</f:facet>
+					</p:dataTable>
+				</h:form>
 			</p:tab>
 			<p:tab id="tab2" title="Rechazadas">
 				<p:growl id="messagess2" />
@@ -109,8 +110,6 @@
 					widgetVar="playasTable" paginatorPosition="bottom"
 					paginator="false" rows="6"
 					emptyMessage="No existen playas rechazadas">
-
-
 
 					<p:column headerText="Razón Social" styleClass="column-font"
 						filterBy="#{playa.razonSocial}" filterMatchMode="contains">
@@ -148,10 +147,8 @@
 					</p:column>
 
 					<p:column headerText="Opciones" styleClass="column-options">
-						<p:commandLink id="view"
-							update=":mainForm:carDlg"
-						 oncomplete="carDialog.show()"
-							title="Ver Datos">
+						<p:commandLink id="view" update=":mainForm:carDlg"
+							oncomplete="carDialog.show()" title="Ver Datos">
 							<f:setPropertyActionListener value="#{playa}"
 								target="#{auditoriaMB.playaSeleccionada}" />
 							<h:graphicImage library="images/icons" name="search.png" />

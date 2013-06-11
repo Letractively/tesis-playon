@@ -75,14 +75,14 @@
 							<h:graphicImage library="images/icons" name="pencil.png" />
 						</p:commandLink>
 
-						<p:commandLink id="aprobar" title="Aprobar Playa"
+						<p:commandLink id="aprobar" title="Aprobar Playa" update="playas,tab1"
 							action="#{auditoriaPlayaMB.approvePlayaAuditoria}" ajax="false">
 							<f:setPropertyActionListener value="#{playa}"
 								target="#{auditoriaPlayaMB.playaSeleccionada}" />
 							<h:graphicImage library="images/icons" name="check.png" />
 						</p:commandLink>
 
-						<p:commandLink id="rechazar" title="Rechazar Playa"
+						<p:commandLink id="rechazar" title="Rechazar Playa" update="playas,tab1"
 							action="#{auditoriaPlayaMB.rejectPlayaAuditoria}" ajax="false">
 							<f:setPropertyActionListener value="#{playa}"
 								target="#{auditoriaPlayaMB.playaSeleccionada}" />
@@ -159,8 +159,8 @@
 							<h:graphicImage library="images/icons" name="pencil.png" />
 						</p:commandLink>
 
-						<p:commandLink id="aprobar" title="Aprobar Playa"
-							action="#{auditoriaPlayaMB.approvePlayaAuditoria}" ajax="false">
+						<p:commandLink id="aprobar" title="Aprobar Playa" update="playas2"
+							action="#{auditoriaPlayaMB.approvePlayaAuditoria}" ajax="true">
 							<f:setPropertyActionListener value="#{playa}"
 								target="#{auditoriaPlayaMB.playaSeleccionada}" />
 							<h:graphicImage library="images/icons" name="check.png" />

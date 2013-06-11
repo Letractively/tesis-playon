@@ -53,9 +53,8 @@ public class UsuarioDao implements IUsuarioDao {
 	    for (Object object : list) {
 		usuarios.add((Usuario) object);
 	    }
-	    return usuarios;
 	}
-	return null;
+	return usuarios;
     }
 
     @Override
@@ -67,9 +66,8 @@ public class UsuarioDao implements IUsuarioDao {
 	    for (Object object : list) {
 		usuarios.add((Usuario) object);
 	    }
-	    return usuarios;
 	}
-	return null;
+	return usuarios;
     }
 
     @Override
@@ -83,9 +81,9 @@ public class UsuarioDao implements IUsuarioDao {
 	    return (Usuario) list.get(0);
 	return null;
     }
-    
+
     @Override
-    public boolean existeEmail(String email){
+    public boolean existeEmail(String email) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario where email=?")
 		.setParameter(0, email).list();
 	if (list.isEmpty()) {
@@ -93,9 +91,9 @@ public class UsuarioDao implements IUsuarioDao {
 	}
 	return true;
     }
-    
+
     @Override
-    public boolean existeUserName(String userName){
+    public boolean existeUserName(String userName) {
 	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario where nombreUser=?")
 		.setParameter(0, userName).list();
 	if (list.isEmpty()) {
@@ -103,11 +101,11 @@ public class UsuarioDao implements IUsuarioDao {
 	}
 	return true;
     }
-    
+
     @Override
-    public boolean existeEmail(String email,String userName){
-	List<?> list = getSessionFactory().getCurrentSession().createQuery("from Usuario where email=? and nombreUser !=?")
-		.setParameter(0, email)
+    public boolean existeEmail(String email, String userName) {
+	List<?> list = getSessionFactory().getCurrentSession()
+		.createQuery("from Usuario where email=? and nombreUser !=?").setParameter(0, email)
 		.setParameter(1, userName).list();
 	if (list.isEmpty()) {
 	    return false;

@@ -36,12 +36,21 @@
 
 			</div>
 
-			<p:commandLink id="favorito" immediate="true"
-				rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}" ajax="true"
-				actionListener="#{favoritoMB.addFavorito}" update="messages">
-				<h:graphicImage library="images/icons" name="star.png" />
-				<h:outputText value="Agregar a favoritos" />
-			</p:commandLink>
+			<h:panelGrid columns="2" rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}" width="100%">
+				<p:commandLink id="favorito" immediate="true" ajax="true"
+					actionListener="#{favoritoMB.addFavorito}" update="messages">
+					<h:graphicImage library="images/icons" name="star.png" />
+					<h:outputText value="Agregar a favoritos" />
+				</p:commandLink>
+				<p:column>
+					<div align="right">
+						<h:commandLink id="denunciaComentario" value="Denunciar Playa"
+							action="#"
+							immediate="true" >
+						</h:commandLink>
+					</div>
+				</p:column>
+			</h:panelGrid>
 			<div>
 				<br />
 				<h:panelGrid columns="3" cellpadding="5">
@@ -99,9 +108,10 @@
 								<h:outputText value="Dirección web: "
 									styleClass="fuente-outputtext" />
 								<p:column>
-									<a href="#{perfilPlayaMB.playaSelected.url}" target="_blank"> <h:outputText
-											value="#{perfilPlayaMB.playaSelected.url}"
-											styleClass="fuente-perfil" /></a>
+									<a href="#{perfilPlayaMB.playaSelected.url}" target="_blank">
+										<h:outputText value="#{perfilPlayaMB.playaSelected.url}"
+											styleClass="fuente-perfil" />
+									</a>
 								</p:column>
 								<p:column />
 
@@ -212,29 +222,28 @@
 								</p:column>
 
 								<p:column headerText="Comentario">
-										<table style="border: 0px solid transparent;">
-											<tr>
-												<td style="text-align: left; border-style: none;"><h:outputText
-														value="#{comentario.fecha}">
-														<f:convertDateTime pattern="dd/MM/yyyy hh:mm" 
-															timeStyle="short" type="both"/>
-													</h:outputText></td>
-												<td style="text-align: right; border-style: none;">
-													<h:commandLink
-														id="denunciaComentario" value="Denunciar" update="comentarios"
-														action="#{comentarioMB.denunciarComentario}"
-														immediate="true" styleClass="fuente-link-denuncia">
-														<f:setPropertyActionListener value="#{comentario}"
-															target="#{comentarioMB.comentarioDenunciado}" />
-													</h:commandLink>
-												</td>
-											</tr>
-											<tr>
-												<td colspan="2" id="perfil-playa-frente"
-													style="border-style: none;"><p>#{comentario.comentario}</p></td>
-											</tr>
-										</table>
-									</p:column>
+									<table style="border: 0px solid transparent;">
+										<tr>
+											<td style="text-align: left; border-style: none;"><h:outputText
+													value="#{comentario.fecha}">
+													<f:convertDateTime pattern="dd/MM/yyyy hh:mm"
+														timeStyle="short" type="both" />
+												</h:outputText></td>
+											<td style="text-align: right; border-style: none;"><h:commandLink
+													id="denunciaComentario" value="Denunciar"
+													update="comentarios"
+													action="#{comentarioMB.denunciarComentario}"
+													immediate="true" styleClass="fuente-link-denuncia">
+													<f:setPropertyActionListener value="#{comentario}"
+														target="#{comentarioMB.comentarioDenunciado}" />
+												</h:commandLink></td>
+										</tr>
+										<tr>
+											<td colspan="2" id="perfil-playa-frente"
+												style="border-style: none;"><p>#{comentario.comentario}</p></td>
+										</tr>
+									</table>
+								</p:column>
 								<f:facet name="footer">
 									<h:panelGrid columns="2">
 										<p:column>
@@ -311,7 +320,8 @@
 					<p:galleria value="#{perfilPlayaMB.fotosListSelected}" var="image"
 						effect="slide" effectSpeed="1000" showOverlays="true"
 						panelWidth="500" panelHeight="350">
-						<h:graphicImage library="fotos_playas" name="#{image.id}_#{image.nombre}"
+						<h:graphicImage library="fotos_playas"
+							name="#{image.id}_#{image.nombre}"
 							style="width:500px; height:350px" />
 						<p:galleriaOverlay>
 							<div align="right">

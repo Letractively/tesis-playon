@@ -35,12 +35,22 @@
 
 			</div>
 
-			<h:commandLink actionListener="#" id="favorito"
-				action="#{favoritoMB.addFavorito}"
-				rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}">
-				<h:graphicImage library="images/icons" name="star.png" />
-				<h:outputText value="Agregar a favoritos" />
-			</h:commandLink>
+			<h:panelGrid columns="2" rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}"  width="100%">
+				<h:commandLink actionListener="#" id="favorito"
+					action="#{favoritoMB.addFavorito}"
+					rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}">
+					<h:graphicImage library="images/icons" name="star.png" />
+					<h:outputText value="Agregar a favoritos" />
+				</h:commandLink>
+				<p:column>
+					<div align="right">
+						<h:commandLink id="denunciaComentario" value="Denunciar Playa"
+							action="#" immediate="true">
+						</h:commandLink>
+					</div>
+				</p:column>
+			</h:panelGrid>
+
 			<div>
 				<br />
 				<h:panelGrid columns="3" cellpadding="5">
@@ -213,18 +223,17 @@
 											<tr>
 												<td style="text-align: left; border-style: none;"><h:outputText
 														value="#{comentario.fecha}">
-														<f:convertDateTime pattern="dd/MM/yyyy hh:mm" 
-															timeStyle="short" type="both"/>
+														<f:convertDateTime pattern="dd/MM/yyyy hh:mm"
+															timeStyle="short" type="both" />
 													</h:outputText></td>
-												<td style="text-align: right; border-style: none;">
-													<h:commandLink
-														id="denunciaComentario" value="Denunciar" update="comentarios"
+												<td style="text-align: right; border-style: none;"><h:commandLink
+														id="denunciaComentario" value="Denunciar"
+														update="comentarios"
 														action="#{comentarioMB.denunciarComentario}"
 														immediate="true" styleClass="fuente-link-denuncia">
 														<f:setPropertyActionListener value="#{comentario}"
 															target="#{comentarioMB.comentarioDenunciado}" />
-													</h:commandLink>
-												</td>
+													</h:commandLink></td>
 											</tr>
 											<tr>
 												<td colspan="2" id="perfil-playa-frente"
