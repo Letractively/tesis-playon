@@ -36,7 +36,8 @@
 
 			</div>
 
-			<h:panelGrid columns="2" rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}" width="100%">
+			<h:panelGrid columns="2" rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}"
+				width="100%">
 				<p:commandLink id="favorito" immediate="true" ajax="true"
 					actionListener="#{favoritoMB.addFavorito}" update="messages">
 					<h:graphicImage library="images/icons" name="star.png" />
@@ -44,9 +45,10 @@
 				</p:commandLink>
 				<p:column>
 					<div align="right">
-						<h:commandLink id="denunciaComentario" value="Denunciar Playa"
-							action="#"
-							immediate="true" >
+						<h:commandLink id="denunciaPlaya" value="Denunciar Playa" ajax="true"
+							action="/denunciaplayaadd.html?faces-redirect=true" immediate="true">
+							<f:setPropertyActionListener value="#{perfilPlayaMB.playaSelected}"
+								target="#{denunciaPlayaMB.playaSelected}" />
 						</h:commandLink>
 					</div>
 				</p:column>

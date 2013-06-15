@@ -34,6 +34,14 @@ public class DenunciaPlayaManagedBean implements Serializable{
     IEstadoDenunciaService estadoDenunciaService;
     
     private static Playa playaSelected;
+    
+    private String motivo;
+    
+    
+    public String denunciarPlaya()
+    {
+	return null;
+    }
 
     /**
      * @return the usuarioService
@@ -90,7 +98,19 @@ public class DenunciaPlayaManagedBean implements Serializable{
     public void setPlayaSelected(Playa playaSelected) {
         DenunciaPlayaManagedBean.playaSelected = playaSelected;
     }
-    
-    
+
+    /**
+     * @return the motivo
+     */
+    public String getMotivo() {
+        return motivo;
+    }
+
+    /**
+     * @param motivo the motivo to set
+     */
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
     
 }

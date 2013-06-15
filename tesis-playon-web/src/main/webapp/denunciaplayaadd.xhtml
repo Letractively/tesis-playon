@@ -10,7 +10,7 @@
     </ui:define>
 
 	<ui:define name="content">
-		<h1>Denunciar vehículo</h1>
+		<h1>Denunciar Playa de Estacionamiento</h1>
 
 		<h:form style="margin:0 0 0 20px;">
 			<p:growl id="messages" />
@@ -21,12 +21,13 @@
 					<p:column>
 						<div align="right">
 							<h:outputLabel for="playa"
-								value="Playa a denunciar" />
+								value="Playa a denunciar: " />
 						</div>
 					</p:column>
 					<p:column>
 						<p:inputText id="playa" style="width: 200px"
-							value="#{denunciaVehiculoMB.patente}">
+							value="#{denunciaPlayaMB.playaSelected.nombreComercial}"
+							readonly="true">
 						</p:inputText>
 					</p:column>
 					<p:column />
@@ -39,7 +40,7 @@
 
 					<p:column styleClass="vert-align-top">
 						<p:inputTextarea id="asunto" rows="7" cols="33"
-							style="width: 300px" value="#{denunciaPlayaMB.asunto}"
+							style="width: 300px" value="#{denunciaPlayaMB.motivo}"
 							required="true" requiredMessage="Campo motivo obligatorio"
 							maxlength="500">
 							<f:validateLength minimum="3" update="mensajeMsg" />
