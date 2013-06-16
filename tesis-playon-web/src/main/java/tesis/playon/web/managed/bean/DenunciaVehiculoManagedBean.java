@@ -76,10 +76,15 @@ public class DenunciaVehiculoManagedBean implements Serializable {
 	    estado = getEstadoDenunciaService().findByNombreEstadoDenuncia("Pendiente");
 	    denuncia = new DenunciaVehiculo(getAsunto(), fecha, vehiculo, playa, estado);
 	    getDenunciaService().save(denuncia);
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO
+		    , "Su denuncia se registró con éxito y se encuentra pendiente de auditoría."
+		    , null);
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    
 	    return "denunciarvehiculoend";
 	} catch (DataAccessException e) {
 
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Problemas al enviar su denuncia "
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Problemas al enviar su denuncia "
 		    + "Vuelva  a intentarlo ", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();

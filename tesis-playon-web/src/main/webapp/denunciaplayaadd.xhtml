@@ -17,11 +17,10 @@
 			<div align="left">
 				<h:panelGrid id="displayView" columns="3" cellpadding="8"
 					cellspacing="10" styleClass="admin-input-text">
-					
+
 					<p:column>
 						<div align="right">
-							<h:outputLabel for="playa"
-								value="Playa a denunciar: " />
+							<h:outputLabel for="playa" value="Playa a denunciar: " />
 						</div>
 					</p:column>
 					<p:column>
@@ -54,8 +53,14 @@
 					<p:column></p:column>
 					<p:column>
 						<div align="right">
-							<p:commandButton id="enviar" value="Enviar denuncia"
-								action="#{denunciaPlayaMB.denunciar}" ajax="false" />
+							<p:commandButton id="enviar" value="Registrar denuncia"
+								action="#{denunciaPlayaMB.denunciarPlaya}" ajax="false">
+							</p:commandButton>
+							<p:commandButton id="cancelar" value="Cancelar"
+								action="/viewperfilplaya.html"
+								ajax="false" immediate="true">
+								<f:param name="id" value="#{denunciaPlayaMB.playaSelected.id}"/>
+							</p:commandButton>
 						</div>
 					</p:column>
 					<p:column></p:column>

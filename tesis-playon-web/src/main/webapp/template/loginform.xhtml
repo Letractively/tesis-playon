@@ -18,7 +18,7 @@
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{loginMB.logueado}">
-			<td>Bienvenido "#{loginMB.usuario}"<h:commandLink
+			<td>Bienvenido "#{loginMB.usuario}"&#160;&#160;<h:commandLink
 					action="#{loginMB.logout}">Cerrar sesi&#243;n</h:commandLink></td>
 			<h:panelGrid column="1" width="100%">
 				<p:columns>
@@ -30,6 +30,26 @@
 					<div align="right">
 						<ui:fragment rendered="#{loginMB.rol eq '[ROLE_AUDITOR]'}">
 							<h:link value="Panel de auditoría" outcome="/auditoria/index" />
+						</ui:fragment>
+					</div>
+					<div align="right">
+						<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_EMPLEADO]'}">
+							<h:outputText value='"#{loginMB.usuarioLogueado.playa.nombreComercial}"' />
+						</ui:fragment>
+					</div>
+					<div align="right">
+						<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_EMPLEADO]'}">
+							<h:outputText value='Rol: "Playero"' />
+						</ui:fragment>
+					</div>
+					<div align="right">
+						<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_GERENTE]'}">
+							<h:outputText value='"#{loginMB.usuarioLogueado.playa.nombreComercial}"' />
+						</ui:fragment>
+					</div>
+					<div align="right">
+						<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_GERENTE]'}">
+							<h:outputText value='Rol: "Gerente de Playa"' />
 						</ui:fragment>
 					</div>
 				</p:columns>

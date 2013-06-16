@@ -20,6 +20,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.RememberMeServices;
 
+import tesis.playon.web.model.Usuario;
+import tesis.playon.web.service.IUsuarioService;
+
 /**
  * 
  * @author gmorales
@@ -44,6 +47,8 @@ public class LoginBean {
     private static final String ROLE_PLAYA_GERENTE = "[ROLE_PLAYA_GERENTE]";
 
     private String usuario = null;
+    
+    private Usuario usuarioLogueado = null;
 
     private String password = null;
 
@@ -61,6 +66,9 @@ public class LoginBean {
 
     @ManagedProperty(value = "#{customJDBCUserService}")
     private UserDetailsService userDetailsService = null;
+    
+    @ManagedProperty(value = "#{UsuarioService}")
+    IUsuarioService usuarioService;
 
     public String login() {
 	Authentication result = null;
@@ -76,9 +84,11 @@ public class LoginBean {
 			.getExternalContext().getResponse();
 		rememberMeServices.loginSuccess(httpServletRequest, httpServletResponse, rememberMeAuthenticationToken);
 		result = rememberMeAuthenticationToken;
+		usuarioLogueado = getUsuarioService().findByNombreUsuario(usuario);
 	    } else {
 		Authentication request = new UsernamePasswordAuthenticationToken(this.getUsuario(), this.getPassword());
 		result = authenticationManager.authenticate(request);
+		usuarioLogueado = getUsuarioService().findByNombreUsuario(usuario);
 	    }
 	    SecurityContextHolder.getContext().setAuthentication(result);
 	    setLogueado(true);
@@ -156,6 +166,20 @@ public class LoginBean {
 	return userDetailsService;
     }
 
+    /**
+     * @return the usuarioService
+     */
+    public IUsuarioService getUsuarioService() {
+        return usuarioService;
+    }
+
+    /**
+     * @param usuarioService the usuarioService to set
+     */
+    public void setUsuarioService(IUsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
+
     public void setUserDetailsService(UserDetailsService userDetailsService) {
 	this.userDetailsService = userDetailsService;
     }
@@ -198,6 +222,20 @@ public class LoginBean {
 
     public void setLogueado(Boolean logueado) {
 	this.logueado = logueado;
+    }
+
+    /**
+     * @return the usuarioLogueado
+     */
+    public Usuario getUsuarioLogueado() {
+        return usuarioLogueado;
+    }
+
+    /**
+     * @param usuarioLogueado the usuarioLogueado to set
+     */
+    public void setUsuarioLogueado(Usuario usuarioLogueado) {
+        this.usuarioLogueado = usuarioLogueado;
     }
 
 }
