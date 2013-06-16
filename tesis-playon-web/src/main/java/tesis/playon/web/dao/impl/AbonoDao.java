@@ -54,16 +54,18 @@ public class AbonoDao implements IAbonoDao {
 
 	public List<Abono> findByPlaya(Playa playa) {
 		List<Abono> abonos = new ArrayList<Abono>();
-		List<?> list = getSessionFactory().getCurrentSession()
-				.createQuery("from Abono where playa=?").setParameter(0, playa)
-				.list();
+		List<?> list = getSessionFactory()
+				.getCurrentSession()
+				.createQuery(
+						"from Abono where playa=? and (now() >= fechaVigenciaDesde and now() <= fechaVigenciaHasta) ")
+				.setParameter(0, playa).list();
 		if (!list.isEmpty()) {
 			for (Object obj : list) {
 				abonos.add((Abono) obj);
 			}
-			return abonos;
+
 		}
-		return null;
+		return abonos;
 	}
 
 	public boolean existeAbonoVehiculo(Vehiculo vehiculo, Playa playa) {

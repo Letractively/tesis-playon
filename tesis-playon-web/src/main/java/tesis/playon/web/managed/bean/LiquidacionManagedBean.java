@@ -399,14 +399,14 @@ public class LiquidacionManagedBean implements Serializable {
 	}
 
 	public List<Liquidacion> getLiquidacionesListPorFecha() {
-		if (liquidacionesListPorFecha == null) {
+		
 			Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde
 					: new Date(01012012));
 			Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta
 					: Calendar.getInstance().getTime());
 			liquidacionesListPorFecha = getLiquidacionService().findByFecha(
 					fechaDesde, fechaHasta);
-		}
+		
 		return liquidacionesListPorFecha;
 	}
 
