@@ -104,7 +104,7 @@ public class TransaccionClienteDao implements ITransaccionClienteDao {
 		.getCurrentSession()
 		.createQuery(
 			"FROM TransaccionCliente WHERE "
-				+ "cuentaCliente=? and tipoPago.nombre='Cuenta' ORDER BY fecha DESC")
+				+ "cuentaCliente=? and tipoPago.nombre='DineroMail' ORDER BY fecha DESC")
 		.setParameter(0, cuentaCliente).list();
 
 	if (!list.isEmpty()) {

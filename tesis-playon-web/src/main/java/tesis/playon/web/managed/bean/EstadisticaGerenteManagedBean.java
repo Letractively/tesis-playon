@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -49,7 +50,7 @@ import tesis.playon.web.service.IVehiculoService;
 
 @ManagedBean(name = "estadisticaGerenteMB")
 @ViewScoped
-public class EstadisticaGerenteManagedBean implements Serializable{
+public class EstadisticaGerenteManagedBean implements Serializable {
 
     private static final long serialVersionUID = 8192168088851565609L;
 
@@ -88,6 +89,8 @@ public class EstadisticaGerenteManagedBean implements Serializable{
 
     @ManagedProperty(value = "#{TransaccionClienteService}")
     ITransaccionClienteService transaccionClienteService;
+
+    private String datatipFormat;
 
     private List<Tarifa> tarifaPlayaList;
 
@@ -157,6 +160,11 @@ public class EstadisticaGerenteManagedBean implements Serializable{
     @SuppressWarnings("unused")
     private static double ingAuto, ingUtilitario, ingMoto, ingPickUp;
 
+    // ----------------- Atributos para el reporte de ingresos por hora en el dia.
+    private Date fechaDesde, fechaHasta;
+
+    private CartesianChartModel lmIngresosPorHoraDelDia;
+
     @PostConstruct
     public void init() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -169,6 +177,7 @@ public class EstadisticaGerenteManagedBean implements Serializable{
 	// importePorTipo();
 	createLinearModel();
 	createCategoryModel();
+	// cantidadIngresosPorHoraDelDia();
 
     }
 
@@ -245,6 +254,18 @@ public class EstadisticaGerenteManagedBean implements Serializable{
 	    }
 
 	}
+    }
+
+    public void cantidadIngresosPorHoraDelDia() {
+	Integer[] horas = new Integer[24];
+	for (int i = 0; i < horas.length; i++)
+	    horas[i] = 0;
+
+	if (fechaHasta.before(fechaDesde))
+	    fechaHasta = new Date();
+	horas = getDetalleEstadiaService().findEstadiasByPlaya(playaSelected, fechaDesde, fechaHasta);
+
+	createLMIngresosPorHora(horas);
     }
 
     public IEmpleadoService getEmpleadoService() {
@@ -613,6 +634,67 @@ public class EstadisticaGerenteManagedBean implements Serializable{
 	this.mayorCant = mayorCant;
     }
 
+    public String getDatatipFormat() {
+	datatipFormat="<span style=\"display:none;\">%.0f</span><span>%.0f</span>";
+	return datatipFormat;
+    }
+    
+    /**
+     * @param datatipFormat the datatipFormat to set
+     */
+    public void setDatatipFormat(String datatipFormat) {
+        this.datatipFormat = datatipFormat;
+    }
+
+    /**
+     * ------ Métodos para gráficar la frecuencia de ingresos por horas del día.
+     */
+
+    /**
+     * @return the fechaDesde
+     */
+    public Date getFechaDesde() {
+	return fechaDesde;
+    }
+
+    /**
+     * @param fechaDesde
+     *            the fechaDesde to set
+     */
+    public void setFechaDesde(Date fechaDesde) {
+	this.fechaDesde = fechaDesde;
+    }
+
+    /**
+     * @return the fechaHasta
+     */
+    public Date getFechaHasta() {
+	return fechaHasta;
+    }
+
+    /**
+     * @param fechaHasta
+     *            the fechaHasta to set
+     */
+    public void setFechaHasta(Date fechaHasta) {
+	this.fechaHasta = fechaHasta;
+    }
+
+    /**
+     * @return the lmIngresosPorHoraDelDia
+     */
+    public CartesianChartModel getLmIngresosPorHoraDelDia() {
+	return lmIngresosPorHoraDelDia;
+    }
+
+    /**
+     * @param lmIngresosPorHoraDelDia
+     *            the lmIngresosPorHoraDelDia to set
+     */
+    public void setLmIngresosPorHoraDelDia(CartesianChartModel lmIngresosPorHoraDelDia) {
+	this.lmIngresosPorHoraDelDia = lmIngresosPorHoraDelDia;
+    }
+
     /**************************************************************************************************/
     private CartesianChartModel linearModel;
 
@@ -716,6 +798,24 @@ public class EstadisticaGerenteManagedBean implements Serializable{
 	linearModel.addSeries(motos);
 	linearModel.addSeries(utilitarios);
 	linearModel.addSeries(pickup);
+    }
+
+    private void createLMIngresosPorHora(Integer[] horas) {
+	lmIngresosPorHoraDelDia = new CartesianChartModel();
+
+	LineChartSeries ingresos = new LineChartSeries();
+	ingresos.setLabel("Cantidad de Ingresos");
+
+	for (int i = 0; i < horas.length; i++) {
+	    String hora = i + "";
+	    if (hora.length() == 1)
+		hora = "0" + hora;
+
+	    ingresos.set(hora, horas[i]);
+	}
+
+	lmIngresosPorHoraDelDia.addSeries(ingresos);
+
     }
 
     /***************************************************************************************/

@@ -5,6 +5,7 @@ import java.util.List;
 
 import tesis.playon.web.model.DetalleEstadia;
 import tesis.playon.web.model.Estadia;
+import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Vehiculo;
 
 /**
@@ -27,5 +28,7 @@ public interface IDetalleEstadiaService {
     List<DetalleEstadia> findByHorarios(Estadia estadia, Date fechaInicio, Date fechaFin);
 
     DetalleEstadia findByVehiculoDetalleEstadia(Vehiculo vehiculo);
+    
+    Integer[] findEstadiasByPlaya(Playa playa, Date fechaDesde, Date fechaHasta);
 
 }

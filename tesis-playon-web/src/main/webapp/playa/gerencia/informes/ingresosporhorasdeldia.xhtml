@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<script type="text/javascript">
+	  function customExtender() {
+	    this.cfg.highlighter = {
+	      useAxesFormatters: false,
+	      tooltipAxes: 'y'
+	    }
+	  }
+	</script>
+	<h:form>
+		<div>
+			<p:panel id="ingresosXHorasDelDia"
+				header="Frecuencia de ingresos a la playa por período por cada hora del día">
+				<h:panelGrid columns="1" width="100%">
+					<p:column>
+						<h:panelGrid columns="5" width="100%">
+							<h:outputLabel value="Fecha Desde: " />
+							<p:calendar value="#{estadisticaGerenteMB.fechaDesde}"
+								id="fechaDesde" showOn="button" />
+							<h:outputLabel value="Fecha Hasta: " />
+							<p:calendar value="#{estadisticaGerenteMB.fechaHasta}"
+								id="fechaHasta" showOn="button" />
+							<p:commandButton id="getGrafico" value="Ver Reporte"
+								action="#{estadisticaGerenteMB.cantidadIngresosPorHoraDelDia}"
+								ajax="false" update="ingresosPorHora">
+							</p:commandButton>
+						</h:panelGrid>
+					</p:column>
+					<p:column>
+						<ui:fragment
+							rendered="#{estadisticaGerenteMB.lmIngresosPorHoraDelDia != null}">
+							<p:lineChart id="ingresosPorHora"
+								datatipFormat="#{estadisticaGerenteMB.datatipFormat}"
+								xaxisLabel="Horas del día" yaxisLabel="Cantidad de ingresos"
+								value="#{estadisticaGerenteMB.lmIngresosPorHoraDelDia}"
+								legendPosition="w" legendRows="1" animate="true"
+								title="Frecuencia de ingresos a la playa por período por cada hora del día"
+								minY="0" maxY="13" style="margin-top:20px" />
+						</ui:fragment>
+					</p:column>
+				</h:panelGrid>
+			</p:panel>
+		</div>
+	</h:form>
+
+</ui:composition>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import tesis.playon.web.dao.IDetalleEstadiaDao;
 import tesis.playon.web.model.DetalleEstadia;
 import tesis.playon.web.model.Estadia;
+import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Vehiculo;
 
 @Repository("detalleEstadiaDao")
@@ -44,9 +45,8 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
 	    for (Object object : list) {
 		detalleEstadia.add((DetalleEstadia) object);
 	    }
-	    return detalleEstadia;
 	}
-	return null;
+	return detalleEstadia;
     }
 
     public List<DetalleEstadia> findByEstadia(Estadia estadia) {
@@ -57,9 +57,8 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
 	    for (Object object : list) {
 		detallesEstadia.add((DetalleEstadia) object);
 	    }
-	    return detallesEstadia;
 	}
-	return null;
+	return detallesEstadia;
     }
 
     public List<DetalleEstadia> findBy(Estadia estadia) {
@@ -70,9 +69,8 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
 	    for (Object object : list) {
 		detallesEstadia.add((DetalleEstadia) object);
 	    }
-	    return detallesEstadia;
 	}
-	return null;
+	return detallesEstadia;
     }
 
     public List<DetalleEstadia> findByHorarios(Estadia estadia, Date horaInicio, Date horaFin) {
@@ -84,10 +82,8 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
 	    for (Object object : list) {
 		detallesEstadia.add((DetalleEstadia) object);
 	    }
-	    return detallesEstadia;
 	}
-	return null;
-
+	return detallesEstadia;
     }
 
     @Override
@@ -98,6 +94,99 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
 	    return (DetalleEstadia) list.get(0);
 	}
 	return null;
+    }
+
+    @Override
+    public Integer[] findEstadiasByPlaya(Playa playa, Date fechaDesde, Date fechaHasta) {
+	Integer[] horas = new Integer[24];
+	for(int i = 0; i<horas.length ; i++)
+	    horas[i] =0;
+	String query = "SELECT HOUR(fechaHoraIngreso) " + "FROM tesis_playon.detalle_estadia de "
+		+ "INNER JOIN tesis_playon.estadia e ON e.estadiaID=de.estadiaID "
+		+ "WHERE playaID=? AND fechaHoraIngreso >= ? AND fechaHoraIngreso <= ?";
+	List<?> list = getSessionFactory().getCurrentSession().createSQLQuery(query).setParameter(0, playa.getId())
+		.setParameter(1, fechaDesde).setParameter(2, fechaHasta).list();
+	if (!list.isEmpty()) {
+	    for (Object object : list) {
+		switch (Integer.parseInt(object.toString())) {
+		    case 00:
+			horas[0]++;
+			break;
+		    case 01:
+			horas[1]++;
+			break;
+		    case 02:
+			horas[2]++;
+			break;
+		    case 03:
+			horas[3]++;
+			break;
+		    case 04:
+			horas[4]++;
+			break;
+		    case 05:
+			horas[5]++;
+			break;
+		    case 06:
+			horas[6]++;
+			break;
+		    case 07:
+			horas[7]++;
+			break;
+		    case 8:
+			horas[8]++;
+			break;
+		    case 9:
+			horas[9]++;
+			break;
+		    case 10:
+			horas[10]++;
+			break;
+		    case 11:
+			horas[11]++;
+			break;
+		    case 12:
+			horas[12]++;
+			break;
+		    case 13:
+			horas[13]++;
+			break;
+		    case 14:
+			horas[14]++;
+			break;
+		    case 15:
+			horas[15]++;
+			break;
+		    case 16:
+			horas[16]++;
+			break;
+		    case 17:
+			horas[17]++;
+			break;
+		    case 18:
+			horas[18]++;
+			break;
+		    case 19:
+			horas[19]++;
+			break;
+		    case 20:
+			horas[20]++;
+			break;
+		    case 21:
+			horas[21]++;
+			break;
+		    case 22:
+			horas[22]++;
+			break;
+		    case 23:
+			horas[23]++;
+			break;
+		    default:
+			break;
+		}
+	    }
+	}
+	return horas;
     }
 
 }

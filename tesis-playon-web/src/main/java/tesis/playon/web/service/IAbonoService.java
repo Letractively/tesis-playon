@@ -1,6 +1,5 @@
 package tesis.playon.web.service;
 
-import java.util.Date;
 import java.util.List;
 
 import tesis.playon.web.model.Abono;

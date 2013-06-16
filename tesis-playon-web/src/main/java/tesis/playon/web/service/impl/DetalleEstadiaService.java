@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tesis.playon.web.dao.IDetalleEstadiaDao;
 import tesis.playon.web.model.DetalleEstadia;
 import tesis.playon.web.model.Estadia;
+import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.IDetalleEstadiaService;
 
@@ -56,6 +57,11 @@ public class DetalleEstadiaService implements IDetalleEstadiaService {
     public List<DetalleEstadia> findByHorarios(Estadia estadia, Date fechaInicio, Date fechaFin) {
 	return getDetalleEstadiaDao().findByHorarios(estadia, fechaInicio, fechaFin);
 
+    }
+    
+    @Override
+    public Integer[] findEstadiasByPlaya(Playa playa, Date fechaDesde, Date fechaHasta){
+	return getDetalleEstadiaDao().findEstadiasByPlaya(playa, fechaDesde, fechaHasta);
     }
 
     public IDetalleEstadiaDao getDetalleEstadiaDao() {
