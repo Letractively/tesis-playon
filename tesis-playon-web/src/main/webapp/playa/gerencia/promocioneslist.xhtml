@@ -14,6 +14,8 @@
 
 		<h:form>
 			<p:growl id="messages" />
+
+
 			<p:dataGrid var="promocion" value="#{promocionMB.promocionPlayaList}"
 				columns="1" rows="6" paginator="true"
 				emptyMessage="No existen promociones en su playa"
@@ -45,7 +47,7 @@
 						</h:outputText>
 
 						<h:outputText value="Hora de finalización: " />
-						<h:outputText value="#{promocion.horaFin}" >
+						<h:outputText value="#{promocion.horaFin}">
 							<f:convertDateTime pattern="HH:mm" />
 						</h:outputText>
 
@@ -98,11 +100,78 @@
 								</p:commandLink>
 							</div>
 						</p:column>
-
-
 					</h:panelGrid>
 				</p:panel>
+
+
+				<p:dataTable id="promociones" var="promocion"
+					value="#{promocionMB.promocionPlayaList}" style="display:none">
+
+					<p:column headerText="Nombre" style="text-align:center">
+
+						<f:facet name="header">
+							<h:outputText value="Nombre" />
+						</f:facet>
+						<h:outputText value="#{promocion.nombre}" />
+
+					</p:column>
+
+					<p:column headerText="Fecha Inicio" style="text-align:center">
+						<f:facet name="header">
+							<h:outputText value="Fecha Inicio" />
+						</f:facet>
+						<h:outputText value="#{promocion.fechaInicio}" />
+					</p:column>
+
+					<p:column headerText="Fecha Fin" style="text-align:center">
+						<f:facet name="header">
+							<h:outputText value="Fecha Fin" />
+						</f:facet>
+						<h:outputText value="#{promocion.fechaFin}" />
+					</p:column>
+
+					<p:column headerText="Tipo Estadia" style="text-align:center">
+
+						<f:facet name="header">
+							<h:outputText value="Tipo Estadia" />
+						</f:facet>
+						<h:outputText value="#{promocion.tarifa.tipoEstadia.nombre}" />
+					</p:column>
+
+					<p:column headerText="Precio final" style="text-align:center">
+						<f:facet name="header">
+							<h:outputText value="Monto Final" />
+						</f:facet>
+						<h:outputText
+							value="#{(promocion.montoFijo * (1- promocion.descuento/100))}">
+							<f:convertNumber type="currency" currencySymbol="$ " />
+						</h:outputText>
+					</p:column>
+
+				</p:dataTable>
+				<f:facet name="footer">
+
+					<div align="center">
+						<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+							<h:commandLink title="Exportar a excel">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/excel.png" />
+								<p:dataExporter type="xls" target="promociones"
+									fileName="Promociones" />
+							</h:commandLink>
+
+							<h:commandLink title="Exportar a PDF">
+								<p:graphicImage
+									value="http://www.primefaces.org/showcase/images/pdf.png" />
+								<p:dataExporter type="pdf" target="promociones"
+									preProcessor="#{documentExporterMB.listadoPromocionesPDF}"
+									fileName="Promociones" />
+							</h:commandLink>
+						</h:panelGrid>
+					</div>
+				</f:facet>
 			</p:dataGrid>
+
 		</h:form>
 	</ui:define>
 </ui:composition>
