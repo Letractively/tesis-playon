@@ -14,7 +14,8 @@
 	<ui:define name="content">
 		<h1>Nuevo empleado</h1>
 
-		<p:growl id="messages" />
+		<p:growl id="messages" autoUpdate="false" showDetail="true"
+			globalOnly="true" />
 		<h:form id="form" style="margin-left:20px">
 
 			<div align="left" style="margin: 10px 30px 5px 50px">
@@ -116,7 +117,8 @@
 						<h:outputLabel for="passwordRepeat" value="Repita Contraseña: " />
 						<p:password id="passwordRepeat" style="width: 200px"
 							value="#{empleadoMB.password}" required="true"
-							requiredMessage="Campo repita contraseña obligatorio" feedback="true">
+							requiredMessage="Campo repita contraseña obligatorio"
+							feedback="true">
 							<f:validateLength minimum="5" update="passwordMsg" />
 							<p:ajax event="blur" update="passwordMsg" />
 						</p:password>
