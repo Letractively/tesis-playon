@@ -25,29 +25,49 @@
 
 					<p:column headerText="Razón Social" styleClass="column-font"
 						filterBy="#{playa.razonSocial}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="Razon Social" />
+						</f:facet>
 						<h:outputText value="#{playa.razonSocial}" />
 					</p:column>
+
+
+
+
+
 
 					<p:column headerText="C.U.I.T." styleClass="column-font"
 						style="width:105px" filterBy="#{playa.cuit}"
 						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="CUIT" />
+						</f:facet>
 						<h:outputText value="#{playa.cuit}" />
 					</p:column>
 
 					<p:column headerText="Domicilio" styleClass="column-font"
 						filterBy="#{playa.domicilio}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="Domicilio" />
+						</f:facet>
 						<h:outputText value="#{playa.domicilio}" />
 					</p:column>
 
 					<p:column headerText="Barrio" styleClass="column-font"
 						filterBy="#{playa.barrio}"
 						filterOptions="#{auditoriaPlayaMB.barriosOptions}"
-						filterMatchMode="exact">
+						filterMatchMode="exact" exportable="false">
+						<f:facet name="header">
+							<h:outputText value="Barrio" />
+						</f:facet>
 						<h:outputText value="#{playa.barrio.nombre}" />
 					</p:column>
 
 					<p:column headerText="Teléfono" styleClass="column-font"
 						filterBy="#{playa.telefono}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="Telefono" />
+						</f:facet>
 						<h:outputText value="#{playa.telefono}" />
 					</p:column>
 
@@ -55,11 +75,14 @@
 						filterBy="#{playa.estado}"
 						filterOptions="#{auditoriaPlayaMB.estadosOptions}"
 						filterMatchMode="exact">
+						<f:facet name="header">
+							<h:outputText value="Estado" />
+						</f:facet>
 						<h:outputText value="#{playa.estado.nombre}" />
 					</p:column>
 
 					<p:column headerText="Opciones" styleClass="column-options"
-						style="text-align:center; width:120px;">
+						style="text-align:center; width:120px;" exportable="false ">
 
 						<p:commandLink id="view" update=":mainForm:carDlg"
 							oncomplete="carDialog.show();" title="Ver Datos">
@@ -93,12 +116,25 @@
 						</p:commandLink>
 					</p:column>
 					<f:facet name="footer">
-						<h:panelGroup id="quitarFiltro" layout="block"
-							style="text-align: right;">
-							<p:commandLink id="removeFilter" value="Quitar Filtro"
-								action="/auditoria/playaspendienteslist.html?faces-redirect=true"
-								ajax="false" />
-						</h:panelGroup>
+
+						<div align="center">
+							<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+								<h:commandLink title="Exportar a excel">
+									<p:graphicImage
+										value="http://www.primefaces.org/showcase/images/excel.png" />
+									<p:dataExporter type="xls" target="playas"
+										fileName="Playas pendientes" />
+								</h:commandLink>
+
+								<h:commandLink title="Exportar a PDF">
+									<p:graphicImage
+										value="http://www.primefaces.org/showcase/images/pdf.png" />
+									<p:dataExporter type="pdf" target="playas"
+										preProcessor="#{documentExporterMB.listadoPlayasPendientesPDF}"
+										fileName="Playas pendientes" />
+								</h:commandLink>
+							</h:panelGrid>
+						</div>
 					</f:facet>
 				</p:dataTable>
 
@@ -113,29 +149,41 @@
 
 					<p:column headerText="Razón Social" styleClass="column-font"
 						filterBy="#{playa.razonSocial}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="Razon Social" />
+						</f:facet>
 						<h:outputText value="#{playa.razonSocial}" />
 					</p:column>
 
 					<p:column headerText="C.U.I.T." styleClass="column-font"
 						style="width:105px" filterBy="#{playa.cuit}"
 						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="CUIT" />
+						</f:facet>
 						<h:outputText value="#{playa.cuit}" />
 					</p:column>
 
 					<p:column headerText="Domicilio" styleClass="column-font"
 						filterBy="#{playa.domicilio}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="Domicilio" />
+						</f:facet>
 						<h:outputText value="#{playa.domicilio}" />
 					</p:column>
 
 					<p:column headerText="Barrio" styleClass="column-font"
 						filterBy="#{playa.barrio}"
 						filterOptions="#{auditoriaPlayaMB.barriosOptions}"
-						filterMatchMode="exact">
+						filterMatchMode="exact" exportable="false">
 						<h:outputText value="#{playa.barrio.nombre}" />
 					</p:column>
 
 					<p:column headerText="Teléfono" styleClass="column-font"
 						filterBy="#{playa.telefono}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="Telefono" />
+						</f:facet>
 						<h:outputText value="#{playa.telefono}" />
 					</p:column>
 
@@ -143,10 +191,14 @@
 						filterBy="#{playa.estado}"
 						filterOptions="#{auditoriaPlayaMB.estadosOptions}"
 						filterMatchMode="exact">
+						<f:facet name="header">
+							<h:outputText value="Estado" />
+						</f:facet>
 						<h:outputText value="#{playa.estado.nombre}" />
 					</p:column>
 
-					<p:column headerText="Opciones" styleClass="column-options">
+					<p:column headerText="Opciones" styleClass="column-options"
+						exportable="false">
 						<p:commandLink id="view" update=":mainForm:carDlg"
 							oncomplete="carDialog.show()" title="Ver Datos">
 							<f:setPropertyActionListener value="#{playa}"
@@ -170,12 +222,25 @@
 						</p:commandLink>
 					</p:column>
 					<f:facet name="footer">
-						<h:panelGroup id="quitarFiltro" layout="block"
-							style="text-align: right;">
-							<p:commandLink id="removeFilter" value="Quitar Filtro"
-								action="/auditoria/playaspendienteslist.html?faces-redirect=true"
-								ajax="false" />
-						</h:panelGroup>
+
+						<div align="center">
+							<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+								<h:commandLink title="Exportar a excel">
+									<p:graphicImage
+										value="http://www.primefaces.org/showcase/images/excel.png" />
+									<p:dataExporter type="xls" target="playas2"
+										fileName="Playas Rechazadas" />
+								</h:commandLink>
+
+								<h:commandLink title="Exportar a PDF">
+									<p:graphicImage
+										value="http://www.primefaces.org/showcase/images/pdf.png" />
+									<p:dataExporter type="pdf" target="playas2"
+										preProcessor="#{documentExporterMB.listadoPlayasRechazadasPDF}"
+										fileName="Playas Rechazadas" />
+								</h:commandLink>
+							</h:panelGrid>
+						</div>
 					</f:facet>
 				</p:dataTable>
 			</p:tab>
