@@ -9,7 +9,8 @@
 		value="Listado de Playas de Estacionamiento" />
 
 	<ui:define name="panelContent" class="admin-font">
-		<p:growl id="messages" />
+		<p:growl id="messages" autoUpdate="false" showDetail="true"
+			globalOnly="true" />
 
 		<table class="ui-datatable liquidacion-table"
 			style="text-align: right;">
@@ -47,7 +48,7 @@
         		</f:facet>
 
 			<p:column selectionMode="multiple" style="width:18px" />
-			
+
 			<p:column headerText="Razon Social" styleClass="column-font"
 				filterBy="#{playa.razonSocial}" filterMatchMode="contains">
 				<h:outputText value="#{playa.razonSocial}" />
@@ -79,7 +80,7 @@
 						target="#{playaMB.playaSelected}" />
 					<h:graphicImage library="images/icons" name="search.png" />
 				</p:commandLink>
-				
+
 				<p:commandLink id="viewTrn" update=":mainForm:transaccionesView"
 					oncomplete="trnDialog.show();" title="Ver Transacciones">
 					<f:setPropertyActionListener value="#{playa}"
@@ -209,7 +210,7 @@
         		</p:dataList>
 
 		</p:dialog>
-		
+
 		<!-- DIALOG PARA VER LOS DATOS DE LAS TRANSACCIONES DE LA PLAYA SELECCIONADA -->
 		<p:dialog header="Datos de las transacciones" widgetVar="trnDialog"
 			resizable="false" id="trnDlg" showEffect="fade" modal="true"
@@ -217,8 +218,8 @@
 
 			<p:dataTable id="transaccionesView" var="transaccionPlaya"
 				paginatorPosition="bottom"
-				value="#{liquidacionMB.transaccionesDePlayaALiquidar}" paginator="true"
-				rows="10">
+				value="#{liquidacionMB.transaccionesDePlayaALiquidar}"
+				paginator="true" rows="10">
 
 				<f:facet name="header">  
             		Listado de transacciones de la playa 
@@ -286,6 +287,6 @@
 				</p>
 			</div>
 		</p:dialog>
-		
+
 	</ui:define>
 </ui:composition>

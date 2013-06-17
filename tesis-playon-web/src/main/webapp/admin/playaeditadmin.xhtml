@@ -8,7 +8,8 @@
 	<ui:param name="panelTitle" value="Editar playa" />
 
 	<ui:define name="panelContent">
-		<p:growl id="messages" />
+		<p:growl id="messages" autoUpdate="false" showDetail="true"
+			globalOnly="true" />
 
 		<div align="center">
 			<h:panelGrid id="displayView" columns="3" cellpadding="8"
@@ -116,9 +117,10 @@
 					<h:outputLabel for="url" value="Dirección web: " />
 				</p:column>
 				<p:column>
-					<p:inputText id="url" feedback="true" value="#{playaMB.playaSelected.url}"
-						type="url">
-						<p:ajax event="blur" update="url" listener="#{playaMB.addHttpEdit}" />
+					<p:inputText id="url" feedback="true"
+						value="#{playaMB.playaSelected.url}" type="url">
+						<p:ajax event="blur" update="url"
+							listener="#{playaMB.addHttpEdit}" />
 					</p:inputText>
 				</p:column>
 				<p:column />

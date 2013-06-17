@@ -8,7 +8,8 @@
 	<ui:param name="panelTitle" value="Editar usuario" />
 
 	<ui:define name="panelContent">
-		<p:growl id="messages" />
+		<p:growl id="messages" autoUpdate="false" showDetail="true"
+			globalOnly="true" />
 
 		<div align="center">
 			<h:panelGrid columuns="1">
@@ -112,7 +113,7 @@
 						</p:selectBooleanCheckbox>
 					</p:column>
 				</h:panelGrid>
-			<p:column>
+				<p:column>
 					<div align="center">
 						<p:commandButton id="updateUser" value="Modificar Usuario"
 							action="#{usuarioMB.updateUsuarioAdmin}" ajax="false" />

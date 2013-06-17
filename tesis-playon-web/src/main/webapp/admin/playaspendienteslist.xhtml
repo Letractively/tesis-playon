@@ -14,7 +14,8 @@
 		<p:tabView id="tabView">
 			<p:tab id="tab1" title="Pendientes">
 				<h:form id="formTab1">
-					<p:growl id="messages" />
+					<p:growl id="messages" autoUpdate="false" showDetail="true"
+						globalOnly="true" />
 					<p:dataTable id="playas" var="playa"
 						value="#{auditoriaMB.playasPendientesList}"
 						filteredValue="#{auditoriaMB.filteredPlayas}"
@@ -77,16 +78,17 @@
 								<h:graphicImage library="images/icons" name="pencil.png" />
 							</p:commandLink>
 
-							<p:commandLink id="aprobar" title="Aprobar Playa" update=":mainForm:form:playas"
+							<p:commandLink id="aprobar" title="Aprobar Playa"
+								update=":mainForm:form:playas"
 								action="#{auditoriaMB.approvePlayaAuditoria}">
-								<f:setPropertyActionListener value="#{playa}"  update="playas"
+								<f:setPropertyActionListener value="#{playa}" update="playas"
 									target="#{auditoriaMB.playaSeleccionada}" />
 								<h:graphicImage library="images/icons" name="check.png" />
 							</p:commandLink>
 
 							<p:commandLink id="rechazar" title="Rechazar Playa"
 								update="playas" action="#{auditoriaMB.rejectPlayaAuditoria}">
-								<f:setPropertyActionListener value="#{playa}"  update="playas"
+								<f:setPropertyActionListener value="#{playa}" update="playas"
 									target="#{auditoriaMB.playaSeleccionada}" />
 								<h:graphicImage library="images/icons" name="rejected.png" />
 							</p:commandLink>

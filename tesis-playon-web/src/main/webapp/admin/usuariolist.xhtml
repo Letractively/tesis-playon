@@ -10,8 +10,8 @@
 
 	<ui:define name="panelContent" class="admin-font">
 
-		<p:growl id="messages" />
-
+		<p:growl id="messages" autoUpdate="false" showDetail="true"
+			globalOnly="true" />
 		<p:dataTable id="usuarios" var="usuario" paginator="true" rows="6"
 			paginatorPosition="bottom" value="#{usuarioMB.usuarioList}"
 			emptyMessage="¡No existen usuarios en el sistema!"

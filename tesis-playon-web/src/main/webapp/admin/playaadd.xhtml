@@ -9,10 +9,12 @@
 
 	<ui:define name="panelContent">
 		<h:form>
-			<p:growl id="messages" />
+			<p:growl id="messages" autoUpdate="false" showDetail="true"
+				globalOnly="true" />
 
 			<div align="left" style="margin: 0 200px 0 100px;">
-				<h:panelGrid columns="1" cellspacing="10" styleClass="admin-input-text" width="100%">
+				<h:panelGrid columns="1" cellspacing="10"
+					styleClass="admin-input-text" width="100%">
 					<p:panel header="Datos de Playa">
 						<h:panelGrid id="displayView" columns="3" cellpadding="8"
 							styleClass="admin-input-text">
