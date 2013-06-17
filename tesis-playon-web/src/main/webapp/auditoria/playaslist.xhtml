@@ -10,11 +10,12 @@
 
 	<ui:define name="panelContent" class="admin-font">
 
-		<p:growl id="messages" />
+		<p:growl id="messages" autoUpdate="false" showDetail="true"
+			globalOnly="true" />
 		<p:tabView id="tabView">
 
 			<p:tab id="tab1" title="Pendientes">
-				
+
 				<p:dataTable id="playas" var="playa"
 					value="#{auditoriaPlayaMB.playasPendientesList}"
 					filteredValue="#{auditoriaPlayaMB.filteredPlayas}"
@@ -75,14 +76,16 @@
 							<h:graphicImage library="images/icons" name="pencil.png" />
 						</p:commandLink>
 
-						<p:commandLink id="aprobar" title="Aprobar Playa" update="playas,tab1"
+						<p:commandLink id="aprobar" title="Aprobar Playa"
+							update="playas,tab1"
 							action="#{auditoriaPlayaMB.approvePlayaAuditoria}" ajax="false">
 							<f:setPropertyActionListener value="#{playa}"
 								target="#{auditoriaPlayaMB.playaSeleccionada}" />
 							<h:graphicImage library="images/icons" name="check.png" />
 						</p:commandLink>
 
-						<p:commandLink id="rechazar" title="Rechazar Playa" update="playas,tab1"
+						<p:commandLink id="rechazar" title="Rechazar Playa"
+							update="playas,tab1"
 							action="#{auditoriaPlayaMB.rejectPlayaAuditoria}" ajax="false">
 							<f:setPropertyActionListener value="#{playa}"
 								target="#{auditoriaPlayaMB.playaSeleccionada}" />
@@ -190,7 +193,8 @@
 					<h:outputText value="Razon Social: " />
 				</p:column>
 				<p:column>
-					<h:outputText value="#{auditoriaPlayaMB.playaSeleccionada.razonSocial}"
+					<h:outputText
+						value="#{auditoriaPlayaMB.playaSeleccionada.razonSocial}"
 						style="font-weight:bold" />
 				</p:column>
 
@@ -224,7 +228,8 @@
 					<h:outputText value="Domicilio: " />
 				</p:column>
 				<p:column>
-					<h:outputText value="#{auditoriaPlayaMB.playaSeleccionada.domicilio}"
+					<h:outputText
+						value="#{auditoriaPlayaMB.playaSeleccionada.domicilio}"
 						style="font-weight:bold" />
 				</p:column>
 
@@ -232,7 +237,8 @@
 					<h:outputText value="Teléfono: " />
 				</p:column>
 				<p:column>
-					<h:outputText value="#{auditoriaPlayaMB.playaSeleccionada.telefono}"
+					<h:outputText
+						value="#{auditoriaPlayaMB.playaSeleccionada.telefono}"
 						style="font-weight:bold" />
 				</p:column>
 

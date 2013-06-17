@@ -8,7 +8,8 @@
 	<ui:param name="panelTitle" value="Auditoría de Publicidades" />
 
 	<ui:define name="panelContent" class="admin-font">
-		<p:growl id="messages" />
+		<p:growl id="messages" autoUpdate="false" showDetail="true"
+			globalOnly="true" />
 
 		<p:tabView id="tabView">
 

@@ -12,7 +12,8 @@
 		<p:tabView id="tabView">
 
 			<p:tab id="tab1" title="Pendientes">
-				<p:growl id="messages" />
+				<p:growl id="messages" autoUpdate="false" showDetail="true"
+					globalOnly="true" />
 				<p:dataTable id="denunciaPendiente" var="denuncias"
 					value="#{auditoriaMB.denunciasPendientesVehiculosList}"
 					paginatorPosition="bottom" paginator="false" rows="4"
