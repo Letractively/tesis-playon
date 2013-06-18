@@ -11,6 +11,8 @@ import tesis.playon.mobile.json.model.CuentaCliente;
 import tesis.playon.mobile.preferences.PreferenceHelper;
 import tesis.playon.mobile.utils.Utils;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,7 +48,20 @@ public class PerfilClienteActivity extends Activity {
 
 	if (0 != nroUsuario) {
 	    Log.d(TAG, "ID de usuario: " + nroUsuario);
-	    new PerfilClienteService().execute();
+	    if (Utils.isOnline(getApplicationContext())) {
+		new PerfilClienteService().execute();
+	    } else {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setTitle("Problema de conexión").setMessage("No está conectado a Internet")
+			.setCancelable(false).setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog, int id) {
+				PerfilClienteActivity.this.finish();
+			    }
+			});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	    }
+
 	    setContentView(R.layout.perfil_cliente);
 	} else {
 	    setContentView(R.layout.perfil_cliente_vacio);

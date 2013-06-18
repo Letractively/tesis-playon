@@ -9,8 +9,10 @@ import tesis.playon.mobile.R;
 import tesis.playon.mobile.json.model.Comentarios;
 import tesis.playon.mobile.preferences.PreferenceHelper;
 import tesis.playon.mobile.utils.Utils;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,7 +48,19 @@ public class ComentariosActivity extends ListActivity {
 	PreferenceHelper mPreferences = new PreferenceHelper(mContext);
 	nomPlaya = mPreferences.getNomPlaya();
 
-	new BuscarComentariosPlayaService().execute();
+	if (Utils.isOnline(mContext)) {
+	    new BuscarComentariosPlayaService().execute();
+	} else {
+	    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+	    alertDialogBuilder.setTitle("Problema de conexión").setMessage("No está conectado a Internet")
+		    .setCancelable(false).setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+			    ComentariosActivity.this.finish();
+			}
+		    });
+	    AlertDialog alertDialog = alertDialogBuilder.create();
+	    alertDialog.show();
+	}
     }
 
     private void cargarComentariosPlaya(Comentarios comentarios) {
@@ -72,11 +86,17 @@ public class ComentariosActivity extends ListActivity {
 	    String url = URL_COMENTARIOS_PLAYA
 		    + nomPlaya.replace(" ", "%20").replace("á", "a").replace("é", "e").replace("í", "i")
 			    .replace("ó", "o").replace("ú", "u").replace("ñ", "n");
-	    InputStream source = new Utils().retrieveStream(url);
-	    Gson gson = new Gson();
-	    Reader reader = new InputStreamReader(source);
-	    comentarios = gson.fromJson(reader, Comentarios.class);
-	    return comentarios.toString();
+	    try {
+		InputStream source = new Utils().retrieveStream(url);
+		Gson gson = new Gson();
+		Reader reader = new InputStreamReader(source);
+		comentarios = gson.fromJson(reader, Comentarios.class);
+		return comentarios.toString();
+	    } catch (Exception e) {
+		e.getStackTrace();
+	    }
+	    return null;
+
 	}
 
 	protected void onPostExecute(String results) {

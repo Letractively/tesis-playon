@@ -17,7 +17,9 @@ import tesis.playon.mobile.json.model.Playa;
 import tesis.playon.mobile.json.model.Playas;
 import tesis.playon.mobile.preferences.PreferenceHelper;
 import tesis.playon.mobile.utils.Utils;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -74,7 +76,19 @@ public class MapaPlayasFragment extends Fragment implements OnInfoWindowClickLis
 	    query = query + ", Córdoba, Argentina";
 	}
 
-	new BuscarPlayaService().execute();
+	if (Utils.isOnline(getActivity().getApplicationContext())) {
+	    new BuscarPlayaService().execute();
+	} else {
+	    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+	    alertDialogBuilder.setTitle("Problema de conexión").setMessage("No está conectado a Internet")
+		    .setCancelable(false).setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+			    getActivity().finish();
+			}
+		    });
+	    AlertDialog alertDialog = alertDialogBuilder.create();
+	    alertDialog.show();
+	}
 
 	View inflatedView = inflater.inflate(R.layout.mapa_playas, container, false);
 

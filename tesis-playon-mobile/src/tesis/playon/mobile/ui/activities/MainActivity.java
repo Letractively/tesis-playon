@@ -11,12 +11,15 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements LocationListener {
+
+    private static final String TAG = "Main Activity";
 
     private final int LOGIN_ID = 50001;
 
@@ -48,14 +51,9 @@ public class MainActivity extends Activity implements LocationListener {
 		    if (resultCode == Activity.RESULT_OK) {
 			Bundle bundle = data.getExtras();
 			Usuario usuario = (Usuario) bundle.getSerializable("json.model.usuario");
-			// Toast.makeText(getBaseContext(), "Logueado correctamente: " + usuario.getNombreUser(),
-			// Toast.LENGTH_SHORT).show();
 			PreferenceHelper mPreferences = new PreferenceHelper(getApplicationContext());
 			mPreferences.updateNroUsuario(usuario.getId());
 			onSearchRequested();
-		    } else if (resultCode == Activity.RESULT_CANCELED) {
-			// Toast.makeText(getBaseContext(), "El usuario no existe o los datos eran incorrectos!",
-			// Toast.LENGTH_SHORT).show();
 		    }
 		    break;
 		}
@@ -139,14 +137,12 @@ public class MainActivity extends Activity implements LocationListener {
 
 	// Initialize the location fields
 	if (location != null) {
-	    System.out.println("Provider " + provider + " has been selected.");
-	    // onLocationChanged(location);
+	    Log.d(TAG, "Provider " + provider + " has been selected.");
+	    onLocationChanged(location);
 	} else {
-	    location = new Location("Manual");
-	    location.setLatitude(-31.440990);
-	    location.setLongitude(-64.193305);
-	    // location.setLatitude(-33.503588);
-	    // location.setLongitude(-70.757669);
+	    location = new Location("Hardcoded");
+	    location.setLatitude(-33.503588);
+	    location.setLongitude(-70.757669);
 	}
 	onLocationChanged(location);
     }

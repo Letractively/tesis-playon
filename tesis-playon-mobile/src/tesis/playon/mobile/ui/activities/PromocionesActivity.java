@@ -9,8 +9,10 @@ import tesis.playon.mobile.R;
 import tesis.playon.mobile.json.model.Promociones;
 import tesis.playon.mobile.preferences.PreferenceHelper;
 import tesis.playon.mobile.utils.Utils;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,7 +48,19 @@ public class PromocionesActivity extends ListActivity {
 	PreferenceHelper mPreferences = new PreferenceHelper(mContext);
 	nomPlaya = mPreferences.getNomPlaya();
 
-	new BuscarPromocionesVigentesPlayaService().execute();
+	if (Utils.isOnline(mContext)) {
+	    new BuscarPromocionesVigentesPlayaService().execute();
+	} else {
+	    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+	    alertDialogBuilder.setTitle("Problema de conexión").setMessage("No está conectado a Internet")
+		    .setCancelable(false).setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+			    PromocionesActivity.this.finish();
+			}
+		    });
+	    AlertDialog alertDialog = alertDialogBuilder.create();
+	    alertDialog.show();
+	}
     }
 
     private void cargarPromocionesPlaya(Promociones promociones) {
@@ -62,7 +76,6 @@ public class PromocionesActivity extends ListActivity {
 	} else {
 	    mListView.setEmptyView(findViewById(R.id.empty_view_promociones));
 	}
-
     }
 
     class BuscarPromocionesVigentesPlayaService extends AsyncTask<Void, Void, String> {

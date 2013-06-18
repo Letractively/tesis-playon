@@ -10,7 +10,9 @@ import tesis.playon.mobile.json.model.PerfilPlaya;
 import tesis.playon.mobile.json.model.Playa;
 import tesis.playon.mobile.preferences.PreferenceHelper;
 import tesis.playon.mobile.utils.Utils;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -61,7 +63,21 @@ public class DetallePlayaFragment extends Fragment implements OnClickListener {
 	    PreferenceHelper mPreferences = new PreferenceHelper(getActivity());
 	    mPreferences.updateNomPlaya(nomPlaya);
 	    Log.d(TAG, "Nombre de la playa: " + nomPlaya);
-	    new BuscarDetallePlayaService().execute();
+
+	    if (Utils.isOnline(getActivity().getApplicationContext())) {
+		new BuscarDetallePlayaService().execute();
+	    } else {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+		alertDialogBuilder.setTitle("Problema de conexión").setMessage("No está conectado a Internet")
+			.setCancelable(false).setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog, int id) {
+				getActivity().finish();
+			    }
+			});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	    }
+
 	    mView = inflater.inflate(R.layout.playa_desc, container, false);
 
 	} else {

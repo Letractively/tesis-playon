@@ -16,6 +16,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import tesis.playon.mobile.json.model.GoogleGeoCodeResponse;
 import tesis.playon.mobile.json.model.Playa;
 import tesis.playon.mobile.json.model.Playas;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 public class Utils {
@@ -102,6 +105,12 @@ public class Utils {
 	    Double comparacion2 = p2.getDistanceFrom(lat, lng);
 	    return comparacion1.compareTo(comparacion2);
 	}
+    }
+
+    public static boolean isOnline(Context context) {
+	ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+	NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+	return (networkInfo != null && networkInfo.isConnected());
     }
 
 }

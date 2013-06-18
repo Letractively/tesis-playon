@@ -10,7 +10,9 @@ import tesis.playon.mobile.json.model.Usuario;
 import tesis.playon.mobile.preferences.PreferenceHelper;
 import tesis.playon.mobile.utils.Utils;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -71,9 +73,21 @@ public class LoginActivity extends Activity implements OnClickListener {
 	    }
 	    Button b = (Button) findViewById(R.id.btn_login);
 	    b.setClickable(false);
-	    new LoginService().execute();
+	    if (Utils.isOnline(mContext)) {
+		new LoginService().execute();
+	    } else {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setTitle("Problema de conexión").setMessage("No está conectado a Internet")
+			.setCancelable(false).setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog, int id) {
+				LoginActivity.this.finish();
+			    }
+			});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	    }
 	} else {
-	    Toast.makeText(getApplicationContext(), "Ingrese el nombre de usuario y la contrase�a", Toast.LENGTH_SHORT)
+	    Toast.makeText(getApplicationContext(), "Ingrese el nombre de usuario y la contraseña", Toast.LENGTH_SHORT)
 		    .show();
 	}
     }
@@ -83,16 +97,21 @@ public class LoginActivity extends Activity implements OnClickListener {
 	@Override
 	protected String doInBackground(Void... params) {
 	    String url = URL_USUARIO + username;
-	    InputStream source = new Utils().retrieveStream(url);
-	    Gson gson = new Gson();
-	    Reader reader = new InputStreamReader(source);
-	    usuario = gson.fromJson(reader, Usuario.class);
-	    return usuario.toString();
+	    try {
+		InputStream source = new Utils().retrieveStream(url);
+		Gson gson = new Gson();
+		Reader reader = new InputStreamReader(source);
+		usuario = gson.fromJson(reader, Usuario.class);
+		return usuario.toString();
+	    } catch (Exception e) {
+		e.getStackTrace();
+	    }
+	    return null;
 	}
 
 	protected void onPostExecute(String results) {
 	    Log.d(TAG, "onPostExecute");
-	    if (username.equals(usuario.getNombreUser()) && password.equals(usuario.getPassword())
+	    if (null != usuario && username.equals(usuario.getNombreUser()) && password.equals(usuario.getPassword())
 		    && usuario.getEnable()) {
 		Intent result = new Intent();
 		Bundle bundle = new Bundle();
