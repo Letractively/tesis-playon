@@ -28,9 +28,9 @@ public class NotificadorUtil implements Serializable {
     /*
      * Constante para definir si el sistema envía mails o no. false: no envía ningún e-mail. true: envía e-mails.
      */
-    private static final boolean ENVIAR_EMAILS = true;
+    private static final boolean ENVIAR_EMAILS = false;
 
-    private static final boolean ENVIAR_EMAILS_AUDITOR = true;
+    private static final boolean ENVIAR_EMAILS_AUDITOR = false;
 
     public void enviar(Mail mail) {
 	if (ENVIAR_EMAILS) {
