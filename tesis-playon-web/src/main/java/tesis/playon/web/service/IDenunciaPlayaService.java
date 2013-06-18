@@ -6,6 +6,7 @@ package tesis.playon.web.service;
 import java.util.List;
 
 import tesis.playon.web.model.DenunciaPlaya;
+import tesis.playon.web.model.DenunciaVehiculo;
 import tesis.playon.web.model.EstadoDenuncia;
 
 /**
@@ -14,16 +15,18 @@ import tesis.playon.web.model.EstadoDenuncia;
  */
 public interface IDenunciaPlayaService {
 
-    void save(DenunciaPlaya denuncia);
+	void save(DenunciaPlaya denuncia);
 
-    void update(DenunciaPlaya denuncia);
+	void update(DenunciaPlaya denuncia);
 
-    void delete(DenunciaPlaya denuncia);
+	void delete(DenunciaPlaya denuncia);
 
-    DenunciaPlaya findByAsuntoDenunciaPlaya(String asuntoDenuncia);
+	DenunciaPlaya findByAsuntoDenunciaPlaya(String asuntoDenuncia);
 
-    DenunciaPlaya findByEstadoDenunciaPlaya(EstadoDenuncia estado);
+	DenunciaPlaya findByEstadoDenunciaPlaya(EstadoDenuncia estado);
 
-    List<DenunciaPlaya> findAll();
+	List<DenunciaPlaya> findByEstadoDenunciaPlayas(EstadoDenuncia estado);
+
+	List<DenunciaPlaya> findAll();
 
 }
