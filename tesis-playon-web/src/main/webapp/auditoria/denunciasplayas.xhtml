@@ -71,12 +71,6 @@
 								width="25" heigth="25" />
 						</p:commandLink>
 
-						<p:commandLink id="rechazar" title="Rechazar denuncia"
-							action="#{auditoriaMB.rejectDenunciaPlaya}" ajax="false">
-							<f:setPropertyActionListener value="#{denuncias}"
-								target="#{auditoriaMB.denunciaPlayaSeleccionada}" />
-							<h:graphicImage library="images/icons" name="rejected.png" />
-						</p:commandLink>
 
 						<p:commandLink id="aceptar" title="Finalizar denuncia"
 							action="#{auditoriaMB.approveDenunciaPlaya}" ajax="false">
@@ -109,21 +103,15 @@
 				</p:dataTable>
 			</p:tab>
 
-
-
-
-
-
 			<p:tab id="tab2" title="Proceso">
 				<p:dataTable id="denunciaProceso" var="denuncias"
 					value="#{auditoriaMB.denunciasEnProcesoPlayaList}"
-					paginatorPosition="bottom" paginator="false"
 					emptyMessage="¡No existen denuncias en proceso de investigación!"
 					text-align="center">
 
 					<f:facet name="header">
 						<h:outputText
-							value="Denuncias a Playas en proceso de investigación" />
+							value="Denuncias a playas en proceso de investigación" />
 					</f:facet>
 
 					<p:column headerText="Denunciante" styleClass="column-font">
@@ -163,14 +151,6 @@
 							<h:graphicImage library="images/icons" name="search.png" />
 						</p:commandLink>
 
-
-						<p:commandLink id="rechazar" title="Rechazar denuncia"
-							action="#{auditoriaMB.rejectDenunciaPlaya}" ajax="false">
-							<f:setPropertyActionListener value="#{denuncias}"
-								target="#{auditoriaMB.denunciaPlayaSeleccionada}" />
-							<h:graphicImage library="images/icons" name="rejected.png" />
-						</p:commandLink>
-
 						<p:commandLink id="aceptar" title="Finalizar denuncia"
 							action="#{auditoriaMB.approveDenunciaPlaya}" ajax="false">
 							<f:setPropertyActionListener value="#{denuncias}"
@@ -206,7 +186,6 @@
 			<p:tab id="tab3" title="Finalizadas">
 				<p:dataTable id="denunciaFinalizada" var="denuncias"
 					value="#{auditoriaMB.denunciasFinalizadasPlayaList}"
-					paginatorPosition="bottom" paginator="true" rows="8"
 					emptyMessage="¡No existen denuncias finalizadas!"
 					text-align="center">
 
@@ -251,13 +230,6 @@
 							<h:graphicImage library="images/icons" name="search.png" />
 						</p:commandLink>
 
-
-						<p:commandLink id="rechazar" title="Rechazar denuncia"
-							action="#{auditoriaMB.rejectDenunciaPlaya}" ajax="false">
-							<f:setPropertyActionListener value="#{denuncias}"
-								target="#{auditoriaMB.denunciaPlayaSeleccionada}" />
-							<h:graphicImage library="images/icons" name="rejected.png" />
-						</p:commandLink>
 
 
 					</p:column>

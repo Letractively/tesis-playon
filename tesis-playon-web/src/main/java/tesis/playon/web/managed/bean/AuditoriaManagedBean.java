@@ -365,15 +365,6 @@ public class AuditoriaManagedBean implements Serializable {
 		}
 	}
 
-	public DenunciaPlaya getDenunciaPlayaSeleccionada() {
-		return denunciaPlayaSeleccionada;
-	}
-
-	public void setDenunciaPlayaSeleccionada(
-			DenunciaPlaya denunciaPlayaSeleccionada) {
-		AuditoriaManagedBean.denunciaPlayaSeleccionada = denunciaPlayaSeleccionada;
-	}
-
 	/********************* SERVICIOS + GET + SET **********************************************/
 	public IEstadoDenunciaService getEstadoDenunciaService() {
 		return estadoDenunciaService;
@@ -465,11 +456,11 @@ public class AuditoriaManagedBean implements Serializable {
 	}
 
 	public List<DenunciaPlaya> getDenunciasEnProcesoPlayaList() {
-		denunciasPendientesPlayaList = new ArrayList<DenunciaPlaya>();
+		denunciasEnProcesoPlayaList = new ArrayList<DenunciaPlaya>();
 		EstadoDenuncia estado = new EstadoDenuncia();
 		estado = getEstadoDenunciaService().findByNombreEstadoDenuncia(
 				"En Proceso");
-		denunciasPendientesPlayaList = getDenunciaPlayaService()
+		denunciasEnProcesoPlayaList = getDenunciaPlayaService()
 				.findByEstadoDenunciaPlayas(estado);
 		return denunciasEnProcesoPlayaList;
 	}
@@ -480,11 +471,11 @@ public class AuditoriaManagedBean implements Serializable {
 	}
 
 	public List<DenunciaPlaya> getDenunciasRechazadasPlayaList() {
-		denunciasPendientesPlayaList = new ArrayList<DenunciaPlaya>();
+		denunciasRechazadasPlayaList = new ArrayList<DenunciaPlaya>();
 		EstadoDenuncia estado = new EstadoDenuncia();
 		estado = getEstadoDenunciaService().findByNombreEstadoDenuncia(
 				"Rechazada");
-		denunciasPendientesPlayaList = getDenunciaPlayaService()
+		denunciasRechazadasPlayaList = getDenunciaPlayaService()
 				.findByEstadoDenunciaPlayas(estado);
 		return denunciasRechazadasPlayaList;
 	}
@@ -495,11 +486,11 @@ public class AuditoriaManagedBean implements Serializable {
 	}
 
 	public List<DenunciaPlaya> getDenunciasFinalizadasPlayaList() {
-		denunciasPendientesPlayaList = new ArrayList<DenunciaPlaya>();
+		denunciasFinalizadasPlayaList = new ArrayList<DenunciaPlaya>();
 		EstadoDenuncia estado = new EstadoDenuncia();
 		estado = getEstadoDenunciaService().findByNombreEstadoDenuncia(
 				"Aceptada");
-		denunciasPendientesPlayaList = getDenunciaPlayaService()
+		denunciasFinalizadasPlayaList = getDenunciaPlayaService()
 				.findByEstadoDenunciaPlayas(estado);
 		return denunciasFinalizadasPlayaList;
 	}
@@ -720,6 +711,15 @@ public class AuditoriaManagedBean implements Serializable {
 	public void setDenunciaVehiculoSeleccionada(
 			DenunciaVehiculo denunciaVehiculoSeleccionada) {
 		AuditoriaManagedBean.denunciaVehiculoSeleccionada = denunciaVehiculoSeleccionada;
+	}
+
+	public DenunciaPlaya getDenunciaPlayaSeleccionada() {
+		return denunciaPlayaSeleccionada;
+	}
+
+	public void setDenunciaPlayaSeleccionada(
+			DenunciaPlaya pdenunciaPlayaSeleccionada) {
+		AuditoriaManagedBean.denunciaPlayaSeleccionada = pdenunciaPlayaSeleccionada;
 	}
 
 	public List<DenunciaVehiculo> getDenunciasEnProcesoVehiculosList() {
