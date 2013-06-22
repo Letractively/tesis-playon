@@ -24,97 +24,90 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "modelo_vehiculo", catalog = "tesis_playon", uniqueConstraints = {
-	@UniqueConstraint(columnNames = "nombre"), @UniqueConstraint(columnNames = "marcaVehiculoID") })
+		@UniqueConstraint(columnNames = "nombre"),
+		@UniqueConstraint(columnNames = "marcaVehiculoID") })
 public class ModeloVehiculo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "modeloVehiculoID")
-    private Integer id;
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "modeloVehiculoID")
+	private Integer id;
 
-    @Column(name = "nombre")
-    private String nombre;
+	@Column(name = "nombre")
+	private String nombre;
 
-    @Column(name = "descripcion")
-    private String descripcion;
+	@Column(name = "descripcion")
+	private String descripcion;
 
-    @ManyToOne
-    @JoinColumn(name = "marcaVehiculoID")
-    private MarcaVehiculo marcaVehiculo;
-    
-    @ManyToOne
-    @JoinColumn(name = "categoriaID")
-    private CategoriaVehiculo categoriaVehiculo;
+	@ManyToOne
+	@JoinColumn(name = "marcaVehiculoID")
+	private MarcaVehiculo marcaVehiculo;
 
-    public ModeloVehiculo(String descripcion, MarcaVehiculo marcaVehiculo, String nombre) {
-	this.nombre = nombre;
-	this.descripcion = descripcion;
-	this.marcaVehiculo = marcaVehiculo;
-    }
+	@ManyToOne
+	@JoinColumn(name = "categoriaID")
+	private CategoriaVehiculo categoriaVehiculo;
 
-    public ModeloVehiculo() {
-    }
+	public ModeloVehiculo(String descripcion, MarcaVehiculo marcaVehiculo,
+			String nombre) {
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.marcaVehiculo = marcaVehiculo;
+	}
 
-    public String getNombre() {
-	return nombre;
-    }
+	public ModeloVehiculo() {
+	}
 
-    public void setNombre(String nombre) {
-	this.nombre = nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public String getDescripcion() {
-	return descripcion;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public void setDescripcion(String descripcion) {
-	this.descripcion = descripcion;
-    }
+	public String getDescripcion() {
+		return descripcion;
+	}
 
-    public MarcaVehiculo getMarcaVehiculo() {
-	return marcaVehiculo;
-    }
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 
-    public void setMarcaVehiculo(MarcaVehiculo marcaVehiculo) {
-	this.marcaVehiculo = marcaVehiculo;
-    }
+	public MarcaVehiculo getMarcaVehiculo() {
+		return marcaVehiculo;
+	}
 
-    public Integer getId() {
-	return id;
-    }
+	public void setMarcaVehiculo(MarcaVehiculo marcaVehiculo) {
+		this.marcaVehiculo = marcaVehiculo;
+	}
 
-    public CategoriaVehiculo getCategoriaVehiculo() {
-        return categoriaVehiculo;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setCategoriaVehiculo(CategoriaVehiculo categoriaVehiculo) {
-        this.categoriaVehiculo = categoriaVehiculo;
-    }
+	public CategoriaVehiculo getCategoriaVehiculo() {
+		return categoriaVehiculo;
+	}
 
-    public boolean equals(Object object) {
-	if (object == this)
-	    return true;
-	if (object == null || getClass() != object.getClass())
-	    return false;
+	public void setCategoriaVehiculo(CategoriaVehiculo categoriaVehiculo) {
+		this.categoriaVehiculo = categoriaVehiculo;
+	}
 
-	ModeloVehiculo otroModelo = (ModeloVehiculo) object;
-	if (id != otroModelo.id)
-	    return false;
-	if (nombre == null ? otroModelo.nombre != null : !nombre.equals(otroModelo.nombre))
-	    return false;
+	public boolean equals(Object other) {
+		return (id != null && other != null && getClass() == other.getClass()) ? id
+				.equals(((ModeloVehiculo) other).id) : (other == this);
+	}
 
-	return true;
-    }
+	@Override
+	public String toString() {
+		return "ModeloVehiculo:\t [modeloVehiculoID= " + id + ", nombre= "
+				+ nombre + ", descripcion= " + descripcion + ", "
+				+ marcaVehiculo.toString() + "]";
+	}
 
-    @Override
-    public String toString() {
-	return "ModeloVehiculo:\t [modeloVehiculoID= " + id + ", nombre= " + nombre + ", descripcion= " + descripcion
-		+ ", " + marcaVehiculo.toString() + "]";
-    }
-
-    public void setId(Integer id) {
-	this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 }
