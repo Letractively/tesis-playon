@@ -1,0 +1,56 @@
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="panelTitle"
+		value="Marcas de vehiculos registradas en el sistema" />
+
+	<ui:define name="panelContent" class="admin-font">
+
+		<p:growl id="messages" />
+		<div align="center">
+			<h:panelGrid columns="1" width="%">
+				<p:dataTable id="marcasVehiculo" var="marcaVehiculo"
+					paginator="true" rows="8" paginatorPosition="bottom"
+					value="#{modeloVehiculoMB.marcaVehiculoList}"
+					emptyMessage="¡No existen marcas de vehiculos en el sistema!">
+					<f:facet name="header">
+				Marcas de vehículos
+            </f:facet>
+
+					<p:column headerText="Nombre" styleClass="column-font"
+						filterBy="#{marcaVehiculo.nombre}">
+						<h:outputText value="#{marcaVehiculo.nombre}" />
+					</p:column>
+
+					<p:column headerText="Descripcion" styleClass="column-font"
+						filterBy="#{marcaVehiculo.descripcion}">
+						<h:outputText value="#{marcaVehiculo.descripcion}" />
+					</p:column>
+					
+					<p:commandLink id="edit" title="Editar Datos"
+					action="/admin/marcavehiculoedit.html?faces-redirect=true"
+					ajax="false">
+					<f:setPropertyActionListener value="#{marcaVehiculo}"
+						target="#{modeloVehiculoMB.marcaVehiculoSelected}" />
+					<h:graphicImage library="images/icons" name="pencil.png" />
+				</p:commandLink>
+					
+
+				</p:dataTable>
+				<p>
+					<h:panelGroup layout="block"
+						style="text-align: right; width: 100%;">
+						<p:commandButton id="addMarcaVehiculo" value="Agregar marca"
+							action="/admin/marcavehiculoadd.html?faces-redirect=true"
+							ajax="false" />
+					</h:panelGroup>
+				</p>
+			</h:panelGrid>
+		</div>
+
+	</ui:define>
+</ui:composition>

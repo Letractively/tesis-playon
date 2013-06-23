@@ -46,6 +46,31 @@
 					icon="ui-icon-star" />
 
 			</p:submenu>
+			
+			
+			<p:submenu label="Gestión de Vehículos">
+			
+				<p:menuitem value="Listado vehiculos"
+					url="#{request.contextPath}/../admin/listadovehiculolist.html"
+					icon="ui-icon-star" />
+					
+				<p:menuitem value="Marcas vehículos"
+					url="#{request.contextPath}/../admin/marcavehiculolist.html"
+					icon="ui-icon-star" />
+				<p:menuitem value="Modelos vehículos"
+					url="#{request.contextPath}/../admin/modelovehiculolist.html"
+					icon="ui-icon-star" />
+
+			</p:submenu>
+
+				<p:submenu label="Gestión de Usuarios">
+				<p:menuitem value="Usuarios"
+					url="#{request.contextPath}/../admin/usuariolist.html"
+					icon="ui-icon-person" />
+				<p:menuitem value="Roles de Usuarios"
+					url="#{request.contextPath}/../admin/rolusuariolist.html"
+					icon="ui-icon-tag" />
+			</p:submenu>
 
 			<p:submenu label="Auditoría">
 				<p:menuitem value="Playas"
@@ -59,14 +84,7 @@
 					icon="ui-icon-close" />
 			</p:submenu>
 
-			<p:submenu label="Gestión de Usuarios">
-				<p:menuitem value="Usuarios"
-					url="#{request.contextPath}/../admin/usuariolist.html"
-					icon="ui-icon-person" />
-				<p:menuitem value="Roles de Usuarios"
-					url="#{request.contextPath}/../admin/rolusuariolist.html"
-					icon="ui-icon-tag" />
-			</p:submenu>
+		
 
 			<p:submenu label="Configuración de Cuenta">
 				<p:menuitem value="Cambiar Contraseña"
