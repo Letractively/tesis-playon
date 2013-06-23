@@ -14,28 +14,6 @@
 
 		<h:form id="contenido">
 			<p:growl id="messages" />
-			<div style="margin: 0 20px 0 20px;">
-				<p:panel>
-					<div id="perfil-playa">
-						<h:panelGrid columns="2">
-							<p:column>
-								<h:graphicImage library="fotos_perfil_usuarios"
-									name="#{perfilClienteMB.usuario.nombreUser}.jpg"
-									styleClass="bordes-foto-perfil"
-									rendered="#{perfilClienteMB.usuario.fotoUsuario != null}" />
-								<h:graphicImage library="fotos_perfil_usuarios"
-									name="sinfoto.jpg" styleClass="bordes-foto-perfil"
-									rendered="#{perfilClienteMB.usuario.fotoUsuario == null}" />
-							</p:column>
-							<h:outputText
-								value="#{perfilClienteMB.usuario.apellido}&#160;
-										#{perfilClienteMB.usuario.nombre}"
-								style="font-size: 34px;font-style: italic;color: #192129;" />
-						</h:panelGrid>
-					</div>
-				</p:panel>
-			</div>
-
 			<div id="perfil-playa" style="margin: 20px 50px 0 50px;">
 				<p:panel header="Mis Datos de Cuenta" styleClass="fuente-outputtext">
 					<h:panelGrid columns="2" cellpadding="8" cellspacing="10">
@@ -55,17 +33,19 @@
 						<h:outputText
 							value="#{perfilClienteMB.cliente.cuentaCliente.saldo}"
 							styleClass="fuente-perfil">
-							<f:convertNumber type="currency" currencySymbol="$"/>
+							<f:convertNumber type="currency" currencySymbol="$" />
 						</h:outputText>
 
 						<h:outputText value="Última recarga: "
 							styleClass="fuente-outputtext" />
 						<h:outputText value="#{perfilClienteMB.ultimaRecarga.fecha}"
-							styleClass="fuente-perfil" rendered="#{perfilClienteMB.ultimaRecarga != null}">
+							styleClass="fuente-perfil"
+							rendered="#{perfilClienteMB.ultimaRecarga != null}">
 							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 						</h:outputText>
 						<h:outputText value="No ha cargado crédito aún"
-							styleClass="fuente-perfil" rendered="#{perfilClienteMB.ultimaRecarga == null}"/>
+							styleClass="fuente-perfil"
+							rendered="#{perfilClienteMB.ultimaRecarga == null}" />
 
 					</h:panelGrid>
 				</p:panel>

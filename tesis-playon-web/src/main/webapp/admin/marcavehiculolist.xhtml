@@ -30,15 +30,19 @@
 						filterBy="#{marcaVehiculo.descripcion}">
 						<h:outputText value="#{marcaVehiculo.descripcion}" />
 					</p:column>
-					
-					<p:commandLink id="edit" title="Editar Datos"
-					action="/admin/marcavehiculoedit.html?faces-redirect=true"
-					ajax="false">
-					<f:setPropertyActionListener value="#{marcaVehiculo}"
-						target="#{modeloVehiculoMB.marcaVehiculoSelected}" />
-					<h:graphicImage library="images/icons" name="pencil.png" />
-				</p:commandLink>
-					
+
+					<p:column headerText="Opciones" styleClass="column-options"
+						style="width:135px">
+
+						<p:commandLink id="edit" title="Editar Datos"
+							action="/admin/marcavehiculoedit.html?faces-redirect=true"
+							ajax="false">
+							<f:setPropertyActionListener value="#{marcaVehiculo}"
+								target="#{modeloVehiculoMB.marcaVehiculoSelected}" />
+							<h:graphicImage library="images/icons" name="pencil.png" />
+						</p:commandLink>
+
+					</p:column>
 
 				</p:dataTable>
 				<p>
