@@ -36,7 +36,8 @@
 			</h:panelGrid>
 
 			<p:dataTable id="transacciones" var="transaccionPlaya"
-				paginator="false" value="#{ingresoEgresoMB.transaccionesPlayas}"
+				paginator="true" value="#{ingresoEgresoMB.transaccionesPlayas}"
+				rows="12	"
 				emptyMessage="No ha realizado transacciones"
 				paginatorPosition="bottom">
 

@@ -53,7 +53,7 @@
 								outcome="/playa/gerencia/empleadolist" icon="ui-icon-person" />
 						</p:submenu>
 						<p:submenu label="Tarifas">
-							<p:menuitem value="Ver tarifas"
+							<p:menuitem value="Administrar Tarifas"
 								outcome="/playa/gerencia/tarifaplayalist" icon="ui-icon-note" />
 						</p:submenu>
 						<p:submenu label="Promociones">
@@ -63,12 +63,16 @@
 								outcome="/playa/gerencia/promocioneslist"
 								icon="ui-icon-suitcase" />
 						</p:submenu>
+						<p:submenu label="Abonados">
+							<p:menuitem value="Nuevo abono " outcome="/playa/abonoadd"
+								icon="ui-icon-tag" />
+							<p:menuitem value="Listado de abonos"
+								outcome="/playa/gerencia/listadoabonados" icon="ui-icon-plus" />
+						</p:submenu>
 						<p:submenu label="Informes">
 							<p:menuitem value="Ver transacciones"
 								outcome="/playa/gerencia/transaccionplayalist"
 								icon="ui-icon-calculator" />
-							<p:menuitem value="Abonados"
-								outcome="/playa/gerencia/listadoabonados" icon="ui-icon-plus" />
 							<p:menuitem value="Estadísticas"
 								outcome="/playa/gerencia/grafico" icon="ui-icon-plus" />
 							<p:menuitem value="Informes de ingresos"
@@ -103,8 +107,8 @@
 						<p:menuitem value="Denunciar vehículo"
 							outcome="/playa/denunciarvehiculo" icon="ui-icon-print" />
 					</p:submenu>
-					</p:menu>
-					<p:menu style="width: 95%; margin-top:5px;" styleClass="side-menu">
+				</p:menu>
+				<p:menu style="width: 95%; margin-top:5px;" styleClass="side-menu">
 					<p:submenu label="Configuración de Cuenta">
 						<p:menuitem value="Cambiar Password"
 							outcome="/playa/cambiarpassword" icon="ui-icon-key" />
