@@ -191,7 +191,7 @@ public class VehiculoManagedBean implements Serializable {
 	    }
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, Ya éxiste un vehículo con patente: " + getPatente(), null);
+		    "Error, Ya existe un vehículo con patente: " + getPatente(), null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}

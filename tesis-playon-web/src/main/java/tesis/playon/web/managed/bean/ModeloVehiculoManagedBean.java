@@ -16,11 +16,12 @@ import javax.faces.context.FacesContext;
 
 import org.springframework.dao.DataAccessException;
 
+import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.MarcaVehiculo;
 import tesis.playon.web.model.ModeloVehiculo;
+import tesis.playon.web.service.ICategoriaVehiculoService;
 import tesis.playon.web.service.IMarcaVehiculoService;
 import tesis.playon.web.service.IModeloVehiculoService;
-import tesis.playon.web.service.IRolUsuarioService;
 
 /**
  * @author pablo
@@ -38,9 +39,14 @@ public class ModeloVehiculoManagedBean implements Serializable {
 	@ManagedProperty(value = "#{MarcaVehiculoService}")
 	IMarcaVehiculoService marcaVehiculoService;
 
+	@ManagedProperty(value = "#{CategoriaVehiculoService}")
+	ICategoriaVehiculoService categoriaVehiculoService;
+
 	private ModeloVehiculo modelo;
 
 	private MarcaVehiculo marca;
+
+	private CategoriaVehiculo categoriaVehiculo;
 
 	@SuppressWarnings("unused")
 	private ModeloVehiculo modeloNulo;
@@ -49,6 +55,8 @@ public class ModeloVehiculoManagedBean implements Serializable {
 	private MarcaVehiculo marcaNula;
 
 	private List<MarcaVehiculo> marcasList;
+
+	private List<CategoriaVehiculo> categoriaVehiculoList;;
 
 	private List<ModeloVehiculo> modelosList;
 
@@ -64,9 +72,14 @@ public class ModeloVehiculoManagedBean implements Serializable {
 
 	private String descripcionMarca;
 
+	private String nombreModelo;
+
+	private String descripcionModelo;
+
 	@PostConstruct
 	private void init() {
 		marcaVehiculoList = getMarcaVehiculoService().findAll();
+		categoriaVehiculoList = getCategoriaVehiculoService().findAll();
 	}
 
 	public String addMarcaVehiculo() {
@@ -94,6 +107,33 @@ public class ModeloVehiculoManagedBean implements Serializable {
 		return ERROR;
 	}
 
+	public String addModeloVehiculo() {
+		ModeloVehiculo modeloVehiculo = new ModeloVehiculo();
+		try {
+			modeloVehiculo.setNombre(getNombreModelo());
+			modeloVehiculo.setCategoriaVehiculo(getCategoriaVehiculo());
+			modeloVehiculo.setDescripcion(getDescripcionModelo());
+			modeloVehiculo.setMarcaVehiculo(getMarca());
+
+			getModeloVehiculoService().save(modeloVehiculo);
+
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Se registró correctamente el modelo de vehículo "
+							+ getNombreModelo(), null);
+			FacesContext.getCurrentInstance().addMessage(null, message);
+
+			return "vehiculoaddend";
+
+		} catch (Exception ex) {
+			FacesMessage message = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Error, No se pudo registrar el modelo ", null);
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			ex.printStackTrace();
+		}
+		return ERROR;
+	}
+
 	public IModeloVehiculoService getModeloVehiculoService() {
 		return modeloVehiculoService;
 	}
@@ -110,6 +150,15 @@ public class ModeloVehiculoManagedBean implements Serializable {
 	public void setMarcaVehiculoService(
 			IMarcaVehiculoService marcaVehiculoService) {
 		this.marcaVehiculoService = marcaVehiculoService;
+	}
+
+	public ICategoriaVehiculoService getCategoriaVehiculoService() {
+		return categoriaVehiculoService;
+	}
+
+	public void setCategoriaVehiculoService(
+			ICategoriaVehiculoService categoriaVehiculoService) {
+		this.categoriaVehiculoService = categoriaVehiculoService;
 	}
 
 	public ModeloVehiculo getModelo() {
@@ -162,13 +211,6 @@ public class ModeloVehiculoManagedBean implements Serializable {
 		this.modelosList = modelosList;
 	}
 
-	public void handleMarcaChange() {
-		if (marca != null && !marca.equals(""))
-			modelosList = getModeloVehiculoService().findByMarca(marca);
-		else
-			modelosList = new ArrayList<ModeloVehiculo>();
-	}
-
 	public List<MarcaVehiculo> getMarcaVehiculoList() {
 		return marcaVehiculoList;
 	}
@@ -202,6 +244,39 @@ public class ModeloVehiculoManagedBean implements Serializable {
 		this.descripcionMarca = descripcionMarca;
 	}
 
-	/******************************** Metodos para marca de vehiculo ************************/
+	public List<CategoriaVehiculo> getCategoriaVehiculoList() {
+		return categoriaVehiculoList;
+	}
+
+	public void setCategoriaVehiculoList(
+			List<CategoriaVehiculo> categoriaVehiculoList) {
+		this.categoriaVehiculoList = categoriaVehiculoList;
+	}
+
+	public String getNombreModelo() {
+		return nombreModelo;
+	}
+
+	public void setNombreModelo(String nombreModelo) {
+		this.nombreModelo = nombreModelo;
+	}
+
+	public String getDescripcionModelo() {
+		return descripcionModelo;
+	}
+
+	public void setDescripcionModelo(String descripcionModelo) {
+		this.descripcionModelo = descripcionModelo;
+	}
+
+	public CategoriaVehiculo getCategoriaVehiculo() {
+		return categoriaVehiculo;
+	}
+
+	public void setCategoriaVehiculo(CategoriaVehiculo categoriaVehiculo) {
+		this.categoriaVehiculo = categoriaVehiculo;
+	}
+
+	/******************************** Metodos para modelo de vehiculo ************************/
 
 }
