@@ -13,9 +13,8 @@
 		<p:growl id="messages" redisplay="false" globalOnly="true" />
 		<div style="margin-left: 20px;">
 			<h1>Solicitud de alta de publicidad</h1>
-			<p>El proceso se ha completado exitosamente. Su solicitud de
-				publicidad está pendiente de auditoría, en breve nos pondremos en
-				contacto para informarle las novedades. ¡Muchas gracias!</p>
+			<p>Se ha producido un error en la transacción. No se pudo registrar 
+				el alta de la publicidad. ¡Disculpe las molestias ocacionadas. Muchas gracias!</p>
 			
 			<div align="right">
 				<p>El equipo de <i>Playón, Red de Playas.</i></p>
@@ -24,10 +23,6 @@
 			<p>
 				<h:link value="Volver" outcome="index" />
 			</p>
-			<h:form>
-			<f:event type="preRenderView"
-				listener="#{publicidadMB.addSolicitudPublicidad}" />
-		</h:form>
 		</div>
 	</ui:define>
 </ui:composition>
