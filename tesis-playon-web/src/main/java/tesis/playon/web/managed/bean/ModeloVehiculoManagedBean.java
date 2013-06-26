@@ -62,13 +62,17 @@ public class ModeloVehiculoManagedBean implements Serializable {
 
 	private static final String LISTA_MARCA_VEHICULOS = "marcavehiculolist";
 
+	private static final String LISTA_MODELO_VEHICULOS = "modelovehiculolist";
+
 	private static final String ERROR = "error";
 
 	private static List<MarcaVehiculo> marcaVehiculoList;
 
 	private String nombreMarca;
 
-	private static MarcaVehiculo marcaVehiculoSelected;
+	private MarcaVehiculo marcaVehiculoSelected;
+
+	private ModeloVehiculo modeloVehiculoSelected;
 
 	private String descripcionMarca;
 
@@ -122,7 +126,7 @@ public class ModeloVehiculoManagedBean implements Serializable {
 							+ getNombreModelo(), null);
 			FacesContext.getCurrentInstance().addMessage(null, message);
 
-			return "vehiculoaddend";
+			return LISTA_MODELO_VEHICULOS;
 
 		} catch (Exception ex) {
 			FacesMessage message = new FacesMessage(
@@ -163,6 +167,7 @@ public class ModeloVehiculoManagedBean implements Serializable {
 
 	public ModeloVehiculo getModelo() {
 		return modelo;
+
 	}
 
 	public void setModelo(ModeloVehiculo modelo) {
@@ -204,6 +209,7 @@ public class ModeloVehiculoManagedBean implements Serializable {
 	}
 
 	public List<ModeloVehiculo> getModelosList() {
+		modelosList = getModeloVehiculoService().findAll();
 		return modelosList;
 	}
 
@@ -227,13 +233,20 @@ public class ModeloVehiculoManagedBean implements Serializable {
 		this.nombreMarca = nombreMarca;
 	}
 
-	public static MarcaVehiculo getMarcaVehiculoSelected() {
+	public MarcaVehiculo getMarcaVehiculoSelected() {
 		return marcaVehiculoSelected;
 	}
 
-	public static void setMarcaVehiculoSelected(
-			MarcaVehiculo marcaVehiculoSelected) {
-		ModeloVehiculoManagedBean.marcaVehiculoSelected = marcaVehiculoSelected;
+	public void setMarcaVehiculoSelected(MarcaVehiculo marcaVehiculoSelected) {
+		this.marcaVehiculoSelected = marcaVehiculoSelected;
+	}
+
+	public ModeloVehiculo getModeloVehiculoSelected() {
+		return modeloVehiculoSelected;
+	}
+
+	public void setModeloVehiculoSelected(ModeloVehiculo modeloVehiculoSelected) {
+		this.modeloVehiculoSelected = modeloVehiculoSelected;
 	}
 
 	public String getDescripcionMarca() {

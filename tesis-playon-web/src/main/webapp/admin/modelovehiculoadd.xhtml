@@ -13,7 +13,7 @@
 
 			<div align="center">
 				<h:panelGrid columns="1" width="60%">
-					<p:panel header="Nuevo modelo de vehiculo">
+					<p:panel>
 						<h:panelGrid id="displayView" columns="3" cellpadding="8"
 							styleClass="admin-input-text">
 
@@ -48,7 +48,7 @@
 							<p:message id="descripcionMsg" for="descripcion" display="icon" />
 
 							<h:outputText for="categoriaVehiculo" value="Categoria: " />
-							<p:selectOneMenu id="categorias" style="width:200px"
+							<p:selectOneMenu id="categorias" style="width:215px"
 								value="#{modeloVehiculoMB.categoriaVehiculo}" effect="fade">
 								<f:selectItem itemLabel="Seleccione una categoria"
 									itemValue="#{null}" />
