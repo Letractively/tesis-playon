@@ -20,7 +20,7 @@
 					value="#{auditoriaPlayaMB.playasPendientesList}"
 					filteredValue="#{auditoriaPlayaMB.filteredPlayas}"
 					widgetVar="playasTable" paginatorPosition="bottom"
-					paginator="false" rows="5"
+					paginator="true" rows="5"
 					emptyMessage="No existen playas para auditar">
 
 					<p:column headerText="Razón Social" styleClass="column-font"
@@ -33,7 +33,7 @@
 
 					<p:column headerText="C.U.I.T." styleClass="column-font"
 						style="width:105px" filterBy="#{playa.cuit}"
-						filterMatchMode="contains">
+						filterMatchMode="contains" exportable="false">
 						<f:facet name="header">
 							<h:outputText value="CUIT" />
 						</f:facet>
@@ -147,9 +147,8 @@
 				<p:dataTable id="playas3" var="playa"
 					value="#{auditoriaPlayaMB.playasAprobadasList}"
 					filteredValue="#{auditoriaPlayaMB.filteredPlayas}"
-					widgetVar="playasTable" paginatorPosition="bottom"
-					paginator="false" rows="6"
-					emptyMessage="No existen playas aprobadas">
+					widgetVar="playasTable" paginatorPosition="bottom" paginator="true"
+					rows="5" emptyMessage="No existen playas aprobadas">
 
 					<p:column headerText="Razón Social" styleClass="column-font"
 						filterBy="#{playa.razonSocial}" filterMatchMode="contains">
@@ -161,7 +160,7 @@
 
 					<p:column headerText="C.U.I.T." styleClass="column-font"
 						style="width:105px" filterBy="#{playa.cuit}"
-						filterMatchMode="contains">
+						filterMatchMode="contains" exportable="false">
 						<f:facet name="header">
 							<h:outputText value="CUIT" />
 						</f:facet>
@@ -259,9 +258,8 @@
 				<p:dataTable id="playas2" var="playa"
 					value="#{auditoriaPlayaMB.playasRechazadasList}"
 					filteredValue="#{auditoriaPlayaMB.filteredPlayas}"
-					widgetVar="playasTable" paginatorPosition="bottom"
-					paginator="false" rows="6"
-					emptyMessage="No existen playas rechazadas">
+					widgetVar="playasTable" paginatorPosition="bottom" paginator="true"
+					rows="5" emptyMessage="No existen playas rechazadas">
 
 					<p:column headerText="Razón Social" styleClass="column-font"
 						filterBy="#{playa.razonSocial}" filterMatchMode="contains">
@@ -273,7 +271,7 @@
 
 					<p:column headerText="C.U.I.T." styleClass="column-font"
 						style="width:105px" filterBy="#{playa.cuit}"
-						filterMatchMode="contains">
+						filterMatchMode="contains" exportable="false">
 						<f:facet name="header">
 							<h:outputText value="CUIT" />
 						</f:facet>

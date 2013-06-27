@@ -16,7 +16,7 @@
 					globalOnly="true" />
 				<p:dataTable id="denunciaPendiente" var="denuncias"
 					value="#{auditoriaMB.denunciasPendientesVehiculosList}"
-					paginatorPosition="bottom" paginator="false" rows="4"
+					paginatorPosition="bottom" paginator="true" rows="5"
 					emptyMessage="¡No existen denuncias para auditar!"
 					text-align="center">
 
@@ -136,7 +136,7 @@
 			<p:tab id="tab2" title="Proceso">
 				<p:dataTable id="denunciaProceso" var="denuncias"
 					value="#{auditoriaMB.denunciasEnProcesoVehiculosList}"
-					paginatorPosition="bottom" paginator="false"
+					paginatorPosition="bottom" paginator="true" rows="5"
 					emptyMessage="¡No existen denuncias en proceso de investigación!"
 					text-align="center">
 

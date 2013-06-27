@@ -865,8 +865,8 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 
 		LineChartSeries ingresos = new LineChartSeries();
 		ChartSeries ingresosBarra = new ChartSeries();
-		ingresos.setLabel("Cantidad de Ingresos por tipo de vehiculo");
-		ingresosBarra.setLabel("");
+		ingresos.setLabel("Cantidad de Ingresos");
+		ingresosBarra.setLabel("Cantidad de Ingresos");
 
 		ingresos.set(AUTO, cantAutos);
 		ingresos.set(MOTO, cantMotos);
