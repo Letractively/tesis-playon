@@ -158,8 +158,8 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 
 	private static int cantAutos, cantUtilitarios, cantMotos, cantPickUp;
 	private int mayorCant;
+	private double mayorRecaudacion;
 
-	@SuppressWarnings("unused")
 	private static double ingAuto, ingUtilitario, ingMoto, ingPickUp;
 
 	private String AUTO = "Autos";
@@ -172,6 +172,8 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 	private Date fechaDesde, fechaHasta;
 
 	private CartesianChartModel lmIngresosPorHoraDelDia;
+
+	private CartesianChartModel lmRecaudacionPorTipoVehiculo;
 
 	private CartesianChartModel lmIngresosPorTipoVehiculo;
 
@@ -190,60 +192,6 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 
 	}
 
-	private void maximoValor() {
-		mayorCant = cantAutos;
-
-		if (cantMotos > mayorCant) {
-			mayorCant = cantMotos;
-			if (cantUtilitarios > mayorCant)
-				mayorCant = cantUtilitarios;
-			if (cantPickUp > mayorCant)
-				mayorCant = cantPickUp;
-		}
-
-		else if (cantUtilitarios > mayorCant) {
-			mayorCant = cantUtilitarios;
-			if (cantPickUp > mayorCant)
-				mayorCant = cantPickUp;
-
-		}
-
-		else if (cantPickUp > mayorCant)
-			mayorCant = cantPickUp;
-
-		mayorCant = mayorCant + (int) (mayorCant * 0.25);
-	}
-
-	@Test
-	private void importePorTipo()
-
-	{
-		ingAuto = 0;
-		ingMoto = 0;
-		ingUtilitario = 0;
-		ingPickUp = 0;
-		for (DetalleEstadia detalleAux : detalles) {
-			if (detalleAux.getVehiculo().getModeloVehiculo()
-					.getCategoriaVehiculo().getNombre().equals("Auto")) {
-				ingAuto += detalleAux.getImporteTotal();
-			}
-			if (detalleAux.getVehiculo().getModeloVehiculo()
-					.getCategoriaVehiculo().getNombre().equals("Moto")) {
-				ingMoto += detalleAux.getImporteTotal();
-
-			}
-			if (detalleAux.getVehiculo().getModeloVehiculo()
-					.getCategoriaVehiculo().getNombre().equals("Utilitario")) {
-				ingUtilitario += detalleAux.getImporteTotal();
-			}
-			if (detalleAux.getVehiculo().getModeloVehiculo()
-					.getCategoriaVehiculo().getNombre().equals("Pickup")) {
-				ingPickUp += detalleAux.getImporteTotal();
-			}
-
-		}
-	}
-
 	public void cantidadIngresosPorHoraDelDia() {
 		Integer[] horas = new Integer[24];
 		for (int i = 0; i < horas.length; i++)
@@ -255,39 +203,6 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 				fechaDesde, fechaHasta);
 
 		createLMIngresosPorHora(horas);
-	}
-
-	public void cantidadIngresosPorTipoVehiculo() {
-		cantAutos = 0;
-		cantMotos = 0;
-		cantPickUp = 0;
-		cantUtilitarios = 0;
-
-		detalles = getDetalleEstadiaService().findByHorarios(getEstadia(),
-				fechaDesde, fechaHasta);
-
-		for (DetalleEstadia detalleAux : detalles) {
-			if (detalleAux.getVehiculo().getModeloVehiculo()
-					.getCategoriaVehiculo().getNombre().equals("Auto")) {
-				cantAutos++;
-			}
-			if (detalleAux.getVehiculo().getModeloVehiculo()
-					.getCategoriaVehiculo().getNombre().equals("Moto")) {
-				cantMotos++;
-			}
-			if (detalleAux.getVehiculo().getModeloVehiculo()
-					.getCategoriaVehiculo().getNombre().equals("Utilitario")) {
-				cantUtilitarios++;
-			}
-			if (detalleAux.getVehiculo().getModeloVehiculo()
-					.getCategoriaVehiculo().getNombre().equals("Pickup")) {
-				cantPickUp++;
-			}
-
-		}
-		maximoValor();
-
-		createLMIngresosPorTipoVehiculo();
 	}
 
 	public IEmpleadoService getEmpleadoService() {
@@ -737,6 +652,15 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 		this.lmIngresosPorTipoVehiculo = lmIngresosPorTipoVehiculo;
 	}
 
+	public CartesianChartModel getLmRecaudacionPorTipoVehiculo() {
+		return lmRecaudacionPorTipoVehiculo;
+	}
+
+	public void setLmRecaudacionPorTipoVehiculo(
+			CartesianChartModel lmRecaudacionPorTipoVehiculo) {
+		this.lmRecaudacionPorTipoVehiculo = lmRecaudacionPorTipoVehiculo;
+	}
+
 	/**************************************************************************************************/
 	private CartesianChartModel linearModel;
 
@@ -882,6 +806,30 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 
 	}
 
+	private void createLMRecaudacionPorTipoVehiculo() {
+		lmRecaudacionPorTipoVehiculo = new CartesianChartModel();
+
+		ChartSeries ingresosBarra = new ChartSeries();
+
+		ingresosBarra.setLabel("Recaudacion");
+
+		ingresosBarra.set(AUTO, ingAuto);
+		ingresosBarra.set(MOTO, ingMoto);
+		ingresosBarra.set(UTILITARIOS, ingUtilitario);
+		ingresosBarra.set(PICKUP, ingPickUp);
+
+		lmRecaudacionPorTipoVehiculo.addSeries(ingresosBarra);
+
+	}
+
+	public double getMayorRecaudacion() {
+		return mayorRecaudacion;
+	}
+
+	public void setMayorRecaudacion(double mayorRecaudacion) {
+		this.mayorRecaudacion = mayorRecaudacion;
+	}
+
 	/***************************************************************************************/
 	private PieChartModel pieModel;
 
@@ -891,6 +839,123 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 
 	public void setPieModel(PieChartModel pieModel) {
 		this.pieModel = pieModel;
+	}
+
+	public void recaudacionPorTipoVehiculo()
+
+	{
+		ingAuto = 0;
+		ingMoto = 0;
+		ingUtilitario = 0;
+		ingPickUp = 0;
+
+		detalles = getDetalleEstadiaService().findByHorarios(getEstadia(),
+				fechaDesde, fechaHasta);
+
+		for (DetalleEstadia detalleAux : detalles) {
+			if (detalleAux.getVehiculo().getModeloVehiculo()
+					.getCategoriaVehiculo().getNombre().equals("Auto")) {
+				ingAuto += detalleAux.getImporteTotal();
+			}
+			if (detalleAux.getVehiculo().getModeloVehiculo()
+					.getCategoriaVehiculo().getNombre().equals("Moto")) {
+				ingMoto += detalleAux.getImporteTotal();
+
+			}
+			if (detalleAux.getVehiculo().getModeloVehiculo()
+					.getCategoriaVehiculo().getNombre().equals("Utilitario")) {
+				ingUtilitario += detalleAux.getImporteTotal();
+			}
+			if (detalleAux.getVehiculo().getModeloVehiculo()
+					.getCategoriaVehiculo().getNombre().equals("Pickup")) {
+				ingPickUp += detalleAux.getImporteTotal();
+			}
+
+		}
+		maximaRecaudacion();
+		createLMRecaudacionPorTipoVehiculo();
+	}
+
+	public void cantidadIngresosPorTipoVehiculo() {
+		cantAutos = 0;
+		cantMotos = 0;
+		cantPickUp = 0;
+		cantUtilitarios = 0;
+
+		detalles = getDetalleEstadiaService().findByHorarios(getEstadia(),
+				fechaDesde, fechaHasta);
+
+		for (DetalleEstadia detalleAux : detalles) {
+			if (detalleAux.getVehiculo().getModeloVehiculo()
+					.getCategoriaVehiculo().getNombre().equals("Auto")) {
+				cantAutos++;
+			}
+			if (detalleAux.getVehiculo().getModeloVehiculo()
+					.getCategoriaVehiculo().getNombre().equals("Moto")) {
+				cantMotos++;
+			}
+			if (detalleAux.getVehiculo().getModeloVehiculo()
+					.getCategoriaVehiculo().getNombre().equals("Utilitario")) {
+				cantUtilitarios++;
+			}
+			if (detalleAux.getVehiculo().getModeloVehiculo()
+					.getCategoriaVehiculo().getNombre().equals("Pickup")) {
+				cantPickUp++;
+			}
+
+		}
+		maximoValor();
+
+		createLMIngresosPorTipoVehiculo();
+	}
+
+	private void maximaRecaudacion() {
+		mayorRecaudacion = ingAuto;
+
+		if (ingMoto > mayorRecaudacion) {
+			mayorRecaudacion = ingMoto;
+			if (ingUtilitario > mayorRecaudacion)
+				mayorRecaudacion = ingUtilitario;
+			if (ingPickUp > mayorRecaudacion)
+				mayorRecaudacion = ingPickUp;
+		}
+
+		else if (ingUtilitario > mayorRecaudacion) {
+			mayorRecaudacion = ingUtilitario;
+			if (ingPickUp > mayorRecaudacion)
+				mayorRecaudacion = ingPickUp;
+
+		}
+
+		else if (ingPickUp > mayorRecaudacion)
+			mayorRecaudacion = ingPickUp;
+
+		mayorRecaudacion = mayorRecaudacion
+				+ (double) (mayorRecaudacion * 0.25);
+	}
+
+	private void maximoValor() {
+		mayorCant = cantAutos;
+
+		if (cantMotos > mayorCant) {
+			mayorCant = cantMotos;
+			if (cantUtilitarios > mayorCant)
+				mayorCant = cantUtilitarios;
+			if (cantPickUp > mayorCant)
+				mayorCant = cantPickUp;
+		}
+
+		else if (cantUtilitarios > mayorCant) {
+			mayorCant = cantUtilitarios;
+			if (cantPickUp > mayorCant)
+				mayorCant = cantPickUp;
+
+		}
+
+		else if (cantPickUp > mayorCant)
+			mayorCant = cantPickUp;
+
+		mayorCant = mayorCant + (int) (mayorCant * 0.25);
 	}
 
 	/***************************************************************************************/
