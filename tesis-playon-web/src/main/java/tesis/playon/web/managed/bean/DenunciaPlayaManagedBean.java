@@ -82,7 +82,7 @@ public class DenunciaPlayaManagedBean implements Serializable {
 		getDenunciaPlayaService().save(denuncia);
 
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-			"Su denuncia se registró con éxito y se encuentra pendiente de auditoría.", null);
+			"Su denuncia se registró con éxito y se encuentra pendiente de auditoría.", "");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 
 		return "viewperfilplaya.html?id=" + playaSelected.getId();
@@ -91,7 +91,7 @@ public class DenunciaPlayaManagedBean implements Serializable {
 
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Problemas al enviar su denuncia. Vuelva a intentarlo más tarde.", null);
+		    "Problemas al enviar su denuncia. Vuelva a intentarlo más tarde.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}

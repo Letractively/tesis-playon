@@ -172,7 +172,7 @@ public class ComentarioManagedBean implements Serializable {
 		
 		FacesMessage message = new FacesMessage(
 			FacesMessage.SEVERITY_INFO,
-			"Se denunció correctamente el comentario", null);
+			"Se denunció correctamente el comentario", "");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	    }
 	}catch(Exception ex){
@@ -192,7 +192,7 @@ public class ComentarioManagedBean implements Serializable {
 		
 		FacesMessage message = new FacesMessage(
 			FacesMessage.SEVERITY_INFO,
-			"Se denunció correctamente el comentario", null);
+			"Se denunció correctamente el comentario", "");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 		
 		return "comentariolist";

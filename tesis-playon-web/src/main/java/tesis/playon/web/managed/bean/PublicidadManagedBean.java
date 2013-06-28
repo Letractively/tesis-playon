@@ -88,7 +88,7 @@ public class PublicidadManagedBean implements Serializable {
 	upload=false;
     }
 
-    public String addSolicitudPublicidad() {
+    public void addSolicitudPublicidad() {
 	try {
 	    fotoPublicidad.setUrl(url);
 	    Publicidad publicidad = new Publicidad(nombreEmpresa, nombreResponsable, apellidoResponsable, fechaDesde,
@@ -105,16 +105,14 @@ public class PublicidadManagedBean implements Serializable {
 	    getPublicidadService().save(publicidad);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se registró la publicidad exitosamente.", null);
+		    "Se registró la publicidad exitosamente.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
-	    return "solicitudpublicidadend";
 	} catch (Exception e) {
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "No se ha podido completar la solicitud. Intente más tarde. Disculpe las molestias ocacionadas.",
 		    null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
-	return null;
     }
 
     public void validateDateInicial(FacesContext context, UIComponent component, Object value) {
@@ -129,7 +127,7 @@ public class PublicidadManagedBean implements Serializable {
 	if (getFechaDesde() != null) {
 	    if (dateFin.before(getFechaDesde())) {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-			"La fecha de finalización debe ser mayor a la fecha de inicio.", null);
+			"La fecha de finalización debe ser mayor a la fecha de inicio.", "");
 		throw new ValidatorException(message);
 	    }
 	}
@@ -146,7 +144,7 @@ public class PublicidadManagedBean implements Serializable {
 	    fotoPublicidad = new FotoPublicidad(foto.getFileName(), foto.getContents(), url);
 	    upload=true;
 	    WriteImage.writeFotoTemporal(fotoPublicidad);
-	    FacesMessage msg = new FacesMessage("La imagen: " + foto.getFileName() + " se guardó correctamente.", null);
+	    FacesMessage msg = new FacesMessage("La imagen: " + foto.getFileName() + " se guardó correctamente.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
     }

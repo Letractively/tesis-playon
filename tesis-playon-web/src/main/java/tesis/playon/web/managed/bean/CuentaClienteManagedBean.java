@@ -126,7 +126,7 @@ public class CuentaClienteManagedBean implements Serializable {
 	    FacesContext.getCurrentInstance().addMessage(
 		    null,
 		    new FacesMessage(FacesMessage.SEVERITY_INFO, "Transacción exitosa. Se agregó a su cuenta $"
-			    + getSaldo() + " ARG. ¡Muchas Gracias!", null));
+			    + getSaldo() + " ARG. ¡Muchas Gracias!", ""));
 
 	} catch (DataAccessException e) {
 	    e.printStackTrace();

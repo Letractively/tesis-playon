@@ -78,7 +78,7 @@ public class DenunciaVehiculoManagedBean implements Serializable {
 	    getDenunciaService().save(denuncia);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO
 		    , "Su denuncia se registró con éxito y se encuentra pendiente de auditoría."
-		    , null);
+		    , "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    
 	    return "denunciarvehiculoend";

@@ -251,7 +251,7 @@ public class AuditoriaManagedBean implements Serializable {
 			getDenunciaVehiculoService().update(denunciaVehiculoSeleccionada);
 
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Se rechazó la denuncia " + "", "");
+					"Se rechazó la denuncia ", "");
 
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		} catch (Exception e) {
@@ -271,7 +271,7 @@ public class AuditoriaManagedBean implements Serializable {
 			getDenunciaVehiculoService().update(denunciaVehiculoSeleccionada);
 
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"La denuncia se dio por FINALIZADA " + "", "");
+					"La denuncia se dio por FINALIZADA ", "");
 
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		} catch (Exception e) {
@@ -291,7 +291,7 @@ public class AuditoriaManagedBean implements Serializable {
 			getDenunciaVehiculoService().update(denunciaVehiculoSeleccionada);
 
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"La denuncia se aceptó y será investigada " + "", "");
+					"La denuncia se aceptó y será investigada ", "");
 
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		} catch (Exception e) {
@@ -313,7 +313,7 @@ public class AuditoriaManagedBean implements Serializable {
 			getDenunciaPlayaService().update(denunciaPlayaSeleccionada);
 
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"La denuncia se aceptó y será investigada " + "", "");
+					"La denuncia se aceptó y será investigada ", "");
 
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		} catch (Exception e) {
@@ -333,7 +333,7 @@ public class AuditoriaManagedBean implements Serializable {
 			getDenunciaPlayaService().update(denunciaPlayaSeleccionada);
 
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Se rechazó la denuncia " + "", "");
+					"Se rechazó la denuncia ", "");
 
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		} catch (Exception e) {
@@ -353,7 +353,7 @@ public class AuditoriaManagedBean implements Serializable {
 			getDenunciaPlayaService().update(denunciaPlayaSeleccionada);
 
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"La denuncia se dio por FINALIZADA " + "", "");
+					"La denuncia se dio por FINALIZADA ", "");
 
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		} catch (Exception e) {

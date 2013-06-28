@@ -200,25 +200,25 @@ public class AbonoManagedBean implements Serializable {
 		    getTransaccionClienteService().save(transaccionCliente);
 
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-			    "Se registró exitosamente el abono mensual", null);
+			    "Se registró exitosamente el abono mensual", "");
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 
 		    return "abonoaddend";
 		} else {
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
-			    "No posee saldo suficiente para efectuar el abono mensual.", null);
+			    "No posee saldo suficiente para efectuar el abono mensual.", "");
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 
 	    } else {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"Ya existe un abonado en el período indicado. ¡Verifique las fechas!", null);
+			"Ya existe un abonado en el período indicado. ¡Verifique las fechas!", "");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	    }
 
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo registrar el abono mensual, Disculpe las molestias ocacionadas.", null);
+		    "Error, no se pudo registrar el abono mensual, Disculpe las molestias ocacionadas.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}
@@ -237,7 +237,7 @@ public class AbonoManagedBean implements Serializable {
 			categoriaVehiculo, tipoEstadia);
 		if (tarifa == null) {
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "No existe tarifa mensual "
-			    + "para la categoría " + tipoEstadia, null);
+			    + "para la categoría " + tipoEstadia, "");
 		    throw new ValidatorException(message);
 		} else {
 		    promocionesDisponibles = getPromocionService().findByPlayaAndTarifa(playaLoggeada, tarifa);
@@ -245,7 +245,7 @@ public class AbonoManagedBean implements Serializable {
 
 	    } else {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"No existe el vehiculo con patente: " + patente, null);
+			"No existe el vehiculo con patente: " + patente, "");
 		throw new ValidatorException(message);
 	    }
 	}
