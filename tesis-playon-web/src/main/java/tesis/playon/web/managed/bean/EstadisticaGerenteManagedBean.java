@@ -13,13 +13,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.component.chart.bar.BarChart;
-
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.PieChartModel;
-import org.testng.annotations.Test;
 
 import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.model.CategoriaVehiculo;
@@ -159,6 +156,7 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 	private static int cantAutos, cantUtilitarios, cantMotos, cantPickUp;
 	private int mayorCant;
 	private double mayorRecaudacion;
+	private int mayorCantIngresos;
 
 	private static double ingAuto, ingUtilitario, ingMoto, ingPickUp;
 
@@ -186,8 +184,6 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 		setEstadia(getEstadiaService().findByPlaya(playaSelected));
 		setDetalles(getDetalleEstadiaService().findByEstadia(estadia));
 		// importePorTipo();
-		createLinearModel();
-		createCategoryModel();
 		// cantidadIngresosPorHoraDelDia();
 
 	}
@@ -203,6 +199,7 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 				fechaDesde, fechaHasta);
 
 		createLMIngresosPorHora(horas);
+		calcularMayorCantidad(horas);
 	}
 
 	public IEmpleadoService getEmpleadoService() {
@@ -686,86 +683,6 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 
 	/**************************************************************************************/
 
-	private void createCategoryModel() {
-		categoryModel = new CartesianChartModel();
-
-		ChartSeries autos = new ChartSeries();
-		ChartSeries motos = new ChartSeries();
-		ChartSeries utilitarios = new ChartSeries();
-		ChartSeries pickup = new ChartSeries();
-
-		autos.setLabel("Autos");
-		motos.setLabel("Motos");
-		utilitarios.setLabel("Utilitarios");
-		pickup.setLabel("Pick-Up");
-
-		autos.set("2009", 1000000);
-		autos.set("2010", 941000);
-		autos.set("2011", 877700);
-		autos.set("2012", 1300000);
-
-		motos.set("2009", 250000);
-		motos.set("2010", 350000);
-		motos.set("2011", 320000);
-		motos.set("2012", 470000);
-
-		utilitarios.set("2009", 580000);
-		utilitarios.set("2010", 850000);
-		utilitarios.set("2011", 777000);
-		utilitarios.set("2012", 817000);
-
-		pickup.set("2009", 589000);
-		pickup.set("2010", 699000);
-		pickup.set("2011", 824000);
-		pickup.set("2012", 728000);
-
-		categoryModel.addSeries(autos);
-		categoryModel.addSeries(motos);
-		categoryModel.addSeries(utilitarios);
-		categoryModel.addSeries(pickup);
-
-	}
-
-	private void createLinearModel() {
-
-		linearModel = new CartesianChartModel();
-
-		LineChartSeries autos = new LineChartSeries();
-		LineChartSeries motos = new LineChartSeries();
-		LineChartSeries utilitarios = new LineChartSeries();
-		LineChartSeries pickup = new LineChartSeries();
-
-		autos.setLabel("Autos");
-		motos.setLabel("Motos");
-		utilitarios.setLabel("Utilitarios");
-		pickup.setLabel("Pick-Up");
-
-		autos.set("2009", 1000000);
-		autos.set("2010", 941000);
-		autos.set("2011", 877700);
-		autos.set("2012", 1300000);
-
-		motos.set("2009", 250000);
-		motos.set("2010", 350000);
-		motos.set("2011", 320000);
-		motos.set("2012", 470000);
-
-		utilitarios.set("2009", 580000);
-		utilitarios.set("2010", 850000);
-		utilitarios.set("2011", 777000);
-		utilitarios.set("2012", 817000);
-
-		pickup.set("2009", 589000);
-		pickup.set("2010", 699000);
-		pickup.set("2011", 824000);
-		pickup.set("2012", 728000);
-
-		linearModel.addSeries(autos);
-		linearModel.addSeries(motos);
-		linearModel.addSeries(utilitarios);
-		linearModel.addSeries(pickup);
-	}
-
 	private void createLMIngresosPorHora(Integer[] horas) {
 		lmIngresosPorHoraDelDia = new CartesianChartModel();
 
@@ -830,15 +747,12 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 		this.mayorRecaudacion = mayorRecaudacion;
 	}
 
-	/***************************************************************************************/
-	private PieChartModel pieModel;
-
-	public PieChartModel getPieModel() {
-		return pieModel;
+	public int getMayorCantIngresos() {
+		return mayorCantIngresos;
 	}
 
-	public void setPieModel(PieChartModel pieModel) {
-		this.pieModel = pieModel;
+	public void setMayorCantIngresos(int mayorCantIngresos) {
+		this.mayorCantIngresos = mayorCantIngresos;
 	}
 
 	public void recaudacionPorTipoVehiculo()
@@ -909,6 +823,19 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 		createLMIngresosPorTipoVehiculo();
 	}
 
+	private void calcularMayorCantidad(Integer[] horas) {
+		int mayor = horas[0];
+
+		for (int i = 1; i < horas.length; i++) {
+			if (horas[i] > mayor)
+				mayor = horas[i];
+
+		}
+		mayor = mayor + (int) (mayor * 0.25);
+		this.setMayorCantIngresos(mayor);
+
+	}
+
 	private void maximaRecaudacion() {
 		mayorRecaudacion = ingAuto;
 
@@ -957,16 +884,5 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 
 		mayorCant = mayorCant + (int) (mayorCant * 0.25);
 	}
-
-	/***************************************************************************************/
-
-	// private void createPieModel() {
-	// pieModel = new PieChartModel();
-	//
-	// pieModel.set("Brand 1", 540);
-	// pieModel.set("Brand 2", 325);
-	// pieModel.set("Brand 3", 702);
-	// pieModel.set("Brand 4", 421);
-	// }
 
 }

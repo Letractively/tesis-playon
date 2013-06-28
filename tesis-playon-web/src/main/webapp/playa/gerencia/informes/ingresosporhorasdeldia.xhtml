@@ -5,12 +5,12 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<script type="text/javascript">
-	  function customExtender() {
-	    this.cfg.highlighter = {
-	      useAxesFormatters: false,
-	      tooltipAxes: 'y'
-	    }
-	  }
+		function customExtender() {
+			this.cfg.highlighter = {
+				useAxesFormatters : false,
+				tooltipAxes : 'y'
+			}
+		}
 	</script>
 	<h:form>
 		<div>
@@ -39,7 +39,8 @@
 								value="#{estadisticaGerenteMB.lmIngresosPorHoraDelDia}"
 								legendPosition="w" legendRows="1" animate="true"
 								title="Frecuencia de ingresos a la playa por período por cada hora del día"
-								minY="0" maxY="13" style="margin-top:20px" />
+								minY="0" maxY="#{estadisticaGerenteMB.mayorCantIngresos}"
+								style="margin-top:20px" />
 						</ui:fragment>
 					</p:column>
 				</h:panelGrid>

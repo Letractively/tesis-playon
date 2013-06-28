@@ -58,7 +58,7 @@ public class ModeloVehiculoManagedBean implements Serializable {
 
 	private List<CategoriaVehiculo> categoriaVehiculoList;;
 
-	private List<ModeloVehiculo> modelosList;
+	private static List<ModeloVehiculo> modelosList;
 
 	private static final String LISTA_MARCA_VEHICULOS = "marcavehiculolist";
 
@@ -83,6 +83,7 @@ public class ModeloVehiculoManagedBean implements Serializable {
 	@PostConstruct
 	private void init() {
 		marcaVehiculoList = getMarcaVehiculoService().findAll();
+		modelosList = getModeloVehiculoService().findAll();
 		categoriaVehiculoList = getCategoriaVehiculoService().findAll();
 	}
 
@@ -209,12 +210,12 @@ public class ModeloVehiculoManagedBean implements Serializable {
 	}
 
 	public List<ModeloVehiculo> getModelosList() {
-		modelosList = getModeloVehiculoService().findAll();
+
 		return modelosList;
 	}
 
 	public void setModelosList(List<ModeloVehiculo> modelosList) {
-		this.modelosList = modelosList;
+		ModeloVehiculoManagedBean.modelosList = modelosList;
 	}
 
 	public List<MarcaVehiculo> getMarcaVehiculoList() {

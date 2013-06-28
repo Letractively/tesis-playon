@@ -16,35 +16,50 @@
 			emptyMessage="No existen clientes" style="width: 100%">
 
 			<f:facet name="header">
-				
-            	</f:facet>
+
+			</f:facet>
 
 			<p:column headerText="Usuario" styleClass="column-font"
 				filterBy="#{cliente.usuario.nombreUser}" filterMatchMode="contains">
+				<f:facet name="header">
+					<h:outputText value="Usuario" />
+				</f:facet>
 				<h:outputText value="#{cliente.usuario.nombreUser}" />
 			</p:column>
 
 			<p:column headerText="Nombre" styleClass="column-font"
 				filterBy="#{cliente.usuario.nombre}" filterMatchMode="contains">
+				<f:facet name="header">
+					<h:outputText value="Nombre" />
+				</f:facet>
 				<h:outputText value="#{cliente.usuario.nombre}" />
 			</p:column>
 
 			<p:column headerText="Apellido" styleClass="column-font"
 				filterBy="#{cliente.usuario.apellido}" filterMatchMode="contains">
+				<f:facet name="header">
+					<h:outputText value="Apellido" />
+				</f:facet>
 				<h:outputText value="#{cliente.usuario.apellido}" />
 			</p:column>
 
 			<p:column headerText="E-mail" styleClass="column-font"
 				filterBy="#{cliente.usuario.email}" filterMatchMode="contains">
+				<f:facet name="header">
+					<h:outputText value="e-Mail" />
+				</f:facet>
 				<h:outputText value="#{cliente.usuario.email}" />
 			</p:column>
 
 			<p:column headerText="Habilitado" styleClass="column-font">
+				<f:facet name="header">
+					<h:outputText value="Habilitado" />
+				</f:facet>
 				<h:outputText value="#{cliente.usuario.enable ? 'Si' : 'No'}" />
 			</p:column>
 
 			<p:column headerText="Opciones" styleClass="column-options"
-				style="width:135px">
+				style="width:135px" exportable="false">
 
 				<p:commandLink id="view" update=":mainForm:displayView"
 					oncomplete="popupClienteDatos.show();" title="Datos Cliente">
@@ -103,13 +118,34 @@
 				</p:confirmDialog>
 			</p:column>
 
+
 			<f:facet name="footer">
-				<h:panelGroup id="removeFilter" layout="block"
-					style="text-align: right;">
-					<p:commandLink id="quitarFiltro" value="Quitar Filtro"
-						action="/admin/clientelist.html?faces-redirect=true" ajax="false" />
-				</h:panelGroup>
+
+				<div align="center">
+					<h:panelGrid columns="2" header="Exportar" style="width:100px;">
+						<h:commandLink title="Exportar a excel">
+							<p:graphicImage
+								value="http://www.primefaces.org/showcase/images/excel.png" />
+							<p:dataExporter type="xls" target="clientes" fileName="Clientes" />
+						</h:commandLink>
+
+						<h:commandLink title="Exportar a PDF">
+							<p:graphicImage
+								value="http://www.primefaces.org/showcase/images/pdf.png" />
+							<p:dataExporter type="pdf" target="clientes"
+								preProcessor="#{documentExporterMB.listadoClientesPDF}"
+								fileName="Clientes" />
+						</h:commandLink>
+					</h:panelGrid>
+					<h:panelGroup id="removeFilter" layout="block"
+						style="text-align: right;">
+						<p:commandLink id="quitarFiltro" value="Quitar Filtro"
+							action="/admin/clientelist.html?faces-redirect=true" ajax="false" />
+					</h:panelGroup>
+				</div>
 			</f:facet>
+
+
 
 		</p:dataTable>
 
@@ -214,7 +250,7 @@
 					</p:column>
 
 				</h:panelGrid>
-				
+
 				<p:column style="text-align:right">
 					<div align="right">
 						<p:commandButton id="btnAceptarPlayas" value="Aceptar"

@@ -353,8 +353,8 @@ public class AuditoriaPlayaManagedBean implements Serializable {
 	 * @param pPlayasPendientesList
 	 *            the playasPendientesList to set
 	 */
-	public void setPlayasPendientesList(List<Playa> pPlayasPendientesList) {
-		playasPendientesList = pPlayasPendientesList;
+	public void setPlayasPendientesList(List<Playa> playasPendientesList) {
+		AuditoriaPlayaManagedBean.playasPendientesList = playasPendientesList;
 	}
 
 	/**
@@ -368,8 +368,8 @@ public class AuditoriaPlayaManagedBean implements Serializable {
 	 * @param playasApobadasList
 	 *            the playasApobadasList to set
 	 */
-	public void setPlayasAprobadasList(List<Playa> pPlayasAprobadasList) {
-		playasAprobadasList = pPlayasAprobadasList;
+	public void setPlayasAprobadasList(List<Playa> playasAprobadasList) {
+		AuditoriaPlayaManagedBean.playasAprobadasList = playasAprobadasList;
 	}
 
 	/**
@@ -383,8 +383,8 @@ public class AuditoriaPlayaManagedBean implements Serializable {
 	 * @param pPlayasRechazadasList
 	 *            the playasRechazadasList to set
 	 */
-	public void setPlayasRechazadasList(List<Playa> pPlayasRechazadasList) {
-		playasRechazadasList = pPlayasRechazadasList;
+	public void setPlayasRechazadasList(List<Playa> playasRechazadasList) {
+		AuditoriaPlayaManagedBean.playasRechazadasList = playasRechazadasList;
 	}
 
 	/**
@@ -398,8 +398,8 @@ public class AuditoriaPlayaManagedBean implements Serializable {
 	 * @param pPlayasDeBajaList
 	 *            the playasDeBajaList to set
 	 */
-	public void setPlayasDeBajaList(List<Playa> pPlayasDeBajaList) {
-		playasDeBajaList = pPlayasDeBajaList;
+	public void setPlayasDeBajaList(List<Playa> playasDeBajaList) {
+		AuditoriaPlayaManagedBean.playasDeBajaList = playasDeBajaList;
 	}
 
 	/**
