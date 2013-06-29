@@ -73,19 +73,19 @@ public class PublicidadManagedBean implements Serializable {
     private String url;
 
     private UploadedFile foto;
-    
+
     private static List<Publicidad> publicidadList;
-    
+
     private boolean upload;
 
     @PostConstruct
     private void init() {
 	precio = 20.0f;
 	today = new Date();
-	
+
 	publicidadList = getPublicidadService().findAllByEstadoVigente();
-	
-	upload=false;
+
+	upload = false;
     }
 
     public void addSolicitudPublicidad() {
@@ -141,8 +141,9 @@ public class PublicidadManagedBean implements Serializable {
 
     public void upload() {
 	if (foto != null) {
+	    
 	    fotoPublicidad = new FotoPublicidad(foto.getFileName(), foto.getContents(), url);
-	    upload=true;
+	    upload = true;
 	    WriteImage.writeFotoTemporal(fotoPublicidad);
 	    FacesMessage msg = new FacesMessage("La imagen: " + foto.getFileName() + " se guardó correctamente.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -398,28 +399,30 @@ public class PublicidadManagedBean implements Serializable {
      * @return the publicidadList
      */
     public List<Publicidad> getPublicidadList() {
-        return publicidadList;
+	return publicidadList;
     }
 
     /**
-     * @param publicidadList the publicidadList to set
+     * @param publicidadList
+     *            the publicidadList to set
      */
     public void setPublicidadList(List<Publicidad> publicidadList) {
-        PublicidadManagedBean.publicidadList = publicidadList;
+	PublicidadManagedBean.publicidadList = publicidadList;
     }
 
     /**
      * @return the upload
      */
     public boolean isUpload() {
-        return upload;
+	return upload;
     }
 
     /**
-     * @param upload the upload to set
+     * @param upload
+     *            the upload to set
      */
     public void setUpload(boolean upload) {
-        this.upload = upload;
+	this.upload = upload;
     }
 
 }
