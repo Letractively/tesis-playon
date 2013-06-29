@@ -67,9 +67,10 @@
 			<p:column headerText="Importe" styleClass="column-font"
 				filterBy="#{transaccionPlaya.importe}" filterMatchMode="contains">
 				<f:facet name="header">
-					$<h:outputText value="Importe" />
+					<h:outputText value="Importe" />
 				</f:facet>
-				<h:outputText value="#{transaccionPlaya.importe}" />
+				<h:outputText value="#{transaccionPlaya.importe}" >
+						<f:convertNumber type="currency" currencySymbol="$ " /></h:outputText>
 			</p:column>
 
 			<p:column headerText="Cobrado" styleClass="column-font">

@@ -16,20 +16,28 @@
 
 			<p:dataGrid var="marcaVehiculo"
 				value="#{modeloVehiculoMB.marcaVehiculoList}" columns="3" rows="9"
-				paginator="true"
-				paginatorPosition="bottom"
+				paginator="true" paginatorPosition="bottom"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="9,12,15">
 
 				<p:panel header="#{Marca}" style="text-align:center">
 					<h:panelGrid columns="2" style="width:100%">
-						<p:graphicImage value="/resources/images/marcas/#{marcaVehiculo.nombre}.jpg" />
+						<p:graphicImage
+							value="/resources/images/marcas/#{marcaVehiculo.nombre}.jpg" />
 
 						<h:outputText value="#{marcaVehiculo.nombre}" />
 					</h:panelGrid>
 				</p:panel>
 
 			</p:dataGrid>
+
+			<p>
+				<h:panelGroup layout="block" style="text-align: right; width: 100%;">
+					<p:commandButton id="addMarcaVehiculo" value="Agregar marca"
+						action="/admin/marcavehiculoadd.html?faces-redirect=true"
+						ajax="false" />
+				</h:panelGroup>
+			</p>
 
 
 

@@ -81,13 +81,16 @@ public class ModeloVehiculoManagedBean implements Serializable {
 	private String nombreModelo;
 
 	private String descripcionModelo;
+	
+
 
 	@PostConstruct
 	private void init() {
 		marcaVehiculoList = getMarcaVehiculoService().findAll();
 		modelosList = getModeloVehiculoService().findAll();
 		categoriaVehiculoList = getCategoriaVehiculoService().findAll();
-	}
+		
+		}
 
 	public String addMarcaVehiculo() {
 		MarcaVehiculo marcaVehiculo = new MarcaVehiculo();
