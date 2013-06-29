@@ -4,9 +4,13 @@
 package tesis.playon.web.managed.bean;
 
 import java.awt.Color;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -25,6 +29,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -183,6 +189,8 @@ public class DetalleEstadiaManagedBean implements Serializable {
     private Promocion promocionSeleccionada;
 
     private boolean imprimir = true;
+
+    private String rutaPDF = "resources" + File.separator + "archivo.pdf";
 
     @PostConstruct
     private void init() {
@@ -349,11 +357,17 @@ public class DetalleEstadiaManagedBean implements Serializable {
 		    "Se registró el ingreso exitosamente del vehiculo patente: " + patente, "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
-	    return "/playa/ingresoegresovehiculo";
+	    this.generarTicketIngreso();
+
+	    return "/playa/ingresoegresovehiculo?faces-redirect=true";
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
 	return null;
+    }
+
+    public String redirect() {
+	return "/playa/ingresoegresovehiculo?faces-redirect=true";
     }
 
     public void calcularImporte() {
@@ -891,15 +905,66 @@ public class DetalleEstadiaManagedBean implements Serializable {
     }
 
     // -------------------- DESCARGAR PDF
-    private StreamedContent file;
+    // private StreamedContent file;
 
-    /**
-     * @return the file
-     */
-    public StreamedContent getFile() {
+    // public StreamedContent getFile() {
+    // try {
+    //
+    // Document doc = new Document(PageSize.A4, 50, 50, 100, 72);
+    //
+    // File filePDF = new File("/tmp/pdf.pdf");
+    // OutputStream os = new FileOutputStream(filePDF);
+    //
+    // @SuppressWarnings("unused")
+    // PdfWriter writer = PdfWriter.getInstance(doc, os);
+    //
+    // // ******definicion de letras y parrafos********************
+    // Font fuenteNegra18 = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, Color.BLACK);
+    // Paragraph titulo = new Paragraph();
+    // titulo.add(new Paragraph("Comprobante de ingreso emitido el: " + fechaActual(), fuenteNegra18));
+    //
+    // Font fuenteCuerpo = new Font(Font.TIMES_ROMAN, 14, Font.NORMAL, Color.BLACK);
+    //
+    // // Paragraph cuerpo = new Paragraph();
+    // agregarLineasEnBlanco(titulo, 2);
+    // titulo.add(new Paragraph("Hora de ingreso: " + getDetalleEstadia().getFechaHoraIngreso(), fuenteCuerpo));
+    //
+    // titulo.add(new Paragraph("Hora de ingreso: "
+    // + "una vez que el archivo descargue, poner fecha de egreso aca!", fuenteCuerpo));
+    // titulo.add(new Paragraph("Patente: " + getDetalleEstadia().getVehiculo().getPatente(), fuenteCuerpo));
+    // titulo.add(new Paragraph("Modelo: " + getDetalleEstadia().getVehiculo().getModeloVehiculo().getNombre(),
+    // fuenteCuerpo));
+    // titulo.add(new Paragraph("Importe: " + getDetalleEstadia().getImporteTotal(), fuenteCuerpo));
+    // titulo.add(new Paragraph("Saldo: "
+    // + getDetalleEstadia().getVehiculo().getCliente().getCuentaCliente().getSaldo(), fuenteCuerpo));
+    //
+    // String sep = File.separator;
+    // ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
+    // String logo = extContext.getRealPath("resources" + sep + "images" + sep + "transacciones.png");
+    // /************************************/
+    // doc.open();
+    // doc.addTitle("Listado de empleados");
+    // doc.add(Image.getInstance(logo));
+    // doc.add(titulo);
+    // doc.close();
+    // /**************************************/
+    // InputStream stream = new FileInputStream(filePDF);
+    //
+    // file = new DefaultStreamedContent(stream, "application/pdf", "downloaded_primefaces.pdf");
+    // return file;
+    // } catch (Exception e) {
+    //
+    // }
+    // return null;
+    // }
+
+    // -------------------- DESCARGAR PDF
+     private StreamedContent fileIngreso;
+
+    public StreamedContent getFileIngreso() {
 	try {
 
-	    Document doc = new Document(PageSize.A4, 50, 50, 100, 72);
+	    Document doc = new Document(PageSize.A6, 10, 10, 10, 10);
 
 	    File filePDF = new File("/tmp/pdf.pdf");
 	    OutputStream os = new FileOutputStream(filePDF);
@@ -909,23 +974,20 @@ public class DetalleEstadiaManagedBean implements Serializable {
 
 	    // ******definicion de letras y parrafos********************
 	    Font fuenteNegra18 = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, Color.BLACK);
-	    Paragraph titulo = new Paragraph();
-	    titulo.add(new Paragraph("Comprobante de ingreso emitido el: " + fechaActual(), fuenteNegra18));
+	    Paragraph cuerpo = new Paragraph();
+	    cuerpo.add(new Paragraph("Comprobante de ingreso emitido el: " + fechaActual(), fuenteNegra18));
 
 	    Font fuenteCuerpo = new Font(Font.TIMES_ROMAN, 14, Font.NORMAL, Color.BLACK);
 
 	    // Paragraph cuerpo = new Paragraph();
-	    agregarLineasEnBlanco(titulo, 2);
-	    titulo.add(new Paragraph("Hora de ingreso: " + getDetalleEstadia().getFechaHoraIngreso(), fuenteCuerpo));
-
-	    titulo.add(new Paragraph("Hora de ingreso: "
-		    + "una vez que el archivo descargue, poner fecha de egreso aca!", fuenteCuerpo));
-	    titulo.add(new Paragraph("Patente: " + getDetalleEstadia().getVehiculo().getPatente(), fuenteCuerpo));
-	    titulo.add(new Paragraph("Modelo: " + getDetalleEstadia().getVehiculo().getModeloVehiculo().getNombre(),
+	    agregarLineasEnBlanco(cuerpo, 2);
+	    // titulo.add(new Paragraph("prueba"));
+	    cuerpo.add(new Paragraph("Hora de ingreso: " + new Timestamp(Calendar.getInstance().getTimeInMillis()),
 		    fuenteCuerpo));
-	    titulo.add(new Paragraph("Importe: " + getDetalleEstadia().getImporteTotal(), fuenteCuerpo));
-	    titulo.add(new Paragraph("Saldo: "
-		    + getDetalleEstadia().getVehiculo().getCliente().getCuentaCliente().getSaldo(), fuenteCuerpo));
+	    cuerpo.add(new Paragraph("Patente: " + this.getVehiculo().getPatente(), fuenteCuerpo));
+	    cuerpo.add(new Paragraph("Modelo: " + this.getVehiculo().getModeloVehiculo().getNombre(), fuenteCuerpo));
+	    cuerpo.add(new Paragraph("Saldo: " + this.getVehiculo().getCliente().getCuentaCliente().getSaldo(),
+		    fuenteCuerpo));
 
 	    String sep = File.separator;
 	    ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -934,19 +996,131 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	    doc.open();
 	    doc.addTitle("Listado de empleados");
 	    doc.add(Image.getInstance(logo));
-	    doc.add(titulo);
+	    doc.add(cuerpo);
 	    doc.close();
 	    /**************************************/
 	    InputStream stream = new FileInputStream(filePDF);
 
-	    file = new DefaultStreamedContent(stream, "application/pdf", "downloaded_primefaces.pdf");
-	    return file;
+	    fileIngreso = new DefaultStreamedContent(stream, "application/pdf", "downloaded_primefaces.pdf");
+	    return fileIngreso;
 	} catch (Exception e) {
 
 	}
 	return null;
     }
+    
+    // private StreamedContent ticketIngreso;
 
+    private static void close(Closeable resource) {
+	if (resource != null) {
+	    try {
+		resource.close();
+	    } catch (IOException e) {
+		// Do your thing with the exception. Print it, log it or mail it. It may be useful to
+		// know that this will generally only be thrown when the client aborted the download.
+		e.printStackTrace();
+	    }
+	}
+    }
+
+    /**
+     * @return the ticket Ingreso File
+     */
+    public void generarTicketIngreso() throws IOException {
+	try {
+
+	    Document doc = new Document(PageSize.A6, 10, 10, 10, 10);
+
+	    File filePDF = new File("/tmp/pdf.pdf");
+	    OutputStream os = new FileOutputStream(filePDF);
+
+	    @SuppressWarnings("unused")
+	    PdfWriter writer = PdfWriter.getInstance(doc, os);
+
+	    // ******definicion de letras y parrafos********************
+	    Font fuenteNegra18 = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, Color.BLACK);
+	    Paragraph cuerpo = new Paragraph();
+	    cuerpo.add(new Paragraph("Comprobante de ingreso emitido el: " + fechaActual(), fuenteNegra18));
+
+	    Font fuenteCuerpo = new Font(Font.TIMES_ROMAN, 14, Font.NORMAL, Color.BLACK);
+
+	    // Paragraph cuerpo = new Paragraph();
+	    agregarLineasEnBlanco(cuerpo, 2);
+	    // titulo.add(new Paragraph("prueba"));
+	    cuerpo.add(new Paragraph("Hora de ingreso: " + new Timestamp(Calendar.getInstance().getTimeInMillis()),
+		    fuenteCuerpo));
+	    cuerpo.add(new Paragraph("Patente: " + this.getVehiculo().getPatente(), fuenteCuerpo));
+	    cuerpo.add(new Paragraph("Modelo: " + this.getVehiculo().getModeloVehiculo().getNombre(), fuenteCuerpo));
+	    cuerpo.add(new Paragraph("Saldo: " + this.getVehiculo().getCliente().getCuentaCliente().getSaldo(),
+		    fuenteCuerpo));
+
+	    String sep = File.separator;
+	    ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
+	    String logo = extContext.getRealPath("resources" + sep + "images" + sep + "transacciones.png");
+	    /************************************/
+	    doc.open();
+	    doc.addTitle("Listado de empleados");
+	    doc.add(Image.getInstance(logo));
+	    doc.add(cuerpo);
+	    doc.close();
+	    /**************************************/
+
+	    int DEFAULT_BUFFER_SIZE = 10240;
+
+	    // Prepare.
+	    FacesContext facesContext = FacesContext.getCurrentInstance();
+	    ExternalContext externalContext = facesContext.getExternalContext();
+	    HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
+
+	    String path = externalContext.getRealPath("resources" + sep + "archivo.pdf");
+
+	    File file = filePDF;
+	    BufferedInputStream input = null;
+	    BufferedOutputStream output = null;
+
+	    try {
+		// Open file.
+		input = new BufferedInputStream(new FileInputStream(file), DEFAULT_BUFFER_SIZE);
+
+		// Init servlet response.
+		response.reset();
+		response.setHeader("Content-Type", "application/pdf");
+		response.setHeader("Content-Length", String.valueOf(file.length()));
+		response.setHeader("Content-Disposition", "filename=\"archivo.pdf\"");
+		output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
+
+		
+		// Write file contents to response.
+		//ServletOutputStream sos = response.getOutputStream();
+
+		byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+		int length;
+		while ((length = input.read(buffer)) > 0) {
+		    output.write(buffer, 0, length);
+		}
+
+		//sos.flush();
+		//sos.close();
+		// Finalize task.
+		output.flush();
+		//facesContext.responseComplete();
+	    } finally {
+		// Gently close streams.
+		close(output);
+		close(input);
+	    }
+
+	    // Inform JSF that it doesn't need to handle response.
+	    // This is very important, otherwise you will get the following exception in the logs:
+	    // java.lang.IllegalStateException: Cannot forward after response has been committed.
+	    //facesContext.responseComplete();
+	    this.setRutaPDF(path);
+
+	} catch (Exception e) {
+
+	}
+    }
+    
     private String fechaActual() {
 	Date hoy = new Date();
 	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -964,8 +1138,16 @@ public class DetalleEstadiaManagedBean implements Serializable {
      * @param file
      *            the file to set
      */
-    public void setFile(StreamedContent file) {
-	this.file = file;
+    // public void setFile(StreamedContent file) {
+    // this.file = file;
+    // }
+
+    public String getRutaPDF() {
+	return rutaPDF;
+    }
+
+    public void setRutaPDF(String rutaPDF) {
+	this.rutaPDF = rutaPDF;
     }
 
 }

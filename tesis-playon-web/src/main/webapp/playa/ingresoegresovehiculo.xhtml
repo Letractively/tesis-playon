@@ -39,7 +39,8 @@
 				</div>
 			</ui:fragment>
 
-			<ui:fragment id="vehiculoSinAbono" rendered="#{detalleEstadiaMB.existeVehiculo 
+			<ui:fragment id="vehiculoSinAbono"
+				rendered="#{detalleEstadiaMB.existeVehiculo 
 					and detalleEstadiaMB.existeAbonoVehiculo == false}">
 				<div id="perfil-playa">
 
@@ -145,13 +146,15 @@
 					</p:panel>
 				</div>
 			</ui:fragment>
-		
-		
-			<ui:fragment rendered="#{detalleEstadiaMB.existeVehiculo
+
+
+			<ui:fragment
+				rendered="#{detalleEstadiaMB.existeVehiculo
 					and detalleEstadiaMB.existeAbonoVehiculo == true}">
 				<div id="perfil-playa">
 
-					<p:panel id="vehiculoAbonado" style="text-align:left;" styleClass="fuente-outputtext">
+					<p:panel id="vehiculoAbonado" style="text-align:left;"
+						styleClass="fuente-outputtext">
 
 						<f:facet name="header">
 							<h:outputText
@@ -160,7 +163,7 @@
 						</f:facet>
 						<div align="center">
 							<h:panelGrid columns="5" cellpadding="10" cellspacing="5">
-								
+
 								<p:column>
 									<div align="right">
 										<h:outputText value="Patente: " />
@@ -170,8 +173,9 @@
 									value="#{detalleEstadiaMB.vehiculo.patente}" />
 
 								<p:column>&#160;&#160;&#160;&#160;&#160;</p:column>
-								<p:column /><p:column />
-								
+								<p:column />
+								<p:column />
+
 								<p:column>
 									<div align="right">
 										<h:outputText value="Vehiculo: " />
@@ -179,10 +183,10 @@
 								</p:column>
 								<h:outputText id="modeloVehiculo"
 									value="#{detalleEstadiaMB.vehiculo.modeloVehiculo.marcaVehiculo.nombre}&#160;
-									#{detalleEstadiaMB.vehiculo.modeloVehiculo.nombre}" />							
+									#{detalleEstadiaMB.vehiculo.modeloVehiculo.nombre}" />
 
 								<p:column>&#160;&#160;&#160;&#160;&#160;</p:column>
-								
+
 								<p:column>
 									<div align="right">
 										<h:outputText value="Categoría: " />
@@ -237,7 +241,8 @@
 											rendered="#{detalleEstadiaMB.detalleEstadia == null
 												and  detalleEstadiaMB.existeTarifa and detalleEstadiaMB.existeAbonoVehiculo == true}"
 											id="ingresoAbono" value="Registrar ingreso" ajax="false"
-											action="#{detalleEstadiaMB.registrarIngresoAbono}" style="margin-right:10px" />
+											action="#{detalleEstadiaMB.registrarIngresoAbono}"
+											style="margin-right:10px" />
 										<p:commandButton id="egresoAbono" value="Registrar egreso"
 											rendered="#{detalleEstadiaMB.detalleEstadia != null}"
 											style="margin-right:15px" update="form"
@@ -252,7 +257,7 @@
 					</p:panel>
 				</div>
 			</ui:fragment>
-			
+
 		</h:form>
 
 		<h:form id="formIngreso">
@@ -317,35 +322,49 @@
 						<f:facet name="footer">
 							<div align="right">
 								<p:commandButton id="registrarIngreso" value="Registrar ingreso"
+									update=":formTicket:pdfMedia"
+									onclick="dlgIngreso.hide();dlgTicket.show();"
 									action="#{detalleEstadiaMB.registrarIngresoVehiculo}"
 									ajax="false" style="margin-right:10px">
-									<p:fileDownload value="#{detalleEstadiaMB.file}"
-									contentDisposition="attachment" />
-									<p:ajax event="click" onstart="dlgIngreso.hide();"/>
+										
 								</p:commandButton>
+
 								<p:commandButton id="cancelar" value="Cancelar" immediate="true"
 									oncomplete="dlgIngreso.hide();" />
 							</div>
 						</f:facet>
 					</h:panelGrid>
-
 				</p:dialog>
 			</ui:fragment>
+		</h:form>
+
+		<h:form id="formTicket">
+			<p:dialog header="Ticket de Ingreso" widgetVar="dlgTicket"
+				resizable="false">
+
+				<p:lightBox iframe="true">
+					<h:outputLink value="#{detalleEstadiaMB.rutaPDF}"
+						title="PrimeFaces HomePage">
+						<h:outputText value="PrimeFaces HomePage" />
+					</h:outputLink>
+				</p:lightBox>
+				<p:commandButton id="Salir" value="Salir" immediate="true"
+									onclick="dlgTicket.hide();window.location.href = '/playa/ingresoegresovehiculo';" />
+			</p:dialog>
 		</h:form>
 
 		<h:form id="formEgreso">
 			<ui:fragment>
 				<p:dialog header="Confirmación de egreso de vehículo"
 					widgetVar="dlgEgreso" resizable="false">
-					
+
 					<div align="center">
 						<h:panelGrid columns="2" cellpadding="8" cellspacing="8"
 							id="panelEgreso">
 
 							<p:column>
 								<div align="right">
-									<h:outputText
-										value="Importe: " styleClass="fuente-outputtext" />
+									<h:outputText value="Importe: " styleClass="fuente-outputtext" />
 								</div>
 							</p:column>
 
