@@ -19,6 +19,7 @@ import org.springframework.dao.DataAccessException;
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.MarcaVehiculo;
 import tesis.playon.web.model.ModeloVehiculo;
+import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.ICategoriaVehiculoService;
 import tesis.playon.web.service.IMarcaVehiculoService;
 import tesis.playon.web.service.IModeloVehiculoService;
@@ -70,9 +71,11 @@ public class ModeloVehiculoManagedBean implements Serializable {
 
 	private String nombreMarca;
 
-	private MarcaVehiculo marcaVehiculoSelected;
+	private static MarcaVehiculo marcaVehiculoSelected;
 
-	private ModeloVehiculo modeloVehiculoSelected;
+	private static ModeloVehiculo modeloVehiculoSelected;
+
+	private static CategoriaVehiculo categoriaVehiculoSelected;
 
 	private String descripcionMarca;
 
@@ -137,6 +140,35 @@ public class ModeloVehiculoManagedBean implements Serializable {
 			ex.printStackTrace();
 		}
 		return ERROR;
+	}
+
+	public String updateVehiculo() {
+		try {
+			modeloVehiculoSelected
+					.setNombre(modeloVehiculoSelected.getNombre());
+			modeloVehiculoSelected
+					.setCategoriaVehiculo(categoriaVehiculoSelected);
+			modeloVehiculoSelected.setDescripcion(modeloVehiculoSelected
+					.getDescripcion());
+			modeloVehiculoSelected.setMarcaVehiculo(marcaVehiculoSelected);
+
+			getModeloVehiculoService().update(modeloVehiculoSelected);
+
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Se actualizó correctamente el modelo de vehiculo: "
+							+ modeloVehiculoSelected.getNombre(), null);
+			FacesContext.getCurrentInstance().addMessage(null, message);
+
+			return LISTA_MODELO_VEHICULOS;
+		} catch (Exception e) {
+
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+					"Ya se encuentra registrado el Modelo  "
+							+ modeloVehiculoSelected.getNombre(), null);
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+		return ERROR;
+
 	}
 
 	public IModeloVehiculoService getModeloVehiculoService() {
@@ -239,7 +271,16 @@ public class ModeloVehiculoManagedBean implements Serializable {
 	}
 
 	public void setMarcaVehiculoSelected(MarcaVehiculo marcaVehiculoSelected) {
-		this.marcaVehiculoSelected = marcaVehiculoSelected;
+		ModeloVehiculoManagedBean.marcaVehiculoSelected = marcaVehiculoSelected;
+	}
+
+	public CategoriaVehiculo getCategoriaVehiculoSelected() {
+		return categoriaVehiculoSelected;
+	}
+
+	public void setCategoriaVehiculoSelected(
+			CategoriaVehiculo categoriaVehiculoSelected) {
+		ModeloVehiculoManagedBean.categoriaVehiculoSelected = categoriaVehiculoSelected;
 	}
 
 	public ModeloVehiculo getModeloVehiculoSelected() {
@@ -247,7 +288,7 @@ public class ModeloVehiculoManagedBean implements Serializable {
 	}
 
 	public void setModeloVehiculoSelected(ModeloVehiculo modeloVehiculoSelected) {
-		this.modeloVehiculoSelected = modeloVehiculoSelected;
+		ModeloVehiculoManagedBean.modeloVehiculoSelected = modeloVehiculoSelected;
 	}
 
 	public String getDescripcionMarca() {

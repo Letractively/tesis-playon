@@ -781,7 +781,7 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 				ingUtilitario += detalleAux.getImporteTotal();
 			}
 			if (detalleAux.getVehiculo().getModeloVehiculo()
-					.getCategoriaVehiculo().getNombre().equals("Pickup")) {
+					.getCategoriaVehiculo().getNombre().equals("PickUp / 4X4")) {
 				ingPickUp += detalleAux.getImporteTotal();
 			}
 
@@ -813,7 +813,7 @@ public class EstadisticaGerenteManagedBean implements Serializable {
 				cantUtilitarios++;
 			}
 			if (detalleAux.getVehiculo().getModeloVehiculo()
-					.getCategoriaVehiculo().getNombre().equals("Pickup")) {
+					.getCategoriaVehiculo().getNombre().equals("PickUp / 4X4")) {
 				cantPickUp++;
 			}
 
