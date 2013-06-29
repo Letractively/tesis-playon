@@ -12,49 +12,33 @@
 
 		<p:growl id="messages" />
 		<div align="center">
-			<h:panelGrid columns="1" width="%">
-				<p:dataTable id="marcasVehiculo" var="marcaVehiculo"
-					paginator="true" rows="8" paginatorPosition="bottom"
-					value="#{modeloVehiculoMB.marcaVehiculoList}"
-					emptyMessage="¡No existen marcas de vehiculos en el sistema!">
-					<f:facet name="header">
-				
-            </f:facet>
 
-					<p:column headerText="Nombre" styleClass="column-font"
-						filterBy="#{marcaVehiculo.nombre}">
+
+			<p:dataGrid var="marcaVehiculo"
+				value="#{modeloVehiculoMB.marcaVehiculoList}" columns="3" rows="9"
+				paginator="true"
+				paginatorPosition="bottom"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="9,12,15">
+
+				<p:panel header="#{Marca}" style="text-align:center">
+					<h:panelGrid columns="2" style="width:100%">
+						<p:graphicImage value="/resources/images/marcas/#{marcaVehiculo.nombre}.jpg" />
+
 						<h:outputText value="#{marcaVehiculo.nombre}" />
-					</p:column>
+					</h:panelGrid>
+				</p:panel>
 
-					<p:column headerText="Descripcion" styleClass="column-font"
-						filterBy="#{marcaVehiculo.descripcion}">
-						<h:outputText value="#{marcaVehiculo.descripcion}" />
-					</p:column>
+			</p:dataGrid>
 
-					<p:column headerText="Opciones" styleClass="column-options"
-						style="width:135px">
 
-						<p:commandLink id="edit" title="Editar Datos"
-							action="/admin/marcavehiculoedit.html?faces-redirect=true"
-							ajax="false">
-							<f:setPropertyActionListener value="#{marcaVehiculo}"
-								target="#{modeloVehiculoMB.marcaVehiculoSelected}" />
-							<h:graphicImage library="images/icons" name="pencil.png" />
-						</p:commandLink>
 
-					</p:column>
-
-				</p:dataTable>
-				<p>
-					<h:panelGroup layout="block"
-						style="text-align: right; width: 100%;">
-						<p:commandButton id="addMarcaVehiculo" value="Agregar marca"
-							action="/admin/marcavehiculoadd.html?faces-redirect=true"
-							ajax="false" />
-					</h:panelGroup>
-				</p>
-			</h:panelGrid>
 		</div>
 
 	</ui:define>
+
+
+
+
+
 </ui:composition>
