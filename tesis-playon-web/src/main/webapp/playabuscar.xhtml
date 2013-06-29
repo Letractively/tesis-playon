@@ -64,131 +64,132 @@
 	</script>
 
 	<h:form id="form">
+		<p:growl id="messages" showSummary="false" autoUpdate="true"
+			globalOnly="true" />
 
-		<p:growl id="messages" />
-		<div align="center">
+		<div style="margin: 10px 0 10px 0;">
+			<h:panelGrid columns="1" width="100%">
+				<h:panelGrid columns="3" cellspacing="10" cellpadding="5"
+					width="100%">
+					<p:column>
+						<div align="right">
+							<h:outputLabel for="direccionBusqueda"
+								value="Dirección búsqueda:" />
+						</div>
+					</p:column>
 
-			<h:panelGrid columns="4" cellspacing="10" cellpadding="8">
-				<p:column>
-					<h:outputLabel for="direccionBusqueda"
-						value="Dirección de búsqueda: " />
-				</p:column>
-				<p:column>
 					<p:inputText id="direccionBusqueda"
 						value="#{busquedaplayaMB.direccionBusqueda}" required="true"
-						requiredMessage="Campo obligatorio">
+						requiredMessage="Campo dirección de búsqueda obligatorio"
+						style="width:200px;">
 						<p:ajax event="blur" update="direccionBusquedaMsg" />
 					</p:inputText>
-				</p:column>
 
-				<p:column style="vertical-align: center;">
-					<div align="right">
-						<h:outputLabel for="distancia" value="N° de cuadras: " />
-					</div>
-				</p:column>
-				<p:column>
-					<p:inputText id="distancia" value="#{busquedaplayaMB.distancia}" />
-				</p:column>
+					<p:message id="direccionBusquedaMsg" display="text"
+						for="direccionBusqueda" />
 
-				<p:column />
-				<p:column>
-					<p:message id="direccionBusquedaMsg" for="direccionBusqueda"
-						display="text" />
-				</p:column>
+					<p:column>
+						<div align="right">
+							<h:outputLabel for="distancia" value="N° de cuadras: " />
+						</div>
+					</p:column>
+					<p:inputText id="distancia" value="#{busquedaplayaMB.distancia}"
+						style="width:100px;" />
 
-				<p:column />
-				<p:column>
-					<p:slider for="distancia" minValue="1" maxValue="50" />
-				</p:column>
-				<p:column />
+					<p:column />
 
-				<p:column />
-				<p:column>
-					<p:commandLink id="btnOpcionesAvanzadas" value="opciones avanzadas"
-						action="#{busquedaplayaMB.settearOpcionesAvanzadas()}"
-						ajax="false" immediate="true"
-						rendered="#{!busquedaplayaMB.opcionesAvanzadas}" />
-				</p:column>
+					<p:column />
+					<p:slider for="distancia" minValue="1" maxValue="50"
+						style="width:100px;" />
+					<p:column />
+				</h:panelGrid>
+
 				<p:column>
 					<div align="right">
+						<p:commandLink id="btnOpcionesAvanzadas"
+							value="opciones avanzadas"
+							action="#{busquedaplayaMB.settearOpcionesAvanzadas()}"
+							ajax="false" immediate="true"
+							rendered="#{!busquedaplayaMB.opcionesAvanzadas}"
+							style="margin:0 20px 0 0;" />
 						<p:commandButton id="btnBuscarId" update="playas,mapa"
 							style="width:110px;" value="Buscar"
 							action="#{busquedaplayaMB.buscarPlaya}" ajax="false"
 							rendered="#{!busquedaplayaMB.opcionesAvanzadas}" />
 					</div>
 				</p:column>
+			</h:panelGrid>
 
+			<h:panelGrid columns="1" width="100%">
+				<h:panelGrid columns="4" cellspacing="10" cellpadding="5"
+					width="100%" rendered="#{busquedaplayaMB.opcionesAvanzadas}">
+					<p:column>
+						<div align="right">
+							<h:outputLabel for="nombrePlaya" value="Nombre de la playa: " />
+						</div>
+					</p:column>
 
-				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
-					<div align="right">
-						<h:outputLabel for="nombrePlaya" value="Nombre de la playa: " />
-					</div>
-				</p:column>
-				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
 					<p:inputText id="nombrePlaya"
-						value="#{busquedaplayaMB.nombrePlayaParameter}" />
-				</p:column>
-				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
-					<h:outputLabel for="nombrePlaya" value="Promociones: " />
-				</p:column>
-				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
+						value="#{busquedaplayaMB.nombrePlayaParameter}"
+						style="width:200px;" />
+
+					<p:column>
+						<div align="right">
+							<h:outputLabel for="check" value="Promociones: " />
+						</div>
+					</p:column>
+
 					<p:selectOneRadio id="check"
 						value="#{busquedaplayaMB.checkPromociones}">
 						<f:selectItem itemLabel="SI&#160;&#160;&#160;&#160;&#160;&#160;"
 							itemValue="1" />
 						<f:selectItem itemLabel=" NO" itemValue="0" />
 					</p:selectOneRadio>
-				</p:column>
 
+
+					<p:column>
+						<div align="right">
+							<h:outputText value="Categoría: " />
+						</div>
+					</p:column>
+
+					<p:column>
+						<p:selectOneMenu value="#{busquedaplayaMB.categoriaParameter}"
+							effect="fade" style="width:130px;">
+							<f:selectItem itemLabel="Todas" itemValue="" />
+							<f:selectItems
+								value="#{categoriaVehiculoMB.categoriaVehiculoList}"
+								var="categoria" itemValue="#{categoria}"
+								itemLabel="#{categoria.nombre}" />
+							<f:converter converterId="categoriaVehiculoConverter" />
+						</p:selectOneMenu>
+					</p:column>
+
+					<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
+						<div align="right">
+							<h:outputText value="Tipo estadía: " />
+						</div>
+					</p:column>
+
+					<p:column>
+						<p:selectOneMenu value="#{busquedaplayaMB.tipoEstadiaParameter}"
+							effect="fade" style="width:130px;">
+							<f:selectItem itemLabel="Todas" itemValue="" />
+							<f:selectItems value="#{tipoEstadiaMB.tipoEstadiaList}"
+								var="tipoEstadia" itemValue="#{tipoEstadia}"
+								itemLabel="#{tipoEstadia.nombre}" />
+							<f:converter converterId="tipoEstadiaConverter" />
+						</p:selectOneMenu>
+					</p:column>
+				</h:panelGrid>
 
 				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
-					<div align="right">
-						<h:outputText value="Categoría: " />
-					</div>
-				</p:column>
-
-				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
-					<p:selectOneMenu value="#{busquedaplayaMB.categoriaParameter}"
-						effect="fade" style="width:130px;">
-						<f:selectItem itemLabel="Todas" itemValue="" />
-						<f:selectItems
-							value="#{categoriaVehiculoMB.categoriaVehiculoList}"
-							var="categoria" itemValue="#{categoria}"
-							itemLabel="#{categoria.nombre}" />
-						<f:converter converterId="categoriaVehiculoConverter" />
-					</p:selectOneMenu>
-				</p:column>
-
-				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
-					<div align="right">
-						<h:outputText value="Tipo estadía: " />
-					</div>
-				</p:column>
-
-				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
-					<p:selectOneMenu value="#{busquedaplayaMB.tipoEstadiaParameter}"
-						effect="fade" style="width:130px;">
-						<f:selectItem itemLabel="Todas" itemValue="" />
-						<f:selectItems value="#{tipoEstadiaMB.tipoEstadiaList}"
-							var="tipoEstadia" itemValue="#{tipoEstadia}"
-							itemLabel="#{tipoEstadia.nombre}" />
-						<f:converter converterId="tipoEstadiaConverter" />
-					</p:selectOneMenu>
-				</p:column>
-
-				<p:column />
-				<p:column />
-				<p:column />
-				<p:column rendered="#{busquedaplayaMB.opcionesAvanzadas}">
-					<div align="right">
+					<div align="right" style="margin: 0 28px 0 0;">
 						<p:commandButton id="btnBuscarAvanzado" update="playas,mapa"
 							value="Buscar" action="#{busquedaplayaMB.busquedaAvanzada}"
 							ajax="false" style="width:130px;" />
 					</div>
 				</p:column>
-
-
-
 			</h:panelGrid>
 		</div>
 
@@ -271,7 +272,8 @@
 
 			<p:column headerText="Ruta" style="text-align:center; width:50px;">
 				<p:commandLink id="view2" oncomplete="dlgOrigen.show();"
-					title="¿Cómo llegar a esta playa?" update=":form:dlgO" process="@this">
+					title="¿Cómo llegar a esta playa?" update=":form:dlgO"
+					process="@this">
 					<f:setPropertyActionListener value="#{playa}"
 						target="#{busquedaplayaMB.playaselected}" />
 					<h:graphicImage library="images/icons" name="search-map.png"

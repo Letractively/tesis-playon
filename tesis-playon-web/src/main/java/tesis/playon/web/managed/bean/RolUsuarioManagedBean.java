@@ -51,7 +51,7 @@ public class RolUsuarioManagedBean implements Serializable {
 	    rolUsuario.setDescripcion(getDescripcion());
 	    getRolUsuarioService().save(rolUsuario);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el Rol: "
-		    + rolUsuario.getNombre(), null);
+		    + rolUsuario.getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return LISTA_ROL_USUARIOS;
@@ -70,7 +70,7 @@ public class RolUsuarioManagedBean implements Serializable {
 
 	    getRolUsuarioService().delete(rolUsuario);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se dió de baja el Rol: "
-		    + rolUsuario.getNombre(), null);
+		    + rolUsuario.getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_ROL_USUARIOS;
 	} catch (Exception e) {
@@ -87,7 +87,7 @@ public class RolUsuarioManagedBean implements Serializable {
 	    if (rolUsuarioSelected != null) {
 		getRolUsuarioService().update(rolUsuarioSelected);
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-			"Se actualizó correctamente el Rol: " + rolUsuarioSelected.getNombre(), null);
+			"Se actualizó correctamente el Rol: " + rolUsuarioSelected.getNombre(), "");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	    }
 	} catch (Exception ex) {

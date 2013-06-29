@@ -433,11 +433,7 @@ public class TarifaManagedBean implements Serializable {
 			FacesMessage message = new FacesMessage(
 					FacesMessage.SEVERITY_ERROR,
 					"Error, no se pudo agregar la tarifa "
-					/*
-					 * + "con categoría: " +
-					 * tarifa.getCategoriaVehiculo().getNombre() +
-					 * " y del tipo: " + tarifa.getTipoEstadia().getNombre()
-					 */, "Por favor, inténtelo más tarde.");
+					, "Por favor, inténtelo más tarde.");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			e.printStackTrace();
 			return false;

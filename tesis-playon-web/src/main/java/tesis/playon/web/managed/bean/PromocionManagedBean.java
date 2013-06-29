@@ -152,13 +152,13 @@ public class PromocionManagedBean implements Serializable {
 	    getPromocionService().save(promocion);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se registró exitosamente la promoción: " + promocion.getNombre(), null);
+		    "Se registró exitosamente la promoción: " + promocion.getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return "promocionaddend";
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo registrar la promoción, Disculpe las molestias ocacionadas.", null);
+		    "Error, no se pudo registrar la promoción, Disculpe las molestias ocacionadas.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -173,13 +173,13 @@ public class PromocionManagedBean implements Serializable {
 	    getPromocionService().update(promo);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se actualizó exitosamente la promoción: " + promocionSelected.getNombre(), null);
+		    "Se actualizó exitosamente la promoción: " + promocionSelected.getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return "promocioneslist";
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo modificar la promoción, Disculpe las molestias ocacionadas.", null);
+		    "Error, no se pudo modificar la promoción, Disculpe las molestias ocacionadas.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -195,13 +195,13 @@ public class PromocionManagedBean implements Serializable {
 		getPromocionService().update(promocionSelected);
 
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-			"Se dió de baja la promoción correctamente.", null);
+			"Se dió de baja la promoción correctamente.", "");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    }
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo dar de baja la promoción, Disculpe las molestias ocacionadas.", null);
+		    "Error, no se pudo dar de baja la promoción, Disculpe las molestias ocacionadas.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}

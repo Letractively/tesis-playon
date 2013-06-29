@@ -112,13 +112,13 @@ public class PerfilClienteManagedBean implements Serializable {
 	    WriteImage.getFotoPerfilUsuario(this.cliente.getUsuario());
 	    
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se actualizó exitosamente su foto de perfil", null);
+		    "Se actualizó exitosamente su foto de perfil", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return "perfilclienteedit";
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudo cargar su foto de perfil",
-		    null);
+		    "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}
@@ -140,13 +140,13 @@ public class PerfilClienteManagedBean implements Serializable {
 	    getClienteService().update(this.cliente);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se actualizó exitosamente su perfil.", null);
+		    "Se actualizó exitosamente su perfil.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    
 	    return "perfilcliente";
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "ERROR, No se pudo modificar el perfil, Disculpe las molestias ocacionadas", null);
+		    "ERROR, No se pudo modificar el perfil, Disculpe las molestias ocacionadas", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}

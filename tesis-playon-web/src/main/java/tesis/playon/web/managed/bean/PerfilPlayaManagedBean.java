@@ -135,13 +135,13 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    getPlayaService().update(playa);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se actualizó correctamente el perfil de la playa", null);
+		    "Se actualizó correctamente el perfil de la playa", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return "/playa/perfilplaya";
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "No se pudo actualizar el perfil de la playa", null);
+		    "No se pudo actualizar el perfil de la playa", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}
@@ -163,7 +163,7 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    return "perfilplayaedit";
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudo cargar su foto de perfil",
-		    null);
+		    "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}
@@ -188,12 +188,12 @@ public class PerfilPlayaManagedBean implements Serializable {
 	    fotosList = getFotoService().findByPlaya(perfil);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se guardó exitosamente la foto "
-		    + file.getFileName(), null);
+		    + file.getFileName(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "No se pudo cargar su foto de perfil",
-		    null);
+		    "");
 	    FacesContext.getCurrentInstance().addMessage("Error", message);
 	    ex.printStackTrace();
 	}

@@ -208,7 +208,7 @@ public class PlayaManagedBean implements Serializable {
 	    notificador.enviar(mail);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente : "
-		    + playa.getNombreComercial(), null);
+		    + playa.getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return LISTA_PLAYAS;
@@ -280,7 +280,7 @@ public class PlayaManagedBean implements Serializable {
 	    notificador.enviar(mail);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente : "
-		    + playa.getNombreComercial(), null);
+		    + playa.getNombreComercial(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return SOLICITUD_PLAYA_END;

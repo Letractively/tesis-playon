@@ -263,7 +263,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 			null,
 			new FacesMessage(FacesMessage.SEVERITY_WARN,
 				"No existen tarifas registradas para la categoria: " + categoriaVehiculo.getNombre(),
-				null));
+				""));
 	    }
 	    setExisteVehiculo(true);
 
@@ -325,7 +325,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	getTransaccionPlayaService().save(txPlaya);
 
 	FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		"Se registró el egreso exitosamente del vehículo patente:", patente);
+		"Se registró el egreso exitosamente del vehículo patente: ", patente);
 	FacesContext.getCurrentInstance().addMessage(null, message);
 
 	limpiar();

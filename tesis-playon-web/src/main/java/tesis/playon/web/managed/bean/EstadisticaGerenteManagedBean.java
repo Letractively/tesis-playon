@@ -16,7 +16,6 @@ import javax.faces.context.FacesContext;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartSeries;
-import org.primefaces.model.chart.PieChartModel;
 
 import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.model.CategoriaVehiculo;

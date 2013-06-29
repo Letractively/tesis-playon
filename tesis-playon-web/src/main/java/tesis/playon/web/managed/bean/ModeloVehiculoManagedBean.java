@@ -19,7 +19,6 @@ import org.springframework.dao.DataAccessException;
 import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.MarcaVehiculo;
 import tesis.playon.web.model.ModeloVehiculo;
-import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.ICategoriaVehiculoService;
 import tesis.playon.web.service.IMarcaVehiculoService;
 import tesis.playon.web.service.IModeloVehiculoService;
@@ -99,7 +98,7 @@ public class ModeloVehiculoManagedBean implements Serializable {
 			getMarcaVehiculoService().save(marcaVehiculo);
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Se agregó correctamente la marca: "
-							+ marcaVehiculo.getNombre(), null);
+							+ marcaVehiculo.getNombre(), "");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 
 			return LISTA_MARCA_VEHICULOS;
@@ -127,7 +126,7 @@ public class ModeloVehiculoManagedBean implements Serializable {
 
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Se registró correctamente el modelo de vehículo "
-							+ getNombreModelo(), null);
+							+ getNombreModelo(), "");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 
 			return LISTA_MODELO_VEHICULOS;
@@ -135,7 +134,7 @@ public class ModeloVehiculoManagedBean implements Serializable {
 		} catch (Exception ex) {
 			FacesMessage message = new FacesMessage(
 					FacesMessage.SEVERITY_ERROR,
-					"Error, No se pudo registrar el modelo ", null);
+					"Error, No se pudo registrar el modelo ", "");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			ex.printStackTrace();
 		}

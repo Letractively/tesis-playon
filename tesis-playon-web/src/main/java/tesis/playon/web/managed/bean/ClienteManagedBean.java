@@ -163,7 +163,7 @@ public class ClienteManagedBean implements Serializable {
 	    getRolesPorUsuarioService().save(rp);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el cliente: "
-		    + cliente.getUsuario().getApellido() + " " + cliente.getUsuario().getNombre(), null);
+		    + cliente.getUsuario().getApellido() + " " + cliente.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_CLIENTES;
 	} catch (DataAccessException e) {
@@ -211,7 +211,7 @@ public class ClienteManagedBean implements Serializable {
 	    notificador.enviar(mail);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se registró correctamente el cliente: " + cliente.getUsuario().getApellido() + " "
-			    + cliente.getUsuario().getNombre(), null);
+			    + cliente.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return "solicitudclienteend";
 	} catch (DataAccessException e) {
@@ -246,7 +246,7 @@ public class ClienteManagedBean implements Serializable {
 	    e.printStackTrace();
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo crear la Cuenta del Cliente. Nombre de usuario o mail Duplicados", null);
+		    "Error, no se pudo crear la Cuenta del Cliente. Nombre de usuario o mail Duplicados", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	return null;
@@ -278,7 +278,7 @@ public class ClienteManagedBean implements Serializable {
 
 	    getUsuarioService().update(usuario);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se borró el cliente: "
-		    + clienteSelected.getUsuario().getApellido() + " " + clienteSelected.getUsuario().getNombre(), null);
+		    + clienteSelected.getUsuario().getApellido() + " " + clienteSelected.getUsuario().getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_CLIENTES;
 	} catch (Exception e) {
@@ -296,7 +296,7 @@ public class ClienteManagedBean implements Serializable {
 	    getUsuarioService().update(usuario);
 	    getClienteService().update(clienteSelected);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "El cliente se actualizó correctamente", null);
+		    "El cliente se actualizó correctamente", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    
 	    return LISTA_CLIENTES;
@@ -309,7 +309,7 @@ public class ClienteManagedBean implements Serializable {
 	    
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados", null);
+		    "Error, no se pudo agregar el cliente. Nombre de usuario o mail Duplicados", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -365,13 +365,13 @@ public class ClienteManagedBean implements Serializable {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 			"Se generó correctamente la nueva clave del cliente: "
 				+ clienteSelected.getUsuario().getApellido() + " "
-				+ clienteSelected.getUsuario().getNombre(), null);
+				+ clienteSelected.getUsuario().getNombre(), "");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    }
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo generar la clave de acceso del cliente.", null);
+		    "Error, no se pudo generar la clave de acceso del cliente.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -382,7 +382,7 @@ public class ClienteManagedBean implements Serializable {
 	String email = (String) value;
 	if (getUsuarioService().existeEmail(email, clienteSelected.getUsuario().getNombreUser())) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "El email " + email
-		    + " ya se encuentra registrado por otro cliente.", null);
+		    + " ya se encuentra registrado por otro cliente.", "");
 	    throw new ValidatorException(message);
 	}
     }

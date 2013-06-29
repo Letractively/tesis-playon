@@ -21,7 +21,6 @@ import javax.faces.model.SelectItem;
 import org.apache.commons.lang.time.DateUtils;
 
 import tesis.playon.web.model.CuentaPlaya;
-import tesis.playon.web.model.DetalleEstadia;
 import tesis.playon.web.model.Liquidacion;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.TipoPago;

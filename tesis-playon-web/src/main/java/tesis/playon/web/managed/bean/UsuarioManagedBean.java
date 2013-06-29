@@ -35,7 +35,7 @@ public class UsuarioManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{UsuarioService}")
     IUsuarioService usuarioService;
-    
+
     @ManagedProperty(value = "#{FotoUsuarioService}")
     IFotoUsuarioService fotoUsuarioService;
 
@@ -68,7 +68,7 @@ public class UsuarioManagedBean implements Serializable {
     private Usuario usuarioLoggeado;
 
     private String passwordActual;
-    
+
     private UploadedFile fotoPerfilFile;
 
     @PostConstruct
@@ -97,7 +97,7 @@ public class UsuarioManagedBean implements Serializable {
 	    getUsuarioService().save(usuario);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó correctamente el usuario: "
-		    + usuario.getNombreUser(), null);
+		    + usuario.getNombreUser(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    return LISTA_USUARIOS;
 
@@ -145,7 +145,7 @@ public class UsuarioManagedBean implements Serializable {
 		getUsuarioService().update(usuarioSelected);
 
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, usuarioSelected.getNombreUser()
-			+ " se actualizó correctamente", null);
+			+ " se actualizó correctamente", "");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	    }
 	} catch (Exception ex) {
@@ -160,7 +160,7 @@ public class UsuarioManagedBean implements Serializable {
 		getUsuarioService().update(usuarioSelected);
 
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, usuarioSelected.getNombreUser()
-			+ " se actualizó correctamente", null);
+			+ " se actualizó correctamente", "");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 
 		return LISTA_USUARIOS;
@@ -193,7 +193,7 @@ public class UsuarioManagedBean implements Serializable {
 		    + " su contraseña de Playón - Red de playas es la siguiente: " + usu.getPassword());
 	    notificador.enviar(mail);
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se envió correctamente su contraseña: " + usu.getApellido() + " " + usu.getNombre(), null);
+		    "Se envió correctamente su contraseña: " + usu.getApellido() + " " + usu.getNombre(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    return "recuperarpasswordend";
@@ -220,21 +220,21 @@ public class UsuarioManagedBean implements Serializable {
 
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 			    "Se actualizó correctamente la contraseña del usuario: " + usuarioLoggeado.getApellido()
-				    + " " + usuarioLoggeado.getNombre(), null);
+				    + " " + usuarioLoggeado.getNombre(), "");
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 		    return "cambiarpasswordend";
 		} else {
 		    FacesMessage message = new FacesMessage(
 			    FacesMessage.SEVERITY_WARN,
 			    "Por favor, ingrese correctamente su contraseña actual para actualizar su nueva contraseña",
-			    null);
+			    "");
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 	    }
 	    return "";
 	} catch (DataAccessException e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "No se pudo modificar su contraseña, Por favor, inténtelo más tarde.", null);
+		    "No se pudo modificar su contraseña, Por favor, inténtelo más tarde.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	    return "ERROR";
@@ -269,43 +269,43 @@ public class UsuarioManagedBean implements Serializable {
 
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 			"Se generó correctamente la nueva clave del cliente: " + usuarioSelected.getApellido() + " "
-				+ usuarioSelected.getNombre(), null);
+				+ usuarioSelected.getNombre(), "");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 
 	    }
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, no se pudo generar la clave de acceso del cliente.", null);
+		    "Error, no se pudo generar la clave de acceso del cliente.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
 
     }
-    
+
     public void upload() {
 	try {
-	    
+
 	    FotoUsuario foto = new FotoUsuario(fotoPerfilFile.getContents());
 	    getFotoUsuarioService().save(foto);
-	    
+
 	    FotoUsuario fotoAntigua = usuarioLoggeado.getFotoUsuario();
 	    WriteImage.borrarFotoPerfilUsuarioAntigua(usuarioLoggeado);
 	    this.usuarioLoggeado.setFotoUsuario(foto);
 	    getUsuarioService().update(usuarioLoggeado);
-	    
-	    if(fotoAntigua != null){
+
+	    if (fotoAntigua != null) {
 		getFotoUsuarioService().delete(fotoAntigua);
 	    }
-	    
+
 	    WriteImage.getFotoPerfilUsuario(usuarioLoggeado);
-	    
+
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se actualizó exitosamente su foto de perfil", null);
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudo cargar su foto de perfil",
-		    null);
-	    FacesContext.getCurrentInstance().addMessage(null, message);
+		    "");
+	    FacesContext.getCurrentInstance().addMessage("", message);
 	    ex.printStackTrace();
 	}
     }
@@ -322,14 +322,15 @@ public class UsuarioManagedBean implements Serializable {
      * @return the fotoUsuarioService
      */
     public IFotoUsuarioService getFotoUsuarioService() {
-        return fotoUsuarioService;
+	return fotoUsuarioService;
     }
 
     /**
-     * @param fotoUsuarioService the fotoUsuarioService to set
+     * @param fotoUsuarioService
+     *            the fotoUsuarioService to set
      */
     public void setFotoUsuarioService(IFotoUsuarioService fotoUsuarioService) {
-        this.fotoUsuarioService = fotoUsuarioService;
+	this.fotoUsuarioService = fotoUsuarioService;
     }
 
     public List<Usuario> getUsuarioList() {
@@ -478,13 +479,14 @@ public class UsuarioManagedBean implements Serializable {
      * @return the fotoPerfilFile
      */
     public UploadedFile getFotoPerfilFile() {
-        return fotoPerfilFile;
+	return fotoPerfilFile;
     }
 
     /**
-     * @param fotoPerfilFile the fotoPerfilFile to set
+     * @param fotoPerfilFile
+     *            the fotoPerfilFile to set
      */
     public void setFotoPerfilFile(UploadedFile fotoPerfilFile) {
-        this.fotoPerfilFile = fotoPerfilFile;
+	this.fotoPerfilFile = fotoPerfilFile;
     }
 }

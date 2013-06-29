@@ -110,7 +110,7 @@ public class PublicidadManagedBean implements Serializable {
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "No se ha podido completar la solicitud. Intente más tarde. Disculpe las molestias ocacionadas.",
-		    null);
+		    "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
     }

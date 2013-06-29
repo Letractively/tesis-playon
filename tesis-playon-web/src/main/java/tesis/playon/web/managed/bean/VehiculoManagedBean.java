@@ -131,20 +131,20 @@ public class VehiculoManagedBean implements Serializable {
 		    getVehiculoService().save(vehiculo);
 
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-			    "Se registró correctamente el vehículo con patente: " + getPatente(), null);
+			    "Se registró correctamente el vehículo con patente: " + getPatente(), "");
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 
 		    return "vehiculoaddend";
 		} else {
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "El vehículo con patente :"
-			    + getPatente() + " ya está registrado", null);
+			    + getPatente() + " ya está registrado", "");
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 	    }
 	    return null;
 	} catch (Exception ex) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, Ya éxiste un vehículo con patente: " + getPatente(), null);
+		    "Error, Ya éxiste un vehículo con patente: " + getPatente(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    ex.printStackTrace();
 	}
@@ -164,7 +164,7 @@ public class VehiculoManagedBean implements Serializable {
 
 		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 			    "Se actualizó correctamente el vehículo con patente: " + vehiculoSelected.getPatente(),
-			    null);
+			    "");
 		    FacesContext.getCurrentInstance().addMessage(null, message);
 
 		    return "vehiculolist";
@@ -177,21 +177,21 @@ public class VehiculoManagedBean implements Serializable {
 
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Se actualizó correctamente el vehículo con patente: " + vehiculoSelected.getPatente(),
-				null);
+				"");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 
 			return "vehiculolist";
 		    } else {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
 				"Ya se encuentra registrado el vehículo con patente: " + vehiculoSelected.getPatente(),
-				null);
+				"");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		    }
 		}
 	    }
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-		    "Error, Ya existe un vehículo con patente: " + getPatente(), null);
+		    "Error, Ya existe un vehículo con patente: " + getPatente(), "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    e.printStackTrace();
 	}
@@ -366,7 +366,7 @@ public class VehiculoManagedBean implements Serializable {
 	    getVehiculoService().update(vehiculoSelected);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se dió de baja el vehiculo: "
-		    + vehiculoSelected.getPatente() + " " + "", "");
+		    + vehiculoSelected.getPatente() + " ", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	    // reset();
 	    return "/cliente/vehiculolist";
