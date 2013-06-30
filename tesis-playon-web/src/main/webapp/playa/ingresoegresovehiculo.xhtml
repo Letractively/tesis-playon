@@ -325,7 +325,7 @@
 
 							<p:column>
 								<div align="right">
-									<h:outputText value="imprimir ticket"
+									<h:outputText value="Imprimir ticket"
 										styleClass="fuente-outputtext" />
 								</div>
 							</p:column>
@@ -352,12 +352,11 @@
 		</h:form>
 
 		<h:form id="formTicket">
-			<p:dialog header="Ticket de Ingreso" widgetVar="dlgTicket"
-				resizable="false"
+			<p:dialog header="Ticket" widgetVar="dlgTicket" resizable="false"
 				onShow="window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';">
 				<p:ajax
 					onstart="window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';" />
-				<p:commandButton id="Salir" value="Salir" immediate="true"
+				<p:commandButton id="Volver" value="Volver" immediate="true"
 					onclick="dlgTicket.hide();window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';" />
 			</p:dialog>
 		</h:form>
@@ -374,18 +373,31 @@
 							<p:column>
 								<div align="right">
 									<h:outputText value="Importe: " styleClass="fuente-outputtext" />
+									<h:outputText id="txt_importe_calculado"
+										value="$#{detalleEstadiaMB.importe}"
+										styleClass="fuente-perfil" type="currency" />
 								</div>
+
 							</p:column>
 
-							<h:outputText id="txt_importe_calculado"
-								value="$#{detalleEstadiaMB.importe}" styleClass="fuente-perfil"
-								type="currency" />
+							<p:column />
 
+							<p:column>
+								<div align="right">
+									<h:outputText value="Imprimir ticket"
+										styleClass="fuente-outputtext" />
+								</div>
+							</p:column>
+							<p:column>
+								<p:selectBooleanCheckbox value="#{detalleEstadiaMB.imprimir}" />
+							</p:column>
+							
 							<f:facet name="footer">
 								<div align="right" style="width: 215px;">
 									<p:commandButton id="egreso" value="Registrar egreso"
 										style="margin-right:10px;" ajax="false"
-										action="#{detalleEstadiaMB.registrarEgresoVehiculo}" />
+										action="#{detalleEstadiaMB.registrarEgresoVehiculo}"
+										onclick="dlgEgreso.hide();dlgTicket.show();" />
 									<p:commandButton id="cancelar" value="Cancelar"
 										immediate="true" oncomplete="dlgEgreso.hide();" />
 								</div>
