@@ -498,7 +498,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	    cuerpo.add(new Paragraph("Comprobante de ingreso\nEmitido el: " + fechaActual(), fuenteNegra16));
 	    agregarLineasEnBlanco(cuerpo, 2);
 
-	    formato = new SimpleDateFormat("hh:ss");
+	    formato = new SimpleDateFormat("HH:ss");
 	    cuerpo.add(new Paragraph("Hora de ingreso: " + formato.format(hoy),
 		    fuenteCuerpo));
 	    cuerpo.add(new Paragraph("Patente: " + this.getVehiculo().getPatente(), fuenteCuerpo));
