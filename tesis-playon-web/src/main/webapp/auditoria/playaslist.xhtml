@@ -15,11 +15,10 @@
 		<p:tabView id="tabView">
 
 			<p:tab id="tab1" title="Pendientes">
-
 				<p:dataTable id="playas" var="playa"
 					value="#{auditoriaPlayaMB.playasPendientesList}"
 					filteredValue="#{auditoriaPlayaMB.filteredPlayas}"
-					widgetVar="playasTable" paginatorPosition="bottom"
+					widgetVar="playasPendientesTable" paginatorPosition="bottom"
 					paginator="true" rows="5"
 					emptyMessage="No existen playas para auditar">
 
@@ -132,7 +131,7 @@
 									<div align="right">
 										<h:commandLink id="removeFilter">
 											<p:commandLink id="addPlayaNueva" value="Quitar Filtro"
-												action="/admin/playalist.html?faces-redirect=true"
+												action="/auditoria/playalist.html?faces-redirect=true"
 												ajax="false" />
 										</h:commandLink>
 									</div>
@@ -143,11 +142,12 @@
 					</f:facet>
 				</p:dataTable>
 			</p:tab>
+			
 			<p:tab id="tab3" title="Aprobadas">
 				<p:dataTable id="playas3" var="playa"
 					value="#{auditoriaPlayaMB.playasAprobadasList}"
 					filteredValue="#{auditoriaPlayaMB.filteredPlayas}"
-					widgetVar="playasTable" paginatorPosition="bottom" paginator="true"
+					widgetVar="playasAprobadasTable" paginatorPosition="bottom" paginator="true"
 					rows="5" emptyMessage="No existen playas aprobadas">
 
 					<p:column headerText="Razón Social" styleClass="column-font"
@@ -242,7 +242,7 @@
 									<div align="right">
 										<h:commandLink id="removeFilter">
 											<p:commandLink id="addPlayaNueva" value="Quitar Filtro"
-												action="/admin/playalist.html?faces-redirect=true"
+												action="/auditoria/playalist.html?faces-redirect=true"
 												ajax="false" />
 										</h:commandLink>
 									</div>
@@ -258,7 +258,7 @@
 				<p:dataTable id="playas2" var="playa"
 					value="#{auditoriaPlayaMB.playasRechazadasList}"
 					filteredValue="#{auditoriaPlayaMB.filteredPlayas}"
-					widgetVar="playasTable" paginatorPosition="bottom" paginator="true"
+					widgetVar="playasRechazadasTable" paginatorPosition="bottom" paginator="true"
 					rows="5" emptyMessage="No existen playas rechazadas">
 
 					<p:column headerText="Razón Social" styleClass="column-font"
@@ -359,7 +359,7 @@
 									<div align="right">
 										<h:commandLink id="removeFilter">
 											<p:commandLink id="addPlayaNueva" value="Quitar Filtro"
-												action="/admin/playalist.html?faces-redirect=true"
+												action="/auditoria/playalist.html?faces-redirect=true"
 												ajax="false" />
 										</h:commandLink>
 									</div>

@@ -107,10 +107,10 @@ public class AuditoriaPlayaManagedBean implements Serializable {
     private void init() {
 	estadoPendiente = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
 	playasPendientesList = getPlayaService().findByEstado(estadoPendiente);
-
+	
 	estadoAprobada = getEstadoPlayaService().findByNombreEstadoPlaya("Aprobada");
 	playasAprobadasList = getPlayaService().findByEstado(estadoAprobada);
-
+	
 	estadoRechazada = getEstadoPlayaService().findByNombreEstadoPlaya("Rechazada");
 	playasRechazadasList = getPlayaService().findByEstado(estadoRechazada);
 
@@ -162,10 +162,10 @@ public class AuditoriaPlayaManagedBean implements Serializable {
 
 	    }
 
-	    estadoPendiente = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
+	    //estadoPendiente = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
 	    playasPendientesList = getPlayaService().findByEstado(estadoPendiente);
 
-	    estadoRechazada = getEstadoPlayaService().findByNombreEstadoPlaya("Rechazada");
+	    //estadoRechazada = getEstadoPlayaService().findByNombreEstadoPlaya("Rechazada");
 	    playasRechazadasList = getPlayaService().findByEstado(estadoRechazada);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se rechazó la playa: "
@@ -214,13 +214,13 @@ public class AuditoriaPlayaManagedBean implements Serializable {
 		notificador.enviarMailAuditor(mail);
 	    }
 
-	    estadoPendiente = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
+	    //estadoPendiente = getEstadoPlayaService().findByNombreEstadoPlaya("Pendiente");
 	    playasPendientesList = getPlayaService().findByEstado(estadoPendiente);
 
-	    estadoAprobada = getEstadoPlayaService().findByNombreEstadoPlaya("Aprobada");
+	    //estadoAprobada = getEstadoPlayaService().findByNombreEstadoPlaya("Aprobada");
 	    playasAprobadasList = getPlayaService().findByEstado(estadoAprobada);
 
-	    estadoRechazada = getEstadoPlayaService().findByNombreEstadoPlaya("Rechazada");
+	    //estadoRechazada = getEstadoPlayaService().findByNombreEstadoPlaya("Rechazada");
 	    playasRechazadasList = getPlayaService().findByEstado(estadoRechazada);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se aprobó la playa: "
