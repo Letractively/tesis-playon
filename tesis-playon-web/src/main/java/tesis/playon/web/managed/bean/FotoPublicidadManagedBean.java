@@ -34,24 +34,33 @@ public class FotoPublicidadManagedBean implements Serializable {
     @ManagedProperty(value = "#{PublicidadService}")
     IPublicidadService publicidadService;
 
-    private static List<FotoPublicidad> fotoPublicidadList;
-    
+    private static List<FotoPublicidad> fotoPublicidadImparList, fotoPublicidadParList;
+
     private static List<Publicidad> publicidadList;
 
     @PostConstruct
     private void init() {
-	publicidadList = getPublicidadService().findAllByEstadoVigente();
-	fotoPublicidadList = new ArrayList<FotoPublicidad>();
+	List<Publicidad> publicidadList = getPublicidadService().findAllByEstadoVigente();
+
+	fotoPublicidadParList = new ArrayList<FotoPublicidad>();
+	fotoPublicidadImparList = new ArrayList<FotoPublicidad>();
 
 	if (publicidadList != null) {
 
-	    for (Publicidad publicidad : publicidadList) {
-		fotoPublicidadList.add(publicidad.getFotoPublicidad());
-	    }
-	    if (fotoPublicidadList != null) {
-		WriteImage.writeFotosPublicidad(fotoPublicidadList);
+	    for (int i = 0; i < publicidadList.size(); i++) {
+		if (publicidadList.get(i).getId() % 2 == 0)
+		    fotoPublicidadParList.add(publicidadList.get(i).getFotoPublicidad());
+		else
+		    fotoPublicidadImparList.add(publicidadList.get(i).getFotoPublicidad());
 	    }
 	}
+	if (fotoPublicidadParList != null) {
+	    WriteImage.writeFotosPublicidad(fotoPublicidadParList);
+	}
+	if (fotoPublicidadImparList != null) {
+	    WriteImage.writeFotosPublicidad(fotoPublicidadImparList);
+	}
+
     }
 
     /**
@@ -85,29 +94,43 @@ public class FotoPublicidadManagedBean implements Serializable {
     }
 
     /**
-     * @return the fotoPublicidadList
+     * @return the fotoPublicidadImparList
      */
-    public List<FotoPublicidad> getFotoPublicidadList() {
-	return fotoPublicidadList;
+    public List<FotoPublicidad> getFotoPublicidadImparList() {
+        return fotoPublicidadImparList;
     }
 
     /**
-     * @param fotoPublicidadList
-     *            the fotoPublicidadList to set
+     * @param fotoPublicidadImparList the fotoPublicidadImparList to set
      */
-    public void setFotoPublicidadList(List<FotoPublicidad> fotoPublicidadList) {
-	FotoPublicidadManagedBean.fotoPublicidadList = fotoPublicidadList;
+    public void setFotoPublicidadImparList(List<FotoPublicidad> fotoPublicidadImparList) {
+        FotoPublicidadManagedBean.fotoPublicidadImparList = fotoPublicidadImparList;
+    }
+
+    /**
+     * @return the fotoPublicidadParList
+     */
+    public List<FotoPublicidad> getFotoPublicidadParList() {
+        return fotoPublicidadParList;
+    }
+
+    /**
+     * @param fotoPublicidadParList the fotoPublicidadParList to set
+     */
+    public void setFotoPublicidadParList(List<FotoPublicidad> fotoPublicidadParList) {
+        FotoPublicidadManagedBean.fotoPublicidadParList = fotoPublicidadParList;
     }
 
     /**
      * @return the publicidadList
      */
     public List<Publicidad> getPublicidadList() {
-        return publicidadList;
+	return publicidadList;
     }
 
     /**
-     * @param publicidadList the publicidadList to set
+     * @param publicidadList
+     *            the publicidadList to set
      */
     public void setPublicidadList(List<Publicidad> publicidadList) {
 	FotoPublicidadManagedBean.publicidadList = publicidadList;

@@ -68,57 +68,56 @@
 			globalOnly="true" />
 
 		<div style="margin: 10px 0 10px 0;">
-			<h:panelGrid columns="1" width="100%">
-				<h:panelGrid columns="3" cellspacing="10" cellpadding="5"
-					width="100%">
+			<div align="left">
+				<h:panelGrid columns="1" width="80%">
+					<h:panelGrid columns="3" cellspacing="10" cellpadding="5"
+						width="100%">
+						<p:column>
+							<div align="right">
+								<h:outputLabel for="direccionBusqueda"
+									value="Dirección búsqueda:" />
+							</div>
+						</p:column>
+
+						<p:inputText id="direccionBusqueda"
+							value="#{busquedaplayaMB.direccionBusqueda}" required="true"
+							requiredMessage="Campo dirección de búsqueda obligatorio"
+							style="width:250px;">
+							<p:ajax event="blur" update="direccionBusquedaMsg" />
+						</p:inputText>
+						<p:message id="direccionBusquedaMsg" display="icon"
+							for="direccionBusqueda" />
+
+						<p:column>
+							<div align="right">
+								<h:outputLabel for="distancia" value="N° de cuadras: " />
+							</div>
+						</p:column>
+						<p:inputText id="distancia" value="#{busquedaplayaMB.distancia}"
+							style="width:100px;" /><p:column />
+
+						<p:column />
+						<p:slider for="distancia" minValue="1" maxValue="50"
+							style="width:100px;" />
+						<p:column />
+					</h:panelGrid>
+
 					<p:column>
 						<div align="right">
-							<h:outputLabel for="direccionBusqueda"
-								value="Dirección búsqueda:" />
+							<p:commandLink id="btnOpcionesAvanzadas"
+								value="opciones avanzadas"
+								action="#{busquedaplayaMB.settearOpcionesAvanzadas()}"
+								ajax="false" immediate="true"
+								rendered="#{!busquedaplayaMB.opcionesAvanzadas}"
+								style="margin:0 20px 0 0;" />
+							<p:commandButton id="btnBuscarId" update="playas,mapa"
+								style="width:110px;" value="Buscar"
+								action="#{busquedaplayaMB.buscarPlaya}" ajax="false"
+								rendered="#{!busquedaplayaMB.opcionesAvanzadas}" />
 						</div>
 					</p:column>
-
-					<p:inputText id="direccionBusqueda"
-						value="#{busquedaplayaMB.direccionBusqueda}" required="true"
-						requiredMessage="Campo dirección de búsqueda obligatorio"
-						style="width:200px;">
-						<p:ajax event="blur" update="direccionBusquedaMsg" />
-					</p:inputText>
-
-					<p:message id="direccionBusquedaMsg" display="text"
-						for="direccionBusqueda" />
-
-					<p:column>
-						<div align="right">
-							<h:outputLabel for="distancia" value="N° de cuadras: " />
-						</div>
-					</p:column>
-					<p:inputText id="distancia" value="#{busquedaplayaMB.distancia}"
-						style="width:100px;" />
-
-					<p:column />
-
-					<p:column />
-					<p:slider for="distancia" minValue="1" maxValue="50"
-						style="width:100px;" />
-					<p:column />
 				</h:panelGrid>
-
-				<p:column>
-					<div align="right">
-						<p:commandLink id="btnOpcionesAvanzadas"
-							value="opciones avanzadas"
-							action="#{busquedaplayaMB.settearOpcionesAvanzadas()}"
-							ajax="false" immediate="true"
-							rendered="#{!busquedaplayaMB.opcionesAvanzadas}"
-							style="margin:0 20px 0 0;" />
-						<p:commandButton id="btnBuscarId" update="playas,mapa"
-							style="width:110px;" value="Buscar"
-							action="#{busquedaplayaMB.buscarPlaya}" ajax="false"
-							rendered="#{!busquedaplayaMB.opcionesAvanzadas}" />
-					</div>
-				</p:column>
-			</h:panelGrid>
+			</div>
 
 			<h:panelGrid columns="1" width="100%">
 				<h:panelGrid columns="4" cellspacing="10" cellpadding="5"

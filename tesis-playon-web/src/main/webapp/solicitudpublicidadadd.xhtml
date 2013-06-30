@@ -112,8 +112,8 @@
 						<p:column>
 							<p:inputText id="urlText" style="width: 200px"
 								value="#{publicidadMB.url}" required="true"
-								requiredMessage="Campo dirección web obligatorio"
-								type="url" onchange="addUrl('#{publicidadMB.url}');">
+								requiredMessage="Campo dirección web obligatorio" type="url"
+								onchange="addUrl('#{publicidadMB.url}');">
 								<f:validateLength minimum="5" />
 								<p:ajax event="blur" listener="#{publicidadMB.addHttp}"
 									update="urlMsg,urlText" />
@@ -157,6 +157,7 @@
 						<p:column>
 							<p:inputText id="precio" style="width: 12	0px"
 								value="#{publicidadMB.precio}" readonly="true">
+								<f:convertNumber type="currency" currencySymbol="$ " />
 							</p:inputText>
 						</p:column>
 						<p:column />
@@ -167,7 +168,8 @@
 						</p:column>
 						<p:column>
 							<p:inputText id="costoTotal" style="width: 120px"
-								value="$#{publicidadMB.costoTotal}" readonly="true">
+								value="#{publicidadMB.costoTotal}" readonly="true">
+								<f:convertNumber type="currency" currencySymbol="$ " />
 							</p:inputText>
 						</p:column>
 						<p:column />
@@ -207,8 +209,8 @@
 				</p:panel>
 				<div align="center" style="margin-top: 10px">
 					<p:commandButton id="addPublicidad" value="Registrar Publicidad"
-						onclick="dlgDM.show();" type="button"
-						action="#{publicidadMB.addSolicitudPublicidad}" ajax="false" />
+						onclick="dlgDM.show();" type="button">
+					</p:commandButton>
 					<p:commandButton id="reset" value="Cancelar" immediate="true"
 						action="/index.html?faces-redirect=true" ajax="false"
 						style="margin-left:10px" />
@@ -235,9 +237,9 @@
 							type='hidden' name='E_Comercio' value='2329650' /> <input
 							type='hidden' name='NroItem' value='-' /> <input type='hidden'
 							name='DireccionExito'
-							value='http://localhost.com:8080/tesis-playon-web/solicitudpublicidadend.jsf' />
+							value='http://localhost:8080/tesis-playon-web/solicitudpublicidadend.jsf' />
 						<input type='hidden' name='DireccionFracaso'
-							value='http://localhost.com:8080/tesis-playon-web/solicitudpublicidadfracaso.jsf' />
+							value='http://localhost:8080/tesis-playon-web/solicitudpublicidadfracaso.jsf' />
 						<input type='hidden' name='DireccionEnvio' value='0' /> <input
 							type='hidden' name='Mensaje' value='0' /> <input type='image'
 							src='https://argentina.dineromail.com/imagenes/botones/pagar-medios_c.gif'

@@ -73,10 +73,12 @@ public class PublicidadManagedBean implements Serializable {
     private String url;
 
     private UploadedFile foto;
-
+    
     private static List<Publicidad> publicidadList;
 
     private boolean upload;
+    
+    private static Publicidad nuevaPublicidad;
 
     @PostConstruct
     private void init() {
@@ -102,7 +104,8 @@ public class PublicidadManagedBean implements Serializable {
 	    getFotoPublicidadService().save(fotoPublicidad);
 
 	    publicidad.setFotoPublicidad(fotoPublicidad);
-	    getPublicidadService().save(publicidad);
+	    nuevaPublicidad = publicidad;
+	    //getPublicidadService().save(publicidad);
 
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -113,6 +116,7 @@ public class PublicidadManagedBean implements Serializable {
     }
     
     public void addSolicitudPublicidadExitosa() {
+	getPublicidadService().save(nuevaPublicidad);
 	FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se registró la publicidad exitosamente.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
@@ -150,6 +154,7 @@ public class PublicidadManagedBean implements Serializable {
 	    WriteImage.writeFotoTemporal(fotoPublicidad);
 	    FacesMessage msg = new FacesMessage("La imagen: " + foto.getFileName() + " se guardó correctamente.", "");
 	    FacesContext.getCurrentInstance().addMessage(null, msg);
+	    addSolicitudPublicidad();
 	}
     }
 
@@ -399,18 +404,17 @@ public class PublicidadManagedBean implements Serializable {
     }
 
     /**
-     * @return the publicidadList
+     * @return the publicidadParList
      */
     public List<Publicidad> getPublicidadList() {
-	return publicidadList;
+        return publicidadList;
     }
 
     /**
-     * @param publicidadList
-     *            the publicidadList to set
+     * @param publicidadParList the publicidadParList to set
      */
-    public void setPublicidadList(List<Publicidad> publicidadList) {
-	PublicidadManagedBean.publicidadList = publicidadList;
+    public void setPublicidadParList(List<Publicidad> publicidadList) {
+        PublicidadManagedBean.publicidadList = publicidadList;
     }
 
     /**
@@ -426,6 +430,20 @@ public class PublicidadManagedBean implements Serializable {
      */
     public void setUpload(boolean upload) {
 	this.upload = upload;
+    }
+
+    /**
+     * @return the nuevaPublicidad
+     */
+    public Publicidad getNuevaPublicidad() {
+        return nuevaPublicidad;
+    }
+
+    /**
+     * @param nuevaPublicidad the nuevaPublicidad to set
+     */
+    public void setNuevaPublicidad(Publicidad nuevaPublicidad) {
+        PublicidadManagedBean.nuevaPublicidad = nuevaPublicidad;
     }
 
 }
