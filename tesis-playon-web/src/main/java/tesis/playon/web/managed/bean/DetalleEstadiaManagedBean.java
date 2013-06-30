@@ -4,9 +4,9 @@
 package tesis.playon.web.managed.bean;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -29,7 +29,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.model.DefaultStreamedContent;
@@ -73,6 +72,7 @@ import com.lowagie.text.Font;
 import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
+import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfWriter;
 
 /**
@@ -133,9 +133,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
     @ManagedProperty(value = "#{AbonoService}")
     IAbonoService abonoService;
 
-    private Usuario usuarioLoggeado;
-
-    private Usuario usuarioCliente;
+    private Usuario usuarioLoggeado, usuarioCliente;
 
     private Cliente cliente;
 
@@ -157,11 +155,9 @@ public class DetalleEstadiaManagedBean implements Serializable {
 
     private DetalleEstadia detalleEstadia;
 
-    private Date fechaIngreso;
+    private Date fechaIngreso, fechaActual;
 
     private Time horaIngreso;
-
-    private Date fechaActual;
 
     @SuppressWarnings("unused")
     private String horaActual;
@@ -174,23 +170,15 @@ public class DetalleEstadiaManagedBean implements Serializable {
 
     // ======== Variables extraAuxiliares =========
 
-    private boolean saldoPositivo;
+    private boolean saldoPositivo, importeCalculado = false;
 
-    private boolean existeTarifa;
-
-    private boolean existeVehiculo;
-
-    private boolean existeAbonoVehiculo;
-
-    private boolean importeCalculado = false;
+    private boolean existeTarifa, existeVehiculo, existeAbonoVehiculo, imprimir = true;
 
     private Tarifa tarifaSeleccionada;
 
     private Promocion promocionSeleccionada;
 
-    private boolean imprimir = true;
-
-    private String rutaPDF = "resources" + File.separator + "archivo.pdf";
+    private String rutaPDF;
 
     @PostConstruct
     private void init() {
@@ -287,6 +275,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	}
     }
 
+    // ---------------- Ingreso / Egreso de un cliente con Abono -----------------------//
     public String registrarIngresoAbono() {
 	try {
 	    // SAVE TO DETTALLEESTADIA
@@ -307,7 +296,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 
 	    existeAbonoVehiculo = false;
 
-	    return "/playa/ingresoegresovehiculo";
+	    return "ingresoegresovehiculo";
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
@@ -331,7 +320,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 
 	    existeAbonoVehiculo = false;
 
-	    return "/playa/ingresoegresovehiculo";
+	    return "ingresoegresovehiculo";
 
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -339,6 +328,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	return null;
     }
 
+    // ---------------- Ingreso / Egreso de un cliente común ---------------------------//
     public String registrarIngresoVehiculo() {
 	try {
 	    // SAVE TO DETTALLEESTADIA
@@ -353,89 +343,23 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	    playaLoggeada.setDisponibilidad(disponibilidad);
 	    getPlayaService().update(playaLoggeada);
 
+	    this.generarTicketIngreso("Ingreso");
+
+	    if (imprimir) {
+		File pdf = new File(rutaPDF);
+		Desktop.getDesktop().open(pdf);
+	    }
+	    
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se registró el ingreso exitosamente del vehiculo patente: " + patente, "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
-	    this.generarTicketIngreso();
+	    return "ingresoegresovahiculo";
 
-	    return "/playa/ingresoegresovehiculo?faces-redirect=true";
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
 	return null;
-    }
-
-    public String redirect() {
-	return "/playa/ingresoegresovehiculo?faces-redirect=true";
-    }
-
-    public void calcularImporte() {
-	TipoEstadia tipoEstadia = detalleEstadia.getTarifa().getTipoEstadia();
-	Timestamp fechaHoraEgreso;
-
-	// calculo de importe a pagar
-	if ("Por Hora".equals(tipoEstadia.getNombre())) {
-	    fechaHoraEgreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
-	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
-	    long diff = detalleEstadia.getFechaHoraEgreso().getTime() - detalleEstadia.getFechaHoraIngreso().getTime();
-	    double diferenciaEnHoras = diff / ((double) 1000 * 60 * 60);
-	    int horasACobrar = (int) diferenciaEnHoras;
-	    int minutos = (int) ((diferenciaEnHoras - horasACobrar) * 60);
-	    if (minutos > 10 || horasACobrar == 0)
-		horasACobrar++;
-	    importe = detalleEstadia.getTarifa().getImporte() * horasACobrar;
-	    if (detalleEstadia.getPromocion() != null) {
-		importe = importe * (1 - detalleEstadia.getPromocion().getDescuento() / 100);
-	    }
-	} else if ("Por Mes".equals(tipoEstadia.getNombre())) {
-	    Calendar calendario = Calendar.getInstance();
-	    calendario.clear();
-	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
-	    calendario.add(Calendar.MONTH, 1);
-	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
-	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
-	    importe = detalleEstadia.getTarifa().getImporte();
-	    if (detalleEstadia.getPromocion() != null) {
-		importe = importe * (1 - detalleEstadia.getPromocion().getDescuento() / 100);
-	    }
-	} else if ("Por Noche".equals(tipoEstadia.getNombre())) {
-	    Calendar calendario = Calendar.getInstance();
-	    calendario.clear();
-	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
-	    calendario.add(Calendar.HOUR_OF_DAY, 8);
-	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
-	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
-	    importe = detalleEstadia.getTarifa().getImporte();
-	    if (detalleEstadia.getPromocion() != null) {
-		importe = importe * (1 - detalleEstadia.getPromocion().getDescuento() / 100);
-	    }
-	} else if ("Por Día".equals(tipoEstadia.getNombre())) {
-	    Calendar calendario = Calendar.getInstance();
-	    calendario.clear();
-	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
-	    calendario.add(Calendar.DAY_OF_MONTH, 1);
-	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
-	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
-	    importe = detalleEstadia.getTarifa().getImporte();
-	    if (detalleEstadia.getPromocion() != null) {
-		importe = importe * (1 - detalleEstadia.getPromocion().getDescuento() / 100);
-	    }
-	} else if ("Por Semana".equals(tipoEstadia.getNombre())) {
-	    Calendar calendario = Calendar.getInstance();
-	    calendario.clear();
-	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
-	    calendario.add(Calendar.DAY_OF_MONTH, 7);
-	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
-	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
-	    importe = detalleEstadia.getTarifa().getImporte();
-	    if (detalleEstadia.getPromocion() != null) {
-		importe = importe * (1 - detalleEstadia.getPromocion().getDescuento() / 100);
-	    }
-	}
-	detalleEstadia.setImporteTotal(importe);
-	detalleEstadia.setCobrado(true);
-	importeCalculado = true;
     }
 
     public String registrarEgresoVehiculo() {
@@ -533,12 +457,176 @@ public class DetalleEstadiaManagedBean implements Serializable {
 		    "Se registró el egreso exitosamente del vehículo patente: " + patente, "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 
-	    return "/playa/ingresoegresovehiculo";
+	    return "ingresoegresovehiculo";
 
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
 	return null;
+    }
+
+    /**
+     * @return the ticket Ingreso File
+     */
+    public void generarTicketIngreso(String tipoMovimiento) throws IOException {
+	try {
+
+	    // ****** Definición de variables *********
+	    FacesContext facesContext = FacesContext.getCurrentInstance();
+	    ExternalContext extContext = facesContext.getExternalContext();
+	    Date hoy = new Date();
+	    SimpleDateFormat formato = new SimpleDateFormat("yyyy_MM_dd_hh:mm:ss");
+	    String nombrePDF = tipoMovimiento +"_" +formato.format(hoy) + ".pdf";
+	    String sep = File.separator;
+	    rutaPDF = extContext.getRealPath("resources" + sep + nombrePDF);
+
+	    File filePDF = new File(rutaPDF);
+
+	    Document doc = new Document(new Rectangle(280f, 350f), 5f, 5f, 5f, 5f);
+	    FileOutputStream os = new FileOutputStream(filePDF);
+	    Paragraph cuerpo = new Paragraph();
+
+	    // ****** Definicion de fuentes ************
+	    Font fuenteNegra18 = new Font(Font.TIMES_ROMAN, 16, Font.BOLDITALIC, Color.BLACK);
+	    Font fuenteNegra16 = new Font(Font.TIMES_ROMAN, 14, Font.NORMAL, Color.BLACK);
+	    Font fuenteCuerpo = new Font(Font.TIMES_ROMAN, 12, Font.NORMAL, Color.BLACK);
+
+	    // ****** Crear el PDF ********************
+	    @SuppressWarnings("unused")
+	    PdfWriter writer = PdfWriter.getInstance(doc, os);
+
+	    cuerpo.add(new Paragraph("Comprobante de ingreso\nEmitido el: " + fechaActual(), fuenteNegra16));
+	    agregarLineasEnBlanco(cuerpo, 2);
+
+	    formato = new SimpleDateFormat("hh:ss");
+	    cuerpo.add(new Paragraph("Hora de ingreso: " + formato.format(hoy),
+		    fuenteCuerpo));
+	    cuerpo.add(new Paragraph("Patente: " + this.getVehiculo().getPatente(), fuenteCuerpo));
+	    cuerpo.add(new Paragraph("Modelo: " + this.getVehiculo().getModeloVehiculo().getNombre(), fuenteCuerpo));
+	    cuerpo.add(new Paragraph("Saldo: $" + String.format("%.2f",this.getVehiculo().getCliente().getCuentaCliente().getSaldo()),
+		    fuenteCuerpo));
+
+	    /************************************/
+	    doc.open();
+	    doc.addTitle("Transacción - Playa: " + playaLoggeada.getNombreComercial());
+	    doc.add(new Paragraph("PLAYON - RED DE PLAYAS",fuenteNegra18));
+	    doc.add(cuerpo);
+	    doc.close();
+	    /**************************************/
+
+	    int DEFAULT_BUFFER_SIZE = 2048;
+	    byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+	    int length;
+
+	    // Prepare.
+	    HttpServletResponse response = (HttpServletResponse) extContext.getResponse();
+
+	    BufferedInputStream input = null;
+	    BufferedOutputStream output = null;
+
+	    try {
+		// Open file.
+		input = new BufferedInputStream(new FileInputStream(filePDF), DEFAULT_BUFFER_SIZE);
+		// input = new BufferedInputStream(new FileInputStream(filePDF), DEFAULT_BUFFER_SIZE);
+		if (!facesContext.getResponseComplete()) {
+		    // Init servlet response.
+		    //response.reset();
+		    response.setContentType("application/pdf");
+		    response.setContentLength((int) filePDF.length());
+		    response.setHeader("Content-Disposition", "attachment;filename=\"" + filePDF.getName() + "\"");
+
+		    // Write file contents to response.
+		    //ServletOutputStream out = response.getOutputStream();
+		    output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
+		    
+		    while ((length = input.read(buffer)) > 0) {
+			output.write(buffer, 0, length);
+		    }
+
+		    // Finalize task.
+		    output.flush();
+		    output.close();
+		    input.close();
+		    facesContext.responseComplete();
+		}
+	    } catch (IOException e) {
+		e.printStackTrace();
+	    }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
+
+    public String redirect() {
+	return "/playa/ingresoegresovehiculo?faces-redirect=true";
+    }
+
+    public void calcularImporte() {
+	TipoEstadia tipoEstadia = detalleEstadia.getTarifa().getTipoEstadia();
+	Timestamp fechaHoraEgreso;
+
+	// calculo de importe a pagar
+	if ("Por Hora".equals(tipoEstadia.getNombre())) {
+	    fechaHoraEgreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
+	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+	    long diff = detalleEstadia.getFechaHoraEgreso().getTime() - detalleEstadia.getFechaHoraIngreso().getTime();
+	    double diferenciaEnHoras = diff / ((double) 1000 * 60 * 60);
+	    int horasACobrar = (int) diferenciaEnHoras;
+	    int minutos = (int) ((diferenciaEnHoras - horasACobrar) * 60);
+	    if (minutos > 10 || horasACobrar == 0)
+		horasACobrar++;
+	    importe = detalleEstadia.getTarifa().getImporte() * horasACobrar;
+	    if (detalleEstadia.getPromocion() != null) {
+		importe = importe * (1 - detalleEstadia.getPromocion().getDescuento() / 100);
+	    }
+	} else if ("Por Mes".equals(tipoEstadia.getNombre())) {
+	    Calendar calendario = Calendar.getInstance();
+	    calendario.clear();
+	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
+	    calendario.add(Calendar.MONTH, 1);
+	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
+	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+	    importe = detalleEstadia.getTarifa().getImporte();
+	    if (detalleEstadia.getPromocion() != null) {
+		importe = importe * (1 - detalleEstadia.getPromocion().getDescuento() / 100);
+	    }
+	} else if ("Por Noche".equals(tipoEstadia.getNombre())) {
+	    Calendar calendario = Calendar.getInstance();
+	    calendario.clear();
+	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
+	    calendario.add(Calendar.HOUR_OF_DAY, 8);
+	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
+	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+	    importe = detalleEstadia.getTarifa().getImporte();
+	    if (detalleEstadia.getPromocion() != null) {
+		importe = importe * (1 - detalleEstadia.getPromocion().getDescuento() / 100);
+	    }
+	} else if ("Por Día".equals(tipoEstadia.getNombre())) {
+	    Calendar calendario = Calendar.getInstance();
+	    calendario.clear();
+	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
+	    calendario.add(Calendar.DAY_OF_MONTH, 1);
+	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
+	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+	    importe = detalleEstadia.getTarifa().getImporte();
+	    if (detalleEstadia.getPromocion() != null) {
+		importe = importe * (1 - detalleEstadia.getPromocion().getDescuento() / 100);
+	    }
+	} else if ("Por Semana".equals(tipoEstadia.getNombre())) {
+	    Calendar calendario = Calendar.getInstance();
+	    calendario.clear();
+	    calendario.setTimeInMillis(detalleEstadia.getFechaHoraIngreso().getTime());
+	    calendario.add(Calendar.DAY_OF_MONTH, 7);
+	    fechaHoraEgreso = new Timestamp(calendario.getTimeInMillis());
+	    detalleEstadia.setFechaHoraEgreso(fechaHoraEgreso);
+	    importe = detalleEstadia.getTarifa().getImporte();
+	    if (detalleEstadia.getPromocion() != null) {
+		importe = importe * (1 - detalleEstadia.getPromocion().getDescuento() / 100);
+	    }
+	}
+	detalleEstadia.setImporteTotal(importe);
+	detalleEstadia.setCobrado(true);
+	importeCalculado = true;
     }
 
     public void handleTarifa() {
@@ -959,7 +1047,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
     // }
 
     // -------------------- DESCARGAR PDF
-     private StreamedContent fileIngreso;
+    private StreamedContent fileIngreso;
 
     public StreamedContent getFileIngreso() {
 	try {
@@ -1008,119 +1096,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	}
 	return null;
     }
-    
-    // private StreamedContent ticketIngreso;
 
-    private static void close(Closeable resource) {
-	if (resource != null) {
-	    try {
-		resource.close();
-	    } catch (IOException e) {
-		// Do your thing with the exception. Print it, log it or mail it. It may be useful to
-		// know that this will generally only be thrown when the client aborted the download.
-		e.printStackTrace();
-	    }
-	}
-    }
-
-    /**
-     * @return the ticket Ingreso File
-     */
-    public void generarTicketIngreso() throws IOException {
-	try {
-
-	    Document doc = new Document(PageSize.A6, 10, 10, 10, 10);
-
-	    File filePDF = new File("/tmp/pdf.pdf");
-	    OutputStream os = new FileOutputStream(filePDF);
-
-	    @SuppressWarnings("unused")
-	    PdfWriter writer = PdfWriter.getInstance(doc, os);
-
-	    // ******definicion de letras y parrafos********************
-	    Font fuenteNegra18 = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, Color.BLACK);
-	    Paragraph cuerpo = new Paragraph();
-	    cuerpo.add(new Paragraph("Comprobante de ingreso emitido el: " + fechaActual(), fuenteNegra18));
-
-	    Font fuenteCuerpo = new Font(Font.TIMES_ROMAN, 14, Font.NORMAL, Color.BLACK);
-
-	    // Paragraph cuerpo = new Paragraph();
-	    agregarLineasEnBlanco(cuerpo, 2);
-	    // titulo.add(new Paragraph("prueba"));
-	    cuerpo.add(new Paragraph("Hora de ingreso: " + new Timestamp(Calendar.getInstance().getTimeInMillis()),
-		    fuenteCuerpo));
-	    cuerpo.add(new Paragraph("Patente: " + this.getVehiculo().getPatente(), fuenteCuerpo));
-	    cuerpo.add(new Paragraph("Modelo: " + this.getVehiculo().getModeloVehiculo().getNombre(), fuenteCuerpo));
-	    cuerpo.add(new Paragraph("Saldo: " + this.getVehiculo().getCliente().getCuentaCliente().getSaldo(),
-		    fuenteCuerpo));
-
-	    String sep = File.separator;
-	    ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
-	    String logo = extContext.getRealPath("resources" + sep + "images" + sep + "transacciones.png");
-	    /************************************/
-	    doc.open();
-	    doc.addTitle("Listado de empleados");
-	    doc.add(Image.getInstance(logo));
-	    doc.add(cuerpo);
-	    doc.close();
-	    /**************************************/
-
-	    int DEFAULT_BUFFER_SIZE = 10240;
-
-	    // Prepare.
-	    FacesContext facesContext = FacesContext.getCurrentInstance();
-	    ExternalContext externalContext = facesContext.getExternalContext();
-	    HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
-
-	    String path = externalContext.getRealPath("resources" + sep + "archivo.pdf");
-
-	    File file = filePDF;
-	    BufferedInputStream input = null;
-	    BufferedOutputStream output = null;
-
-	    try {
-		// Open file.
-		input = new BufferedInputStream(new FileInputStream(file), DEFAULT_BUFFER_SIZE);
-
-		// Init servlet response.
-		response.reset();
-		response.setHeader("Content-Type", "application/pdf");
-		response.setHeader("Content-Length", String.valueOf(file.length()));
-		response.setHeader("Content-Disposition", "filename=\"archivo.pdf\"");
-		output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
-
-		
-		// Write file contents to response.
-		//ServletOutputStream sos = response.getOutputStream();
-
-		byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
-		int length;
-		while ((length = input.read(buffer)) > 0) {
-		    output.write(buffer, 0, length);
-		}
-
-		//sos.flush();
-		//sos.close();
-		// Finalize task.
-		output.flush();
-		//facesContext.responseComplete();
-	    } finally {
-		// Gently close streams.
-		close(output);
-		close(input);
-	    }
-
-	    // Inform JSF that it doesn't need to handle response.
-	    // This is very important, otherwise you will get the following exception in the logs:
-	    // java.lang.IllegalStateException: Cannot forward after response has been committed.
-	    //facesContext.responseComplete();
-	    this.setRutaPDF(path);
-
-	} catch (Exception e) {
-
-	}
-    }
-    
     private String fechaActual() {
 	Date hoy = new Date();
 	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");

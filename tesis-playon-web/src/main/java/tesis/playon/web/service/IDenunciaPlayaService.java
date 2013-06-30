@@ -6,7 +6,6 @@ package tesis.playon.web.service;
 import java.util.List;
 
 import tesis.playon.web.model.DenunciaPlaya;
-import tesis.playon.web.model.DenunciaVehiculo;
 import tesis.playon.web.model.EstadoDenuncia;
 
 /**

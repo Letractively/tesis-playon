@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tesis.playon.web.dao.IDenunciaPlayaDao;
 import tesis.playon.web.model.DenunciaPlaya;
-import tesis.playon.web.model.DenunciaVehiculo;
 import tesis.playon.web.model.EstadoDenuncia;
 import tesis.playon.web.service.IDenunciaPlayaService;
 

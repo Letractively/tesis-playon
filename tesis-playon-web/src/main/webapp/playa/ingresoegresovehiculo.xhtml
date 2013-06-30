@@ -5,6 +5,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+	<script type="text/javascript">
+		var pagina = "http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html"
+		function redireccionar() {
+			location.href = pagina
+		}
+		setTimeout("redireccionar()", 1000);
+	</script>
+
 	<ui:param name="loadmenuperfil" value="true" />
 
 	<ui:define name="title">
@@ -17,7 +25,7 @@
 		<h:form id="form" style="margin: 10px 0px 0px 30px;">
 			<p:growl id="messages" />
 
-			<ui:fragment>
+			<ui:fragment id="searchVehiculoFragment">
 				<div id="perfil-playa">
 					<h:panelGrid columns="4" cellpadding="8" cellspacing="10">
 						<h:outputLabel for="patente" value="Ingrese la patente: "
@@ -39,7 +47,7 @@
 				</div>
 			</ui:fragment>
 
-			<ui:fragment id="vehiculoSinAbono"
+			<ui:fragment id="vehiculoSinAbonoFragment"
 				rendered="#{detalleEstadiaMB.existeVehiculo 
 					and detalleEstadiaMB.existeAbonoVehiculo == false}">
 				<div id="perfil-playa">
@@ -147,8 +155,7 @@
 				</div>
 			</ui:fragment>
 
-
-			<ui:fragment
+			<ui:fragment id="vehiculoConAbonoFragment"
 				rendered="#{detalleEstadiaMB.existeVehiculo
 					and detalleEstadiaMB.existeAbonoVehiculo == true}">
 				<div id="perfil-playa">
@@ -261,78 +268,81 @@
 		</h:form>
 
 		<h:form id="formIngreso">
-			<ui:fragment>
+			<ui:fragment id="ingresoFragment">
 				<p:dialog header="Confirmación de ingreso de vehículo"
 					widgetVar="dlgIngreso" resizable="false">
+					<h:panelGrid columns="1">
+						<h:panelGrid columns="3" cellpadding="8" cellspacing="8"
+							id="panel">
+							<p:column>
+								<div align="right">
+									<h:outputText for="tarifas" styleClass="fuente-outputtext"
+										value="Tarifas disponibles: " />
+								</div>
+							</p:column>
 
-					<h:panelGrid columns="3" cellpadding="8" cellspacing="8" id="panel">
-						<p:column>
-							<div align="right">
-								<h:outputText for="tarifas" styleClass="fuente-outputtext"
-									value="Tarifas disponibles: " />
-							</div>
-						</p:column>
-						<p:column style="text-align:right;">
-							<p:selectOneMenu id="tarifas"
-								value="#{detalleEstadiaMB.tarifaSeleccionada}" effect="fade">
-								<f:selectItem
-									itemLabel="&#160;&#160;Seleccione una tarifa&#160;&#160;"
-									itemValue="" />
-								<f:selectItems value="#{detalleEstadiaMB.tarifaPlayaList}"
-									var="tarifa" itemValue="#{tarifa}"
-									itemLabel="#{tarifa.tipoEstadia.nombre}&#160;-&#160;$#{tarifa.importe}" />
-								<p:ajax update="panel,promociones"
-									listener="#{detalleEstadiaMB.handleTarifa}" event="change"
-									process="@this" />
-								<f:converter converterId="tarifaConverter" />
-							</p:selectOneMenu>
-						</p:column>
-						<p:message id="tarifasMsg" for="tarifas" display="icon" />
+							<p:column style="text-align:right;">
+								<p:selectOneMenu id="tarifas"
+									value="#{detalleEstadiaMB.tarifaSeleccionada}" effect="fade">
+									<f:selectItem
+										itemLabel="&#160;&#160;Seleccione una tarifa&#160;&#160;"
+										itemValue="" />
+									<f:selectItems value="#{detalleEstadiaMB.tarifaPlayaList}"
+										var="tarifa" itemValue="#{tarifa}"
+										itemLabel="#{tarifa.tipoEstadia.nombre}&#160;-&#160;$#{tarifa.importe}" />
+									<p:ajax update="panel,promociones"
+										listener="#{detalleEstadiaMB.handleTarifa}" event="change"
+										process="@this" />
+									<f:converter converterId="tarifaConverter" />
+								</p:selectOneMenu>
+							</p:column>
+							<p:message id="tarifasMsg" for="tarifas" display="icon" />
 
-						<p:column>
-							<div align="right">
-								<h:outputText for="promociones"
-									value="Promociones disponibles: "
-									styleClass="fuente-outputtext" />
-							</div>
-						</p:column>
-						<p:column style="text-align:right;">
-							<p:selectOneMenu id="promociones"
-								value="#{detalleEstadiaMB.promocionSeleccionada}" effect="fade">
-								<f:selectItem itemLabel="&#160;Seleccione una promoción&#160;"
-									itemValue="" />
-								<f:selectItems
-									value="#{detalleEstadiaMB.promocionesDisponibles}"
-									var="promocion" itemValue="#{promocion}"
-									itemLabel="#{promocion.nombre}&#160;-&#160;
+							<p:column>
+								<div align="right">
+									<h:outputText for="promociones"
+										value="Promociones disponibles: "
+										styleClass="fuente-outputtext" />
+								</div>
+							</p:column>
+
+							<p:column style="text-align:right;">
+								<p:selectOneMenu id="promociones"
+									value="#{detalleEstadiaMB.promocionSeleccionada}" effect="fade">
+									<f:selectItem itemLabel="&#160;Seleccione una promoción&#160;"
+										itemValue="" />
+									<f:selectItems
+										value="#{detalleEstadiaMB.promocionesDisponibles}"
+										var="promocion" itemValue="#{promocion}"
+										itemLabel="#{promocion.nombre}&#160;-&#160;
 												#{promocion.descuento}%&#160;desc" />
-								<f:converter converterId="promocionConverter" />
-							</p:selectOneMenu>
-						</p:column>
-						<p:column />
+									<f:converter converterId="promocionConverter" />
+								</p:selectOneMenu>
+							</p:column>
+							<p:column />
 
-						<p:column />
+							<p:column>
+								<div align="right">
+									<h:outputText value="imprimir ticket"
+										styleClass="fuente-outputtext" />
+								</div>
+							</p:column>
+							<p:column>
+								<p:selectBooleanCheckbox value="#{detalleEstadiaMB.imprimir}" />
+							</p:column>
+						</h:panelGrid>
+
 						<p:column>
-							<p:selectBooleanCheckbox value="#{detalleEstadiaMB.imprimir}" />
-							<h:outputText value="&#160;imprimir ticket"
-								styleClass="fuente-outputtext" />
-						</p:column>
-						<p:column />
-
-						<f:facet name="footer">
 							<div align="right">
 								<p:commandButton id="registrarIngreso" value="Registrar ingreso"
-									update=":formTicket:pdfMedia"
-									onclick="dlgIngreso.hide();dlgTicket.show();"
 									action="#{detalleEstadiaMB.registrarIngresoVehiculo}"
-									ajax="false" style="margin-right:10px">
-										
+									ajax="false" style="margin-right:10px" update=":form:vehiculoSinAbonoFragment"
+									onclick="dlgIngreso.hide();dlgTicket.show();">
 								</p:commandButton>
-
 								<p:commandButton id="cancelar" value="Cancelar" immediate="true"
 									oncomplete="dlgIngreso.hide();" />
 							</div>
-						</f:facet>
+						</p:column>
 					</h:panelGrid>
 				</p:dialog>
 			</ui:fragment>
@@ -340,16 +350,10 @@
 
 		<h:form id="formTicket">
 			<p:dialog header="Ticket de Ingreso" widgetVar="dlgTicket"
-				resizable="false">
-
-				<p:lightBox iframe="true">
-					<h:outputLink value="#{detalleEstadiaMB.rutaPDF}"
-						title="PrimeFaces HomePage">
-						<h:outputText value="PrimeFaces HomePage" />
-					</h:outputLink>
-				</p:lightBox>
+				resizable="false" onShow="window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';">
+				<p:ajax onstart="window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';" />
 				<p:commandButton id="Salir" value="Salir" immediate="true"
-									onclick="dlgTicket.hide();window.location.href = '/playa/ingresoegresovehiculo';" />
+					onclick="dlgTicket.hide();window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';" />
 			</p:dialog>
 		</h:form>
 
