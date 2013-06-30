@@ -224,6 +224,92 @@ public class AbonoManagedBean implements Serializable {
 	}
 	return null;
     }
+    
+    
+    public String abonoAddFromPlayaGerente() {
+    	Abono abono;
+    	try {
+
+    	    if (getAbonoService().existeAbonoVehiculo(vehiculo, playaLoggeada) == false) {
+
+    		abono = new Abono(getFechaDesde(), getFechaHasta(), getTarifa(), playaLoggeada);
+    		abono.setVehiculo(getVehiculo());
+    		abono.setPromocion(getPromocion());
+
+    		CuentaCliente cuentaCliente = new CuentaCliente();
+    		cuentaCliente = vehiculo.getCliente().getCuentaCliente();
+
+    		float nuevoSaldo;
+
+    		if (cuentaCliente.getSaldo() >= getTarifa().getImporte()) {
+
+    		    if (getPromocion() != null) {
+    			nuevoSaldo = cuentaCliente.getSaldo()
+    				- (getTarifa().getImporte() * ((getPromocion().getDescuento()) / 100 + 1));
+    		    } else {
+    			nuevoSaldo = cuentaCliente.getSaldo() - (getTarifa().getImporte());
+    		    }
+
+    		    // Grabo el abono
+    		    getAbonoService().save(abono);
+
+    		    // Actualizo la cuenta de cliente.
+    		    cuentaCliente.setSaldo(nuevoSaldo);
+    		    getCuentaClienteService().update(cuentaCliente);
+
+    		    // Creo la transacción de la playa
+    		    TransaccionPlaya txPlaya = new TransaccionPlaya();
+    		    CuentaPlaya cuentaPlaya = getCuentaPlayaService().findByPlaya(playaLoggeada);
+    		    txPlaya.setCuentaPlaya(cuentaPlaya);
+    		    txPlaya.setFecha(new Date());
+
+    		    float importe;
+    		    if (getPromocion() != null) {
+    			importe = getTarifa().getImporte() * ((getPromocion().getDescuento()) / 100 + 1);
+    		    } else {
+    			importe = getTarifa().getImporte();
+    		    }
+    		    txPlaya.setImporte(importe);
+
+    		    TipoPago tipoPagoCuenta = getTipoPagoService().findByNombreTipoPago("Cuenta");
+    		    txPlaya.setTipoPago(tipoPagoCuenta);
+
+    		    getTransaccionPlayaService().save(txPlaya);
+
+    		    // Creo la transacción cliente
+    		    TransaccionCliente transaccionCliente = new TransaccionCliente();
+    		    transaccionCliente.setCuentaCliente(cuentaCliente);
+    		    transaccionCliente.setFecha(new Date());
+    		    transaccionCliente.setImporte(-importe);
+    		    transaccionCliente.setTipoPago(tipoPagoCuenta);
+
+    		    getTransaccionClienteService().save(transaccionCliente);
+
+    		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+    			    "Se registró exitosamente el abono mensual", "");
+    		    FacesContext.getCurrentInstance().addMessage(null, message);
+
+    		    return "abonoaddendgerente";
+    		} else {
+    		    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+    			    "No posee saldo suficiente para efectuar el abono mensual.", "");
+    		    FacesContext.getCurrentInstance().addMessage(null, message);
+    		}
+
+    	    } else {
+    		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+    			"Ya existe un abonado en el período indicado. ¡Verifique las fechas!", "");
+    		FacesContext.getCurrentInstance().addMessage(null, message);
+    	    }
+
+    	} catch (Exception ex) {
+    	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+    		    "Error, no se pudo registrar el abono mensual, Disculpe las molestias ocacionadas.", "");
+    	    FacesContext.getCurrentInstance().addMessage(null, message);
+    	    ex.printStackTrace();
+    	}
+    	return null;
+    }
 
     public void validateVehiculo(FacesContext context, UIComponent component, Object value) {
 	String patente = value.toString();
