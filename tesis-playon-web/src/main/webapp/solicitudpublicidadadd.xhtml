@@ -207,7 +207,8 @@
 				</p:panel>
 				<div align="center" style="margin-top: 10px">
 					<p:commandButton id="addPublicidad" value="Registrar Publicidad"
-						onclick="dlgDM.show();" type="button" />
+						onclick="dlgDM.show();" type="button"
+						action="#{publicidadMB.addSolicitudPublicidad}" ajax="false" />
 					<p:commandButton id="reset" value="Cancelar" immediate="true"
 						action="/index.html?faces-redirect=true" ajax="false"
 						style="margin-left:10px" />

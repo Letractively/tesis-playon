@@ -45,9 +45,11 @@
 				</p:commandLink>
 				<p:column>
 					<div align="right">
-						<h:commandLink id="denunciaPlaya" value="Denunciar Playa" ajax="true"
-							action="/denunciaplayaadd.html?faces-redirect=true" immediate="true">
-							<f:setPropertyActionListener value="#{perfilPlayaMB.playaSelected}"
+						<h:commandLink id="denunciaPlaya" value="Denunciar Playa"
+							ajax="true" action="/denunciaplayaadd.html?faces-redirect=true"
+							immediate="true">
+							<f:setPropertyActionListener
+								value="#{perfilPlayaMB.playaSelected}"
 								target="#{denunciaPlayaMB.playaSelected}" />
 						</h:commandLink>
 					</div>
@@ -140,7 +142,9 @@
 							</p:column>
 
 							<p:column headerText="Importe">
-								<h:outputText value="#{tarifa.importe}" />
+								<h:outputText value="#{tarifa.importe}">
+									<f:convertNumber type="currency" currencySymbol="$ " />
+								</h:outputText>
 							</p:column>
 						</p:dataTable>
 
@@ -178,10 +182,14 @@
 									</h:outputText>
 
 									<h:outputText value="Hora de inicio: " />
-									<h:outputText value="#{promocion.horaInicio}" />
+									<h:outputText value="#{promocion.horaInicio}">
+										<f:convertDateTime pattern="hh:mm" />
+									</h:outputText>
 
 									<h:outputText value="Hora de finalización: " />
-									<h:outputText value="#{promocion.horaFin}" />
+									<h:outputText value="#{promocion.horaFin}">
+										<f:convertDateTime pattern="hh:mm" />
+									</h:outputText>
 
 									<h:outputText value="Tipo de estadía: " />
 									<h:outputText value="#{promocion.tarifa.tipoEstadia.nombre}" />
@@ -191,11 +199,15 @@
 										value="#{promocion.tarifa.categoriaVehiculo.nombre}" />
 
 									<h:outputText value="Monto fijo: " />
-									<h:outputText value="#{promocion.montoFijo}" />
+									<h:outputText value="#{promocion.montoFijo}">
+										<f:convertNumber type="currency" currencySymbol="$" />
+									</h:outputText>
 
 									<h:outputText value="Monto con descuento: " />
 									<h:outputText
-										value="#{promocion.montoFijo * (1- promocion.descuento/100)}" />
+										value="#{promocion.montoFijo * (1- promocion.descuento/100)}">
+										<f:convertNumber type="currency" currencySymbol="$" />
+									</h:outputText>
 
 									<p:column>
 										<h:outputText value="Descuento: " />
@@ -314,26 +326,23 @@
 				</div>
 			</p:dialog>
 
-			<ui:fragment rendered="#{perfilPlayaMB.fotosListSelected !=null}">
-				<br />
-				Fotos
-				<p:separator id="separatorFoto" />
-				<div align="center" style="margin-top: 15px; height: 420px">
-					<p:galleria value="#{perfilPlayaMB.fotosListSelected}" var="image"
-						effect="slide" effectSpeed="1000" showOverlays="true"
-						panelWidth="500" panelHeight="350">
-						<h:graphicImage library="fotos_playas"
-							name="#{image.id}_#{image.nombre}"
-							style="width:500px; height:350px" />
-						<p:galleriaOverlay>
-							<div align="right">
-								<h:outputText value="#{image.nombre}" />
-							</div>
-						</p:galleriaOverlay>
-					</p:galleria>
-				</div>
-			</ui:fragment>
-		</h:form>
+			<div align="center" style="margin: 0 10px 0 10px">
+				<h:panelGrid columns="1" width="500"
+					rendered="#{perfilPlayaMB.fotosListSelected !=null}">
+					<p:column />
+					<h:outputText value="Fotos" />
 
+					<p:separator id="separatorFoto" />
+					<p:column>
+						<p:imageSwitch effect="shuffle">
+							<ui:repeat value="#{perfilPlayaMB.fotosListSelected}" var="image">
+								<p:graphicImage library="fotos_playas"
+									name="#{image.id}_#{image.nombre}" width="500" heigth="360" />
+							</ui:repeat>
+						</p:imageSwitch>
+					</p:column>
+				</h:panelGrid>
+			</div>
+		</h:form>
 	</ui:define>
 </ui:composition>

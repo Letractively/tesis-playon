@@ -104,15 +104,18 @@ public class PublicidadManagedBean implements Serializable {
 	    publicidad.setFotoPublicidad(fotoPublicidad);
 	    getPublicidadService().save(publicidad);
 
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se registró la publicidad exitosamente.", "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
 	} catch (Exception e) {
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 		    "No se ha podido completar la solicitud. Intente más tarde. Disculpe las molestias ocacionadas.",
 		    "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
+    }
+    
+    public void addSolicitudPublicidadExitosa() {
+	FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "Se registró la publicidad exitosamente.", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     public void validateDateInicial(FacesContext context, UIComponent component, Object value) {
