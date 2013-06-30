@@ -329,7 +329,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
     }
 
     // ---------------- Ingreso / Egreso de un cliente común ---------------------------//
-    public String registrarIngresoVehiculo() {
+    public void registrarIngresoVehiculo() {
 	try {
 	    // SAVE TO DETTALLEESTADIA
 	    Timestamp fechaHoraIngreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
@@ -352,14 +352,14 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	    
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se registró el ingreso exitosamente del vehiculo patente: " + patente, "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    FacesContext.getCurrentInstance().addMessage("messagesGral", message);
 
-	    return "ingresoegresovahiculo";
+	    //return "ingresoegresovahiculo";
 
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
-	return null;
+	//return null;
     }
 
     public String registrarEgresoVehiculo() {
@@ -475,14 +475,14 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	    FacesContext facesContext = FacesContext.getCurrentInstance();
 	    ExternalContext extContext = facesContext.getExternalContext();
 	    Date hoy = new Date();
-	    SimpleDateFormat formato = new SimpleDateFormat("yyyy_MM_dd_hh:mm:ss");
+	    SimpleDateFormat formato = new SimpleDateFormat("yyyy_MM_dd_HH:mm:ss");
 	    String nombrePDF = tipoMovimiento +"_" +formato.format(hoy) + ".pdf";
 	    String sep = File.separator;
 	    rutaPDF = extContext.getRealPath("resources" + sep + nombrePDF);
 
 	    File filePDF = new File(rutaPDF);
 
-	    Document doc = new Document(new Rectangle(280f, 350f), 5f, 5f, 5f, 5f);
+	    Document doc = new Document(new Rectangle(240f, 300f), 5f, 5f, 5f, 5f);
 	    FileOutputStream os = new FileOutputStream(filePDF);
 	    Paragraph cuerpo = new Paragraph();
 

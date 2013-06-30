@@ -67,7 +67,9 @@
 									</div>
 								</p:column>
 								<h:outputText id="txt_saldo"
-									value="$#{detalleEstadiaMB.cliente.cuentaCliente.saldo}" />
+									value="#{detalleEstadiaMB.cliente.cuentaCliente.saldo}">
+									<f:convertNumber type="currency" currencySymbol="$ " />
+								</h:outputText>
 
 								<p:column>&#160;&#160;&#160;&#160;&#160;</p:column>
 
@@ -145,8 +147,8 @@
 											onclick="dlgIngreso.show();" style="margin-right:10px"
 											type="button" />
 										<p:commandButton id="cancelar" value="Cancelar"
-											immediate="true" ajax="false"
-											action="/playa/detalleestadia.html?faces-redirec=true" />
+											immediate="true"
+											onclick="window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';" />
 									</div>
 								</f:facet>
 							</h:panelGrid>
@@ -256,7 +258,7 @@
 											action="#{detalleEstadiaMB.registrarEgresoAbonado}" />
 										<p:commandButton id="cancelarAbono" value="Cancelar"
 											immediate="true" ajax="false"
-											action="/playa/detalleestadia.html?faces-redirec=true" />
+											onclick="window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';" />
 									</div>
 								</f:facet>
 							</h:panelGrid>
@@ -336,7 +338,8 @@
 							<div align="right">
 								<p:commandButton id="registrarIngreso" value="Registrar ingreso"
 									action="#{detalleEstadiaMB.registrarIngresoVehiculo}"
-									ajax="false" style="margin-right:10px" update=":form:vehiculoSinAbonoFragment"
+									ajax="false" style="margin-right:10px"
+									update=":form:vehiculoSinAbonoFragment"
 									onclick="dlgIngreso.hide();dlgTicket.show();">
 								</p:commandButton>
 								<p:commandButton id="cancelar" value="Cancelar" immediate="true"
@@ -350,8 +353,10 @@
 
 		<h:form id="formTicket">
 			<p:dialog header="Ticket de Ingreso" widgetVar="dlgTicket"
-				resizable="false" onShow="window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';">
-				<p:ajax onstart="window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';" />
+				resizable="false"
+				onShow="window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';">
+				<p:ajax
+					onstart="window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';" />
 				<p:commandButton id="Salir" value="Salir" immediate="true"
 					onclick="dlgTicket.hide();window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';" />
 			</p:dialog>
