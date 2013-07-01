@@ -142,3 +142,26 @@
 #header a:hover {
 	color: white;
 }
+
+#tos {
+	margin: 0 25px 0 25px;
+	padding: 0 5px 0 5px;
+	/* 	padding: 0 25px 0 25px; */
+	/* 	border-right: 1px solid rgb(166, 201, 226); */
+	/* 	border-left: 1px solid rgb(166, 201, 226); */
+	/* 	border-left: 1px solid rgb(192, 191, 191); */
+	/* 	border-right: 1px solid rgb(192, 191, 191); */
+}
+
+#tos p {
+	text-align: justify;
+	margin-bottom: 0.26cm;
+	font-size: 12px;
+	line-height: 1.7em;
+}
+
+#tos .playon { /* 	color: rgb(62, 61, 61); */
+	color: #006B8F;
+	/* 	font-weight: bold; */
+	/* 	font-style: italic; */}
+}
