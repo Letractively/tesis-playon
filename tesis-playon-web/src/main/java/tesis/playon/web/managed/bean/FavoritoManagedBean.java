@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.menuitem.MenuItem;
@@ -33,7 +33,7 @@ import tesis.playon.web.service.IUsuarioService;
  * 
  */
 @ManagedBean(name = "favoritoMB")
-@RequestScoped
+@ViewScoped
 public class FavoritoManagedBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,6 +57,8 @@ public class FavoritoManagedBean implements Serializable {
     private Cliente cliente;
 
     private List<Favorito> favoritosListPerfil;
+
+    private static Favorito favoritoSelected;
 
     @PostConstruct
     private void init() {
@@ -109,8 +111,15 @@ public class FavoritoManagedBean implements Serializable {
 		int idPlaya = favorito.getPlaya().getId();
 		item.setUrl("/viewperfilplaya.html?id=" + idPlaya);
 		item.setIcon("ui-icon-star");
+		item.setStyle("font-size:10px;");
 		submenu.getChildren().add(item);
 	    }
+
+	    MenuItem item = new MenuItem();
+	    item.setId("itemAdminFav");
+	    item.setValue(" Administrar Favoritos");
+	    item.setIcon("ui-icon-gear");
+	    submenu.getChildren().add(item);
 	}
 
 	model.addSubmenu(submenu);
@@ -124,6 +133,25 @@ public class FavoritoManagedBean implements Serializable {
 		int idPlayaSelected = Integer.parseInt(parametroID);
 		playaSelected = getPlayaService().findById(idPlayaSelected);
 	    }
+	}
+    }
+
+    public void quitarFavorito() {
+	try {
+	    if (favoritoSelected != null) {
+
+		getFavoritoService().delete(favoritoSelected);
+		
+		favoritosListPerfil = getFavoritoService().findByCliente(this.cliente);
+		menuFavorito();
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			"Se quitó la Playa favorita correctamente de su menú", "");
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	    }
+	} catch (Exception ex) {
+	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		    "No se pudo quitar la playa a favoritos.\nDisculpe las molestias ocacionadas", "");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
     }
 
@@ -181,6 +209,21 @@ public class FavoritoManagedBean implements Serializable {
 
     public void setPlayaSelected(Playa playaSelected) {
 	FavoritoManagedBean.playaSelected = playaSelected;
+    }
+
+    /**
+     * @return the favoritoSelected
+     */
+    public Favorito getFavoritoSelected() {
+	return favoritoSelected;
+    }
+
+    /**
+     * @param favoritoSelected
+     *            the favoritoSelected to set
+     */
+    public void setFavoritoSelected(Favorito favoritoSelected) {
+	FavoritoManagedBean.favoritoSelected = favoritoSelected;
     }
 
     public MenuModel getModel() {
