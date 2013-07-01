@@ -50,7 +50,7 @@
 									itemValue="#{null}" />
 								<f:selectItems value="#{vehiculoMB.modelosList}" var="modelo"
 									itemValue="#{modelo}" itemLabel="#{modelo.nombre}" />
-								<p:ajax event="change" update="modeloMsg, @this" process="@this" /> 
+								<p:ajax event="change" update="modeloMsg, @this" process="@this" />
 								<f:converter converterId="modeloVehiculoConverter" />
 							</p:selectOneMenu>
 							<p:message id="modeloMsg" for="modelos" display="icon" />
@@ -58,17 +58,16 @@
 							<h:outputText for="colorVehiculo" value="Color: " />
 							<p:selectOneMenu id="colores" style="width:200px" var="colour"
 								value="#{vehiculoMB.colorVehiculo}" effect="fade">
-								<f:selectItem itemLabel="Seleccione un color"
-									itemValue="-1" />
+								<f:selectItem itemLabel="Seleccione un color" itemValue="-1" />
 								<f:selectItems value="#{vehiculoMB.colorVehiculoList}"
 									var="color" itemValue="#{color}" itemLabel="#{color.nombre}" />
-								
-									<p:column>
-										<h:panelGrid
-											style="width:43px; background-color:##{colour.valorHexadecimal};">
-										</h:panelGrid>
-									</p:column>
-									<p:column>
+
+								<p:column>
+									<h:panelGrid
+										style="width:43px; background-color:##{colour.valorHexadecimal};">
+									</h:panelGrid>
+								</p:column>
+								<p:column>
 										#{colour.nombre}
 									</p:column>
 								<f:converter converterId="colorVehiculoConverter" />
@@ -96,8 +95,17 @@
 									action="/cliente/perfilcliente.html?faces-redirect=true"
 									ajax="false" style="margin-right:10px" />
 							</div>
+							<div align="right">
+								<h:outputLabel for="sug"
+									value="Si no encuentra su modelo, sugieraló! " />
+								<p:commandButton id="sugerir" value="Sugerir modelo"
+									immediate="true" action="/contact.html?faces-redirect=true"
+									ajax="false" style="margin-right:10px" />
+
+							</div>
 						</p:column>
 					</p:panel>
+
 				</h:panelGrid>
 			</div>
 		</h:form>
