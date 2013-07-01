@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
@@ -39,7 +39,7 @@ import tesis.playon.web.util.WriteImage;
  * 
  */
 @ManagedBean(name = "perfilPlayaMB")
-@RequestScoped
+@ViewScoped
 public class PerfilPlayaManagedBean implements Serializable {
 
     private static final long serialVersionUID = -1085389423375986168L;
@@ -119,6 +119,12 @@ public class PerfilPlayaManagedBean implements Serializable {
 		int idPlayaSelected = Integer.parseInt(parametroID);
 		playaSelected = getPlayaService().findById(idPlayaSelected);
 		perfilSelected = getPerfilPlayaService().findByPlaya(playaSelected);
+		if(perfilSelected != null)
+		{
+		    fotosListSelected = getFotoService().findByPlaya(perfilSelected);
+		    if (fotosListSelected != null)
+			WriteImage.writeFotos(fotosListSelected);
+		}
 	    }
 	}
     }

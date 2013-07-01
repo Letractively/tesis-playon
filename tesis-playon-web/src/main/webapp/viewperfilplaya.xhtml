@@ -183,12 +183,12 @@
 
 									<h:outputText value="Hora de inicio: " />
 									<h:outputText value="#{promocion.horaInicio}">
-										<f:convertDateTime pattern="hh:mm" />
+										<f:convertDateTime pattern="HH:mm" />
 									</h:outputText>
 
 									<h:outputText value="Hora de finalización: " />
 									<h:outputText value="#{promocion.horaFin}">
-										<f:convertDateTime pattern="hh:mm" />
+										<f:convertDateTime pattern="HH:mm" />
 									</h:outputText>
 
 									<h:outputText value="Tipo de estadía: " />
@@ -200,13 +200,13 @@
 
 									<h:outputText value="Monto fijo: " />
 									<h:outputText value="#{promocion.montoFijo}">
-										<f:convertNumber type="currency" currencySymbol="$" />
+										<f:convertNumber type="currency" currencySymbol="$ " />
 									</h:outputText>
 
 									<h:outputText value="Monto con descuento: " />
 									<h:outputText
 										value="#{promocion.montoFijo * (1- promocion.descuento/100)}">
-										<f:convertNumber type="currency" currencySymbol="$" />
+										<f:convertNumber type="currency" currencySymbol="$ " />
 									</h:outputText>
 
 									<p:column>
@@ -327,7 +327,7 @@
 			</p:dialog>
 
 			<div align="center" style="margin: 0 10px 0 10px">
-				<h:panelGrid columns="1" width="500"
+				<h:panelGrid columns="1" width="500" height="360"
 					rendered="#{perfilPlayaMB.fotosListSelected !=null}">
 					<p:column />
 					<h:outputText value="Fotos" />
@@ -336,8 +336,8 @@
 					<p:column>
 						<p:imageSwitch effect="shuffle">
 							<ui:repeat value="#{perfilPlayaMB.fotosListSelected}" var="image">
-								<p:graphicImage library="fotos_playas"
-									name="#{image.id}_#{image.nombre}" width="500" heigth="360" />
+								<p:graphicImage library="fotos_playas" style="width:500px;height:360px;"
+									name="#{image.id}_#{image.nombre}" />
 							</ui:repeat>
 						</p:imageSwitch>
 					</p:column>

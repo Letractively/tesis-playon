@@ -61,11 +61,18 @@ public class WriteImage implements Serializable {
 
 		File file = new File(path + foto.getId() + "_" + foto.getNombre());
 
-		// FileOutputStream fos = new FileOutputStream("images\\output.jpg"); //windows
-		FileOutputStream fos = new FileOutputStream(file);
+		if (!file.exists()) {
 
-		fos.write(foto.getImage());
-		fos.close();
+		    FileOutputStream fos = new FileOutputStream(file);
+
+		    fos.write(foto.getImage());
+		    fos.close();
+
+		    BufferedImage bImage = loadImage(file);
+		    bImage = resize(bImage,500,360);
+		    saveImage(bImage, file);
+		}
+
 	    }
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -81,7 +88,7 @@ public class WriteImage implements Serializable {
 
 		String path = extContext.getRealPath("resources" + sep + "tmp") + sep;
 		File file = new File(path + fotoPublicidad.getNombre());
-		
+
 		FileOutputStream fos = new FileOutputStream(file);
 		fos.write(fotoPublicidad.getImage());
 		fos.close();
@@ -90,7 +97,7 @@ public class WriteImage implements Serializable {
 	    e.printStackTrace();
 	}
     }
-    
+
     public static void writeFotosPublicidad(List<FotoPublicidad> fotosList) {
 	ExternalContext extContext = null;
 	try {
@@ -102,14 +109,14 @@ public class WriteImage implements Serializable {
 		File file = new File(path + foto.getId() + "_" + foto.getNombre());
 
 		if (!file.exists()) {
-		    
+
 		    FileOutputStream fos = new FileOutputStream(file);
 
-                    fos.write(foto.getImage());
-                    fos.close();
-		    
+		    fos.write(foto.getImage());
+		    fos.close();
+
 		    BufferedImage bImage = loadImage(file);
-		    bImage = resize(bImage);
+		    bImage = resize(bImage,200,360);
 		    saveImage(bImage, file);
 		}
 	    }
@@ -139,7 +146,7 @@ public class WriteImage implements Serializable {
 	    e.printStackTrace();
 	}
     }
-    
+
     public static void borrarFotoPerfilUsuarioAntigua(Usuario usuario) {
 	ExternalContext extContext = null;
 	try {
@@ -149,7 +156,7 @@ public class WriteImage implements Serializable {
 
 		String path = extContext.getRealPath("resources" + sep + "fotos_perfil_usuarios") + sep;
 		File file = new File(path + usuario.getNombreUser() + ".jpg");
-		
+
 		if (file.exists()) {
 		    file.delete();
 		}
@@ -158,7 +165,7 @@ public class WriteImage implements Serializable {
 	    e.printStackTrace();
 	}
     }
-    
+
     private static BufferedImage loadImage(File pFile) {
 	BufferedImage bufim = null;
 	try {
@@ -168,24 +175,24 @@ public class WriteImage implements Serializable {
 	}
 	return bufim;
     }
-    
-    public static void saveImage(BufferedImage bufferedImage, File pFile) {  
-	    try {  
-	        String format = "jpg";
-	        ImageIO.write(bufferedImage, format, pFile);  
-	    } catch (IOException e) {  
-	        e.printStackTrace();  
-	    }  
-	}  
-    
-    public static BufferedImage resize(BufferedImage bufferedImage) {  
-	    int w = bufferedImage.getWidth();  
-	    int h = bufferedImage.getHeight();  
-	    BufferedImage bufim = new BufferedImage(200, 360, bufferedImage.getType());  
-	    Graphics2D g = bufim.createGraphics();  
-	    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);  
-	    g.drawImage(bufferedImage, 0, 0, 200, 360, 0, 0, w, h, null);  
-	    g.dispose();  
-	    return bufim;  
-	} 
+
+    public static void saveImage(BufferedImage bufferedImage, File pFile) {
+	try {
+	    String format = "jpg";
+	    ImageIO.write(bufferedImage, format, pFile);
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+    }
+
+    public static BufferedImage resize(BufferedImage bufferedImage, int pWidth, int pHeight) {
+	int w = bufferedImage.getWidth();
+	int h = bufferedImage.getHeight();
+	BufferedImage bufim = new BufferedImage(pWidth, pHeight, bufferedImage.getType());
+	Graphics2D g = bufim.createGraphics();
+	g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	g.drawImage(bufferedImage, 0, 0, pWidth, pHeight, 0, 0, w, h, null);
+	g.dispose();
+	return bufim;
+    }
 }
