@@ -19,7 +19,6 @@ import tesis.playon.mobile.utils.Utils;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ListFragment;
-import android.app.SearchManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -60,11 +59,13 @@ public class ListaPlayasFragment extends ListFragment {
 
 	Log.d(TAG, "onCreateView");
 
-	Bundle mBundle = getArguments();
+	// Bundle mBundle = getArguments();
+
+	// mPreference = new PreferenceHelper(getActivity());
 
 	mPreference = new PreferenceHelper(getActivity());
-
-	query = mBundle.getString(SearchManager.QUERY);
+	query = mPreference.getQuery();
+	// query = mBundle.getString(SearchManager.QUERY);
 
 	if (null != query) {
 	    query = query + ", Córdoba, Argentina";
@@ -116,7 +117,8 @@ public class ListaPlayasFragment extends ListFragment {
 	    if (null != query)
 		new BuscarCoordenadasService().execute();
 	    else {
-		playas = new Utils().buscarPlaya(playas, mPreference.getLat(), mPreference.getLng(), 10);
+		// playas = new Utils().buscarPlaya(playas, mPreference.getLat(), mPreference.getLng(), 10);
+		playas = new Utils().buscarPlaya(playas, "-31.443579", "-64.193434", 10);
 		llenarLista(playas);
 	    }
 	}
@@ -188,7 +190,9 @@ public class ListaPlayasFragment extends ListFragment {
 	protected void onPostExecute(String results) {
 	    Log.d(TAG, "onPostExecute");
 	    playas = new Utils().buscarPlaya(playas, result, 10);
-	    llenarLista(playas);
+	    if (getActivity() != null) {
+		llenarLista(playas);
+	    }
 	}
     }
 }

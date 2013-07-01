@@ -114,8 +114,8 @@ public class DetallePlayaFragment extends Fragment implements OnClickListener {
 	TextView desc = (TextView) mView.findViewById(R.id.txt_desc);
 	TextView direccion = (TextView) mView.findViewById(R.id.txt_direccion);
 	TextView disponibilidad = (TextView) mView.findViewById(R.id.txt_disponibilidad);
-	// TextView telefono = (TextView) mView.findViewById(R.id.txt_telefono);
-	// TextView email = (TextView) mView.findViewById(R.id.txt_email);
+	TextView telefono = (TextView) mView.findViewById(R.id.txt_telefono);
+	TextView email = (TextView) mView.findViewById(R.id.txt_email);
 	tarifas = (Button) mView.findViewById(R.id.btn_tarifas);
 	promociones = (Button) mView.findViewById(R.id.btn_promociones);
 	comentarios = (Button) mView.findViewById(R.id.btn_comentarios);
@@ -124,8 +124,8 @@ public class DetallePlayaFragment extends Fragment implements OnClickListener {
 	desc.setText(perfilPlaya.getDescripcion());
 	direccion.setText(playa.getDomicilio());
 	disponibilidad.setText(playa.getDisponibilidad().toString());
-	// telefono.setText((null != playa.getTelefono()) ? playa.getTelefono() : Const.SIN_DATOS);
-	// email.setText((null != playa.getEmail()) ? playa.getEmail() : Const.SIN_DATOS);
+	telefono.setText((null != playa.getTelefono()) ? playa.getTelefono() : Const.SIN_DATOS);
+	email.setText((null != playa.getEmail()) ? playa.getEmail() : Const.SIN_DATOS);
 	tarifas.setOnClickListener(this);
 	promociones.setOnClickListener(this);
 	comentarios.setOnClickListener(this);

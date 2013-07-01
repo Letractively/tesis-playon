@@ -79,15 +79,24 @@ public class PerfilClienteActivity extends Activity {
 	TextView nroCuenta = (TextView) findViewById(R.id.txt_nro_cuenta);
 	TextView saldoCuenta = (TextView) findViewById(R.id.txt_saldo);
 	TextView telefono = (TextView) findViewById(R.id.txt_telefono);
-	TextView email = (TextView) findViewById(R.id.txt_email);
+	TextView email = (TextView) findViewById(R.id.txt_email_cliente);
 
 	nomCliente.setText(cliente.getUsuario().getNombre() + " " + cliente.getUsuario().getApellido());
 	documento.setText(cliente.getUsuario().getTipoDoc().getNombre() + " " + cliente.getUsuario().getNroDoc());
 	domicilio.setText(cliente.getDomicilio());
-	nroCuenta.setText(cuentaCliente.getNroCuenta().toString());
-	saldoCuenta.setText("AR $" + cuentaCliente.getSaldo());
+	if (cuentaCliente != null) {
+	    nroCuenta.setText(cuentaCliente.getNroCuenta().toString());
+	    saldoCuenta.setText("AR $" + cuentaCliente.getSaldo());
+	} else {
+	    nroCuenta.setText("N/A");
+	    saldoCuenta.setText("N/A");
+	}
 	telefono.setText(cliente.getTelefono());
-	email.setText(cliente.getUsuario().getEmail());
+	if (cliente.getUsuario().getEmail() != null) {
+	    email.setText(cliente.getUsuario().getEmail());
+	} else {
+	    email.setText("N/A");
+	}
     }
 
     class PerfilClienteService extends AsyncTask<Void, Void, String> {
@@ -95,11 +104,16 @@ public class PerfilClienteActivity extends Activity {
 	@Override
 	protected String doInBackground(Void... params) {
 	    String url = URL_PERFIL_CLIENTE + nroUsuario;
-	    InputStream source = new Utils().retrieveStream(url);
-	    Gson gson = new Gson();
-	    Reader reader = new InputStreamReader(source);
-	    cliente = gson.fromJson(reader, Cliente.class);
-	    return cliente.toString();
+	    try {
+		InputStream source = new Utils().retrieveStream(url);
+		Gson gson = new Gson();
+		Reader reader = new InputStreamReader(source);
+		cliente = gson.fromJson(reader, Cliente.class);
+		return cliente.toString();
+	    } catch (Exception e) {
+		// TODO: handle exception
+	    }
+	    return null;
 	}
 
 	protected void onPostExecute(String results) {
@@ -117,11 +131,16 @@ public class PerfilClienteActivity extends Activity {
 	@Override
 	protected String doInBackground(Void... params) {
 	    String url = URL_CUENTA_CLIENTE + cliente.getNroCliente();
-	    InputStream source = new Utils().retrieveStream(url);
-	    Gson gson = new Gson();
-	    Reader reader = new InputStreamReader(source);
-	    cuentaCliente = gson.fromJson(reader, CuentaCliente.class);
-	    return cuentaCliente.toString();
+	    try {
+		InputStream source = new Utils().retrieveStream(url);
+		Gson gson = new Gson();
+		Reader reader = new InputStreamReader(source);
+		cuentaCliente = gson.fromJson(reader, CuentaCliente.class);
+		return cuentaCliente.toString();
+	    } catch (Exception e) {
+		// TODO: handle exception
+	    }
+	    return null;
 	}
 
 	protected void onPostExecute(String results) {

@@ -35,10 +35,10 @@ public class BuscarPlayasActivity extends Activity {
 	Bundle args = new Bundle();
 	args.putString(SearchManager.QUERY, query);
 
-	Fragment listaFragment = new ListaPlayasFragment();
-	listaFragment.setArguments(args);
-
 	Fragment mapaFragment = new MapaPlayasFragment();
+	mapaFragment.setArguments(args);
+
+	Fragment listaFragment = new ListaPlayasFragment();
 
 	Fragment playaFragment = new DetallePlayaFragment();
 
@@ -46,16 +46,16 @@ public class BuscarPlayasActivity extends Activity {
 	final ActionBar actionbar = getActionBar();
 	actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-	ActionBar.Tab listaTab = actionbar.newTab().setText("Lista");
 	ActionBar.Tab mapaTab = actionbar.newTab().setText("Mapa");
+	ActionBar.Tab listaTab = actionbar.newTab().setText("Lista");
 	ActionBar.Tab playaTab = actionbar.newTab().setText("Playa");
 
 	listaTab.setTabListener(new MyTabsListener(listaFragment));
 	mapaTab.setTabListener(new MyTabsListener(mapaFragment));
 	playaTab.setTabListener(new MyTabsListener(playaFragment));
 
-	actionbar.addTab(listaTab);
 	actionbar.addTab(mapaTab);
+	actionbar.addTab(listaTab);
 	actionbar.addTab(playaTab);
     }
 

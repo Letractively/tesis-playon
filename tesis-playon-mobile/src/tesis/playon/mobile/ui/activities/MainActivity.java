@@ -106,10 +106,12 @@ public class MainActivity extends Activity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-	String lat = Double.toString((Double) (location.getLatitude()));
-	String lng = Double.toString((Double) (location.getLongitude()));
-	mPreference = new PreferenceHelper(getApplicationContext());
-	mPreference.updateLatLng(lat, lng);
+	// String lat = Double.toString((Double) (location.getLatitude()));
+	// String lng = Double.toString((Double) (location.getLongitude()));
+	// mPreference = new PreferenceHelper(getApplicationContext());
+	location.setLatitude(-31.383459);
+	location.setLongitude(-64.251228);
+	mPreference.updateLatLng("-31.383459", "-64.251228");
     }
 
     @Override
@@ -138,12 +140,14 @@ public class MainActivity extends Activity implements LocationListener {
 	// Initialize the location fields
 	if (location != null) {
 	    Log.d(TAG, "Provider " + provider + " has been selected.");
-	    onLocationChanged(location);
+	    // onLocationChanged(location);
+	    location.setLatitude(-31.383459);
+	    location.setLongitude(-64.251228);
 	} else {
 	    location = new Location("Hardcoded");
-	    location.setLatitude(-33.503588);
-	    location.setLongitude(-70.757669);
+	    location.setLatitude(-31.383459);
+	    location.setLongitude(-64.251228);
+	    mPreference.updateLatLng("-31.383459", "-64.251228");
 	}
-	onLocationChanged(location);
     }
 }
