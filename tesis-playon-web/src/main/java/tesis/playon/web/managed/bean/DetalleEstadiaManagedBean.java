@@ -4,15 +4,12 @@
 package tesis.playon.web.managed.bean;
 
 import java.awt.Color;
-import java.awt.Desktop;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -30,9 +27,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
-
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 
 import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.model.Cliente;
@@ -69,8 +63,6 @@ import tesis.playon.web.service.IVehiculoService;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;
-import com.lowagie.text.Image;
-import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfWriter;
@@ -172,7 +164,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 
     private boolean saldoPositivo, importeCalculado = false;
 
-    private boolean existeTarifa, existeVehiculo, existeAbonoVehiculo, imprimir = true;
+    private boolean existeTarifa, existeVehiculo, existeAbonoVehiculo, imprimir = false;
 
     private Tarifa tarifaSeleccionada;
 

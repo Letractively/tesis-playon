@@ -217,6 +217,7 @@ public class IngresoEgresoManagedBean implements Serializable {
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	}
+	this.updateTransaccionesPlayas();
     }
 
     public void searchVehiculo() {
@@ -842,11 +843,8 @@ public class IngresoEgresoManagedBean implements Serializable {
     }
 
     /***************************** LISTADOS E INFORMES *******************************************/
-    
-    
-    
-    
-    	public void buscarPorFecha() {
+
+    public void buscarPorFecha() {
 
 	List<DetalleEstadia> detallesAux = new ArrayList<DetalleEstadia>();
 
@@ -865,7 +863,7 @@ public class IngresoEgresoManagedBean implements Serializable {
     }
 
     public List<DetalleEstadia> getDetalles() {
-	Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012012));
+	Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012013));
 	Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta : Calendar.getInstance().getTime());
 	estadia = getEstadiaService().findByPlaya(playa);
 	detalles = getDetalleEstadiaService().findByHorarios(getEstadia(), fechaDesde, fechaHasta);
@@ -890,14 +888,22 @@ public class IngresoEgresoManagedBean implements Serializable {
     public void updateListado() {
 
 	fechaDesde = fechaHasta = null;
-
+	this.updateTransaccionesPlayas();
     }
 
-    public List<TransaccionPlaya> getTransaccionesPlayas() {
-	Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012012));
+    public List<TransaccionPlaya> updateTransaccionesPlayas() {
+	Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012013));
 	Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta : Calendar.getInstance().getTime());
 	transaccionesPlayas = getTransaccionPlayaService().findTransaccionesByFecha(getCuentaPlaya(), fechaDesde,
 		fechaHasta);
+	return transaccionesPlayas;
+    }
+
+    public List<TransaccionPlaya> getTransaccionesPlayas() {
+	// Date fechaDesde = (this.fechaDesde != null ? this.fechaDesde : new Date(01012013));
+	// Date fechaHasta = (this.fechaHasta != null ? this.fechaHasta : Calendar.getInstance().getTime());
+	// transaccionesPlayas = getTransaccionPlayaService().findTransaccionesByFecha(getCuentaPlaya(), fechaDesde,
+	// fechaHasta);
 	return transaccionesPlayas;
     }
 

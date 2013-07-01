@@ -28,17 +28,18 @@
 				<p:calendar value="#{ingresoEgresoMB.fechaHasta}" id="calHasta" />
 
 				<p:commandButton id="buscarButton" value="Buscar"
+					action="#{ingresoEgresoMB.updateTransaccionesPlayas()}"
 					icon="ui-icon-search" ajax="true" update="transacciones" />
-				<p:commandButton id="buscarButton2" style="width:130px;"
-					action="#{ingresoEgresoMB.updateListado}" value="Buscar Todas"
+				<p:commandButton id="buscarButton2"
+					action="#{ingresoEgresoMB.updateListado}" value="Todas"
 					icon="ui-icon-search" ajax="true" update="transacciones" />
 
 			</h:panelGrid>
 
+
 			<p:dataTable id="transacciones" var="transaccionPlaya"
 				paginator="true" value="#{ingresoEgresoMB.transaccionesPlayas}"
-				rows="12	"
-				emptyMessage="No ha realizado transacciones"
+				rows="12" emptyMessage="No han realizado transacciones"
 				paginatorPosition="bottom">
 
 				<p:column style="text-align:center">
@@ -89,6 +90,7 @@
 					</div>
 				</f:facet>
 			</p:dataTable>
+
 		</h:form>
 		<div align="right">
 			<br />

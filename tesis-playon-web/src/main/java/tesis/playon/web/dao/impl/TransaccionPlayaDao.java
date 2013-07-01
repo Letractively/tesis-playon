@@ -130,7 +130,9 @@ public class TransaccionPlayaDao implements ITransaccionPlayaDao {
     public List<TransaccionPlaya> findTransaccionesByFecha(CuentaPlaya cuentaPlaya, Date fechaD, Date fechaH) {
 	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
 	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from TransaccionPlaya as tp where " + "tp.cuentaPlaya=? and tp.fecha>=? and tp.fecha<=?")
+		.createQuery("from TransaccionPlaya as tp where " + 
+				"tp.cuentaPlaya=? and tp.fecha>=? and tp.fecha<=? " +
+				"order by tp.fecha")
 		.setParameter(0, cuentaPlaya).setParameter(1, fechaD).setParameter(2, fechaH).list();
 
 	if (!list.isEmpty()) {
