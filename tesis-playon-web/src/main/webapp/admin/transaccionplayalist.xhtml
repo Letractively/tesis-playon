@@ -10,25 +10,56 @@
 	<ui:define name="panelContent" class="admin-font">
 
 		<p:panel header="Buscar Transacciones" id="panel">
-			<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid columns="3" cellpadding="5">
 
-				<h:outputLabel value="Playa:" for="autoCompletePlaya" />
-				<p:autoComplete id="autoCompletePlaya" dropdown="true" size="30"
-					value="#{transaccionPlayaMB.acTxtPlaya}"
-					completeMethod="#{transaccionPlayaMB.complete}" />
+				<p:column>
+					<h:outputLabel value="Playa:" for="autoCompletePlaya" />
+				</p:column>
 
-				<h:outputText value="Desde:   " />
-				<p:calendar value="#{transaccionPlayaMB.fechaDesde}" id="calDesde" />
+				<p:column>
+					<p:autoComplete id="autoCompletePlaya" dropdown="true" size="30"
+						value="#{transaccionPlayaMB.acTxtPlaya}"
+						completeMethod="#{transaccionPlayaMB.complete}" />
+				</p:column>
 
-				<h:outputText value="Hasta:   " />
-				<p:calendar value="#{transaccionPlayaMB.fechaHasta}" id="calHasta" />
+				<p:column>
+					<div align="left">
+						<p:selectBooleanCheckbox
+							value="#{transaccionPlayaMB.soloHabilitadas}">
+							<p:ajax event="change" update="autoCompletePlaya"
+								listener="#{transaccionPlayaMB.changeSoloHabilitadas()}" />
+						</p:selectBooleanCheckbox>
+						<h:outputText value="Ver solo playas habilitadas"
+							styleClass="fuente-outputtext" />
+					</div>
 
+				</p:column>
+
+
+				<p:column>
+					<h:outputText value="Desde:   " />
+				</p:column>
+
+				<p:column>
+					<p:calendar value="#{transaccionPlayaMB.fechaDesde}" id="calDesde" />
+				</p:column>
+
+				<p:column />
+
+				<p:column>
+					<h:outputText value="Hasta:   " />
+				</p:column>
+
+				<p:column>
+					<p:calendar value="#{transaccionPlayaMB.fechaHasta}" id="calHasta" />
+				</p:column>
+
+				<p:column />
 
 				<p:commandButton id="buscarButton" value="Buscar"
 					icon="ui-icon-search"
 					action="#{transaccionPlayaMB.updateTransaccionesPorFechaList}"
 					ajax="true" update="transacciones" />
-
 			</h:panelGrid>
 		</p:panel>
 
@@ -56,8 +87,7 @@
 
 			<p:column headerText="Tipo Pago" styleClass="column-font"
 				filterBy="#{transaccionPlaya.tipoPago}"
-				filterOptions="#{filtrosMB.tipoPagoOptions}"
-				filterMatchMode="exact">
+				filterOptions="#{filtrosMB.tipoPagoOptions}" filterMatchMode="exact">
 				<f:facet name="header">
 					<h:outputText value="Tipo Pago" />
 				</f:facet>
@@ -69,8 +99,9 @@
 				<f:facet name="header">
 					<h:outputText value="Importe" />
 				</f:facet>
-				<h:outputText value="#{transaccionPlaya.importe}" >
-						<f:convertNumber type="currency" currencySymbol="$ " /></h:outputText>
+				<h:outputText value="#{transaccionPlaya.importe}">
+					<f:convertNumber type="currency" currencySymbol="$ " />
+				</h:outputText>
 			</p:column>
 
 			<p:column headerText="Cobrado" styleClass="column-font">

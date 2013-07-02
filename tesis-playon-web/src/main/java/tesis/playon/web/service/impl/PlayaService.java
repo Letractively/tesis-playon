@@ -47,6 +47,11 @@ public class PlayaService implements IPlayaService {
 	public List<Playa> findByLikeNombreComercial(String nombreComercial) {
 		return getPlayaDao().findByLikeNombreComercial(nombreComercial);
 	}
+	
+	@Override
+	public List<Playa> findByLikeNombreComercialEstado(String nombreComercial, EstadoPlaya estado) {
+		return getPlayaDao().findByLikeNombreComercialEstado(nombreComercial, estado);
+	}
 
 	@Override
 	public Playa findByRazonSocial(String razonSocial) {

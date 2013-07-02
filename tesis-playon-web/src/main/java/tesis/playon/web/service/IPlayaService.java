@@ -40,4 +40,6 @@ public interface IPlayaService {
     List<Playa> findByFechaDesdeHasta(Date fechaDesde, Date fechaHasta);
 
 	List<Playa> findByLikeNombreComercial(String nombreComercial);
+	
+	List<Playa> findByLikeNombreComercialEstado(String nombreComercial, EstadoPlaya estado);
 }

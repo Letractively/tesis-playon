@@ -213,7 +213,9 @@
 					<f:facet name="header">
 						<h:outputText value="Fecha" />
 					</f:facet>
-					<h:outputText value="#{transaccionPlaya.fecha}" />
+					<h:outputText value="#{transaccionPlaya.fecha}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+					</h:outputText>
 				</p:column>
 
 				<p:column id="tipoPagoHeader" style="text-align:center">
