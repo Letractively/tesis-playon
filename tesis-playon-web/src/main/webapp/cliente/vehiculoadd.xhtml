@@ -93,19 +93,18 @@
 									action="#{vehiculoMB.addVehiculo}" ajax="false" />
 								<p:commandButton id="cancelar" value="Cancelar" immediate="true"
 									action="/cliente/perfilcliente.html?faces-redirect=true"
-									ajax="false" style="margin-right:10px" />
-							</div>
-							<div align="right">
-								<h:outputLabel for="sug"
-									value="Si no encuentra su modelo, sugieraló! " />
-								<p:commandButton id="sugerir" value="Sugerir modelo"
-									immediate="true" action="/contact.html?faces-redirect=true"
-									ajax="false" style="margin-right:10px" />
-
+									ajax="false" style="margin-left:10px" />
 							</div>
 						</p:column>
 					</p:panel>
-
+					<p:column>
+							<div align="right" style="margin-right:20px;">
+								<h:outputLabel for="sug"
+									value="Si no encuentra su modelo, sugieraló " />
+								<h:link value="Aquí" outcome="/contact" />
+								<h:outputLabel value="!" />
+							</div>
+						</p:column>
 				</h:panelGrid>
 			</div>
 		</h:form>

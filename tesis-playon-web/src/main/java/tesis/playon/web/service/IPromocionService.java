@@ -36,7 +36,7 @@ public interface IPromocionService {
     
     List<Promocion> findByCategoria(CategoriaVehiculo categoria, Playa playa);
     
-    List<Promocion> findByTipoEstadiaAndPlaya(TipoEstadia tipoEstadia, Playa playa);
+    List<Promocion> findByTipoEstadiaAndPlaya(TipoEstadia tipoEstadia, CategoriaVehiculo categoria, Playa playa);
     
     List<Promocion> findByPlayaAndTarifa(Playa playa, Tarifa tarifa);
 }

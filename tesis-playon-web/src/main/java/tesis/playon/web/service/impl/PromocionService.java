@@ -79,8 +79,8 @@ public class PromocionService implements IPromocionService {
     }
     
     @Override
-    public List<Promocion> findByTipoEstadiaAndPlaya(TipoEstadia tipoEstadia, Playa playa){
-	return getPromocionDao().findByTipoEstadiaAndPlaya(tipoEstadia, playa);
+    public List<Promocion> findByTipoEstadiaAndPlaya(TipoEstadia tipoEstadia, CategoriaVehiculo categoria, Playa playa){
+	return getPromocionDao().findByTipoEstadiaAndPlaya(tipoEstadia, categoria, playa);
     }
     
     @Override

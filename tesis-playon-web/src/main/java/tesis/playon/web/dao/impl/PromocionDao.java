@@ -121,14 +121,14 @@ public class PromocionDao implements IPromocionDao {
     }
     
     @Override
-    public List<Promocion> findByTipoEstadiaAndPlaya(TipoEstadia tipoEstadia, Playa playa){
+    public List<Promocion> findByTipoEstadiaAndPlaya(TipoEstadia tipoEstadia, CategoriaVehiculo categoria, Playa playa){
 	List<Promocion> promociones = new ArrayList<Promocion>();
 	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from Promocion where (tarifa.tipoEstadia=? and playa=?) " +
+		.createQuery("from Promocion where (tarifa.tipoEstadia=? and playa=? and tarifa.categoriaVehiculo=?) " +
 				"and (now()>=fechaInicio and now()<=fechaFin) " +
 				"and estadoPromocion.id=2 and " +
 				"((horaInicio=null and horaFin=null) or (CURTIME() >= horaInicio  and CURTIME() <= horaFin))")
-		.setParameter(0, tipoEstadia).setParameter(1, playa).list();
+		.setParameter(0, tipoEstadia).setParameter(1, playa).setParameter(2, categoria).list();
 	if(!list.isEmpty()){
 	    for (Object object : list) {
 		if(!((Promocion)object).getTarifa().getTipoEstadia().getNombre().equals("Por Mes"))

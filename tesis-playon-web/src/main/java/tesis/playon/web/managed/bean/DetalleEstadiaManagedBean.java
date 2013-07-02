@@ -29,6 +29,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
 import tesis.playon.web.model.CargoEmpleado;
+import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.Cliente;
 import tesis.playon.web.model.CuentaCliente;
 import tesis.playon.web.model.CuentaPlaya;
@@ -46,6 +47,7 @@ import tesis.playon.web.model.Usuario;
 import tesis.playon.web.model.Vehiculo;
 import tesis.playon.web.service.IAbonoService;
 import tesis.playon.web.service.ICargoEmpleadoService;
+import tesis.playon.web.service.ICategoriaVehiculoService;
 import tesis.playon.web.service.ICuentaClienteService;
 import tesis.playon.web.service.ICuentaPlayaService;
 import tesis.playon.web.service.IDetalleEstadiaService;
@@ -121,6 +123,9 @@ public class DetalleEstadiaManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{TipoEstadiaService}")
     ITipoEstadiaService tipoEstadiaService;
+
+    @ManagedProperty(value = "#{CategoriaVehiculoService}")
+    ICategoriaVehiculoService categoriaVehiculoService;
 
     @ManagedProperty(value = "#{AbonoService}")
     IAbonoService abonoService;
@@ -337,10 +342,10 @@ public class DetalleEstadiaManagedBean implements Serializable {
 
 	    if (imprimir) {
 		this.generarTicket("Ingreso");
-		//File pdf = new File(rutaPDF);
-		//Desktop.getDesktop().open(pdf);
+		// File pdf = new File(rutaPDF);
+		// Desktop.getDesktop().open(pdf);
 	    }
-	    
+
 	    this.setExisteVehiculo(false);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -448,12 +453,12 @@ public class DetalleEstadiaManagedBean implements Serializable {
 
 	    if (imprimir) {
 		this.generarTicket("Egreso");
-		//File pdf = new File(rutaPDF);
-		//Desktop.getDesktop().open(pdf);
+		// File pdf = new File(rutaPDF);
+		// Desktop.getDesktop().open(pdf);
 	    }
-	    
+
 	    this.setExisteVehiculo(false);
-	    
+
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se registró el egreso exitosamente del vehículo patente: " + patente, "");
 	    FacesContext.getCurrentInstance().addMessage(null, message);
@@ -496,27 +501,28 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	    @SuppressWarnings("unused")
 	    PdfWriter writer = PdfWriter.getInstance(doc, os);
 
-	    cuerpo.add(new Paragraph("Comprobante de " + tipoMovimiento + "\nEmitido el: " + fechaActual(), fuenteNegra16));
+	    cuerpo.add(new Paragraph("Comprobante de " + tipoMovimiento + "\nEmitido el: " + fechaActual(),
+		    fuenteNegra16));
 	    agregarLineasEnBlanco(cuerpo, 2);
 
 	    formato = new SimpleDateFormat("HH:mm:ss");
-	    
-	    if(tipoMovimiento.compareTo("Ingreso") == 0){
+
+	    if (tipoMovimiento.compareTo("Ingreso") == 0) {
 		cuerpo.add(new Paragraph("Hora de ingreso: " + formato.format(hoy), fuenteCuerpo));
 	    }
-	    
-	    if(tipoMovimiento.compareTo("Egreso") == 0){
+
+	    if (tipoMovimiento.compareTo("Egreso") == 0) {
 		cuerpo.add(new Paragraph("Hora de ingreso: " + this.getHoraIngreso(), fuenteCuerpo));
 		cuerpo.add(new Paragraph("Hora de egreso: " + formato.format(hoy), fuenteCuerpo));
 	    }
-	    
+
 	    cuerpo.add(new Paragraph("Patente: " + this.getVehiculo().getPatente(), fuenteCuerpo));
 	    cuerpo.add(new Paragraph("Modelo: " + this.getVehiculo().getModeloVehiculo().getNombre(), fuenteCuerpo));
-	    
-	    if(tipoMovimiento.compareTo("Egreso") == 0){
+
+	    if (tipoMovimiento.compareTo("Egreso") == 0) {
 		cuerpo.add(new Paragraph("Importe: $" + this.getImporte(), fuenteCuerpo));
 	    }
-	    
+
 	    cuerpo.add(new Paragraph("Saldo: $"
 		    + String.format("%.2f", this.getVehiculo().getCliente().getCuentaCliente().getSaldo()),
 		    fuenteCuerpo));
@@ -554,7 +560,6 @@ public class DetalleEstadiaManagedBean implements Serializable {
 		    // ServletOutputStream out = response.getOutputStream();
 		    output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
 
-		    
 		    while ((length = input.read(buffer)) > 0) {
 			output.write(buffer, 0, length);
 		    }
@@ -563,7 +568,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 		    output.flush();
 		    output.close();
 		    input.close();
-		    //facesContext.responseComplete();
+		    // facesContext.responseComplete();
 		}
 	    } catch (IOException e) {
 		e.printStackTrace();
@@ -572,98 +577,98 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	    e.printStackTrace();
 	}
     }
-    
+
     /**
      * @return the ticket Ingreso File
      */
-//    public void generarTicketIngreso(String tipoMovimiento) throws IOException {
-//	try {
-//
-//	    // ****** Definición de variables *********
-//	    FacesContext facesContext = FacesContext.getCurrentInstance();
-//	    ExternalContext extContext = facesContext.getExternalContext();
-//	    Date hoy = new Date();
-//	    SimpleDateFormat formato = new SimpleDateFormat("yyyy_MM_dd_HH:mm:ss");
-//	    String nombrePDF = tipoMovimiento + "_" + formato.format(hoy) + ".pdf";
-//	    String sep = File.separator;
-//	    rutaPDF = extContext.getRealPath("resources" + sep + nombrePDF);
-//
-//	    File filePDF = new File(rutaPDF);
-//
-//	    Document doc = new Document(new Rectangle(240f, 300f), 5f, 5f, 5f, 5f);
-//	    FileOutputStream os = new FileOutputStream(filePDF);
-//	    Paragraph cuerpo = new Paragraph();
-//
-//	    // ****** Definicion de fuentes ************
-//	    Font fuenteNegra18 = new Font(Font.TIMES_ROMAN, 16, Font.BOLDITALIC, Color.BLACK);
-//	    Font fuenteNegra16 = new Font(Font.TIMES_ROMAN, 14, Font.NORMAL, Color.BLACK);
-//	    Font fuenteCuerpo = new Font(Font.TIMES_ROMAN, 12, Font.NORMAL, Color.BLACK);
-//
-//	    // ****** Crear el PDF ********************
-//	    @SuppressWarnings("unused")
-//	    PdfWriter writer = PdfWriter.getInstance(doc, os);
-//
-//	    cuerpo.add(new Paragraph("Comprobante de ingreso\nEmitido el: " + fechaActual(), fuenteNegra16));
-//	    agregarLineasEnBlanco(cuerpo, 2);
-//
-//	    formato = new SimpleDateFormat("HH:ss");
-//	    cuerpo.add(new Paragraph("Hora de ingreso: " + formato.format(hoy), fuenteCuerpo));
-//	    cuerpo.add(new Paragraph("Patente: " + this.getVehiculo().getPatente(), fuenteCuerpo));
-//	    cuerpo.add(new Paragraph("Modelo: " + this.getVehiculo().getModeloVehiculo().getNombre(), fuenteCuerpo));
-//	    cuerpo.add(new Paragraph("Saldo: $"
-//		    + String.format("%.2f", this.getVehiculo().getCliente().getCuentaCliente().getSaldo()),
-//		    fuenteCuerpo));
-//
-//	    /************************************/
-//	    doc.open();
-//	    doc.addTitle("Transacción - Playa: " + playaLoggeada.getNombreComercial());
-//	    doc.add(new Paragraph("PLAYON - RED DE PLAYAS", fuenteNegra18));
-//	    doc.add(cuerpo);
-//	    doc.close();
-//	    /**************************************/
-//
-//	    int DEFAULT_BUFFER_SIZE = 2048;
-//	    byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
-//	    int length;
-//
-//	    // Prepare.
-//	    HttpServletResponse response = (HttpServletResponse) extContext.getResponse();
-//
-//	    BufferedInputStream input = null;
-//	    BufferedOutputStream output = null;
-//
-//	    try {
-//		// Open file.
-//		input = new BufferedInputStream(new FileInputStream(filePDF), DEFAULT_BUFFER_SIZE);
-//		// input = new BufferedInputStream(new FileInputStream(filePDF), DEFAULT_BUFFER_SIZE);
-//		if (!facesContext.getResponseComplete()) {
-//		    // Init servlet response.
-//		    // response.reset();
-//		    response.setContentType("application/pdf");
-//		    response.setContentLength((int) filePDF.length());
-//		    response.setHeader("Content-Disposition", "attachment;filename=\"" + filePDF.getName() + "\"");
-//
-//		    // Write file contents to response.
-//		    // ServletOutputStream out = response.getOutputStream();
-//		    output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
-//
-//		    while ((length = input.read(buffer)) > 0) {
-//			output.write(buffer, 0, length);
-//		    }
-//
-//		    // Finalize task.
-//		    output.flush();
-//		    output.close();
-//		    input.close();
-//		    facesContext.responseComplete();
-//		}
-//	    } catch (IOException e) {
-//		e.printStackTrace();
-//	    }
-//	} catch (Exception e) {
-//	    e.printStackTrace();
-//	}
-//    }
+    // public void generarTicketIngreso(String tipoMovimiento) throws IOException {
+    // try {
+    //
+    // // ****** Definición de variables *********
+    // FacesContext facesContext = FacesContext.getCurrentInstance();
+    // ExternalContext extContext = facesContext.getExternalContext();
+    // Date hoy = new Date();
+    // SimpleDateFormat formato = new SimpleDateFormat("yyyy_MM_dd_HH:mm:ss");
+    // String nombrePDF = tipoMovimiento + "_" + formato.format(hoy) + ".pdf";
+    // String sep = File.separator;
+    // rutaPDF = extContext.getRealPath("resources" + sep + nombrePDF);
+    //
+    // File filePDF = new File(rutaPDF);
+    //
+    // Document doc = new Document(new Rectangle(240f, 300f), 5f, 5f, 5f, 5f);
+    // FileOutputStream os = new FileOutputStream(filePDF);
+    // Paragraph cuerpo = new Paragraph();
+    //
+    // // ****** Definicion de fuentes ************
+    // Font fuenteNegra18 = new Font(Font.TIMES_ROMAN, 16, Font.BOLDITALIC, Color.BLACK);
+    // Font fuenteNegra16 = new Font(Font.TIMES_ROMAN, 14, Font.NORMAL, Color.BLACK);
+    // Font fuenteCuerpo = new Font(Font.TIMES_ROMAN, 12, Font.NORMAL, Color.BLACK);
+    //
+    // // ****** Crear el PDF ********************
+    // @SuppressWarnings("unused")
+    // PdfWriter writer = PdfWriter.getInstance(doc, os);
+    //
+    // cuerpo.add(new Paragraph("Comprobante de ingreso\nEmitido el: " + fechaActual(), fuenteNegra16));
+    // agregarLineasEnBlanco(cuerpo, 2);
+    //
+    // formato = new SimpleDateFormat("HH:ss");
+    // cuerpo.add(new Paragraph("Hora de ingreso: " + formato.format(hoy), fuenteCuerpo));
+    // cuerpo.add(new Paragraph("Patente: " + this.getVehiculo().getPatente(), fuenteCuerpo));
+    // cuerpo.add(new Paragraph("Modelo: " + this.getVehiculo().getModeloVehiculo().getNombre(), fuenteCuerpo));
+    // cuerpo.add(new Paragraph("Saldo: $"
+    // + String.format("%.2f", this.getVehiculo().getCliente().getCuentaCliente().getSaldo()),
+    // fuenteCuerpo));
+    //
+    // /************************************/
+    // doc.open();
+    // doc.addTitle("Transacción - Playa: " + playaLoggeada.getNombreComercial());
+    // doc.add(new Paragraph("PLAYON - RED DE PLAYAS", fuenteNegra18));
+    // doc.add(cuerpo);
+    // doc.close();
+    // /**************************************/
+    //
+    // int DEFAULT_BUFFER_SIZE = 2048;
+    // byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+    // int length;
+    //
+    // // Prepare.
+    // HttpServletResponse response = (HttpServletResponse) extContext.getResponse();
+    //
+    // BufferedInputStream input = null;
+    // BufferedOutputStream output = null;
+    //
+    // try {
+    // // Open file.
+    // input = new BufferedInputStream(new FileInputStream(filePDF), DEFAULT_BUFFER_SIZE);
+    // // input = new BufferedInputStream(new FileInputStream(filePDF), DEFAULT_BUFFER_SIZE);
+    // if (!facesContext.getResponseComplete()) {
+    // // Init servlet response.
+    // // response.reset();
+    // response.setContentType("application/pdf");
+    // response.setContentLength((int) filePDF.length());
+    // response.setHeader("Content-Disposition", "attachment;filename=\"" + filePDF.getName() + "\"");
+    //
+    // // Write file contents to response.
+    // // ServletOutputStream out = response.getOutputStream();
+    // output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
+    //
+    // while ((length = input.read(buffer)) > 0) {
+    // output.write(buffer, 0, length);
+    // }
+    //
+    // // Finalize task.
+    // output.flush();
+    // output.close();
+    // input.close();
+    // facesContext.responseComplete();
+    // }
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // }
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // }
+    // }
 
     public String redirect() {
 	return "/playa/ingresoegresovehiculo?faces-redirect=true";
@@ -741,7 +746,10 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	if (tarifaSeleccionada != null && !tarifaSeleccionada.equals("")) {
 	    TipoEstadia tipo = getTipoEstadiaService().findByNombreTipoEstadia(
 		    tarifaSeleccionada.getTipoEstadia().getNombre());
-	    promocionesDisponibles = getPromocionService().findByTipoEstadiaAndPlaya(tipo, playaLoggeada);
+	    CategoriaVehiculo cat = getCategoriaVehiculoService().findByNombreCategoriaVehiculo(
+		    tarifaSeleccionada.getCategoriaVehiculo().getNombre());
+	    promocionesDisponibles = getPromocionService().findByTipoEstadiaAndPlaya(tipo,
+		    cat, playaLoggeada);
 	} else
 	    promocionesDisponibles = new ArrayList<Promocion>();
     }
@@ -869,8 +877,20 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	this.tipoEstadiaService = tipoEstadiaService;
     }
 
-    // =============================== GETTER & SETTER
-    // =====================================
+    /**
+     * @return the categoriaVehiculoService
+     */
+    public ICategoriaVehiculoService getCategoriaVehiculoService() {
+	return categoriaVehiculoService;
+    }
+
+    /**
+     * @param categoriaVehiculoService
+     *            the categoriaVehiculoService to set
+     */
+    public void setCategoriaVehiculoService(ICategoriaVehiculoService categoriaVehiculoService) {
+	this.categoriaVehiculoService = categoriaVehiculoService;
+    }
 
     public IAbonoService getAbonoService() {
 	return abonoService;
@@ -879,6 +899,8 @@ public class DetalleEstadiaManagedBean implements Serializable {
     public void setAbonoService(IAbonoService abonoService) {
 	this.abonoService = abonoService;
     }
+
+    // =============================== GETTER & SETTER =====================================
 
     public Usuario getUsuarioLoggeado() {
 	return usuarioLoggeado;

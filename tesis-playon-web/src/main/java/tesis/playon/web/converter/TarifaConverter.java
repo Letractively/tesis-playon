@@ -25,7 +25,7 @@ public class TarifaConverter implements Converter {
     public Object getAsObject(FacesContext context, UIComponent component, String value) throws ConverterException {
 	if (!StringUtils.isEmpty(value)) {
 	    String toObject[] = value.split(":");
-	    if (toObject.length != 4) {
+	    if (toObject.length != 5) {
 		throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"Debe seleccionar una opción", null));
 		 //return null;
@@ -34,10 +34,11 @@ public class TarifaConverter implements Converter {
 		tarifa.setId(Integer.parseInt(toObject[0]));
 		tarifa.setImporte(Float.parseFloat(toObject[1]));
 		CategoriaVehiculo categoria = new CategoriaVehiculo();
-		categoria.setNombre(toObject[2].toString());
+		categoria.setId(Integer.parseInt(toObject[2].toString()));
+		categoria.setNombre(toObject[3].toString());
 		tarifa.setCategoriaVehiculo(categoria);
 		TipoEstadia tipo = new TipoEstadia();
-		tipo.setNombre(toObject[3].toString());
+		tipo.setNombre(toObject[4].toString());
 		tarifa.setTipoEstadia(tipo);
 		return tarifa;
 	    }
@@ -52,9 +53,11 @@ public class TarifaConverter implements Converter {
 		Tarifa tarifa = (Tarifa) value;
 		String idTarifa = Integer.toString(tarifa.getId());
 		String importeTarifa = Float.toString(tarifa.getImporte());
-		String categoria = tarifa.getCategoriaVehiculo().getNombre();
+		String idCategoria = tarifa.getCategoriaVehiculo().getId().toString();
+		String nombreCategoria = tarifa.getCategoriaVehiculo().getNombre();
+		//String idTipoEstadia = tarifa
 		String tipoEstadia = tarifa.getTipoEstadia().getNombre();
-		String toString = idTarifa + ":" + importeTarifa + ":" + categoria + ":" + tipoEstadia;
+		String toString = idTarifa + ":" + importeTarifa + ":" + idCategoria + ":" + nombreCategoria + ":" + tipoEstadia;
 		return toString;
 	    } else {
 		System.out.println("No se pudo parsear el objeto");
