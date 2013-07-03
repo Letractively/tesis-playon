@@ -8,7 +8,7 @@
 	<h:form id="loginFormId" prependId="false">
 		<h:panelGroup rendered="#{!loginMB.logueado}">
 			<h:outputLink id="loginLink" value="javascript:void(0)"
-				onclick="dlg.show()" title="login">
+				onclick="dlg.show();" title="login">
 				<f:verbatim>
 					<b>Iniciar sesi&#243;n</b>
 				</f:verbatim>
@@ -83,15 +83,15 @@
 	<p:growl id="growl" showDetail="true" life="3000" />
 
 	<p:dialog id="dialog" header="Login" widgetVar="dlg" modal="true"
-		resizable="false">
+		resizable="false" draggable="false">
 		<h:form>
 
 			<h:panelGrid columns="2" cellpadding="5">
-				<h:outputLabel for="usuario" value="Usuario:" />
+				<h:outputLabel for="usuario" value="Usuario: " />
 				<p:inputText value="#{loginMB.usuario}" id="usuario"
 					style="width: 200px;" required="true" label="Usuario" />
 
-				<h:outputLabel for="password" value="Contraseña:" />
+				<h:outputLabel for="password" value="Contraseña: " />
 				<h:inputSecret value="#{loginMB.password}" id="password"
 					class="ui-inputfield ui-corner-all ui-widget-content"
 					style="width: 200px;" required="true" label="Contraseña" />
@@ -112,7 +112,7 @@
 						</p:commandButton>
 						<p:commandButton id="btnCancelar" value="Cancelar"
 							oncomplete="handleLoginRequest(xhr, status, args)"
-							onclick="dlg.hide()">
+							onclick="dlg.hide();">
 						</p:commandButton>
 					</div>
 
