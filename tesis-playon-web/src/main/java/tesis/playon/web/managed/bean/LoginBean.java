@@ -47,7 +47,7 @@ public class LoginBean {
     private static final String ROLE_PLAYA_GERENTE = "[ROLE_PLAYA_GERENTE]";
 
     private String usuario = null;
-    
+
     private Usuario usuarioLogueado = null;
 
     private String password = null;
@@ -66,7 +66,7 @@ public class LoginBean {
 
     @ManagedProperty(value = "#{customJDBCUserService}")
     private UserDetailsService userDetailsService = null;
-    
+
     @ManagedProperty(value = "#{UsuarioService}")
     IUsuarioService usuarioService;
 
@@ -92,7 +92,7 @@ public class LoginBean {
 	    }
 	    SecurityContextHolder.getContext().setAuthentication(result);
 	    setLogueado(true);
-	    if(context != null){
+	    if (context != null) {
 		context.addCallbackParam("logueado", logueado);
 	    }
 	    setRol(result.getAuthorities().toString());
@@ -115,9 +115,10 @@ public class LoginBean {
 	    }
 	} catch (AuthenticationException e) {
 	    e.printStackTrace();
-	    FacesMessage fm = new FacesMessage("Usuario o contraseña incorrecto");
-	    FacesContext.getCurrentInstance().addMessage("Usuario o contraseña incorrecto", fm);
-	    if(context != null){
+	    FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+		    "Usuario o contraseña incorrecto", "");
+	    FacesContext.getCurrentInstance().addMessage("", fm);
+	    if (context != null) {
 		context.addCallbackParam("logueado", logueado);
 	    }
 	    return "UnSecured";
@@ -139,7 +140,7 @@ public class LoginBean {
 	setRol(null);
 	setUsuario(null);
 	return "LoggedOut";
-	//return "index?faces-redirect=true";
+	// return "index?faces-redirect=true";
     }
 
     public String cancel() {
@@ -170,14 +171,15 @@ public class LoginBean {
      * @return the usuarioService
      */
     public IUsuarioService getUsuarioService() {
-        return usuarioService;
+	return usuarioService;
     }
 
     /**
-     * @param usuarioService the usuarioService to set
+     * @param usuarioService
+     *            the usuarioService to set
      */
     public void setUsuarioService(IUsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
+	this.usuarioService = usuarioService;
     }
 
     public void setUserDetailsService(UserDetailsService userDetailsService) {
@@ -228,14 +230,15 @@ public class LoginBean {
      * @return the usuarioLogueado
      */
     public Usuario getUsuarioLogueado() {
-        return usuarioLogueado;
+	return usuarioLogueado;
     }
 
     /**
-     * @param usuarioLogueado the usuarioLogueado to set
+     * @param usuarioLogueado
+     *            the usuarioLogueado to set
      */
     public void setUsuarioLogueado(Usuario usuarioLogueado) {
-        this.usuarioLogueado = usuarioLogueado;
+	this.usuarioLogueado = usuarioLogueado;
     }
 
 }

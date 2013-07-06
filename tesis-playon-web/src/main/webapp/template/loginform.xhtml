@@ -8,45 +8,29 @@
 	<h:form id="loginFormId" prependId="false">
 		<h:panelGroup rendered="#{!loginMB.logueado}">
 			<h:outputLink id="loginLink" value="javascript:void(0)"
-				onclick="dlg.show();" title="login">
-				<f:verbatim>
-					<b>Iniciar sesi&#243;n</b>
-				</f:verbatim>
+				onclick="dlg.show();" title="login" style="letter-spacing:1px">
+				<b>Iniciar sesi&#243;n</b>
 			</h:outputLink>
 			 |
-			<h:link outcome="/solicitudclienteadd.xhtml">
-				<f:verbatim>
-					<b>Registrarse</b>
-				</f:verbatim>
+			<h:link outcome="/solicitudclienteadd.xhtml"
+				style="letter-spacing:1px">
+				<b>Registrarse</b>
 			</h:link>
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{loginMB.logueado}">
-			<td><b>Bienvenido "#{loginMB.usuario}" 
-			
-			<ui:fragment
+			<td><b>Bienvenido "#{loginMB.usuario}"<ui:fragment
 						rendered="#{loginMB.rol eq '[ROLE_PLAYA_EMPLEADO]'}">
-						<h:outputText value='(Playero)' />
-					</ui:fragment> 
-					
-					<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_GERENTE]'}">
-						<h:outputText value='(Gerente)' />
-					</ui:fragment>
-					
-					<ui:fragment
-						rendered="#{loginMB.rol eq '[ROLE_ADMIN]'}">
-						<h:outputText value='(ADMIN)' />
-					</ui:fragment> 
-					
-					<ui:fragment rendered="#{loginMB.rol eq '[ROLE_AUDITOR]'}">
-						<h:outputText value='(Auditor)' />
-					</ui:fragment>
-					
-					<ui:fragment rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}">
-						<h:outputText value='(Cliente)' />
-					</ui:fragment>
-
-			</b>| <h:commandLink action="#{loginMB.logout}">
+						<h:outputText value=' (Playero)' />
+					</ui:fragment> <ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_GERENTE]'}">
+						<h:outputText value=' (Gerente)' />
+					</ui:fragment> <ui:fragment rendered="#{loginMB.rol eq '[ROLE_ADMIN]'}">
+						<h:outputText value=' (ADMIN)' />
+					</ui:fragment> <ui:fragment rendered="#{loginMB.rol eq '[ROLE_AUDITOR]'}">
+						<h:outputText value=' (Auditor)' />
+					</ui:fragment> <ui:fragment rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}">
+						<h:outputText value=' (Cliente)' />
+					</ui:fragment></b> | <h:commandLink action="#{loginMB.logout}">
 					<b>Cerrar sesi&#243;n</b>
 				</h:commandLink></td>
 			<h:panelGrid column="1" width="100%">
@@ -72,7 +56,7 @@
 					<div align="right">
 						<ui:fragment rendered="#{loginMB.rol eq '[ROLE_PLAYA_GERENTE]'}">
 							<b><h:outputText style="font-weight:bold; font-size:14pt"
-								value='"#{loginMB.usuarioLogueado.playa.nombreComercial}"' /></b>
+									value='"#{loginMB.usuarioLogueado.playa.nombreComercial}"' /></b>
 						</ui:fragment>
 					</div>
 				</p:columns>
@@ -82,8 +66,11 @@
 
 	<p:growl id="growl" showDetail="true" life="3000" />
 
-	<p:dialog id="dialog" header="Login" widgetVar="dlg" modal="true"
-		resizable="false" draggable="false">
+	<p:dialog id="dialog" header="Inicio de sesi&#243;n" widgetVar="dlg"
+		modal="true" resizable="false" draggable="false">
+		<f:facet name="header">
+			<h:outputText value="Inicio de sesi&#243;n" />
+		</f:facet>
 		<h:form>
 
 			<h:panelGrid columns="2" cellpadding="5">

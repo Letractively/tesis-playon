@@ -10,7 +10,14 @@
     </ui:define>
 
 	<ui:define name="content">
-		<h1>Perfil de la playa</h1>
+
+		<h1>
+			<h:outputText value="Perfil de la playa" />
+			<ui:fragment>
+				<p:commandButton style="position: absolute; right:270px;"
+					value="Volver" onclick="history.back();" />
+			</ui:fragment>
+		</h1>
 		
 		#{perfilPlayaMB.findPlayaById()}
 		#{tarifaMB.findPlayaById()}
@@ -336,13 +343,15 @@
 					<p:column>
 						<p:imageSwitch effect="shuffle">
 							<ui:repeat value="#{perfilPlayaMB.fotosListSelected}" var="image">
-								<p:graphicImage library="fotos_playas" style="width:500px;height:360px;"
+								<p:graphicImage library="fotos_playas"
+									style="width:500px;height:360px;"
 									name="#{image.id}_#{image.nombre}" />
 							</ui:repeat>
 						</p:imageSwitch>
 					</p:column>
 				</h:panelGrid>
 			</div>
+			
 		</h:form>
 	</ui:define>
 </ui:composition>
