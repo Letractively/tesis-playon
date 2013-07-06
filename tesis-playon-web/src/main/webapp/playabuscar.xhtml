@@ -26,7 +26,7 @@
 				travelMode : google.maps.DirectionsTravelMode.DRIVING
 			}
 			var myOptions = {
-				zoom : 15,
+				zoom : 13,
 				center : new google.maps.LatLng(#{busquedaplayaMB.latitudCentro},#{busquedaplayaMB.longitudCentro}),
 				mapTypeId : google.maps.MapTypeId.ROADMAP
 			}
@@ -94,7 +94,8 @@
 							</div>
 						</p:column>
 						<p:inputText id="distancia" value="#{busquedaplayaMB.distancia}"
-							style="width:100px;" /><p:column />
+							style="width:100px;" />
+						<p:column />
 
 						<p:column />
 						<p:slider for="distancia" minValue="1" maxValue="50"
@@ -282,7 +283,7 @@
 			</p:column>
 		</p:dataTable>
 
-		<p:dialog widgetVar="dlg2" width="1000" height="550" modal="true"
+		<p:dialog widgetVar="dlg2" width="800" height="400" modal="true"
 			id="dialog" draggable="false" closable="false">
 
 			<f:facet name="header">
@@ -294,12 +295,12 @@
 			</div>
 			<f:facet name="footer" style="text-align=right;">
 				<p:commandButton id="undo" value="Volver"
-					style="float:left; width:640px; height: 42px" onclick="undo();"></p:commandButton>
+					style="float:right; width:274px; height: 42px" onclick="undo();"></p:commandButton>
 			</f:facet>
 		</p:dialog>
 
 		<p:dialog header="Dirección de origen" id="dlgO" widgetVar="dlgOrigen"
-			resizable="false">
+			resizable="false" closable="false">
 			<h:panelGrid columns="2" cellspacing="10" cellpadding="10">
 				<h:outputLabel for="dirOrigen" value="Dirección de origen: " />
 				<p:inputText id="dirOrigen" required="true"
