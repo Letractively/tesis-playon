@@ -193,6 +193,8 @@
 			</h:panelGrid>
 		</div>
 
+
+
 		<div>
 			<f:view contentType="text/html">
 				<!-- 				<h1>Playas encontradas:</h1> -->
@@ -272,8 +274,7 @@
 
 			<p:column headerText="Ruta" style="text-align:center; width:50px;">
 				<p:commandLink id="view2" oncomplete="dlgOrigen.show();"
-					title="¿Cómo llegar a esta playa?" update=":form:dlgO"
-					process="@this">
+					title="¿Cómo llegar a esta playa?" update=":dlgO" process="@this">
 					<f:setPropertyActionListener value="#{playa}"
 						target="#{busquedaplayaMB.playaselected}" />
 					<h:graphicImage library="images/icons" name="search-map.png"
@@ -282,10 +283,12 @@
 
 			</p:column>
 		</p:dataTable>
+		<!-- 	</h:form> -->
 
 		<p:dialog widgetVar="dlg2" width="800" height="400" modal="true"
 			id="dialog" draggable="false" closable="false">
 
+			<!-- 		<h:form id="frmComoLlegar"> -->
 			<f:facet name="header">
 				<h:outputText value="¿Cómo llegar a la playa?" />
 			</f:facet>
@@ -298,26 +301,31 @@
 					style="float:right; width:274px; height: 42px" onclick="undo();"></p:commandButton>
 			</f:facet>
 		</p:dialog>
+	</h:form>
 
-		<p:dialog header="Dirección de origen" id="dlgO" widgetVar="dlgOrigen"
-			resizable="false" closable="false">
+	<p:dialog header="Dirección de origen" id="dlgO" widgetVar="dlgOrigen"
+		resizable="false" closable="false">
+		<h:form id="frmComoLlegar">
+
 			<h:panelGrid columns="2" cellspacing="10" cellpadding="10">
 				<h:outputLabel for="dirOrigen" value="Dirección de origen: " />
 				<p:inputText id="dirOrigen" required="true"
-					value="#{busquedaplayaMB.direccionDesde}" />
+					value="#{busquedaplayaMB.direccionDesde}"
+					onkeyup="if (event.keyCode == 13) { document.getElementById(':frmComoLlegar:siguiente').click(); return false; }" />
 				<p:column />
 				<p:column>
 					<div align="right">
 						<p:commandButton id="siguiente" value="Siguiente" ajax="true"
-							onclick="initia(jQuery('#form\\:dirOrigen').val(), '#{busquedaplayaMB.playaselected}');"
+							onclick="initia(jQuery('#frmComoLlegar\\:dirOrigen').val(), '#{busquedaplayaMB.playaselected}');"
 							update=":dialog" process="@this"
 							action="#{busquedaplayaMB.tomarDomicilioDesde}" />
 					</div>
 				</p:column>
 			</h:panelGrid>
-		</p:dialog>
+		</h:form>
+	</p:dialog>
 
-	</h:form>
+
 </ui:composition>
 
 
