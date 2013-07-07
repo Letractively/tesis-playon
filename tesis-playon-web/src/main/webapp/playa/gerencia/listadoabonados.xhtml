@@ -22,9 +22,6 @@
 				emptyMessage="No existen clientes con abonos para su Playa"
 				paginatorPosition="bottom">
 
-				<f:facet name="header">
-						Listado de abonados de la playa
-				</f:facet>
 
 				<p:column headerText="Nombre" style="text-align:center">
 
@@ -92,11 +89,15 @@
 				</f:facet>
 
 			</p:dataTable>
+			<br></br>
+			<h:panelGroup layout="block" style="text-align: right; width: 100%;">
+				<p:commandButton id="addAbono" value="Nuevo abonado"
+					action="/playa/gerencia/abonoaddgerente.html?faces-redirect=true"
+					ajax="false" />
+			</h:panelGroup>
+
 		</h:form>
-		<div align="right">
-			<br />
-			<h:link value="volver a administración"
-				outcome="/playa/gerencia/administracion" />
-		</div>
+
+
 	</ui:define>
 </ui:composition>

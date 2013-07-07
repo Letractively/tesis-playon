@@ -10,27 +10,20 @@
 			<ui:fragment rendered="#{!empty loadmenuclientes}">
 				<div class="box">
 					<p:menu style="width: 95%;" styleClass="side-menu">
-						<p:submenu label="Perfil">
+						<p:submenu label="Administración">
 							<p:menuitem value="Ver perfil" outcome="/cliente/perfilcliente"
-								icon="ui-icon-script" />
+								icon="ui-icon-person" />
 							<p:menuitem value="Editar perfil"
 								outcome="/cliente/perfilclienteedit" icon="ui-icon-pencil" />
-						</p:submenu>
-						<p:submenu label="Cuenta">
 							<p:menuitem value="Ver Cuenta" outcome="/cliente/cuentacliente"
 								icon="ui-icon-contact" />
 							<p:menuitem value="Cargar Saldo" outcome="/cliente/cargarcredito"
 								icon="ui-icon-cart" />
 							<p:menuitem value="Historial de movimientos"
-								outcome="/cliente/transaccioneslist" icon="ui-icon-key" />
-						</p:submenu>
-						<p:submenu label="Vehículos">
-							<p:menuitem value="Nuevo Vehículo" outcome="/cliente/vehiculoadd"
-								icon="ui-icon-plus" />
+								outcome="/cliente/transaccioneslist" icon="ui-icon-calculator" />
+
 							<p:menuitem value="Mis Vehículos" outcome="/cliente/vehiculolist"
 								icon="ui-icon-radio-on" />
-						</p:submenu>
-						<p:submenu label="Configuración de Cuenta">
 							<p:menuitem value="Cambiar Password"
 								outcome="/cliente/cambiarpassword" icon="ui-icon-key" />
 						</p:submenu>
@@ -38,21 +31,22 @@
 
 				</div>
 				<div class="box">
-					<h:form id="frmMenuFav" rendered="#{favoritoMB.favoritosListPerfil != null}">
-						<p:menu id="menuFavorito" style="width: 95%;" styleClass="side-menu"
-							model="#{favoritoMB.model}">
+					<h:form id="frmMenuFav"
+						rendered="#{favoritoMB.favoritosListPerfil != null}">
+						<p:menu id="menuFavorito" style="width: 95%;"
+							styleClass="side-menu" model="#{favoritoMB.model}">
 						</p:menu>
 						<p:overlayPanel id="favoritoPanel" for="itemAdminFav"
 							hideEffect="fade" dynamic="true">
-							
+
 							<p:dataTable id="tablaFavoritos" var="favorito"
 								value="#{favoritoMB.favoritosListPerfil}" rows="10"
 								paginator="true" paginatorPosition="bottom">
-								
+
 								<f:facet name="header">
 									<h:outputText value="Administración de Playas Favoritas" />
 								</f:facet>
-								
+
 								<p:column headerText="Playa de Estacionamiento">
 									<h:outputText value="#{favorito.playa.nombreComercial}" />
 								</p:column>

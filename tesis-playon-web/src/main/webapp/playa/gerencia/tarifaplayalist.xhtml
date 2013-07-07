@@ -18,9 +18,6 @@
 				paginatorPosition="bottom" value="#{tarifaMB.tarifaPlayaLogged}"
 				emptyMessage="No existen tarifas en la playa seleccionada">
 
-				<f:facet name="header">
-					Tarifas
-            	</f:facet>
 
 				<p:column headerText="Tipo Estadía" styleClass="column-font"
 					style="text-align:center">
@@ -284,12 +281,14 @@
 						</tr>
 					</table>
 				</div>
-				<br></br><div align="right">
-				<p:commandButton id="tarifasAceptar" value="Aceptar"
-					action="#{tarifaMB.addTarifas}" ajax="false"
-					style="margin-right:10px;" />
-				<p:commandButton id="tarifasCancelar" value="Cancelar"
-					onclick="popupTarifas.hide();" /></div>
+				<br></br>
+				<div align="right">
+					<p:commandButton id="tarifasAceptar" value="Aceptar"
+						action="#{tarifaMB.addTarifas}" ajax="false"
+						style="margin-right:10px;" />
+					<p:commandButton id="tarifasCancelar" value="Cancelar"
+						onclick="popupTarifas.hide();" />
+				</div>
 			</h:form>
 		</p:dialog>
 

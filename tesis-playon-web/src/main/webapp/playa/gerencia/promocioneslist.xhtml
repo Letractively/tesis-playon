@@ -10,7 +10,7 @@
 	<ui:param name="title" value="Listado de Promociones" />
 
 	<ui:define name="content" class="admin-font">
-		<h1>Listados de promociones</h1>
+		<h1>Promociones</h1>
 
 		<h:form>
 			<p:growl id="messages" />
@@ -104,6 +104,8 @@
 				</p:panel>
 
 
+
+
 				<p:dataTable id="promociones" var="promocion"
 					value="#{promocionMB.promocionPlayaList}" style="display:none">
 
@@ -171,6 +173,14 @@
 					</div>
 				</f:facet>
 			</p:dataGrid>
+
+
+			<br></br>
+			<h:panelGroup layout="block" style="text-align: right; width: 100%;">
+				<p:commandButton id="addPromocion" value="Nueva Promoción"
+					action="/playa/gerencia/promocionadd.html?faces-redirect=true"
+					ajax="false" />
+			</h:panelGroup>
 
 		</h:form>
 	</ui:define>

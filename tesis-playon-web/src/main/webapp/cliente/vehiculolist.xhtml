@@ -17,10 +17,6 @@
 				value="#{vehiculoMB.vehiculoList}"
 				emptyMessage="No ha registrado vehiculos" paginatorPosition="bottom">
 
-				<f:facet name="header">
-						Listado de sus vehículos
-				</f:facet>
-
 				<p:column headerText="Patente">
 					<h:outputText value="#{vehiculo.patente}" />
 				</p:column>
@@ -33,15 +29,17 @@
 				<p:column headerText="Modelo">
 					<h:outputText value="#{vehiculo.modeloVehiculo.nombre}" />
 				</p:column>
-				
+
 				<p:column headerText="Categoría">
-					<h:outputText value="#{vehiculo.modeloVehiculo.categoriaVehiculo.nombre}" />
+					<h:outputText
+						value="#{vehiculo.modeloVehiculo.categoriaVehiculo.nombre}" />
 				</p:column>
 
 				<p:column headerText="Opciones"
 					style="text-align:center; width:80px;">
 					<p:commandLink id="edit" title="Editar"
-						action="/cliente/vehiculoedit.html?faces-redirect=true" ajax="false">
+						action="/cliente/vehiculoedit.html?faces-redirect=true"
+						ajax="false">
 						<f:setPropertyActionListener value="#{vehiculo}"
 							target="#{vehiculoMB.vehiculoSelected}" />
 						<h:graphicImage library="images/icons" name="pencil.png"
@@ -56,10 +54,13 @@
 					</p:commandLink>
 				</p:column>
 			</p:dataTable>
+
+			<br></br>
+			<h:panelGroup layout="block" style="text-align: right; width: 100%;">
+				<p:commandButton id="addVehiculo" value="Nuevo Vehículo"
+					action="/cliente/vehiculoadd.html?faces-redirect=true" ajax="false" />
+			</h:panelGroup>
 		</h:form>
-		<div align="right">
-			<br />
-			<h:link value="volver a su perfil" outcome="/cliente/perfilcliente" />
-		</div>
+
 	</ui:define>
 </ui:composition>

@@ -9,11 +9,11 @@
 
 
 	<ui:define name="title">
-		Solicitud de registro de vehículo
+		Promociones
     </ui:define>
 
 	<ui:define name="content">
-		<h1>Consultar promociones vigentes</h1>
+		<h1>Listado de promociones</h1>
 
 		<h:form id="form" style="margin: 10px 0px 0px 30px;">
 			<p:growl id="messages" />
@@ -23,9 +23,6 @@
 				emptyMessage="No existen promociones en estos momentos"
 				paginatorPosition="bottom">
 
-				<f:facet name="header">
-						Listado de promociones de la playa
-				</f:facet>
 
 				<p:column headerText="Nombre" filterBy="#{promocion.nombre}"
 					filterMatchMode="contains">

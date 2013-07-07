@@ -9,11 +9,11 @@
 
 
 	<ui:define name="title">
-		Solicitud de registro de vehículo
+		Tarifas
     </ui:define>
 
 	<ui:define name="content">
-		<h1>Consultar tarifas vigentes</h1>
+		<h1>Tarifas vigentes</h1>
 
 		<h:form id="form" style="margin: 10px 0px 0px 30px;">
 			<p:growl id="messages" />
@@ -23,9 +23,6 @@
 				emptyMessage="No existen tarifas en la playa seleccionada"
 				filteredValue="#{tarifaMB.filteredTarifas}">
 
-				<f:facet name="header">
-				Tarifas
-            	</f:facet>
 
 				<p:column headerText="Tipo Estadía" styleClass="column-font"
 					filterMatchMode="exact" filterBy="#{tarifa.tipoEstadia}"

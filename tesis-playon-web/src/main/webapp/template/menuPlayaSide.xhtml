@@ -21,16 +21,54 @@
 			<ui:fragment rendered="#{!empty loadmenuperfil}">
 				<div class="box">
 					<p:menu style="width: 95%;" styleClass="side-menu">
-						<p:submenu label="Menú">
-							<p:menuitem value="Ver perfil" outcome="/playa/perfilplaya"
-								icon="ui-icon-script" />
-							<p:menuitem value="Editar perfil"
-								outcome="/playa/gerencia/perfilplayaedit" icon="ui-icon-pencil" />
+						<p:submenu label="Edición del perfil">
+							<p:menuitem value="Ver perfil"
+								outcome="/playa/gerencia/perfilplaya" icon="ui-icon-script" />
 							<p:menuitem value="Fotos" outcome="/playa/gerencia/fotoadd"
 								icon="ui-icon-image" />
 							<p:menuitem value="Comentarios" outcome="/playa/comentariolist"
 								icon="ui-icon-comment" />
 						</p:submenu>
+						<p:submenu label="Adminsitración">
+							<p:menuitem value="Empleados"
+								outcome="/playa/gerencia/empleadolist" icon="ui-icon-person" />
+							<p:menuitem value="Tarifas"
+								outcome="/playa/gerencia/tarifaplayalist" icon="ui-icon-note" />
+							<p:menuitem value="Promociones"
+								outcome="/playa/gerencia/promocioneslist"
+								icon="ui-icon-suitcase" />
+							<p:menuitem value="Abonados"
+								outcome="/playa/gerencia/listadoabonados" icon="ui-icon-person" />
+							<p:menuitem value="Ingreso / Egreso"
+								outcome="/playa/ingresoegresovehiculo"
+								icon="ui-icon-transferthick-e-w" />
+
+						</p:submenu>
+						<p:submenu label="Informes y Reportes">
+							<p:menuitem value="Ver transacciones"
+								outcome="/playa/gerencia/transaccionplayalist"
+								icon="ui-icon-calculator" />
+							<p:menuitem value="Informes de ingresos"
+								outcome="/playa/gerencia/informes/informeporhora"
+								icon="ui-icon-image" />
+
+							<p:menuitem value="Recaudacion por tipo"
+								outcome="/playa/gerencia/informes/informerecaudacion"
+								icon="ui-icon-image" />
+
+							<p:menuitem value="Estadías tipo vehículo"
+								outcome="/playa/gerencia/informes/informeportipo"
+								icon="ui-icon-image" />
+
+
+						</p:submenu>
+						<p:submenu label="Configuración de Cuenta">
+							<p:menuitem value="Cambiar Password"
+								outcome="/playa/gerencia/cambiarpassword" icon="ui-icon-key" />
+							<p:menuitem value="Cambiar mi foto"
+								outcome="/playa/cambiarfotoperfil" icon="ui-icon-image" />
+						</p:submenu>
+
 					</p:menu>
 				</div>
 			</ui:fragment>
@@ -40,50 +78,38 @@
 				<div class="box">
 
 					<p:menu style="width: 95%;" styleClass="side-menu">
-						<p:submenu label="Perfil">
-							<p:menuitem value="Ver perfil" outcome="/playa/perfilplaya"
-								icon="ui-icon-plus" />
-							<p:menuitem value="Editar perfil"
-								outcome="/playa/gerencia/perfilplayaedit" icon="ui-icon-person" />
-						</p:submenu>
-						<p:submenu label="Empleados">
-							<p:menuitem value="Nuevo empleado"
-								outcome="/playa/gerencia/empleadoadd" icon="ui-icon-plus" />
-							<p:menuitem value="Ver empleados"
+						<p:submenu label="Adminsitración">
+							<p:menuitem value="Ver perfil"
+								outcome="/playa/gerencia/perfilplaya" icon="ui-icon-plus" />
+							<p:menuitem value="Empleados"
 								outcome="/playa/gerencia/empleadolist" icon="ui-icon-person" />
-						</p:submenu>
-						<p:submenu label="Tarifas">
-							<p:menuitem value="Administrar Tarifas"
+							<p:menuitem value="Tarifas"
 								outcome="/playa/gerencia/tarifaplayalist" icon="ui-icon-note" />
-						</p:submenu>
-						<p:submenu label="Promociones">
-							<p:menuitem value="Nueva promoción"
-								outcome="/playa/gerencia/promocionadd" icon="ui-icon-plus" />
-							<p:menuitem value="Ver promociones"
+							<p:menuitem value="Promociones"
 								outcome="/playa/gerencia/promocioneslist"
 								icon="ui-icon-suitcase" />
+							<p:menuitem value="Abonados"
+								outcome="/playa/gerencia/listadoabonados" icon="ui-icon-person" />
+							<p:menuitem value="Ingreso / Egreso"
+								outcome="/playa/ingresoegresovehiculo"
+								icon="ui-icon-transferthick-e-w" />
+
 						</p:submenu>
-						<p:submenu label="Abonados">
-							<p:menuitem value="Nuevo abono " outcome="/playa/gerencia/abonoaddgerente"
-								icon="ui-icon-tag" />
-							<p:menuitem value="Listado de abonos"
-								outcome="/playa/gerencia/listadoabonados" icon="ui-icon-plus" />
-						</p:submenu>
-						<p:submenu label="Informes">
+						<p:submenu label="Informes y Reportes">
 							<p:menuitem value="Ver transacciones"
 								outcome="/playa/gerencia/transaccionplayalist"
 								icon="ui-icon-calculator" />
 							<p:menuitem value="Informes de ingresos"
 								outcome="/playa/gerencia/informes/informeporhora"
-								icon="ui-icon-plus" />
+								icon="ui-icon-image" />
 
 							<p:menuitem value="Recaudacion por tipo"
 								outcome="/playa/gerencia/informes/informerecaudacion"
-								icon="ui-icon-plus" />
+								icon="ui-icon-image" />
 
 							<p:menuitem value="Estadías tipo vehículo"
 								outcome="/playa/gerencia/informes/informeportipo"
-								icon="ui-icon-plus" />
+								icon="ui-icon-image" />
 
 
 						</p:submenu>
@@ -104,9 +130,8 @@
 						<p:menuitem value="Perfil de playa" outcome="/playa/perfilplaya"
 							icon="ui-icon-script" />
 						<p:menuitem value="Ingreso / Egreso"
-							outcome="/playa/ingresoegresovehiculo" icon="ui-icon-arrow-2-e-w" />
-						<p:menuitem value="Nuevo abono mensual" outcome="/playa/abonoadd"
-							icon="ui-icon-tag" />
+							outcome="/playa/ingresoegresovehiculo"
+							icon="ui-icon-transferthick-e-w" />
 						<p:menuitem value="Consultar tarifas"
 							outcome="/playa/consultartarifas" icon="ui-icon-note" />
 						<p:menuitem value="Consultar promociones"

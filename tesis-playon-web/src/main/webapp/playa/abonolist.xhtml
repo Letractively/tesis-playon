@@ -22,10 +22,6 @@
 				emptyMessage="No existen clientes con abonos para su Playa"
 				paginatorPosition="bottom">
 
-				<f:facet name="header">
-						Listado de abonados de la playa
-				</f:facet>
-
 				<p:column style="text-align:center" headerText="Cliente"
 					filterBy="#{abono.vehiculo.cliente.usuario.apellido}"
 					filterMatchMode="contains">
@@ -88,6 +84,13 @@
 				</f:facet>
 
 			</p:dataTable>
+
+			<br></br>
+			<h:panelGroup layout="block" style="text-align: right; width: 100%;">
+				<p:commandButton id="addAbono" value="Nuevo abonado"
+					action="/playa/abonoadd.html?faces-redirect=true" ajax="false" />
+			</h:panelGroup>
+
 		</h:form>
 	</ui:define>
 </ui:composition>

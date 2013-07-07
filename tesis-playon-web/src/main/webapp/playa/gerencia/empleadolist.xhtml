@@ -20,9 +20,6 @@
 				emptyMessage="No existen empleados en su playa"
 				paginatorPosition="bottom">
 
-				<f:facet name="header">
-						Listado de empleados de la playa
-					</f:facet>
 
 				<p:column headerText="Legajo" style="text-align:center">
 
@@ -94,16 +91,16 @@
 						action="#{empleadoMB.deleteEmpleado}" ajax="false">
 						<f:setPropertyActionListener value="#{empleado}"
 							target="#{empleadoMB.empleadoSelected}" />
-						<h:graphicImage library="images/icons" name="trash.png"
-							width="20" height="20" />
+						<h:graphicImage library="images/icons" name="trash.png" width="20"
+							height="20" />
 					</p:commandLink>
 
 					<p:commandLink id="keys" title="Resetear clave de acceso"
 						type="button" onclick="confirmationClave.show();">
 						<f:setPropertyActionListener value="#{empleado.usuario}"
 							target="#{usuarioMB.usuarioSelected}" />
-						<h:graphicImage library="images/icons" name="keys.png"
-							width="24" height="24" />
+						<h:graphicImage library="images/icons" name="keys.png" width="24"
+							height="24" />
 					</p:commandLink>
 					<p:confirmDialog id="confirmDialogClave"
 						message="¿Está seguro que desea generar una nueva clave de acceso para este Empleado?"
@@ -141,13 +138,19 @@
 					</div>
 				</f:facet>
 			</p:dataTable>
+			<br></br>
+			<h:panelGroup layout="block" style="text-align: right; width: 100%;">
+				<p:commandButton id="addEmpleado" value="Nuevo Empleado"
+					action="/playa/gerencia/empleadoadd.html?faces-redirect=true"
+					ajax="false" />
+			</h:panelGroup>
+
 
 		</h:form>
-		<div align="right">
-			<br />
-			<h:link value="volver a administración"
-				outcome="/playa/gerencia/administracion" />
-		</div>
+
+
+
+
 
 		<!-- DIALOG PARA VER LOS DATOS DEL USUARIO SELECCIONADO -->
 		<p:dialog header="Datos del Empleado" widgetVar="viewDialog"
