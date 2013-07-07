@@ -65,7 +65,7 @@ public class ComentarioManagedBean implements Serializable {
 	}	
     }
 
-    public String addComentario() {
+    public void addComentario() {
 	Comentario comentario = null;
 	try {
 	    FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -80,11 +80,11 @@ public class ComentarioManagedBean implements Serializable {
 		    if (playaSelected == null) {
 			comentario = new Comentario(user, getComentario(), user.getPlaya(), new Boolean(true));
 			getComentarioService().save(comentario);
-			comentariosList = getComentarioService().findByPlaya(user.getPlaya());
+			comentariosListPerfil = getComentarioService().findByPlaya(user.getPlaya());
 		    } else {
 			comentario = new Comentario(user, getComentario(), playaSelected, new Boolean(true));
 			getComentarioService().save(comentario);
-			comentariosList = getComentarioService().findByPlaya(user.getPlaya());
+			comentariosListPerfil = getComentarioService().findByPlaya(user.getPlaya());
 		    }
 		}
 
@@ -98,7 +98,6 @@ public class ComentarioManagedBean implements Serializable {
 			new FacesMessage(FacesMessage.SEVERITY_WARN, "No se pudó registrar su comentario",
 				"¡Debe iniciar sesión para poder comentar la playa!"));
 	    }
-	    return "/viewperfilplaya.html?faces-redirect=true&id=" + playaSelected.getId();
 
 	} catch (Exception e) {
 	    FacesContext.getCurrentInstance().addMessage(
@@ -106,10 +105,9 @@ public class ComentarioManagedBean implements Serializable {
 		    new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudó registrar su comentario",
 			    "Disculpe las molestias ocacionadas"));
 	}
-	return null;
     }
 
-    public String addComentarioPerfil() {
+    public void addComentarioPerfil() {
 	Comentario comentario = null;
 	try {
 	    FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -119,7 +117,7 @@ public class ComentarioManagedBean implements Serializable {
 		if (user.getPlaya() == null) {
 		    comentario = new Comentario(user, getComentario(), playaSelected, new Boolean(true));
 		    getComentarioService().save(comentario);
-		    comentariosListPerfil = getComentarioService().findByPlaya(playaSelected);
+		    comentariosList = getComentarioService().findByPlaya(playaSelected);
 		} else {
 		    if (playaSelected == null) {
 			comentario = new Comentario(user, getComentario(), user.getPlaya(), new Boolean(true));
@@ -142,7 +140,6 @@ public class ComentarioManagedBean implements Serializable {
 			new FacesMessage(FacesMessage.SEVERITY_WARN, "No se pudó registrar su comentario",
 				"¡Debe iniciar sesión para poder comentar la playa!"));
 	    }
-	    return "comentariolist";
 
 	} catch (Exception e) {
 	    FacesContext.getCurrentInstance().addMessage(
@@ -150,7 +147,6 @@ public class ComentarioManagedBean implements Serializable {
 		    new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se pudó registrar su comentario",
 			    "Disculpe las molestias ocacionadas"));
 	}
-	return null;
     }
 
     public void findPlayaById() {

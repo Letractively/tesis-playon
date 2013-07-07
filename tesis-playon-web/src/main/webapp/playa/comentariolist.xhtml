@@ -46,8 +46,8 @@
 									<td style="text-align: right; border-style: none;"><h:commandLink
 											id="denunciaComentario" value="Denunciar"
 											update="comentarios" ajax="true"
-											action="#{comentarioMB.denunciarComentarioGerente}" immediate="true"
-											styleClass="fuente-link-denuncia">
+											action="#{comentarioMB.denunciarComentarioGerente}"
+											immediate="true" styleClass="fuente-link-denuncia">
 											<f:setPropertyActionListener value="#{comentario}"
 												target="#{comentarioMB.comentarioDenunciado}" />
 										</h:commandLink></td>
@@ -60,7 +60,7 @@
 						</p:column>
 
 						<f:facet name="footer">
-							<h:panelGrid columns="2" cellspacing="15">
+							<h:panelGrid columns="2" cellspacing="15" width="90%">
 								<p:column style="heigth:20px;">
 									<div align="center">
 										<h:graphicImage library="fotos_perfil_usuarios"
@@ -68,26 +68,30 @@
 									</div>
 								</p:column>
 
-								<p:column>
-									<h:panelGrid columns="1" style="margin-left:10px">
-										<p:column>
-											<p:inputTextarea id="comentario" cols="70" rows="2"
+								<h:panelGrid columns="1" cellspacing="15">
+
+									<p:column>
+										<h:panelGrid columns="1">
+											<p:inputTextarea id="comentario" cols="69" rows="2"
 												value="#{comentarioMB.comentario}" required="true"
 												requiredMessage="El campo comentario no puede estar vacio"
-												styleClass="contenido-textarea" />
-										</p:column>
-										<p:column>
-											<div align="right">
-												<p:commandButton id="enviarComentario"
-													value="Enviar comentario"
-													action="#{comentarioMB.addComentarioPerfil}" ajax="false"
-													style="margin:5px 6px 0 5px">
-												</p:commandButton>
-											</div>
-										</p:column>
+												styleClass="contenido-textarea">
+												<f:validateLength minimum="3" update=":form:messageComentario" />
+												<p:ajax event="blur" update=":form:messageComentario" />
+											</p:inputTextarea>
+											<p:column>
+												<div align="right">
+													<p:commandButton id="enviarComentario"
+														value="Enviar comentario" update="comentarios"
+														action="#{comentarioMB.addComentarioPerfil}" ajax="false"
+														style="margin:5px 6px 0 5px">
+													</p:commandButton>
+												</div>
+											</p:column>
 
-									</h:panelGrid>
-								</p:column>
+										</h:panelGrid>
+									</p:column>
+								</h:panelGrid>
 							</h:panelGrid>
 						</f:facet>
 
