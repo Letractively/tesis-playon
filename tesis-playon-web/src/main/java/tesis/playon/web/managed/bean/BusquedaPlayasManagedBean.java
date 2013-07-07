@@ -65,11 +65,9 @@ public class BusquedaPlayasManagedBean implements Serializable {
     public static Playa playaselected;
 
     // Atributos para los filtros.
-    private boolean opcionesAvanzadas;
     private CategoriaVehiculo categoriaParameter;
     private TipoEstadia tipoEstadiaParameter;
-    private int checkPromociones;
-    private String nombrePlayaParameter;
+    private boolean checkPromociones;
 
     private Double latitudCentro;
     private Double longitudCentro;
@@ -78,20 +76,15 @@ public class BusquedaPlayasManagedBean implements Serializable {
     private void init() {
 	playaResultadoBusqueda = new ArrayList<Playa>();
 	distancia = 25;
-	opcionesAvanzadas = false;
 	this.direccionDesde = " ";
     }
 
     public void preRenderView() {
 	if (!FacesContext.getCurrentInstance().isPostback()) {
-	    // if (getDireccionBusqueda() == null) {
-	    // if (getDireccionBusqueda().trim().isEmpty()) {
 	    if (getPlayaResultadoBusqueda() != null) {
 		playaResultadoBusqueda.clear();
 		playaResultadoBusqueda = null;
 	    }
-	    // }
-	    // }
 	}
     }
 
@@ -106,15 +99,15 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
 		latLonUtil = new LatitudlongitudUtil();
 		// GeoposicionDePlaya
-		respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda().trim() + ", Cordoba, Argentina");
+		respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda().trim() + ", Córdoba, Argentina");
 		coordenadas = respuesta.toString();
 
 		playaResultadoBusqueda = new ArrayList<Playa>();
 		advancedModel = new DefaultMapModel();
-
+		int valorInt = checkPromociones == true ? 1 : 0;
 		List<Playa> playasCercanas = new ArrayList<Playa>();
 		playasCercanas = getPlayaService().findByPlayasCercanas(respuesta.getLatitud(),
-			respuesta.getLongitud(), idCategoria, idTipoEstadia, nombrePlaya, checkPromociones);
+			respuesta.getLongitud(), idCategoria, idTipoEstadia, nombrePlaya, valorInt);
 
 		if (playasCercanas != null) {
 		    for (Playa playaAux : playasCercanas) {
@@ -157,23 +150,22 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	    idCategoria = categoriaParameter.getId();
 	if (tipoEstadiaParameter != null)
 	    idTipoEstadia = tipoEstadiaParameter.getId();
-	if (!nombrePlayaParameter.isEmpty())
-	    nombrePlaya = nombrePlayaParameter;
 
 	if (null != getDireccionBusqueda() && !getDireccionBusqueda().trim().isEmpty()) {
 	    try {
 
 		latLonUtil = new LatitudlongitudUtil();
 		// GeoposicionDePlaya
-		respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda().trim() + ", Cordoba, Argentina");
+		respuesta = latLonUtil.getLocationFromAddress(getDireccionBusqueda().trim() + ", Córdoba, Argentina");
 		coordenadas = respuesta.toString();
 
 		playaResultadoBusqueda = new ArrayList<Playa>();
 		advancedModel = new DefaultMapModel();
-
+		
+		int valorInt = checkPromociones == true ? 1 : 0;
 		List<Playa> playasCercanas = new ArrayList<Playa>();
 		playasCercanas = getPlayaService().findByPlayasCercanas(respuesta.getLatitud(),
-			respuesta.getLongitud(), idCategoria, idTipoEstadia, nombrePlaya, checkPromociones);
+			respuesta.getLongitud(), idCategoria, idTipoEstadia, nombrePlaya, valorInt);
 
 		if (playasCercanas != null) {
 		    for (Playa playaAux : playasCercanas) {
@@ -327,17 +319,6 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     // ==================================GETTER & SETTER DE LOS FILTROS
     // ===============================//
-    public boolean isOpcionesAvanzadas() {
-	return opcionesAvanzadas;
-    }
-
-    public void setOpcionesAvanzadas(boolean opcionesAvanzadas) {
-	this.opcionesAvanzadas = opcionesAvanzadas;
-    }
-
-    public void settearOpcionesAvanzadas() {
-	this.opcionesAvanzadas = true;
-    }
 
     public CategoriaVehiculo getCategoriaParameter() {
 	return categoriaParameter;
@@ -360,7 +341,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	    LatitudlongitudUtil latLon = new LatitudlongitudUtil();
 	    GeoposicionDePlaya latitud = null;
 	    try {
-		latitud = latLon.getLocationFromAddress(getDireccionBusqueda().trim() + ", Cordoba, Argentina");
+		latitud = latLon.getLocationFromAddress(getDireccionBusqueda().trim() + ", Córdoba, Argentina");
 	    } catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -384,7 +365,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	    LatitudlongitudUtil latLon = new LatitudlongitudUtil();
 	    GeoposicionDePlaya latitud = null;
 	    try {
-		latitud = latLon.getLocationFromAddress(getDireccionBusqueda().trim() + ", Cordoba, Argentina");
+		latitud = latLon.getLocationFromAddress(getDireccionBusqueda().trim() + ", Córdoba, Argentina");
 	    } catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -401,20 +382,12 @@ public class BusquedaPlayasManagedBean implements Serializable {
 	this.longitudCentro = longitudCentro;
     }
 
-    public int getCheckPromociones() {
+    public boolean getCheckPromociones() {
 	return checkPromociones;
     }
 
-    public void setCheckPromociones(int checkPromociones) {
+    public void setCheckPromociones(boolean checkPromociones) {
 	this.checkPromociones = checkPromociones;
-    }
-
-    public String getNombrePlayaParameter() {
-	return nombrePlayaParameter;
-    }
-
-    public void setNombrePlayaParameter(String nombrePlayaParameter) {
-	this.nombrePlayaParameter = nombrePlayaParameter;
     }
 
     public String getDireccionDesde() {
