@@ -993,8 +993,8 @@ BEGIN
                                                         FROM promocion promo
                                                         WHERE pPromociones = 1
                                                                 AND promo.estadoPromocionID=2
-                                                                AND (now() >= promo.fechaInicio )
-                                                                AND (now() <= promo.fechaFin ))))
+                                                                AND (CURDATE() >= promo.fechaInicio )
+                                                                AND (CURDATE() <= DATE_ADD(promo.fechaFin, INTERVAL 1 DAY) ))))
             AND (p.estadoPlayaID = 2)
             AND (p.disponibilidad > 0));
 END $$
