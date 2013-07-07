@@ -4,10 +4,9 @@
 package tesis.playon.web.managed.bean;
 
 import java.awt.Color;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -26,7 +25,15 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletResponse;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
 
 import tesis.playon.web.model.CargoEmpleado;
 import tesis.playon.web.model.CategoriaVehiculo;
@@ -288,8 +295,8 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	    getPlayaService().update(playaLoggeada);
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se registró el ingreso exitosamente del vehiculo con abono mensual con patente: " + patente, "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
+		    "Se registró el ingreso exitosamente del vehículo con abono mensual con patente: " + patente, "");
+	    FacesContext.getCurrentInstance().addMessage("messagesGral", message);
 
 	    existeAbonoVehiculo = false;
 
@@ -313,7 +320,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 
 	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		    "Se registró el egreso exitosamente del vehículo con abono patente: " + patente, "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    FacesContext.getCurrentInstance().addMessage("messagesGral", message);
 
 	    existeAbonoVehiculo = false;
 
@@ -326,7 +333,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
     }
 
     // ---------------- Ingreso / Egreso de un cliente común ---------------------------//
-    public void registrarIngresoVehiculo() {
+    public String registrarIngresoVehiculo() {
 	try {
 	    // SAVE TO DETTALLEESTADIA
 	    Timestamp fechaHoraIngreso = new Timestamp(Calendar.getInstance().getTimeInMillis());
@@ -340,24 +347,27 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	    playaLoggeada.setDisponibilidad(disponibilidad);
 	    getPlayaService().update(playaLoggeada);
 
+	    this.generarComprombantePDF("Ingreso");
+
 	    if (imprimir) {
-		this.generarTicket("Ingreso");
-		// File pdf = new File(rutaPDF);
-		// Desktop.getDesktop().open(pdf);
+		String msg = imprimirComprobante();
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			"Se registró el ingreso exitosamente del vehículo patente: " + patente + ".", msg);
+		FacesContext.getCurrentInstance().addMessage("messagesGral", message);
+	    } else {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			"Se registró el ingreso exitosamente del vehículo patente: " + patente + ".", "");
+		FacesContext.getCurrentInstance().addMessage("messagesGral", message);
 	    }
-
 	    this.setExisteVehiculo(false);
+	    this.setPatente(null);
 
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se registró el ingreso exitosamente del vehiculo patente: " + patente, "");
-	    FacesContext.getCurrentInstance().addMessage("messagesGral", message);
-
-	    // return "ingresoegresovahiculo";
+	    return "ingresoegresovahiculo";
 
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
-	// return null;
+	return null;
     }
 
     public String registrarEgresoVehiculo() {
@@ -451,35 +461,36 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	    playaLoggeada.setDisponibilidad(disponibilidad);
 	    getPlayaService().update(playaLoggeada);
 
+	    this.generarComprombantePDF("Egreso");
+
 	    if (imprimir) {
-		this.generarTicket("Egreso");
-		// File pdf = new File(rutaPDF);
-		// Desktop.getDesktop().open(pdf);
+		String msg = imprimirComprobante();
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			"Se registró el egreso exitosamente del vehículo patente: " + patente + ".", msg);
+		FacesContext.getCurrentInstance().addMessage("messagesGral", message);
+	    } else {
+
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			"Se registró el egreso exitosamente del vehículo patente: " + patente + ".", "");
+		FacesContext.getCurrentInstance().addMessage("messagesGral", message);
 	    }
-
 	    this.setExisteVehiculo(false);
-
-	    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-		    "Se registró el egreso exitosamente del vehículo patente: " + patente, "");
-	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    this.setPatente(null);
 
 	    return "ingresoegresovehiculo";
-
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
 	return null;
     }
 
-    /**
-     * @return the ticket Ingreso File
-     */
-    public void generarTicket(String tipoMovimiento) throws IOException {
+    public void generarComprombantePDF(String tipoMovimiento) throws IOException {
 	try {
 
 	    // ****** Definición de variables *********
 	    FacesContext facesContext = FacesContext.getCurrentInstance();
 	    ExternalContext extContext = facesContext.getExternalContext();
+
 	    Date hoy = new Date();
 	    SimpleDateFormat formato = new SimpleDateFormat("yyyyMMddHHmmss");
 	    String nombrePDF = tipoMovimiento + "_" + formato.format(hoy) + ".pdf";
@@ -535,143 +546,9 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	    doc.close();
 	    /**************************************/
 
-	    int DEFAULT_BUFFER_SIZE = 2048;
-	    byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
-	    int length;
-
-	    // Prepare.
-	    HttpServletResponse response = (HttpServletResponse) extContext.getResponse();
-
-	    BufferedInputStream input = null;
-	    BufferedOutputStream output = null;
-
-	    try {
-		// Open file.
-		input = new BufferedInputStream(new FileInputStream(filePDF), DEFAULT_BUFFER_SIZE);
-		// input = new BufferedInputStream(new FileInputStream(filePDF), DEFAULT_BUFFER_SIZE);
-		if (!facesContext.getResponseComplete()) {
-		    // Init servlet response.
-		    // response.reset();
-		    response.setContentType("application/pdf");
-		    response.setContentLength((int) filePDF.length());
-		    response.setHeader("Content-Disposition", "attachment;filename=\"" + filePDF.getName() + "\"");
-
-		    // Write file contents to response.
-		    // ServletOutputStream out = response.getOutputStream();
-		    output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
-
-		    while ((length = input.read(buffer)) > 0) {
-			output.write(buffer, 0, length);
-		    }
-
-		    // Finalize task.
-		    output.flush();
-		    output.close();
-		    input.close();
-		    // facesContext.responseComplete();
-		}
-	    } catch (IOException e) {
-		e.printStackTrace();
-	    }
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
-    }
-
-    /**
-     * @return the ticket Ingreso File
-     */
-    // public void generarTicketIngreso(String tipoMovimiento) throws IOException {
-    // try {
-    //
-    // // ****** Definición de variables *********
-    // FacesContext facesContext = FacesContext.getCurrentInstance();
-    // ExternalContext extContext = facesContext.getExternalContext();
-    // Date hoy = new Date();
-    // SimpleDateFormat formato = new SimpleDateFormat("yyyy_MM_dd_HH:mm:ss");
-    // String nombrePDF = tipoMovimiento + "_" + formato.format(hoy) + ".pdf";
-    // String sep = File.separator;
-    // rutaPDF = extContext.getRealPath("resources" + sep + nombrePDF);
-    //
-    // File filePDF = new File(rutaPDF);
-    //
-    // Document doc = new Document(new Rectangle(240f, 300f), 5f, 5f, 5f, 5f);
-    // FileOutputStream os = new FileOutputStream(filePDF);
-    // Paragraph cuerpo = new Paragraph();
-    //
-    // // ****** Definicion de fuentes ************
-    // Font fuenteNegra18 = new Font(Font.TIMES_ROMAN, 16, Font.BOLDITALIC, Color.BLACK);
-    // Font fuenteNegra16 = new Font(Font.TIMES_ROMAN, 14, Font.NORMAL, Color.BLACK);
-    // Font fuenteCuerpo = new Font(Font.TIMES_ROMAN, 12, Font.NORMAL, Color.BLACK);
-    //
-    // // ****** Crear el PDF ********************
-    // @SuppressWarnings("unused")
-    // PdfWriter writer = PdfWriter.getInstance(doc, os);
-    //
-    // cuerpo.add(new Paragraph("Comprobante de ingreso\nEmitido el: " + fechaActual(), fuenteNegra16));
-    // agregarLineasEnBlanco(cuerpo, 2);
-    //
-    // formato = new SimpleDateFormat("HH:ss");
-    // cuerpo.add(new Paragraph("Hora de ingreso: " + formato.format(hoy), fuenteCuerpo));
-    // cuerpo.add(new Paragraph("Patente: " + this.getVehiculo().getPatente(), fuenteCuerpo));
-    // cuerpo.add(new Paragraph("Modelo: " + this.getVehiculo().getModeloVehiculo().getNombre(), fuenteCuerpo));
-    // cuerpo.add(new Paragraph("Saldo: $"
-    // + String.format("%.2f", this.getVehiculo().getCliente().getCuentaCliente().getSaldo()),
-    // fuenteCuerpo));
-    //
-    // /************************************/
-    // doc.open();
-    // doc.addTitle("Transacción - Playa: " + playaLoggeada.getNombreComercial());
-    // doc.add(new Paragraph("PLAYON - RED DE PLAYAS", fuenteNegra18));
-    // doc.add(cuerpo);
-    // doc.close();
-    // /**************************************/
-    //
-    // int DEFAULT_BUFFER_SIZE = 2048;
-    // byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
-    // int length;
-    //
-    // // Prepare.
-    // HttpServletResponse response = (HttpServletResponse) extContext.getResponse();
-    //
-    // BufferedInputStream input = null;
-    // BufferedOutputStream output = null;
-    //
-    // try {
-    // // Open file.
-    // input = new BufferedInputStream(new FileInputStream(filePDF), DEFAULT_BUFFER_SIZE);
-    // // input = new BufferedInputStream(new FileInputStream(filePDF), DEFAULT_BUFFER_SIZE);
-    // if (!facesContext.getResponseComplete()) {
-    // // Init servlet response.
-    // // response.reset();
-    // response.setContentType("application/pdf");
-    // response.setContentLength((int) filePDF.length());
-    // response.setHeader("Content-Disposition", "attachment;filename=\"" + filePDF.getName() + "\"");
-    //
-    // // Write file contents to response.
-    // // ServletOutputStream out = response.getOutputStream();
-    // output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
-    //
-    // while ((length = input.read(buffer)) > 0) {
-    // output.write(buffer, 0, length);
-    // }
-    //
-    // // Finalize task.
-    // output.flush();
-    // output.close();
-    // input.close();
-    // facesContext.responseComplete();
-    // }
-    // } catch (IOException e) {
-    // e.printStackTrace();
-    // }
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // }
-    // }
-
-    public String redirect() {
-	return "/playa/ingresoegresovehiculo?faces-redirect=true";
     }
 
     public void calcularImporte() {
@@ -748,14 +625,52 @@ public class DetalleEstadiaManagedBean implements Serializable {
 		    tarifaSeleccionada.getTipoEstadia().getNombre());
 	    CategoriaVehiculo cat = getCategoriaVehiculoService().findByNombreCategoriaVehiculo(
 		    tarifaSeleccionada.getCategoriaVehiculo().getNombre());
-	    promocionesDisponibles = getPromocionService().findByTipoEstadiaAndPlaya(tipo,
-		    cat, playaLoggeada);
+	    promocionesDisponibles = getPromocionService().findByTipoEstadiaAndPlaya(tipo, cat, playaLoggeada);
 	} else
 	    promocionesDisponibles = new ArrayList<Promocion>();
     }
 
-    // =================================== SERVICES
-    // =========================================
+    public String imprimirComprobante() throws FileNotFoundException, IOException, PrintException {
+	String message = "";
+
+	// Archivo que se desea imprimir
+	FileInputStream inputStream = null;
+	try {
+	    inputStream = new FileInputStream(rutaPDF);
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	}
+
+	if (inputStream == null) {
+	    return null;
+	}
+
+	// Formato de Documento
+	DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
+	// Lectura de Documento
+	Doc document = new SimpleDoc(inputStream, docFormat, null);
+
+	// Impresora por defecto.
+	PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
+	PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
+
+	if (defaultPrintService != null) {
+	    DocPrintJob printJob = defaultPrintService.createPrintJob();
+	    try {
+		printJob.print(document, attributeSet);
+		message = "Imprimiendo en: " + defaultPrintService.getName();
+	    } catch (Exception e) {
+		e.printStackTrace();
+	    }
+	} else {
+	    message = "No existen impresoras instaladas.";
+	}
+
+	inputStream.close();
+	return message;
+    }
+
+    // ================================= SERVICES =========================================
 
     public IEmpleadoService getEmpleadoService() {
 	return empleadoService;
@@ -900,7 +815,7 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	this.abonoService = abonoService;
     }
 
-    // =============================== GETTER & SETTER =====================================
+    // ============================= GETTER & SETTER ===================================
 
     public Usuario getUsuarioLoggeado() {
 	return usuarioLoggeado;

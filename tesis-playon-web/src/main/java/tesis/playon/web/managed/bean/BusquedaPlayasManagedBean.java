@@ -162,7 +162,7 @@ public class BusquedaPlayasManagedBean implements Serializable {
 		playaResultadoBusqueda = new ArrayList<Playa>();
 		advancedModel = new DefaultMapModel();
 		
-		int valorInt = checkPromociones == true ? 1 : 0;
+		int valorInt = checkPromociones ? 1 : 0;
 		List<Playa> playasCercanas = new ArrayList<Playa>();
 		playasCercanas = getPlayaService().findByPlayasCercanas(respuesta.getLatitud(),
 			respuesta.getLongitud(), idCategoria, idTipoEstadia, nombrePlaya, valorInt);

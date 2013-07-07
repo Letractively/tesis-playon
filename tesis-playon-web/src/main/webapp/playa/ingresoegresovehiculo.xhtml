@@ -23,7 +23,7 @@
 		<h1>¡Registre el ingreso y egreso de sus clientes!</h1>
 
 		<h:form id="form" style="margin: 10px 0px 0px 30px;">
-			<p:growl id="messages" />
+			<p:growl id="messages" globalOnly="true" autoUpdate="false" redisplay="false" />
 
 			<ui:fragment id="searchVehiculoFragment">
 				<div id="perfil-playa">
@@ -42,8 +42,6 @@
 							action="#{detalleEstadiaMB.searchVehiculo}" ajax="false"
 							style="width:150px" />
 					</h:panelGrid>
-					<p:messages id="messagesGral" showDetail="false" autoUpdate="true"
-						closable="true" showSummary="true" />
 				</div>
 			</ui:fragment>
 
@@ -257,7 +255,7 @@
 											style="margin-right:15px" update="form"
 											action="#{detalleEstadiaMB.registrarEgresoAbonado}" />
 										<p:commandButton id="cancelarAbono" value="Cancelar"
-											immediate="true" ajax="false"
+											immediate="true"
 											onclick="window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';" />
 									</div>
 								</f:facet>
@@ -266,6 +264,9 @@
 					</p:panel>
 				</div>
 			</ui:fragment>
+
+			<p:messages id="messagesGral" showDetail="true" autoUpdate="true"
+				closable="true" showSummary="true" />
 
 		</h:form>
 
@@ -337,10 +338,9 @@
 						<p:column>
 							<div align="right">
 								<p:commandButton id="registrarIngreso" value="Registrar ingreso"
+									style="margin-right:10px" update=":form:btn" ajax="false"
 									action="#{detalleEstadiaMB.registrarIngresoVehiculo}"
-									ajax="false" style="margin-right:10px"
-									update=":form:vehiculoSinAbonoFragment"
-									onclick="dlgIngreso.hide();dlgTicket.show();">
+									onclick="dlgIngreso.hide();">
 								</p:commandButton>
 								<p:commandButton id="cancelar" value="Cancelar" immediate="true"
 									oncomplete="dlgIngreso.hide();" />
@@ -351,16 +351,6 @@
 			</ui:fragment>
 		</h:form>
 
-		<h:form id="formTicket">
-			<p:dialog header="Ticket" widgetVar="dlgTicket" resizable="false"
-				onShow="window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';">
-				<p:ajax
-					onstart="window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';" />
-				<p:commandButton id="Volver" value="Volver" immediate="true"
-					onclick="dlgTicket.hide();window.location.href = 'http://localhost:8080/tesis-playon-web/playa/ingresoegresovehiculo.html';" />
-			</p:dialog>
-		</h:form>
-
 		<h:form id="formEgreso">
 			<ui:fragment>
 				<p:dialog header="Confirmación de egreso de vehículo"
@@ -369,17 +359,15 @@
 					<div align="center">
 						<h:panelGrid columns="2" cellpadding="8" cellspacing="8"
 							id="panelEgreso">
-
 							<p:column>
 								<div align="right">
 									<h:outputText value="Importe: " styleClass="fuente-outputtext" />
 									<h:outputText id="txt_importe_calculado"
-										value="$#{detalleEstadiaMB.importe}"
-										styleClass="fuente-perfil" type="currency" />
+										value="#{detalleEstadiaMB.importe}" styleClass="fuente-perfil">
+										<f:convertNumber type="currency" currencySymbol="$ " />
+									</h:outputText>
 								</div>
-
 							</p:column>
-
 							<p:column />
 
 							<p:column>
@@ -391,7 +379,7 @@
 							<p:column>
 								<p:selectBooleanCheckbox value="#{detalleEstadiaMB.imprimir}" />
 							</p:column>
-							
+
 							<f:facet name="footer">
 								<div align="right" style="width: 215px;">
 									<p:commandButton id="egreso" value="Registrar egreso"
