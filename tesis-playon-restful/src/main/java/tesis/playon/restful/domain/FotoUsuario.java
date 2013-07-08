@@ -27,22 +27,21 @@ public class FotoUsuario implements Serializable {
     @Lob
     @Column(name = "fotoUsuario", columnDefinition = "mediumblob")
     private byte[] fotoUsuario;
-    
-    
+
     public int getId() {
-        return id;
+	return id;
     }
 
     public void setId(int id) {
-        this.id = id;
+	this.id = id;
     }
 
     public byte[] getFotoUsuario() {
-        return fotoUsuario;
+	return fotoUsuario;
     }
 
     public void setFotoUsuario(byte[] fotoUsuario) {
-        this.fotoUsuario = fotoUsuario;
+	this.fotoUsuario = fotoUsuario;
     }
-   
+
 }

@@ -57,7 +57,7 @@ public class Usuario implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "fotoUsuarioID")
-    private FotoUsuario usuario;
+    private FotoUsuario foto;
 
     public Integer getId() {
 	return id;
@@ -139,12 +139,13 @@ public class Usuario implements Serializable {
 	this.enable = enable;
     }
 
-    public FotoUsuario getUsuario() {
-	return usuario;
+    public FotoUsuario getFoto() {
+        return foto;
     }
 
-    public void setUsuario(FotoUsuario usuario) {
-	this.usuario = usuario;
+    public void setFoto(FotoUsuario foto) {
+        this.foto = foto;
     }
 
+   
 }
