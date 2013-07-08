@@ -3,29 +3,20 @@ package tesis.playon.mobile.ui.activities;
 import tesis.playon.mobile.R;
 import tesis.playon.mobile.json.model.Usuario;
 import tesis.playon.mobile.preferences.PreferenceHelper;
+import tesis.playon.mobile.utils.MyLocation;
+import tesis.playon.mobile.utils.MyLocation.LocationResult;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements LocationListener {
-
-    private static final String TAG = "Main Activity";
+public class MainActivity extends Activity {
 
     private final int LOGIN_ID = 50001;
-
-    private LocationManager locationManager;
-
-    private String provider;
 
     private PreferenceHelper mPreference;
 
@@ -104,50 +95,21 @@ public class MainActivity extends Activity implements LocationListener {
 	}
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-	// String lat = Double.toString((Double) (location.getLatitude()));
-	// String lng = Double.toString((Double) (location.getLongitude()));
-	// mPreference = new PreferenceHelper(getApplicationContext());
-	location.setLatitude(-31.383459);
-	location.setLongitude(-64.251228);
-	mPreference.updateLatLng("-31.383459", "-64.251228");
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
     public void saveUserLocation() {
-	// Get the location manager
-	locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-	// Define the criteria how to select the location provider
-	Criteria criteria = new Criteria();
-	provider = locationManager.getBestProvider(criteria, false);
-	Location location = locationManager.getLastKnownLocation(provider);
 
-	// Initialize the location fields
-	if (location != null) {
-	    Log.d(TAG, "Provider " + provider + " has been selected.");
-	    // onLocationChanged(location);
-	    location.setLatitude(-31.383459);
-	    location.setLongitude(-64.251228);
-	} else {
-	    location = new Location("Hardcoded");
-	    location.setLatitude(-31.383459);
-	    location.setLongitude(-64.251228);
-	    mPreference.updateLatLng("-31.383459", "-64.251228");
-	}
+	// Location UTN
+	// -31.442079
+	// -64.183434
+
+	LocationResult locationResult = new LocationResult() {
+	    @Override
+	    public void gotLocation(Location location) {
+		mPreference.updateLatLng(Double.toString(location.getLatitude()),
+			Double.toString(location.getLongitude()));
+	    }
+	};
+	MyLocation myLocation = new MyLocation();
+	myLocation.getLocation(this, locationResult);
+
     }
 }

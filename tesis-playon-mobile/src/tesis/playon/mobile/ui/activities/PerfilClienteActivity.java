@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -73,6 +74,7 @@ public class PerfilClienteActivity extends Activity {
 
 	Log.d(TAG, "cargarPerfilCliente");
 
+	ImageView imagen = (ImageView) findViewById(R.id.photo_cliente);
 	TextView nomCliente = (TextView) findViewById(R.id.txt_cliente);
 	TextView documento = (TextView) findViewById(R.id.txt_documento);
 	TextView domicilio = (TextView) findViewById(R.id.txt_domicilio);
@@ -80,6 +82,11 @@ public class PerfilClienteActivity extends Activity {
 	TextView saldoCuenta = (TextView) findViewById(R.id.txt_saldo);
 	TextView telefono = (TextView) findViewById(R.id.txt_telefono);
 	TextView email = (TextView) findViewById(R.id.txt_email_cliente);
+
+	// TODO: set image
+	if (cliente.getUsuario().getNombre().equals("Mario") && cliente.getUsuario().getApellido().equals("Grippo")) {
+	    imagen.setImageResource(R.drawable.perfil_cliente_hc);
+	}
 
 	nomCliente.setText(cliente.getUsuario().getNombre() + " " + cliente.getUsuario().getApellido());
 	documento.setText(cliente.getUsuario().getTipoDoc().getNombre() + " " + cliente.getUsuario().getNroDoc());

@@ -8,17 +8,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <!-- <ImageView -->
-        <!-- android:id="@+id/photo_playa" -->
-        <!-- android:layout_width="200dp" -->
-        <!-- android:layout_height="200dp" -->
-        <!-- android:contentDescription="@string/foto_de_playa" -->
-        <!-- android:src="@drawable/mapa_playa" /> -->
+        <ImageView
+            android:id="@+id/photo_playa"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/foto_de_playa"
+            android:src="@drawable/mapa_playa" />
 
         <TextView
             android:id="@+id/txt_nombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/photo_playa"
             android:textColor="#4682B4"
             android:textSize="25sp" />
 
@@ -27,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_nombre"
-            android:textSize="25sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/lbl_direccion"
@@ -36,7 +37,7 @@
             android:layout_below="@id/txt_desc"
             android:text="@string/direccion"
             android:textColor="#4682B4"
-            android:textSize="25sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txt_direccion"
@@ -44,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_desc"
             android:layout_toRightOf="@+id/lbl_direccion"
-            android:textSize="25sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/lbl_disponibilidad"
@@ -53,7 +54,7 @@
             android:layout_below="@id/txt_direccion"
             android:text="@string/disponibilidad"
             android:textColor="#4682B4"
-            android:textSize="25sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txt_disponibilidad"
@@ -61,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_direccion"
             android:layout_toRightOf="@+id/lbl_disponibilidad"
-            android:textSize="25sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/lbl_telefono"
@@ -70,7 +71,7 @@
             android:layout_below="@id/txt_disponibilidad"
             android:text="@string/telefono"
             android:textColor="#4682B4"
-            android:textSize="25sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txt_telefono"
@@ -78,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_disponibilidad"
             android:layout_toRightOf="@+id/lbl_telefono"
-            android:textSize="25sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/lbl_email"
@@ -87,7 +88,7 @@
             android:layout_below="@id/txt_telefono"
             android:text="@string/email"
             android:textColor="#4682B4"
-            android:textSize="25sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txt_email"
@@ -95,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_telefono"
             android:layout_toRightOf="@+id/lbl_email"
-            android:textSize="25sp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btn_tarifas"

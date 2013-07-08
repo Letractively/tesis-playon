@@ -59,13 +59,8 @@ public class ListaPlayasFragment extends ListFragment {
 
 	Log.d(TAG, "onCreateView");
 
-	// Bundle mBundle = getArguments();
-
-	// mPreference = new PreferenceHelper(getActivity());
-
 	mPreference = new PreferenceHelper(getActivity());
 	query = mPreference.getQuery();
-	// query = mBundle.getString(SearchManager.QUERY);
 
 	if (null != query) {
 	    query = query + ", Córdoba, Argentina";
@@ -117,8 +112,7 @@ public class ListaPlayasFragment extends ListFragment {
 	    if (null != query)
 		new BuscarCoordenadasService().execute();
 	    else {
-		// playas = new Utils().buscarPlaya(playas, mPreference.getLat(), mPreference.getLng(), 10);
-		playas = new Utils().buscarPlaya(playas, "-31.443579", "-64.193434", 10);
+		playas = new Utils().buscarPlaya(playas, mPreference.getLat(), mPreference.getLng(), 10);
 		llenarLista(playas);
 	    }
 	}
@@ -137,8 +131,6 @@ public class ListaPlayasFragment extends ListFragment {
 
 	    mListView.setOnItemClickListener(new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		    // Toast.makeText(getActivity().getApplicationContext(),
-		    // playas.getPlayas().get(position).getNombreComercial(), Toast.LENGTH_SHORT).show();
 		    String nomPlaya = playas.getPlayas().get(position).getNombreComercial();
 		    Bundle playa = new Bundle();
 		    playa.putString(Const.NOMBRE_PLAYA, nomPlaya);

@@ -67,18 +67,7 @@ public class MapaPlayasFragment extends Fragment implements OnInfoWindowClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 	Log.d(TAG, "onCreateView");
-	
-	
-//	Bundle mBundle = getArguments();
-//
-//	mPreference = new PreferenceHelper(getActivity());
-//
-//	query = mBundle.getString(SearchManager.QUERY);
-//
-//	if (null != query) {
-//	    query = query + ", Córdoba, Argentina";
-//	}
-	
+
 	mPreference = new PreferenceHelper(getActivity());
 	query = mPreference.getQuery();
 
@@ -154,19 +143,12 @@ public class MapaPlayasFragment extends Fragment implements OnInfoWindowClickLis
 
 	Log.d(TAG, "llenarLista");
 	mMap = mMapView.getMap();
-	// draw current position of user
 	if (null != query) {
 	    latActual = Double.parseDouble(result.results[0].geometry.location.lat);
 	    lngActual = Double.parseDouble(result.results[0].geometry.location.lng);
 	} else {
-	    // latActual = Double.parseDouble(mPreference.getLat());
-	    // lngActual = Double.parseDouble(mPreference.getLng());
-
-	    latActual = Double.parseDouble("-31.443579");
-	    lngActual = Double.parseDouble("-64.193434");
-
-	    // -31.442079
-	    // -64.183434
+	    latActual = Double.parseDouble(mPreference.getLat());
+	    lngActual = Double.parseDouble(mPreference.getLng());
 	}
 	LatLng latLng = new LatLng(latActual, lngActual);
 	mMap.addMarker(
@@ -205,8 +187,7 @@ public class MapaPlayasFragment extends Fragment implements OnInfoWindowClickLis
 	    if (null != query)
 		new BuscarCoordenadasService().execute();
 	    else {
-		// playas = new Utils().buscarPlaya(playas, mPreference.getLat(), mPreference.getLng(), 10);
-		playas = new Utils().buscarPlaya(playas, "-31.443579", "-64.193434", 10);
+		playas = new Utils().buscarPlaya(playas, mPreference.getLat(), mPreference.getLng(), 10);
 		llenarMapa(playas);
 	    }
 	}

@@ -17,7 +17,8 @@ public class PerfilPlaya implements Serializable {
     private Playa playa;
 
     @SerializedName("fotoPerfil")
-    private byte[] fotoPerfil;
+    // private byte[] fotoPerfil;
+    private String fotoPerfil;
 
     @SerializedName("nombreFoto")
     private String nombreFoto;
@@ -46,11 +47,11 @@ public class PerfilPlaya implements Serializable {
 	this.playa = playa;
     }
 
-    public byte[] getFotoPerfil() {
+    public String getFotoPerfil() {
 	return fotoPerfil;
     }
 
-    public void setFotoPerfil(byte[] fotoPerfil) {
+    public void setFotoPerfil(String fotoPerfil) {
 	this.fotoPerfil = fotoPerfil;
     }
 

@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -110,6 +111,7 @@ public class DetallePlayaFragment extends Fragment implements OnClickListener {
 
 	Log.d(TAG, "cargarDetallePlaya");
 
+	ImageView imagen = (ImageView) mView.findViewById(R.id.photo_playa);
 	TextView nombre = (TextView) mView.findViewById(R.id.txt_nombre);
 	TextView desc = (TextView) mView.findViewById(R.id.txt_desc);
 	TextView direccion = (TextView) mView.findViewById(R.id.txt_direccion);
@@ -119,6 +121,11 @@ public class DetallePlayaFragment extends Fragment implements OnClickListener {
 	tarifas = (Button) mView.findViewById(R.id.btn_tarifas);
 	promociones = (Button) mView.findViewById(R.id.btn_promociones);
 	comentarios = (Button) mView.findViewById(R.id.btn_comentarios);
+
+	// TODO: set image
+	if (playa.getNombreComercial().equals("New Parking")) {
+	    imagen.setImageResource(R.drawable.perfil_playa_hc);
+	}
 
 	nombre.setText(playa.getNombreComercial());
 	desc.setText(perfilPlaya.getDescripcion());
