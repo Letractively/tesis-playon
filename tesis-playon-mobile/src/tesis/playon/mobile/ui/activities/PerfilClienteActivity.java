@@ -14,8 +14,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,12 +67,10 @@ public class PerfilClienteActivity extends Activity {
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
 	    }
-
 	    setContentView(R.layout.perfil_cliente);
 	} else {
 	    setContentView(R.layout.perfil_cliente_vacio);
 	}
-
     }
 
     private void cargarPerfilCliente(CuentaCliente cuentaCliente) {
@@ -83,9 +86,15 @@ public class PerfilClienteActivity extends Activity {
 	TextView telefono = (TextView) findViewById(R.id.txt_telefono);
 	TextView email = (TextView) findViewById(R.id.txt_email_cliente);
 
-	// TODO: set image
-	if (cliente.getUsuario().getNombre().equals("Mario") && cliente.getUsuario().getApellido().equals("Grippo")) {
-	    imagen.setImageResource(R.drawable.perfil_cliente_hc);
+	if (null != cliente.getUsuario().getFoto() && null != cliente.getUsuario().getFoto().getFotoUsuario()) {
+
+	    byte[] decodedString = Base64.decode(cliente.getUsuario().getFoto().getFotoUsuario(), Base64.DEFAULT);
+	    Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+	    if (bitmap != null) {
+		Drawable image = new BitmapDrawable(getApplicationContext().getResources(), Bitmap.createScaledBitmap(
+			bitmap, 100, 100, true));
+		imagen.setImageDrawable(image);
+	    }
 	}
 
 	nomCliente.setText(cliente.getUsuario().getNombre() + " " + cliente.getUsuario().getApellido());

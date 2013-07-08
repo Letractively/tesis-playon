@@ -17,9 +17,6 @@ public class Usuario implements Serializable {
     @SerializedName("nombreUser")
     private String nombreUser;
 
-    @SerializedName("fotoPerfil")
-    private byte[] fotoPerfil;
-
     @SerializedName("apellido")
     private String apellido;
 
@@ -32,12 +29,14 @@ public class Usuario implements Serializable {
     @SerializedName("nroDoc")
     private int nroDoc;
 
-    private Playa playa;
-
     @SerializedName("enable")
     private Boolean enable;
 
     private TipoDoc tipoDoc;
+
+    private Playa playa;
+
+    private FotoUsuario foto;
 
     public Integer getId() {
 	return id;
@@ -61,14 +60,6 @@ public class Usuario implements Serializable {
 
     public void setNombreUser(String nombreUser) {
 	this.nombreUser = nombreUser;
-    }
-
-    public byte[] getFotoPerfil() {
-	return fotoPerfil;
-    }
-
-    public void setFotoPerfil(byte[] fotoPerfil) {
-	this.fotoPerfil = fotoPerfil;
     }
 
     public String getApellido() {
@@ -125,6 +116,14 @@ public class Usuario implements Serializable {
 
     public void setTipoDoc(TipoDoc tipoDoc) {
 	this.tipoDoc = tipoDoc;
+    }
+
+    public FotoUsuario getFoto() {
+	return foto;
+    }
+
+    public void setFoto(FotoUsuario foto) {
+	this.foto = foto;
     }
 
 }

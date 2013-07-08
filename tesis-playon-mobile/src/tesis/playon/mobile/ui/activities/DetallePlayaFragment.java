@@ -14,8 +14,13 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -122,9 +127,15 @@ public class DetallePlayaFragment extends Fragment implements OnClickListener {
 	promociones = (Button) mView.findViewById(R.id.btn_promociones);
 	comentarios = (Button) mView.findViewById(R.id.btn_comentarios);
 
-	// TODO: set image
-	if (playa.getNombreComercial().equals("New Parking")) {
-	    imagen.setImageResource(R.drawable.perfil_playa_hc);
+	if (null != perfilPlaya.getFotoPerfil()) {
+
+	    byte[] decodedString = Base64.decode(perfilPlaya.getFotoPerfil(), Base64.DEFAULT);
+	    Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+	    if (bitmap != null) {
+		Drawable image = new BitmapDrawable(getActivity().getApplicationContext().getResources(),
+			Bitmap.createScaledBitmap(bitmap, 100, 100, true));
+		imagen.setImageDrawable(image);
+	    }
 	}
 
 	nombre.setText(playa.getNombreComercial());
