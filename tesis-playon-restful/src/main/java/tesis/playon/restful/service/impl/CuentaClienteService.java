@@ -63,7 +63,8 @@ public class CuentaClienteService implements ICuentaClienteService {
     @Override
     public CuentaCliente findByNroCliente(Cliente cliente) {
 	Session session = sessionFactory.getCurrentSession();
-	List<?> list = session.createQuery("from CuentaCliente where cliente=?").setParameter(0, cliente).list();
+	List<?> list = session.createQuery("from CuentaCliente where cliente.nroCliente=?")
+		.setParameter(0, cliente.getNroCliente()).list();
 	if (!list.isEmpty())
 	    return (CuentaCliente) list.get(0);
 	return null;

@@ -33,7 +33,7 @@ public class CuentaClienteController {
     public @ResponseBody
     CuentaCliente getCuentaCliente(@PathVariable("nroCliente") Integer nroCliente) {
 	Cliente cliente = new Cliente();
-	cliente.setId(nroCliente);
+	cliente.setNroCliente(nroCliente);
 	return cuentaClienteService.findByNroCliente(cliente);
     }
 }
