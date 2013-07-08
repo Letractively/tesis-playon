@@ -9,11 +9,11 @@
 		value="Listado de Playas de Estacionamiento liquidadas" />
 
 	<ui:define name="panelContent" class="admin-font">
-		<p:growl id="messages" autoUpdate="false" showDetail="true"
-			globalOnly="true" />
-
-		<p>Liquidado con éxito. A continuación verá un listado con todas
-			las liquidaciones.</p>
+		<p:growl id="messagesGrowl" />
+		<div style="margin: left">
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+		</div>
 
 		<p:dataTable id="liquidaciones" var="liquidacion"
 			value="#{liquidacionMB.liquidacionesList}" paginatorPosition="bottom"

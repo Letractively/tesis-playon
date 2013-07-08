@@ -10,9 +10,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang.time.DateUtils;
 
@@ -302,7 +304,11 @@ public class LiquidacionManagedBean implements Serializable {
 			}
 
 		}
-		return "/admin/liquidacionplayasend.html?faces-redirect=true";
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+			    "El proceso de liquidación finalizó con éxito" , "");
+		    FacesContext.getCurrentInstance().addMessage(null, message);
+
+		return "liquidacionplayasend";
 	}
 
 	public List<TransaccionPlaya> getTransaccionesDePlayaALiquidar() {
