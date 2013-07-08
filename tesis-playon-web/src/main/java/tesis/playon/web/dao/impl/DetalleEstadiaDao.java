@@ -1,5 +1,6 @@
 package tesis.playon.web.dao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -99,8 +100,8 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
     @Override
     public Integer[] findEstadiasByPlaya(Playa playa, Date fechaDesde, Date fechaHasta) {
 	Integer[] horas = new Integer[24];
-	for(int i = 0; i<horas.length ; i++)
-	    horas[i] =0;
+	for (int i = 0; i < horas.length; i++)
+	    horas[i] = 0;
 	String query = "SELECT HOUR(fechaHoraIngreso) " + "FROM tesis_playon.detalle_estadia de "
 		+ "INNER JOIN tesis_playon.estadia e ON e.estadiaID=de.estadiaID "
 		+ "WHERE playaID=? AND fechaHoraIngreso >= ? AND fechaHoraIngreso <= ?";
@@ -189,4 +190,30 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
 	return horas;
     }
 
+    @Override
+    public List<String[]> findEstadiasByVehiculoByPeriodo(Vehiculo vehiculo, Date fechaDesde, Date fechaHasta) {
+	List<String[]> resultQuery = new ArrayList<String[]>(3);
+	String query = "SELECT CAST(MONTH(DATE(fechaHoraEgreso)) AS CHAR(50)) AS 'MES'"
+		+ ", CAST(YEAR(DATE(fechaHoraEgreso)) AS CHAR(50)) AS 'AÑO'"
+		+ ", CAST(SUM(importeTotal) AS CHAR(50)) AS 'TOTAL CONSUMIDO'" + "FROM detalle_estadia "
+		+ "WHERE vehiculoID = ? AND fechaHoraEgreso is not null "
+		+ "AND DATE(fechaHoraEgreso) >= CONVERT(?, DATE) " + "AND DATE(fechaHoraEgreso) <= CONVERT(?, DATE) "
+		+ "GROUP BY MONTH(DATE(fechaHoraEgreso)), YEAR(DATE(fechaHoraEgreso)) " + "ORDER BY 2, 1";
+	SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
+	List<?> list = getSessionFactory().getCurrentSession().createSQLQuery(query).setParameter(0, vehiculo.getId())
+		.setParameter(1, formato.format(fechaDesde)).setParameter(2, formato.format(fechaHasta)).list();
+	if (!list.isEmpty()) {
+	    String[] vConsumo;
+	    for (Object obj : list) {
+		vConsumo = new String[3];
+		Object[] vObject = new Object[3];
+		vObject = ((Object[]) obj);
+		vConsumo[0] =(String) vObject[0];
+		vConsumo[1] = (String) vObject[1];
+		vConsumo[2] = (String) vObject[2];
+		resultQuery.add(vConsumo);
+	    }
+	}
+	return resultQuery;
+    }
 }

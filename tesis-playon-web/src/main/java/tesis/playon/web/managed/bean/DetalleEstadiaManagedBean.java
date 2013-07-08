@@ -531,7 +531,8 @@ public class DetalleEstadiaManagedBean implements Serializable {
 	    cuerpo.add(new Paragraph("Modelo: " + this.getVehiculo().getModeloVehiculo().getNombre(), fuenteCuerpo));
 
 	    if (tipoMovimiento.compareTo("Egreso") == 0) {
-		cuerpo.add(new Paragraph("Importe: $" + this.getImporte(), fuenteCuerpo));
+		cuerpo.add(new Paragraph("Importe: $" 
+			+ String.format("%.2f", this.getImporte()), fuenteCuerpo));
 	    }
 
 	    cuerpo.add(new Paragraph("Saldo: $"

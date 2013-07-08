@@ -29,7 +29,7 @@
 		<h:form id="form">
 			<p:growl id="messages" />
 
-			<h:panelGrid columns="1" cellspacing="10" width="95%">
+			<h:panelGrid id="pnlRoot" columns="1" cellspacing="10" width="95%">
 				<p:column>
 					<div id="perfil-playa">
 						<h:panelGrid columns="2">
@@ -76,14 +76,14 @@
 						onRate="if(!confirm('¿Está seguro que desea calificar la playa con '
 								+ value +' puntos'))return false;">
 						<p:ajax event="rate" listener="#{calificacionMB.onrate}"
-							update="rating,messages" />
+							update="rating,messages,puntos" />
 					</p:rating>
 
-					<h:outputLabel
+					<h:outputLabel id="puntos"
 						value="&#160;&#160;&#160;#{calificacionMB.calificacionPlaya} ptos." />
 
 				</h:panelGrid>
-				
+
 				<p:column>
 					<div align="center" style="margin: 15px 50px 15px 50px;">
 						<h:outputText value="#{perfilPlayaMB.perfilSelected.descripcion}"
@@ -142,7 +142,7 @@
 								</h:panelGrid>
 							</div>
 						</p:tab>
-						
+
 						<p:tab title="Tarifas">
 							<p:dataTable id="tarifas" value="#{tarifaMB.tarifaListSelected}"
 								var="tarifa"
@@ -172,7 +172,7 @@
 								</p:column>
 							</h:panelGrid>
 						</p:tab>
-						
+
 						<p:tab title="Promociones">
 							<p:dataGrid var="promocion"
 								value="#{promocionMB.promocionPlayaListSelected}" columns="1"
@@ -233,9 +233,10 @@
 								</p:panel>
 							</p:dataGrid>
 						</p:tab>
-						
-						<p:tab title="Comentarios">
-							<div align="left" style="width:90%;">
+
+						<p:tab id="tabComentarios" title="Comentarios">
+							
+							<div align="left" style="width: 90%;">
 								<p:dataTable id="comentarios"
 									value="#{comentarioMB.comentariosListPerfil}" var="comentario"
 									emptyMessage="No existen comentarios en esta playa de estacionamiento">
@@ -276,7 +277,7 @@
 											</tr>
 										</table>
 									</p:column>
-									
+
 									<f:facet name="footer">
 										<h:panelGrid columns="2">
 											<p:column>
@@ -295,7 +296,7 @@
 																<p:inputTextarea id="comentario" cols="60" rows="2"
 																	value="#{comentarioMB.comentario}" required="true"
 																	requiredMessage="El campo comentario no puede estar vacio"
-																	styleClass="contenido-textarea" >
+																	styleClass="contenido-textarea">
 																</p:inputTextarea>
 															</div>
 														</td>
@@ -306,8 +307,7 @@
 																<p:commandButton id="enviarComentario"
 																	value="Enviar comentario"
 																	action="#{comentarioMB.addComentario}" ajax="false"
-																	style="margin:5px 5px 0 5px"
-																	update=":comentarios">
+																	style="margin:5px 5px 0 5px" update=":comentarios">
 																</p:commandButton>
 															</div>
 														</td>

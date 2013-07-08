@@ -31,4 +31,5 @@ public interface IDetalleEstadiaService {
     
     Integer[] findEstadiasByPlaya(Playa playa, Date fechaDesde, Date fechaHasta);
 
+    List<String[]> findEstadiasByVehiculoByPeriodo(Vehiculo vehiculo, Date fechaDesde, Date fechaHasta);
 }

@@ -63,6 +63,11 @@ public class DetalleEstadiaService implements IDetalleEstadiaService {
     public Integer[] findEstadiasByPlaya(Playa playa, Date fechaDesde, Date fechaHasta){
 	return getDetalleEstadiaDao().findEstadiasByPlaya(playa, fechaDesde, fechaHasta);
     }
+    
+    @Override
+    public List<String[]> findEstadiasByVehiculoByPeriodo(Vehiculo vehiculo, Date fechaDesde, Date fechaHasta){
+	return getDetalleEstadiaDao().findEstadiasByVehiculoByPeriodo(vehiculo, fechaDesde, fechaHasta);
+    }
 
     public IDetalleEstadiaDao getDetalleEstadiaDao() {
 	return detalleEstadiaDao;

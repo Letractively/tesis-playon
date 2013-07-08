@@ -56,9 +56,8 @@ public class VehiculoDao implements IVehiculoDao {
 	    for (Object object : list) {
 		vehiculos.add((Vehiculo) object);
 	    }
-	    return vehiculos;
 	}
-	return null;
+	return vehiculos;
     }
 
     public List<Vehiculo> findAll() {
