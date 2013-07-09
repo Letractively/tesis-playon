@@ -133,7 +133,8 @@
 						<p:column style="vertical-align:text-center;">
 							<div align="right">
 								<h:panelGrid columns="2">
-									<p:selectBooleanCheckbox id="check" value="#{busquedaplayaMB.checkPromociones}" />
+									<p:selectBooleanCheckbox id="check"
+										value="#{busquedaplayaMB.checkPromociones}" />
 									<p:outputLabel for="check" value="Sólo con promociones" />
 								</h:panelGrid>
 							</div>
@@ -167,31 +168,70 @@
 							listener="#{busquedaplayaMB.onMarkerSelect}" />
 
 						<p:gmapInfoWindow>
-							<div align="center">
-								<h:panelGrid column="1" style="text-align:center;"
-									cellspacing="0px" cellpadding="0px">
-									<p:column>
-										<h:graphicImage library="fotos_perfil_playas"
-											name="#{busquedaplayaMB.marker.data.id}_#{busquedaplayaMB.marker.data.nombreFoto}"
-											styleClass="bordes-foto-perfil-comentario"
-											rendered="#{busquedaplayaMB.marker.data.nombreFoto != null}" />
-										<h:graphicImage library="fotos_perfil_playas"
-											name="sinfoto.jpg" styleClass="bordes-foto-perfil-comentario"
-											rendered="#{busquedaplayaMB.marker.data.nombreFoto == null}" />
-									</p:column>
-									<h:outputText
-										value="#{busquedaplayaMB.marker.data.playa.nombreComercial}" />
 
-									<h:outputText
-										value="#{busquedaplayaMB.marker.data.playa.domicilio}" />
+							<ui:fragment
+								rendered="#{busquedaplayaMB.marker.data.playa == null}">
+								<div align="center">
+									<ui:fragment rendered="#{busquedaplayaMB.usuario == null}">
+										<h:outputText style="font-weight:bold;" value="¡Usted está aquí!" />
+									</ui:fragment>
 
-									<h:outputText
-										value="#{busquedaplayaMB.marker.data.playa.barrio.nombre}" />
-									<h:link id="link" tittle="Ir a playa" value="Ver información"
-										outcome="/viewperfilplaya.html?id=#{busquedaplayaMB.marker.data.playa.id}" />
+									<ui:fragment rendered="#{busquedaplayaMB.usuario != null}">
+										<h:panelGrid column="1" style="text-align:center;"
+											cellspacing="0px" cellpadding="0px">
 
-								</h:panelGrid>
-							</div>
+											<p:column>
+												<h:graphicImage library="fotos_perfil_usuarios"
+													name="sinfoto.jpg"
+													styleClass="bordes-foto-perfil-comentario"
+													rendered="#{busquedaplayaMB.usuario.fotoUsuario == null}" />
+												<h:graphicImage library="fotos_perfil_usuarios"
+													name="#{busquedaplayaMB.usuario.nombreUser}.jpg"
+													styleClass="bordes-foto-perfil-comentario"
+													rendered="#{busquedaplayaMB.usuario.fotoUsuario != null}" />
+											</p:column>
+											<p:column>
+												<h:outputText style="font-weight:bold;"
+													value="#{busquedaplayaMB.usuario.nombre} #{busquedaplayaMB.usuario.apellido}" />
+											</p:column>
+											<p:column>
+												<h:link id="linkUsuario" tittle="Ir a mi perfil"
+													value="Ir a mi perfil" outcome="/cliente/perfilcliente" />
+											</p:column>
+
+										</h:panelGrid>
+									</ui:fragment>
+
+								</div>
+							</ui:fragment>
+
+							<ui:fragment
+								rendered="#{busquedaplayaMB.marker.data.playa != null}">
+								<div align="center">
+									<h:panelGrid column="1" style="text-align:center;"
+										cellspacing="0px" cellpadding="0px">
+										<p:column>
+											<h:graphicImage library="fotos_perfil_playas"
+												name="#{busquedaplayaMB.marker.data.id}_#{busquedaplayaMB.marker.data.nombreFoto}"
+												styleClass="bordes-foto-perfil-comentario"
+												rendered="#{busquedaplayaMB.marker.data.nombreFoto != null}" />
+											<h:graphicImage library="fotos_perfil_playas"
+												name="sinfoto.jpg"
+												styleClass="bordes-foto-perfil-comentario"
+												rendered="#{busquedaplayaMB.marker.data.nombreFoto == null}" />
+										</p:column>
+										<h:outputText style="font-weight:bold;"
+											value="#{busquedaplayaMB.marker.data.playa.nombreComercial}" />
+
+										<h:outputText
+											value="#{busquedaplayaMB.marker.data.playa.domicilio} - #{busquedaplayaMB.marker.data.playa.barrio.nombre}" />
+
+										<h:link id="link" tittle="Ir a playa" value="Ver información"
+											outcome="/viewperfilplaya.html?id=#{busquedaplayaMB.marker.data.playa.id}" />
+
+									</h:panelGrid>
+								</div>
+							</ui:fragment>
 						</p:gmapInfoWindow>
 					</p:gmap>
 				</f:view>
@@ -244,7 +284,7 @@
 		<!-- 	</h:form> -->
 
 		<p:dialog widgetVar="dlg2" width="800" height="400" modal="true"
-			id="dialog" draggable="false" closable="false">
+			id="dialog" draggable="false" closable="true">
 
 			<!-- 		<h:form id="frmComoLlegar"> -->
 			<f:facet name="header">
@@ -262,7 +302,7 @@
 	</h:form>
 
 	<p:dialog header="Dirección de origen" id="dlgO" widgetVar="dlgOrigen"
-		resizable="false" closable="false">
+		resizable="false" closable="true">
 		<h:form id="frmComoLlegar">
 
 			<h:panelGrid columns="2" cellspacing="10" cellpadding="10">

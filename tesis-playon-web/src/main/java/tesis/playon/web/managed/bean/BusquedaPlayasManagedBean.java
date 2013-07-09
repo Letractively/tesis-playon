@@ -22,8 +22,10 @@ import tesis.playon.web.model.CategoriaVehiculo;
 import tesis.playon.web.model.PerfilPlaya;
 import tesis.playon.web.model.Playa;
 import tesis.playon.web.model.TipoEstadia;
+import tesis.playon.web.model.Usuario;
 import tesis.playon.web.service.IPerfilPlayaService;
 import tesis.playon.web.service.IPlayaService;
+import tesis.playon.web.service.IUsuarioService;
 import tesis.playon.web.util.LatitudlongitudUtil;
 import tesis.playon.web.util.LatitudlongitudUtil.GeoposicionDePlaya;
 import tesis.playon.web.util.WriteImage;
@@ -43,7 +45,10 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     @ManagedProperty(value = "#{PerfilPlayaService}")
     IPerfilPlayaService perfilPlayaService;
-
+    
+    @ManagedProperty(value = "#{UsuarioService}")
+    IUsuarioService usuarioService;
+    
     List<Playa> playaList;
 
     private static List<Playa> playaResultadoBusqueda;
@@ -71,9 +76,16 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     private Double latitudCentro;
     private Double longitudCentro;
+    
+    private Usuario usuario;
 
     @PostConstruct
     private void init() {
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	String userName = facesContext.getExternalContext().getRemoteUser();
+	Usuario user = getUsuarioService().findByNombreUsuario(userName);
+	this.setUsuario(user);
+	
 	playaResultadoBusqueda = new ArrayList<Playa>();
 	distancia = 25;
 	this.direccionDesde = " ";
@@ -221,6 +233,14 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     public void setPerfilPlayaService(IPerfilPlayaService perfilPlayaService) {
 	this.perfilPlayaService = perfilPlayaService;
+    }
+
+    public IUsuarioService getUsuarioService() {
+        return usuarioService;
+    }
+
+    public void setUsuarioService(IUsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
     }
 
     public LatitudlongitudUtil getLatLonUtil() {
@@ -425,6 +445,14 @@ public class BusquedaPlayasManagedBean implements Serializable {
 
     public void tomarDomicilioDesde() {
 	this.setDireccionDesde(this.getDireccionDesde());
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 }
