@@ -54,12 +54,15 @@ public class ComentarioManagedBean implements Serializable {
     private String comentario;
     
     private Comentario comentarioDenunciado;
+    
+    private Usuario usuario;
 
     @PostConstruct
     public void init() {
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	String userName = facesContext.getExternalContext().getRemoteUser();
 	Usuario user = getUsuarioService().findByNombreUsuario(userName);
+	this.setUsuario(user);
 	if (user != null && user.getPlaya() != null) {
 	    comentariosList = getComentarioService().findByPlaya(user.getPlaya());
 	}	
@@ -306,4 +309,13 @@ public class ComentarioManagedBean implements Serializable {
     public void setComentarioDenunciado(Comentario comentarioDenunciado) {
         this.comentarioDenunciado = comentarioDenunciado;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
 }

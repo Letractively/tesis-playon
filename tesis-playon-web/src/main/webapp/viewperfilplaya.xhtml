@@ -15,7 +15,8 @@
 			<h:outputText value="Perfil de la playa" />
 			<ui:fragment>
 				<p:commandButton style="position: absolute; right:270px;"
-					value="Volver" onclick="history.back();" />
+					value="Volver" icon="ui-icon-arrowthick-1-w"
+					onclick="history.back();" />
 			</ui:fragment>
 		</h1>
 		
@@ -45,7 +46,7 @@
 					</div>
 				</p:column>
 
-				<h:panelGrid columns="2" style="margin-left:20px;"
+				<h:panelGrid columns="2" style="margin-left:20px;width:600px;"
 					rendered="#{loginMB.rol eq '[ROLE_CLIENT]'}" width="90%">
 					<h:panelGrid columns="2">
 						<h:graphicImage library="images/icons" name="star.png" />
@@ -55,15 +56,17 @@
 							<h:outputText value="Agregar a favoritos" />
 						</p:commandLink>
 					</h:panelGrid>
-					<p:column>
+					<p:column style="text-align: right;">
 						<div align="right">
-							<h:commandLink id="denunciaPlaya" value="Denunciar Playa"
+							<h:graphicImage library="images/icons" name="denuncia.png"
+								style="vertical-align:text-bottom;" />
+							<p:commandLink id="denunciaPlaya" value="Denunciar Playa"
 								ajax="true" action="/denunciaplayaadd.html?faces-redirect=true"
-								immediate="true">
+								immediate="true" style="vertical-align:text-bottom;">
 								<f:setPropertyActionListener
 									value="#{perfilPlayaMB.playaSelected}"
 									target="#{denunciaPlayaMB.playaSelected}" />
-							</h:commandLink>
+							</p:commandLink>
 						</div>
 					</p:column>
 				</h:panelGrid>
@@ -235,22 +238,28 @@
 						</p:tab>
 
 						<p:tab id="tabComentarios" title="Comentarios">
-							
+
 							<div align="left" style="width: 90%;">
 								<p:dataTable id="comentarios"
 									value="#{comentarioMB.comentariosListPerfil}" var="comentario"
 									emptyMessage="No existen comentarios en esta playa de estacionamiento">
 
 									<p:column headerText="Usuario" style="width:90px;">
-										<div align="center">
-											<h:graphicImage library="fotos_perfil_usuarios"
+										<div id="userImg" align="center">
+											<h:graphicImage id="userImg1" library="fotos_perfil_usuarios"
 												name="#{comentario.usuario.nombreUser}.jpg"
 												styleClass="bordes-foto-perfil-comentario"
 												rendered="#{comentario.usuario.fotoUsuario != null}" />
-											<h:graphicImage library="fotos_perfil_usuarios"
+											<h:graphicImage id="userImg2" library="fotos_perfil_usuarios"
 												name="sinfoto.jpg"
 												styleClass="bordes-foto-perfil-comentario"
 												rendered="#{comentario.usuario.fotoUsuario == null}" />
+											<p:tooltip for="userImg1" showEffect="fade" hideEffect="fade"
+												style="font-weight:bold;line-height: 1.1em;"
+												value="#{comentario.usuario.nombre} #{comentario.usuario.apellido}" />
+											<p:tooltip for="userImg2" showEffect="fade" hideEffect="fade"
+												style="font-weight:bold;line-height: 1.1em;"
+												value="#{comentario.usuario.nombre} #{comentario.usuario.apellido}" />
 										</div>
 									</p:column>
 
@@ -284,7 +293,12 @@
 												<div align="left" style="width: 100px;">
 													<h:graphicImage library="fotos_perfil_usuarios"
 														name="sinfoto.jpg"
-														styleClass="bordes-foto-perfil-comentario" />
+														styleClass="bordes-foto-perfil-comentario"
+														rendered="#{comentarioMB.usuario.fotoUsuario == null}" />
+													<h:graphicImage library="fotos_perfil_usuarios"
+														name="#{comentarioMB.usuario.nombreUser}.jpg"
+														styleClass="bordes-foto-perfil-comentario"
+														rendered="#{comentarioMB.usuario.fotoUsuario != null}" />
 												</div>
 											</p:column>
 
