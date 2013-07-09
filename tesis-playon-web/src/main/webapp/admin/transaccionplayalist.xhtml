@@ -136,18 +136,19 @@ table tr td {
 					#{transaccionPlaya.detalleEstadia.empleado.usuario.apellido}" />
 				</ui:fragment>
 
-				<ui:fragment rendered="#{transaccionPlaya.importe lt 0}">
+				<ui:fragment rendered="#{transaccionPlaya.detalleEstadia == null}">
+					<ui:fragment rendered="#{transaccionPlaya.importe lt 0}">
 
-					<h:outputText value="Comisión Servicios PLAYÓN. Liquidación: " />
-					<h:outputText value="#{transaccionPlaya.liquidacion.fecha}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</h:outputText>
+						<h:outputText value="Comisión Servicios PLAYÓN. Liquidación: " />
+						<h:outputText value="#{transaccionPlaya.liquidacion.fecha}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</ui:fragment>
+
+					<ui:fragment rendered="#{transaccionPlaya.importe gt 0}">
+						<h:outputText value="Nuevo Abono " />
+					</ui:fragment>
 				</ui:fragment>
-
-				<ui:fragment rendered="#{transaccionPlaya.importe gt 0}">
-					<h:outputText value="Nuevo Abono " />
-				</ui:fragment>
-
 
 			</p:column>
 
