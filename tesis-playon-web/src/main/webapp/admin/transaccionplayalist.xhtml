@@ -5,6 +5,15 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+	<h:head>
+		<title>DataTable Row Height Sample</title>
+		<style type="text/css">
+table tr td {
+	height: 80px;
+}
+</style>
+	</h:head>
+
 	<ui:param name="panelTitle" value="Listado de transacciones de playas" />
 
 	<ui:define name="panelContent" class="admin-font">
@@ -66,14 +75,15 @@
 		<br />
 
 		<p:dataTable id="transacciones" var="transaccionPlaya"
+			rowStyleClass="#{transaccionPlaya.importe >= 0 ? null : 'negative-row'}"
 			value="#{transaccionPlayaMB.transaccionesPorFechaList}"
 			filteredValue="#{filtrosMB.filteredTransaccionesPlaya}"
 			widgetVar="transaccionesTable" paginatorPosition="bottom"
 			paginator="true" rows="20" emptyMessage="No existen transacciones">
 
 			<f:facet name="header">  
-            		Listado de transacciones  
-        		</f:facet>
+            	Listado de transacciones  
+        	</f:facet>
 
 			<p:column headerText="Fecha" styleClass="column-font"
 				filterBy="#{transaccionPlaya.fecha}" filterMatchMode="contains">
@@ -104,44 +114,63 @@
 				</h:outputText>
 			</p:column>
 
-			<p:column headerText="Cobrado" styleClass="column-font">
-				<f:facet name="header">
-					<h:outputText value="Cobrado" />
-				</f:facet>
-				<h:outputText
-					value="#{transaccionPlaya.detalleEstadia.cobrado ? 'Si' : 'No'}" />
-			</p:column>
+			<!-- 			<p:column headerText="Cobrado" styleClass="column-font"> -->
+			<!-- 				<f:facet name="header"> -->
+			<!-- 					<h:outputText value="Cobrado" /> -->
+			<!-- 				</f:facet> -->
+			<!-- 				<h:outputText -->
+			<!-- 					value="#{transaccionPlaya.detalleEstadia.cobrado ? 'Si' : 'No'}" /> -->
+			<!-- 			</p:column> -->
 
-			<p:column headerText="Empleado" styleClass="column-font"
-				filterBy="#{transaccionPlaya.detalleEstadia.empleado.usuario.nombre}"
-				filterMatchMode="contains">
-				<f:facet name="header">
-					<h:outputText value="Empleado" />
-				</f:facet>
-				<h:outputText
-					value="#{transaccionPlaya.detalleEstadia.empleado.usuario.nombre} 
-					#{transaccionPlaya.detalleEstadia.empleado.usuario.apellido}" />
-			</p:column>
-
-			<p:column headerText="Vehículo" styleClass="column-font"
+			<p:column headerText="Descripción" styleClass="column-font"
 				filterBy="#{transaccionPlaya.detalleEstadia.vehiculo.patente}"
-				filterMatchMode="contains">
+				filterMatchMode="contains" width="450">
 				<f:facet name="header">
-					<h:outputText value="Vehículo" />
+					<h:outputText value="Descripción" />
 				</f:facet>
-				<h:outputText
-					value="#{transaccionPlaya.detalleEstadia.vehiculo.patente}" />
+
+				<ui:fragment rendered="#{transaccionPlaya.detalleEstadia != null}">
+					<h:outputText value="Vehículo: " />
+					<b> <h:outputText
+							value="#{transaccionPlaya.detalleEstadia.vehiculo.patente}" /></b>
+					<h:outputText
+						value=" (#{transaccionPlaya.detalleEstadia.vehiculo.cliente.usuario.nombre} 
+						#{transaccionPlaya.detalleEstadia.vehiculo.cliente.usuario.apellido})" />
+
+
+					<h:outputText value=" - Empleado: " />
+					<h:outputText
+						value="#{transaccionPlaya.detalleEstadia.empleado.usuario.nombre} 
+					#{transaccionPlaya.detalleEstadia.empleado.usuario.apellido}" />
+				</ui:fragment>
+
+				<ui:fragment rendered="#{transaccionPlaya.detalleEstadia == null}">
+					<h:outputText value="Comisión Servicios PLAYÓN" />
+				</ui:fragment>
+
+
 			</p:column>
 
 			<p:column headerText="Opciones" styleClass="column-options"
-				exportable="false" style="text-align:center; width:120px;">
+				exportable="false" style="text-align:center; width:80px;">
 
-				<p:commandLink id="view3" oncomplete="estadiasDialog.show();"
-					update=":mainForm:estadiasDlg" title="OPC">
-					<f:setPropertyActionListener value="#{transaccionPlaya}"
-						target="#{transaccionPlayaMB.transaccionSelected}" />
-					<h:graphicImage library="images/icons" name="search.png" />
-				</p:commandLink>
+
+				<ui:fragment rendered="#{transaccionPlaya.detalleEstadia != null}">
+
+					<p:commandLink id="view3" oncomplete="estadiasDialog.show();"
+						update=":mainForm:estadiasDlg" title="Detalle de estadía">
+						<f:setPropertyActionListener value="#{transaccionPlaya}"
+							target="#{transaccionPlayaMB.transaccionSelected}" />
+						<h:graphicImage library="images/icons" name="search.png" />
+					</p:commandLink>
+
+				</ui:fragment>
+
+				<ui:fragment rendered="#{transaccionPlaya.detalleEstadia == null}">
+					<h:graphicImage library="images/icons" name="transparent.png" />
+				</ui:fragment>
+
+
 			</p:column>
 			<f:facet name="footer">
 				<div align="center">
@@ -168,13 +197,22 @@
 
 		<!-- DIALOG PARA VER LOS DATOS DE LA ESTADIA DE LA TRANSACCION SELECCIONADA -->
 		<p:dialog header="Datos de la Estadía" widgetVar="estadiasDialog"
-			dynamic="false" resizable="true" id="estadiasDlg" showEffect="fade"
-			position="center,top" modal="true" draggable="false">
+			dynamic="false" resizable="false" id="estadiasDlg" showEffect="fade"
+			position="center,top" modal="true" draggable="true">
 
 			<h:panelGrid id="displayView" columns="2" cellpadding="8"
-				style="margin:0 auto;">
+				styleClass="ui-datatable ui-widget"
+				style="margin:0 auto;width:500px;border: 1px solid rgb(197, 219, 236);">
 
-				<p:column>
+				<p:column style="width:100px; ">
+					<b> <h:outputText style="color: rgb(46, 110, 158); "
+							value="Datos estadía" />
+					</b>
+				</p:column>
+
+				<p:column />
+
+				<p:column style="width:100px;">
 					<h:outputText value="Ingreso: " />
 				</p:column>
 				<p:column>
@@ -204,7 +242,9 @@
 				<p:column>
 					<h:outputText
 						value="#{transaccionPlayaMB.transaccionSelected.detalleEstadia.importeTotal}"
-						style="font-weight:bold" />
+						style="font-weight:bold">
+						<f:convertNumber type="currency" currencySymbol="$ " />
+					</h:outputText>
 				</p:column>
 
 				<p:column>
@@ -235,8 +275,16 @@
 						style="font-weight:bold" />
 				</p:column>
 
+				<p:column style="width:100px; ">
+					<b> <h:outputText style="color: rgb(46, 110, 158); "
+							value="Datos vehículo" />
+					</b>
+				</p:column>
+
+				<p:column />
+
 				<p:column>
-					<h:outputText value="Vehículo: " />
+					<h:outputText value="Patente: " />
 				</p:column>
 				<p:column>
 					<h:outputText
@@ -245,16 +293,35 @@
 				</p:column>
 
 				<p:column>
+					<h:outputText value="Modelo: " />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{transaccionPlayaMB.transaccionSelected.detalleEstadia.vehiculo.modeloVehiculo.marcaVehiculo.nombre}"
+						style="font-weight:bold" />
+					<h:outputText
+						value=" #{transaccionPlayaMB.transaccionSelected.detalleEstadia.vehiculo.modeloVehiculo.nombre}"
+						style="font-weight:bold" />
 				</p:column>
 
-				<p:column style="text-align:right">
-					<div align="right">
-						<p:commandButton id="btnAceptar" value="Aceptar"
-							onclick="estadiasDialog.hide()" type="button" />
-					</div>
+				<p:column>
+					<h:outputText value="Cliente: " />
 				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{transaccionPlayaMB.transaccionSelected.detalleEstadia.vehiculo.cliente.usuario.nombre} 
+						#{transaccionPlayaMB.transaccionSelected.detalleEstadia.vehiculo.cliente.usuario.apellido}"
+						style="font-weight:bold" />
+				</p:column>
+
 
 			</h:panelGrid>
+
+			<br />
+			<div align="right">
+				<p:commandButton id="btnAceptar" value="Aceptar"
+					onclick="estadiasDialog.hide()" type="button" />
+			</div>
 		</p:dialog>
 
 	</ui:define>

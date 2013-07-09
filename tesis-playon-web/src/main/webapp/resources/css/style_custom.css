@@ -30,6 +30,10 @@
 	border: 0px solid white;
 }
 
+.negative-row {
+	color: red;
+}
+
 /* <SIDE MENU> */
 #sidebar .ui-widget .ui-widget {
 	font-size: 14px;

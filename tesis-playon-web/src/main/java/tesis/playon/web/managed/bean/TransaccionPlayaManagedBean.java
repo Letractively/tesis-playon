@@ -97,6 +97,7 @@ public class TransaccionPlayaManagedBean implements Serializable {
 	}
 	this.setSoloHabilitadas(true);
 	this.estadoHabilitado = getEstadoPlayaService().findByNombreEstadoPlaya("Aprobada");
+	this.setTransaccionesPorFechaList(null);
     }
 
     public void changeSoloHabilitadas() {

@@ -196,6 +196,9 @@ body { /* 		background-color: lightgray; */
 	padding: 10px;
 }
 
+.negative-row {
+	color: red;
+}
 
 /* ********************************************** */
 /*	Layout Login	*/
