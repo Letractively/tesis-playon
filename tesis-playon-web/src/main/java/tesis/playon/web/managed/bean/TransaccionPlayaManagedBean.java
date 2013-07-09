@@ -92,7 +92,7 @@ public class TransaccionPlayaManagedBean implements Serializable {
 	this.fechaDesde = new Date();
 	this.fechaHasta = new Date();
 	this.fechaDesde = DateUtils.setDays(this.fechaDesde, 1);
-	if (liquidacionSelected != null && transaccionesList == null) {
+	if (liquidacionSelected != null) {
 	    updateTransaccionesList();
 	}
 	this.setSoloHabilitadas(true);
@@ -101,9 +101,9 @@ public class TransaccionPlayaManagedBean implements Serializable {
     }
 
     public void changeSoloHabilitadas() {
-	//this.setSoloHabilitadas(!this.isSoloHabilitadas());
+	// this.setSoloHabilitadas(!this.isSoloHabilitadas());
     }
-    
+
     public List<String> complete(String query) {
 	List<String> results = new ArrayList<String>();
 
@@ -116,9 +116,9 @@ public class TransaccionPlayaManagedBean implements Serializable {
 	}
 
 	for (Playa nombrePlaya : playas) {
-	    //if (this.isSoloHabilitadas() && nombrePlaya.getEstado().getNombre().equals("Aprobada")) {
-		results.add(nombrePlaya.getNombreComercial());
-	    //}
+	    // if (this.isSoloHabilitadas() && nombrePlaya.getEstado().getNombre().equals("Aprobada")) {
+	    results.add(nombrePlaya.getNombreComercial());
+	    // }
 	}
 
 	return results;
@@ -153,15 +153,17 @@ public class TransaccionPlayaManagedBean implements Serializable {
     }
 
     public void updateTransaccionesList() {
+	if (liquidacionSelected == null)
+	    return;
 	transaccionesList = getTransaccionPlayaService().findTransaccionesByLiquidacion(liquidacionSelected);
     }
 
     public List<TransaccionPlaya> getTransaccionesList() {
 	// transaccionesList =
 	// getTransaccionPlayaService().findTransaccionesByLiquidacion(liquidacionSelected);
-	if (transaccionesList == null) {
-	    updateTransaccionesList();
-	}
+	// if (transaccionesList == null) {
+	// updateTransaccionesList();
+	// }
 	return transaccionesList;
     }
 

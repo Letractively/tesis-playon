@@ -114,14 +114,6 @@ table tr td {
 				</h:outputText>
 			</p:column>
 
-			<!-- 			<p:column headerText="Cobrado" styleClass="column-font"> -->
-			<!-- 				<f:facet name="header"> -->
-			<!-- 					<h:outputText value="Cobrado" /> -->
-			<!-- 				</f:facet> -->
-			<!-- 				<h:outputText -->
-			<!-- 					value="#{transaccionPlaya.detalleEstadia.cobrado ? 'Si' : 'No'}" /> -->
-			<!-- 			</p:column> -->
-
 			<p:column headerText="Descripción" styleClass="column-font"
 				filterBy="#{transaccionPlaya.detalleEstadia.vehiculo.patente}"
 				filterMatchMode="contains" width="450">
@@ -144,8 +136,16 @@ table tr td {
 					#{transaccionPlaya.detalleEstadia.empleado.usuario.apellido}" />
 				</ui:fragment>
 
-				<ui:fragment rendered="#{transaccionPlaya.detalleEstadia == null}">
-					<h:outputText value="Comisión Servicios PLAYÓN" />
+				<ui:fragment rendered="#{transaccionPlaya.importe lt 0}">
+
+					<h:outputText value="Comisión Servicios PLAYÓN. Liquidación: " />
+					<h:outputText value="#{transaccionPlaya.liquidacion.fecha}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</ui:fragment>
+
+				<ui:fragment rendered="#{transaccionPlaya.importe gt 0}">
+					<h:outputText value="Nuevo Abono " />
 				</ui:fragment>
 
 
@@ -252,7 +252,7 @@ table tr td {
 				</p:column>
 				<p:column>
 					<h:outputText
-						value="#{transaccionPlaya.detalleEstadia.cobrado ? 'Si' : 'No'}"
+						value="#{transaccionPlayaMB.transaccionSelected.detalleEstadia.cobrado ? 'Si' : 'No'}"
 						style="font-weight:bold" />
 				</p:column>
 

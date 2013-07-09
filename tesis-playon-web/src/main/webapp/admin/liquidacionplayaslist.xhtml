@@ -29,6 +29,7 @@
 
 					<td style="text-align: center; width: 150px;"
 						class="ui-widget-content"><p:commandButton id="buscarButton"
+							action="liquidacionMB.updateLiquidacionesListPorFecha"
 							value="Buscar" icon="ui-icon-search" ajax="true"
 							update="liquidaciones" /></td>
 				</tr>
@@ -45,17 +46,47 @@
             	Listado de playas liquidadas  
         	</f:facet>
 
-				<p:column id="fechaId" sortBy="#{liquidacion.id}"
-					style="text-align:center">
+				<p:column id="liquidacionId" sortBy="#{liquidacion.id}"
+					styleClass="column-font">
 					<f:facet name="header">
 						<h:outputText value="Número" />
 					</f:facet>
 					<h:outputText value="#{liquidacion.id}" />
 				</p:column>
 
+				<p:column id="fecha" sortBy="#{liquidacion.fecha}"
+					styleClass="column-font">
+					<f:facet name="header">
+						<h:outputText value="Fecha" />
+					</f:facet>
+					<h:outputText value="#{liquidacion.fecha}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+					</h:outputText>
+				</p:column>
+
+				<p:column id="fechaD" sortBy="#{liquidacion.fechaDesde}"
+					styleClass="column-font">
+					<f:facet name="header">
+						<h:outputText value="Desde" />
+					</f:facet>
+					<h:outputText value="#{liquidacion.fechaDesde}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column id="fechaH" sortBy="#{liquidacion.fechaHasta}"
+					styleClass="column-font">
+					<f:facet name="header">
+						<h:outputText value="Desde" />
+					</f:facet>
+					<h:outputText value="#{liquidacion.fechaHasta}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
 				<p:column id="playaHeader"
 					sortBy="#{liquidacion.estadia.playa.razonSocial}"
-					style="text-align:center">
+					styleClass="column-font">
 					<f:facet name="header">
 						<h:outputText value="Playa" />
 					</f:facet>
@@ -63,7 +94,7 @@
 				</p:column>
 
 				<p:column id="importeHeader" sortBy="#{liquidacion.importeTotal}"
-					style="text-align:center">
+					styleClass="column-font">
 					<f:facet name="header">
 						<h:outputText value="Importe" />
 					</f:facet>
@@ -73,7 +104,7 @@
 				</p:column>
 
 				<p:column headerText="Opciones" styleClass="column-options"
-					exportable="false" style="text-align:center; width:95px;">
+					exportable="false" style="text-align:center; width:80px;">
 
 					<p:commandLink id="view" update=":mainForm:form:displayView"
 						oncomplete="playasDialog.show();" title="Ver Datos">
@@ -119,7 +150,8 @@
 			<!-- DIALOG PARA VER LOS DATOS DE LA PLAYA SELECCIONADA -->
 			<p:dialog header="Datos de la Playa" widgetVar="playasDialog"
 				resizable="false" id="playasDlg" showEffect="fade" modal="true"
-				draggable="true" style="margin-bottom:50px;height:70%;">
+				position="center,top" draggable="true"
+				style="margin-bottom:50px;height:70%;">
 
 				<h:panelGrid columns="1" width="100%" height="80%"
 					style="margin:10px 0 10px 0;">
@@ -209,7 +241,8 @@
 			<!-- DIALOG PARA VER LOS DATOS DE LAS TRANSACCIONES DE LA PLAYA SELECCIONADA -->
 			<p:dialog header="Datos de las transacciones" widgetVar="trnDialog"
 				resizable="false" id="trnDlg" showEffect="fade" modal="true"
-				draggable="true" style="margin-bottom:50px;height:70%;">
+				position="center,top" draggable="true"
+				style="margin-bottom:50px;height:70%;">
 
 				<h:panelGrid id="pnlTransaccionesView" columns="1" width="100%"
 					height="80%" style="margin:10px 0 10px 0;">
