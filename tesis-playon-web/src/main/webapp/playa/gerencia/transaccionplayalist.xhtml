@@ -18,14 +18,16 @@
 		<h:form id="mainForm" style="margin:0 0 0 0px;">
 			<h:panelGrid columns="6" cellspacing="10">
 				<h:outputText value="Desde:" />
-				<p:calendar value="#{ingresoEgresoMB.fechaDesde}" id="calDesde" />
+				<p:calendar value="#{ingresoEgresoMB.fechaDesde}" id="calDesde"
+				navigator="true" locale="es" showButtonPanel="true" />
 
 				<p:column>
 					<div align="right">
 						<h:outputText value="Hasta: " />
 					</div>
 				</p:column>
-				<p:calendar value="#{ingresoEgresoMB.fechaHasta}" id="calHasta" />
+				<p:calendar value="#{ingresoEgresoMB.fechaHasta}" id="calHasta"
+				navigator="true" locale="es" showButtonPanel="true" />
 
 				<p:commandButton id="buscarButton" value="Buscar"
 					action="#{ingresoEgresoMB.updateTransaccionesPlayas()}"

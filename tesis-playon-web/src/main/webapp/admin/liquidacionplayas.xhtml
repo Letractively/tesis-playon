@@ -20,11 +20,13 @@
 			<tr>
 				<td style="text-align: center; width: 300px;"
 					class="ui-widget-content"><h:outputText value="Desde:   " />
-					<p:calendar value="#{liquidacionMB.fechaDesde}" id="calDesde" /></td>
+					<p:calendar value="#{liquidacionMB.fechaDesde}" id="calDesde" 
+					navigator="true" locale="es" showButtonPanel="true" /></td>
 
 				<td style="text-align: center; width: 300px;"
 					class="ui-widget-content"><h:outputText value="Hasta:   " />
-					<p:calendar value="#{liquidacionMB.fechaHasta}" id="calHasta" /></td>
+					<p:calendar value="#{liquidacionMB.fechaHasta}" id="calHasta"
+					navigator="true" locale="es" showButtonPanel="true" /></td>
 
 				<td style="text-align: center; width: 150px;"
 					class="ui-widget-content"><p:commandButton id="buscarButton"

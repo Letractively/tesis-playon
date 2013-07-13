@@ -10,6 +10,9 @@
 	<h:head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 		<h:outputStylesheet library="css" name="style_admin.css" />
+
+		<ui:include src="../../template/loadscripts.xhtml" />
+
 		<title>Playon | Administración</title>
 		<ui:insert name="head"></ui:insert>
 
@@ -19,7 +22,8 @@
 		<div class="mainbody">
 
 			<div class="admin-header ui-corner-all">
-				<div id="header" class="ui-widget ui-widget-header ui-corner-all ui-shadow">
+				<div id="header"
+					class="ui-widget ui-widget-header ui-corner-all ui-shadow">
 
 					<ui:include src="header.xhtml" />
 

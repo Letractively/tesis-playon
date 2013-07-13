@@ -16,11 +16,13 @@
 						<h:panelGrid columns="5" width="100%">
 							<h:outputLabel value="Fecha Desde: " />
 							<p:calendar value="#{estadisticaAdministracionMB.fechaDesde}"
-								id="fechaDesde" showOn="button" required="true"
+								navigator="true" locale="es" showButtonPanel="true"
+								id="fechaDesde" required="true"
 								requiredMessage="Campo fecha desde obligatorio" />
 							<h:outputLabel value="Fecha Hasta: " />
 							<p:calendar value="#{estadisticaAdministracionMB.fechaHasta}"
-								id="fechaHasta" showOn="button" required="true"
+								navigator="true" locale="es" showButtonPanel="true"
+								id="fechaHasta" required="true"
 								requiredMessage="Campo fecha hasta obligatorio" />
 							<p:commandButton id="getGrafico" value="Ver Reporte"
 								action="#{estadisticaAdministracionMB.calcularComisionPorPeriodo}"
@@ -68,15 +70,14 @@
 
 								<f:facet name="footer">
 									<div align="center">
-										<h:panelGrid columns="2" style="text-align:center; width:60px;">
+										<h:panelGrid columns="2"
+											style="text-align:center; width:60px;">
 											<p:commandLink title="Exportar a pdf">
-												<h:graphicImage library="images/icons"
-													name="pdf.png" />
+												<h:graphicImage library="images/icons" name="pdf.png" />
 											</p:commandLink>
 
 											<p:commandLink title="Exportar a excel">
-												<h:graphicImage library="images/icons"
-													name="excel.png" />
+												<h:graphicImage library="images/icons" name="excel.png" />
 											</p:commandLink>
 										</h:panelGrid>
 									</div>

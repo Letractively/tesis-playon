@@ -42,6 +42,7 @@
 
 							<h:outputLabel value="Fecha de inicio: " />
 							<p:calendar value="#{abonoMB.fechaDesde}" required="true"
+								navigator="true" locale="es" showButtonPanel="true"
 								requiredMessage="Campo obligatorio"
 								validator="#{abonoMB.validateFechaVencimiento}"
 								pattern="dd/MM/yyyy" mindate="#{abonoMB.today}">
@@ -52,7 +53,7 @@
 
 
 							<h:outputText value="Fecha de vencimiento: "
-								for="fechaVencimiento"/>
+								for="fechaVencimiento" />
 							<p:inputText id="fechaVencimiento" value="#{abonoMB.fechaHasta}"
 								readonly="true">
 								<f:convertDateTime pattern="dd/MM/yyyy" />

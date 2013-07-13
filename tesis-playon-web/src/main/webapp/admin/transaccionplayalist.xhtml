@@ -19,56 +19,61 @@ table tr td {
 	<ui:define name="panelContent" class="admin-font">
 
 		<p:panel header="Buscar Transacciones" id="panel">
-			<h:panelGrid columns="3" cellpadding="5">
+			<h:panelGrid columns="1" cellpadding="5">
 
-				<p:column>
-					<h:outputLabel value="Playa:" for="autoCompletePlaya" />
-				</p:column>
+				<h:panelGrid columns="3" cellpadding="5">
+					<p:column>
+						<h:outputLabel value="Playa:"
+							for="autoCompletePlaya" />
+					</p:column>
+					<p:column>
+						<p:autoComplete id="autoCompletePlaya" dropdown="true" size="30"
+							value="#{transaccionPlayaMB.acTxtPlaya}"
+							completeMethod="#{transaccionPlayaMB.complete}"
+							scrollHeight="150" />
+					</p:column>
 
-				<p:column>
-					<p:autoComplete id="autoCompletePlaya" dropdown="true" size="30"
-						value="#{transaccionPlayaMB.acTxtPlaya}"
-						completeMethod="#{transaccionPlayaMB.complete}" scrollHeight="150" />
-				</p:column>
+					<p:column>
+						<div align="left">
+							<p:selectBooleanCheckbox
+								value="#{transaccionPlayaMB.soloHabilitadas}">
+								<p:ajax event="change" update="autoCompletePlaya"
+									listener="#{transaccionPlayaMB.changeSoloHabilitadas()}" />
+							</p:selectBooleanCheckbox>
+							<h:outputText value="Ver solo playas habilitadas"
+								styleClass="fuente-outputtext" />
+						</div>
 
-				<p:column>
-					<div align="left">
-						<p:selectBooleanCheckbox
-							value="#{transaccionPlayaMB.soloHabilitadas}">
-							<p:ajax event="change" update="autoCompletePlaya"
-								listener="#{transaccionPlayaMB.changeSoloHabilitadas()}" />
-						</p:selectBooleanCheckbox>
-						<h:outputText value="Ver solo playas habilitadas"
-							styleClass="fuente-outputtext" />
+					</p:column>
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="6" cellpadding="5" style="width:100%" >
+					<p:column>
+						<h:outputText value="Desde:   " />
+					</p:column>
+
+					<p:column>
+						<p:calendar value="#{transaccionPlayaMB.fechaDesde}" id="calDesde"
+						navigator="true" locale="es" showButtonPanel="true" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="Hasta:   " />
+					</p:column>
+
+					<p:column>
+						<p:calendar value="#{transaccionPlayaMB.fechaHasta}" id="calHasta"
+						navigator="true" locale="es" showButtonPanel="true" />
+					</p:column>
+
+					<div align="right">
+						<p:commandButton id="buscarButton" value="Buscar"
+							icon="ui-icon-search"
+							action="#{transaccionPlayaMB.updateTransaccionesPorFechaList}"
+							ajax="true" update="transacciones" />
 					</div>
-
-				</p:column>
-
-
-				<p:column>
-					<h:outputText value="Desde:   " />
-				</p:column>
-
-				<p:column>
-					<p:calendar value="#{transaccionPlayaMB.fechaDesde}" id="calDesde" />
-				</p:column>
-
-				<p:column />
-
-				<p:column>
-					<h:outputText value="Hasta:   " />
-				</p:column>
-
-				<p:column>
-					<p:calendar value="#{transaccionPlayaMB.fechaHasta}" id="calHasta" />
-				</p:column>
-
-				<p:column />
-
-				<p:commandButton id="buscarButton" value="Buscar"
-					icon="ui-icon-search"
-					action="#{transaccionPlayaMB.updateTransaccionesPorFechaList}"
-					ajax="true" update="transacciones" />
+				</h:panelGrid>
 			</h:panelGrid>
 		</p:panel>
 

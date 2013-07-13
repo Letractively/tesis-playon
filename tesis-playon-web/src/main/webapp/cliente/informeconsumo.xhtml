@@ -20,12 +20,14 @@
 							<h:panelGrid columns="5" width="100%">
 								<h:outputLabel value="Fecha Desde: " />
 								<p:calendar value="#{estadisticaClienteMB.fechaDesde}"
-									id="fechaDesde" showOn="button" required="true"
+									id="fechaDesde" required="true" navigator="true" locale="es"
+									showButtonPanel="true"
 									requiredMessage="Campo fecha desde obligatorio" />
 								<h:outputLabel value="Fecha Hasta: " />
 								<p:calendar value="#{estadisticaClienteMB.fechaHasta}"
-									id="fechaHasta" showOn="button" required="true"
-									requiredMessage="Campo fecha hasta obligatorio" />
+									id="fechaHasta" required="true" navigator="true" locale="es"
+									showButtonPanel="true"
+									requiredMessage="Campo fecha hasta obligatorio" />	
 								<p:commandButton id="getGrafico" value="Ver Reporte"
 									action="#{estadisticaClienteMB.calcularConsumoPorPeriodo}"
 									ajax="false" update="consumoChart">

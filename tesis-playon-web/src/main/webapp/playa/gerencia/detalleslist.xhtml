@@ -18,19 +18,21 @@
 		<h:form style="margin:0 0 0 20px;">
 			<h:panelGrid columns="6" cellspacing="10">
 				<h:outputText value="Desde:" />
-				<p:calendar value="#{ingresoEgresoMB.fechaDesde}"
-					pattern="dd/MM/yyyy HH:mm" id="fechaD" />
+				<p:calendar value="#{ingresoEgresoMB.fechaDesde}" navigator="true"
+					locale="es" showButtonPanel="true" pattern="dd/MM/yyyy HH:mm"
+					id="fechaD" />
 				<p:column>
 					<div align="right">
 						<h:outputText value="Hasta: " />
 					</div>
 				</p:column>
 
-				<p:calendar value="#{ingresoEgresoMB.fechaHasta}"
-					pattern="dd/MM/yyyy HH:mm" id="fechaH" />
+				<p:calendar value="#{ingresoEgresoMB.fechaHasta}" navigator="true"
+					locale="es" showButtonPanel="true" pattern="dd/MM/yyyy HH:mm"
+					id="fechaH" />
 				<p:commandButton id="buscarButton" value="Buscar"
-				action="#{ingresoEgresoMB.buscarPorFecha}"
-					icon="ui-icon-search" ajax="true" update="detalles" />
+					action="#{ingresoEgresoMB.buscarPorFecha}" icon="ui-icon-search"
+					ajax="true" update="detalles" />
 				<p:commandButton id="buscarButton2" style="width:130px;"
 					action="#{ingresoEgresoMB.updateListado}" value="Listar Todas"
 					icon="ui-icon-search" ajax="true" update="detalles" />

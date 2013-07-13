@@ -20,10 +20,12 @@
 						<h:panelGrid columns="5" width="100%">
 							<h:outputLabel value="Fecha Desde: " />
 							<p:calendar value="#{estadisticaGerenteMB.fechaDesde}"
-								id="fechaDesde" showOn="button" />
+								navigator="true" locale="es" showButtonPanel="true"
+								id="fechaDesde" />
 							<h:outputLabel value="Fecha Hasta: " />
 							<p:calendar value="#{estadisticaGerenteMB.fechaHasta}"
-								id="fechaHasta" showOn="button" />
+								navigator="true" locale="es" showButtonPanel="true"
+								id="fechaHasta" />
 							<p:commandButton id="getGrafico" value="Ver Reporte"
 								action="#{estadisticaGerenteMB.cantidadIngresosPorTipoVehiculo}"
 								ajax="false" update="ingresosPorTipoVehiculo">
@@ -41,7 +43,7 @@
 								title="Cantidad de ingresos por tipo de vehículo por período"
 								minY="0" maxY="#{estadisticaGerenteMB.mayorCant}"
 								style="margin-top:20px" />
-							</ui:fragment>
+						</ui:fragment>
 					</p:column>
 				</h:panelGrid>
 			</p:panel>
