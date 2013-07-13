@@ -9,7 +9,7 @@
 		value="Listado de Playas de Estacionamiento" />
 
 	<ui:define name="panelContent" class="admin-font">
-	<p:growl id="messages" />
+		<p:growl id="messages" />
 
 		<table class="ui-datatable liquidacion-table"
 			style="text-align: right;">
@@ -20,13 +20,15 @@
 			<tr>
 				<td style="text-align: center; width: 300px;"
 					class="ui-widget-content"><h:outputText value="Desde:   " />
-					<p:calendar value="#{liquidacionMB.fechaDesde}" id="calDesde" 
-					navigator="true" locale="es" showButtonPanel="true" /></td>
+					<p:calendar value="#{liquidacionMB.fechaDesde}" id="calDesde"
+						navigator="true" locale="es" showButtonPanel="true"
+						pattern="dd/MM/yyyy" /></td>
 
 				<td style="text-align: center; width: 300px;"
 					class="ui-widget-content"><h:outputText value="Hasta:   " />
 					<p:calendar value="#{liquidacionMB.fechaHasta}" id="calHasta"
-					navigator="true" locale="es" showButtonPanel="true" /></td>
+						navigator="true" locale="es" showButtonPanel="true"
+						pattern="dd/MM/yyyy" /></td>
 
 				<td style="text-align: center; width: 150px;"
 					class="ui-widget-content"><p:commandButton id="buscarButton"
@@ -242,7 +244,7 @@
 					<h:outputText value="#{transaccionPlaya.fecha}">
 						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 					</h:outputText>
-					
+
 				</p:column>
 
 				<p:column id="tipoPagoHeader">

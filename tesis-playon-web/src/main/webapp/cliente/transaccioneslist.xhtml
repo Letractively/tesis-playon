@@ -16,7 +16,8 @@
 			<h:panelGrid columns="6" cellspacing="10">
 				<h:outputText value="Desde:" />
 				<p:calendar value="#{cuentaClienteMB.fechaDesde}" id="calDesde"
-				navigator="true" locale="es" showButtonPanel="true" />
+					navigator="true" locale="es" showButtonPanel="true"
+					pattern="dd/MM/yyyy" />
 
 				<p:column>
 					<div align="right">
@@ -24,7 +25,8 @@
 					</div>
 				</p:column>
 				<p:calendar value="#{cuentaClienteMB.fechaHasta}" id="calHasta"
-				navigator="true" locale="es" showButtonPanel="true" />
+					navigator="true" locale="es" showButtonPanel="true"
+					pattern="dd/MM/yyyy" />
 
 				<p:commandButton id="buscarButton" value="Buscar"
 					icon="ui-icon-search" ajax="true" update="transacciones" />
@@ -38,7 +40,8 @@
 			<p:dataTable id="transacciones" var="transaccionCliente"
 				rowStyleClass="#{transaccionCliente.tipoPago.nombre eq 'Cuenta' ? 'old' :null}"
 				paginator="true" rows="10" value="#{cuentaClienteMB.transacciones}"
-				emptyMessage="No ha realizado transacciones" paginatorPosition="bottom">
+				emptyMessage="No ha realizado transacciones"
+				paginatorPosition="bottom">
 
 				<p:column style="text-align:center">
 					<f:facet name="header">
@@ -64,7 +67,7 @@
 					</f:facet>
 
 					<h:outputText value="#{transaccionCliente.importe}">
-						<f:convertNumber type="currency" currencySymbol="$"/>
+						<f:convertNumber type="currency" currencySymbol="$" />
 					</h:outputText>
 				</p:column>
 
@@ -72,7 +75,7 @@
 					<p:row>
 						<p:column colspan="2" footerText="Saldo" style="text-align:right" />
 						<p:column footerText="#{cuentaClienteMB.cuentaCliente.saldo}">
-<!-- 							<f:convertNumber type="currency" currencySymbol="$"/> -->
+							<!-- 							<f:convertNumber type="currency" currencySymbol="$"/> -->
 						</p:column>
 					</p:row>
 				</p:columnGroup>

@@ -17,12 +17,12 @@
 							<h:outputLabel value="Fecha Desde: " />
 							<p:calendar value="#{estadisticaAdministracionMB.fechaDesde}"
 								navigator="true" locale="es" showButtonPanel="true"
-								id="fechaDesde" required="true"
+								id="fechaDesde" required="true" pattern="dd/MM/yyyy"
 								requiredMessage="Campo fecha desde obligatorio" />
 							<h:outputLabel value="Fecha Hasta: " />
 							<p:calendar value="#{estadisticaAdministracionMB.fechaHasta}"
 								navigator="true" locale="es" showButtonPanel="true"
-								id="fechaHasta" required="true"
+								id="fechaHasta" required="true" pattern="dd/MM/yyyy"
 								requiredMessage="Campo fecha hasta obligatorio" />
 							<p:commandButton id="getGrafico" value="Ver Reporte"
 								action="#{estadisticaAdministracionMB.calcularComisionPorPeriodo}"

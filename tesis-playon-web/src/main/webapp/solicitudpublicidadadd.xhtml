@@ -128,6 +128,7 @@
 						<p:calendar showButtonPanel="true" navigator="true"
 							mindate="#{publicidadMB.today}" id="fechaInicio"
 							value="#{publicidadMB.fechaDesde}" required="true"
+							pattern="dd/MM/yyyy"
 							requiredMessage="Campo fecha inicio obligatorio" locale="es"
 							validator="#{publicidadMB.validateDateInicial}">
 							<p:ajax event="blur" update="fechaInicioMsg" />
@@ -142,6 +143,7 @@
 						<p:calendar showButtonPanel="true" navigator="true"
 							mindate="#{publicidadMB.today}" id="fechaFin"
 							value="#{publicidadMB.fechaHasta}" required="true"
+							pattern="dd/MM/yyyy"
 							requiredMessage="Campo fecha finalización obligatorio"
 							locale="es" validator="#{publicidadMB.validateDate}">
 							<p:ajax event="blur" update="fechaFinMsg" />

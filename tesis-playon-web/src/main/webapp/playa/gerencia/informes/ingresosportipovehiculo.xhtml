@@ -21,11 +21,11 @@
 							<h:outputLabel value="Fecha Desde: " />
 							<p:calendar value="#{estadisticaGerenteMB.fechaDesde}"
 								navigator="true" locale="es" showButtonPanel="true"
-								id="fechaDesde" />
+								id="fechaDesde" pattern="dd/MM/yyyy" />
 							<h:outputLabel value="Fecha Hasta: " />
 							<p:calendar value="#{estadisticaGerenteMB.fechaHasta}"
 								navigator="true" locale="es" showButtonPanel="true"
-								id="fechaHasta" />
+								id="fechaHasta" pattern="dd/MM/yyyy" />
 							<p:commandButton id="getGrafico" value="Ver Reporte"
 								action="#{estadisticaGerenteMB.cantidadIngresosPorTipoVehiculo}"
 								ajax="false" update="ingresosPorTipoVehiculo">

@@ -21,12 +21,12 @@
 								<h:outputLabel value="Fecha Desde: " />
 								<p:calendar value="#{estadisticaClienteMB.fechaDesde}"
 									id="fechaDesde" required="true" navigator="true" locale="es"
-									showButtonPanel="true"
+									showButtonPanel="true" pattern="dd/MM/yyyy"
 									requiredMessage="Campo fecha desde obligatorio" />
 								<h:outputLabel value="Fecha Hasta: " />
 								<p:calendar value="#{estadisticaClienteMB.fechaHasta}"
 									id="fechaHasta" required="true" navigator="true" locale="es"
-									showButtonPanel="true"
+									showButtonPanel="true" pattern="dd/MM/yyyy"
 									requiredMessage="Campo fecha hasta obligatorio" />	
 								<p:commandButton id="getGrafico" value="Ver Reporte"
 									action="#{estadisticaClienteMB.calcularConsumoPorPeriodo}"

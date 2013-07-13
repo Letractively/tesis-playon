@@ -14,39 +14,6 @@
 	<ui:define name="content">
 		<h1>Editar promoción</h1>
 
-		<script type="text/javascript">
-			PrimeFaces.locales['es'] = {
-				closeText : 'Cerrar',
-				prevText : 'Anterior',
-				nextText : 'Siguiente',
-				monthNames : [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
-						'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
-						'Noviembre', 'Diciembre' ],
-				monthNamesShort : [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
-						'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
-				dayNames : [ 'Domingo', 'Lunes', 'Martes', 'Miércoles',
-						'Jueves', 'Viernes', 'Sábado' ],
-				dayNamesShort : [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie',
-						'Sab' ],
-				dayNamesMin : [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
-				weekHeader : 'Semana',
-				firstDay : 1,
-				isRTL : false,
-				showMonthAfterYear : false,
-				yearSuffix : '',
-				timeOnlyTitle : 'Sólo hora',
-				timeText : 'Tiempo',
-				hourText : 'Hora',
-				minuteText : 'Minuto',
-				secondText : 'Segundo',
-				currentText : 'Fecha actual',
-				ampm : false,
-				month : 'Mes',
-				week : 'Semana',
-				day : 'Día',
-				allDayText : 'Todo el día'
-			};
-		</script>
 		<p:growl id="messages" />
 		<h:form id="form" style="margin-left:20px">
 
@@ -77,7 +44,8 @@
 							mindate="#{promocionMB.today}" id="fechaInicio"
 							value="#{promocionMB.promocionSelected.fechaInicio}"
 							required="true" requiredMessage="Campo obligatorio" locale="es"
-							validator="#{promocionMB.validateDateInicial}">
+							validator="#{promocionMB.validateDateInicial}"
+							pattern="dd/MM/yyyy">
 							<p:ajax event="blur" update="fechaInicioMsg" />
 						</p:calendar>
 						<p:message id="fechaInicioMsg" for="fechaInicio" display="icon" />
@@ -87,7 +55,7 @@
 							mindate="#{promocionMB.today}" id="fechaFin"
 							value="#{promocionMB.promocionSelected.fechaFin}" required="true"
 							requiredMessage="Campo obligatorio" locale="es"
-							validator="#{promocionMB.validateDate}">
+							validator="#{promocionMB.validateDate}" pattern="dd/MM/yyyy">
 							<p:ajax event="blur" update="fechaFinMsg" />
 						</p:calendar>
 						<p:column />

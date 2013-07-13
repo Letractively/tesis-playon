@@ -43,7 +43,8 @@
 							mindate="#{promocionMB.today}" id="fechaInicio"
 							value="#{promocionMB.fechaInicio}" required="true"
 							requiredMessage="Campo obligatorio" locale="es"
-							validator="#{promocionMB.validateDateInicial}">
+							validator="#{promocionMB.validateDateInicial}"
+							pattern="dd/MM/yyyy">
 							<p:ajax event="blur" update="fechaInicioMsg" />
 							<p:ajax event="dateSelect" update="fechaInicioMsg" />
 						</p:calendar>
@@ -54,7 +55,7 @@
 							mindate="#{promocionMB.today}" id="fechaFin"
 							value="#{promocionMB.fechaFin}" required="true"
 							requiredMessage="Campo obligatorio" locale="es"
-							validator="#{promocionMB.validateDate}">
+							validator="#{promocionMB.validateDate}" pattern="dd/MM/yyyy">
 							<p:ajax event="blur" update="fechaFinMsg" />
 							<p:ajax event="dateSelect" update="fechaFinMsg" />
 						</p:calendar>
@@ -74,8 +75,7 @@
 
 						<h:panelGroup id="txtHoraInicio">
 							<p:calendar value="#{promocionMB.horaInicio}" pattern="HH:mm"
-								timeOnly="true"
-								rendered="#{promocionMB.incluyeHorario == true}">
+								timeOnly="true" rendered="#{promocionMB.incluyeHorario == true}">
 								<p:ajax event="dateSelect" update="@this" />
 								<f:convertDateTime pattern="HH:mm" />
 							</p:calendar>
@@ -89,8 +89,7 @@
 
 						<h:panelGroup id="txtHoraFin">
 							<p:calendar value="#{promocionMB.horaFin}" pattern="HH:mm"
-								timeOnly="true"
-								rendered="#{promocionMB.incluyeHorario == true}">
+								timeOnly="true" rendered="#{promocionMB.incluyeHorario == true}">
 								<p:ajax event="dateSelect" update="@this" />
 								<f:convertDateTime pattern="HH:mm" />
 							</p:calendar>
@@ -147,7 +146,7 @@
 						<p:message id="montoConDescuentoMsg" for="montoConDescuento"
 							display="icon" />
 					</h:panelGrid>
-					
+
 					<div align="center" style="margin: 10px 30px 0 0;">
 						<p:commandButton id="registrar" value="Registrar"
 							action="#{promocionMB.addPromocion}" ajax="false" />

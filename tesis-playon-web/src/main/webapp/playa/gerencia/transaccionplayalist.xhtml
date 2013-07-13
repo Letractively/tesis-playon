@@ -19,7 +19,8 @@
 			<h:panelGrid columns="6" cellspacing="10">
 				<h:outputText value="Desde:" />
 				<p:calendar value="#{ingresoEgresoMB.fechaDesde}" id="calDesde"
-				navigator="true" locale="es" showButtonPanel="true" />
+					navigator="true" locale="es" showButtonPanel="true"
+					pattern="dd/MM/yyyy" />
 
 				<p:column>
 					<div align="right">
@@ -27,7 +28,8 @@
 					</div>
 				</p:column>
 				<p:calendar value="#{ingresoEgresoMB.fechaHasta}" id="calHasta"
-				navigator="true" locale="es" showButtonPanel="true" />
+					navigator="true" locale="es" showButtonPanel="true"
+					pattern="dd/MM/yyyy" />
 
 				<p:commandButton id="buscarButton" value="Buscar"
 					action="#{ingresoEgresoMB.updateTransaccionesPlayas()}"
