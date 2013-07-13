@@ -95,6 +95,7 @@ public class ComentarioManagedBean implements Serializable {
 
 		FacesContext.getCurrentInstance().addMessage("messageComentario",
 			new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró exitosamente su comentario", ""));
+		
 	    } else {
 		FacesContext.getCurrentInstance().addMessage(
 			"messageComentario",

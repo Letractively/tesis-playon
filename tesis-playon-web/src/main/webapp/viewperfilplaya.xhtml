@@ -29,7 +29,7 @@
 		
 		<h:form id="form">
 			<p:growl id="messages" />
-
+			<p:focus id="focusMessageComentario" for=":form:pnlRoot" />
 			<h:panelGrid id="pnlRoot" columns="1" cellspacing="10" width="95%">
 				<p:column>
 					<div id="perfil-playa">
@@ -95,7 +95,7 @@
 				</p:column>
 
 				<p:column>
-					<p:accordionPanel multiple="true" dynamic="true">
+					<p:accordionPanel id="acordeonPnl" multiple="true" dynamic="true">
 						<p:tab title="Información">
 							<div style="margin: 0 0 0 10px;">
 								<h:panelGrid columns="3" cellpadding="8">
@@ -321,7 +321,7 @@
 																<p:commandButton id="enviarComentario"
 																	value="Enviar comentario"
 																	action="#{comentarioMB.addComentario}" ajax="false"
-																	style="margin:5px 5px 0 5px" update=":comentarios">
+																	style="margin:5px 5px 0 5px" update=":comentarios, :focusMessageComentario">
 																</p:commandButton>
 															</div>
 														</td>
@@ -364,7 +364,7 @@
 				</p:column>
 				<p:column>
 					<div align="center" style="margin: 0 10px 0 10px">
-						<h:panelGrid columns="1" width="500" height="360"
+						<h:panelGrid id="pnlFotos" columns="1" width="500" height="360"
 							rendered="#{perfilPlayaMB.fotosListSelected !=null}">
 							<p:column />
 							<h:outputText value="Fotos" />

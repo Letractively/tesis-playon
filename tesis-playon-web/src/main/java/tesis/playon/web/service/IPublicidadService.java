@@ -3,6 +3,7 @@
  */
 package tesis.playon.web.service;
 
+import java.util.Date;
 import java.util.List;
 
 import tesis.playon.web.model.EstadoPublicidad;
@@ -25,4 +26,6 @@ public interface IPublicidadService {
     List<Publicidad> findAllByEstadoVigente();
 
     List<Publicidad> findByEstado(EstadoPublicidad estado);
+    
+    List<String[]> getMontosDePublicidadByPeriodo(Date fechaDesde, Date fechaHasta) ;
 }

@@ -3,6 +3,7 @@
  */
 package tesis.playon.web.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -68,6 +69,11 @@ public class PublicidadService implements IPublicidadService {
     @Override
     public List<Publicidad> findByEstado(EstadoPublicidad estado){
 	return getPublicidadDao().findByEstado(estado);
+    }
+    
+    @Override
+    public List<String[]> getMontosDePublicidadByPeriodo(Date fechaDesde, Date fechaHasta){
+	return getPublicidadDao().getMontosDePublicidadByPeriodo(fechaDesde, fechaHasta);
     }
 
     /**
