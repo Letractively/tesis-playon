@@ -39,7 +39,7 @@
 								yaxisLabel="Recaudación en $"
 								value="#{estadisticaAdministracionMB.lModelComision}"
 								legendPosition="ne" legendRows="2" animate="true"
-								title="Recaudación de transacciones y publicidades por período mensual"
+								title="Recaudación de transacciones por período mensual"
 								minY="0" maxY="#{estadisticaAdministracionMB.maximoMonto}"
 								style="margin-top:20px" />
 						</ui:fragment>
@@ -72,7 +72,8 @@
 									<div align="center">
 										<h:panelGrid columns="2"
 											style="text-align:center; width:60px;">
-											<p:commandLink title="Exportar a pdf">
+											<p:commandLink title="Exportar a pdf"
+												action="#{estadisticaAdministracionMB.crearPDF}">
 												<h:graphicImage library="images/icons" name="pdf.png" />
 											</p:commandLink>
 
