@@ -16,34 +16,72 @@
 
 			<!-- <p:menuitem value="Principal" url="#{request.contextPath}/../index.html" /> -->
 
+			<p:submenu label="Auditoría">
+				<p:menuitem value="Playas"
+					url="#{request.contextPath}/../auditoria/playaslist.html"
+					icon="ui-icon-alert" />
+				<p:menuitem value="Denuncia a vehículo"
+					url="#{request.contextPath}/../auditoria/denunciasvehiculos.html"
+					icon="ui-icon-alert" />
+				<p:menuitem value="Denuncia a playa"
+					url="#{request.contextPath}/../auditoria/denunciasplayas.html"
+					icon="ui-icon-alert" />
+				<p:menuitem value="Publicidades"
+					url="#{request.contextPath}/../auditoria/publicidadeslist.html"
+					icon="ui-icon-alert" />
+			</p:submenu>
+
+
+
+			<p:submenu label="Administración">
+				<p:menuitem value="Generar Liquidación"
+					url="#{request.contextPath}/../admin/liquidacionplayas.html"
+					icon="ui-icon-bookmark" />
+				<p:menuitem value="Ver liquidaciones"
+					url="#{request.contextPath}/../admin/liquidacionplayaslist.html"
+					icon="ui-icon-bookmark" />
+				<p:menuitem value="Ver Transacciones"
+					url="#{request.contextPath}/../admin/transaccionplayalist.html"
+					icon="ui-icon-tag" />
+				<p:menuitem value="Recaudación Playón"
+					url="#{request.contextPath}/../admin/informes.html"
+					icon="ui-icon-image" />
+			</p:submenu>
+
+
 			<p:submenu label="Gestión de Playas">
 				<p:menuitem value="Playas"
 					url="#{request.contextPath}/../admin/playalist.html"
 					icon="ui-icon-home" />
 				<p:menuitem value="Cuentas Playas"
 					url="#{request.contextPath}/../admin/cuentaplayalist.html"
-					icon="ui-icon-home" />
-				<p:menuitem value="Transacciones"
-					url="#{request.contextPath}/../admin/transaccionplayalist.html"
-					icon="ui-icon-tag" />
-				<p:menuitem value="Ver liquidaciones"
-					url="#{request.contextPath}/../admin/liquidacionplayaslist.html"
-					icon="ui-icon-bookmark" />
-				<p:menuitem value="Liquidación"
-					url="#{request.contextPath}/../admin/liquidacionplayas.html"
-					icon="ui-icon-bookmark" />
+					icon="ui-icon-star" />
+
+
+
 			</p:submenu>
 
 			<p:submenu label="Gestión de Clientes">
 				<p:menuitem value="Clientes"
 					url="#{request.contextPath}/../admin/clientelist.html"
-					icon="ui-icon-star" />
+					icon="ui-icon-person" />
 				<p:menuitem value="Cuentas Clientes"
 					url="#{request.contextPath}/../admin/cuentaclientelist.html"
 					icon="ui-icon-star" />
 
 			</p:submenu>
 
+
+
+
+			<p:submenu label="Gestión de Usuarios">
+				<p:menuitem value="Usuarios"
+					url="#{request.contextPath}/../admin/usuariolist.html"
+					icon="ui-icon-person" />
+				<p:menuitem value="Roles de Usuarios"
+					url="#{request.contextPath}/../admin/rolusuariolist.html"
+					icon="ui-icon-tag" />
+			</p:submenu>
 
 			<p:submenu label="Gestión de Vehículos">
 
@@ -59,35 +97,6 @@
 
 			</p:submenu>
 
-			<p:submenu label="Gestión de Usuarios">
-				<p:menuitem value="Usuarios"
-					url="#{request.contextPath}/../admin/usuariolist.html"
-					icon="ui-icon-person" />
-				<p:menuitem value="Roles de Usuarios"
-					url="#{request.contextPath}/../admin/rolusuariolist.html"
-					icon="ui-icon-tag" />
-			</p:submenu>
-
-			<p:submenu label="Auditoría">
-				<p:menuitem value="Playas"
-					url="#{request.contextPath}/../auditoria/playaslist.html"
-					icon="ui-icon-help" />
-				<p:menuitem value="Denuncia a vehículo"
-					url="#{request.contextPath}/../auditoria/denunciasvehiculos.html"
-					icon="ui-icon-pin-w" />
-				<p:menuitem value="Denuncia a playa"
-					url="#{request.contextPath}/../auditoria/denunciasplayas.html"
-					icon="ui-icon-close" />
-					<p:menuitem value="Publicidades"
-					url="#{request.contextPath}/../auditoria/publicidadeslist.html"
-					icon="ui-icon-close" />
-			</p:submenu>
-
-			<p:submenu label="Informes">
-				<p:menuitem value="Comisión por transacciones"
-					url="#{request.contextPath}/../admin/informes.html"
-					icon="ui-icon-image" />
-			</p:submenu>
 
 			<p:submenu label="Configuración de Cuenta">
 				<p:menuitem value="Cambiar Contraseña"
