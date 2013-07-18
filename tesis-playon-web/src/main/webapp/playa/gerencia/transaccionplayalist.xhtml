@@ -128,20 +128,55 @@
 
 
 				</p:column>
+
+				<p:dataTable id="transaccionesP" var="transaccionPlaya"
+					paginator="true" value="#{ingresoEgresoMB.transaccionesPlayas}"
+					rows="12" emptyMessage="No han realizado transacciones"
+					paginatorPosition="bottom" style="display:none">
+
+					<p:column style="text-align:center">
+						<f:facet name="header">
+							<h:outputText value="Fecha" />
+						</f:facet>
+						<h:outputText value="#{transaccionPlaya.fecha}">
+							<f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+						</h:outputText>
+					</p:column>
+
+					<p:column style="text-align:center">
+						<f:facet name="header">
+							<h:outputText value="Datos de vehículo" />
+						</f:facet>
+						<h:outputText
+							value="#{transaccionPlaya.detalleEstadia.vehiculo.patente}" />
+					</p:column>
+
+					<p:column style="text-align:center">
+						<f:facet name="header">
+							<h:outputText value="Importe" />
+						</f:facet>
+
+						<h:outputText value="#{transaccionPlaya.importe}">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+
+				</p:dataTable>
+
 				<f:facet name="footer">
 					<div align="center">
 						<h:panelGrid columns="2" header="Exportar" style="width:100px;">
 							<h:commandLink title="Exportar a excel">
 								<p:graphicImage
 									value="http://www.primefaces.org/showcase/images/excel.png" />
-								<p:dataExporter type="xls" target="transacciones"
+								<p:dataExporter type="xls" target="transaccionesP"
 									fileName="Transacciones" />
 							</h:commandLink>
 
 							<h:commandLink title="Exportar a PDF">
 								<p:graphicImage
 									value="http://www.primefaces.org/showcase/images/pdf.png" />
-								<p:dataExporter type="pdf" target="transacciones"
+								<p:dataExporter type="pdf" target="transaccionesP"
 									preProcessor="#{empleadoMB.listadoTransaccionesPDF}"
 									fileName="Transacciones" />
 							</h:commandLink>

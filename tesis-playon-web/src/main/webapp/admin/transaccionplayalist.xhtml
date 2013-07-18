@@ -23,8 +23,7 @@ table tr td {
 
 				<h:panelGrid columns="3" cellpadding="5">
 					<p:column>
-						<h:outputLabel value="Playa:"
-							for="autoCompletePlaya" />
+						<h:outputLabel value="Playa:" for="autoCompletePlaya" />
 					</p:column>
 					<p:column>
 						<p:autoComplete id="autoCompletePlaya" dropdown="true" size="30"
@@ -48,15 +47,15 @@ table tr td {
 
 				</h:panelGrid>
 
-				<h:panelGrid columns="6" cellpadding="5" style="width:100%" >
+				<h:panelGrid columns="6" cellpadding="5" style="width:100%">
 					<p:column>
 						<h:outputText value="Desde:   " />
 					</p:column>
 
 					<p:column>
 						<p:calendar value="#{transaccionPlayaMB.fechaDesde}" id="calDesde"
-						navigator="true" locale="es" showButtonPanel="true"
-						pattern="dd/MM/yyyy" />
+							navigator="true" locale="es" showButtonPanel="true"
+							pattern="dd/MM/yyyy" />
 					</p:column>
 
 					<p:column>
@@ -65,8 +64,8 @@ table tr td {
 
 					<p:column>
 						<p:calendar value="#{transaccionPlayaMB.fechaHasta}" id="calHasta"
-						navigator="true" locale="es" showButtonPanel="true"
-						pattern="dd/MM/yyyy" />
+							navigator="true" locale="es" showButtonPanel="true"
+							pattern="dd/MM/yyyy" />
 					</p:column>
 
 					<div align="right">
@@ -180,26 +179,107 @@ table tr td {
 
 
 			</p:column>
+
+			<p:dataTable id="transaccionesP" var="transaccionPlaya"
+				value="#{transaccionPlayaMB.transaccionesPorFechaList}"
+				filteredValue="#{filtrosMB.filteredTransaccionesPlaya}"
+				widgetVar="transaccionesTable" paginatorPosition="bottom"
+				paginator="true" rows="20" emptyMessage="No existen transacciones"
+				style="display:none">
+
+
+				<p:column headerText="Fecha" styleClass="column-font"
+					filterBy="#{transaccionPlaya.fecha}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Fecha" />
+					</f:facet>
+					<h:outputText value="#{transaccionPlaya.fecha}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Tipo Pago" styleClass="column-font"
+					filterBy="#{transaccionPlaya.tipoPago}"
+					filterOptions="#{filtrosMB.tipoPagoOptions}"
+					filterMatchMode="exact">
+					<f:facet name="header">
+						<h:outputText value="Tipo Pago" />
+					</f:facet>
+					<h:outputText value="#{transaccionPlaya.tipoPago.nombre}" />
+				</p:column>
+
+				<p:column headerText="Importe" styleClass="column-font"
+					filterBy="#{transaccionPlaya.importe}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Importe" />
+					</f:facet>
+					<h:outputText value="#{transaccionPlaya.importe}">
+						<f:convertNumber type="currency" currencySymbol="$ " />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Cobrado" styleClass="column-font">
+					<f:facet name="header">
+						<h:outputText value="Cobrado" />
+					</f:facet>
+					<h:outputText
+						value="#{transaccionPlaya.detalleEstadia.cobrado ? 'Si' : 'No'}" />
+				</p:column>
+
+				<p:column headerText="Empleado" styleClass="column-font"
+					filterBy="#{transaccionPlaya.detalleEstadia.empleado.usuario.nombre}"
+					filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Empleado" />
+					</f:facet>
+					<h:outputText
+						value="#{transaccionPlaya.detalleEstadia.empleado.usuario.nombre} 
+                                        #{transaccionPlaya.detalleEstadia.empleado.usuario.apellido}" />
+				</p:column>
+
+				<p:column headerText="Vehículo" styleClass="column-font"
+					filterBy="#{transaccionPlaya.detalleEstadia.vehiculo.patente}"
+					filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Vehículo" />
+					</f:facet>
+					<h:outputText
+						value="#{transaccionPlaya.detalleEstadia.vehiculo.patente}" />
+				</p:column>
+
+				<p:column headerText="Opciones" styleClass="column-options"
+					exportable="false" style="text-align:center; width:120px;">
+
+					<p:commandLink id="view3" oncomplete="estadiasDialog.show();"
+						update=":mainForm:estadiasDlg" title="OPC">
+						<f:setPropertyActionListener value="#{transaccionPlaya}"
+							target="#{transaccionPlayaMB.transaccionSelected}" />
+						<h:graphicImage library="images/icons" name="search.png" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+
 			<f:facet name="footer">
 				<div align="center">
 					<h:panelGrid columns="2" header="Exportar" style="width:100px;">
 						<h:commandLink title="Exportar a excel">
 							<p:graphicImage
 								value="http://www.primefaces.org/showcase/images/excel.png" />
-							<p:dataExporter type="xls" target="transacciones"
+							<p:dataExporter type="xls" target="transaccionesP"
 								fileName="Transacciones" />
 						</h:commandLink>
 
 						<h:commandLink title="Exportar a PDF">
 							<p:graphicImage
 								value="http://www.primefaces.org/showcase/images/pdf.png" />
-							<p:dataExporter type="pdf" target="transacciones"
+							<p:dataExporter type="pdf" target="transaccionesP"
 								preProcessor="#{transaccionPlayaMB.listadoTransaccionesPDF}"
 								fileName="Transacciones" />
 						</h:commandLink>
 					</h:panelGrid>
 				</div>
 			</f:facet>
+
 
 		</p:dataTable>
 
@@ -331,6 +411,5 @@ table tr td {
 					onclick="estadiasDialog.hide()" type="button" />
 			</div>
 		</p:dialog>
-
 	</ui:define>
 </ui:composition>
