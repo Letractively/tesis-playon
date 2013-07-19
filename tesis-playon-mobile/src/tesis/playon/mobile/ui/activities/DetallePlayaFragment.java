@@ -59,6 +59,8 @@ public class DetallePlayaFragment extends Fragment implements OnClickListener {
 
     private PerfilPlaya perfilPlaya;
 
+    private PreferenceHelper mPreferences;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -66,7 +68,7 @@ public class DetallePlayaFragment extends Fragment implements OnClickListener {
 
 	if (null != mBundle) {
 	    nomPlaya = mBundle.getString(Const.NOMBRE_PLAYA);
-	    PreferenceHelper mPreferences = new PreferenceHelper(getActivity());
+	    mPreferences = new PreferenceHelper(getActivity());
 	    mPreferences.updateNomPlaya(nomPlaya);
 	    Log.d(TAG, "Nombre de la playa: " + nomPlaya);
 
@@ -115,6 +117,8 @@ public class DetallePlayaFragment extends Fragment implements OnClickListener {
     private void cargarDetallePlaya(Playa playa, PerfilPlaya perfilPlaya) {
 
 	Log.d(TAG, "cargarDetallePlaya");
+
+	mPreferences.updateIdPlaya(playa.getId());
 
 	ImageView imagen = (ImageView) mView.findViewById(R.id.photo_playa);
 	TextView nombre = (TextView) mView.findViewById(R.id.txt_nombre);

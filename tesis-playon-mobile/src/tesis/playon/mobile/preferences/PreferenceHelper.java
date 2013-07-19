@@ -26,9 +26,27 @@ public class PreferenceHelper {
 	editor.commit();
     }
 
+    public void updateIdPlaya(int idPlaya) {
+	SharedPreferences.Editor editor = mPreferences.edit();
+	editor.putInt(Const.ID_PLAYA, idPlaya);
+	editor.commit();
+    }
+
+    public void updateNomPlaya(String nomPlaya) {
+	SharedPreferences.Editor editor = mPreferences.edit();
+	editor.putString(Const.NOMBRE_PLAYA, nomPlaya);
+	editor.commit();
+    }
+
     public void updateQuery(String query) {
 	SharedPreferences.Editor editor = mPreferences.edit();
 	editor.putString(Const.QUERY, query);
+	editor.commit();
+    }
+
+    public void updateComentario(String comentario) {
+	SharedPreferences.Editor editor = mPreferences.edit();
+	editor.putString(Const.COMENTARIO, comentario);
 	editor.commit();
     }
 
@@ -39,14 +57,12 @@ public class PreferenceHelper {
 	editor.commit();
     }
 
-    public void updateNomPlaya(String nomPlaya) {
-	SharedPreferences.Editor editor = mPreferences.edit();
-	editor.putString(Const.NOMBRE_PLAYA, nomPlaya);
-	editor.commit();
-    }
-
     public int getIdUsuario() {
 	return mPreferences.getInt(Const.ID_USUARIO, 0);
+    }
+
+    public int getIdPlaya() {
+	return mPreferences.getInt(Const.ID_PLAYA, 0);
     }
 
     public String getUsuario() {
@@ -55,6 +71,10 @@ public class PreferenceHelper {
 
     public String getPassword() {
 	return mPreferences.getString(Const.PASSWORD, null);
+    }
+
+    public String getComentario() {
+	return mPreferences.getString(Const.COMENTARIO, null);
     }
 
     public String getQuery() {

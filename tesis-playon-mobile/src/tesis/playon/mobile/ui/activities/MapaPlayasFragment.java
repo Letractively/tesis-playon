@@ -178,7 +178,7 @@ public class MapaPlayasFragment extends Fragment implements OnInfoWindowClickLis
 	    return playas.toString();
 	}
 
-	protected void onPostExecute(String results) {
+	protected void  onPostExecute(String results) {
 	    Log.d(TAG, "onPostExecute");
 	    Intent result = new Intent();
 	    Bundle bundle = new Bundle();

@@ -41,5 +41,7 @@
     <string name="tarifas">Tarifas</string>
     <string name="comentarios">Comentarios</string>
     <string name="foto_de_playa">Foto de playa</string>
+    <string name="comentar">Agregar comentario</string>
+    <string name="enviar">Enviar</string>
 
 </resources>
