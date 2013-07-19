@@ -255,7 +255,7 @@
             			Listado de transacciones de la playa 
         			</f:facet>
 
-					<p:column id="playaHeader" style="text-align:center">
+					<p:column id="playaHeader" styleClass="column-font">
 						<f:facet name="header">
 							<h:outputText value="Playa" />
 						</f:facet>
@@ -263,7 +263,7 @@
 							value="#{transaccionPlaya.cuentaPlaya.playa.razonSocial}" />
 					</p:column>
 
-					<p:column id="fechaHeader" style="text-align:center">
+					<p:column id="fechaHeader" styleClass="column-font">
 						<f:facet name="header">
 							<h:outputText value="Fecha" />
 						</f:facet>
@@ -272,14 +272,14 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column id="tipoPagoHeader" style="text-align:center">
+					<p:column id="tipoPagoHeader" styleClass="column-font">
 						<f:facet name="header">
 							<h:outputText value="Tipo de Pago" />
 						</f:facet>
 						<h:outputText value="#{transaccionPlaya.tipoPago.nombre}" />
 					</p:column>
 
-					<p:column id="importeHeader" style="text-align:center">
+					<p:column id="importeHeader" styleClass="column-font">
 						<f:facet name="header">
 							<h:outputText value="Importe" />
 						</f:facet>
