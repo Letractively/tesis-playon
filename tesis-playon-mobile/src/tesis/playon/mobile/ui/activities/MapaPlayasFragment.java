@@ -13,6 +13,7 @@ import java.net.URLEncoder;
 import tesis.playon.mobile.Const;
 import tesis.playon.mobile.R;
 import tesis.playon.mobile.json.model.GoogleGeoCodeResponse;
+import tesis.playon.mobile.json.model.PerfilPlaya;
 import tesis.playon.mobile.json.model.Playa;
 import tesis.playon.mobile.json.model.Playas;
 import tesis.playon.mobile.preferences.PreferenceHelper;
@@ -21,16 +22,24 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -47,6 +56,9 @@ public class MapaPlayasFragment extends Fragment implements OnInfoWindowClickLis
 
     private static final String URL_PLAYAS = "http://" + Const.SERVER_IP + ":8080/tesis-playon-restful/playas";
 
+    private static final String URL_PERFIL_PLAYA = "http://" + Const.SERVER_IP
+	    + ":8080/tesis-playon-restful/perfilplaya/";
+
     private Playas playas;
 
     private MapView mMapView;
@@ -62,6 +74,10 @@ public class MapaPlayasFragment extends Fragment implements OnInfoWindowClickLis
     private Double latActual;
 
     private Double lngActual;
+
+    private String nombrePlaya;
+
+    private PerfilPlaya perfilPlaya;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -101,6 +117,7 @@ public class MapaPlayasFragment extends Fragment implements OnInfoWindowClickLis
 	mMapView.onCreate(savedInstanceState);
 
 	mMap = mMapView.getMap();
+	mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
 	mMap.setOnInfoWindowClickListener(this);
 	return inflatedView;
     }
@@ -128,11 +145,11 @@ public class MapaPlayasFragment extends Fragment implements OnInfoWindowClickLis
 
 	if (!arg0.getTitle().equalsIgnoreCase("Usted esta aquí")) {
 	    String nomPlaya = arg0.getTitle();
-	    Bundle playa = new Bundle();
-	    playa.putString(Const.NOMBRE_PLAYA, nomPlaya);
+	    Bundle mPlaya = new Bundle();
+	    mPlaya.putString(Const.NOMBRE_PLAYA, nomPlaya);
 
 	    Fragment fragment = new DetallePlayaFragment();
-	    fragment.setArguments(playa);
+	    fragment.setArguments(mPlaya);
 
 	    getActivity().getActionBar().getTabAt(2).setTabListener(new MyTabsListener(fragment));
 	    getActivity().getActionBar().selectTab(getActivity().getActionBar().getTabAt(2));
@@ -159,6 +176,7 @@ public class MapaPlayasFragment extends Fragment implements OnInfoWindowClickLis
 
 	// draw search results
 	for (Playa playa : playas.getPlayas()) {
+
 	    mMap.addMarker(new MarkerOptions().position(new LatLng(playa.getLatitud(), playa.getLongitud()))
 		    .title(playa.getNombreComercial()).snippet("Disponibilidad: " + playa.getDisponibilidad())
 		    .icon(BitmapDescriptorFactory.fromResource(R.drawable.mapa_playa_48)));
@@ -178,7 +196,7 @@ public class MapaPlayasFragment extends Fragment implements OnInfoWindowClickLis
 	    return playas.toString();
 	}
 
-	protected void  onPostExecute(String results) {
+	protected void onPostExecute(String results) {
 	    Log.d(TAG, "onPostExecute");
 	    Intent result = new Intent();
 	    Bundle bundle = new Bundle();
@@ -230,6 +248,75 @@ public class MapaPlayasFragment extends Fragment implements OnInfoWindowClickLis
 	    playas = new Utils().buscarPlaya(playas, result, 10);
 	    llenarMapa(playas);
 	}
+    }
+
+    class BuscarPerfilPlayaService extends AsyncTask<Void, Void, String> {
+
+	@Override
+	protected String doInBackground(Void... params) {
+	    String url = URL_PERFIL_PLAYA
+		    + nombrePlaya.replace(" ", "%20").replace("á", "a").replace("é", "e").replace("í", "i")
+			    .replace("ó", "o").replace("ú", "u").replace("ñ", "n");
+	    InputStream source = new Utils().retrieveStream(url);
+	    Gson gson = new Gson();
+	    Reader reader = new InputStreamReader(source);
+	    perfilPlaya = gson.fromJson(reader, PerfilPlaya.class);
+	    cancel(true);
+	    return perfilPlaya.toString();
+	}
+
+    }
+
+    class MyInfoWindowAdapter implements InfoWindowAdapter {
+
+	private final View myContentsView;
+
+	MyInfoWindowAdapter() {
+	    myContentsView = getActivity().getLayoutInflater().inflate(R.layout.custom_info_window, null);
+	}
+
+	@Override
+	public View getInfoContents(Marker marker) {
+
+	    TextView tvNomPlaya = ((TextView) myContentsView.findViewById(R.id.nombre_playa_info));
+	    tvNomPlaya.setText(marker.getTitle());
+	    TextView tvDispPlaya = ((TextView) myContentsView.findViewById(R.id.disp_playa_info));
+	    tvDispPlaya.setText(marker.getSnippet());
+
+	    nombrePlaya = tvNomPlaya.getText().toString();
+
+	    BuscarPerfilPlayaService mFotoPerfilPlaya = new BuscarPerfilPlayaService();
+	    mFotoPerfilPlaya.execute();
+
+	    while (!mFotoPerfilPlaya.isCancelled()) {
+
+	    }
+
+	    ImageView imagen = (ImageView) myContentsView.findViewById(R.id.foto_playa_info);
+
+	    if (null != perfilPlaya && null != perfilPlaya.getFotoPerfil()) {
+
+		byte[] decodedString = Base64.decode(perfilPlaya.getFotoPerfil(), Base64.DEFAULT);
+		Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+		if (bitmap != null) {
+		    Drawable image = new BitmapDrawable(getActivity().getApplicationContext().getResources(),
+			    Bitmap.createScaledBitmap(bitmap, 100, 100, true));
+		    imagen.setImageDrawable(image);
+		}
+	    } else if (nombrePlaya.equals("Usted esta aquí")) {
+		imagen.setImageResource(R.drawable.mapa_auto);
+	    } else {
+		imagen.setImageResource(R.drawable.mapa_playa);
+	    }
+
+	    return myContentsView;
+	}
+
+	@Override
+	public View getInfoWindow(Marker marker) {
+	    return null;
+	}
+
     }
 
 }
