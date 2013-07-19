@@ -191,8 +191,6 @@ public class ComentariosActivity extends ListActivity {
 	    setListAdapter(mComentariosAdapter);
 	    mListView.setAdapter(mComentariosAdapter);
 	    mListView.setTextFilterEnabled(true);
-	} else {
-	    mListView.setEmptyView(findViewById(R.id.empty_view_comentarios));
 	}
     }
 

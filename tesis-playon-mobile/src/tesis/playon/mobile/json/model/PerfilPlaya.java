@@ -17,7 +17,6 @@ public class PerfilPlaya implements Serializable {
     private Playa playa;
 
     @SerializedName("fotoPerfil")
-    // private byte[] fotoPerfil;
     private String fotoPerfil;
 
     @SerializedName("nombreFoto")

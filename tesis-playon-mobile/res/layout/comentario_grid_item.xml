@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="60dip"
     android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/grid_usuario_image"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
+        android:layout_alignParentLeft="true"
+        android:contentDescription="@string/foto_de_playa"
+        android:src="@drawable/foto_usuario_perfil" />
 
     <TextView
         android:id="@+id/txt_comentario"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/grid_usuario_image"
         android:textColor="#4682B4"
         android:textSize="24sp" >
     </TextView>
@@ -16,7 +25,9 @@
         android:id="@+id/txt_usuario"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_comentario"
+        android:layout_toRightOf="@+id/grid_usuario_image"
         android:textSize="16sp" >
     </TextView>
 
-</LinearLayout>
+</RelativeLayout>

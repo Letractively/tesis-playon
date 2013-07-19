@@ -10,7 +10,7 @@
         android:layout_height="fill_parent"
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/seleccione_un_cliente"
-        android:textColor="#FF0000"
+        android:textColor="#4682B4"
         android:textSize="30sp" />
 
 </LinearLayout>

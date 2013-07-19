@@ -100,21 +100,21 @@
 
         <Button
             android:id="@+id/btn_tarifas"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_email"
             android:text="@string/ver_tarifas" />
 
         <Button
             android:id="@+id/btn_promociones"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/btn_tarifas"
             android:text="@string/ver_promociones" />
 
         <Button
             android:id="@+id/btn_comentarios"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/btn_promociones"
             android:text="@string/ver_comentarios" />
