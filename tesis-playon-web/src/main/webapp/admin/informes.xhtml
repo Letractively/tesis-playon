@@ -72,14 +72,15 @@
 									<div align="center">
 										<h:panelGrid columns="2"
 											style="text-align:center; width:60px;">
-											<p:commandLink title="Exportar a pdf"
+											<h:commandLink title="Exportar a pdf"
 												action="#{estadisticaAdministracionMB.crearPDF}">
-												<h:graphicImage library="images/icons" name="pdf.png" />
-											</p:commandLink>
+												<h:graphicImage library="images/icons" name="pdf.png" /> 
+											</h:commandLink>
 
-											<p:commandLink title="Exportar a excel">
+											<h:commandLink title="Exportar a excel"
+												action="#{estadisticaAdministracionMB.crearExcel}">
 												<h:graphicImage library="images/icons" name="excel.png" />
-											</p:commandLink>
+											</h:commandLink>
 										</h:panelGrid>
 									</div>
 								</f:facet>
