@@ -57,7 +57,7 @@ public class AbonoDao implements IAbonoDao {
 		List<?> list = getSessionFactory()
 				.getCurrentSession()
 				.createQuery(
-						"from Abono where playa=? and (now() >= fechaVigenciaDesde and now() <= fechaVigenciaHasta) ")
+						"from Abono where playa=? and (now() >= DATE(fechaVigenciaDesde) and now() <= DATE(fechaVigenciaHasta)) ")
 				.setParameter(0, playa).list();
 		if (!list.isEmpty()) {
 			for (Object obj : list) {

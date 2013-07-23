@@ -58,7 +58,7 @@ public class LiquidacionDao implements ILiquidacionDao {
 	public List<Liquidacion> findByFecha(Date fechaDesde, Date fechaHasta) {
 		List<Liquidacion> liquidaciones = new ArrayList<Liquidacion>();
 		List<?> list = getSessionFactory().getCurrentSession()
-				.createQuery("from Liquidacion where fecha>=? and fecha<=?")
+				.createQuery("from Liquidacion where DATE(fecha) >= DATE(?) and DATE(fecha) <= DATE(?)")
 				.setParameter(0, fechaDesde).setParameter(1, fechaHasta).list();
 		for (Object object : list) {
 			liquidaciones.add((Liquidacion) object);

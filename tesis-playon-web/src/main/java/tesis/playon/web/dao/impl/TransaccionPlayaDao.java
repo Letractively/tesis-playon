@@ -70,7 +70,7 @@ public class TransaccionPlayaDao implements ITransaccionPlayaDao {
     public List<TransaccionPlaya> findNoLiquidadasByFechaDesdeHasta(Date fechaDesde, Date fechaHasta) {
 	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
 	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from TransaccionPlaya where liquidacion is null and fecha>=? and fecha<=?")
+		.createQuery("from TransaccionPlaya where liquidacion is null and DATE(fecha) >= DATE(?) and DATE(fecha) <= DATE(?)")
 		.setParameter(0, fechaDesde).setParameter(1, fechaHasta).list();
 	for (Object object : list) {
 	    transaccionPlaya.add((TransaccionPlaya) object);
@@ -131,7 +131,7 @@ public class TransaccionPlayaDao implements ITransaccionPlayaDao {
 	List<TransaccionPlaya> transaccionPlaya = new ArrayList<TransaccionPlaya>();
 	List<?> list = getSessionFactory().getCurrentSession()
 		.createQuery("from TransaccionPlaya as tp where " + 
-				"tp.cuentaPlaya=? and tp.fecha>=? and tp.fecha<=? " +
+				"tp.cuentaPlaya=? and DATE(tp.fecha) >= DATE(?) and DATE(tp.fecha)<= DATE(?) " +
 				"order by tp.fecha DESC")
 		.setParameter(0, cuentaPlaya).setParameter(1, fechaD).setParameter(2, fechaH).list();
 

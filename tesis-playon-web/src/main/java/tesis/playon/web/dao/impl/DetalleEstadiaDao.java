@@ -77,7 +77,7 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
     public List<DetalleEstadia> findByHorarios(Estadia estadia, Date horaInicio, Date horaFin) {
 	List<DetalleEstadia> detallesEstadia = new ArrayList<DetalleEstadia>();
 	List<?> list = getSessionFactory().getCurrentSession()
-		.createQuery("from DetalleEstadia where estadia=? and fechaHoraIngreso>=? and fechaHoraEgreso<=?")
+		.createQuery("from DetalleEstadia where estadia=? and DATE(fechaHoraIngreso) >= DATE(?) and DATE(fechaHoraEgreso) <= DATE(?)")
 		.setParameter(0, estadia).setParameter(1, horaInicio).setParameter(2, horaFin).list();
 	if (!list.isEmpty()) {
 	    for (Object object : list) {
@@ -104,7 +104,7 @@ public class DetalleEstadiaDao implements IDetalleEstadiaDao {
 	    horas[i] = 0;
 	String query = "SELECT HOUR(fechaHoraIngreso) " + "FROM tesis_playon.detalle_estadia de "
 		+ "INNER JOIN tesis_playon.estadia e ON e.estadiaID=de.estadiaID "
-		+ "WHERE playaID=? AND fechaHoraIngreso >= ? AND fechaHoraIngreso <= ?";
+		+ "WHERE playaID=? AND DATE(fechaHoraIngreso) >= DATE(?) AND DATE(fechaHoraIngreso) <= DATE(?)";
 	List<?> list = getSessionFactory().getCurrentSession().createSQLQuery(query).setParameter(0, playa.getId())
 		.setParameter(1, fechaDesde).setParameter(2, fechaHasta).list();
 	if (!list.isEmpty()) {
