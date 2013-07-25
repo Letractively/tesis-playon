@@ -358,19 +358,19 @@
 						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 					</h:outputText>
 
-					<h:outputText value="Vehículo: " />
+					<h:outputText value="Patente: " />
 					<h:outputText
 						value="#{auditoriaMB.denunciaVehiculoSeleccionada.vehiculo.patente}"
 						style="font-weight:bold" />
 
-					<h:outputText value="Modelo - Marca: " />
+					<h:outputText value="Vehículo: " />
 					<h:outputText
-						value="#{auditoriaMB.denunciaVehiculoSeleccionada.vehiculo.modeloVehiculo.nombre}&#160;-&#160;#{auditoriaMB.denunciaVehiculoSeleccionada.vehiculo.modeloVehiculo.marcaVehiculo.nombre}"
+						value="#{auditoriaMB.denunciaVehiculoSeleccionada.vehiculo.modeloVehiculo.marcaVehiculo.nombre}&#160;#{auditoriaMB.denunciaVehiculoSeleccionada.vehiculo.modeloVehiculo.nombre}"
 						style="font-weight:bold" />
 
 					<h:outputText value="Categoría vehículo: " />
 					<h:outputText
-						value="#{auditoriaMB.denunciaVehiculoSeleccionada.vehiculo.patente}"
+						value="#{auditoriaMB.denunciaVehiculoSeleccionada.vehiculo.modeloVehiculo.categoriaVehiculo.nombre}"
 						style="font-weight:bold" />
 
 					<h:outputText value="Apellido del Propietario " />
